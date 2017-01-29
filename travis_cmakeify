@@ -1,6 +1,0 @@
-TRAVIS_CMAKEIFY_JAR=build/libs/cmakeify.jar
-if [ -f "build/libs/cmakeify-${TRAVIS_TAG}.jar" ]; then
-    TRAVIS_CMAKEIFY_JAR=build/libs/cmakeify-${TRAVIS_TAG}.jar
-fi
-chmod +x ./cmakeify-production
-./cmakeify-production $TRAVIS_CMAKEIFY_JAR $@
