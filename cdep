@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+CDEP_SCRIPT=https://raw.githubusercontent.com/jomof/cdep/master/cdep-production
+CDEP_DOWNLOAD_FOLDER=.cdep/downloads
+CDEP_RUN=$CMAKEIFY_DOWNLOAD_FOLDER/cdep-run
+
+# Create the download folder
+if [ ! -d "$CDEP_DOWNLOAD_FOLDER" ]; then
+  mkdir -p $CDEP_DOWNLOAD_FOLDER
+fi
+
+echo Downloading CDEP_SCRIPT
+if [ -f "$CDEP_RUN" ]; then
+    rm $CDEP_RUN
+fi
+curl -o $CDEP_RUN $CDEP_SCRIPT &> $CDEP_DOWNLOAD_FOLDER/download-cdep-run.log
+chmod +x $CDEP_RUN
+$CDEP_RUN $@
