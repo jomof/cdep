@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/jomof/cmakeify.svg?branch=master)](https://travis-ci.org/jomof/cmakeify)
+[![Build Status](https://travis-ci.org/jomof/cdep.svg?branch=master)](https://travis-ci.org/jomof/cdep)
 
 
-# CMakeify
+# CDep
 
 Download from releases or build it yourself:
 
-    git clone https://github.com/jomof/cmakeify.git
-    cd cmakeify
+    git clone https://github.com/jomof/cdep.git
+    cd cdep
     ./gradlew assemble check
