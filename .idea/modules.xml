@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cmakeify.iml" filepath="$PROJECT_DIR$/.idea/modules/cmakeify.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cmakeify_main.iml" filepath="$PROJECT_DIR$/.idea/modules/cmakeify_main.iml" group="cmakeify" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cmakeify_test.iml" filepath="$PROJECT_DIR$/.idea/modules/cmakeify_test.iml" group="cmakeify" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep_main.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep_main.iml" group="cdep" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep_test.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep_test.iml" group="cdep" />
     </modules>
   </component>
 </project>
