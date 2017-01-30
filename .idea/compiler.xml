@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="cmakeify_main" target="1.8" />
-      <module name="cmakeify_test" target="1.8" />
+      <module name="cdep_main" target="1.8" />
+      <module name="cdep_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
