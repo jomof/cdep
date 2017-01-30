@@ -1,6 +1,10 @@
 package com.jomofisher.cdep;
 
 
+import com.jomofisher.cdep.AST.CaseExpression;
+import com.jomofisher.cdep.AST.Expression;
+import com.jomofisher.cdep.AST.VariableExpression;
+import com.jomofisher.cdep.manifest.Android;
 import com.jomofisher.cdep.manifest.Coordinate;
 import com.jomofisher.cdep.manifest.Manifest;
 import com.jomofisher.cdep.model.Configuration;
@@ -18,6 +22,7 @@ public class CDep {
     private PrintStream out = System.out;
     private File workingFolder = new File(".");
     private Configuration config = null;
+    private Map<Coordinate, Manifest> manifests = null;
 
     CDep(PrintStream out) {
         this.out = out;
@@ -36,7 +41,7 @@ public class CDep {
     }
 
     private void handleGenerateScript() throws IOException {
-        Map<Coordinate, Manifest> compile = new HashMap<>();
+        manifests = new HashMap<>();
 
         for(Reference dependency : config.dependencies) {
             if (dependency.compile != null) {
@@ -45,7 +50,47 @@ public class CDep {
                     throw new RuntimeException("Could not resolve: " + dependency.compile);
 
                 }
-                compile.put(resolved.coordinate, resolved);
+                manifests.put(resolved.coordinate, resolved);
+            }
+        }
+
+        Expression getter = createTargetCase();
+
+    }
+
+    Expression createTargetCase() {
+        Map<String, Expression> targets = new HashMap<>();
+        for (Manifest manifest : manifests.values()) {
+            if (targets.get("android") == null && manifest.android.length > 0) {
+                targets.put("android", createAndroidCase());
+            }
+        }
+        return new CaseExpression(new VariableExpression("target"), targets);
+    }
+
+    Expression createAndroidCase() {
+        Map<String, Expression> abiCases = new HashMap<>();
+        for (Manifest manifest : manifests.values()) {
+            for (Android android : manifest.android) {
+                for (String abi : android.abis) {
+                    if (abiCases.get(abi) == null) {
+                        abiCases.put(abi, createAndroidAbiCase(abi));
+                    }
+                }
+            }
+        }
+        return new CaseExpression(new VariableExpression("abi"), abiCases);
+    }
+
+    Expression createAndroidAbiCase(String abi) {
+        Map<String, Manifest> manifests = new HashMap<>();
+        for (Manifest manifest : manifests.values()) {
+            for (Android android : manifest.android) {
+                for (String currentAbi : android.abis) {
+                    if (currentAbi.equals(abi)) {
+                        manifests.put(manifests., createAndroidAbiCase(abi));
+                    }
+                }
             }
         }
     }

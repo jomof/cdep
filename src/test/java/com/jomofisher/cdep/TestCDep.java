@@ -65,8 +65,8 @@ public class TestCDep {
         File yaml = new File("test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("dependencies:\n"
-                + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.28/cdep-manifest.yml\n"
-                + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.28/cdep-manifest.yml\n",
+                + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.29/cdep-manifest.yml\n"
+                + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.29/cdep-manifest.yml\n",
             yaml, StandardCharsets.UTF_8);
         String result1 = main("-wf", yaml.getParent(), "--dump");
         yaml.delete();
@@ -74,7 +74,7 @@ public class TestCDep {
         System.out.print(result1);
         String result2 = main("-wf", yaml.getParent(), "--dump");
         assertThat(result2).isEqualTo(result1);
-        assertThat(result2).contains("alpha-0.0.28");
+        assertThat(result2).contains("alpha-0.0.29");
         String result3 = main("-wf", yaml.getParent());
     }
 

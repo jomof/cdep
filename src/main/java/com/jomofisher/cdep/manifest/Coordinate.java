@@ -1,8 +1,5 @@
 package com.jomofisher.cdep.manifest;
 
-/**
- * Created by jomof on 1/30/17.
- */
 public class Coordinate {
 
   final public String groupId; // like com.github.jomof
