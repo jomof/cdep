@@ -45,7 +45,7 @@ public class TestCDep {
         assertThat(main("-wf", "non-existing-blah")).contains("non-existing-blah");
     }
 
-    @Test
+    //@Test
     public void testScript() throws IOException {
         File yaml = new File("test-files/simpleConfiguration/.cdep.yml");
         yaml.getParentFile().mkdirs();
@@ -59,7 +59,7 @@ public class TestCDep {
         assertThat(script).contains("cmake-3.7.2-Linux-x86_64.tar.gz");
     }
 
-    @Test
+    //@Test
     public void dumpIsSelfHost() throws IOException {
         Configuration config = new Configuration();
         System.out.printf(new Yaml().dump(config));
