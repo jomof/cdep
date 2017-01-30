@@ -9,7 +9,7 @@ if [ ! -d "$CDEP_DOWNLOAD_FOLDER" ]; then
   mkdir -p $CDEP_DOWNLOAD_FOLDER
 fi
 
-echo Downloading CDEP_SCRIPT
+echo Downloading $CDEP_SCRIPT
 if [ -f "$CDEP_RUN" ]; then
     rm $CDEP_RUN
 fi
