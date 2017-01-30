@@ -19,13 +19,13 @@ buildscript {
 
 class GenerateBuildInfo extends DefaultTask {
     @OutputFile
-    public File buildInfoFile = new File("src/main/java/com/jomofisher/cmakeify/BuildInfo.java")
+    public File buildInfoFile = new File("src/main/java/com/jomofisher/cdep/BuildInfo.java")
 
     @TaskAction
     def generate() {
         buildInfoFile.parentFile.mkdirs()
         buildInfoFile.write(
-                """package com.jomofisher.cmakeify;
+                """package com.jomofisher.cdep;
 public class BuildInfo {
   static final String PROJECT_VERSION = "$project.version";
 }""")
