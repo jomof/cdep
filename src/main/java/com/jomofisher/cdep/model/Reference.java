@@ -1,10 +1,8 @@
 package com.jomofisher.cdep.model;
 
-import static com.sun.tools.corba.se.idl.toJavaPortable.Compile.compiler;
-
-public class Dependency {
+public class Reference {
   final public String compile;
-  Dependency() {
+  Reference() {
     compile = null;
   }
 

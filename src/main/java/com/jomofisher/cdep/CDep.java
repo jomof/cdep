@@ -1,15 +1,24 @@
 package com.jomofisher.cdep;
 
 
-import com.jomofisher.cdep.model.CDepConfiguration;
+import static com.jomofisher.cdep.Resolver.resolveAny;
+
+import com.jomofisher.cdep.model.Configuration;
+import com.jomofisher.cdep.manifest.Manifest;
+import com.jomofisher.cdep.model.Reference;
 import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 public class CDep {
     private PrintStream out = System.out;
     private File workingFolder = new File(".");
-    private CDepConfiguration config = null;
+    private Configuration config = null;
 
     CDep(PrintStream out) {
         this.out = out;
@@ -23,7 +32,20 @@ public class CDep {
         handleGenerateScript();
     }
 
-    private void handleGenerateScript() {
+
+    private void handleGenerateScript() throws IOException {
+        Map<Coordinate, Manifest> compile = new HashMap<>();
+
+        for(Reference dependency : config.dependencies) {
+            if (dependency.compile != null) {
+                ResolvedDependency resolved = Resolver.resolveAny(dependency.compile);
+                if (resolved == null) {
+                    throw new RuntimeException("Could not resolve: " + dependency.compile);
+
+                }
+                compile.put(resolved.coordinate, resolved.manifest);
+            }
+        }
     }
 
     private boolean handleDump(String[] args) {
@@ -43,10 +65,10 @@ public class CDep {
             return false;
         }
 
-        Yaml yaml = new Yaml(new Constructor(CDepConfiguration.class));
-        this.config = (CDepConfiguration)yaml.load(new FileInputStream(config));
+        Yaml yaml = new Yaml(new Constructor(Configuration.class));
+        this.config = (Configuration)yaml.load(new FileInputStream(config));
         if (this.config == null) {
-            this.config = new CDepConfiguration();
+            this.config = new Configuration();
         }
         return true;
     }

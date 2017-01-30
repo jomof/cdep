@@ -1,10 +1,10 @@
 package com.jomofisher.cdep.model;
 
-public class CDepConfiguration {
-    final public Dependency dependencies[];
+public class Configuration {
+    final public Reference dependencies[];
 
-    public CDepConfiguration() {
-        dependencies  = new Dependency[] {};
+    public Configuration() {
+        dependencies  = new Reference[] {};
     }
 
     public String toYaml(int indent) {
@@ -12,7 +12,7 @@ public class CDepConfiguration {
         StringBuilder sb = new StringBuilder();
         if (dependencies != null && dependencies.length > 0) {
             sb.append(String.format("%sdependencies:\n", prefix));
-            for (Dependency dependency : dependencies) {
+            for (Reference dependency : dependencies) {
                 sb.append("- ");
                 sb.append(dependency.toYaml(indent + 1));
             }
