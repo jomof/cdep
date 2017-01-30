@@ -1,21 +1,19 @@
-deploy: 
-  api_key: 
-    secure: UdnzVI6lMVQ0JX2m+zoXnq5DwAbj39+bz4xviRCpBE5LlijxFTNToMafxYPhK2cK26L6WZ5y8rkBMGAlOfsjwHHJjtc1EbywI+Wf88wdzQISHXU7qmwBopL6NxgtOoqnTTXYMnpd+8Efa7RRr23mirERPj7CZyM+eD67n8/vHkjqtUyNFw6FR0FHxzdeSkF95P4HyG1qlX7PqBNFSnCkW97+ypL5YNbQKJXlKTBfC7hoT/TlbmQNZcRiBcP6rXXgGx0ev8nMdf93RF3ucgc23bx7jbzS1wvEG0ULLEmPKN0d1pY949URXjMnkkAWMEpO73Yqoq9rX+L1uFghBN0N7T2/kFxbsFjidnFBBeBdl2mAZDwmR+Ovxeglft+NU2+eaLdQXFmf8lZqczu6fQrDXYvVC0C3UMYI+n6NNc4lkd+S5t7D7mV7ZoW2r5ggd78LsTLHpjzQ9FR2lui5PCQbWET+ardpmFQbjqaNF4swaKtMPivGzKbJXVWPTyea8TGtZEBArj0Vx05DTGIGa2CZTOVvMElnsTT21ZzJQ0VqLRDHGBvf2upbBfdK+iJ9KCOhsfv8wwi8xbrYYU9z9z/B8KwT0pbHNRbSbNzc4uW/ky441168xJL0GaNLxCQDr+6BQgJpm7cIkJ8zP2cLxVMchNQiUcHIYS++eun39HxFn1k=
-  file: 
+language: java
+matrix:
+  include:
+  - jdk: oraclejdk7
+    os: linux
+    script:
+    - "./gradlew assemble check"
+deploy:
+  api_key:
+    secure: eJTLT/plD9BdFDjy16+izosm8CvpIAFGXOj+RQ9DsYsK0xMp8CMGC41aMnevcAFjtdvlJZJwLAKhFCSgjw5bKhSh+YFvHi8SCTS2oKKZQtZun39ICU75sEOaPHwGOaNmzhNkU1H3t/BPSZjJAFfsvT+tr04zeeKwNf6SETfcxB5Qb2fWrAkqjbu6uKs6kLnUIMVB/xSHFNB8X6FwH0ZD1ZOhW8RnHuC9wrwuXIh/gY5t3GSuYtujHustXRvpppcAmzRCAibIrM+RNuA3kJzi7GMNA5N1adL58YcxwX7TKgOrOw53+uCiaffCBtD2j5RZMJE5OYEUzPThizIcD5RzQvpV8gIUMIXJs+geO1oD2BSHzXUFe075OMKtSGT/1XZsl3i9W0jyx3r6EeqhUy+kZgMgqXFuPGC20y2J9maIBUhVRgYhbOZ81/Hvj3c2CeNMZ1LmqqCkWaGO2fa+Bi6hoSl6lvFyVdj7IEr4eU7+kX4ys/N+i7omAJItwPpO3oyRYEr9SpOBAj83EIjmjhjuLA5rH+B4t/R3IyeK9bvfvTPjiQqbaerV6VNsKN59b4T3zA/ARZBlUMHUduOlLYPCZ5R/G0Cm25Ibd48C0WsxhJWD4ZDNgeu2+htwT7FDdR25z5wkgnSTJ3D7BIjmoCKFvYt6Eu3gEBZWMsmn9kUaKug=
+  file:
     - build/libs/cdep-${TRAVIS_TAG}.jar
     - build/libs/cdep-${TRAVIS_TAG}-sources.jar
     - build/libs/cdep-${TRAVIS_TAG}-javadoc.jar
-   
+
   provider: releases
   skip_cleanup: true
-  true: 
+  true:
     tags: true
-language: java
-matrix: 
-  include: 
-    - 
-      jdk: oraclejdk7
-      os: linux
-      script: 
-        - ./gradlew assemble check
-
