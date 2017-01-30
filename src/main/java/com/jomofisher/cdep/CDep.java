@@ -1,15 +1,14 @@
 package com.jomofisher.cdep;
 
 
-import static com.jomofisher.cdep.Resolver.resolveAny;
-
-import com.jomofisher.cdep.model.Configuration;
+import com.jomofisher.cdep.manifest.Coordinate;
 import com.jomofisher.cdep.manifest.Manifest;
+import com.jomofisher.cdep.model.Configuration;
 import com.jomofisher.cdep.model.Reference;
-import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
@@ -24,6 +23,10 @@ public class CDep {
         this.out = out;
     }
 
+    public static void main(String[] args) throws IOException {
+        new CDep(System.out).go(args);
+    }
+
     void go(String [] args) throws IOException {
         if (!handleVersion(args)) return;
         handleWorkingFolder(args);
@@ -32,18 +35,17 @@ public class CDep {
         handleGenerateScript();
     }
 
-
     private void handleGenerateScript() throws IOException {
         Map<Coordinate, Manifest> compile = new HashMap<>();
 
         for(Reference dependency : config.dependencies) {
             if (dependency.compile != null) {
-                ResolvedDependency resolved = Resolver.resolveAny(dependency.compile);
+                Manifest resolved = Resolver.resolveAny(dependency.compile);
                 if (resolved == null) {
                     throw new RuntimeException("Could not resolve: " + dependency.compile);
 
                 }
-                compile.put(resolved.coordinate, resolved.manifest);
+                compile.put(resolved.coordinate, resolved);
             }
         }
     }
@@ -91,9 +93,5 @@ public class CDep {
         }
         out.printf("cdep %s\n", BuildInfo.PROJECT_VERSION);
         return false;
-    }
-
-    public static void main(String [] args) throws IOException {
-        new CDep(System.out).go(args);
     }
 }

@@ -1,5 +1,6 @@
 package com.jomofisher.cdep;
 
+import com.jomofisher.cdep.manifest.Coordinate;
 import com.jomofisher.cdep.manifest.Manifest;
 
 class ResolvedDependency {

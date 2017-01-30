@@ -1,5 +1,6 @@
 package com.jomofisher.cdep;
 
+import com.jomofisher.cdep.manifest.Manifest;
 import java.io.IOException;
 
 abstract class Resolver {
@@ -7,12 +8,10 @@ abstract class Resolver {
       new GithubStyleUrlResolver()
   };
 
-  abstract ResolvedDependency resolve(String coordinate) throws IOException;
-
-  static ResolvedDependency resolveAny(String coordinate) throws IOException {
-    ResolvedDependency resolved = null;
+  static Manifest resolveAny(String coordinate) throws IOException {
+    Manifest resolved = null;
     for (Resolver resolver : resolvers) {
-      ResolvedDependency attempt = resolver.resolve(coordinate);
+      Manifest attempt = resolver.resolve(coordinate);
       if (attempt != null) {
         if (resolved != null) {
           throw new RuntimeException("Multiple resolvers matched coordinate: " + coordinate);
@@ -22,4 +21,6 @@ abstract class Resolver {
     }
     return resolved;
   }
+
+  abstract Manifest resolve(String coordinate) throws IOException;
 }

@@ -1,19 +1,18 @@
 package com.jomofisher.cdep;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.io.Files;
 import com.jomofisher.cdep.model.Configuration;
-import org.junit.Test;
-import org.yaml.snakeyaml.Yaml;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-
-import static com.google.common.truth.Truth.assertThat;
+import org.junit.Test;
+import org.yaml.snakeyaml.Yaml;
 
 public class TestCDep {
 
@@ -66,8 +65,8 @@ public class TestCDep {
         File yaml = new File("test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("dependencies:\n"
-            + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.27/cdep-manifest.yml\n"
-            + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.25/cdep-manifest.yml\n",
+                + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.28/cdep-manifest.yml\n"
+                + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.28/cdep-manifest.yml\n",
             yaml, StandardCharsets.UTF_8);
         String result1 = main("-wf", yaml.getParent(), "--dump");
         yaml.delete();
@@ -75,7 +74,7 @@ public class TestCDep {
         System.out.print(result1);
         String result2 = main("-wf", yaml.getParent(), "--dump");
         assertThat(result2).isEqualTo(result1);
-        assertThat(result2).contains("alpha-0.0.25");
+        assertThat(result2).contains("alpha-0.0.28");
         String result3 = main("-wf", yaml.getParent());
     }
 
