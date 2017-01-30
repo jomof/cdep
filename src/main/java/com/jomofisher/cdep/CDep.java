@@ -1,11 +1,15 @@
 package com.jomofisher.cdep;
 
 
+import com.jomofisher.cdep.model.CDepConfiguration;
 import java.io.*;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 public class CDep {
     private PrintStream out = System.out;
     private File workingFolder = new File(".");
+    private CDepConfiguration config = null;
 
     CDep(PrintStream out) {
         this.out = out;
@@ -23,28 +27,27 @@ public class CDep {
     }
 
     private boolean handleDump(String[] args) {
-//        for (int i = 0; i < args.length; ++i) {
-//            if (args[i].equals("--dump") || args[i].equals("-d")) {
-//                out.print(config.toString());
-//                return false;
-//            }
-//        }
-//        return true;
+        for (int i = 0; i < args.length; ++i) {
+            if (args[i].equals("--dump") || args[i].equals("-d")) {
+                out.print(config.toString());
+                return false;
+            }
+        }
         return true;
     }
 
     private boolean handleReadConfig(String[] args) throws IOException {
-//        File config = new File(workingFolder, ".cdep.yml");
-//        if (!config.exists()) {
-//            out.printf("Expected a configuration file at %s\n", config.getCanonicalFile());
-//            return false;
-//        }
-//
-//        Yaml yaml = new Yaml(new Constructor(Configuration.class));
-//        this.config = (Configuration)yaml.load(new FileInputStream(config));
-//        if (this.config == null) {
-//            this.config = new Configuration();
-//        }
+        File config = new File(workingFolder, "cdep.yml");
+        if (!config.exists()) {
+            out.printf("Expected a configuration file at %s\n", config.getCanonicalFile());
+            return false;
+        }
+
+        Yaml yaml = new Yaml(new Constructor(CDepConfiguration.class));
+        this.config = (CDepConfiguration)yaml.load(new FileInputStream(config));
+        if (this.config == null) {
+            this.config = new CDepConfiguration();
+        }
         return true;
     }
 
@@ -64,7 +67,6 @@ public class CDep {
         if (args.length != 1 || !args[0].equals("--version")) {
             return true;
         }
-
         out.printf("cdep %s\n", BuildInfo.PROJECT_VERSION);
         return false;
     }

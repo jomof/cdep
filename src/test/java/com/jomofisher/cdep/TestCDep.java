@@ -3,7 +3,7 @@ package com.jomofisher.cdep;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.io.Files;
-import com.jomofisher.cdep.model.Configuration;
+import com.jomofisher.cdep.model.CDepConfiguration;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
 
@@ -29,18 +29,18 @@ public class TestCDep {
         assertThat(main("--version")).contains(BuildInfo.PROJECT_VERSION);
     }
 
-    //@Test
+    @Test
     public void missingConfigurationFile() throws IOException {
         new File("test-files/empty-folder").mkdirs();
         assertThat(main("-wf", "test-files/empty-folder")).contains("configuration file");
     }
 
-    //@Test
+    @Test
     public void workingFolderFlag() throws IOException {
         assertThat(main("--working-folder", "non-existing-blah")).contains("non-existing-blah");
     }
 
-    //@Test
+    @Test
     public void wfFlag() throws IOException {
         assertThat(main("-wf", "non-existing-blah")).contains("non-existing-blah");
     }
@@ -59,11 +59,31 @@ public class TestCDep {
         assertThat(script).contains("cmake-3.7.2-Linux-x86_64.tar.gz");
     }
 
-    //@Test
-    public void dumpIsSelfHost() throws IOException {
-        Configuration config = new Configuration();
+    @Test
+    public void simpleDependency() throws IOException {
+        CDepConfiguration config = new CDepConfiguration();
         System.out.printf(new Yaml().dump(config));
-        File yaml = new File("test-files/simpleConfiguration/.cdep.yml");
+        File yaml = new File("test-files/simpleDependency/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("dependencies:\n"
+            + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.25/cdep-manifest.yml\n"
+            + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.24/cdep-manifest.yml\n",
+            yaml, StandardCharsets.UTF_8);
+        String result1 = main("-wf", yaml.getParent(), "--dump");
+        yaml.delete();
+        Files.write(result1, yaml, StandardCharsets.UTF_8);
+        System.out.print(result1);
+        String result2 = main("-wf", yaml.getParent(), "--dump");
+        assertThat(result2).isEqualTo(result1);
+        assertThat(result2).contains("alpha-0.0.25");
+        assertThat(result2).contains("alpha-0.0.24");
+    }
+
+    @Test
+    public void dumpIsSelfHost() throws IOException {
+        CDepConfiguration config = new CDepConfiguration();
+        System.out.printf(new Yaml().dump(config));
+        File yaml = new File("test-files/simpleConfiguration/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("", yaml, StandardCharsets.UTF_8);
         String result1 = main("-wf", yaml.getParent(), "--dump");
@@ -72,7 +92,5 @@ public class TestCDep {
         System.out.print(result1);
         String result2 = main("-wf", yaml.getParent(), "--dump");
         assertThat(result2).isEqualTo(result1);
-
-
     }
 }
