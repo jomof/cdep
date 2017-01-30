@@ -20,4 +20,19 @@ public class Coordinate {
     this.artifactId = artifactId;
     this.version = version;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    return toString().equals(obj);
+  }
+
+  @Override
+  public int hashCode() {
+    return toString().hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return groupId + ":" + artifactId + ":" + version;
+  }
 }
