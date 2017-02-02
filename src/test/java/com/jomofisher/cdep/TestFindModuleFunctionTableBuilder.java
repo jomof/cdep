@@ -143,7 +143,7 @@ public class TestFindModuleFunctionTableBuilder {
             "21",
             "c++_shared",
             "x86");
-        assertThat(found.include.toString()).isEqualTo("include");
+        assertThat(found.include.toString()).isEqualTo("boost_1_63_0/boost");
         assertThat(found.lib.toString()).isEqualTo("lib");
         assertThat(found.archive.toString()).isEqualTo(
             "https://github.com/jomof/cdep-boost/releases/download/1.0.63-rev6/boost_1_63_0.zip");

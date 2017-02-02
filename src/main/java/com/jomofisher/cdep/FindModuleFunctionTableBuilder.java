@@ -177,6 +177,8 @@ public class FindModuleFunctionTableBuilder {
             .resolve(".")
             .resolve(android.file)
             .toURL();
-        return new FoundModuleExpression(url, android.include, android.lib);
+        String include = android.include;
+        String lib = android.lib;
+        return new FoundModuleExpression(url, include, lib);
     }
 }

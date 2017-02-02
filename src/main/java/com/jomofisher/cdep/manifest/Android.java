@@ -9,6 +9,11 @@ public class Android {
   final public String platform = null;
   final public String builder = null;
   final public String abis[] = null;
-  final public String include = "include";
-  final public String lib = "lib";
+  final public String include;
+  final public String lib;
+
+  Android() {
+    include = "include";
+    lib = "lib";
+  }
 }
