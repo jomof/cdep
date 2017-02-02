@@ -109,4 +109,44 @@ public class TestFindModuleFunctionTableBuilder {
                 + "cmakeify-android-cxx_shared-platform-21.zip");
         WebUtils.pingUrl(found.archive);
     }
+
+    @Test
+    public void testFoundIncludeAndLib() throws IOException, URISyntaxException {
+        ResolvedManifest resolved = Resolver.resolveAny(
+            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/cdep-manifest.yml");
+
+        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+        builder.addManifest(resolved);
+        FunctionTable table = builder.build();
+        FoundModuleExpression found = FindModuleInterpreter.find(table,
+            resolved.manifest.coordinate.toString(),
+            "Android",
+            "21",
+            "c++_shared",
+            "x86");
+        assertThat(found.include.toString()).isEqualTo("include");
+        assertThat(found.lib.toString()).isEqualTo("lib");
+        WebUtils.pingUrl(found.archive);
+    }
+
+    @Test
+    public void testHeaderOnly() throws IOException, URISyntaxException {
+        ResolvedManifest resolved = Resolver.resolveAny(
+            "https://github.com/jomof/cdep-boost/releases/download/1.0.63-rev6/cdep-manifest.yml");
+
+        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+        builder.addManifest(resolved);
+        FunctionTable table = builder.build();
+        FoundModuleExpression found = FindModuleInterpreter.find(table,
+            resolved.manifest.coordinate.toString(),
+            "Android",
+            "21",
+            "c++_shared",
+            "x86");
+        assertThat(found.include.toString()).isEqualTo("include");
+        assertThat(found.lib.toString()).isEqualTo("lib");
+        assertThat(found.archive.toString()).isEqualTo(
+            "https://github.com/jomof/cdep-boost/releases/download/1.0.63-rev6/boost_1_63_0.zip");
+        WebUtils.pingUrl(found.archive);
+    }
 }

@@ -72,6 +72,7 @@ public class FindModuleFunctionTableBuilder {
 
     private Expression buildAndroidStlTypeCase(
         ResolvedManifest resolved) throws MalformedURLException, URISyntaxException {
+
         // Gather up the runtime names
         Map<String, List<Android>> stlTypes = new HashMap<>();
         for (Android android : resolved.manifest.android) {
@@ -81,6 +82,19 @@ public class FindModuleFunctionTableBuilder {
                 stlTypes.put(android.runtime, androids);
             }
             androids.add(android);
+        }
+
+        List<Android> noRuntimeAndroids = stlTypes.get(null);
+        if (noRuntimeAndroids != null) {
+            if (stlTypes.size() == 1) {
+                // If there are no runtimes, then skip the runtime check. This is likely a
+                // header-only module.
+                return buildAndroidPlatformExpression(resolved, noRuntimeAndroids);
+            }
+            // There are some android sub modules with runtime and some without
+            return new AbortExpression(
+                String.format("Runtime is on some android submodules but not other in module '%s'",
+                    resolved.manifest.coordinate));
         }
 
         Map<String, Expression> cases = new HashMap<>();
@@ -115,6 +129,14 @@ public class FindModuleFunctionTableBuilder {
     private Expression buildAndroidPlatformExpression(
         ResolvedManifest resolved,
         List<Android> androids) throws MalformedURLException, URISyntaxException {
+
+        // If there's only one android left and it doesn't have a platform then this is
+        // a header-only module.
+        if (androids.size() == 1 && androids.get(0).platform == null) {
+            return returnOnly(resolved, androids);
+        }
+
+
         Map<Long, List<Android>> grouped = new HashMap<>();
         for (Android android : androids) {
             Long platform = Long.parseLong(android.platform);
@@ -137,23 +159,24 @@ public class FindModuleFunctionTableBuilder {
             prior = new IfGreaterThanOrEqualExpression(
                 systemVersion,
                 new LongConstantExpression(platform),
-                buildAndroidAbiCase(resolved, grouped.get(platform)),
+                returnOnly(resolved, grouped.get(platform)),
                 prior);
         }
         return prior;
     }
 
-    private Expression buildAndroidAbiCase(ResolvedManifest resolved, List<Android> androids)
+    private Expression returnOnly(ResolvedManifest resolved, List<Android> androids)
         throws URISyntaxException, MalformedURLException {
         if (androids.size() != 1) {
             throw new RuntimeException(String.format(
                 "Expected only one android zip upon reaching ABI level. There were %s.",
                 androids.size()));
         }
+        Android android = androids.get(0);
         URL url = resolved.remote.toURI()
             .resolve(".")
-            .resolve(androids.get(0).file)
+            .resolve(android.file)
             .toURL();
-        return new FoundModuleExpression(url);
+        return new FoundModuleExpression(url, android.include, android.lib);
     }
 }
