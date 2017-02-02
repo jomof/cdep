@@ -149,4 +149,25 @@ public class TestFindModuleFunctionTableBuilder {
             "https://github.com/jomof/cdep-boost/releases/download/1.0.63-rev6/boost_1_63_0.zip");
         WebUtils.pingUrl(found.archive);
     }
+
+
+    @Test
+    public void testHeaderOnlyGitHubCoordinate() throws IOException, URISyntaxException {
+        ResolvedManifest resolved = Resolver.resolveAny("com.github.jomof:cdep-boost:1.0.63-rev6");
+
+        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+        builder.addManifest(resolved);
+        FunctionTable table = builder.build();
+        FoundModuleExpression found = FindModuleInterpreter.find(table,
+            resolved.manifest.coordinate.toString(),
+            "Android",
+            "21",
+            "c++_shared",
+            "x86");
+        assertThat(found.include.toString()).isEqualTo("boost_1_63_0/boost");
+        assertThat(found.lib.toString()).isEqualTo("lib");
+        assertThat(found.archive.toString()).isEqualTo(
+            "https://github.com/jomof/cdep-boost/releases/download/1.0.63-rev6/boost_1_63_0.zip");
+        WebUtils.pingUrl(found.archive);
+    }
 }

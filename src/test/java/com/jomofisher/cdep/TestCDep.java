@@ -66,7 +66,8 @@ public class TestCDep {
         File yaml = new File("test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("dependencies:\n"
-                + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.33/cdep-manifest.yml\n"
+                + "- compile: com.github.jomof:cmakeify:alpha-0.0.35\n"
+                + "- compile: com.github.jomof:cdep-boost:1.0.63-rev6\n"
                 + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.33/cdep-manifest.yml\n",
             yaml, StandardCharsets.UTF_8);
         String result1 = main("-wf", yaml.getParent(), "--dump");

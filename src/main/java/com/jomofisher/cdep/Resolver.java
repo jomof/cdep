@@ -4,7 +4,8 @@ import java.io.IOException;
 
 abstract class Resolver {
   final private static Resolver resolvers[] = new Resolver[] {
-      new GithubStyleUrlResolver()
+      new GithubStyleUrlResolver(),
+      new GithubReleasesCoordinateResolver()
   };
 
   static ResolvedManifest resolveAny(String coordinate) throws IOException {
