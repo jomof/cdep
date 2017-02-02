@@ -1,10 +1,7 @@
 package com.jomofisher.cdep;
 
 
-import com.jomofisher.cdep.AST.CaseExpression;
-import com.jomofisher.cdep.AST.Expression;
-import com.jomofisher.cdep.AST.VariableExpression;
-import com.jomofisher.cdep.manifest.Android;
+import com.jomofisher.cdep.AST.FunctionTable;
 import com.jomofisher.cdep.manifest.Coordinate;
 import com.jomofisher.cdep.manifest.Manifest;
 import com.jomofisher.cdep.model.Configuration;
@@ -13,8 +10,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -41,58 +39,25 @@ public class CDep {
     }
 
     private void handleGenerateScript() throws IOException {
-        manifests = new HashMap<>();
-
+        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+        Set<String> seen = new HashSet<>();
         for(Reference dependency : config.dependencies) {
-            if (dependency.compile != null) {
-                Manifest resolved = Resolver.resolveAny(dependency.compile);
-                if (resolved == null) {
-                    throw new RuntimeException("Could not resolve: " + dependency.compile);
-
-                }
-                manifests.put(resolved.coordinate, resolved);
+            if (dependency.compile == null) {
+                continue;
             }
+            if (seen.contains(dependency.compile)) {
+                continue;
+            }
+            Manifest resolved = Resolver.resolveAny(dependency.compile);
+            if (resolved == null) {
+                throw new RuntimeException("Could not resolve: " + dependency.compile);
+
+            }
+            builder.addManifest(resolved);
+            seen.add(dependency.compile);
         }
 
-        Expression getter = createTargetCase();
-
-    }
-
-    Expression createTargetCase() {
-        Map<String, Expression> targets = new HashMap<>();
-        for (Manifest manifest : manifests.values()) {
-            if (targets.get("android") == null && manifest.android.length > 0) {
-                targets.put("android", createAndroidCase());
-            }
-        }
-        return new CaseExpression(new VariableExpression("target"), targets);
-    }
-
-    Expression createAndroidCase() {
-        Map<String, Expression> abiCases = new HashMap<>();
-        for (Manifest manifest : manifests.values()) {
-            for (Android android : manifest.android) {
-                for (String abi : android.abis) {
-                    if (abiCases.get(abi) == null) {
-                        abiCases.put(abi, createAndroidAbiCase(abi));
-                    }
-                }
-            }
-        }
-        return new CaseExpression(new VariableExpression("abi"), abiCases);
-    }
-
-    Expression createAndroidAbiCase(String abi) {
-        Map<String, Manifest> manifests = new HashMap<>();
-        for (Manifest manifest : manifests.values()) {
-            for (Android android : manifest.android) {
-                for (String currentAbi : android.abis) {
-                    if (currentAbi.equals(abi)) {
-                        manifests.put(manifests., createAndroidAbiCase(abi));
-                    }
-                }
-            }
-        }
+        FunctionTable table = builder.build();
     }
 
     private boolean handleDump(String[] args) {
