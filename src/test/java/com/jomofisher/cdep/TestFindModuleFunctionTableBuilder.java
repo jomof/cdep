@@ -2,8 +2,8 @@ package com.jomofisher.cdep;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import com.jomofisher.cdep.AST.FoundModuleExpression;
 import com.jomofisher.cdep.AST.FunctionTable;
-import com.jomofisher.cdep.manifest.Manifest;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -14,37 +14,37 @@ public class TestFindModuleFunctionTableBuilder {
 
     @Test
     public void testSimple() throws IOException {
-        Manifest manifest = Resolver.resolveAny(
+        ResolvedManifest resolved = Resolver.resolveAny(
             "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.33/cdep-manifest.yml");
-        assertThat(manifest.coordinate.groupId).isEqualTo("com.github.jomof");
-        assertThat(manifest.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(manifest.coordinate.version).isEqualTo("alpha-0.0.33");
-        assertThat(manifest.android.length).isEqualTo(2);
+        assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
+        assertThat(resolved.manifest.coordinate.artifactId).isEqualTo("cmakeify");
+        assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.33");
+        assertThat(resolved.manifest.android.length).isEqualTo(2);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
-        builder.addManifest(manifest);
+        builder.addManifest(resolved);
         FunctionTable table = builder.build();
-        String zip = FindModuleInterpreter.getZip(table,
-            manifest.coordinate.toString(),
+        String zip = FindModuleInterpreter.find(table,
+            resolved.manifest.coordinate.toString(),
             "Android",
             "21",
             "c++_shared",
-            "x86");
-        assertThat(zip).isEqualTo("cmakeify-android-c++_shared.zip");
+            "x86").archive.getPath();
+        assertThat(zip).endsWith("cmakeify-android-c++_shared.zip");
     }
 
     // Test case where a manifest points to the same zip file multiple times (not allowed)
     @Test
     public void testMultipleZipReferences() throws IOException {
-        Manifest manifest = Resolver.resolveAny(
+        ResolvedManifest resolved = Resolver.resolveAny(
             "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.32/cdep-manifest.yml");
-        assertThat(manifest.coordinate.groupId).isEqualTo("com.github.jomof");
-        assertThat(manifest.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(manifest.coordinate.version).isEqualTo("alpha-0.0.32");
-        assertThat(manifest.android.length).isEqualTo(208);
+        assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
+        assertThat(resolved.manifest.coordinate.artifactId).isEqualTo("cmakeify");
+        assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.32");
+        assertThat(resolved.manifest.android.length).isEqualTo(208);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
-        builder.addManifest(manifest);
+        builder.addManifest(resolved);
 
         try {
             builder.build();
@@ -59,34 +59,53 @@ public class TestFindModuleFunctionTableBuilder {
 
     @Test
     public void testCheckPlatformSwitch() throws IOException {
-        Manifest manifest = Resolver.resolveAny(
+        ResolvedManifest resolved = Resolver.resolveAny(
             "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.34/cdep-manifest.yml");
-        assertThat(manifest.coordinate.groupId).isEqualTo("com.github.jomof");
-        assertThat(manifest.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(manifest.coordinate.version).isEqualTo("alpha-0.0.34");
-        assertThat(manifest.android.length).isEqualTo(4);
+        assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
+        assertThat(resolved.manifest.coordinate.artifactId).isEqualTo("cmakeify");
+        assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.34");
+        assertThat(resolved.manifest.android.length).isEqualTo(4);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
-        builder.addManifest(manifest);
+        builder.addManifest(resolved);
         FunctionTable table = builder.build();
-        FindModuleInterpreter.getZip(table,
-            manifest.coordinate.toString(),
+        FindModuleInterpreter.find(table,
+            resolved.manifest.coordinate.toString(),
             "Android",
             "21",
             "c++_shared",
-            "x86").contains("platform-21");
-        FindModuleInterpreter.getZip(table,
-            manifest.coordinate.toString(),
+            "x86").archive.getPath().contains("platform-21");
+        FindModuleInterpreter.find(table,
+            resolved.manifest.coordinate.toString(),
             "Android",
             "22",
             "c++_shared",
-            "x86").contains("platform-21");
-        FindModuleInterpreter.getZip(table,
-            manifest.coordinate.toString(),
+            "x86").archive.getPath().contains("platform-21");
+        FindModuleInterpreter.find(table,
+            resolved.manifest.coordinate.toString(),
             "Android",
             "20",
             "c++_shared",
-            "x86").contains("platform-9");
+            "x86").archive.getPath().contains("platform-9");
     }
 
+    @Test
+    public void testArchivePathIsFull() throws IOException {
+        ResolvedManifest resolved = Resolver.resolveAny(
+            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/cdep-manifest.yml");
+
+        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+        builder.addManifest(resolved);
+        FunctionTable table = builder.build();
+        FoundModuleExpression found = FindModuleInterpreter.find(table,
+            resolved.manifest.coordinate.toString(),
+            "Android",
+            "21",
+            "c++_shared",
+            "x86");
+        assertThat(found.archive.getPath()).isEqualTo(
+            "https:/github.com/jomof/cmakeify/releases/download/alpha-0.0.35/"
+                + "cmakeify-android-cxx_shared-platform-21.zip");
+
+    }
 }

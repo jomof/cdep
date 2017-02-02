@@ -1,6 +1,7 @@
 package com.jomofisher.cdep;
 
 import com.jomofisher.cdep.manifest.Manifest;
+import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,7 +10,7 @@ class GithubStyleUrlResolver extends Resolver {
   final private Pattern pattern = Pattern.compile("^https://(.*)/(.*)/(.*)/releases/download/(.*)/cdep-manifest.yml$");
 
   @Override
-  Manifest resolve(String coordinate) throws IOException {
+  ResolvedManifest resolve(String coordinate) throws IOException {
 
     Matcher match = pattern.matcher(coordinate);
     if (match.find()) {
@@ -34,10 +35,9 @@ class GithubStyleUrlResolver extends Resolver {
                 coordinate));
       }
 
-      return manifest;
+      return new ResolvedManifest(new File(coordinate), manifest);
     }
 
-    //"https://github.com/jomof/cmakeify/releases/tag/alpha-0.0.27";
     return null;
   }
 }

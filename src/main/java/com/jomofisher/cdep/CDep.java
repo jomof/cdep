@@ -48,7 +48,7 @@ public class CDep {
             if (seen.contains(dependency.compile)) {
                 continue;
             }
-            Manifest resolved = Resolver.resolveAny(dependency.compile);
+            ResolvedManifest resolved = Resolver.resolveAny(dependency.compile);
             if (resolved == null) {
                 throw new RuntimeException("Could not resolve: " + dependency.compile);
 

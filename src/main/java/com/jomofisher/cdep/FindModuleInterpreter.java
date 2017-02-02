@@ -4,6 +4,7 @@ import com.jomofisher.cdep.AST.AbortExpression;
 import com.jomofisher.cdep.AST.CaseExpression;
 import com.jomofisher.cdep.AST.Expression;
 import com.jomofisher.cdep.AST.FindModuleExpression;
+import com.jomofisher.cdep.AST.FoundModuleExpression;
 import com.jomofisher.cdep.AST.FunctionTable;
 import com.jomofisher.cdep.AST.IfGreaterThanOrEqualExpression;
 import com.jomofisher.cdep.AST.LongConstantExpression;
@@ -17,7 +18,7 @@ import java.util.Map;
  */
 public class FindModuleInterpreter {
 
-    static String getZip(
+    static FoundModuleExpression find(
         FunctionTable table,
         String functionName,
         String targetPlatform,
@@ -30,7 +31,7 @@ public class FindModuleInterpreter {
         parameters.put(function.systemVersion, systemVersion);
         parameters.put(function.androidStlType, androidStlType);
         parameters.put(function.androidTargetAbi, androidTargetAbi);
-        return (String) interpret(parameters, function.expression);
+        return (FoundModuleExpression) interpret(parameters, function.expression);
     }
 
     private static Object interpret(Map<ParameterExpression, String> parameters,
@@ -67,6 +68,8 @@ public class FindModuleInterpreter {
         } else if (expression instanceof StringExpression) {
             StringExpression stringConst = (StringExpression) expression;
             return stringConst.value;
+        } else if (expression instanceof FoundModuleExpression) {
+            return expression;
         }
         throw new RuntimeException(expression.toString());
     }
