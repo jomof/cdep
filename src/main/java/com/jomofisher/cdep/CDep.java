@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -26,11 +27,11 @@ public class CDep {
         this.out = out;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, URISyntaxException {
         new CDep(System.out).go(args);
     }
 
-    void go(String [] args) throws IOException {
+    void go(String[] args) throws IOException, URISyntaxException {
         if (!handleVersion(args)) return;
         handleWorkingFolder(args);
         if (!handleReadConfig(args)) return;
@@ -38,7 +39,7 @@ public class CDep {
         handleGenerateScript();
     }
 
-    private void handleGenerateScript() throws IOException {
+    private void handleGenerateScript() throws IOException, URISyntaxException {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         Set<String> seen = new HashSet<>();
         for(Reference dependency : config.dependencies) {

@@ -10,13 +10,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
 
 public class TestCDep {
 
-    private static String main(String... args) throws IOException {
+    private static String main(String... args) throws IOException, URISyntaxException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
         new CDep(ps).go(args);
@@ -24,28 +25,28 @@ public class TestCDep {
     }
 
     @Test
-    public void testVersion() throws IOException {
+    public void testVersion() throws IOException, URISyntaxException {
         assertThat(main("--version")).contains(BuildInfo.PROJECT_VERSION);
     }
 
     @Test
-    public void missingConfigurationFile() throws IOException {
+    public void missingConfigurationFile() throws IOException, URISyntaxException {
         new File("test-files/empty-folder").mkdirs();
         assertThat(main("-wf", "test-files/empty-folder")).contains("configuration file");
     }
 
     @Test
-    public void workingFolderFlag() throws IOException {
+    public void workingFolderFlag() throws IOException, URISyntaxException {
         assertThat(main("--working-folder", "non-existing-blah")).contains("non-existing-blah");
     }
 
     @Test
-    public void wfFlag() throws IOException {
+    public void wfFlag() throws IOException, URISyntaxException {
         assertThat(main("-wf", "non-existing-blah")).contains("non-existing-blah");
     }
 
     //@Test
-    public void testScript() throws IOException {
+    public void testScript() throws IOException, URISyntaxException {
         File yaml = new File("test-files/simpleConfiguration/.cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("android:\n" +
@@ -59,7 +60,7 @@ public class TestCDep {
     }
 
     @Test
-    public void someKnownUrls() throws IOException {
+    public void someKnownUrls() throws IOException, URISyntaxException {
         Configuration config = new Configuration();
         System.out.printf(new Yaml().dump(config));
         File yaml = new File("test-files/simpleDependency/cdep.yml");
@@ -79,7 +80,7 @@ public class TestCDep {
     }
 
     @Test
-    public void dumpIsSelfHost() throws IOException {
+    public void dumpIsSelfHost() throws IOException, URISyntaxException {
         Configuration config = new Configuration();
         System.out.printf(new Yaml().dump(config));
         File yaml = new File("test-files/simpleConfiguration/cdep.yml");

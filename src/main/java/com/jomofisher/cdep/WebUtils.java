@@ -13,7 +13,6 @@ public class WebUtils {
     URLConnection con = urlObj.openConnection();
 
     con.setDoOutput(true);
-    con.setRequestProperty("Cookie", "myCookie=test123");
     con.connect();
 
     BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -31,4 +30,9 @@ public class WebUtils {
     return response.toString();
   }
 
+  public static void pingUrl(URL url) throws IOException {
+    URLConnection con = url.openConnection();
+    con.connect();
+    con.getInputStream().read();
+  }
 }

@@ -1,14 +1,14 @@
 package com.jomofisher.cdep;
 
 import com.jomofisher.cdep.manifest.Manifest;
-import java.io.File;
+import java.net.URL;
 
 public class ResolvedManifest {
 
-    final public File remote;
+    final public URL remote;
     final public Manifest manifest;
 
-    ResolvedManifest(File remote, Manifest manifest) {
+    ResolvedManifest(URL remote, Manifest manifest) {
         this.remote = remote;
         this.manifest = manifest;
     }

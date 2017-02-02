@@ -5,6 +5,7 @@ import static com.google.common.truth.Truth.assertThat;
 import com.jomofisher.cdep.AST.FoundModuleExpression;
 import com.jomofisher.cdep.AST.FunctionTable;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import org.junit.Test;
 
 /**
@@ -13,7 +14,7 @@ import org.junit.Test;
 public class TestFindModuleFunctionTableBuilder {
 
     @Test
-    public void testSimple() throws IOException {
+    public void testSimple() throws IOException, URISyntaxException {
         ResolvedManifest resolved = Resolver.resolveAny(
             "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.33/cdep-manifest.yml");
         assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
@@ -35,7 +36,7 @@ public class TestFindModuleFunctionTableBuilder {
 
     // Test case where a manifest points to the same zip file multiple times (not allowed)
     @Test
-    public void testMultipleZipReferences() throws IOException {
+    public void testMultipleZipReferences() throws IOException, URISyntaxException {
         ResolvedManifest resolved = Resolver.resolveAny(
             "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.32/cdep-manifest.yml");
         assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
@@ -58,7 +59,7 @@ public class TestFindModuleFunctionTableBuilder {
     }
 
     @Test
-    public void testCheckPlatformSwitch() throws IOException {
+    public void testCheckPlatformSwitch() throws IOException, URISyntaxException {
         ResolvedManifest resolved = Resolver.resolveAny(
             "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.34/cdep-manifest.yml");
         assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
@@ -90,7 +91,7 @@ public class TestFindModuleFunctionTableBuilder {
     }
 
     @Test
-    public void testArchivePathIsFull() throws IOException {
+    public void testArchivePathIsFull() throws IOException, URISyntaxException {
         ResolvedManifest resolved = Resolver.resolveAny(
             "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/cdep-manifest.yml");
 
@@ -103,9 +104,9 @@ public class TestFindModuleFunctionTableBuilder {
             "21",
             "c++_shared",
             "x86");
-        assertThat(found.archive.getPath()).isEqualTo(
-            "https:/github.com/jomof/cmakeify/releases/download/alpha-0.0.35/"
+        assertThat(found.archive.toString()).isEqualTo(
+            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/"
                 + "cmakeify-android-cxx_shared-platform-21.zip");
-
+        WebUtils.pingUrl(found.archive);
     }
 }

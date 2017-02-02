@@ -11,7 +11,9 @@ import com.jomofisher.cdep.AST.LongConstantExpression;
 import com.jomofisher.cdep.AST.ParameterExpression;
 import com.jomofisher.cdep.manifest.Android;
 import com.jomofisher.cdep.manifest.Coordinate;
-import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,7 +38,7 @@ public class FindModuleFunctionTableBuilder {
         manifests.put(resolved.manifest.coordinate, resolved);
     }
 
-    public FunctionTable build() {
+    public FunctionTable build() throws MalformedURLException, URISyntaxException {
         FunctionTable functionTable = new FunctionTable();
         for (ResolvedManifest resolved : manifests.values()) {
             functionTable.functions.put(resolved.manifest.coordinate.toString(),
@@ -45,7 +47,8 @@ public class FindModuleFunctionTableBuilder {
         return functionTable;
     }
 
-    private FindModuleExpression buildFindModule(ResolvedManifest resolved) {
+    private FindModuleExpression buildFindModule(ResolvedManifest resolved)
+        throws MalformedURLException, URISyntaxException {
         checkForDuplicateZipFiles(resolved);
 
         Map<String, Expression> cases = new HashMap<>();
@@ -68,7 +71,7 @@ public class FindModuleFunctionTableBuilder {
     }
 
     private Expression buildAndroidStlTypeCase(
-        ResolvedManifest resolved) {
+        ResolvedManifest resolved) throws MalformedURLException, URISyntaxException {
         // Gather up the runtime names
         Map<String, List<Android>> stlTypes = new HashMap<>();
         for (Android android : resolved.manifest.android) {
@@ -111,7 +114,7 @@ public class FindModuleFunctionTableBuilder {
 
     private Expression buildAndroidPlatformExpression(
         ResolvedManifest resolved,
-        List<Android> androids) {
+        List<Android> androids) throws MalformedURLException, URISyntaxException {
         Map<Long, List<Android>> grouped = new HashMap<>();
         for (Android android : androids) {
             Long platform = Long.parseLong(android.platform);
@@ -140,13 +143,17 @@ public class FindModuleFunctionTableBuilder {
         return prior;
     }
 
-    private Expression buildAndroidAbiCase(ResolvedManifest resolved, List<Android> androids) {
+    private Expression buildAndroidAbiCase(ResolvedManifest resolved, List<Android> androids)
+        throws URISyntaxException, MalformedURLException {
         if (androids.size() != 1) {
             throw new RuntimeException(String.format(
                 "Expected only one android zip upon reaching ABI level. There were %s.",
                 androids.size()));
         }
-        return new FoundModuleExpression(
-            new File(resolved.remote.getParent(), androids.get(0).file));
+        URL url = resolved.remote.toURI()
+            .resolve(".")
+            .resolve(androids.get(0).file)
+            .toURL();
+        return new FoundModuleExpression(url);
     }
 }

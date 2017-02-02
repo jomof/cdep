@@ -1,8 +1,8 @@
 package com.jomofisher.cdep;
 
 import com.jomofisher.cdep.manifest.Manifest;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,7 +35,7 @@ class GithubStyleUrlResolver extends Resolver {
                 coordinate));
       }
 
-      return new ResolvedManifest(new File(coordinate), manifest);
+      return new ResolvedManifest(new URL(coordinate), manifest);
     }
 
     return null;
