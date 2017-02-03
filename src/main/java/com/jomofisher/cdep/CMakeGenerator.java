@@ -23,44 +23,6 @@ public class CMakeGenerator {
         this.foundModules = new ArrayList<>();
     }
 
-    void generate(GeneratorEnvironment environment, FunctionTableExpression table)
-        throws IOException {
-        getAllFoundModuleExpressions(table, foundModules);
-        for (FoundModuleExpression foundModule : foundModules) {
-            File local = environment.getLocalArchiveFilename(
-                foundModule.coordinate, foundModule.archive);
-            if (!local.exists()) {
-                local.getParentFile().mkdirs();
-                WebUtils.copyUrlToLocalFile(foundModule.archive, local);
-            }
-            File unzipFolder = environment.getLocalUnzipFolder(
-                foundModule.coordinate, foundModule.archive);
-            if (!unzipFolder.exists()) {
-                unzipFolder.mkdirs();
-                ArchiveUtils.unzip(local, unzipFolder);
-            }
-        }
-    }
-
-    void generate(GeneratorEnvironment environment, FunctionTableExpression table)
-        throws IOException {
-        getAllFoundModuleExpressions(table, foundModules);
-        for (FoundModuleExpression foundModule : foundModules) {
-            File local = environment.getLocalArchiveFilename(
-                foundModule.coordinate, foundModule.archive);
-            if (!local.exists()) {
-                local.getParentFile().mkdirs();
-                WebUtils.copyUrlToLocalFile(foundModule.archive, local);
-            }
-            File unzipFolder = environment.getLocalUnzipFolder(
-                foundModule.coordinate, foundModule.archive);
-            if (!unzipFolder.exists()) {
-                unzipFolder.mkdirs();
-                ArchiveUtils.unzip(local, unzipFolder);
-            }
-        }
-    }
-
     private static void getAllFoundModuleExpressions(
         Expression expression, List<FoundModuleExpression> foundModules) {
         if (expression instanceof CaseExpression) {
@@ -101,5 +63,24 @@ public class CMakeGenerator {
             return;
         }
         throw new RuntimeException(expression.toString());
+    }
+
+    void generate(GeneratorEnvironment environment, FunctionTableExpression table)
+        throws IOException {
+        getAllFoundModuleExpressions(table, foundModules);
+        for (FoundModuleExpression foundModule : foundModules) {
+            File local = environment.getLocalArchiveFilename(
+                foundModule.coordinate, foundModule.archive);
+            if (!local.exists()) {
+                local.getParentFile().mkdirs();
+                WebUtils.copyUrlToLocalFile(foundModule.archive, local);
+            }
+            File unzipFolder = environment.getLocalUnzipFolder(
+                foundModule.coordinate, foundModule.archive);
+            if (!unzipFolder.exists()) {
+                unzipFolder.mkdirs();
+                ArchiveUtils.unzip(local, unzipFolder);
+            }
+        }
     }
 }
