@@ -80,12 +80,14 @@ public class CMakeGenerator {
                 foundModule.coordinate, foundModule.archive);
             if (!local.exists()) {
                 local.getParentFile().mkdirs();
+                environment.out.printf("Downloading %s\n", foundModule.archive);
                 WebUtils.copyUrlToLocalFile(foundModule.archive, local);
             }
             File unzipFolder = environment.getLocalUnzipFolder(
                 foundModule.coordinate, foundModule.archive);
             if (!unzipFolder.exists()) {
                 unzipFolder.mkdirs();
+                environment.out.printf("Exploding %s\n", foundModule.archive);
                 ArchiveUtils.unzip(local, unzipFolder);
             }
         }

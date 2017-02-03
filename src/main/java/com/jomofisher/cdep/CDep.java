@@ -61,6 +61,7 @@ public class CDep {
 
         FunctionTableExpression table = builder.build();
         GeneratorEnvironment environment = new GeneratorEnvironment(
+            out,
             new File(workingFolder, ".cdep/downloads").getAbsoluteFile(),
             new File(workingFolder, ".cdep/exploded").getAbsoluteFile(),
             new File(workingFolder, ".cdep/modules").getAbsoluteFile()

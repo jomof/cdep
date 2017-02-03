@@ -2,18 +2,21 @@ package com.jomofisher.cdep;
 
 import com.jomofisher.cdep.manifest.Coordinate;
 import java.io.File;
+import java.io.PrintStream;
 import java.net.URL;
 
 public class GeneratorEnvironment {
-
-    public File downloadFolder;
-    public File unzippedArchivesFolder;
-    public File modulesFolder;
+    final public PrintStream out;
+    final public File downloadFolder;
+    final public File unzippedArchivesFolder;
+    final public File modulesFolder;
 
     GeneratorEnvironment(
+        PrintStream out,
         File downloadFolder,
         File unzippedArchivesFolder,
         File modulesFolder) {
+        this.out = out;
         this.downloadFolder = downloadFolder;
         this.unzippedArchivesFolder = unzippedArchivesFolder;
         this.modulesFolder = modulesFolder;
