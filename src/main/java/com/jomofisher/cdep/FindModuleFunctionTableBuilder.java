@@ -66,7 +66,7 @@ public class FindModuleFunctionTableBuilder {
                         + "Supported: %s",
                     resolved.manifest.coordinate, supported), targetPlatform));
 
-        return new FindModuleExpression(resolved.manifest.coordinate.toString(), targetPlatform,
+        return new FindModuleExpression(resolved.manifest.coordinate, targetPlatform,
             systemVersion, androidArchAbi, androidStlType, expression);
     }
 

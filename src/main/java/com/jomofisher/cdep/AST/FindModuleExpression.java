@@ -1,8 +1,10 @@
 package com.jomofisher.cdep.AST;
 
+import com.jomofisher.cdep.manifest.Coordinate;
+
 public class FindModuleExpression extends Expression {
 
-    final public String name;
+    final public Coordinate coordinate;
     final public ParameterExpression targetPlatform;
     final public ParameterExpression systemVersion;
     final public ParameterExpression androidTargetAbi;
@@ -10,13 +12,13 @@ public class FindModuleExpression extends Expression {
     final public CaseExpression expression;
 
     public FindModuleExpression(
-        String functionName,
+        Coordinate coordinate,
         ParameterExpression targetPlatform,
         ParameterExpression systemVersion,
         ParameterExpression androidTargetAbi,
         ParameterExpression androidStlType,
         CaseExpression expression) {
-        this.name = functionName;
+        this.coordinate = coordinate;
         this.targetPlatform = targetPlatform;
         this.systemVersion = systemVersion;
         this.androidTargetAbi = androidTargetAbi;

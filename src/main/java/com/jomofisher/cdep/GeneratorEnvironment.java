@@ -8,10 +8,15 @@ public class GeneratorEnvironment {
 
     public File downloadFolder;
     public File unzippedArchivesFolder;
+    public File modulesFolder;
 
-    GeneratorEnvironment(File downloadFolder, File unzippedArchivesFolder) {
+    GeneratorEnvironment(
+        File downloadFolder,
+        File unzippedArchivesFolder,
+        File modulesFolder) {
         this.downloadFolder = downloadFolder;
         this.unzippedArchivesFolder = unzippedArchivesFolder;
+        this.modulesFolder = modulesFolder;
     }
 
     File getLocalArchiveFilename(Coordinate coordinate, URL remoteArchive) {
@@ -25,7 +30,6 @@ public class GeneratorEnvironment {
 
     File getLocalUnzipFolder(Coordinate coordinate, URL remoteArchive) {
         File local = unzippedArchivesFolder;
-        local = new File(local, "modules");
         local = new File(local, coordinate.groupId);
         local = new File(local, coordinate.artifactId);
         local = new File(local, coordinate.version);

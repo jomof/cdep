@@ -10,16 +10,21 @@ import com.jomofisher.cdep.AST.IfGreaterThanOrEqualExpression;
 import com.jomofisher.cdep.AST.LongConstantExpression;
 import com.jomofisher.cdep.AST.ParameterExpression;
 import com.jomofisher.cdep.AST.StringExpression;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class CMakeGenerator {
 
+    final private GeneratorEnvironment environment;
     final private List<FoundModuleExpression> foundModules;
 
-    CMakeGenerator() {
+    CMakeGenerator(GeneratorEnvironment environment) {
+        this.environment = environment;
         this.foundModules = new ArrayList<>();
     }
 
@@ -65,9 +70,11 @@ public class CMakeGenerator {
         throw new RuntimeException(expression.toString());
     }
 
-    void generate(GeneratorEnvironment environment, FunctionTableExpression table)
+    void generate(FunctionTableExpression table)
         throws IOException {
         getAllFoundModuleExpressions(table, foundModules);
+
+        // Download and unzip any modules.
         for (FoundModuleExpression foundModule : foundModules) {
             File local = environment.getLocalArchiveFilename(
                 foundModule.coordinate, foundModule.archive);
@@ -82,5 +89,115 @@ public class CMakeGenerator {
                 ArchiveUtils.unzip(local, unzipFolder);
             }
         }
+
+        // Generate CMake Find*.cmake files
+        for (FindModuleExpression findFunction : table.functions.values()) {
+            StringBuilder sb = new StringBuilder();
+            generateFinderExpression(0, findFunction, findFunction, sb);
+            // TODO: If two artifact IDs conflict then generate a Find*.cmake that emits an error
+            // telling user to pick one.
+            File shortFile = new File(environment.modulesFolder,
+                String.format("Find%s.cmake", findFunction.coordinate.artifactId));
+            writeTextToFile(shortFile, sb.toString());
+
+        }
+    }
+
+    private void writeTextToFile(File file, String body) throws IOException {
+        BufferedWriter writer = null;
+        file.getParentFile().mkdirs();
+        file.delete();
+        try {
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(body.toString());
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
+        }
+    }
+
+    private void generateFinderExpression(
+        int indent,
+        FindModuleExpression signature,
+        Expression expression,
+        StringBuilder sb) {
+        String prefix = new String(new char[indent * 2]).replace('\0', ' ');
+        if (expression instanceof FindModuleExpression) {
+            FindModuleExpression specific = (FindModuleExpression) expression;
+            sb.append("# GENERATED FILE. DO NOT EDIT.\n");
+            sb.append(String.format("# FindModule for CDep module: %s\n",
+                specific.coordinate.toString()));
+            generateFinderExpression(indent, signature, specific.expression, sb);
+            return;
+        } else if (expression instanceof CaseExpression) {
+            CaseExpression specific = (CaseExpression) expression;
+            StringBuilder varBuilder = new StringBuilder();
+            generateFinderExpression(indent, signature, specific.var, varBuilder);
+            String var = varBuilder.toString();
+            for (String matchValue : specific.cases.keySet()) {
+                sb.append(String.format("%sif(%s STREQUAL \"%s\") \n", prefix, var, matchValue));
+                generateFinderExpression(indent + 1, signature, specific.cases.get(matchValue), sb);
+                sb.append(String.format("%selse\n", prefix, var, matchValue));
+            }
+            generateFinderExpression(indent + 1, signature, specific.defaultCase, sb);
+            sb.append(String.format("%sendif\n", prefix));
+            return;
+        } else if (expression instanceof IfGreaterThanOrEqualExpression) {
+            IfGreaterThanOrEqualExpression specific = (IfGreaterThanOrEqualExpression) expression;
+            StringBuilder varBuilder = new StringBuilder();
+            generateFinderExpression(indent, signature, specific.value, varBuilder);
+            String var = varBuilder.toString();
+            StringBuilder compareToBuilder = new StringBuilder();
+            generateFinderExpression(indent, signature, specific.compareTo, compareToBuilder);
+            String compareTo = compareToBuilder.toString();
+            sb.append(String.format("%sif((%s GREATER %s) OR (%s EQUAL %s))\n",
+                prefix, var, compareTo, var, compareTo));
+            generateFinderExpression(indent + 1, signature, specific.trueExpression, sb);
+            sb.append(String.format("%selse\n", prefix));
+            generateFinderExpression(indent + 1, signature, specific.falseExpression, sb);
+            sb.append(String.format("%sendif\n", prefix));
+            return;
+        } else if (expression instanceof ParameterExpression) {
+            ParameterExpression specific = (ParameterExpression) expression;
+            if (specific == signature.targetPlatform) {
+                sb.append("CMAKE_SYSTEM_NAME");
+                return;
+            }
+            if (specific == signature.androidStlType) {
+                sb.append("CMAKE_ANDROID_STL_TYPE");
+                return;
+            }
+            if (specific == signature.systemVersion) {
+                sb.append("CMAKE_SYSTEM_VERSION");
+                return;
+            }
+            throw new RuntimeException(specific.name);
+        } else if (expression instanceof LongConstantExpression) {
+            LongConstantExpression specific = (LongConstantExpression) expression;
+            sb.append(specific.value.toString());
+            return;
+        } else if (expression instanceof FoundModuleExpression) {
+            FoundModuleExpression specific = (FoundModuleExpression) expression;
+            String simpleName = specific.coordinate.artifactId.toUpperCase();
+            File exploded = environment.getLocalUnzipFolder(specific.coordinate, specific.archive);
+            sb.append(String.format("%sset(%s_FOUND true)\n", prefix, simpleName));
+            sb.append(String.format("%sset(%s_INCLUDE_DIRS %s)\n", prefix, simpleName,
+                new File(exploded, specific.include)));
+            return;
+        } else if (expression instanceof AbortExpression) {
+            AbortExpression specific = (AbortExpression) expression;
+            Object parms[] = new String[specific.parameters.length];
+            for (int i = 0; i < parms.length; ++i) {
+                StringBuilder argBuilder = new StringBuilder();
+                generateFinderExpression(0, signature, specific.parameters[i], argBuilder);
+                parms[i] = String.format("${%s}", argBuilder.toString());
+            }
+            String message = String.format(specific.message, parms);
+            sb.append(String.format("%smessage(error %s)\n", prefix, message));
+            return;
+        }
+
+        throw new RuntimeException(expression.toString());
     }
 }
