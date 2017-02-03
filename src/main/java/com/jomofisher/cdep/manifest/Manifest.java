@@ -1,7 +1,14 @@
 package com.jomofisher.cdep.manifest;
 
 public class Manifest {
-  final public Coordinate coordinate = null;
-  final public Android android[] = null;
-  final public Object linux[] = null;
+
+    final public Coordinate coordinate;
+    final public Android android[];
+    final public Object linux[];
+
+    Manifest() {
+        this.coordinate = null;
+        this.android = null;
+        this.linux = null;
+    }
 }

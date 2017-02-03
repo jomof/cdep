@@ -1,8 +1,12 @@
 package com.jomofisher.cdep;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -34,5 +38,19 @@ public class WebUtils {
     URLConnection con = url.openConnection();
     con.connect();
     con.getInputStream().read();
+  }
+
+  public static void copyUrlToLocalFile(URL url, File localFile) throws IOException {
+    URLConnection con = url.openConnection();
+    con.connect();
+    InputStream input = con.getInputStream();
+    byte[] buffer = new byte[4096];
+    int n;
+
+    OutputStream output = new FileOutputStream(localFile);
+    while ((n = input.read(buffer)) != -1) {
+      output.write(buffer, 0, n);
+    }
+    output.close();
   }
 }

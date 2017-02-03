@@ -65,10 +65,11 @@ public class TestCDep {
         System.out.printf(new Yaml().dump(config));
         File yaml = new File("test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
-        Files.write("dependencies:\n"
+        Files.write("builders: [cmake]\n"
+                + "dependencies:\n"
                 + "- compile: com.github.jomof:cmakeify:alpha-0.0.35\n"
                 + "- compile: com.github.jomof:boost:1.0.63-rev7\n"
-                + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.33/cdep-manifest.yml\n",
+                + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/cdep-manifest.yml\n",
             yaml, StandardCharsets.UTF_8);
         String result1 = main("-wf", yaml.getParent(), "--dump");
         yaml.delete();
@@ -76,7 +77,7 @@ public class TestCDep {
         System.out.print(result1);
         String result2 = main("-wf", yaml.getParent(), "--dump");
         assertThat(result2).isEqualTo(result1);
-        assertThat(result2).contains("alpha-0.0.33");
+        assertThat(result2).contains("alpha-0.0.35");
         String result3 = main("-wf", yaml.getParent());
     }
 
@@ -86,7 +87,7 @@ public class TestCDep {
         System.out.printf(new Yaml().dump(config));
         File yaml = new File("test-files/simpleConfiguration/cdep.yml");
         yaml.getParentFile().mkdirs();
-        Files.write("", yaml, StandardCharsets.UTF_8);
+        Files.write("builders: [cmake]", yaml, StandardCharsets.UTF_8);
         String result1 = main("-wf", yaml.getParent(), "--dump");
         yaml.delete();
         Files.write(result1, yaml, StandardCharsets.UTF_8);

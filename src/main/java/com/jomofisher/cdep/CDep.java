@@ -1,9 +1,10 @@
 package com.jomofisher.cdep;
 
 
-import com.jomofisher.cdep.AST.FunctionTable;
+import com.jomofisher.cdep.AST.FunctionTableExpression;
 import com.jomofisher.cdep.manifest.Coordinate;
 import com.jomofisher.cdep.manifest.Manifest;
+import com.jomofisher.cdep.model.BuildSystem;
 import com.jomofisher.cdep.model.Configuration;
 import com.jomofisher.cdep.model.Reference;
 import java.io.File;
@@ -58,7 +59,12 @@ public class CDep {
             seen.add(dependency.compile);
         }
 
-        FunctionTable table = builder.build();
+        FunctionTableExpression table = builder.build();
+        GeneratorEnvironment environment = new GeneratorEnvironment(
+            new File(workingFolder, ".cdep/downloads").getAbsoluteFile(),
+            new File(workingFolder, ".cdep/exploded").getAbsoluteFile()
+        );
+        new CMakeGenerator().generate(environment, table);
     }
 
     private boolean handleDump(String[] args) {
@@ -83,7 +89,20 @@ public class CDep {
         if (this.config == null) {
             this.config = new Configuration();
         }
+        validateConfig(config);
         return true;
+    }
+
+    private void validateConfig(File configurationFile) {
+        if (config.builders == null || config.builders.length == 0) {
+            StringBuilder sb = new StringBuilder();
+            for (BuildSystem builder : BuildSystem.values()) {
+                sb.append(builder.toString());
+                sb.append(" ");
+            }
+            throw new RuntimeException(String.format("Error in '%s'. The 'builders' section is "
+                + "missing or empty. Valid values are: %s.", configurationFile, sb));
+        }
     }
 
     private void handleWorkingFolder(String[] args) throws IOException {

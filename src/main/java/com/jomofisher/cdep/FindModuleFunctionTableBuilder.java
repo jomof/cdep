@@ -5,7 +5,7 @@ import com.jomofisher.cdep.AST.CaseExpression;
 import com.jomofisher.cdep.AST.Expression;
 import com.jomofisher.cdep.AST.FindModuleExpression;
 import com.jomofisher.cdep.AST.FoundModuleExpression;
-import com.jomofisher.cdep.AST.FunctionTable;
+import com.jomofisher.cdep.AST.FunctionTableExpression;
 import com.jomofisher.cdep.AST.IfGreaterThanOrEqualExpression;
 import com.jomofisher.cdep.AST.LongConstantExpression;
 import com.jomofisher.cdep.AST.ParameterExpression;
@@ -38,8 +38,8 @@ public class FindModuleFunctionTableBuilder {
         manifests.put(resolved.manifest.coordinate, resolved);
     }
 
-    public FunctionTable build() throws MalformedURLException, URISyntaxException {
-        FunctionTable functionTable = new FunctionTable();
+    public FunctionTableExpression build() throws MalformedURLException, URISyntaxException {
+        FunctionTableExpression functionTable = new FunctionTableExpression();
         for (ResolvedManifest resolved : manifests.values()) {
             functionTable.functions.put(resolved.manifest.coordinate.toString(),
                 buildFindModule(resolved));
@@ -179,6 +179,6 @@ public class FindModuleFunctionTableBuilder {
             .toURL();
         String include = android.include;
         String lib = android.lib;
-        return new FoundModuleExpression(url, include, lib);
+        return new FoundModuleExpression(resolved.manifest.coordinate, url, include, lib);
     }
 }

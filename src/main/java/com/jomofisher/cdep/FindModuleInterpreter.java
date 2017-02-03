@@ -5,7 +5,7 @@ import com.jomofisher.cdep.AST.CaseExpression;
 import com.jomofisher.cdep.AST.Expression;
 import com.jomofisher.cdep.AST.FindModuleExpression;
 import com.jomofisher.cdep.AST.FoundModuleExpression;
-import com.jomofisher.cdep.AST.FunctionTable;
+import com.jomofisher.cdep.AST.FunctionTableExpression;
 import com.jomofisher.cdep.AST.IfGreaterThanOrEqualExpression;
 import com.jomofisher.cdep.AST.LongConstantExpression;
 import com.jomofisher.cdep.AST.ParameterExpression;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class FindModuleInterpreter {
 
     static FoundModuleExpression find(
-        FunctionTable table,
+        FunctionTableExpression table,
         String functionName,
         String targetPlatform,
         String systemVersion, // On android, "platform"

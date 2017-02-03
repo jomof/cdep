@@ -3,7 +3,7 @@ package com.jomofisher.cdep;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.jomofisher.cdep.AST.FoundModuleExpression;
-import com.jomofisher.cdep.AST.FunctionTable;
+import com.jomofisher.cdep.AST.FunctionTableExpression;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class TestFindModuleFunctionTableBuilder {
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
-        FunctionTable table = builder.build();
+        FunctionTableExpression table = builder.build();
         String zip = FindModuleInterpreter.find(table,
             resolved.manifest.coordinate.toString(),
             "Android",
@@ -69,7 +69,7 @@ public class TestFindModuleFunctionTableBuilder {
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
-        FunctionTable table = builder.build();
+        FunctionTableExpression table = builder.build();
         FindModuleInterpreter.find(table,
             resolved.manifest.coordinate.toString(),
             "Android",
@@ -97,7 +97,7 @@ public class TestFindModuleFunctionTableBuilder {
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
-        FunctionTable table = builder.build();
+        FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
             resolved.manifest.coordinate.toString(),
             "Android",
@@ -117,7 +117,7 @@ public class TestFindModuleFunctionTableBuilder {
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
-        FunctionTable table = builder.build();
+        FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
             resolved.manifest.coordinate.toString(),
             "Android",
@@ -136,7 +136,7 @@ public class TestFindModuleFunctionTableBuilder {
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
-        FunctionTable table = builder.build();
+        FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
             resolved.manifest.coordinate.toString(),
             "Android",
@@ -157,7 +157,7 @@ public class TestFindModuleFunctionTableBuilder {
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
-        FunctionTable table = builder.build();
+        FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
             resolved.manifest.coordinate.toString(),
             "Android",
