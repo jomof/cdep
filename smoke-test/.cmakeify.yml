@@ -1,0 +1,5 @@
+targets: [android]
+android:
+  ndk:
+    platforms: [9, 21]
+
