@@ -19,4 +19,5 @@ if [ -f "$CMAKEIFY_RUN" ]; then
 fi
 curl -o $CMAKEIFY_RUN $CMAKEIFY_SCRIPT &> $CMAKEIFY_DOWNLOAD_FOLDER/download-cmakeify-run.log
 chmod +x $CMAKEIFY_RUN
+echo $CMAKEIFY_RUN $@
 $CMAKEIFY_RUN $@
