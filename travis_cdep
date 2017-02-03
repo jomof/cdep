@@ -1,4 +1,7 @@
 TRAVIS_CDEP_JAR=build/libs/cdep.jar
+if [ -f "build/libs/cdep-dev.jar" ]; then
+    TRAVIS_CDEP_JAR=build/libs/cdep-dev.jar
+fi
 if [ -f "build/libs/cdep-${TRAVIS_TAG}.jar" ]; then
     TRAVIS_CDEP_JAR=build/libs/cdep-${TRAVIS_TAG}.jar
 fi
