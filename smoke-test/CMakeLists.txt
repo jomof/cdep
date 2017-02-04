@@ -11,7 +11,7 @@ if(NOT EXISTS LOW_LEVEL_STATISTICS_INCLUDE_DIRS)
   message(error "'LOW_LEVEL_STATISTICS_INCLUDE_DIRS' was not defined by the module or wasn't an existing directory")
 endif()
 
-include_directories(LOW_LEVEL_STATISTICS_INCLUDE_DIRS)
+include_directories(${LOW_LEVEL_STATISTICS_INCLUDE_DIRS})
 
 add_library(Hello STATIC hello.c)
 
