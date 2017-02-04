@@ -148,6 +148,7 @@ public class CMakeGenerator {
                 }
                 generateFinderExpression(indent + 1, signature, specific.cases.get(matchValue), sb);
             }
+            sb.append(String.format("%selse()\n", prefix));
             generateFinderExpression(indent + 1, signature, specific.defaultCase, sb);
             sb.append(String.format("%sendif()\n", prefix));
             return;
