@@ -8,7 +8,7 @@
 
 ## Download jars and dependencies
 CDEP_DOWNLOADS=.cdep/jars
-CDEP_VERSION=alpha-0.0.28
+CDEP_VERSION=alpha-0.0.29
 CDEP_JAR=$CDEP_DOWNLOADS/cdep-$CDEP_VERSION.jar
 
 if [ ! -d $CDEP_DOWNLOADS ]; then
