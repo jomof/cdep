@@ -185,7 +185,7 @@ public class CMakeGenerator {
             String simpleName = specific.coordinate.artifactId.toUpperCase();
             File exploded = environment.getLocalUnzipFolder(specific.coordinate, specific.archive);
             sb.append(String.format("%sset(%s_FOUND true)\n", prefix, simpleName));
-            sb.append(String.format("%sset(%s_INCLUDE_DIRS %s)\n", prefix, simpleName,
+            sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, simpleName,
                 new File(exploded, specific.include)));
             return;
         } else if (expression instanceof AbortExpression) {
