@@ -6,5 +6,9 @@ find_package(low-level-statistics REQUIRED)
 if(NOT LOW_LEVEL_STATISTICS_FOUND)
   message(error "'LOW_LEVEL_STATISTICS_FOUND' was not defined by the module")
 endif()
+
+if(NOT EXISTS LOW_LEVEL_STATISTICS_INCLUDE_DIRS)
+  message(error "'LOW_LEVEL_STATISTICS_INCLUDE_DIRS' was not defined by the module or wasn't an existing directory")
+endif()
 add_library(Hello STATIC hello.c)
 
