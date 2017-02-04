@@ -141,10 +141,10 @@ public class CMakeGenerator {
             for (String matchValue : specific.cases.keySet()) {
                 sb.append(String.format("%sif(%s STREQUAL \"%s\") \n", prefix, var, matchValue));
                 generateFinderExpression(indent + 1, signature, specific.cases.get(matchValue), sb);
-                sb.append(String.format("%selse\n", prefix, var, matchValue));
+                sb.append(String.format("%selse()\n", prefix, var, matchValue));
             }
             generateFinderExpression(indent + 1, signature, specific.defaultCase, sb);
-            sb.append(String.format("%sendif\n", prefix));
+            sb.append(String.format("%sendif()\n", prefix));
             return;
         } else if (expression instanceof IfGreaterThanOrEqualExpression) {
             IfGreaterThanOrEqualExpression specific = (IfGreaterThanOrEqualExpression) expression;
@@ -157,9 +157,9 @@ public class CMakeGenerator {
             sb.append(String.format("%sif((%s GREATER %s) OR (%s EQUAL %s))\n",
                 prefix, var, compareTo, var, compareTo));
             generateFinderExpression(indent + 1, signature, specific.trueExpression, sb);
-            sb.append(String.format("%selse\n", prefix));
+            sb.append(String.format("%selse()\n", prefix));
             generateFinderExpression(indent + 1, signature, specific.falseExpression, sb);
-            sb.append(String.format("%sendif\n", prefix));
+            sb.append(String.format("%sendif()\n", prefix));
             return;
         } else if (expression instanceof ParameterExpression) {
             ParameterExpression specific = (ParameterExpression) expression;
