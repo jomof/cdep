@@ -138,28 +138,33 @@ public class CMakeGenerator {
             StringBuilder varBuilder = new StringBuilder();
             generateFinderExpression(indent, signature, specific.var, varBuilder);
             String var = varBuilder.toString();
+            boolean first = true;
             for (String matchValue : specific.cases.keySet()) {
-                sb.append(String.format("%sif(%s STREQUAL \"%s\") \n", prefix, var, matchValue));
+                if (first) {
+                    sb.append(String.format("%sif(%s STREQUAL \"%s\")\n", prefix, var, matchValue));
+                    first = false;
+                } else {
+                    sb.append(String.format("%selseif(%s STREQUAL \"%s\")\n", prefix, var, matchValue));
+                }
                 generateFinderExpression(indent + 1, signature, specific.cases.get(matchValue), sb);
-                sb.append(String.format("%selse()\n", prefix, var, matchValue));
             }
             generateFinderExpression(indent + 1, signature, specific.defaultCase, sb);
             sb.append(String.format("%sendif()\n", prefix));
             return;
         } else if (expression instanceof IfGreaterThanOrEqualExpression) {
-            IfGreaterThanOrEqualExpression specific = (IfGreaterThanOrEqualExpression) expression;
-            StringBuilder varBuilder = new StringBuilder();
-            generateFinderExpression(indent, signature, specific.value, varBuilder);
-            String var = varBuilder.toString();
-            StringBuilder compareToBuilder = new StringBuilder();
-            generateFinderExpression(indent, signature, specific.compareTo, compareToBuilder);
-            String compareTo = compareToBuilder.toString();
-            sb.append(String.format("%sif((%s GREATER %s) OR (%s EQUAL %s))\n",
-                prefix, var, compareTo, var, compareTo));
-            generateFinderExpression(indent + 1, signature, specific.trueExpression, sb);
-            sb.append(String.format("%selse()\n", prefix));
-            generateFinderExpression(indent + 1, signature, specific.falseExpression, sb);
-            sb.append(String.format("%sendif()\n", prefix));
+//            IfGreaterThanOrEqualExpression specific = (IfGreaterThanOrEqualExpression) expression;
+//            StringBuilder varBuilder = new StringBuilder();
+//            generateFinderExpression(indent, signature, specific.value, varBuilder);
+//            String var = varBuilder.toString();
+//            StringBuilder compareToBuilder = new StringBuilder();
+//            generateFinderExpression(indent, signature, specific.compareTo, compareToBuilder);
+//            String compareTo = compareToBuilder.toString();
+//            sb.append(String.format("%sif((%s GREATER %s) OR (%s EQUAL %s))\n",
+//                prefix, var, compareTo, var, compareTo));
+//            generateFinderExpression(indent + 1, signature, specific.trueExpression, sb);
+//            sb.append(String.format("%selse()\n", prefix));
+//            generateFinderExpression(indent + 1, signature, specific.falseExpression, sb);
+//            sb.append(String.format("%sendif()\n", prefix));
             return;
         } else if (expression instanceof ParameterExpression) {
             ParameterExpression specific = (ParameterExpression) expression;
