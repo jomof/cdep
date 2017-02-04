@@ -152,19 +152,19 @@ public class CMakeGenerator {
             sb.append(String.format("%sendif()\n", prefix));
             return;
         } else if (expression instanceof IfGreaterThanOrEqualExpression) {
-//            IfGreaterThanOrEqualExpression specific = (IfGreaterThanOrEqualExpression) expression;
-//            StringBuilder varBuilder = new StringBuilder();
-//            generateFinderExpression(indent, signature, specific.value, varBuilder);
-//            String var = varBuilder.toString();
-//            StringBuilder compareToBuilder = new StringBuilder();
-//            generateFinderExpression(indent, signature, specific.compareTo, compareToBuilder);
-//            String compareTo = compareToBuilder.toString();
-//            sb.append(String.format("%sif((%s GREATER %s) OR (%s EQUAL %s))\n",
-//                prefix, var, compareTo, var, compareTo));
-//            generateFinderExpression(indent + 1, signature, specific.trueExpression, sb);
-//            sb.append(String.format("%selse()\n", prefix));
-//            generateFinderExpression(indent + 1, signature, specific.falseExpression, sb);
-//            sb.append(String.format("%sendif()\n", prefix));
+            IfGreaterThanOrEqualExpression specific = (IfGreaterThanOrEqualExpression) expression;
+            StringBuilder varBuilder = new StringBuilder();
+            generateFinderExpression(indent, signature, specific.value, varBuilder);
+            String var = varBuilder.toString();
+            StringBuilder compareToBuilder = new StringBuilder();
+            generateFinderExpression(indent, signature, specific.compareTo, compareToBuilder);
+            String compareTo = compareToBuilder.toString();
+            sb.append(String.format("%sif((%s GREATER %s) OR (%s EQUAL %s))\n",
+                prefix, var, compareTo, var, compareTo));
+            generateFinderExpression(indent + 1, signature, specific.trueExpression, sb);
+            sb.append(String.format("%selse()\n", prefix));
+            generateFinderExpression(indent + 1, signature, specific.falseExpression, sb);
+            sb.append(String.format("%sendif()\n", prefix));
             return;
         } else if (expression instanceof ParameterExpression) {
             ParameterExpression specific = (ParameterExpression) expression;
