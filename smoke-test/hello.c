@@ -1,1 +1,5 @@
-int f() { return 1; }
+#include "statistics.h"
+
+int f() {
+    return 1;
+}
