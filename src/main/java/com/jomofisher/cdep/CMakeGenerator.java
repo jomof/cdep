@@ -197,7 +197,7 @@ public class CMakeGenerator {
                 parms[i] = String.format("${%s}", argBuilder.toString());
             }
             String message = String.format(specific.message, parms);
-            sb.append(String.format("%smessage(error %s)\n", prefix, message));
+            sb.append(String.format("%smessage(error \"%s\")\n", prefix, message));
             return;
         }
 
