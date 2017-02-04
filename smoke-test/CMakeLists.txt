@@ -4,7 +4,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/.cdep/modules")
 message(warning "CMake module path " ${CMAKE_MODULE_PATH})
 find_package(low-level-statistics REQUIRED)
 if(not LOW_LEVEL_STATISTICS_FOUND)
-  message(error "'LOW_LEVEL_STATISTICS_FOUND' was not defined by the module"
+  message(error "'LOW_LEVEL_STATISTICS_FOUND' was not defined by the module")
 endif()
 add_library(Hello STATIC hello.c)
 
