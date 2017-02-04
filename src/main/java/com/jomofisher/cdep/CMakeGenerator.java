@@ -106,6 +106,7 @@ public class CMakeGenerator {
     }
 
     private void writeTextToFile(File file, String body) throws IOException {
+        environment.out.printf("Generating %s\n", file);
         BufferedWriter writer = null;
         file.getParentFile().mkdirs();
         file.delete();
