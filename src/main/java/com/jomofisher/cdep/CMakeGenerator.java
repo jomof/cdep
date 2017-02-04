@@ -182,7 +182,7 @@ public class CMakeGenerator {
             return;
         } else if (expression instanceof FoundModuleExpression) {
             FoundModuleExpression specific = (FoundModuleExpression) expression;
-            String simpleName = specific.coordinate.artifactId.toUpperCase();
+            String simpleName = specific.coordinate.artifactId.toUpperCase().replace("-", "_");
             File exploded = environment.getLocalUnzipFolder(specific.coordinate, specific.archive);
             sb.append(String.format("%sset(%s_FOUND true)\n", prefix, simpleName));
             sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, simpleName,
