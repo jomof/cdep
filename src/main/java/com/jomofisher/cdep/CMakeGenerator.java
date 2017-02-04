@@ -190,9 +190,9 @@ public class CMakeGenerator {
             FoundModuleExpression specific = (FoundModuleExpression) expression;
             String simpleName = specific.coordinate.artifactId.toUpperCase().replace("-", "_");
             File exploded = environment.getLocalUnzipFolder(specific.coordinate, specific.archive);
-//            sb.append(String.format("%sset(%s_FOUND true)\n", prefix, simpleName));
-//            sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, simpleName,
-//                new File(exploded, specific.include)));
+            sb.append(String.format("%sset(%s_FOUND true)\n", prefix, simpleName));
+            sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, simpleName,
+                new File(exploded, specific.include)));
             return;
         } else if (expression instanceof AbortExpression) {
             AbortExpression specific = (AbortExpression) expression;
