@@ -70,7 +70,7 @@ public class TestCDep {
                 + "- compile: com.github.jomof:cmakeify:alpha-0.0.35\n"
                 + "- compile: com.github.jomof:boost:1.0.63-rev7\n"
                 + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/cdep-manifest.yml\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.4\n",
+                + "- compile: com.github.jomof:low-level-statistics:0.0.5\n",
             yaml, StandardCharsets.UTF_8);
         String result1 = main("-wf", yaml.getParent(), "--dump");
         yaml.delete();

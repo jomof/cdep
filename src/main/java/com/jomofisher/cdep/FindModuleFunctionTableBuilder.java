@@ -108,7 +108,7 @@ public class FindModuleFunctionTableBuilder {
             androidStlType,
             cases,
             new AbortExpression(
-                String.format("Runtime '%%s' is not supported by module '%s'",
+                String.format("Android runtime '%%s' is not supported by module '%s'",
                     resolved.manifest.coordinate), androidStlType));
     }
 
@@ -153,7 +153,7 @@ public class FindModuleFunctionTableBuilder {
         Collections.sort(platforms);
 
         Expression prior = new AbortExpression(
-            String.format("Platform '%%s' is not supported by module '%s'",
+            String.format("Android API level '%%s' is not supported by module '%s'",
                 resolved.manifest.coordinate), systemVersion);
         for (long platform : platforms) {
             prior = new IfGreaterThanOrEqualExpression(
