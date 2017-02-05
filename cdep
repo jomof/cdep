@@ -7,8 +7,6 @@
 ##############################################################################
 
 MANIFEST=https://raw.githubusercontent.com/jomof/bootstrap/master/bootstrap.yml
-<<<<<<< HEAD
-
 CLASSPATH=bootstrap/wrapper/bootstrap.jar
 
 # Attempt to set APP_HOME
@@ -270,10 +268,5 @@ if [[ "$(uname)" == "Darwin" ]] && [[ "$HOME" == "$PWD" ]]; then
   cd "$(dirname "$0")"
 fi
 
-<<<<<<< HEAD
-"$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" com.jomofisher.bootstrap.Bootstrap $MANIFEST $@
-
-=======
 "$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" com.jomofisher.cdep.CDep $MANIFEST $@
->>>>>>> 68389de503fb47f7147d1c92ced42d0e0ca679bf
 
