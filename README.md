@@ -10,4 +10,15 @@ Download from releases or build it yourself:
     cd cdep
     ./gradlew assemble check
     
-powershell -command "wget https://raw.githubusercontent.com/jomof/cdep/master/cdep -OutFile hello.txt"
+    
+## CDep Boost
+A CDep packaging of Boost (header only).
+[![Build Status](https://travis-ci.org/jomof/boost.svg?branch=master)](https://github.com/jomof/boost)
+
+## CMakeify
+Tools for building and deploying CDep packages for Android.
+[![Build Status](https://travis-ci.org/jomof/cmakeify.svg?branch=master)](https://github.com/jomof/cmakeify)
+
+## Bootstrap
+Helper tools to get CDep onto your system.
+[![Build Status](https://travis-ci.org/jomof/bootstrap.svg?branch=master)](https://github.com/jomof/bootstrap)
