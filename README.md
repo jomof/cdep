@@ -2,6 +2,7 @@
 
 
 # CDep
+CDep is a native package dependency manager with a focus on Android.
 
 Download from releases or build it yourself:
 
