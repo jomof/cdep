@@ -8,6 +8,10 @@
 
 MANIFEST=https://raw.githubusercontent.com/jomof/cdep/master/bootstrap.yml
 
+if [ "$1" == "bootstrap" ]; then
+  mkdir -p bootstrap/wrapper
+  wget 
+
 if [ -f "$1" ]; then
     echo Using $1 instead of $MANIFEST
     MANIFEST=$1
