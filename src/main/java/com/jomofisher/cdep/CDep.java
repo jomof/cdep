@@ -48,7 +48,7 @@ public class CDep {
                 throw new RuntimeException("Must set java system proeperty io.cdep.appname to the path of cdep.bat");
             }
             File applicationBase = new File(appname).getParentFile();
-            if (!applicationBase.isDirectory()) {
+            if (applicationBase == null || !applicationBase.isDirectory()) {
                 throw new RuntimeException(String.format("Could not find folder for io.cdep.appname='%s'",
                         appname));
             }
