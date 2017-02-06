@@ -6,7 +6,7 @@
 ##
 ##############################################################################
 
-MANIFEST=https://raw.githubusercontent.com/jomof/bootstrap/master/bootstrap.yml
+MANIFEST=https://raw.githubusercontent.com/jomof/cdep/master/bootstrap.yml
 
 if [ -f "$1" ]; then
     echo Using $1 instead of $MANIFEST
