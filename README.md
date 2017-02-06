@@ -14,11 +14,9 @@ Download from releases or build it yourself:
 ## CDep Boost [![Build Status](https://travis-ci.org/jomof/boost.svg?branch=master)](https://github.com/jomof/boost)
 A CDep packaging of Boost (header only).
 
-
-## CMakeify
+## CMakeify [![Build Status](https://travis-ci.org/jomof/cmakeify.svg?branch=master)](https://github.com/jomof/cmakeify)
 Tools for building and deploying CDep packages for Android.
-[![Build Status](https://travis-ci.org/jomof/cmakeify.svg?branch=master)](https://github.com/jomof/cmakeify)
 
-## Bootstrap
+## Bootstrap [![Build Status](https://travis-ci.org/jomof/bootstrap.svg?branch=master)](https://github.com/jomof/bootstrap)
 Helper tools to get CDep onto your system.
-[![Build Status](https://travis-ci.org/jomof/bootstrap.svg?branch=master)](https://github.com/jomof/bootstrap)
+
