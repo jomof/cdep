@@ -33,9 +33,6 @@ public class CDep {
     }
 
     void go(String[] args) throws IOException, URISyntaxException {
-        for (int i = 0; i < args.length; i++) {
-            out.printf("Arg %s = %s\n", i, args[i]);
-        }
         if (!handleVersion(args)) return;
         handleWorkingFolder(args);
         if (!handleReadConfig(args)) return;
