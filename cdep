@@ -7,6 +7,7 @@
 ##############################################################################
 
 MANIFEST=https://raw.githubusercontent.com/jomof/bootstrap/master/bootstrap.yml
+
 if [ -f "$1" ]; then
     echo Using $1 instead of $MANIFEST
     MANIFEST=$1
@@ -168,5 +169,7 @@ if [[ "$(uname)" == "Darwin" ]] && [[ "$HOME" == "$PWD" ]]; then
   cd "$(dirname "$0")"
 fi
 
-"$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" com.jomofisher.cdep.CDep $MANIFEST $@
+"$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" com.jomofisher.bootstrap.Bootstrap $MANIFEST $@
+
+
 
