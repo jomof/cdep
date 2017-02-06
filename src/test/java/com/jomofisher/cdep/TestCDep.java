@@ -68,7 +68,6 @@ public class TestCDep {
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
                 + "- compile: com.github.jomof:cmakeify:alpha-0.0.35\n"
-                + "- compile: com.github.jomof:boost:1.0.63-rev7\n"
                 + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/cdep-manifest.yml\n"
                 + "- compile: com.github.jomof:low-level-statistics:0.0.6\n",
             yaml, StandardCharsets.UTF_8);

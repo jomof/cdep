@@ -15,6 +15,15 @@ class GithubStyleUrlResolver extends Resolver {
     Matcher match = pattern.matcher(coordinate);
     if (match.find()) {
 
+      String baseUrl = match.group(1);
+      String segments[] = baseUrl.split("\\.");
+      String groupId = "";
+      for (int i = 0; i < segments.length; ++i) {
+        groupId += segments[segments.length - i - 1];
+        groupId += ".";
+      }
+      String user = match.group(2);
+      groupId += user;
       String artifactId = match.group(3);
       String version = match.group(4);
 
@@ -22,6 +31,12 @@ class GithubStyleUrlResolver extends Resolver {
       Manifest manifest = ManifestUtils.convertStringToManifest(manifestContent);
 
       // Ensure that the manifest coordinate agrees with the url provided
+      if (!groupId.equals(manifest.coordinate.groupId)) {
+        throw new RuntimeException(
+            String.format("artifactId '%s' from manifest did not agree with github url '%s",
+                manifest.coordinate.artifactId,
+                coordinate));
+      }
       if (!artifactId.equals(manifest.coordinate.artifactId)) {
         throw new RuntimeException(
             String.format("artifactId '%s' from manifest did not agree with github url '%s",
