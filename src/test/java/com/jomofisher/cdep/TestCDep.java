@@ -84,6 +84,7 @@ public class TestCDep {
 
     @Test
     public void dumpIsSelfHost() throws IOException, URISyntaxException {
+        System.out.printf("%s\n", System.getProperty("user.home"));
         Configuration config = new Configuration();
         System.out.printf(new Yaml().dump(config));
         File yaml = new File("test-files/simpleConfiguration/cdep.yml");

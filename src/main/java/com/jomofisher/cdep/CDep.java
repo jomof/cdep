@@ -60,10 +60,11 @@ public class CDep {
         }
 
         FunctionTableExpression table = builder.build();
+        File userFolder = new File(System.getProperty("user.home"));
         GeneratorEnvironment environment = new GeneratorEnvironment(
             out,
-            new File(workingFolder, ".cdep/downloads").getAbsoluteFile(),
-            new File(workingFolder, ".cdep/exploded").getAbsoluteFile(),
+            new File(userFolder, ".cdep/downloads").getAbsoluteFile(),
+            new File(userFolder, ".cdep/exploded").getAbsoluteFile(),
             new File(workingFolder, ".cdep/modules").getAbsoluteFile()
         );
         new CMakeGenerator(environment).generate(table);
