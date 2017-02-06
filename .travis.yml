@@ -5,7 +5,7 @@ matrix:
     os: linux
     script:
     - ./gradlew assemble check
-    - ./travis_cdep -wf smoke-test
+    - ./travis_cdep
     - ./cmakeify -wf smoke-test
 deploy:
   api_key:
