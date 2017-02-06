@@ -42,7 +42,6 @@ public class CDep {
     }
 
     private boolean handleWrapper(String args[]) throws IOException {
-        out.printf("args=%s\n", args);
         if (args.length > 0 && "wrapper".equals(args[0])) {
             String appname = System.getProperty("io.cdep.appname");
             if (appname == null) {
