@@ -13,8 +13,8 @@ if [ -f "$1" ]; then
     MANIFEST=$1
     shift 1
 fi
-
-CLASSPATH=bootstrap/wrapper/bootstrap.jar
+SCRIPT_FOLDER="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+CLASSPATH=$SCRIPT_FOLDER/bootstrap/wrapper/bootstrap.jar
 
 # Attempt to set APP_HOME
 # Resolve links: $0 may be a link
