@@ -44,7 +44,7 @@ public class CDep {
     }
 
     private boolean handleWrapper(String args[]) throws IOException {
-        if ("wrapper".equals(args[0])) {
+        if (args.length > 0 && "wrapper".equals(args[0])) {
             out.printf("Installing cdep wrapper from %s\n", applicationBase);
             File cdepBatFrom = new File(applicationBase, "cdep.bat");
             File cdepBatTo = new File(workingFolder, "cdep.bat");

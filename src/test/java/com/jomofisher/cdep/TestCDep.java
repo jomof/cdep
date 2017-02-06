@@ -102,6 +102,11 @@ public class TestCDep {
     }
 
     @Test
+    public void testNakedCall() throws IOException, URISyntaxException {
+        main();
+    }
+
+    @Test
     public void testWrapper() throws IOException, URISyntaxException {
         File testFolder = new File("test-files/testWrapper");
         File redistFolder = new File(testFolder, "redist");
