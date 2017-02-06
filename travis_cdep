@@ -6,10 +6,11 @@ if [ -f "build/libs/cdep-${TRAVIS_TAG}.jar" ]; then
     TRAVIS_CDEP_JAR=build/libs/cdep-${TRAVIS_TAG}.jar
 fi
 BOOTSTRAP_MANIFEST=$(pwd)/build/libs/bootstrap.yml
-mkdir -p smoke-test/bootstrap/wrapper
-cp ./redist/cdep/cdep smoke-test/cdep
-cp ./redist/cdep/cdep.bat smoke-test/cdep.bat
-cp ./redist/cdep/bootstrap/wrapper/bootstrap.jar smoke-test/bootstrap/wrapper/bootstrap.jar
+pushd ./redist
+zip ../build/libs/redist-${TRAVIS_TAG}.zip . -r
+popd
+./redist wrapper -wf smoke-test
+
 echo entry: com.jomofisher.cdep.CDep > $BOOTSTRAP_MANIFEST
 echo dependencies: >> $BOOTSTRAP_MANIFEST
 printf "%s\n" "- $(pwd)/$TRAVIS_CDEP_JAR" >>$BOOTSTRAP_MANIFEST
@@ -19,7 +20,5 @@ pushd smoke-test
 echo ./cdep $BOOTSTRAP_MANIFEST
 ./cdep $BOOTSTRAP_MANIFEST
 popd
-pushd ./redist
-zip ../build/libs/redist-${TRAVIS_TAG}.zip . -r
-popd
+
 
