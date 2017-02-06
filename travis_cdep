@@ -19,7 +19,9 @@ cat $BOOTSTRAP_MANIFEST
 pushd smoke-test
 echo ./cdep $BOOTSTRAP_MANIFEST
 ../redist/cdep/cdep $BOOTSTRAP_MANIFEST wrapper
+rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 ./cdep $BOOTSTRAP_MANIFEST
+rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 popd
 
 
