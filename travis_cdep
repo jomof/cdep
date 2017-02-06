@@ -18,7 +18,7 @@ printf "%s\n" "- https://search.maven.org/remotecontent?filepath=org/yaml/snakey
 cat $BOOTSTRAP_MANIFEST
 pushd smoke-test
 echo ./cdep $BOOTSTRAP_MANIFEST
-./redist/cdep/cdep $BOOTSTRAP_MANIFEST wrapper
+../redist/cdep/cdep $BOOTSTRAP_MANIFEST wrapper
 ./cdep $BOOTSTRAP_MANIFEST
 popd
 
