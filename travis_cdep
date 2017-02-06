@@ -19,3 +19,7 @@ pushd smoke-test
 echo ./cdep $BOOTSTRAP_MANIFEST
 ./cdep $BOOTSTRAP_MANIFEST
 popd
+push redist
+zip ../build/libs/redist-${TRAVIS_TAG}.zip . -r
+popd
+

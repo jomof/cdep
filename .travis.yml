@@ -14,7 +14,7 @@ deploy:
     - build/libs/cdep-${TRAVIS_TAG}.jar
     - build/libs/cdep-${TRAVIS_TAG}-sources.jar
     - build/libs/cdep-${TRAVIS_TAG}-javadoc.jar
-
+    - build/libs/redist-${TRAVIS_TAG}.zip
   provider: releases
   skip_cleanup: true
   true:
