@@ -23,6 +23,8 @@ public class CDep {
     private File workingFolder = new File(".");
     private Configuration config = null;
     private Map<Coordinate, Manifest> manifests = null;
+    private File applicationBase =
+            new File(System.getProperty("io.cdep.appname")).getParentFile();
 
     CDep(PrintStream out) {
         this.out = out;
@@ -35,9 +37,32 @@ public class CDep {
     void go(String[] args) throws IOException, URISyntaxException {
         if (!handleVersion(args)) return;
         handleWorkingFolder(args);
+        if (handleWrapper(args)) return;
         if (!handleReadConfig(args)) return;
         if (!handleDump(args)) return;
         handleGenerateScript();
+    }
+
+    private boolean handleWrapper(String args[]) throws IOException {
+        if ("wrapper".equals(args[0])) {
+            out.printf("Installing cdep wrapper from %s\n", applicationBase);
+            File cdepBatFrom = new File(applicationBase, "cdep.bat");
+            File cdepBatTo = new File(workingFolder, "cdep.bat");
+            File cdepFrom = new File(applicationBase, "cdep");
+            File cdepTo = new File(workingFolder, "cdep");
+            File bootstrapFrom = new File(applicationBase, "bootstrap/wrapper/bootstrap.jar");
+            File bootstrapTo = new File(workingFolder, "bootstrap/wrapper/bootstrap.jar");
+            bootstrapTo.getParentFile().mkdirs();
+            out.printf("Installing %s\n", cdepBatTo);
+            FileUtils.copyFile(cdepBatFrom, cdepBatTo);
+            out.printf("Installing %s\n", cdepTo);
+            FileUtils.copyFile(cdepFrom, cdepTo);
+            out.printf("Installing %s\n", bootstrapTo);
+            FileUtils.copyFile(bootstrapFrom, bootstrapTo);
+            cdepTo.setExecutable(true);
+            return true;
+        }
+        return false;
     }
 
     private void handleGenerateScript() throws IOException, URISyntaxException {

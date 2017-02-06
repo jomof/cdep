@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
@@ -20,6 +21,9 @@ public class TestCDep {
     private static String main(String... args) throws IOException, URISyntaxException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
+        if (System.getProperty("io.cdep.appname") == null) {
+            System.setProperty("io.cdep.appname", "rando-test-folder");
+        }
         new CDep(ps).go(args);
         return new String(baos.toByteArray(), StandardCharsets.UTF_8);
     }
@@ -95,5 +99,37 @@ public class TestCDep {
         System.out.print(result1);
         String result2 = main("-wf", yaml.getParent(), "--dump");
         assertThat(result2).isEqualTo(result1);
+    }
+
+    @Test
+    public void testWrapper() throws IOException, URISyntaxException {
+        File testFolder = new File("test-files/testWrapper");
+        File redistFolder = new File(testFolder, "redist");
+        File workingFolder = new File(testFolder, "working");
+        File cdepFile = new File(redistFolder, "cdep");
+        File cdepBatFile = new File(redistFolder, "cdep.bat");
+        File bootstrapJar = new File(redistFolder, "bootstrap/wrapper/bootstrap.jar");
+        redistFolder.mkdirs();
+        workingFolder.mkdirs();
+        bootstrapJar.getParentFile().mkdirs();
+        Files.write("cdepFile content", cdepFile, Charset.defaultCharset());
+        Files.write("cdepBatFile content", cdepBatFile, Charset.defaultCharset());
+        Files.write("bootstrapJar content", bootstrapJar, Charset.defaultCharset());
+        System.setProperty("io.cdep.appname", new File(redistFolder, "cdep.bat").getAbsolutePath());
+        String result;
+        try {
+            result = main("wrapper", "-wf", workingFolder.toString());
+        } finally {
+            System.setProperty("io.cdep.appname", "rando-test-folder");
+        }
+
+        System.out.print(result);
+        assertThat(result).contains("Installing cdep");
+        File cdepToFile = new File(workingFolder, "cdep");
+        File cdepBatToFile = new File(workingFolder, "cdep.bat");
+        File bootstrapJarToFile = new File(workingFolder, "bootstrap/wrapper/bootstrap.jar");
+        assertThat(cdepToFile.isFile()).isTrue();
+        assertThat(cdepBatToFile.isFile()).isTrue();
+        assertThat(bootstrapJarToFile.isFile()).isTrue();
     }
 }
