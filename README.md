@@ -11,9 +11,9 @@ Download from releases or build it yourself:
     ./gradlew assemble check
     
     
-## CDep Boost
+## CDep Boost [![Build Status](https://travis-ci.org/jomof/boost.svg?branch=master)](https://github.com/jomof/boost)
 A CDep packaging of Boost (header only).
-[![Build Status](https://travis-ci.org/jomof/boost.svg?branch=master)](https://github.com/jomof/boost)
+
 
 ## CMakeify
 Tools for building and deploying CDep packages for Android.
