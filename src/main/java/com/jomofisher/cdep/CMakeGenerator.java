@@ -192,7 +192,7 @@ public class CMakeGenerator {
             File exploded = environment.getLocalUnzipFolder(specific.coordinate, specific.archive);
             sb.append(String.format("%sset(%s_FOUND true)\n", prefix, simpleName));
             sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, simpleName,
-                new File(exploded, specific.include)));
+                new File(exploded, specific.include).toString().replace("\\", "\\\\")));
             return;
         } else if (expression instanceof AbortExpression) {
             AbortExpression specific = (AbortExpression) expression;
