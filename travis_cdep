@@ -8,7 +8,7 @@ fi
 BOOTSTRAP_MANIFEST=$(pwd)/build/libs/bootstrap.yml
 cp ./cdep smoke-test/cdep
 mkdir -p ./smoke-test/bootstrap/wrapper
-wget https://github.com/jomof/bootstrap/releases/download/0.0.12/bootstrap-0.0.12.jar -O ./smoke-test/bootstrap/wrapper/bootstrap.jar
+wget https://github.com/jomof/bootstrap/releases/download/0.0.13/bootstrap-0.0.13.jar -O ./smoke-test/bootstrap/wrapper/bootstrap.jar
 echo entry: com.jomofisher.cdep.CDep > $BOOTSTRAP_MANIFEST
 echo dependencies: >> $BOOTSTRAP_MANIFEST
 - $(pwd)/$TRAVIS_CDEP_JAR >>$BOOTSTRAP_MANIFEST
