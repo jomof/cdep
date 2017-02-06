@@ -23,11 +23,9 @@ public class CDep {
     private File workingFolder = new File(".");
     private Configuration config = null;
     private Map<Coordinate, Manifest> manifests = null;
-    private File applicationBase;
 
     CDep(PrintStream out) {
         this.out = out;
-        this.applicationBase = new File(System.getProperty("io.cdep.appname")).getParentFile();
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException {
@@ -45,9 +43,14 @@ public class CDep {
 
     private boolean handleWrapper(String args[]) throws IOException {
         if (args.length > 0 && "wrapper".equals(args[0])) {
+            String appname = System.getProperty("io.cdep.appname");
+            if (appname == null) {
+                throw new RuntimeException("Must set java system proeperty io.cdep.appname to the path of cdep.bat");
+            }
+            File applicationBase = new File(appname).getParentFile();
             if (!applicationBase.isDirectory()) {
                 throw new RuntimeException(String.format("Could not find folder for io.cdep.appname='%s'",
-                        System.getProperty("io.cdep.appname")));
+                        appname));
             }
             out.printf("Installing cdep wrapper from %s\n", applicationBase);
             File cdepBatFrom = new File(applicationBase, "cdep.bat");
