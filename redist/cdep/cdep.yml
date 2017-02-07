@@ -1,0 +1,7 @@
+# Set builders to build system tool
+builders: [cmake]
+
+# Dependencies to download
+dependencies:
+# Uncomment next line to get header-only boost
+#- compile: com.github.jomof:boost:1.0.63-rev8
