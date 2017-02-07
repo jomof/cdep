@@ -23,6 +23,7 @@ public class CDep {
     private File workingFolder = new File(".");
     private Configuration config = null;
     private Map<Coordinate, Manifest> manifests = null;
+    private File configFile = null;
 
     CDep(PrintStream out) {
         this.out = out;
@@ -36,9 +37,25 @@ public class CDep {
         if (!handleVersion(args)) return;
         handleWorkingFolder(args);
         if (handleWrapper(args)) return;
+        if (handleShow(args)) return;
         if (!handleReadConfig(args)) return;
         if (!handleDump(args)) return;
         handleGenerateScript();
+    }
+
+    private boolean handleShow(String args[]) throws IOException {
+        if (args.length > 0 && "show".equals(args[0])) {
+            if (args.length > 1 && "folders".equals(args[1])) {
+                GeneratorEnvironment environment = getGeneratorEnvironment();
+                out.printf("Downloads: %s\n", environment.downloadFolder.getAbsolutePath());
+                out.printf("Exploded: %s\n", environment.unzippedArchivesFolder.getAbsolutePath());
+                out.printf("Modules: %s\n", environment.modulesFolder.getAbsolutePath());
+                return true;
+            }
+            out.print("Nothing to show. Try 'cdep show folders'.\n");
+            return true;
+        }
+        return false;
     }
 
     private boolean handleWrapper(String args[]) throws IOException {
@@ -83,6 +100,10 @@ public class CDep {
     private void handleGenerateScript() throws IOException, URISyntaxException {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         Set<String> seen = new HashSet<>();
+        if (config.dependencies == null) {
+            out.printf("Nothing to do. Add dependencies to %s\n", configFile);
+            return;
+        }
         for(Reference dependency : config.dependencies) {
             if (dependency.compile == null) {
                 continue;
@@ -100,14 +121,18 @@ public class CDep {
         }
 
         FunctionTableExpression table = builder.build();
-        File userFolder = new File(System.getProperty("user.home"));
-        GeneratorEnvironment environment = new GeneratorEnvironment(
-            out,
-            new File(userFolder, ".cdep/downloads").getAbsoluteFile(),
-            new File(userFolder, ".cdep/exploded").getAbsoluteFile(),
-            new File(workingFolder, ".cdep/modules").getAbsoluteFile()
-        );
+        GeneratorEnvironment environment = getGeneratorEnvironment();
         new CMakeGenerator(environment).generate(table);
+    }
+
+    private GeneratorEnvironment getGeneratorEnvironment() {
+        File userFolder = new File(System.getProperty("user.home"));
+        return new GeneratorEnvironment(
+                out,
+                new File(userFolder, ".cdep/downloads").getAbsoluteFile(),
+                new File(userFolder, ".cdep/exploded").getAbsoluteFile(),
+                new File(workingFolder, ".cdep/modules").getAbsoluteFile()
+            );
     }
 
     private boolean handleDump(String[] args) {
@@ -121,18 +146,18 @@ public class CDep {
     }
 
     private boolean handleReadConfig(String[] args) throws IOException {
-        File config = new File(workingFolder, "cdep.yml");
-        if (!config.exists()) {
-            out.printf("Expected a configuration file at %s\n", config.getCanonicalFile());
+        configFile = new File(workingFolder, "cdep.yml");
+        if (!configFile.exists()) {
+            out.printf("Expected a configuration file at %s\n", configFile.getCanonicalFile());
             return false;
         }
 
         Yaml yaml = new Yaml(new Constructor(Configuration.class));
-        this.config = (Configuration)yaml.load(new FileInputStream(config));
+        this.config = (Configuration)yaml.load(new FileInputStream(configFile));
         if (this.config == null) {
             this.config = new Configuration();
         }
-        validateConfig(config);
+        validateConfig(configFile);
         return true;
     }
 

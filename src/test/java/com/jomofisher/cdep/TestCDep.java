@@ -49,20 +49,6 @@ public class TestCDep {
         assertThat(main("-wf", "non-existing-blah")).contains("non-existing-blah");
     }
 
-    //@Test
-    public void testScript() throws IOException, URISyntaxException {
-        File yaml = new File("test-files/simpleConfiguration/.cdep.yml");
-        yaml.getParentFile().mkdirs();
-        Files.write("android:\n" +
-                        "  ndk:\n" +
-                        "    platforms: [21, 22]\n",
-            yaml, StandardCharsets.UTF_8);
-        main("-wf", yaml.getParent(), "--host", "Linux");
-        File scriptFile = new File(".cdep/build.sh");
-        String script = Joiner.on("\n").join(Files.readLines(scriptFile, Charsets.UTF_8));
-        assertThat(script).contains("cmake-3.7.2-Linux-x86_64.tar.gz");
-    }
-
     @Test
     public void someKnownUrls() throws IOException, URISyntaxException {
         Configuration config = new Configuration();
@@ -86,6 +72,20 @@ public class TestCDep {
     }
 
     @Test
+    public void noDependencies() throws IOException, URISyntaxException {
+        Configuration config = new Configuration();
+        System.out.printf(new Yaml().dump(config));
+        File yaml = new File("test-files/simpleDependency/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake]\n"
+                + "dependencies:\n",
+            yaml, StandardCharsets.UTF_8);
+        String result1 = main("-wf", yaml.getParent());
+        System.out.printf(result1);
+        assertThat(result1).contains("Nothing");
+    }
+
+    @Test
     public void dumpIsSelfHost() throws IOException, URISyntaxException {
         System.out.printf("%s\n", System.getProperty("user.home"));
         Configuration config = new Configuration();
@@ -104,6 +104,12 @@ public class TestCDep {
     @Test
     public void testNakedCall() throws IOException, URISyntaxException {
         main();
+    }
+
+    @Test
+    public void showFolders() throws IOException, URISyntaxException {
+        String result = main("show", "folders");
+        System.out.printf(result);
     }
 
     @Test

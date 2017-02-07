@@ -172,7 +172,6 @@ fi
 "$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" com.jomofisher.bootstrap.Bootstrap $MANIFEST $@
 if [[ $? != 0 ]]; then
   echo "$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" com.jomofisher.bootstrap.Bootstrap $MANIFEST $@
-  ll $CLASSPATH
 fi
 
 
