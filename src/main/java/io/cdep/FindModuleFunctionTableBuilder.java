@@ -111,7 +111,7 @@ public class FindModuleFunctionTableBuilder {
             androidStlType,
             cases,
             new AbortExpression(
-                String.format("Android runtime '%%s' is not supported by module '%s'. Supported: $s",
+                String.format("Android runtime '%%s' is not supported by module '%s'. Supported: %s",
                     resolved.manifest.coordinate, runtimes), androidStlType));
     }
 
