@@ -136,9 +136,11 @@ public class CMakeGenerator {
                     "# Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
                     "if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
                     "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" +
+                    "  set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n" +
                     "else()\n" +
                     "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" +
-                    "endif()\n");
+                    "  set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
+                    "endif()\n\n");
             generateFinderExpression(indent, signature, specific.expression, sb);
             return;
         } else if (expression instanceof CaseExpression) {
@@ -202,8 +204,10 @@ public class CMakeGenerator {
             sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, simpleName,
                 new File(exploded, specific.include).toString().replace("\\", "\\\\")));
             String libFolder = new File(exploded, specific.lib).toString().replace("\\", "\\\\");
-            sb.append(String.format("%sfile(GLOB %s_LIBRARIES \"%s/*.a\" \"%s/*.so\")\n", prefix, simpleName,
-                    libFolder, libFolder));
+            sb.append(String.format("%sfile(GLOB %s_LIBRARIES \"%s/${CDEP_DETERMINED_ANDROID_ABI}/lib*.*\")\n",
+                    prefix,
+                    simpleName,
+                    libFolder));
             return;
         } else if (expression instanceof AbortExpression) {
             AbortExpression specific = (AbortExpression) expression;
