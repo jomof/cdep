@@ -12,17 +12,19 @@ Get started with CDep on Windows.
     Unzip to a temporary folder
     
     cd project-dir
-    {path}\cdeb wrapper
+    {temporary folder}\cdeb wrapper
+    cdep --version
    
  ## Bash
  Get started with CDep on Linux and Mac.
  
      mkdir tmp
      cd tmp
-     wget https://github.com/jomof/cdep/releases/download/alpha-0.0.33/redist-alpha-0.0.33.zip
-     unzip redist-alpha-0.0.33.zip
+     wget https://github.com/jomof/cdep/releases/download/alpha-0.0.36/redist.zip
+     unzip redist.zip
      cd ../project
      ../tmp/cdep/cdep wrapper
+     ./cdep --version
 
 Download from releases or build it yourself:
 
