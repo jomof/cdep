@@ -132,13 +132,13 @@ public class CMakeGenerator {
             sb.append("# GENERATED FILE. DO NOT EDIT.\n");
             sb.append(String.format("# FindModule for CDep module: %s\n",
                 specific.coordinate.toString()));
-            sb.append("" +
+            sb.append("\n" +
                     "# Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
                     "if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
                     "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" +
                     "else()\n" +
                     "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" +
-                    "endif()");
+                    "endif()\n");
             generateFinderExpression(indent, signature, specific.expression, sb);
             return;
         } else if (expression instanceof CaseExpression) {
