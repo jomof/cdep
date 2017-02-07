@@ -1,4 +1,4 @@
-entry: com.jomofisher.cdep.CDep
+entry: CDep
 dependencies:
 - https://github.com/jomof/cdep/releases/download/alpha-0.0.35/cdep-alpha-0.0.35.jar
 - https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.17/snakeyaml-1.17.jar
