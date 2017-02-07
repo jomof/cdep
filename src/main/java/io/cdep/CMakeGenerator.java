@@ -201,6 +201,9 @@ public class CMakeGenerator {
             sb.append(String.format("%sset(%s_FOUND true)\n", prefix, simpleName));
             sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, simpleName,
                 new File(exploded, specific.include).toString().replace("\\", "\\\\")));
+            String libFolder = new File(exploded, specific.lib).toString().replace("\\", "\\\\");
+            sb.append(String.format("%sfile(GLOB %s_LIBRARIES \"%s/*.a\" \"%s/*.so\")\n", prefix, simpleName,
+                    libFolder, libFolder));
             return;
         } else if (expression instanceof AbortExpression) {
             AbortExpression specific = (AbortExpression) expression;
