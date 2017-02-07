@@ -25,7 +25,7 @@ class GenerateBuildInfo extends DefaultTask {
     def generate() {
         buildInfoFile.parentFile.mkdirs()
         buildInfoFile.write(
-                """package com.jomofisher.cdep;
+                """package io.cdep;
 public class BuildInfo {
   static final String PROJECT_VERSION = "$project.version";
 }""")
