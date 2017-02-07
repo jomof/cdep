@@ -106,7 +106,7 @@ public class FindModuleFunctionTableBuilder {
                 resolved,
                 stlTypes.get(stlType)));
         }
-        
+
         return new CaseExpression(
             androidStlType,
             cases,
