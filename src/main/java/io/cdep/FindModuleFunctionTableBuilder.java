@@ -99,18 +99,20 @@ public class FindModuleFunctionTableBuilder {
         }
 
         Map<String, Expression> cases = new HashMap<>();
+        String runtimes = "";
         for (String stlType : stlTypes.keySet()) {
+            runtimes += stlType + " ";
             cases.put(stlType, buildAndroidPlatformExpression(
                 resolved,
                 stlTypes.get(stlType)));
         }
-
+        
         return new CaseExpression(
             androidStlType,
             cases,
             new AbortExpression(
-                String.format("Android runtime '%%s' is not supported by module '%s'",
-                    resolved.manifest.coordinate), androidStlType));
+                String.format("Android runtime '%%s' is not supported by module '%s'. Supported: $s",
+                    resolved.manifest.coordinate, runtimes), androidStlType));
     }
 
     private void checkForDuplicateZipFiles(ResolvedManifest resolved) {
