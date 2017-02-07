@@ -2,7 +2,27 @@
 
 
 # CDep
-CDep is a native package dependency manager with a focus on Android.
+CDep is a native package dependency manager with a focus on Android. Runs on Windows, Linux, and MacOS.
+
+
+## Windows
+Get started with CDep on Windows.
+
+    Download redist-x.y.z.zip from https://github.com/jomof/cdep/releases
+    Unzip to a temporary folder
+    
+    cd project-dir
+    {path}\cdeb wrapper
+   
+ ## Bash
+ Get started with CDep on Linux and Mac.
+ 
+     mkdir tmp
+     cd tmp
+     wget https://github.com/jomof/cdep/releases/download/alpha-0.0.33/redist-alpha-0.0.33.zip
+     unzip redist-alpha-0.0.33.zip
+     cd ../project
+     ../tmp/cdep/cdep wrapper
 
 Download from releases or build it yourself:
 
