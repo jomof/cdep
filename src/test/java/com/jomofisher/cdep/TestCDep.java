@@ -113,12 +113,14 @@ public class TestCDep {
         File workingFolder = new File(testFolder, "working");
         File cdepFile = new File(redistFolder, "cdep");
         File cdepBatFile = new File(redistFolder, "cdep.bat");
+        File cdepYmlFile = new File(redistFolder, "cdep.yml");
         File bootstrapJar = new File(redistFolder, "bootstrap/wrapper/bootstrap.jar");
         redistFolder.mkdirs();
         workingFolder.mkdirs();
         bootstrapJar.getParentFile().mkdirs();
         Files.write("cdepFile content", cdepFile, Charset.defaultCharset());
         Files.write("cdepBatFile content", cdepBatFile, Charset.defaultCharset());
+        Files.write("cdepYmlFile content", cdepYmlFile, Charset.defaultCharset());
         Files.write("bootstrapJar content", bootstrapJar, Charset.defaultCharset());
         System.setProperty("io.cdep.appname", new File(redistFolder, "cdep.bat").getAbsolutePath());
         String result;
@@ -132,9 +134,11 @@ public class TestCDep {
         assertThat(result).contains("Installing cdep");
         File cdepToFile = new File(workingFolder, "cdep");
         File cdepBatToFile = new File(workingFolder, "cdep.bat");
+        File cdepYmlToFile = new File(workingFolder, "cdep.yml");
         File bootstrapJarToFile = new File(workingFolder, "bootstrap/wrapper/bootstrap.jar");
         assertThat(cdepToFile.isFile()).isTrue();
         assertThat(cdepBatToFile.isFile()).isTrue();
+        assertThat(cdepYmlToFile.isFile()).isTrue();
         assertThat(bootstrapJarToFile.isFile()).isTrue();
     }
 }

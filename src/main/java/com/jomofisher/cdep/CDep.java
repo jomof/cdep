@@ -57,6 +57,8 @@ public class CDep {
             File cdepBatTo = new File(workingFolder, "cdep.bat");
             File cdepFrom = new File(applicationBase, "cdep");
             File cdepTo = new File(workingFolder, "cdep");
+            File cdepYmlFrom = new File(applicationBase, "cdep.yml");
+            File cdepYmlTo = new File(workingFolder, "cdep.yml");
             File bootstrapFrom = new File(applicationBase, "bootstrap/wrapper/bootstrap.jar");
             File bootstrapTo = new File(workingFolder, "bootstrap/wrapper/bootstrap.jar");
             bootstrapTo.getParentFile().mkdirs();
@@ -64,9 +66,15 @@ public class CDep {
             FileUtils.copyFile(cdepBatFrom, cdepBatTo);
             out.printf("Installing %s\n", cdepTo);
             FileUtils.copyFile(cdepFrom, cdepTo);
+            cdepTo.setExecutable(true);
             out.printf("Installing %s\n", bootstrapTo);
             FileUtils.copyFile(bootstrapFrom, bootstrapTo);
-            cdepTo.setExecutable(true);
+            if (cdepYmlTo.isFile()) {
+                out.printf("Not overwriting %s\n", cdepYmlTo);
+            } else {
+                out.printf("Installing %s\n", cdepYmlTo);
+                FileUtils.copyFile(cdepYmlFrom, cdepYmlTo);
+            }
             return true;
         }
         return false;
