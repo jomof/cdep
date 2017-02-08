@@ -26,7 +26,6 @@ Get started with CDep on Windows.
      > git clone https://github.com/jomof/cdep-redist.git  
      > cd my-project
      > ..\cdep-redist\cdep wrapper
-     > ..\cdep-redist\cdep add dependency com.github.jomof:sqllite:3.16.2-rev6
      
 Now edit cdep.yml file to add a line like this.
 
