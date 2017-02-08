@@ -22,12 +22,9 @@ This tell CDeps that this project depends on SQLLite.
 Next, run cdep command to download SQLLits and build CMake modules for it.
 
     $ ./cdep
-    Downloading https://github.com/jomof/sqllite/releases/download/3.16.2-rev6/
-        sqllite-android-gnustl_shared-platform-21.zip
-    Exploding https://github.com/jomof/sqllite/releases/download/3.16.2-rev6/
-        sqllite-android-gnustl_shared-platform-21.zip
-    Generating /usr/local/google/home/jomof/projects/my-project/./.cdep/modules/
-        Findsqllite.cmake
+    Downloading sqllite-android-gnustl_shared-platform-21.zip
+    Exploding sqllite-android-gnustl_shared-platform-21.zip
+    Generating ./.cdep/modules/Findsqllite.cmake
 
 ## Windows
 Get started with CDep on Windows.
