@@ -5,7 +5,7 @@
 CDep is a distributed native package dependency manager with a focus on Android. Runs on Windows, Linux, and MacOS.
    
    
-## Bash
+## Linux and Mac
 Get started with CDep on Linux and Mac.
  
      $ git clone https://github.com/jomof/cdep-redist.git  
@@ -13,24 +13,27 @@ Get started with CDep on Linux and Mac.
      $ ../cdep-redist/cdep wrapper
 
 
-
-
-
 Now edit cdep.yml file to add a line like this.
+
      dependencies:
      - com.github.jomof:sqllite:3.16.2-rev6
+     
+This tell CDep to download SQLLite.
 
-
-
-
-
+## Windows
 Get started with CDep on Windows.
 
      > git clone https://github.com/jomof/cdep-redist.git  
      > cd my-project
      > ..\cdep-redist\cdep wrapper
      > ..\cdep-redist\cdep add dependency com.github.jomof:sqllite:3.16.2-rev6
-    
+     
+Now edit cdep.yml file to add a line like this.
+
+     dependencies:
+     - com.github.jomof:sqllite:3.16.2-rev6
+     
+This tell CDep to download SQLLite.
     
 ## CDep Boost [![Build Status](https://travis-ci.org/jomof/boost.svg?branch=master)](https://github.com/jomof/boost)
 A CDep packaging of Boost (header only).
