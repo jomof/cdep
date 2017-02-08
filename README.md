@@ -12,13 +12,19 @@ Get started with CDep on Linux and Mac.
      $ cd my-project
      $ ../cdep-redist/cdep wrapper
 
-
 Now edit cdep.yml file to add a line like this.
 
      dependencies:
      - compile: com.github.jomof:sqllite:3.16.2-rev6
      
-This tell CDep to download SQLLite.
+This tell CDeps that this project depends on SQLLite.
+
+Next, run cdep command to download SQLLits and build CMake modules for it.
+
+    $ ./cdep
+    Downloading https://github.com/jomof/sqllite/releases/download/3.16.2-rev6/sqllite-android-gnustl_shared-platform-21.zip
+    Exploding https://github.com/jomof/sqllite/releases/download/3.16.2-rev6/sqllite-android-gnustl_shared-platform-21.zip
+    Generating /usr/local/google/home/jomof/projects/my-project/./.cdep/modules/Findsqllite.cmake
 
 ## Windows
 Get started with CDep on Windows.
@@ -27,12 +33,7 @@ Get started with CDep on Windows.
      > cd my-project
      > ..\cdep-redist\cdep wrapper
      
-Now edit cdep.yml file to add a line like this.
-
-     dependencies:
-     - compile: com.github.jomof:sqllite:3.16.2-rev6
-     
-This tell CDep to download SQLLite.
+After this, the instructions are the same as Linux and Mac.
     
 ## CDep Boost [![Build Status](https://travis-ci.org/jomof/boost.svg?branch=master)](https://github.com/jomof/boost)
 A CDep packaging of Boost (header only).
