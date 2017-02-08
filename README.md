@@ -16,7 +16,7 @@ Get started with CDep on Linux and Mac.
 Now edit cdep.yml file to add a line like this.
 
      dependencies:
-     - com.github.jomof:sqllite:3.16.2-rev6
+     - compile: com.github.jomof:sqllite:3.16.2-rev6
      
 This tell CDep to download SQLLite.
 
@@ -30,7 +30,7 @@ Get started with CDep on Windows.
 Now edit cdep.yml file to add a line like this.
 
      dependencies:
-     - com.github.jomof:sqllite:3.16.2-rev6
+     - compile: com.github.jomof:sqllite:3.16.2-rev6
      
 This tell CDep to download SQLLite.
     
