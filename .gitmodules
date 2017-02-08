@@ -1,0 +1,3 @@
+[submodule "redist/cdep-redist"]
+	path = redist/cdep-redist
+	url = https://github.com/jomof/cdep-redist.git

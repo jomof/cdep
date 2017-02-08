@@ -6,10 +6,6 @@ if [ -f "build/libs/cdep-${TRAVIS_TAG}.jar" ]; then
     TRAVIS_CDEP_JAR=build/libs/cdep-${TRAVIS_TAG}.jar
 fi
 BOOTSTRAP_MANIFEST=$(pwd)/build/libs/bootstrap.yml
-pushd ./redist
-zip ../build/libs/redist.zip . -r
-popd
-
 echo entry: io.cdep.CDep > $BOOTSTRAP_MANIFEST
 echo dependencies: >> $BOOTSTRAP_MANIFEST
 printf "%s\n" "- $(pwd)/$TRAVIS_CDEP_JAR" >>$BOOTSTRAP_MANIFEST
@@ -17,7 +13,7 @@ printf "%s\n" "- https://search.maven.org/remotecontent?filepath=org/yaml/snakey
 cat $BOOTSTRAP_MANIFEST
 pushd smoke-test
 echo ./cdep $BOOTSTRAP_MANIFEST
-../redist/cdep/cdep $BOOTSTRAP_MANIFEST wrapper
+../redist/cdep-redist/cdep $BOOTSTRAP_MANIFEST wrapper
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 ./cdep $BOOTSTRAP_MANIFEST
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
