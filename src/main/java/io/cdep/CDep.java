@@ -75,7 +75,12 @@ public class CDep {
                 out.println(local.getCanonicalFile());
                 return true;
             }
-            out.print("Usage: cdep show [folders|local]'\n");
+            if (args.length > 1 && "manifest".equals(args[1])) {
+                handleReadConfig();
+                out.print(config.toString());
+                return true;
+            }
+            out.print("Usage: cdep show [folders|local|manifest]'\n");
             return true;
         }
         return false;

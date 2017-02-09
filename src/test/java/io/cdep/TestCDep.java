@@ -59,11 +59,11 @@ public class TestCDep {
                 + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/cdep-manifest.yml\n"
                 + "- compile: com.github.jomof:low-level-statistics:0.0.6\n",
             yaml, StandardCharsets.UTF_8);
-        String result1 = main("-wf", yaml.getParent(), "--dump");
+        String result1 = main("show", "manifest", "-wf", yaml.getParent());
         yaml.delete();
         Files.write(result1, yaml, StandardCharsets.UTF_8);
         System.out.print(result1);
-        String result2 = main("-wf", yaml.getParent(), "--dump");
+        String result2 = main("show", "manifest", "-wf", yaml.getParent());
         assertThat(result2).isEqualTo(result1);
         assertThat(result2).contains("alpha-0.0.35");
         String result3 = main("-wf", yaml.getParent());
@@ -91,11 +91,11 @@ public class TestCDep {
         File yaml = new File("test-files/simpleConfiguration/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]", yaml, StandardCharsets.UTF_8);
-        String result1 = main("-wf", yaml.getParent(), "--dump");
+        String result1 = main("show", "manifest", "-wf", yaml.getParent());
         yaml.delete();
         Files.write(result1, yaml, StandardCharsets.UTF_8);
         System.out.print(result1);
-        String result2 = main("-wf", yaml.getParent(), "--dump");
+        String result2 = main("show", "manifest", "-wf", yaml.getParent());
         assertThat(result2).isEqualTo(result1);
     }
 
