@@ -3,7 +3,7 @@ package io.cdep.model;
 @SuppressWarnings("unused")
 public class Reference {
   final public String compile;
-  private final Boolean enforceSourceUrlMatchesManifest; // null means yes
+  final public Boolean enforceSourceUrlMatchesManifest; // null means yes
 
   public Reference() {
     compile = null;

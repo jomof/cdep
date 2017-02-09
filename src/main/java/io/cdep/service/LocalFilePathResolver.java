@@ -23,6 +23,7 @@ class LocalFilePathResolver extends Resolver {
         String content = new String(Files.readAllBytes(Paths.get(local.getCanonicalPath())));
         Manifest manifest = ManifestUtils.convertStringToManifest(content);
 
+        if (reference.enforceSourceUrlMatchesManifest != Boolean.FALSE)
         // Ensure that the manifest coordinate agrees with the url provided
         assert manifest.coordinate != null;
         assert manifest.coordinate.groupId != null;
