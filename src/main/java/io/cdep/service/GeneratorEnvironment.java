@@ -1,6 +1,7 @@
 package io.cdep.service;
 
 import io.cdep.AST.service.ResolvedManifest;
+import io.cdep.ManifestUtils;
 import io.cdep.manifest.Coordinate;
 import io.cdep.model.Reference;
 import java.io.File;
@@ -108,6 +109,7 @@ public class GeneratorEnvironment {
             }
         }
         if (resolved != null) {
+            ManifestUtils.checkManifestSanity(resolved.manifest);
             File local = getLocalDownloadFilename(resolved.manifest.coordinate, resolved.remote);
             if (!local.exists()) {
                 // Copy the file local if the resolver didn't

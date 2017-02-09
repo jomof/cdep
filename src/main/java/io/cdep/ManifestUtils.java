@@ -18,4 +18,19 @@ public class ManifestUtils {
         }
         return dependencyConfig;
   }
+
+    public static void checkManifestSanity(Manifest manifest) {
+        if (manifest.coordinate == null) {
+            throw new RuntimeException("Manifest was missing coordinate");
+        }
+        if (manifest.coordinate.groupId == null) {
+            throw new RuntimeException("Manifest was missing coordinate.groupId");
+        }
+        if (manifest.coordinate.artifactId == null) {
+            throw new RuntimeException("Manifest was missing coordinate.artifactId");
+        }
+        if (manifest.coordinate.version == null) {
+            throw new RuntimeException("Manifest was missing coordinate.version");
+        }
+    }
 }
