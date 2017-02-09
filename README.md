@@ -5,46 +5,47 @@
 CDep is a distributed native package dependency manager with a focus on Android. Runs on Windows, Linux, and MacOS.
    
    
-## Bash
+## Linux and Mac
 Get started with CDep on Linux and Mac.
  
-     mkdir tmp
-     cd tmp
-     wget https://github.com/jomof/cdep/releases/download/alpha-0.0.36/redist.zip
-     unzip redist.zip
-     cd ../project
-     ../tmp/cdep/cdep wrapper
-     ./cdep --version
+     $ git clone https://github.com/jomof/cdep-redist.git  
+     $ cd my-project
+     $ ../cdep-redist/cdep wrapper
 
-Download from releases or build it yourself:
+Now edit cdep.yml file to add a line like this.
 
-    git clone https://github.com/jomof/cdep.git
-    cd cdep
-    ./gradlew assemble check
-    
-    
+     dependencies:
+     - compile: com.github.jomof:sqllite:3.16.2-rev6
+     
+This tell CDeps that this project depends on SQLLite.
+
+Next, run cdep command to download SQLLits and build CMake modules for it.
+
+    $ ./cdep
+    Downloading sqllite-android-gnustl_shared-platform-21.zip
+    Exploding sqllite-android-gnustl_shared-platform-21.zip
+    Generating ./.cdep/modules/Findsqllite.cmake
+
 ## Windows
 Get started with CDep on Windows.
 
-    Download redist-x.y.z.zip from https://github.com/jomof/cdep/releases
-    Unzip to a temporary folder
-    
-    cd project-dir
-    {temporary folder}\cdeb wrapper
-    cdep --version
-    
+     > git clone https://github.com/jomof/cdep-redist.git  
+     > cd my-project
+     > ..\cdep-redist\cdep wrapper
+     
+After this, the instructions are the same as Linux and Mac.
     
 ## CDep Boost [![Build Status](https://travis-ci.org/jomof/boost.svg?branch=master)](https://github.com/jomof/boost)
 A CDep packaging of Boost (header only).
 
+## CDep SQLLite [![Build Status](https://travis-ci.org/jomof/sqllite.svg?branch=master)](https://github.com/jomof/sqllite)
+A CDep packaging of SQLLite
 
 ## Hello Boost [![Build Status](https://travis-ci.org/jomof/hello-boost.svg?branch=master)](https://github.com/jomof/hello-boost)
 Helper tools to get CDep onto your system.
 
-
 ## CMakeify [![Build Status](https://travis-ci.org/jomof/cmakeify.svg?branch=master)](https://github.com/jomof/cmakeify)
 Tools for building and deploying CDep packages for Android.
-
 
 ## Bootstrap [![Build Status](https://travis-ci.org/jomof/bootstrap.svg?branch=master)](https://github.com/jomof/bootstrap)
 Helper tools to get CDep onto your system.
