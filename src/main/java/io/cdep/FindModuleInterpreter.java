@@ -1,24 +1,24 @@
 package io.cdep;
 
-import io.cdep.AST.AbortExpression;
-import io.cdep.AST.CaseExpression;
-import io.cdep.AST.Expression;
-import io.cdep.AST.FindModuleExpression;
-import io.cdep.AST.FoundModuleExpression;
-import io.cdep.AST.FunctionTableExpression;
-import io.cdep.AST.IfGreaterThanOrEqualExpression;
-import io.cdep.AST.LongConstantExpression;
-import io.cdep.AST.ParameterExpression;
-import io.cdep.AST.StringExpression;
-
+import io.cdep.AST.finder.AbortExpression;
+import io.cdep.AST.finder.CaseExpression;
+import io.cdep.AST.finder.Expression;
+import io.cdep.AST.finder.FindModuleExpression;
+import io.cdep.AST.finder.FoundModuleExpression;
+import io.cdep.AST.finder.FunctionTableExpression;
+import io.cdep.AST.finder.IfGreaterThanOrEqualExpression;
+import io.cdep.AST.finder.LongConstantExpression;
+import io.cdep.AST.finder.ParameterExpression;
+import io.cdep.AST.finder.StringExpression;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by jomof on 1/31/17.
  */
-public class FindModuleInterpreter {
+class FindModuleInterpreter {
 
+    @SuppressWarnings("SameParameterValue")
     static FoundModuleExpression find(
         FunctionTableExpression table,
         String functionName,

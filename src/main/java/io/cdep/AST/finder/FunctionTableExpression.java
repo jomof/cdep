@@ -1,4 +1,4 @@
-package io.cdep.AST;
+package io.cdep.AST.finder;
 
 import java.util.HashMap;
 import java.util.Map;

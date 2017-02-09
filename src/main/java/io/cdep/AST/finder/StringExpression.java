@@ -1,4 +1,4 @@
-package io.cdep.AST;
+package io.cdep.AST.finder;
 
 public class StringExpression extends Expression {
 

@@ -1,18 +1,22 @@
-package io.cdep;
+package io.cdep.service;
 
 import static java.util.regex.Pattern.compile;
 
+import io.cdep.AST.service.ResolvedManifest;
+import io.cdep.model.Reference;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GithubReleasesCoordinateResolver extends Resolver {
+class GithubReleasesCoordinateResolver extends Resolver {
 
     final private Pattern pattern = compile("^com\\.github\\.(.*):(.*):(.*)$");
     final private GithubStyleUrlResolver urlResolver = new GithubStyleUrlResolver();
 
     @Override
-    ResolvedManifest resolve(String coordinate) throws IOException {
+    ResolvedManifest resolve(GeneratorEnvironment environment,
+        Reference reference) throws IOException {
+        String coordinate = reference.compile;
         Matcher match = pattern.matcher(coordinate);
         if (match.find()) {
             String user = match.group(1);
@@ -23,7 +27,7 @@ public class GithubReleasesCoordinateResolver extends Resolver {
                 user,
                 groupId,
                 version);
-            return urlResolver.resolve(manifest);
+            return urlResolver.resolve(environment, new Reference(manifest));
         }
         return null;
     }

@@ -11,7 +11,6 @@ import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
 
@@ -145,5 +144,30 @@ public class TestCDep {
         assertThat(cdepBatToFile.isFile()).isTrue();
         assertThat(cdepYmlToFile.isFile()).isTrue();
         assertThat(bootstrapJarToFile.isFile()).isTrue();
+    }
+
+    @Test
+    public void localPathsWork() throws IOException, URISyntaxException {
+        File yaml = new File("test-files/localPathsWork/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake]\n"
+                + "dependencies:\n"
+                + "- compile: com.github.jomof:low-level-statistics:0.0.6\n",
+            yaml, StandardCharsets.UTF_8);
+        // Download everything
+        String resultRemote = main("-wf", yaml.getParent());
+        // Ask for the local path to the manifes.
+        String localPath = main("show", "local", "com.github.jomof:low-level-statistics:0.0.6");
+        assertThat(localPath).contains("cdep-manifest.yml");
+        // Write a new manifest with the local path.
+        Files.write(String.format("builders: [cmake]\n"
+                + "dependencies:\n"
+                + "- compile: %s\n", localPath),
+            yaml, StandardCharsets.UTF_8);
+        String resultLocal = main("-wf", yaml.getParent(), "-df",
+            new File(yaml.getParent(), "downloads").getPath());
+        System.out.print(resultLocal);
+        resultLocal = main("-wf", yaml.getParent());
+        System.out.print(resultLocal);
     }
 }

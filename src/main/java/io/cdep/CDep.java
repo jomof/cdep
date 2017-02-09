@@ -1,29 +1,30 @@
 package io.cdep;
 
 
-import io.cdep.AST.FunctionTableExpression;
-import io.cdep.manifest.Coordinate;
-import io.cdep.manifest.Manifest;
+import io.cdep.AST.finder.FunctionTableExpression;
+import io.cdep.AST.service.ResolvedManifest;
 import io.cdep.model.BuildSystem;
 import io.cdep.model.Configuration;
 import io.cdep.model.Reference;
+import io.cdep.service.GeneratorEnvironment;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
-public class CDep {
+
+class CDep {
+
+    final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev8";
     private PrintStream out = System.out;
     private File workingFolder = new File(".");
+    private File downloadFolder = null;
     private Configuration config = null;
-    private Map<Coordinate, Manifest> manifests = null;
     private File configFile = null;
 
     CDep(PrintStream out) {
@@ -37,6 +38,7 @@ public class CDep {
     void go(String[] args) throws IOException, URISyntaxException {
         if (!handleVersion(args)) return;
         handleWorkingFolder(args);
+        handleDownloadFolder(args);
         if (handleWrapper(args)) return;
         if (handleShow(args)) return;
         if (!handleReadConfig(args)) return;
@@ -53,7 +55,25 @@ public class CDep {
                 out.printf("Modules: %s\n", environment.modulesFolder.getAbsolutePath());
                 return true;
             }
-            out.print("Nothing to show. Try 'cdep show folders'.\n");
+            if (args.length > 1 && "local".equals(args[1])) {
+                GeneratorEnvironment environment = getGeneratorEnvironment();
+                if (args.length == 2) {
+                    out.printf("Usage: cdep show local %s\n", EXAMPLE_COORDINATE);
+                    return true;
+                }
+                Reference reference = new Reference(args[2]);
+                ResolvedManifest resolved = environment.resolveAny(reference);
+                if (resolved == null) {
+                    out.printf("Could not resolve manifest coordinate %s\n", args[2]);
+                    return true;
+                }
+
+                File local = environment.getLocalDownloadFilename(resolved.manifest.coordinate,
+                    resolved.remote);
+                out.println(local.getCanonicalFile());
+                return true;
+            }
+            out.print("Usage: cdep show [folders|local]'\n");
             return true;
         }
         return false;
@@ -112,10 +132,9 @@ public class CDep {
             if (seen.contains(dependency.compile)) {
                 continue;
             }
-            ResolvedManifest resolved = Resolver.resolveAny(dependency.compile);
+            ResolvedManifest resolved = getGeneratorEnvironment().resolveAny(dependency);
             if (resolved == null) {
                 throw new RuntimeException("Could not resolve: " + dependency.compile);
-
             }
             builder.addManifest(resolved);
             seen.add(dependency.compile);
@@ -127,13 +146,7 @@ public class CDep {
     }
 
     private GeneratorEnvironment getGeneratorEnvironment() {
-        File userFolder = new File(System.getProperty("user.home"));
-        return new GeneratorEnvironment(
-                out,
-                new File(userFolder, ".cdep/downloads").getAbsoluteFile(),
-                new File(userFolder, ".cdep/exploded").getAbsoluteFile(),
-                new File(workingFolder, ".cdep/modules").getAbsoluteFile()
-            );
+        return new GeneratorEnvironment(out, workingFolder, downloadFolder);
     }
 
     private boolean handleDump(String[] args) {
@@ -181,6 +194,18 @@ public class CDep {
                 this.workingFolder = new File(args[i]);
                 takeNext = false;
             } else if (args[i].equals("--working-folder") || args[i].equals("-wf")) {
+                takeNext = true;
+            }
+        }
+    }
+
+    private void handleDownloadFolder(String[] args) throws IOException {
+        boolean takeNext = false;
+        for (int i = 0; i < args.length; ++i) {
+            if (takeNext) {
+                this.downloadFolder = new File(args[i]);
+                takeNext = false;
+            } else if (args[i].equals("--download-folder") || args[i].equals("-df")) {
                 takeNext = true;
             }
         }

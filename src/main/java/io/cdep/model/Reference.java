@@ -2,8 +2,16 @@ package io.cdep.model;
 
 public class Reference {
   final public String compile;
-  Reference() {
+  private final Boolean enforceSourceUrlMatchesManifest; // null means yes
+
+  public Reference() {
     compile = null;
+    enforceSourceUrlMatchesManifest = null;
+  }
+
+  public Reference(String compile) {
+    this.compile = compile;
+    this.enforceSourceUrlMatchesManifest = null;
   }
 
   public String toYaml(int indent) {
@@ -13,6 +21,11 @@ public class Reference {
     String prefix = firstPrefix;
     if (compile != null && compile.length() > 0) {
       sb.append(String.format("%scompile: %s\n", prefix, compile));
+      prefix = nextPrefix;
+    }
+    if (enforceSourceUrlMatchesManifest != null) {
+      sb.append(String.format("%enforceSourceUrlMatchesManifest: %s\n", prefix,
+          enforceSourceUrlMatchesManifest));
       prefix = nextPrefix;
     }
     return sb.toString();

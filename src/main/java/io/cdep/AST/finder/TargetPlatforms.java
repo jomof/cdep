@@ -1,4 +1,4 @@
-package io.cdep.AST;
+package io.cdep.AST.finder;
 
 /**
  * Created by jomof on 1/31/17.

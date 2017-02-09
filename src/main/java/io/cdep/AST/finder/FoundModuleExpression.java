@@ -1,4 +1,4 @@
-package io.cdep.AST;
+package io.cdep.AST.finder;
 
 import io.cdep.manifest.Coordinate;
 import java.net.URL;

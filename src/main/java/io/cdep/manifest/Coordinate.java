@@ -12,7 +12,7 @@ public class Coordinate {
     version = null;
   }
 
-  Coordinate(String groupId, String artifactId, String version) {
+    public Coordinate(String groupId, String artifactId, String version) {
     this.groupId = groupId;
     this.artifactId = artifactId;
     this.version = version;

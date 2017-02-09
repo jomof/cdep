@@ -1,17 +1,17 @@
 package io.cdep;
 
-import io.cdep.AST.AbortExpression;
-import io.cdep.AST.CaseExpression;
-import io.cdep.AST.Expression;
-import io.cdep.AST.FindModuleExpression;
-import io.cdep.AST.FoundModuleExpression;
-import io.cdep.AST.FunctionTableExpression;
-import io.cdep.AST.IfGreaterThanOrEqualExpression;
-import io.cdep.AST.LongConstantExpression;
-import io.cdep.AST.ParameterExpression;
+import io.cdep.AST.finder.AbortExpression;
+import io.cdep.AST.finder.CaseExpression;
+import io.cdep.AST.finder.Expression;
+import io.cdep.AST.finder.FindModuleExpression;
+import io.cdep.AST.finder.FoundModuleExpression;
+import io.cdep.AST.finder.FunctionTableExpression;
+import io.cdep.AST.finder.IfGreaterThanOrEqualExpression;
+import io.cdep.AST.finder.LongConstantExpression;
+import io.cdep.AST.finder.ParameterExpression;
+import io.cdep.AST.service.ResolvedManifest;
 import io.cdep.manifest.Android;
 import io.cdep.manifest.Coordinate;
-
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class FindModuleFunctionTableBuilder {
+class FindModuleFunctionTableBuilder {
 
     private final Map<Coordinate, ResolvedManifest> manifests = new HashMap<>();
     private final ParameterExpression targetPlatform =

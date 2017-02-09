@@ -1,16 +1,16 @@
 package io.cdep;
 
-import io.cdep.AST.AbortExpression;
-import io.cdep.AST.CaseExpression;
-import io.cdep.AST.Expression;
-import io.cdep.AST.FindModuleExpression;
-import io.cdep.AST.FoundModuleExpression;
-import io.cdep.AST.FunctionTableExpression;
-import io.cdep.AST.IfGreaterThanOrEqualExpression;
-import io.cdep.AST.LongConstantExpression;
-import io.cdep.AST.ParameterExpression;
-import io.cdep.AST.StringExpression;
-
+import io.cdep.AST.finder.AbortExpression;
+import io.cdep.AST.finder.CaseExpression;
+import io.cdep.AST.finder.Expression;
+import io.cdep.AST.finder.FindModuleExpression;
+import io.cdep.AST.finder.FoundModuleExpression;
+import io.cdep.AST.finder.FunctionTableExpression;
+import io.cdep.AST.finder.IfGreaterThanOrEqualExpression;
+import io.cdep.AST.finder.LongConstantExpression;
+import io.cdep.AST.finder.ParameterExpression;
+import io.cdep.AST.finder.StringExpression;
+import io.cdep.service.GeneratorEnvironment;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CMakeGenerator {
+class CMakeGenerator {
 
     final private GeneratorEnvironment environment;
     final private List<FoundModuleExpression> foundModules;
@@ -77,13 +77,8 @@ public class CMakeGenerator {
 
         // Download and unzip any modules.
         for (FoundModuleExpression foundModule : foundModules) {
-            File local = environment.getLocalArchiveFilename(
+            File local = environment.getLocalDownloadedFile(
                 foundModule.coordinate, foundModule.archive);
-            if (!local.exists()) {
-                local.getParentFile().mkdirs();
-                environment.out.printf("Downloading %s\n", foundModule.archive);
-                WebUtils.copyUrlToLocalFile(foundModule.archive, local);
-            }
             File unzipFolder = environment.getLocalUnzipFolder(
                 foundModule.coordinate, foundModule.archive);
             if (!unzipFolder.exists()) {
