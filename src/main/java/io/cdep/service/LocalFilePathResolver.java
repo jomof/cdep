@@ -24,7 +24,8 @@ class LocalFilePathResolver extends Resolver {
         Manifest manifest = ManifestUtils.convertStringToManifest(content);
         ManifestUtils.checkManifestSanity(manifest);
 
-        if (reference.enforceSourceUrlMatchesManifest != Boolean.FALSE) {
+        if (reference.enforceSourceUrlMatchesManifest == null
+            || reference.enforceSourceUrlMatchesManifest) {
             // Ensure that the manifest coordinate agrees with the url provided
             assert manifest.coordinate != null;
             assert manifest.coordinate.groupId != null;
