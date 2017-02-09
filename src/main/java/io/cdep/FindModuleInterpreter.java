@@ -13,9 +13,6 @@ import io.cdep.AST.finder.StringExpression;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by jomof on 1/31/17.
- */
 class FindModuleInterpreter {
 
     @SuppressWarnings("SameParameterValue")

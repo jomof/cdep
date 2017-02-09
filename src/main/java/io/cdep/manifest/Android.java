@@ -1,6 +1,7 @@
 package io.cdep.manifest;
 
 
+@SuppressWarnings("unused")
 public class Android {
   final public String file = null;
   final public String ndk = null;

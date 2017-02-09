@@ -1,8 +1,9 @@
 package io.cdep.AST.finder;
 
+@SuppressWarnings("unused")
 class VariableExpression extends Expression {
 
-    private String name;
+    private final String name;
 
     public VariableExpression(String name) {
         this.name = name;
@@ -10,6 +11,6 @@ class VariableExpression extends Expression {
 
     @Override
     public String toString() {
-        return name.toString();
+        return name;
     }
 }

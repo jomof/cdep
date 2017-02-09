@@ -1,10 +1,12 @@
 package io.cdep.manifest;
 
+@SuppressWarnings("unused")
 public class Manifest {
 
     final public Coordinate coordinate;
     final public Android android[];
-    final public Object linux[];
+    @SuppressWarnings("WeakerAccess")
+    final public Object[] linux;
 
     Manifest() {
         this.coordinate = null;

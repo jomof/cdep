@@ -8,10 +8,7 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-/**
- * Created by jomof on 2/3/17.
- */
-public class ArchiveUtils {
+class ArchiveUtils {
 
     static void unzip(File localArchive, File localUnzipFolder) throws IOException {
         ZipFile zipFile = new ZipFile(localArchive.getPath());
@@ -27,12 +24,14 @@ public class ArchiveUtils {
 
             File file = new File(localUnzipFolder, name);
             if (name.endsWith("/")) {
+                //noinspection ResultOfMethodCallIgnored
                 file.mkdirs();
                 continue;
             }
 
             File parent = file.getParentFile();
             if (parent != null) {
+                //noinspection ResultOfMethodCallIgnored
                 parent.mkdirs();
             }
 

@@ -1,5 +1,6 @@
 package io.cdep.model;
 
+@SuppressWarnings("unused")
 public class Reference {
   final public String compile;
   private final Boolean enforceSourceUrlMatchesManifest; // null means yes
@@ -24,9 +25,8 @@ public class Reference {
       prefix = nextPrefix;
     }
     if (enforceSourceUrlMatchesManifest != null) {
-      sb.append(String.format("%enforceSourceUrlMatchesManifest: %s\n", prefix,
+      sb.append(String.format("%senforceSourceUrlMatchesManifest: %s\n", prefix,
           enforceSourceUrlMatchesManifest));
-      prefix = nextPrefix;
     }
     return sb.toString();
   }

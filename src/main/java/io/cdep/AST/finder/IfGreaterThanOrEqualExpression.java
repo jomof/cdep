@@ -1,8 +1,5 @@
 package io.cdep.AST.finder;
 
-/**
- * Created by jomof on 1/31/17.
- */
 public class IfGreaterThanOrEqualExpression extends Expression {
 
     final public Expression value;

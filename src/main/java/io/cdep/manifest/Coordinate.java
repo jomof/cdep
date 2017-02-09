@@ -1,5 +1,6 @@
 package io.cdep.manifest;
 
+@SuppressWarnings("unused")
 public class Coordinate {
 
   final public String groupId; // like com.github.jomof
@@ -20,6 +21,12 @@ public class Coordinate {
 
   @Override
   public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof Coordinate)) {
+      return false;
+    }
     return toString().equals(obj);
   }
 

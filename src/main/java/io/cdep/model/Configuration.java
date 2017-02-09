@@ -2,15 +2,13 @@ package io.cdep.model;
 
 public class Configuration {
 
-    final public BuildSystem builders[];
-    final public Reference dependencies[];
+    final public BuildSystem builders[] = new BuildSystem[0];
+    final public Reference dependencies[] = new Reference[0];
 
     public Configuration() {
-        builders = new BuildSystem[]{};
-        dependencies  = new Reference[] {};
     }
 
-    public String toYaml(int indent) {
+    private String toYaml(@SuppressWarnings("SameParameterValue") int indent) {
         String prefix = new String(new char[indent * 2]).replace('\0', ' ');
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("%sbuilders: [", prefix));
@@ -22,7 +20,7 @@ public class Configuration {
         }
         sb.append("]\n");
 
-        if (dependencies != null && dependencies.length > 0) {
+        if (dependencies.length > 0) {
             sb.append(String.format("%sdependencies:\n", prefix));
             for (Reference dependency : dependencies) {
                 sb.append("- ");

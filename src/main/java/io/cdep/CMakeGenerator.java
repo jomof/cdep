@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 class CMakeGenerator {
 
     final private GeneratorEnvironment environment;
@@ -82,6 +81,7 @@ class CMakeGenerator {
             File unzipFolder = environment.getLocalUnzipFolder(
                 foundModule.coordinate, foundModule.archive);
             if (!unzipFolder.exists()) {
+                //noinspection ResultOfMethodCallIgnored
                 unzipFolder.mkdirs();
                 environment.out.printf("Exploding %s\n", foundModule.archive);
                 ArchiveUtils.unzip(local, unzipFolder);
@@ -104,11 +104,13 @@ class CMakeGenerator {
     private void writeTextToFile(File file, String body) throws IOException {
         environment.out.printf("Generating %s\n", file);
         BufferedWriter writer = null;
+        //noinspection ResultOfMethodCallIgnored
         file.getParentFile().mkdirs();
+        //noinspection ResultOfMethodCallIgnored
         file.delete();
         try {
             writer = new BufferedWriter(new FileWriter(file));
-            writer.write(body.toString());
+            writer.write(body);
         } finally {
             if (writer != null) {
                 writer.close();
@@ -193,6 +195,7 @@ class CMakeGenerator {
             return;
         } else if (expression instanceof FoundModuleExpression) {
             FoundModuleExpression specific = (FoundModuleExpression) expression;
+            assert specific.coordinate.artifactId != null;
             String simpleName = specific.coordinate.artifactId.toUpperCase().replace("-", "_");
             File exploded = environment.getLocalUnzipFolder(specific.coordinate, specific.archive);
             sb.append(String.format("%sset(%s_FOUND true)\n", prefix, simpleName));

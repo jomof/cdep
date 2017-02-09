@@ -17,6 +17,7 @@ class GithubReleasesCoordinateResolver extends Resolver {
     ResolvedManifest resolve(GeneratorEnvironment environment,
         Reference reference) throws IOException {
         String coordinate = reference.compile;
+        assert coordinate != null;
         Matcher match = pattern.matcher(coordinate);
         if (match.find()) {
             String user = match.group(1);

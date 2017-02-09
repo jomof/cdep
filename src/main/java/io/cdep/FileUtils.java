@@ -6,12 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-/**
- * Created by jomof on 2/6/2017.
- */
-public class FileUtils {
+class FileUtils {
     public static void copyFile(File sourceFile, File destFile) throws IOException {
     if(!destFile.exists()) {
+        //noinspection ResultOfMethodCallIgnored
         destFile.createNewFile();
     }
 

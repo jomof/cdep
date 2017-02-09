@@ -17,6 +17,7 @@ class GithubStyleUrlResolver extends Resolver {
   ResolvedManifest resolve(GeneratorEnvironment environment,
       Reference reference) throws IOException {
     String coordinate = reference.compile;
+    assert coordinate != null;
     Matcher match = pattern.matcher(coordinate);
     if (match.find()) {
 
@@ -39,6 +40,7 @@ class GithubStyleUrlResolver extends Resolver {
       Manifest manifest = ManifestUtils.convertStringToManifest(manifestContent);
 
       // Ensure that the manifest coordinate agrees with the url provided
+      assert manifest.coordinate != null;
       if (!groupId.equals(manifest.coordinate.groupId)) {
         throw new RuntimeException(
             String.format("groupId '%s' from manifest did not agree with github url '%s",

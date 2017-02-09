@@ -3,7 +3,7 @@ package io.cdep.service;
 import io.cdep.manifest.Coordinate;
 import io.cdep.manifest.Manifest;
 
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings({"FieldCanBeLocal", "unused"})
 class ResolvedDependency {
 
   private final Coordinate coordinate;

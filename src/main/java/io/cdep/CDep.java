@@ -41,7 +41,9 @@ class CDep {
         handleDownloadFolder(args);
         if (handleWrapper(args)) return;
         if (handleShow(args)) return;
-        if (!handleReadConfig(args)) return;
+        if (!handleReadConfig()) {
+            return;
+        }
         if (!handleDump(args)) return;
         handleGenerateScript();
     }
@@ -99,12 +101,15 @@ class CDep {
             File cdepYmlTo = new File(workingFolder, "cdep.yml");
             File bootstrapFrom = new File(applicationBase, "bootstrap/wrapper/bootstrap.jar");
             File bootstrapTo = new File(workingFolder, "bootstrap/wrapper/bootstrap.jar");
+            //noinspection ResultOfMethodCallIgnored
             bootstrapTo.getParentFile().mkdirs();
             out.printf("Installing %s\n", cdepBatTo);
             FileUtils.copyFile(cdepBatFrom, cdepBatTo);
             out.printf("Installing %s\n", cdepTo);
             FileUtils.copyFile(cdepFrom, cdepTo);
-            cdepTo.setExecutable(true);
+            if (!cdepTo.setExecutable(true)) {
+                throw new RuntimeException("User did not have permission to make cdep executable");
+            }
             out.printf("Installing %s\n", bootstrapTo);
             FileUtils.copyFile(bootstrapFrom, bootstrapTo);
             if (cdepYmlTo.isFile()) {
@@ -121,7 +126,8 @@ class CDep {
     private void handleGenerateScript() throws IOException, URISyntaxException {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         Set<String> seen = new HashSet<>();
-        if (config.dependencies == null) {
+        //noinspection ConstantConditions
+        if (config.dependencies == null || config.dependencies.length == 0) {
             out.printf("Nothing to do. Add dependencies to %s\n", configFile);
             return;
         }
@@ -159,7 +165,7 @@ class CDep {
         return true;
     }
 
-    private boolean handleReadConfig(String[] args) throws IOException {
+    private boolean handleReadConfig() throws IOException {
         configFile = new File(workingFolder, "cdep.yml");
         if (!configFile.exists()) {
             out.printf("Expected a configuration file at %s\n", configFile.getCanonicalFile());
@@ -176,7 +182,7 @@ class CDep {
     }
 
     private void validateConfig(File configurationFile) {
-        if (config.builders == null || config.builders.length == 0) {
+        if (config.builders.length == 0) {
             StringBuilder sb = new StringBuilder();
             for (BuildSystem builder : BuildSystem.values()) {
                 sb.append(builder.toString());

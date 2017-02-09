@@ -42,6 +42,7 @@ class FindModuleFunctionTableBuilder {
     public FunctionTableExpression build() throws MalformedURLException, URISyntaxException {
         FunctionTableExpression functionTable = new FunctionTableExpression();
         for (ResolvedManifest resolved : manifests.values()) {
+            assert resolved.manifest.coordinate != null;
             functionTable.functions.put(resolved.manifest.coordinate.toString(),
                 buildFindModule(resolved));
         }
@@ -76,6 +77,7 @@ class FindModuleFunctionTableBuilder {
 
         // Gather up the runtime names
         Map<String, List<Android>> stlTypes = new HashMap<>();
+        assert resolved.manifest.android != null;
         for (Android android : resolved.manifest.android) {
             List<Android> androids = stlTypes.get(android.runtime);
             if (androids == null) {
@@ -117,6 +119,7 @@ class FindModuleFunctionTableBuilder {
 
     private void checkForDuplicateZipFiles(ResolvedManifest resolved) {
         Set<String> zips = new HashSet<>();
+        assert resolved.manifest.android != null;
         for (Android android : resolved.manifest.android) {
             if (zips.contains(android.file)) {
                 throw new RuntimeException(

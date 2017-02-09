@@ -67,6 +67,7 @@ public class GeneratorEnvironment {
         throws IOException {
         File local = getLocalDownloadFilename(coordinate, remoteArchive);
         if (!local.isFile()) {
+            //noinspection ResultOfMethodCallIgnored
             local.getParentFile().mkdirs();
             out.printf("Downloading %s\n", remoteArchive);
             copyUrlToLocalFile(remoteArchive, local);
@@ -91,7 +92,7 @@ public class GeneratorEnvironment {
 
     private String getUrlBaseName(URL url) {
         String urlString = url.getFile();
-        return urlString.toString().substring(urlString.lastIndexOf('/') + 1, urlString.length());
+        return urlString.substring(urlString.lastIndexOf('/') + 1, urlString.length());
     }
 
     public ResolvedManifest resolveAny(Reference reference) throws IOException {
