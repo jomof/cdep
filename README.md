@@ -19,7 +19,7 @@ Now edit cdep.yml file to add a line like this.
      
 This tell CDeps that this project depends on SQLLite.
 
-Next, run cdep command to download SQLLits and build CMake modules for it.
+Next, run cdep command to download SQLLite and build CMake modules for it.
 
     $ ./cdep
     Downloading sqllite-android-gnustl_shared-platform-21.zip
