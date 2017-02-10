@@ -42,7 +42,9 @@ A CDep packaging of Boost (header only).
 [![CDep Status](https://cdep-io.github.io/com.github.jomof/sqllite/latest/latest.svg)](https://github.com/jomof/sqllite/releases/latest)
 A CDep packaging of SQLLite
 
-## yaml-cpp [![Build Status](https://travis-ci.org/jomof/yaml-cpp.svg?branch=master)](https://github.com/jomof/yaml-cpp) [![CDep Status](https://cdep-io.github.io/com.github.jomof/yaml-cpp/latest/latest.svg)](https://github.com/jomof/yaml-cpp/releases/latest)
+## yaml-cpp 
+[![Build Status](https://travis-ci.org/jomof/yaml-cpp.svg?branch=master)](https://github.com/jomof/yaml-cpp)
+[![CDep Status](https://cdep-io.github.io/com.github.jomof/yaml-cpp/latest/latest.svg)](https://github.com/jomof/yaml-cpp/releases/latest)
 A CDep packaging of yaml-cpp
 
 ## Hello Boost [![Build Status](https://travis-ci.org/jomof/hello-boost.svg?branch=master)](https://github.com/jomof/hello-boost)
