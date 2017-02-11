@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.7)
 project(hello)
-set(cdep-dependencies_DIR ".cdep/modules")
+message("FOUND-->>>>>>>>>>>>>>>>>> cdep-dependencies_DIR=" ${cdep-dependencies_DIR})
 find_package(cdep-dependencies REQUIRED)
 add_library(hello STATIC hello.c)
-add_cdep_dependencies(hello)
+add_cdep_low-level-statistics_dependencies(hello)
 
