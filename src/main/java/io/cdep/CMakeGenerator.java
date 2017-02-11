@@ -107,7 +107,7 @@ class CMakeGenerator {
             generateFinderExpression(0, findFunction, findFunction, sb);
             // TODO: If two artifact IDs conflict then generate a Find*.cmake that emits an error
         }
-        File file = new File(environment.modulesFolder, "Findcdep-dependencies.cmake");
+        File file = new File(environment.modulesFolder, "Findcdep.cmake");
         writeTextToFile(file, sb.toString());
     }
 
