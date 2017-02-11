@@ -1,3 +1,5 @@
 builders: [cmake]
 dependencies:
 - compile: com.github.jomof:low-level-statistics:0.0.8
+- compile: com.github.jomof:sqllite:3.16.2-rev9
+
