@@ -154,7 +154,7 @@ class CMakeGenerator {
             sb.append(String.format("   add_custom_command(TARGET ${target} " +
                     "POST_BUILD COMMAND ${CMAKE_COMMAND} -E " +
                     "copy ${%s_SHARED_LIBRARIES} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})\n",upperArtifactID));
-            sb.append(String.format("end function(%s)\n",functionName));
+            sb.append(String.format("endfunction(%s)\n",functionName));
             return;
         } else if (expression instanceof CaseExpression) {
             CaseExpression specific = (CaseExpression) expression;
