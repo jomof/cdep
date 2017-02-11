@@ -6,7 +6,7 @@ matrix:
     script:
     - ./gradlew assemble check
     - ./travis_cdep
-    - cat $(pwd)/smoke-test/.cdep/modules/Findcdep.cmake
+    - cat $(pwd)/smoke-test/.cdep/modules/cdep-config.cmake
     - ./cmakeify -wf smoke-test --cmake-flags "-Dcdep_DIR=$(pwd)/smoke-test/.cdep/modules"
 deploy:
   api_key:
