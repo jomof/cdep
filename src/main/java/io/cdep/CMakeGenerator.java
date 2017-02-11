@@ -91,16 +91,19 @@ class CMakeGenerator {
         }
 
         // Generate CMake Find*.cmake files
+        StringBuilder total = new StringBuilder();
         for (FindModuleExpression findFunction : table.functions.values()) {
             StringBuilder sb = new StringBuilder();
             generateFinderExpression(0, findFunction, findFunction, sb);
+            generateFinderExpression(0, findFunction, findFunction, total);
             // TODO: If two artifact IDs conflict then generate a Find*.cmake that emits an error
             // telling user to pick one.
             File shortFile = new File(environment.modulesFolder,
                 String.format("Find%s.cmake", findFunction.coordinate.artifactId));
             writeTextToFile(shortFile, sb.toString());
-
         }
+        File file = new File(environment.modulesFolder, "cdep-dependencies-config.cmake");
+        writeTextToFile(file, total.toString());
     }
 
     private void writeTextToFile(File file, String body) throws IOException {
