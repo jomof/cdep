@@ -149,12 +149,13 @@ class CMakeGenerator {
             String functionName = String.format("add_cdep_%s_dependencies", specific.coordinate.artifactId)
                     .replace("-", "_");
             sb.append(String.format("\nfunction(%s target)\n",functionName));
-            sb.append(String.format("   message(\"target_include_directories \" ${target} ${%s_INCLUDE_DIRS} )\n",upperArtifactID));
             sb.append(String.format("   target_include_directories(${target} PRIVATE ${%s_INCLUDE_DIRS})\n",upperArtifactID));
             sb.append(String.format("   target_link_libraries(${target} ${%s_LIBRARIES})\n",upperArtifactID));
-            sb.append(String.format("   add_custom_command(TARGET ${target} " +
+            sb.append(String.format("   if(%s_SHARED_LIBRARIES)\n",upperArtifactID));
+            sb.append(String.format("     add_custom_command(TARGET ${target} " +
                     "POST_BUILD COMMAND ${CMAKE_COMMAND} -E " +
                     "copy ${%s_SHARED_LIBRARIES} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})\n",upperArtifactID));
+            sb.append(String.format("   endif(%s_SHARED_LIBRARIES)\n",upperArtifactID));
             sb.append(String.format("endfunction(%s)\n",functionName));
             return;
         } else if (expression instanceof CaseExpression) {
