@@ -91,19 +91,24 @@ class CMakeGenerator {
         }
 
         // Generate CMake Find*.cmake files
-        StringBuilder total = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
+        sb.append("# GENERATED FILE. DO NOT EDIT.\n");
+        sb.append("\n" +
+            "# Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
+            "if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
+            "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" +
+            "  set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n" +
+            "else()\n" +
+            "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" +
+            "  set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
+            "endif()\n");
+
         for (FindModuleExpression findFunction : table.functions.values()) {
-            StringBuilder sb = new StringBuilder();
             generateFinderExpression(0, findFunction, findFunction, sb);
-            generateFinderExpression(0, findFunction, findFunction, total);
             // TODO: If two artifact IDs conflict then generate a Find*.cmake that emits an error
-            // telling user to pick one.
-            File shortFile = new File(environment.modulesFolder,
-                String.format("Find%s.cmake", findFunction.coordinate.artifactId));
-            writeTextToFile(shortFile, sb.toString());
         }
         File file = new File(environment.modulesFolder, "cdep-dependencies-config.cmake");
-        writeTextToFile(file, total.toString());
+        writeTextToFile(file, sb.toString());
     }
 
     private void writeTextToFile(File file, String body) throws IOException {
@@ -128,22 +133,27 @@ class CMakeGenerator {
         FindModuleExpression signature,
         Expression expression,
         StringBuilder sb) {
+
         String prefix = new String(new char[indent * 2]).replace('\0', ' ');
+
+        String upperArtifactID = signature.coordinate.artifactId.toUpperCase().replace("-", "_");
+
         if (expression instanceof FindModuleExpression) {
             FindModuleExpression specific = (FindModuleExpression) expression;
-            sb.append("# GENERATED FILE. DO NOT EDIT.\n");
-            sb.append(String.format("# FindModule for CDep module: %s\n",
+            sb.append("\n###\n");
+            sb.append(String.format("### FindModule for CDep module: %s\n",
                 specific.coordinate.toString()));
-            sb.append("\n" +
-                    "# Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
-                    "if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
-                    "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" +
-                    "  set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n" +
-                    "else()\n" +
-                    "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" +
-                    "  set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
-                    "endif()\n\n");
+            sb.append("###\n");
+
             generateFinderExpression(indent, signature, specific.expression, sb);
+            String functionName = String.format("add_cdep_%s_dependencies", specific.coordinate.artifactId);
+            sb.append(String.format("\nfunction(%s target)\n",functionName));
+            sb.append(String.format("   target_include_directories(${target} ${%s_INCLUDE_DIRS})\n",upperArtifactID));
+            sb.append(String.format("   target_link_libraries(${target} ${%s_LIBRARIES})\n",upperArtifactID));
+            sb.append(String.format("   add_custom_command(TARGET ${target} " +
+                    "POST_BUILD COMMAND ${CMAKE_COMMAND} -E " +
+                    "copy ${%s_SHARED_LIBRARIES} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})\n",upperArtifactID));
+            sb.append(String.format("end function(%s)\n",functionName));
             return;
         } else if (expression instanceof CaseExpression) {
             CaseExpression specific = (CaseExpression) expression;
@@ -201,18 +211,17 @@ class CMakeGenerator {
         } else if (expression instanceof FoundModuleExpression) {
             FoundModuleExpression specific = (FoundModuleExpression) expression;
             assert specific.coordinate.artifactId != null;
-            String simpleName = specific.coordinate.artifactId.toUpperCase().replace("-", "_");
             File exploded = environment.getLocalUnzipFolder(specific.coordinate, specific.archive);
-            sb.append(String.format("%sset(%s_FOUND true)\n", prefix, simpleName));
-            sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, simpleName,
+            sb.append(String.format("%sset(%s_FOUND true)\n", prefix, upperArtifactID));
+            sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, upperArtifactID,
                 new File(exploded, specific.include).toString().replace("\\", "\\\\")));
             String libFolder = new File(exploded, specific.lib).toString().replace("\\", "\\\\");
             sb.append(String.format("%sfile(GLOB %s_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%slib*.*\")\n",
-                    prefix,
-                    simpleName,
-                    libFolder,
-                    slash,
-                    slash));
+                    prefix, upperArtifactID, libFolder, slash, slash));
+            sb.append(String.format("%sfile(GLOB %s_SHARED_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%slib*.so\")\n",
+                    prefix, upperArtifactID, libFolder, slash, slash));
+            sb.append(String.format("%sfile(GLOB %s_STATIC_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%slib*.a\")\n",
+                    prefix, upperArtifactID, libFolder, slash, slash));
             return;
         } else if (expression instanceof AbortExpression) {
             AbortExpression specific = (AbortExpression) expression;
