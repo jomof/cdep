@@ -22,10 +22,12 @@ class CMakeGenerator {
 
     final private GeneratorEnvironment environment;
     final private List<FoundModuleExpression> foundModules;
+    final private String slash;
 
     CMakeGenerator(GeneratorEnvironment environment) {
         this.environment = environment;
         this.foundModules = new ArrayList<>();
+        this.slash = File.separator.replace("\\", "\\\\");
     }
 
     private static void getAllFoundModuleExpressions(
@@ -202,10 +204,12 @@ class CMakeGenerator {
             sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, simpleName,
                 new File(exploded, specific.include).toString().replace("\\", "\\\\")));
             String libFolder = new File(exploded, specific.lib).toString().replace("\\", "\\\\");
-            sb.append(String.format("%sfile(GLOB %s_LIBRARIES \"%s/${CDEP_DETERMINED_ANDROID_ABI}/lib*.*\")\n",
+            sb.append(String.format("%sfile(GLOB %s_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%slib*.*\")\n",
                     prefix,
                     simpleName,
-                    libFolder));
+                    libFolder,
+                    slash,
+                    slash));
             return;
         } else if (expression instanceof AbortExpression) {
             AbortExpression specific = (AbortExpression) expression;
