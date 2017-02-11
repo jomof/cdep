@@ -10,6 +10,7 @@ import io.cdep.AST.finder.IfGreaterThanOrEqualExpression;
 import io.cdep.AST.finder.LongConstantExpression;
 import io.cdep.AST.finder.ParameterExpression;
 import io.cdep.AST.finder.StringExpression;
+import io.cdep.manifest.Coordinate;
 import io.cdep.service.GeneratorEnvironment;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -108,6 +109,12 @@ class CMakeGenerator {
             // TODO: If two artifact IDs conflict then generate a Find*.cmake that emits an error
         }
         File file = new File(environment.modulesFolder, "cdep-dependencies-config.cmake");
+        sb.append("\nfunction(add_all_cdep_dependencies target)\n");
+        for (FindModuleExpression findFunction : table.functions.values()) {
+            String function = getAddDependencyFunctionName(findFunction.coordinate);
+            sb.append(String.format("  %s(${target})\n", function));
+        }
+        sb.append("endfunction(add_all_cdep_dependencies)\n");
         writeTextToFile(file, sb.toString());
     }
 
@@ -146,8 +153,7 @@ class CMakeGenerator {
             sb.append("###\n");
 
             generateFinderExpression(indent, signature, specific.expression, sb);
-            String functionName = String.format("add_cdep_%s_dependency", specific.coordinate.artifactId)
-                    .replace("-", "_");
+            String functionName = getAddDependencyFunctionName(specific.coordinate);
             sb.append(String.format("\nfunction(%s target)\n",functionName));
             sb.append(String.format("   target_include_directories(${target} PRIVATE ${%s_INCLUDE_DIRS})\n",upperArtifactID));
             sb.append(String.format("   target_link_libraries(${target} ${%s_LIBRARIES})\n",upperArtifactID));
@@ -240,5 +246,10 @@ class CMakeGenerator {
         }
 
         throw new RuntimeException(expression.toString());
+    }
+
+    private String getAddDependencyFunctionName(Coordinate coordinate) {
+        return String.format("add_cdep_%s_dependency", coordinate.artifactId)
+                .replace("-", "_");
     }
 }
