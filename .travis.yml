@@ -6,7 +6,7 @@ matrix:
     script:
     - ./gradlew assemble check
     - ./travis_cdep
-    - cat smoke-test/.cdep/modules/Findlow-level-statistics.cmake
+    - cat smoke-test/.cdep/modules/cdep-dependencies-config.cmake
     - ./cmakeify -wf smoke-test
 deploy:
   api_key:
