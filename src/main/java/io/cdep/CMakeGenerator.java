@@ -150,7 +150,7 @@ class CMakeGenerator {
                     .replace("-", "_");
             sb.append(String.format("\nfunction(%s target)\n",functionName));
             sb.append(String.format("   message(\"target_include_directories \" ${target} ${%s_INCLUDE_DIRS} )\n",upperArtifactID));
-            sb.append(String.format("   target_include_directories(${target} ${%s_INCLUDE_DIRS})\n",upperArtifactID));
+            sb.append(String.format("   target_include_directories(${target} PRIVATE ${%s_INCLUDE_DIRS})\n",upperArtifactID));
             sb.append(String.format("   target_link_libraries(${target} ${%s_LIBRARIES})\n",upperArtifactID));
             sb.append(String.format("   add_custom_command(TARGET ${target} " +
                     "POST_BUILD COMMAND ${CMAKE_COMMAND} -E " +
