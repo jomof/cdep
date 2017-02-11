@@ -3,4 +3,5 @@ project(hello)
 find_package(cdep-dependencies REQUIRED)
 add_library(hello STATIC hello.c)
 add_cdep_low_level_statistics_dependencies(hello)
+add_sqllite_dependencies(hello)
 
