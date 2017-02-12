@@ -4,6 +4,7 @@ package io.cdep.manifest;
 @SuppressWarnings("unused")
 public class Android {
   final public String file = null;
+  final public String sha256 = null;
   final public String ndk = null;
   final public String compiler = null;
   final public String runtime = null;

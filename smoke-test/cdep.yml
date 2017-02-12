@@ -2,7 +2,7 @@ builders: [cmake]
 
 dependencies:
 - compile: com.github.jomof:low-level-statistics:0.0.10
-- compile: com.github.jomof:sqllite:3.16.2-rev9
+- compile: com.github.jomof:sqllite:3.16.2-rev10
 - compile: com.github.jomof:boost:1.0.63-rev9
-- compile: com.github.jomof:yaml-cpp:0.5.3-rev2
+- compile: com.github.jomof:yaml-cpp:0.5.3-rev3
 
