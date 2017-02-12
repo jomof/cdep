@@ -30,11 +30,11 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testSimple() throws IOException, URISyntaxException {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.33/cdep-manifest.yml"));
+            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml"));
         assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
         assertThat(resolved.manifest.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.33");
-        assertThat(resolved.manifest.android.length).isEqualTo(2);
+        assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.59");
+        assertThat(resolved.manifest.android.length).isEqualTo(4);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
@@ -45,7 +45,7 @@ public class TestFindModuleFunctionTableBuilder {
             "21",
             "c++_shared",
             "x86").archive.getPath();
-        assertThat(zip).endsWith("cmakeify-android-c++_shared.zip");
+        assertThat(zip).endsWith("cmakeify-android-cxx_shared-platform-21.zip");
     }
 
     // Test case where a manifest points to the same zip file multiple times (not allowed)
@@ -75,10 +75,10 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testCheckPlatformSwitch() throws IOException, URISyntaxException {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.34/cdep-manifest.yml"));
+            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml"));
         assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
         assertThat(resolved.manifest.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.34");
+        assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.59");
         assertThat(resolved.manifest.android.length).isEqualTo(4);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -107,7 +107,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testArchivePathIsFull() throws IOException, URISyntaxException {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/cdep-manifest.yml"));
+            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml"));
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
@@ -119,14 +119,14 @@ public class TestFindModuleFunctionTableBuilder {
             "c++_shared",
             "x86");
         assertThat(found.archive.toString()).isEqualTo(
-            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/"
+            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/"
                 + "cmakeify-android-cxx_shared-platform-21.zip");
     }
 
     @Test
     public void testFoundIncludeAndLib() throws IOException, URISyntaxException {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/cdep-manifest.yml"));
+            "https://github.com/jomof/sqllite/releases/download/3.16.2-rev11/cdep-manifest.yml"));
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
@@ -137,8 +137,8 @@ public class TestFindModuleFunctionTableBuilder {
             "21",
             "c++_shared",
             "x86");
-        assertThat(found.include.toString()).isEqualTo("include");
-        assertThat(found.lib.toString()).isEqualTo("lib");
+        assertThat(found.include).isEqualTo("include");
+        assertThat(found.libraryName).isEqualTo("libsqllite.so");
     }
 
     @Test
@@ -156,7 +156,7 @@ public class TestFindModuleFunctionTableBuilder {
             "c++_shared",
             "x86");
         assertThat(found.include.toString()).isEqualTo("boost_1_63_0/boost");
-        assertThat(found.lib.toString()).isEqualTo("lib");
+        assertThat(found.libraryName).isNull();
         assertThat(found.archive.toString()).isEqualTo(
             "https://github.com/jomof/cdep-boost/releases/download/1.0.63-rev6/boost_1_63_0.zip");
     }
@@ -165,7 +165,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testHeaderOnlyGitHubCoordinate() throws IOException, URISyntaxException {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "com.github.jomof:cdep-boost:1.0.63-rev6"));
+            "com.github.jomof:boost:1.0.63-rev9"));
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
@@ -176,9 +176,9 @@ public class TestFindModuleFunctionTableBuilder {
             "21",
             "c++_shared",
             "x86");
-        assertThat(found.include.toString()).isEqualTo("boost_1_63_0/boost");
-        assertThat(found.lib.toString()).isEqualTo("lib");
+        assertThat(found.include).isEqualTo("boost_1_63_0");
+        assertThat(found.libraryName).isNull();
         assertThat(found.archive.toString()).isEqualTo(
-            "https://github.com/jomof/cdep-boost/releases/download/1.0.63-rev6/boost_1_63_0.zip");
+            "https://github.com/jomof/boost/releases/download/1.0.63-rev9/boost_1_63_0.zip");
     }
 }

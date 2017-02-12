@@ -131,7 +131,6 @@ class FindModuleFunctionTableBuilder {
         }
     }
 
-
     private Expression buildAndroidPlatformExpression(
         ResolvedManifest resolved,
         List<Android> androids) throws MalformedURLException, URISyntaxException {
@@ -184,7 +183,6 @@ class FindModuleFunctionTableBuilder {
             .resolve(android.file)
             .toURL();
         String include = android.include;
-        String lib = android.lib;
-        return new FoundModuleExpression(resolved.manifest.coordinate, url, include, lib);
+        return new FoundModuleExpression(resolved.manifest.coordinate, url, include, android.lib);
     }
 }

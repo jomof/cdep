@@ -224,13 +224,16 @@ class CMakeGenerator {
             sb.append(String.format("%sset(%s_FOUND true)\n", prefix, upperArtifactID));
             sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, upperArtifactID,
                 new File(exploded, specific.include).toString().replace("\\", "\\\\")));
-            String libFolder = new File(exploded, specific.lib).toString().replace("\\", "\\\\");
-            sb.append(String.format("%sfile(GLOB %s_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%slib*.*\")\n",
-                    prefix, upperArtifactID, libFolder, slash, slash));
-            sb.append(String.format("%sfile(GLOB %s_SHARED_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%slib*.so\")\n",
-                    prefix, upperArtifactID, libFolder, slash, slash));
-            sb.append(String.format("%sfile(GLOB %s_STATIC_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%slib*.a\")\n",
-                    prefix, upperArtifactID, libFolder, slash, slash));
+            String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
+
+            if (specific.libraryName != null && specific.libraryName.length() > 0) {
+                sb.append(String.format("%sset(%s_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%s%s\")\n",
+                        prefix, upperArtifactID, libFolder, slash, slash, specific.libraryName));
+                if (specific.libraryName.endsWith(".so")) {
+                    sb.append(String.format("%sset(%s_SHARED_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%s%s\")\n",
+                        prefix, upperArtifactID, libFolder, slash, slash, specific.libraryName));
+                }
+            }
             return;
         } else if (expression instanceof AbortExpression) {
             AbortExpression specific = (AbortExpression) expression;

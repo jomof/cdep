@@ -12,10 +12,9 @@ public class Android {
   final public String builder = null;
   final public String abis[] = null;
   final public String include;
-  final public String lib;
+  final public String lib = null;
 
   Android() {
     include = "include";
-    lib = "lib";
   }
 }

@@ -55,9 +55,9 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:cmakeify:alpha-0.0.35\n"
-                + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.35/cdep-manifest.yml\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.6\n",
+                + "- compile: com.github.jomof:cmakeify:alpha-0.0.59\n"
+                + "- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml\n"
+                + "- compile: com.github.jomof:low-level-statistics:0.0.10\n",
             yaml, StandardCharsets.UTF_8);
         String result1 = main("show", "manifest", "-wf", yaml.getParent());
         yaml.delete();
@@ -65,7 +65,7 @@ public class TestCDep {
         System.out.print(result1);
         String result2 = main("show", "manifest", "-wf", yaml.getParent());
         assertThat(result2).isEqualTo(result1);
-        assertThat(result2).contains("alpha-0.0.35");
+        assertThat(result2).contains("alpha-0.0.59");
         String result3 = main("-wf", yaml.getParent());
     }
 
@@ -152,12 +152,12 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.6\n",
+                + "- compile: com.github.jomof:low-level-statistics:0.0.10\n",
             yaml, StandardCharsets.UTF_8);
         // Download everything
         String resultRemote = main("-wf", yaml.getParent());
         // Ask for the local path to the manifes.
-        String localPath = main("show", "local", "com.github.jomof:low-level-statistics:0.0.6");
+        String localPath = main("show", "local", "com.github.jomof:low-level-statistics:0.0.10");
         assertThat(localPath).contains("cdep-manifest.yml");
         // Write a new manifest with the local path.
         Files.write(String.format("builders: [cmake]\n"
