@@ -183,6 +183,7 @@ class CMakeGenerator {
             sb.append(String.format("%selse()\n", prefix));
             generateFinderExpression(indent + 1, signature, specific.defaultCase, sb);
             sb.append(String.format("%sendif()\n", prefix));
+            
             return;
         } else if (expression instanceof IfGreaterThanOrEqualExpression) {
             IfGreaterThanOrEqualExpression specific = (IfGreaterThanOrEqualExpression) expression;
