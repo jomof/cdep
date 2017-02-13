@@ -155,7 +155,8 @@ class CMakeGenerator {
             generateFinderExpression(indent, signature, specific.expression, sb);
             String functionName = getAddDependencyFunctionName(specific.coordinate);
             sb.append(String.format("\nfunction(%s target)\n",functionName));
-            sb.append(String.format("   target_include_directories(${target} PRIVATE ${%s_INCLUDE_DIRS})\n",upperArtifactID));
+            sb.append(String.format("   target_include_directories(${target} PRIVATE ${%s_INCLUDE_DIRS})\n",
+                    upperArtifactID));
             sb.append(String.format("   target_link_libraries(${target} ${%s_LIBRARIES})\n",upperArtifactID));
             sb.append(String.format("   if(%s_SHARED_LIBRARIES AND CMAKE_LIBRARY_OUTPUT_DIRECTORY)\n",upperArtifactID));
             sb.append(String.format("     add_custom_command(TARGET ${target} " +
