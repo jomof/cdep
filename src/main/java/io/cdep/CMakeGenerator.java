@@ -162,7 +162,8 @@ class CMakeGenerator {
             sb.append(String.format("     add_custom_command(TARGET ${target} " +
                     "POST_BUILD COMMAND ${CMAKE_COMMAND} -E " +
                     "copy ${%s_SHARED_LIBRARIES} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})\n",upperArtifactID));
-            sb.append(String.format("   endif(%s_SHARED_LIBRARIES)\n",upperArtifactID));
+            sb.append(String.format("   endif(%s_SHARED_LIBRARIES AND CMAKE_LIBRARY_OUTPUT_DIRECTORY)\n",
+                    upperArtifactID));
             sb.append(String.format("endfunction(%s)\n",functionName));
             return;
         } else if (expression instanceof CaseExpression) {
@@ -183,7 +184,7 @@ class CMakeGenerator {
             sb.append(String.format("%selse()\n", prefix));
             generateFinderExpression(indent + 1, signature, specific.defaultCase, sb);
             sb.append(String.format("%sendif()\n", prefix));
-            
+
             return;
         } else if (expression instanceof IfGreaterThanOrEqualExpression) {
             IfGreaterThanOrEqualExpression specific = (IfGreaterThanOrEqualExpression) expression;
