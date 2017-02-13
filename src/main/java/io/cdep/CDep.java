@@ -163,8 +163,7 @@ public class CDep {
     private boolean handleDump(String[] args) {
         for (int i = 0; i < args.length; ++i) {
             if (args[i].equals("--dump") || args[i].equals("-d")) {
-                out.print(config.toString());
-                return false;
+                throw new RuntimeException("--dump is now 'show manifest'");
             }
         }
         return true;
