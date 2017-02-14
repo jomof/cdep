@@ -9,87 +9,25 @@ import io.cdep.AST.finder.FunctionTableExpression;
 import io.cdep.AST.finder.IfGreaterThanOrEqualExpression;
 import io.cdep.AST.finder.LongConstantExpression;
 import io.cdep.AST.finder.ParameterExpression;
-import io.cdep.AST.finder.StringExpression;
 import io.cdep.manifest.Coordinate;
 import io.cdep.service.GeneratorEnvironment;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 class CMakeGenerator {
 
     final private GeneratorEnvironment environment;
-    final private List<FoundModuleExpression> foundModules;
     final private String slash;
 
     CMakeGenerator(GeneratorEnvironment environment) {
         this.environment = environment;
-        this.foundModules = new ArrayList<>();
         this.slash = File.separator.replace("\\", "\\\\");
     }
 
-    private static void getAllFoundModuleExpressions(
-            Expression expression, List<FoundModuleExpression> foundModules) {
-        if (expression instanceof CaseExpression) {
-            CaseExpression caseExpression = (CaseExpression) expression;
-            getAllFoundModuleExpressions(caseExpression.var, foundModules);
-            for (String caseValue : caseExpression.cases.keySet()) {
-                getAllFoundModuleExpressions(caseExpression.cases.get(caseValue), foundModules);
-            }
-            getAllFoundModuleExpressions(caseExpression.defaultCase, foundModules);
-            return;
-        } else if (expression instanceof ParameterExpression) {
-            return;
-        } else if (expression instanceof AbortExpression) {
-            return;
-        } else if (expression instanceof IfGreaterThanOrEqualExpression) {
-            IfGreaterThanOrEqualExpression ifexpr = (IfGreaterThanOrEqualExpression) expression;
-            getAllFoundModuleExpressions(ifexpr.value, foundModules);
-            getAllFoundModuleExpressions(ifexpr.compareTo, foundModules);
-            getAllFoundModuleExpressions(ifexpr.trueExpression, foundModules);
-            getAllFoundModuleExpressions(ifexpr.falseExpression, foundModules);
-            return;
-        } else if (expression instanceof LongConstantExpression) {
-            return;
-        } else if (expression instanceof StringExpression) {
-            return;
-        } else if (expression instanceof FoundModuleExpression) {
-            foundModules.add((FoundModuleExpression) expression);
-            return;
-        } else if (expression instanceof FunctionTableExpression) {
-            FunctionTableExpression table = (FunctionTableExpression) expression;
-            for (FindModuleExpression function : table.functions.values()) {
-                getAllFoundModuleExpressions(function, foundModules);
-            }
-            return;
-        } else if (expression instanceof FindModuleExpression) {
-            FindModuleExpression findModule = (FindModuleExpression) expression;
-            getAllFoundModuleExpressions(findModule.expression, foundModules);
-            return;
-        }
-        throw new RuntimeException(expression.toString());
-    }
+    void generate(FunctionTableExpression table) throws IOException {
 
-    void generate(FunctionTableExpression table)
-        throws IOException {
-        getAllFoundModuleExpressions(table, foundModules);
-
-        // Download and unzip any modules.
-        for (FoundModuleExpression foundModule : foundModules) {
-            File local = environment.getLocalDownloadedFile(
-                foundModule.coordinate, foundModule.archive);
-            File unzipFolder = environment.getLocalUnzipFolder(
-                foundModule.coordinate, foundModule.archive);
-            if (!unzipFolder.exists()) {
-                //noinspection ResultOfMethodCallIgnored
-                unzipFolder.mkdirs();
-                environment.out.printf("Exploding %s\n", foundModule.archive);
-                ArchiveUtils.unzip(local, unzipFolder);
-            }
-        }
 
         // Generate CMake Find*.cmake files
         StringBuilder sb = new StringBuilder();
@@ -117,6 +55,7 @@ class CMakeGenerator {
         sb.append("endfunction(add_all_cdep_dependencies)\n");
         writeTextToFile(file, sb.toString());
     }
+
 
     private void writeTextToFile(File file, String body) throws IOException {
         environment.out.printf("Generating %s\n", file);

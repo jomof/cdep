@@ -9,7 +9,6 @@ import io.cdep.AST.finder.FunctionTableExpression;
 import io.cdep.AST.finder.IfGreaterThanOrEqualExpression;
 import io.cdep.AST.finder.LongConstantExpression;
 import io.cdep.AST.finder.ParameterExpression;
-import io.cdep.AST.finder.StringExpression;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,9 +62,6 @@ class FindModuleInterpreter {
         } else if (expression instanceof LongConstantExpression) {
             LongConstantExpression longConst = (LongConstantExpression) expression;
             return longConst.value;
-        } else if (expression instanceof StringExpression) {
-            StringExpression stringConst = (StringExpression) expression;
-            return stringConst.value;
         } else if (expression instanceof FoundModuleExpression) {
             return expression;
         }

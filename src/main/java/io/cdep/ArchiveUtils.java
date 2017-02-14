@@ -10,6 +10,9 @@ import java.util.zip.ZipFile;
 
 class ArchiveUtils {
 
+    /**
+     * Unzip the given archive.
+     */
     static void unzip(File localArchive, File localUnzipFolder) throws IOException {
         ZipFile zipFile = new ZipFile(localArchive.getPath());
         Enumeration<?> enu = zipFile.entries();

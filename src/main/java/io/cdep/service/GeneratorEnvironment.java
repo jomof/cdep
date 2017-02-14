@@ -118,5 +118,4 @@ public class GeneratorEnvironment {
         }
         return resolved;
     }
-
 }

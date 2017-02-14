@@ -20,7 +20,7 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 public class CDep {
 
-    final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev8";
+    final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev9";
     private PrintStream out = System.out;
     private File workingFolder = new File(".");
     private File downloadFolder = null;
@@ -41,11 +41,17 @@ public class CDep {
         handleDownloadFolder(args);
         if (handleWrapper(args)) return;
         if (handleShow(args)) return;
+        if (handleRedownload(args)) {
+            return;
+        }
         if (!handleReadConfig()) {
             return;
         }
-        if (!handleDump(args)) return;
         handleGenerateScript();
+    }
+
+    private boolean handleRedownload(String[] args) {
+        return args.length > 0 && "redownload".equals(args[0]);
     }
 
     private boolean handleShow(String args[]) throws IOException {
@@ -153,20 +159,15 @@ public class CDep {
 
         FunctionTableExpression table = builder.build();
         GeneratorEnvironment environment = getGeneratorEnvironment();
+
+        // Download and unzip archives.
+        GeneratorEnvironmentUtils.downloadReferencedModules(environment, table);
+
         new CMakeGenerator(environment).generate(table);
     }
 
     private GeneratorEnvironment getGeneratorEnvironment() {
         return new GeneratorEnvironment(out, workingFolder, downloadFolder);
-    }
-
-    private boolean handleDump(String[] args) {
-        for (int i = 0; i < args.length; ++i) {
-            if (args[i].equals("--dump") || args[i].equals("-d")) {
-                throw new RuntimeException("--dump is now 'show manifest'");
-            }
-        }
-        return true;
     }
 
     private boolean handleReadConfig() throws IOException {
