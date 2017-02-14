@@ -22,7 +22,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 
-public class CDepMain {
+public class CDep {
 
     final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev9";
     private PrintStream out = System.out;
@@ -31,13 +31,13 @@ public class CDepMain {
     private CDepYml config = null;
     private File configFile = null;
 
-    CDepMain(PrintStream out) {
+    CDep(PrintStream out) {
         this.out = out;
     }
 
     public static void main(String[] args)
         throws IOException, URISyntaxException, NoSuchAlgorithmException {
-        new CDepMain(System.out).go(args);
+        new CDep(System.out).go(args);
     }
 
     void go(String[] args) throws IOException, URISyntaxException, NoSuchAlgorithmException {

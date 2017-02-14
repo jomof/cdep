@@ -20,7 +20,7 @@ public class TestCDep {
         if (System.getProperty("io.cdep.appname") == null) {
             System.setProperty("io.cdep.appname", "rando-test-folder");
         }
-        new CDepMain(ps).go(args);
+        new CDep(ps).go(args);
         return new String(baos.toByteArray(), StandardCharsets.UTF_8);
     }
 
