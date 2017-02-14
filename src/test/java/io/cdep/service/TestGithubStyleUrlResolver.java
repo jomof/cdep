@@ -18,7 +18,8 @@ public class TestGithubStyleUrlResolver {
   public void testSimple() throws IOException {
     ResolvedManifest resolved = new GithubStyleUrlResolver()
         .resolve(environment, new Reference(
-            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.29/cdep-manifest.yml"));
+                "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.29/cdep-manifest.yml"),
+            false);
     assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.manifest.coordinate.artifactId).isEqualTo("cmakeify");
     assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.29");

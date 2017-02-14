@@ -15,7 +15,7 @@ class GithubStyleUrlResolver extends Resolver {
 
   @Override
   ResolvedManifest resolve(GeneratorEnvironment environment,
-      Reference reference) throws IOException {
+      Reference reference, boolean forceRedownload) throws IOException {
     String coordinate = reference.compile;
     assert coordinate != null;
     Matcher match = pattern.matcher(coordinate);
@@ -36,7 +36,7 @@ class GithubStyleUrlResolver extends Resolver {
       Coordinate provisionalCoordinate = new Coordinate(groupId, artifactId, version);
       String manifestContent = environment.getLocalDownloadedFileText(
           provisionalCoordinate,
-          new URL(coordinate));
+          new URL(coordinate), forceRedownload);
       Manifest manifest = ManifestUtils.convertStringToManifest(manifestContent);
 
       // Ensure that the manifest coordinate agrees with the url provided

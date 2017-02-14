@@ -70,6 +70,23 @@ public class TestCDep {
     }
 
     @Test
+    public void redownload() throws IOException, URISyntaxException {
+        Configuration config = new Configuration();
+        File yaml = new File("test-files/simpleDependency/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake]\n"
+                + "dependencies:\n"
+                + "- compile: com.github.jomof:low-level-statistics:0.0.10\n",
+            yaml, StandardCharsets.UTF_8);
+        // Download first.
+        main("-wf", yaml.getParent());
+        // Redownload
+        String result = main("redownload", "-wf", yaml.getParent());
+        System.out.printf(result);
+        assertThat(result).contains("Redownload");
+    }
+
+    @Test
     public void noDependencies() throws IOException, URISyntaxException {
         Configuration config = new Configuration();
         System.out.printf(new Yaml().dump(config));
@@ -108,6 +125,13 @@ public class TestCDep {
     public void showFolders() throws IOException, URISyntaxException {
         String result = main("show", "folders");
         System.out.printf(result);
+    }
+
+    @Test
+    public void help() throws IOException, URISyntaxException {
+        String result = main("--help");
+        System.out.printf(result);
+        assertThat(result).contains("show folders");
     }
 
     @Test

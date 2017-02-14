@@ -15,7 +15,7 @@ class GithubReleasesCoordinateResolver extends Resolver {
 
     @Override
     ResolvedManifest resolve(GeneratorEnvironment environment,
-        Reference reference) throws IOException {
+        Reference reference, boolean forceRedownload) throws IOException {
         String coordinate = reference.compile;
         assert coordinate != null;
         Matcher match = pattern.matcher(coordinate);
@@ -28,7 +28,7 @@ class GithubReleasesCoordinateResolver extends Resolver {
                 user,
                 groupId,
                 version);
-            return urlResolver.resolve(environment, new Reference(manifest));
+            return urlResolver.resolve(environment, new Reference(manifest), forceRedownload);
         }
         return null;
     }

@@ -64,22 +64,33 @@ public class GeneratorEnvironment {
         return local;
     }
 
-    public File getLocalDownloadedFile(Coordinate coordinate, URL remoteArchive)
+    public File getLocalDownloadedFile(
+        Coordinate coordinate,
+        URL remoteArchive,
+        boolean forceRedownload)
         throws IOException {
         File local = getLocalDownloadFilename(coordinate, remoteArchive);
         if (!local.isFile()) {
-            //noinspection ResultOfMethodCallIgnored
-            local.getParentFile().mkdirs();
             out.printf("Downloading %s\n", remoteArchive);
-            copyUrlToLocalFile(remoteArchive, local);
+        } else if (forceRedownload) {
+            out.printf("Redownloading %s\n", remoteArchive);
+        } else {
+            return local;
         }
+        //noinspection ResultOfMethodCallIgnored
+        local.getParentFile().mkdirs();
+        copyUrlToLocalFile(remoteArchive, local);
         return local;
     }
 
-    public String getLocalDownloadedFileText(Coordinate coordinate, URL remoteArchive)
+    public String getLocalDownloadedFileText(
+        Coordinate coordinate,
+        URL remoteArchive,
+        boolean forceRedownload)
         throws IOException {
         return new String(Files.readAllBytes(
-            Paths.get(getLocalDownloadedFile(coordinate, remoteArchive).getCanonicalPath())));
+            Paths.get(getLocalDownloadedFile(coordinate, remoteArchive, forceRedownload)
+                .getCanonicalPath())));
     }
 
     public File getLocalUnzipFolder(Coordinate coordinate, URL remoteArchive) {
@@ -96,10 +107,12 @@ public class GeneratorEnvironment {
         return urlString.substring(urlString.lastIndexOf('/') + 1, urlString.length());
     }
 
-    public ResolvedManifest resolveAny(Reference reference) throws IOException {
+    public ResolvedManifest resolveAny(
+        Reference reference,
+        boolean forceRedownload) throws IOException {
         ResolvedManifest resolved = null;
         for (Resolver resolver : resolvers) {
-            ResolvedManifest attempt = resolver.resolve(this, reference);
+            ResolvedManifest attempt = resolver.resolve(this, reference, forceRedownload);
             if (attempt != null) {
                 if (resolved != null) {
                     throw new RuntimeException("Multiple resolvers matched coordinate:\n"
@@ -113,7 +126,8 @@ public class GeneratorEnvironment {
             File local = getLocalDownloadFilename(resolved.manifest.coordinate, resolved.remote);
             if (!local.exists()) {
                 // Copy the file local if the resolver didn't
-                getLocalDownloadedFile(resolved.manifest.coordinate, resolved.remote);
+                getLocalDownloadedFile(resolved.manifest.coordinate, resolved.remote,
+                    forceRedownload);
             }
         }
         return resolved;

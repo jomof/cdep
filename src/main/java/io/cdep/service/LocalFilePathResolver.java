@@ -12,7 +12,8 @@ import java.nio.file.Paths;
 class LocalFilePathResolver extends Resolver {
 
     @Override
-    ResolvedManifest resolve(GeneratorEnvironment environment, Reference reference)
+    ResolvedManifest resolve(GeneratorEnvironment environment, Reference reference,
+        boolean forceRedownload)
         throws IOException {
         String coordinate = reference.compile;
         assert coordinate != null;

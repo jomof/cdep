@@ -36,22 +36,38 @@ public class CDep {
     }
 
     void go(String[] args) throws IOException, URISyntaxException {
+        if (!handleHelp(args)) {
+            return;
+        }
         if (!handleVersion(args)) return;
         handleWorkingFolder(args);
         handleDownloadFolder(args);
         if (handleWrapper(args)) return;
         if (handleShow(args)) return;
-        if (handleRedownload(args)) {
+        if (!handleReadConfig()) {
             return;
         }
-        if (!handleReadConfig()) {
+        if (handleRedownload(args)) {
             return;
         }
         handleGenerateScript();
     }
 
-    private boolean handleRedownload(String[] args) {
-        return args.length > 0 && "redownload".equals(args[0]);
+    private boolean handleRedownload(String[] args) throws IOException, URISyntaxException {
+        if (args.length > 0 && "redownload".equals(args[0])) {
+            FunctionTableExpression table = getFunctionTableExpression(true);
+            GeneratorEnvironment environment = getGeneratorEnvironment();
+
+            // Download and unzip archives.
+            GeneratorEnvironmentUtils.downloadReferencedModules(
+                environment,
+                table,
+                true /* forceRedownload */);
+
+            new CMakeGenerator(environment).generate(table);
+            return true;
+        }
+        return false;
     }
 
     private boolean handleShow(String args[]) throws IOException {
@@ -70,7 +86,7 @@ public class CDep {
                     return true;
                 }
                 Reference reference = new Reference(args[2]);
-                ResolvedManifest resolved = environment.resolveAny(reference);
+                ResolvedManifest resolved = environment.resolveAny(reference, false);
                 if (resolved == null) {
                     out.printf("Could not resolve manifest coordinate %s\n", args[2]);
                     return true;
@@ -135,13 +151,27 @@ public class CDep {
     }
 
     private void handleGenerateScript() throws IOException, URISyntaxException {
-        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
-        Set<String> seen = new HashSet<>();
         //noinspection ConstantConditions
         if (config.dependencies == null || config.dependencies.length == 0) {
             out.printf("Nothing to do. Add dependencies to %s\n", configFile);
             return;
         }
+        FunctionTableExpression table = getFunctionTableExpression(false);
+        GeneratorEnvironment environment = getGeneratorEnvironment();
+
+        // Download and unzip archives.
+        GeneratorEnvironmentUtils.downloadReferencedModules(
+            environment,
+            table,
+            false /* forceRedownload */);
+
+        new CMakeGenerator(environment).generate(table);
+    }
+
+    private FunctionTableExpression getFunctionTableExpression(boolean forceRedownload)
+        throws IOException, URISyntaxException {
+        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+        Set<String> seen = new HashSet<>();
         for(Reference dependency : config.dependencies) {
             if (dependency.compile == null) {
                 continue;
@@ -149,7 +179,8 @@ public class CDep {
             if (seen.contains(dependency.compile)) {
                 continue;
             }
-            ResolvedManifest resolved = getGeneratorEnvironment().resolveAny(dependency);
+            ResolvedManifest resolved = getGeneratorEnvironment().resolveAny(
+                dependency, forceRedownload);
             if (resolved == null) {
                 throw new RuntimeException("Could not resolve: " + dependency.compile);
             }
@@ -157,13 +188,7 @@ public class CDep {
             seen.add(dependency.compile);
         }
 
-        FunctionTableExpression table = builder.build();
-        GeneratorEnvironment environment = getGeneratorEnvironment();
-
-        // Download and unzip archives.
-        GeneratorEnvironmentUtils.downloadReferencedModules(environment, table);
-
-        new CMakeGenerator(environment).generate(table);
+        return builder.build();
     }
 
     private GeneratorEnvironment getGeneratorEnvironment() {
@@ -196,6 +221,20 @@ public class CDep {
             throw new RuntimeException(String.format("Error in '%s'. The 'builders' section is "
                 + "missing or empty. Valid values are: %s.", configurationFile, sb));
         }
+    }
+
+    private boolean handleHelp(String[] args) throws IOException {
+        if (args.length != 1 || !args[0].equals("--help")) {
+            return true;
+        }
+        out.printf("cdep %s\n", BuildInfo.PROJECT_VERSION);
+        out.printf(
+            " cdep: download dependencies and generate build modules for current cdep.yml\n");
+        out.printf(" cdep show folders: show local download and archive folders\n");
+        out.printf(" cdep show manifest: show cdep interpretation of cdep.yml\n");
+        out.printf(" cdep redownload: redownload dependencies for current cdep.yml\n");
+        out.printf(" cdep --version: show version information\n");
+        return false;
     }
 
     private void handleWorkingFolder(String[] args) throws IOException {

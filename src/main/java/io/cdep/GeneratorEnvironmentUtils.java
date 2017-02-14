@@ -17,14 +17,15 @@ public class GeneratorEnvironmentUtils {
      */
     static void downloadReferencedModules(
         GeneratorEnvironment environment,
-        FunctionTableExpression table) throws IOException {
+        FunctionTableExpression table,
+        boolean forceRedownload) throws IOException {
         List<FoundModuleExpression> foundModules =
             ExpressionUtils.getAllFoundModuleExpressions(table);
 
         // Download and unzip any modules.
         for (FoundModuleExpression foundModule : foundModules) {
             File local = environment.getLocalDownloadedFile(
-                foundModule.coordinate, foundModule.archive);
+                foundModule.coordinate, foundModule.archive, forceRedownload);
             File unzipFolder = environment.getLocalUnzipFolder(
                 foundModule.coordinate, foundModule.archive);
             if (!unzipFolder.exists()) {
