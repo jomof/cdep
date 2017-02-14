@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.Set;
 import org.yaml.snakeyaml.Yaml;
@@ -31,11 +32,12 @@ public class CDep {
         this.out = out;
     }
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args)
+        throws IOException, URISyntaxException, NoSuchAlgorithmException {
         new CDep(System.out).go(args);
     }
 
-    void go(String[] args) throws IOException, URISyntaxException {
+    void go(String[] args) throws IOException, URISyntaxException, NoSuchAlgorithmException {
         if (!handleHelp(args)) {
             return;
         }
@@ -53,7 +55,8 @@ public class CDep {
         handleGenerateScript();
     }
 
-    private boolean handleRedownload(String[] args) throws IOException, URISyntaxException {
+    private boolean handleRedownload(String[] args)
+        throws IOException, URISyntaxException, NoSuchAlgorithmException {
         if (args.length > 0 && "redownload".equals(args[0])) {
             FunctionTableExpression table = getFunctionTableExpression(true);
             GeneratorEnvironment environment = getGeneratorEnvironment();
@@ -150,7 +153,8 @@ public class CDep {
         return false;
     }
 
-    private void handleGenerateScript() throws IOException, URISyntaxException {
+    private void handleGenerateScript()
+        throws IOException, URISyntaxException, NoSuchAlgorithmException {
         //noinspection ConstantConditions
         if (config.dependencies == null || config.dependencies.length == 0) {
             out.printf("Nothing to do. Add dependencies to %s\n", configFile);

@@ -195,6 +195,7 @@ class FindModuleFunctionTableBuilder {
             .resolve(android.file)
             .toURL();
         String include = android.include;
-        return new FoundModuleExpression(resolved.manifest.coordinate, url, include, android.lib);
+        return new FoundModuleExpression(resolved.manifest.coordinate, url,
+            android.sha256, include, android.lib);
     }
 }
