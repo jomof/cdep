@@ -34,14 +34,14 @@ class FindModuleFunctionTableBuilder {
         new ParameterExpression("systemVersion");
 
     public void addManifest(ResolvedManifest resolved) {
-        manifests.put(resolved.manifest.coordinate, resolved);
+        manifests.put(resolved.cdepManifestYml.coordinate, resolved);
     }
 
     public FunctionTableExpression build() throws MalformedURLException, URISyntaxException {
         FunctionTableExpression functionTable = new FunctionTableExpression();
         for (ResolvedManifest resolved : manifests.values()) {
-            assert resolved.manifest.coordinate != null;
-            functionTable.functions.put(resolved.manifest.coordinate.toString(),
+            assert resolved.cdepManifestYml.coordinate != null;
+            functionTable.functions.put(resolved.cdepManifestYml.coordinate.toString(),
                 buildFindModule(resolved));
         }
         return functionTable;
@@ -52,7 +52,7 @@ class FindModuleFunctionTableBuilder {
 
         Map<String, Expression> cases = new HashMap<>();
         String supported = "";
-        if (resolved.manifest.android != null) {
+        if (resolved.cdepManifestYml.android != null) {
             supported += "'Android' ";
             cases.put("Android",
                 buildAndroidStlTypeCase(resolved));
@@ -63,9 +63,9 @@ class FindModuleFunctionTableBuilder {
             new AbortExpression(
                 String.format("Target platform '%%s' is not supported by module '%s'. "
                         + "Supported: %s",
-                    resolved.manifest.coordinate, supported), targetPlatform));
+                    resolved.cdepManifestYml.coordinate, supported), targetPlatform));
 
-        return new FindModuleExpression(resolved.manifest.coordinate, targetPlatform,
+        return new FindModuleExpression(resolved.cdepManifestYml.coordinate, targetPlatform,
             systemVersion, androidArchAbi, androidStlType, expression);
     }
 
@@ -74,8 +74,8 @@ class FindModuleFunctionTableBuilder {
 
         // Gather up the runtime names
         Map<String, List<Android>> stlTypes = new HashMap<>();
-        assert resolved.manifest.android != null;
-        for (Android android : resolved.manifest.android) {
+        assert resolved.cdepManifestYml.android != null;
+        for (Android android : resolved.cdepManifestYml.android) {
             List<Android> androids = stlTypes.get(android.runtime);
             if (androids == null) {
                 androids = new ArrayList<>();
@@ -94,7 +94,7 @@ class FindModuleFunctionTableBuilder {
             // There are some android sub modules with runtime and some without
             return new AbortExpression(
                 String.format("Runtime is on some android submodules but not other in module '%s'",
-                    resolved.manifest.coordinate));
+                    resolved.cdepManifestYml.coordinate));
         }
 
         Map<String, Expression> cases = new HashMap<>();
@@ -111,7 +111,7 @@ class FindModuleFunctionTableBuilder {
             cases,
             new AbortExpression(
                 String.format("Android runtime '%%s' is not supported by module '%s'. Supported: %s",
-                    resolved.manifest.coordinate, runtimes), androidStlType));
+                    resolved.cdepManifestYml.coordinate, runtimes), androidStlType));
     }
 
 
@@ -144,7 +144,7 @@ class FindModuleFunctionTableBuilder {
 
         Expression prior = new AbortExpression(
             String.format("Android API level '%%s' is not supported by module '%s'",
-                resolved.manifest.coordinate), systemVersion);
+                resolved.cdepManifestYml.coordinate), systemVersion);
         for (long platform : platforms) {
             prior = new IfGreaterThanOrEqualExpression(
                 systemVersion,
@@ -168,7 +168,7 @@ class FindModuleFunctionTableBuilder {
             .resolve(android.file)
             .toURL();
         String include = android.include;
-        return new FoundModuleExpression(resolved.manifest.coordinate, url,
+        return new FoundModuleExpression(resolved.cdepManifestYml.coordinate, url,
             android.sha256, include, android.lib);
     }
 }

@@ -2,8 +2,8 @@ package io.cdep.service;
 
 import io.cdep.AST.service.ResolvedManifest;
 import io.cdep.ManifestUtils;
-import io.cdep.manifest.Manifest;
-import io.cdep.model.Reference;
+import io.cdep.manifest.CDepManifestYml;
+import io.cdep.model.Dependency;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,46 +12,46 @@ import java.nio.file.Paths;
 class LocalFilePathResolver extends Resolver {
 
     @Override
-    ResolvedManifest resolve(GeneratorEnvironment environment, Reference reference,
+    ResolvedManifest resolve(GeneratorEnvironment environment, Dependency dependency,
         boolean forceRedownload)
         throws IOException {
-        String coordinate = reference.compile;
+        String coordinate = dependency.compile;
         assert coordinate != null;
         File local = new File(coordinate);
         if (!local.isFile()) {
             return null;
         }
         String content = new String(Files.readAllBytes(Paths.get(local.getCanonicalPath())));
-        Manifest manifest = ManifestUtils.convertStringToManifest(content);
-        ManifestUtils.checkManifestSanity(manifest);
+        CDepManifestYml cdepManifestYml = ManifestUtils.convertStringToManifest(content);
+        ManifestUtils.checkManifestSanity(cdepManifestYml);
 
-        if (reference.enforceSourceUrlMatchesManifest == null
-            || reference.enforceSourceUrlMatchesManifest) {
+        if (dependency.enforceSourceUrlMatchesManifest == null
+            || dependency.enforceSourceUrlMatchesManifest) {
             // Ensure that the manifest coordinate agrees with the url provided
-            assert manifest.coordinate != null;
-            assert manifest.coordinate.groupId != null;
-            if (!coordinate.contains(manifest.coordinate.groupId)) {
+            assert cdepManifestYml.coordinate != null;
+            assert cdepManifestYml.coordinate.groupId != null;
+            if (!coordinate.contains(cdepManifestYml.coordinate.groupId)) {
                 throw new RuntimeException(
                     String.format("local file name '%s' did not contain groupId '%s'"
                             + "", coordinate,
-                        manifest.coordinate.groupId));
+                        cdepManifestYml.coordinate.groupId));
             }
-            assert manifest.coordinate.artifactId != null;
-            if (!coordinate.contains(manifest.coordinate.artifactId)) {
+            assert cdepManifestYml.coordinate.artifactId != null;
+            if (!coordinate.contains(cdepManifestYml.coordinate.artifactId)) {
                 throw new RuntimeException(
                     String.format("local file name '%s' did not contain artifactId '%s'"
                             + "", coordinate,
-                        manifest.coordinate.artifactId));
+                        cdepManifestYml.coordinate.artifactId));
             }
-            assert manifest.coordinate.version != null;
-            if (!coordinate.contains(manifest.coordinate.version)) {
+            assert cdepManifestYml.coordinate.version != null;
+            if (!coordinate.contains(cdepManifestYml.coordinate.version)) {
                 throw new RuntimeException(
                     String.format("local file name '%s' did not contain version '%s'"
                             + "", coordinate,
-                        manifest.coordinate.version));
+                        cdepManifestYml.coordinate.version));
             }
         }
 
-        return new ResolvedManifest(local.getCanonicalFile().toURI().toURL(), manifest);
+        return new ResolvedManifest(local.getCanonicalFile().toURI().toURL(), cdepManifestYml);
     }
 }

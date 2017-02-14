@@ -1,16 +1,16 @@
 package io.cdep.model;
 
 @SuppressWarnings("unused")
-public class Reference {
+public class Dependency {
   final public String compile;
   final public Boolean enforceSourceUrlMatchesManifest; // null means yes
 
-  public Reference() {
+  public Dependency() {
     compile = null;
     enforceSourceUrlMatchesManifest = null;
   }
 
-  public Reference(String compile) {
+  public Dependency(String compile) {
     this.compile = compile;
     this.enforceSourceUrlMatchesManifest = null;
   }

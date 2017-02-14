@@ -4,8 +4,8 @@ package io.cdep;
 import io.cdep.AST.finder.FunctionTableExpression;
 import io.cdep.AST.service.ResolvedManifest;
 import io.cdep.model.BuildSystem;
-import io.cdep.model.Configuration;
-import io.cdep.model.Reference;
+import io.cdep.model.CDepYml;
+import io.cdep.model.Dependency;
 import io.cdep.service.GeneratorEnvironment;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,7 +25,7 @@ public class CDep {
     private PrintStream out = System.out;
     private File workingFolder = new File(".");
     private File downloadFolder = null;
-    private Configuration config = null;
+    private CDepYml config = null;
     private File configFile = null;
 
     CDep(PrintStream out) {
@@ -88,14 +88,15 @@ public class CDep {
                     out.printf("Usage: cdep show local %s\n", EXAMPLE_COORDINATE);
                     return true;
                 }
-                Reference reference = new Reference(args[2]);
-                ResolvedManifest resolved = environment.resolveAny(reference, false);
+                Dependency dependency = new Dependency(args[2]);
+                ResolvedManifest resolved = environment.resolveAny(dependency, false);
                 if (resolved == null) {
                     out.printf("Could not resolve manifest coordinate %s\n", args[2]);
                     return true;
                 }
 
-                File local = environment.getLocalDownloadFilename(resolved.manifest.coordinate,
+                File local = environment
+                    .getLocalDownloadFilename(resolved.cdepManifestYml.coordinate,
                     resolved.remote);
                 out.println(local.getCanonicalFile());
                 return true;
@@ -176,7 +177,7 @@ public class CDep {
         throws IOException, URISyntaxException {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         Set<String> seen = new HashSet<>();
-        for(Reference dependency : config.dependencies) {
+        for (Dependency dependency : config.dependencies) {
             if (dependency.compile == null) {
                 continue;
             }
@@ -206,10 +207,10 @@ public class CDep {
             return false;
         }
 
-        Yaml yaml = new Yaml(new Constructor(Configuration.class));
-        this.config = (Configuration)yaml.load(new FileInputStream(configFile));
+        Yaml yaml = new Yaml(new Constructor(CDepYml.class));
+        this.config = (CDepYml) yaml.load(new FileInputStream(configFile));
         if (this.config == null) {
-            this.config = new Configuration();
+            this.config = new CDepYml();
         }
         validateConfig(configFile);
         return true;

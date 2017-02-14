@@ -5,7 +5,7 @@ import static com.google.common.truth.Truth.assertThat;
 import io.cdep.AST.finder.FoundModuleExpression;
 import io.cdep.AST.finder.FunctionTableExpression;
 import io.cdep.AST.service.ResolvedManifest;
-import io.cdep.model.Reference;
+import io.cdep.model.Dependency;
 import io.cdep.service.GeneratorEnvironment;
 import java.io.File;
 import java.io.IOException;
@@ -22,8 +22,8 @@ public class TestFindModuleFunctionTableBuilder {
         new File("./test-files/TestFindModuleFunctionTableBuilder/working"),
         null);
 
-    private static Reference createReference(String compile) {
-        return new Reference(compile);
+    private static Dependency createReference(String compile) {
+        return new Dependency(compile);
 
     }
 
@@ -32,16 +32,16 @@ public class TestFindModuleFunctionTableBuilder {
         ResolvedManifest resolved = environment.resolveAny(createReference(
             "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml"),
             false);
-        assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
-        assertThat(resolved.manifest.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.59");
-        assertThat(resolved.manifest.android.length).isEqualTo(4);
+        assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
+        assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
+        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("alpha-0.0.59");
+        assertThat(resolved.cdepManifestYml.android.length).isEqualTo(4);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         String zip = FindModuleInterpreter.find(table,
-            resolved.manifest.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate.toString(),
             "Android",
             "21",
             "c++_shared",
@@ -56,10 +56,10 @@ public class TestFindModuleFunctionTableBuilder {
             ResolvedManifest resolved = environment.resolveAny(createReference(
                 "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.32/cdep-manifest.yml"),
                 false);
-            assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
-            assertThat(resolved.manifest.coordinate.artifactId).isEqualTo("cmakeify");
-            assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.32");
-            assertThat(resolved.manifest.android.length).isEqualTo(208);
+            assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
+            assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
+            assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("alpha-0.0.32");
+            assertThat(resolved.cdepManifestYml.android.length).isEqualTo(208);
 
             FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
             builder.addManifest(resolved);
@@ -78,28 +78,28 @@ public class TestFindModuleFunctionTableBuilder {
         ResolvedManifest resolved = environment.resolveAny(createReference(
             "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml"),
             false);
-        assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
-        assertThat(resolved.manifest.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.59");
-        assertThat(resolved.manifest.android.length).isEqualTo(4);
+        assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
+        assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
+        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("alpha-0.0.59");
+        assertThat(resolved.cdepManifestYml.android.length).isEqualTo(4);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         FindModuleInterpreter.find(table,
-            resolved.manifest.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate.toString(),
             "Android",
             "21",
             "c++_shared",
             "x86").archive.getPath().contains("platform-21");
         FindModuleInterpreter.find(table,
-            resolved.manifest.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate.toString(),
             "Android",
             "22",
             "c++_shared",
             "x86").archive.getPath().contains("platform-21");
         FindModuleInterpreter.find(table,
-            resolved.manifest.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate.toString(),
             "Android",
             "20",
             "c++_shared",
@@ -116,7 +116,7 @@ public class TestFindModuleFunctionTableBuilder {
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
-            resolved.manifest.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate.toString(),
             "Android",
             "21",
             "c++_shared",
@@ -136,7 +136,7 @@ public class TestFindModuleFunctionTableBuilder {
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
-            resolved.manifest.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate.toString(),
             "Android",
             "21",
             "c++_shared",
@@ -155,7 +155,7 @@ public class TestFindModuleFunctionTableBuilder {
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
-            resolved.manifest.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate.toString(),
             "Android",
             "21",
             "c++_shared",
@@ -176,7 +176,7 @@ public class TestFindModuleFunctionTableBuilder {
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
-            resolved.manifest.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate.toString(),
             "Android",
             "21",
             "c++_shared",

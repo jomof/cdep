@@ -3,7 +3,7 @@ package io.cdep.service;
 import static java.util.regex.Pattern.compile;
 
 import io.cdep.AST.service.ResolvedManifest;
-import io.cdep.model.Reference;
+import io.cdep.model.Dependency;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,8 +15,8 @@ class GithubReleasesCoordinateResolver extends Resolver {
 
     @Override
     ResolvedManifest resolve(GeneratorEnvironment environment,
-        Reference reference, boolean forceRedownload) throws IOException {
-        String coordinate = reference.compile;
+        Dependency dependency, boolean forceRedownload) throws IOException {
+        String coordinate = dependency.compile;
         assert coordinate != null;
         Matcher match = pattern.matcher(coordinate);
         if (match.find()) {
@@ -28,7 +28,7 @@ class GithubReleasesCoordinateResolver extends Resolver {
                 user,
                 groupId,
                 version);
-            return urlResolver.resolve(environment, new Reference(manifest), forceRedownload);
+            return urlResolver.resolve(environment, new Dependency(manifest), forceRedownload);
         }
         return null;
     }

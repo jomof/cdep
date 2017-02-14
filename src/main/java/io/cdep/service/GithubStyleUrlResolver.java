@@ -2,9 +2,9 @@ package io.cdep.service;
 
 import io.cdep.AST.service.ResolvedManifest;
 import io.cdep.ManifestUtils;
+import io.cdep.manifest.CDepManifestYml;
 import io.cdep.manifest.Coordinate;
-import io.cdep.manifest.Manifest;
-import io.cdep.model.Reference;
+import io.cdep.model.Dependency;
 import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Matcher;
@@ -15,8 +15,8 @@ class GithubStyleUrlResolver extends Resolver {
 
   @Override
   ResolvedManifest resolve(GeneratorEnvironment environment,
-      Reference reference, boolean forceRedownload) throws IOException {
-    String coordinate = reference.compile;
+      Dependency dependency, boolean forceRedownload) throws IOException {
+    String coordinate = dependency.compile;
     assert coordinate != null;
     Matcher match = pattern.matcher(coordinate);
     if (match.find()) {
@@ -37,30 +37,30 @@ class GithubStyleUrlResolver extends Resolver {
       String manifestContent = environment.getLocalDownloadedFileText(
           provisionalCoordinate,
           new URL(coordinate), forceRedownload);
-      Manifest manifest = ManifestUtils.convertStringToManifest(manifestContent);
+      CDepManifestYml cdepManifestYml = ManifestUtils.convertStringToManifest(manifestContent);
 
       // Ensure that the manifest coordinate agrees with the url provided
-      assert manifest.coordinate != null;
-      if (!groupId.equals(manifest.coordinate.groupId)) {
+      assert cdepManifestYml.coordinate != null;
+      if (!groupId.equals(cdepManifestYml.coordinate.groupId)) {
         throw new RuntimeException(
             String.format("groupId '%s' from manifest did not agree with github url '%s",
-                manifest.coordinate.groupId,
+                cdepManifestYml.coordinate.groupId,
                 coordinate));
       }
-      if (!artifactId.equals(manifest.coordinate.artifactId)) {
+      if (!artifactId.equals(cdepManifestYml.coordinate.artifactId)) {
         throw new RuntimeException(
             String.format("artifactId '%s' from manifest did not agree with github url '%s",
-                manifest.coordinate.artifactId,
+                cdepManifestYml.coordinate.artifactId,
                 coordinate));
       }
-      if (!version.equals(manifest.coordinate.version)) {
+      if (!version.equals(cdepManifestYml.coordinate.version)) {
         throw new RuntimeException(
             String.format("version '%s' from manifest did not agree with github url '%s",
-                manifest.coordinate.version,
+                cdepManifestYml.coordinate.version,
                 coordinate));
       }
 
-      return new ResolvedManifest(new URL(coordinate), manifest);
+      return new ResolvedManifest(new URL(coordinate), cdepManifestYml);
     }
 
     return null;

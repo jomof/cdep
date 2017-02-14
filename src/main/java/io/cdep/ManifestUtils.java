@@ -1,7 +1,7 @@
 package io.cdep;
 
 import io.cdep.manifest.Android;
-import io.cdep.manifest.Manifest;
+import io.cdep.manifest.CDepManifestYml;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
@@ -11,10 +11,11 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 
 public class ManifestUtils {
-  public static Manifest convertStringToManifest(String content) {
-        Yaml yaml = new Yaml(new Constructor(Manifest.class));
-        Manifest dependencyConfig =
-            (Manifest)yaml.load( new ByteArrayInputStream(content.getBytes(
+
+    public static CDepManifestYml convertStringToManifest(String content) {
+        Yaml yaml = new Yaml(new Constructor(CDepManifestYml.class));
+        CDepManifestYml dependencyConfig =
+            (CDepManifestYml) yaml.load(new ByteArrayInputStream(content.getBytes(
                 StandardCharsets.UTF_8)));
         if (dependencyConfig == null) {
             throw new RuntimeException();
@@ -22,23 +23,23 @@ public class ManifestUtils {
         return dependencyConfig;
   }
 
-    public static void checkManifestSanity(Manifest manifest) {
-        if (manifest.coordinate == null) {
+    public static void checkManifestSanity(CDepManifestYml cdepManifestYml) {
+        if (cdepManifestYml.coordinate == null) {
             throw new RuntimeException("Manifest was missing coordinate");
         }
-        if (manifest.coordinate.groupId == null) {
+        if (cdepManifestYml.coordinate.groupId == null) {
             throw new RuntimeException("Manifest was missing coordinate.groupId");
         }
-        if (manifest.coordinate.artifactId == null) {
+        if (cdepManifestYml.coordinate.artifactId == null) {
             throw new RuntimeException("Manifest was missing coordinate.artifactId");
         }
-        if (manifest.coordinate.version == null) {
+        if (cdepManifestYml.coordinate.version == null) {
             throw new RuntimeException("Manifest was missing coordinate.version");
         }
 
-        checkForDuplicateZipFiles(manifest);
+        checkForDuplicateZipFiles(cdepManifestYml);
 
-        for (Android android : manifest.android) {
+        for (Android android : cdepManifestYml.android) {
             validateAndroid(android);
         }
     }
@@ -54,15 +55,15 @@ public class ManifestUtils {
         }
     }
 
-    private static void checkForDuplicateZipFiles(Manifest manifest) {
+    private static void checkForDuplicateZipFiles(CDepManifestYml cdepManifestYml) {
         Set<String> zips = new HashSet<>();
-        assert manifest.android != null;
-        for (Android android : manifest.android) {
+        assert cdepManifestYml.android != null;
+        for (Android android : cdepManifestYml.android) {
             if (zips.contains(android.file)) {
                 throw new RuntimeException(
                     String.format(
                         "Module '%s' contains multiple references to the same zip file: %s",
-                        manifest.coordinate, android.file));
+                        cdepManifestYml.coordinate, android.file));
             }
             zips.add(android.file);
         }

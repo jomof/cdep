@@ -3,7 +3,7 @@ package io.cdep;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.common.io.Files;
-import io.cdep.model.Configuration;
+import io.cdep.model.CDepYml;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
@@ -47,7 +47,7 @@ public class TestCDep {
 
     @Test
     public void someKnownUrls() throws Exception {
-        Configuration config = new Configuration();
+        CDepYml config = new CDepYml();
         System.out.printf(new Yaml().dump(config));
         File yaml = new File("test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
@@ -69,7 +69,7 @@ public class TestCDep {
 
     @Test
     public void redownload() throws Exception {
-        Configuration config = new Configuration();
+        CDepYml config = new CDepYml();
         File yaml = new File("test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
@@ -86,7 +86,7 @@ public class TestCDep {
 
     @Test
     public void noDependencies() throws Exception {
-        Configuration config = new Configuration();
+        CDepYml config = new CDepYml();
         System.out.printf(new Yaml().dump(config));
         File yaml = new File("test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
@@ -101,7 +101,7 @@ public class TestCDep {
     @Test
     public void dumpIsSelfHost() throws Exception {
         System.out.printf("%s\n", System.getProperty("user.home"));
-        Configuration config = new Configuration();
+        CDepYml config = new CDepYml();
         System.out.printf(new Yaml().dump(config));
         File yaml = new File("test-files/simpleConfiguration/cdep.yml");
         yaml.getParentFile().mkdirs();

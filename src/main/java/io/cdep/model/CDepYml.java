@@ -1,11 +1,11 @@
 package io.cdep.model;
 
-public class Configuration {
+public class CDepYml {
 
     final public BuildSystem builders[] = new BuildSystem[0];
-    final public Reference dependencies[] = new Reference[0];
+    final public Dependency dependencies[] = new Dependency[0];
 
-    public Configuration() {
+    public CDepYml() {
     }
 
     private String toYaml(@SuppressWarnings("SameParameterValue") int indent) {
@@ -22,7 +22,7 @@ public class Configuration {
 
         if (dependencies.length > 0) {
             sb.append(String.format("%sdependencies:\n", prefix));
-            for (Reference dependency : dependencies) {
+            for (Dependency dependency : dependencies) {
                 sb.append("- ");
                 sb.append(dependency.toYaml(indent + 1));
             }
