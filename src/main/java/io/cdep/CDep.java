@@ -23,7 +23,7 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 public class CDep {
 
-    final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev9";
+    final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev10";
     private PrintStream out = System.out;
     private File workingFolder = new File(".");
     private File downloadFolder = null;
