@@ -2,7 +2,7 @@
 
 
 # CDep
-CDep is a distributed native package dependency manager with a focus on Android. Runs on Windows, Linux, and MacOS.
+CDep is a dectralized native package dependency manager with a focus on Android. Runs on Windows, Linux, and MacOS.
    
    
 ## Linux and Mac
