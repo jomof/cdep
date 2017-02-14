@@ -3,10 +3,10 @@ package io.cdep;
 
 import io.cdep.AST.finder.FunctionTableExpression;
 import io.cdep.AST.service.ResolvedManifest;
-import io.cdep.model.BuildSystem;
-import io.cdep.model.CDepYml;
-import io.cdep.model.Dependency;
 import io.cdep.service.GeneratorEnvironment;
+import io.cdep.yml.cdep.BuildSystem;
+import io.cdep.yml.cdep.CDepYml;
+import io.cdep.yml.cdep.Dependency;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

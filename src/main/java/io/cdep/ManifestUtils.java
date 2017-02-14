@@ -1,7 +1,7 @@
 package io.cdep;
 
-import io.cdep.manifest.Android;
-import io.cdep.manifest.CDepManifestYml;
+import io.cdep.yml.cdepmanifest.Android;
+import io.cdep.yml.cdepmanifest.CDepManifestYml;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;

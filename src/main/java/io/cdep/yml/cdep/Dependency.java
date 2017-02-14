@@ -1,4 +1,4 @@
-package io.cdep.model;
+package io.cdep.yml.cdep;
 
 @SuppressWarnings("unused")
 public class Dependency {

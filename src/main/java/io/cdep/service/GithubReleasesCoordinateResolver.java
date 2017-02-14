@@ -3,7 +3,7 @@ package io.cdep.service;
 import static java.util.regex.Pattern.compile;
 
 import io.cdep.AST.service.ResolvedManifest;
-import io.cdep.model.Dependency;
+import io.cdep.yml.cdep.Dependency;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

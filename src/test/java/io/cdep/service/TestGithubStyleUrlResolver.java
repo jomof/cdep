@@ -3,7 +3,7 @@ package io.cdep.service;
 import static com.google.common.truth.Truth.assertThat;
 
 import io.cdep.AST.service.ResolvedManifest;
-import io.cdep.model.Dependency;
+import io.cdep.yml.cdep.Dependency;
 import java.io.File;
 import java.io.IOException;
 import org.junit.Test;

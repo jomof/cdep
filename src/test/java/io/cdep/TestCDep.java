@@ -3,7 +3,7 @@ package io.cdep;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.common.io.Files;
-import io.cdep.model.CDepYml;
+import io.cdep.yml.cdep.CDepYml;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;

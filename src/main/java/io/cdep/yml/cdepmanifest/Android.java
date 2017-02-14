@@ -1,4 +1,4 @@
-package io.cdep.manifest;
+package io.cdep.yml.cdepmanifest;
 
 
 @SuppressWarnings("unused")

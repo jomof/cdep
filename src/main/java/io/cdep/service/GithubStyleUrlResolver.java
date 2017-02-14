@@ -2,9 +2,9 @@ package io.cdep.service;
 
 import io.cdep.AST.service.ResolvedManifest;
 import io.cdep.ManifestUtils;
-import io.cdep.manifest.CDepManifestYml;
-import io.cdep.manifest.Coordinate;
-import io.cdep.model.Dependency;
+import io.cdep.yml.cdep.Dependency;
+import io.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.yml.cdepmanifest.Coordinate;
 import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Matcher;

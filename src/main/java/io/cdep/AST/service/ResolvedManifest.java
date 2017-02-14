@@ -1,6 +1,6 @@
 package io.cdep.AST.service;
 
-import io.cdep.manifest.CDepManifestYml;
+import io.cdep.yml.cdepmanifest.CDepManifestYml;
 import java.net.URL;
 
 public class ResolvedManifest {

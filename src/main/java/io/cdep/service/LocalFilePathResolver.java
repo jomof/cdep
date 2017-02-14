@@ -2,8 +2,8 @@ package io.cdep.service;
 
 import io.cdep.AST.service.ResolvedManifest;
 import io.cdep.ManifestUtils;
-import io.cdep.manifest.CDepManifestYml;
-import io.cdep.model.Dependency;
+import io.cdep.yml.cdep.Dependency;
+import io.cdep.yml.cdepmanifest.CDepManifestYml;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
