@@ -210,4 +210,22 @@ public class TestCDep {
         }
         throw new RuntimeException("Expected a hash code error but didn't get one");
     }
+
+    @Test
+    public void androidIsMissingSha256() throws Exception {
+        File yaml = new File("test-files/androidIsMissingSha256/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake]\n"
+                + "dependencies:\n"
+                + "- compile: com.github.jomof:low-level-statistics:0.0.8\n",
+            yaml, StandardCharsets.UTF_8);
+        // Download everything
+        try {
+            main("-wf", yaml.getParent());
+        } catch (RuntimeException e) {
+            assertThat(e.toString()).contains("is missing required sha256");
+            return;
+        }
+        throw new RuntimeException("Expected a hash code error but didn't get one");
+    }
 }

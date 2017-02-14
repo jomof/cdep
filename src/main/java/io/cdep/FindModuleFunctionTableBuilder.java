@@ -18,10 +18,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 class FindModuleFunctionTableBuilder {
 
@@ -51,7 +49,6 @@ class FindModuleFunctionTableBuilder {
 
     private FindModuleExpression buildFindModule(ResolvedManifest resolved)
         throws MalformedURLException, URISyntaxException {
-        checkForDuplicateZipFiles(resolved);
 
         Map<String, Expression> cases = new HashMap<>();
         String supported = "";
@@ -79,7 +76,6 @@ class FindModuleFunctionTableBuilder {
         Map<String, List<Android>> stlTypes = new HashMap<>();
         assert resolved.manifest.android != null;
         for (Android android : resolved.manifest.android) {
-            validateAndroid(android);
             List<Android> androids = stlTypes.get(android.runtime);
             if (androids == null) {
                 androids = new ArrayList<>();
@@ -118,30 +114,7 @@ class FindModuleFunctionTableBuilder {
                     resolved.manifest.coordinate, runtimes), androidStlType));
     }
 
-    private void validateAndroid(Android android) {
-        if (android.file == null) {
-            throw new RuntimeException("Package Android manifest missing file.");
-        }
-        if (android.sha256 == null) {
-            throw new RuntimeException(
-                String.format("Package Android manifest '%s' is missing required sha256",
-                    android.file));
-        }
-    }
 
-    private void checkForDuplicateZipFiles(ResolvedManifest resolved) {
-        Set<String> zips = new HashSet<>();
-        assert resolved.manifest.android != null;
-        for (Android android : resolved.manifest.android) {
-            if (zips.contains(android.file)) {
-                throw new RuntimeException(
-                    String.format(
-                        "Module '%s' contains multiple references to the same zip file: %s",
-                        resolved.manifest.coordinate, android.file));
-            }
-            zips.add(android.file);
-        }
-    }
 
     private Expression buildAndroidPlatformExpression(
         ResolvedManifest resolved,

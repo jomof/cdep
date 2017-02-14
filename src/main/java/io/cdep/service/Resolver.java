@@ -6,6 +6,8 @@ import java.io.IOException;
 
 abstract class Resolver {
 
-  abstract ResolvedManifest resolve(GeneratorEnvironment environment,
-      Reference reference, boolean forceRedownload) throws IOException;
+    abstract ResolvedManifest resolve(
+        GeneratorEnvironment environment,
+        Reference reference,
+        boolean forceRedownload) throws IOException;
 }

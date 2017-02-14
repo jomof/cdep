@@ -52,18 +52,17 @@ public class TestFindModuleFunctionTableBuilder {
     // Test case where a manifest points to the same zip file multiple times (not allowed)
     @Test
     public void testMultipleZipReferences() throws IOException, URISyntaxException {
-        ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.32/cdep-manifest.yml"),
-            false);
-        assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
-        assertThat(resolved.manifest.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.32");
-        assertThat(resolved.manifest.android.length).isEqualTo(208);
-
-        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
-        builder.addManifest(resolved);
-
         try {
+            ResolvedManifest resolved = environment.resolveAny(createReference(
+                "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.32/cdep-manifest.yml"),
+                false);
+            assertThat(resolved.manifest.coordinate.groupId).isEqualTo("com.github.jomof");
+            assertThat(resolved.manifest.coordinate.artifactId).isEqualTo("cmakeify");
+            assertThat(resolved.manifest.coordinate.version).isEqualTo("alpha-0.0.32");
+            assertThat(resolved.manifest.android.length).isEqualTo(208);
+
+            FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+            builder.addManifest(resolved);
             builder.build();
         } catch (RuntimeException e) {
             assertThat(e).hasMessage("Module 'com.github.jomof:cmakeify:alpha-0.0.32' contains "
