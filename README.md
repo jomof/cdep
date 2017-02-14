@@ -12,6 +12,15 @@ Get started with CDep on Linux and Mac.
      $ cd my-project
      $ ../cdep-redist/cdep wrapper
 
+This created a four files in your local folder:
+
+     cdep   
+     cdep.bat
+     cdep.yml
+     bootstrap\wrapper\bootstrap.jar
+
+These files are meant to be checked into source control.  
+  
 Now edit cdep.yml file to add a line like this.
 
      dependencies:
