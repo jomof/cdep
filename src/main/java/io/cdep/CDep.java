@@ -21,7 +21,6 @@ import java.util.Set;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
-
 public class CDep {
 
     final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev9";
