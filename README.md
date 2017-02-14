@@ -19,11 +19,11 @@ Now edit cdep.yml file to add a line like this.
      
 This tell CDeps that this project depends on SQLite.
 
-Next, run cdep command to download SQLLite and build CMake modules for it.
+Next, run cdep command to download SQLite and build CMake modules for it.
 
     $ ./cdep
-    Downloading sqllite-android-gnustl_shared-platform-21.zip
-    Exploding sqllite-android-gnustl_shared-platform-21.zip
+    Downloading sqlite-android-gnustl_shared-platform-21.zip
+    Exploding sqlite-android-gnustl_shared-platform-21.zip
     Generating .cdep/modules/cdep-dependencies-config.cmake
 
 ## Windows
@@ -40,7 +40,7 @@ A CDep packaging of Boost (header only).
 
 ## SQLite [![Build Status](https://travis-ci.org/jomof/sqlite.svg?branch=master)](https://travis-ci.org/jomof/sqlite) [![CDep Status](https://cdep-io.github.io/com.github.jomof/sqlite/latest/latest.svg)](https://github.com/jomof/sqlite/releases/latest)
 
-A CDep packaging of SQLLite
+A CDep packaging of SQLite
 
 ## yaml-cpp [![Build Status](https://travis-ci.org/jomof/yaml-cpp.svg?branch=master)](https://github.com/jomof/yaml-cpp) [![CDep Status](https://cdep-io.github.io/com.github.jomof/yaml-cpp/latest/latest.svg)](https://github.com/jomof/yaml-cpp/releases/latest)
 A CDep packaging of yaml-cpp
