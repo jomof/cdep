@@ -1,4 +1,4 @@
-package io.cdep.AST.finder;
+package io.cdep.ast.finder;
 
 public class AbortExpression extends Expression {
 

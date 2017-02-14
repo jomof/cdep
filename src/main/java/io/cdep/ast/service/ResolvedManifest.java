@@ -1,4 +1,4 @@
-package io.cdep.AST.service;
+package io.cdep.ast.service;
 
 import io.cdep.yml.cdepmanifest.CDepManifestYml;
 import java.net.URL;

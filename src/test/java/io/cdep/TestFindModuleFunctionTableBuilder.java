@@ -2,10 +2,10 @@ package io.cdep;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import io.cdep.AST.finder.FoundModuleExpression;
-import io.cdep.AST.finder.FunctionTableExpression;
-import io.cdep.AST.service.ResolvedManifest;
-import io.cdep.service.GeneratorEnvironment;
+import io.cdep.ast.finder.FoundModuleExpression;
+import io.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.ast.service.ResolvedManifest;
+import io.cdep.generator.GeneratorEnvironment;
 import io.cdep.yml.cdep.Dependency;
 import java.io.File;
 import java.io.IOException;

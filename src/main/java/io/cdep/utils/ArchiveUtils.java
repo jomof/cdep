@@ -1,4 +1,4 @@
-package io.cdep;
+package io.cdep.utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,12 +8,12 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-class ArchiveUtils {
+public class ArchiveUtils {
 
     /**
      * Unzip the given archive.
      */
-    static void unzip(File localArchive, File localUnzipFolder) throws IOException {
+    public static void unzip(File localArchive, File localUnzipFolder) throws IOException {
         ZipFile zipFile = new ZipFile(localArchive.getPath());
         Enumeration<?> enu = zipFile.entries();
         while (enu.hasMoreElements()) {

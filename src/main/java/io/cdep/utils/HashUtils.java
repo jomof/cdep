@@ -1,4 +1,4 @@
-package io.cdep;
+package io.cdep.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,7 +27,7 @@ public class HashUtils {
      *
      * command run from bash.
      */
-    static String getSHA256OfFile(File local) throws NoSuchAlgorithmException, IOException {
+    public static String getSHA256OfFile(File local) throws NoSuchAlgorithmException, IOException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         InputStream in = new FileInputStream(local);
         byte[] block = new byte[4096];

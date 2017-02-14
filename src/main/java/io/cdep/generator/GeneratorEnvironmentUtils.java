@@ -1,8 +1,10 @@
-package io.cdep;
+package io.cdep.generator;
 
-import io.cdep.AST.finder.FoundModuleExpression;
-import io.cdep.AST.finder.FunctionTableExpression;
-import io.cdep.service.GeneratorEnvironment;
+import io.cdep.ast.finder.FoundModuleExpression;
+import io.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.utils.ArchiveUtils;
+import io.cdep.utils.ExpressionUtils;
+import io.cdep.utils.HashUtils;
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -16,7 +18,7 @@ public class GeneratorEnvironmentUtils {
     /**
      * Given a function table and generator environment, download all of the files referenced.
      */
-    static void downloadReferencedModules(
+    public static void downloadReferencedModules(
         GeneratorEnvironment environment,
         FunctionTableExpression table,
         boolean forceRedownload) throws IOException, NoSuchAlgorithmException {
@@ -43,6 +45,4 @@ public class GeneratorEnvironmentUtils {
             }
         }
     }
-
-
 }

@@ -1,7 +1,8 @@
-package io.cdep.service;
+package io.cdep.resolver;
 
-import io.cdep.AST.service.ResolvedManifest;
-import io.cdep.ManifestUtils;
+import io.cdep.ast.service.ResolvedManifest;
+import io.cdep.generator.GeneratorEnvironment;
+import io.cdep.utils.ManifestUtils;
 import io.cdep.yml.cdep.Dependency;
 import io.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.yml.cdepmanifest.Coordinate;
@@ -10,11 +11,11 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class GithubStyleUrlResolver extends Resolver {
+public class GithubStyleUrlResolver extends Resolver {
   final private Pattern pattern = Pattern.compile("^https://(.*)/(.*)/(.*)/releases/download/(.*)/cdep-manifest.yml$");
 
   @Override
-  ResolvedManifest resolve(GeneratorEnvironment environment,
+  public ResolvedManifest resolve(GeneratorEnvironment environment,
       Dependency dependency, boolean forceRedownload) throws IOException {
     String coordinate = dependency.compile;
     assert coordinate != null;

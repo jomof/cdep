@@ -1,7 +1,8 @@
-package io.cdep.service;
+package io.cdep.resolver;
 
-import io.cdep.AST.service.ResolvedManifest;
-import io.cdep.ManifestUtils;
+import io.cdep.ast.service.ResolvedManifest;
+import io.cdep.generator.GeneratorEnvironment;
+import io.cdep.utils.ManifestUtils;
 import io.cdep.yml.cdep.Dependency;
 import io.cdep.yml.cdepmanifest.CDepManifestYml;
 import java.io.File;
@@ -9,10 +10,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-class LocalFilePathResolver extends Resolver {
+public class LocalFilePathResolver extends Resolver {
 
     @Override
-    ResolvedManifest resolve(GeneratorEnvironment environment, Dependency dependency,
+    public ResolvedManifest resolve(GeneratorEnvironment environment, Dependency dependency,
         boolean forceRedownload)
         throws IOException {
         String coordinate = dependency.compile;

@@ -1,4 +1,4 @@
-package io.cdep;
+package io.cdep.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-class FileUtils {
+public class FileUtils {
     public static void copyFile(File sourceFile, File destFile) throws IOException {
     if(!destFile.exists()) {
         //noinspection ResultOfMethodCallIgnored

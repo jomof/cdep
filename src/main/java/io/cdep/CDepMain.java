@@ -1,9 +1,12 @@
 package io.cdep;
 
 
-import io.cdep.AST.finder.FunctionTableExpression;
-import io.cdep.AST.service.ResolvedManifest;
-import io.cdep.service.GeneratorEnvironment;
+import io.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.ast.service.ResolvedManifest;
+import io.cdep.generator.CMakeGenerator;
+import io.cdep.generator.GeneratorEnvironment;
+import io.cdep.generator.GeneratorEnvironmentUtils;
+import io.cdep.utils.FileUtils;
 import io.cdep.yml.cdep.BuildSystem;
 import io.cdep.yml.cdep.CDepYml;
 import io.cdep.yml.cdep.Dependency;
@@ -19,7 +22,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 
-public class CDep {
+public class CDepMain {
 
     final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev9";
     private PrintStream out = System.out;
@@ -28,13 +31,13 @@ public class CDep {
     private CDepYml config = null;
     private File configFile = null;
 
-    CDep(PrintStream out) {
+    CDepMain(PrintStream out) {
         this.out = out;
     }
 
     public static void main(String[] args)
         throws IOException, URISyntaxException, NoSuchAlgorithmException {
-        new CDep(System.out).go(args);
+        new CDepMain(System.out).go(args);
     }
 
     void go(String[] args) throws IOException, URISyntaxException, NoSuchAlgorithmException {

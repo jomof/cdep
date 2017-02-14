@@ -1,32 +1,31 @@
-package io.cdep;
+package io.cdep.generator;
 
-import io.cdep.AST.finder.AbortExpression;
-import io.cdep.AST.finder.CaseExpression;
-import io.cdep.AST.finder.Expression;
-import io.cdep.AST.finder.FindModuleExpression;
-import io.cdep.AST.finder.FoundModuleExpression;
-import io.cdep.AST.finder.FunctionTableExpression;
-import io.cdep.AST.finder.IfGreaterThanOrEqualExpression;
-import io.cdep.AST.finder.LongConstantExpression;
-import io.cdep.AST.finder.ParameterExpression;
-import io.cdep.service.GeneratorEnvironment;
+import io.cdep.ast.finder.AbortExpression;
+import io.cdep.ast.finder.CaseExpression;
+import io.cdep.ast.finder.Expression;
+import io.cdep.ast.finder.FindModuleExpression;
+import io.cdep.ast.finder.FoundModuleExpression;
+import io.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.ast.finder.IfGreaterThanOrEqualExpression;
+import io.cdep.ast.finder.LongConstantExpression;
+import io.cdep.ast.finder.ParameterExpression;
 import io.cdep.yml.cdepmanifest.Coordinate;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-class CMakeGenerator {
+public class CMakeGenerator {
 
     final private GeneratorEnvironment environment;
     final private String slash;
 
-    CMakeGenerator(GeneratorEnvironment environment) {
+    public CMakeGenerator(GeneratorEnvironment environment) {
         this.environment = environment;
         this.slash = File.separator.replace("\\", "\\\\");
     }
 
-    void generate(FunctionTableExpression table) throws IOException {
+    public void generate(FunctionTableExpression table) throws IOException {
 
 
         // Generate CMake Find*.cmake files

@@ -1,7 +1,11 @@
-package io.cdep.service;
+package io.cdep.generator;
 
-import io.cdep.AST.service.ResolvedManifest;
-import io.cdep.ManifestUtils;
+import io.cdep.ast.service.ResolvedManifest;
+import io.cdep.resolver.GithubReleasesCoordinateResolver;
+import io.cdep.resolver.GithubStyleUrlResolver;
+import io.cdep.resolver.LocalFilePathResolver;
+import io.cdep.resolver.Resolver;
+import io.cdep.utils.ManifestUtils;
 import io.cdep.yml.cdep.Dependency;
 import io.cdep.yml.cdepmanifest.Coordinate;
 import java.io.File;

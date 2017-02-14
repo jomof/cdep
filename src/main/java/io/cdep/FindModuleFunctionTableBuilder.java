@@ -1,15 +1,15 @@
 package io.cdep;
 
-import io.cdep.AST.finder.AbortExpression;
-import io.cdep.AST.finder.CaseExpression;
-import io.cdep.AST.finder.Expression;
-import io.cdep.AST.finder.FindModuleExpression;
-import io.cdep.AST.finder.FoundModuleExpression;
-import io.cdep.AST.finder.FunctionTableExpression;
-import io.cdep.AST.finder.IfGreaterThanOrEqualExpression;
-import io.cdep.AST.finder.LongConstantExpression;
-import io.cdep.AST.finder.ParameterExpression;
-import io.cdep.AST.service.ResolvedManifest;
+import io.cdep.ast.finder.AbortExpression;
+import io.cdep.ast.finder.CaseExpression;
+import io.cdep.ast.finder.Expression;
+import io.cdep.ast.finder.FindModuleExpression;
+import io.cdep.ast.finder.FoundModuleExpression;
+import io.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.ast.finder.IfGreaterThanOrEqualExpression;
+import io.cdep.ast.finder.LongConstantExpression;
+import io.cdep.ast.finder.ParameterExpression;
+import io.cdep.ast.service.ResolvedManifest;
 import io.cdep.yml.cdepmanifest.Android;
 import io.cdep.yml.cdepmanifest.Coordinate;
 import java.net.MalformedURLException;

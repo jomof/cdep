@@ -1,8 +1,9 @@
-package io.cdep.service;
+package io.cdep.generator;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import io.cdep.AST.service.ResolvedManifest;
+import io.cdep.ast.service.ResolvedManifest;
+import io.cdep.resolver.GithubStyleUrlResolver;
 import io.cdep.yml.cdep.Dependency;
 import java.io.File;
 import java.io.IOException;

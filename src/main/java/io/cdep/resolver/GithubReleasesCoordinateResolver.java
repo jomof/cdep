@@ -1,20 +1,21 @@
-package io.cdep.service;
+package io.cdep.resolver;
 
 import static java.util.regex.Pattern.compile;
 
-import io.cdep.AST.service.ResolvedManifest;
+import io.cdep.ast.service.ResolvedManifest;
+import io.cdep.generator.GeneratorEnvironment;
 import io.cdep.yml.cdep.Dependency;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class GithubReleasesCoordinateResolver extends Resolver {
+public class GithubReleasesCoordinateResolver extends Resolver {
 
     final private Pattern pattern = compile("^com\\.github\\.(.*):(.*):(.*)$");
     final private GithubStyleUrlResolver urlResolver = new GithubStyleUrlResolver();
 
     @Override
-    ResolvedManifest resolve(GeneratorEnvironment environment,
+    public ResolvedManifest resolve(GeneratorEnvironment environment,
         Dependency dependency, boolean forceRedownload) throws IOException {
         String coordinate = dependency.compile;
         assert coordinate != null;

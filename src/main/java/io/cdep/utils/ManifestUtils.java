@@ -1,4 +1,4 @@
-package io.cdep;
+package io.cdep.utils;
 
 import io.cdep.yml.cdepmanifest.Android;
 import io.cdep.yml.cdepmanifest.CDepManifestYml;

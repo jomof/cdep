@@ -1,14 +1,14 @@
-package io.cdep;
+package io.cdep.utils;
 
-import io.cdep.AST.finder.AbortExpression;
-import io.cdep.AST.finder.CaseExpression;
-import io.cdep.AST.finder.Expression;
-import io.cdep.AST.finder.FindModuleExpression;
-import io.cdep.AST.finder.FoundModuleExpression;
-import io.cdep.AST.finder.FunctionTableExpression;
-import io.cdep.AST.finder.IfGreaterThanOrEqualExpression;
-import io.cdep.AST.finder.LongConstantExpression;
-import io.cdep.AST.finder.ParameterExpression;
+import io.cdep.ast.finder.AbortExpression;
+import io.cdep.ast.finder.CaseExpression;
+import io.cdep.ast.finder.Expression;
+import io.cdep.ast.finder.FindModuleExpression;
+import io.cdep.ast.finder.FoundModuleExpression;
+import io.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.ast.finder.IfGreaterThanOrEqualExpression;
+import io.cdep.ast.finder.LongConstantExpression;
+import io.cdep.ast.finder.ParameterExpression;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +62,7 @@ abstract public class ExpressionUtils {
      * These expressions contain the local module location as well as the resolved coordinate
      * and other information
      */
-    static List<FoundModuleExpression> getAllFoundModuleExpressions(Expression expression) {
+    public static List<FoundModuleExpression> getAllFoundModuleExpressions(Expression expression) {
         List<FoundModuleExpression> foundModules = new ArrayList<>();
         getAllFoundModuleExpressions(expression, foundModules);
         return foundModules;
