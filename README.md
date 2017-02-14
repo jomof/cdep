@@ -15,7 +15,7 @@ Get started with CDep on Linux and Mac.
 Now edit cdep.yml file to add a line like this.
 
      dependencies:
-     - compile: com.github.jomof:sqllite:3.16.2-rev14
+     - compile: com.github.jomof:sqlite:3.16.2-rev14
      
 This tell CDeps that this project depends on SQLite.
 
