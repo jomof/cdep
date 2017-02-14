@@ -79,6 +79,7 @@ class FindModuleFunctionTableBuilder {
         Map<String, List<Android>> stlTypes = new HashMap<>();
         assert resolved.manifest.android != null;
         for (Android android : resolved.manifest.android) {
+            validateAndroid(android);
             List<Android> androids = stlTypes.get(android.runtime);
             if (androids == null) {
                 androids = new ArrayList<>();
@@ -115,6 +116,17 @@ class FindModuleFunctionTableBuilder {
             new AbortExpression(
                 String.format("Android runtime '%%s' is not supported by module '%s'. Supported: %s",
                     resolved.manifest.coordinate, runtimes), androidStlType));
+    }
+
+    private void validateAndroid(Android android) {
+        if (android.file == null) {
+            throw new RuntimeException("Package Android manifest missing file.");
+        }
+        if (android.sha256 == null) {
+            throw new RuntimeException(
+                String.format("Package Android manifest '%s' is missing required sha256",
+                    android.file));
+        }
     }
 
     private void checkForDuplicateZipFiles(ResolvedManifest resolved) {
