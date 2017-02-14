@@ -38,7 +38,7 @@ After this, the instructions are the same as Linux and Mac.
 ## Boost [![Build Status](https://travis-ci.org/jomof/boost.svg?branch=master)](https://github.com/jomof/boost)
 A CDep packaging of Boost (header only).
 
-## SQLLite [![Build Status](https://travis-ci.org/jomof/sqllite.svg?branch=master)](https://travis-ci.org/jomof/sqllite) [![CDep Status](https://cdep-io.github.io/com.github.jomof/sqllite/latest/latest.svg)](https://github.com/jomof/sqllite/releases/latest)
+## SQLite [![Build Status](https://travis-ci.org/jomof/sqlite.svg?branch=master)](https://travis-ci.org/jomof/sqlite) [![CDep Status](https://cdep-io.github.io/com.github.jomof/sqlite/latest/latest.svg)](https://github.com/jomof/sqlite/releases/latest)
 
 A CDep packaging of SQLLite
 
