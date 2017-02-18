@@ -1,4 +1,0 @@
-builders: [cmake]
-dependencies:
-- compile: C:\Users\jomof\.cdep\downloads\com.github.jomof\low-level-statistics\0.0.11\cdep-manifest.yml
-

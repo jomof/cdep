@@ -1,8 +1,0 @@
--classpath 'C:\\Users\\jomof\\projects\\mega\\bootstrap\\build\\classes\\main;C:\\Users\\jomof\\projects\\mega\\bootstrap\\build\\resources\\main;C:\\Users\\jomof\\.gradle\\caches\\modules-2\\files-2.1\\org.yaml\\snakeyaml\\1.17\\7a27ea250c5130b2922b86dea63cbb1cc10a660c\\snakeyaml-1.17.jar'
--d 'C:\\Users\\jomof\\projects\\mega\\bootstrap\\build\\docs\\javadoc'
--doctitle 'bootstrap dev API'
--quiet 
--windowtitle 'bootstrap dev API'
-'C:\\Users\\jomof\\projects\\mega\\bootstrap\\src\\main\\java\\io\\cdep\\bootstrap\\Bootstrap.java'
-'C:\\Users\\jomof\\projects\\mega\\bootstrap\\src\\main\\java\\io\\cdep\\bootstrap\\BuildInfo.java'
-'C:\\Users\\jomof\\projects\\mega\\bootstrap\\src\\main\\java\\io\\cdep\\bootstrap\\WebUtils.java'

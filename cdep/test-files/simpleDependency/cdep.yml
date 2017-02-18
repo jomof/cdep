@@ -1,5 +1,0 @@
-builders: [cmake]
-dependencies:
-- compile: com.github.jomof:cmakeify:alpha-0.0.59
-- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml
-- compile: com.github.jomof:low-level-statistics:0.0.11

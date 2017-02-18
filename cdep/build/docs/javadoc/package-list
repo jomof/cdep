@@ -1,9 +1,0 @@
-io.cdep
-io.cdep.cdep
-io.cdep.cdep.ast.finder
-io.cdep.cdep.ast.service
-io.cdep.cdep.generator
-io.cdep.cdep.resolver
-io.cdep.cdep.utils
-io.cdep.cdep.yml.cdep
-io.cdep.cdep.yml.cdepmanifest
