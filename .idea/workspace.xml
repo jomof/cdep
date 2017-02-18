@@ -2,336 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="Mega">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/3.1/taskArtifacts/cache.properties.lock" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/3.1/taskArtifacts/fileHashes.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/3.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/3.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/.test-files/testCDep/bootstrap/.download/-1372211843/cdep-alpha-0.0.55.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/.test-files/testCDep/bootstrap/.download/-1372211843/snakeyaml-1.17.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/.gradle/3.1/taskArtifacts/cache.properties.lock" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/.gradle/3.1/taskArtifacts/fileHashes.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/.gradle/3.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/.gradle/3.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/.test-files/testCDep/bootstrap/.download/-1372211843/cdep-alpha-0.0.55.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/.test-files/testCDep/bootstrap/.download/-1372211843/snakeyaml-1.17.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/classes/main/io/cdep/bootstrap/Bootstrap.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/classes/main/io/cdep/bootstrap/BuildInfo.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/classes/main/io/cdep/bootstrap/WebUtils.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/classes/test/io/cdep/bootstrap/TestBootstrap.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/libs/bootstrap-dev-javadoc.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/libs/bootstrap-dev-sources.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/libs/bootstrap-dev.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/test-results/test/binary/output.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/test-results/test/binary/output.bin.idx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/test-results/test/binary/results.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/gradle/wrapper/gradle-wrapper.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/local-test-files/cdep-alpha-0.0.29.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/local-test-files/snakeyaml-1.17.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/classes/main/io/cdep/BuildInfo.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/classes/main/io/cdep/bootstrap/BuildInfo.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/.gradle/3.1/taskArtifacts/cache.properties.lock" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/.gradle/3.1/taskArtifacts/fileHashes.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/.gradle/3.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/.gradle/3.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/BuildInfo.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/CDep.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/FindModuleFunctionTableBuilder.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/FindModuleInterpreter.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/ast/finder/AbortExpression.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/ast/finder/CaseExpression.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/ast/finder/Expression.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/ast/finder/FindModuleExpression.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/ast/finder/FoundModuleExpression.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/ast/finder/FunctionTableExpression.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/ast/finder/IfGreaterThanOrEqualExpression.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/ast/finder/LongConstantExpression.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/ast/finder/ParameterExpression.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/ast/service/ResolvedManifest.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/generator/CMakeGenerator.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/generator/GeneratorEnvironment.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/generator/GeneratorEnvironmentUtils.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/resolver/GithubStyleUrlResolver.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/resolver/LocalFilePathResolver.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/resolver/Resolver.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/utils/ArchiveUtils.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/utils/ExpressionUtils.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/utils/FileUtils.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/utils/HashUtils.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/utils/ManifestUtils.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/yml/cdep/BuildSystem.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/yml/cdep/CDepYml.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/yml/cdep/Dependency.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/yml/cdepmanifest/Android.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/yml/cdepmanifest/CDepManifestYml.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/main/io/cdep/cdep/yml/cdepmanifest/Coordinate.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/test/io/cdep/TestCDep.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/test/io/cdep/cdep/TestFindModuleFunctionTableBuilder.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/classes/test/io/cdep/cdep/generator/TestGithubStyleUrlResolver.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/libs/cdep-dev-javadoc.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/libs/cdep-dev-sources.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/libs/cdep-dev.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/test-results/test/binary/output.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/test-results/test/binary/output.bin.idx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/test-results/test/binary/results.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/gradle/wrapper/gradle-wrapper.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/downloads/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-21.zip" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/downloads/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-9.zip" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/downloads/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-21.zip" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/downloads/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-9.zip" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-21.zip/lib/arm64-v8a/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-21.zip/lib/armeabi-v7a/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-21.zip/lib/armeabi/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-21.zip/lib/x86/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-21.zip/lib/x86_64/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-9.zip/lib/armeabi-v7a/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-9.zip/lib/armeabi/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-9.zip/lib/x86/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-21.zip/lib/arm64-v8a/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-21.zip/lib/armeabi-v7a/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-21.zip/lib/armeabi/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-21.zip/lib/x86/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-21.zip/lib/x86_64/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-9.zip/lib/armeabi-v7a/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-9.zip/lib/armeabi/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-9.zip/lib/x86/libstatistics.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/testWrapper/redist/bootstrap/wrapper/bootstrap.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/testWrapper/working/bootstrap/wrapper/bootstrap.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/.gradle/3.1/taskArtifacts/cache.properties.lock" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/.gradle/3.1/taskArtifacts/fileHashes.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/.gradle/3.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/.gradle/3.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/build/libs/integration-1.0-SNAPSHOT.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/gradle/wrapper/gradle-wrapper.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/3.1/taskArtifacts/cache.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/.test-files/testLocalFile/bootstrap.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/bootstrap/bootstrap.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/bootstrap_main.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/bootstrap_test.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/cdep/cdep.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/integration/integration.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/integration_main.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/integration_test.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/mega.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/.gradle/3.1/taskArtifacts/cache.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/.test-files/testLocalFile/bootstrap.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build.gradle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/allclasses-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/allclasses-noframe.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/constant-values.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/deprecated-list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/help-doc.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/index-all.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/io/cdep/bootstrap/Bootstrap.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/io/cdep/bootstrap/BuildInfo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/io/cdep/bootstrap/WebUtils.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/io/cdep/bootstrap/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/io/cdep/bootstrap/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/io/cdep/bootstrap/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/overview-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/package-list" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/script.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/docs/javadoc/stylesheet.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/reports/tests/test/classes/io.cdep.bootstrap.TestBootstrap.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/reports/tests/test/css/base-style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/reports/tests/test/css/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/reports/tests/test/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/reports/tests/test/js/report.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/reports/tests/test/packages/io.cdep.bootstrap.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/test-results/test/TEST-io.cdep.bootstrap.TestBootstrap.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/tmp/jar/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/tmp/javadoc/javadoc.options" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/tmp/javadocJar/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/build/tmp/sourcesJar/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/gradle/wrapper/gradle-wrapper.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/settings.gradle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/src/main/java/io/cdep/bootstrap/Bootstrap.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/src/main/java/io/cdep/bootstrap/BuildInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/src/main/java/io/cdep/bootstrap/WebUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/src/test/java/io/cdep/bootstrap/TestBootstrap.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/.gradle/3.1/taskArtifacts/cache.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build.gradle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/allclasses-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/allclasses-noframe.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/constant-values.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/deprecated-list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/help-doc.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/index-all.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/BuildInfo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/CDep.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/FindModuleFunctionTableBuilder.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/AbortExpression.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/CaseExpression.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/Expression.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/FindModuleExpression.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/FoundModuleExpression.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/FunctionTableExpression.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/IfGreaterThanOrEqualExpression.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/LongConstantExpression.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/ParameterExpression.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/finder/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/service/ResolvedManifest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/service/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/service/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/ast/service/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/generator/CMakeGenerator.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/generator/GeneratorEnvironment.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/generator/GeneratorEnvironmentUtils.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/generator/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/generator/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/generator/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/resolver/GithubStyleUrlResolver.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/resolver/LocalFilePathResolver.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/resolver/Resolver.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/resolver/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/resolver/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/resolver/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/utils/ArchiveUtils.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/utils/ExpressionUtils.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/utils/FileUtils.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/utils/HashUtils.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/utils/ManifestUtils.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/utils/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/utils/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/utils/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdep/BuildSystem.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdep/CDepYml.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdep/Dependency.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdep/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdep/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdep/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdepmanifest/Android.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdepmanifest/CDepManifestYml.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdepmanifest/Coordinate.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdepmanifest/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdepmanifest/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/cdep/yml/cdepmanifest/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/io/cdep/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/overview-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/overview-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/overview-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/package-list" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/script.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/docs/javadoc/stylesheet.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/reports/tests/test/classes/io.cdep.TestCDep.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/reports/tests/test/classes/io.cdep.cdep.TestFindModuleFunctionTableBuilder.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/reports/tests/test/classes/io.cdep.cdep.generator.TestGithubStyleUrlResolver.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/reports/tests/test/css/base-style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/reports/tests/test/css/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/reports/tests/test/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/reports/tests/test/js/report.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/reports/tests/test/packages/io.cdep.cdep.generator.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/reports/tests/test/packages/io.cdep.cdep.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/reports/tests/test/packages/io.cdep.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/test-results/test/TEST-io.cdep.TestCDep.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/test-results/test/TEST-io.cdep.cdep.TestFindModuleFunctionTableBuilder.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/test-results/test/TEST-io.cdep.cdep.generator.TestGithubStyleUrlResolver.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/tmp/jar/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/tmp/javadoc/javadoc.options" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/tmp/javadocJar/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/build/tmp/sourcesJar/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/gradle/wrapper/gradle-wrapper.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/gradlew" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/gradlew.bat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/settings.gradle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/BuildInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/androidIsMissingSha256/cdep.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/.cdep/modules/cdep-dependencies-config.cmake" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/cdep.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/downloads/com.github.jomof/low-level-statistics/0.0.11/cdep-manifest.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-21.zip/include/statistics.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_shared-platform-9.zip/include/statistics.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-21.zip/include/statistics.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/localPathsWork/downloads/.cdep/exploded/com.github.jomof/low-level-statistics/0.0.11/low-level-statistics-android-cxx_static-platform-9.zip/include/statistics.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/simpleConfiguration/cdep.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/simpleDependency/.cdep/modules/cdep-dependencies-config.cmake" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/simpleDependency/cdep.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/testWrapper/redist/cdep" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/testWrapper/redist/cdep.bat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/testWrapper/redist/cdep.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/testWrapper/working/cdep" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/testWrapper/working/cdep.bat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/testWrapper/working/cdep.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/test-files/wrongZipHashNotAllowed/cdep.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/.gradle/3.1/taskArtifacts/cache.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/build.gradle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/build/tmp/jar/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/gradle/wrapper/gradle-wrapper.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/gradlew" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/gradlew.bat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integration/settings.gradle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/cdep/bootstrap/BuildInfo.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitmodules" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules/cdep.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmakeify" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/redist/cdep-redist" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/smoke-test/CMakeLists.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/smoke-test/cdep.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/smoke-test/cmakeify.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/smoke-test/hello.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/travis_cdep" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/smoke-test/cdep" afterPath="$PROJECT_DIR$/bootstrap/gradlew" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/smoke-test/cdep.bat" afterPath="$PROJECT_DIR$/bootstrap/gradlew.bat" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/CDep.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/FindModuleFunctionTableBuilder.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/FindModuleInterpreter.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/ast/finder/AbortExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/AbortExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/ast/finder/CaseExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/CaseExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/ast/finder/Expression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/Expression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/ast/finder/FindModuleExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/FindModuleExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/ast/finder/FoundModuleExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/FoundModuleExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/ast/finder/FunctionTableExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/FunctionTableExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/ast/finder/IfGreaterThanOrEqualExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/IfGreaterThanOrEqualExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/ast/finder/LongConstantExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/LongConstantExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/ast/finder/ParameterExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ParameterExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/ast/service/ResolvedManifest.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/service/ResolvedManifest.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/generator/CMakeGenerator.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/generator/GeneratorEnvironment.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/generator/GeneratorEnvironmentUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/resolver/GithubReleasesCoordinateResolver.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/resolver/GithubStyleUrlResolver.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlResolver.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/resolver/LocalFilePathResolver.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/LocalFilePathResolver.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/resolver/Resolver.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/Resolver.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/utils/ArchiveUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ArchiveUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/utils/ExpressionUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ExpressionUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/utils/FileUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/FileUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/utils/HashUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/HashUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/utils/ManifestUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ManifestUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/yml/cdep/BuildSystem.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdep/BuildSystem.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/yml/cdep/CDepYml.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdep/CDepYml.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/yml/cdep/Dependency.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdep/Dependency.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/yml/cdepmanifest/Android.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Android.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/yml/cdepmanifest/CDepManifestYml.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYml.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/yml/cdepmanifest/Coordinate.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Coordinate.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/io/cdep/TestCDep.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/io/cdep/TestFindModuleFunctionTableBuilder.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/io/cdep/generator/TestGithubStyleUrlResolver.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestGithubStyleUrlResolver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/cdep_main.iml" afterPath="$PROJECT_DIR$/.idea/modules/cdep_main.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/cdep_test.iml" afterPath="$PROJECT_DIR$/.idea/modules/cdep_test.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradlew" afterPath="$PROJECT_DIR$/gradlew" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/cdep/BuildInfo.java" afterPath="$PROJECT_DIR$/src/main/java/io/cdep/BuildInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/integration/build/libs/integration-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/integration/build/libs/integration-1.0-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -383,7 +56,7 @@
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
               </PATH_ELEMENT>
               <PATH_ELEMENT>
-                <option name="myItemId" value="cdep" />
+                <option name="myItemId" value="mega" />
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
               </PATH_ELEMENT>
             </PATH>
@@ -394,7 +67,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="HashUtils.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HashUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/HashUtils.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="594">
@@ -416,13 +89,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestCDep.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TestCDep.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="19" column="18" lean-forward="false" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+            <state relative-caret-position="476">
+              <caret line="50" column="43" lean-forward="false" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
               <folding>
-                <element signature="e#0#9956#0" expanded="false" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -443,7 +116,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="132">
               <caret line="18" column="54" lean-forward="false" selection-start-line="18" selection-start-column="54" selection-end-line="18" selection-end-column="54" />
-              <folding />
+              <folding>
+                <element signature="e#0#8916#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1269,12 +944,12 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/HashUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/generator/TestGithubStyleUrlResolver.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestFindModuleFunctionTableBuilder.java" />
-        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
         <option value="$PROJECT_DIR$/cdep/build.gradle" />
         <option value="$PROJECT_DIR$/integration/build.gradle" />
         <option value="$PROJECT_DIR$/bootstrap/src/test/java/io/cdep/bootstrap/TestBootstrap.java" />
+        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
       </list>
     </option>
   </component>
@@ -1302,6 +977,34 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Production">
@@ -1344,104 +1047,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cdep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1825,10 +1430,10 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_bootstrap_test_(1) - 2017.02.18 at 10h 00m 37s.xml">
-      <configuration name="All in bootstrap_test (1)" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_cdep_test - 2017.02.18 at 11h 59m 07s.xml">
+      <configuration name="All in cdep_test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep_test - 2017.02.18 at 12h 22m 47s.xml">
       <configuration name="All in cdep_test" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestBootstrap_testLocalFile - 2017.02.18 at 10h 01m 36s.xml">
@@ -1867,10 +1472,10 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296417" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296417" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.151875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.151875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0540625" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1937,7 +1542,7 @@
         <state relative-caret-position="165">
           <caret line="19" column="18" lean-forward="false" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
           <folding>
-            <element signature="e#0#9956#0" expanded="false" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1954,7 +1559,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="18" column="54" lean-forward="false" selection-start-line="18" selection-start-column="54" selection-end-line="18" selection-end-column="54" />
-          <folding />
+          <folding>
+            <element signature="e#0#8916#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2228,21 +1835,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="19" column="18" lean-forward="false" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#9956#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="18" column="54" lean-forward="false" selection-start-line="18" selection-start-column="54" selection-end-line="18" selection-end-column="54" />
-          <folding />
+          <folding>
+            <element signature="e#0#8916#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2295,6 +1894,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2204">
           <caret line="73" column="66" lean-forward="true" selection-start-line="73" selection-start-column="66" selection-end-line="73" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="50" column="43" lean-forward="false" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

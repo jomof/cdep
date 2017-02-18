@@ -47,8 +47,8 @@ public class TestCDep {
 
     @Test
     public void missingConfigurationFile() throws Exception {
-        new File("test-files/empty-folder").mkdirs();
-        assertThat(main("-wf", "test-files/empty-folder")).contains("configuration file");
+        new File(".test-files/empty-folder").mkdirs();
+        assertThat(main("-wf", ".test-files/empty-folder")).contains("configuration file");
     }
 
     @Test
@@ -65,7 +65,7 @@ public class TestCDep {
     public void someKnownUrls() throws Exception {
         CDepYml config = new CDepYml();
         System.out.printf(new Yaml().dump(config));
-        File yaml = new File("test-files/simpleDependency/cdep.yml");
+        File yaml = new File(".test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
@@ -86,7 +86,7 @@ public class TestCDep {
     @Test
     public void redownload() throws Exception {
         CDepYml config = new CDepYml();
-        File yaml = new File("test-files/simpleDependency/cdep.yml");
+        File yaml = new File(".test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
@@ -104,7 +104,7 @@ public class TestCDep {
     public void noDependencies() throws Exception {
         CDepYml config = new CDepYml();
         System.out.printf(new Yaml().dump(config));
-        File yaml = new File("test-files/simpleDependency/cdep.yml");
+        File yaml = new File(".test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n",
@@ -119,7 +119,7 @@ public class TestCDep {
         System.out.printf("%s\n", System.getProperty("user.home"));
         CDepYml config = new CDepYml();
         System.out.printf(new Yaml().dump(config));
-        File yaml = new File("test-files/simpleConfiguration/cdep.yml");
+        File yaml = new File(".test-files/simpleConfiguration/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]", yaml, StandardCharsets.UTF_8);
         String result1 = main("show", "manifest", "-wf", yaml.getParent());
@@ -150,7 +150,7 @@ public class TestCDep {
 
     @Test
     public void testWrapper() throws Exception {
-        File testFolder = new File("test-files/testWrapper");
+        File testFolder = new File(".test-files/testWrapper");
         File redistFolder = new File(testFolder, "redist");
         File workingFolder = new File(testFolder, "working");
         File cdepFile = new File(redistFolder, "cdep");
@@ -186,7 +186,7 @@ public class TestCDep {
 
     @Test
     public void localPathsWork() throws Exception {
-        File yaml = new File("test-files/localPathsWork/cdep.yml");
+        File yaml = new File(".test-files/localPathsWork/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
@@ -211,7 +211,7 @@ public class TestCDep {
 
     @Test
     public void wrongZipHashNotAllowed() throws Exception {
-        File yaml = new File("test-files/wrongZipHashNotAllowed/cdep.yml");
+        File yaml = new File(".test-files/wrongZipHashNotAllowed/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
@@ -229,7 +229,7 @@ public class TestCDep {
 
     @Test
     public void androidIsMissingSha256() throws Exception {
-        File yaml = new File("test-files/androidIsMissingSha256/cdep.yml");
+        File yaml = new File(".test-files/androidIsMissingSha256/cdep.yml");
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
