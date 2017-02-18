@@ -1,0 +1,22 @@
+TRAVIS_CDEP_JAR=build/libs/cdep.jar
+if [ -f "build/libs/cdep-dev.jar" ]; then
+    TRAVIS_CDEP_JAR=build/libs/cdep-dev.jar
+fi
+if [ -f "build/libs/cdep-${TRAVIS_TAG}.jar" ]; then
+    TRAVIS_CDEP_JAR=build/libs/cdep-${TRAVIS_TAG}.jar
+fi
+BOOTSTRAP_MANIFEST=$(pwd)/build/libs/bootstrap.yml
+echo entry: io.cdep.CDep > $BOOTSTRAP_MANIFEST
+echo dependencies: >> $BOOTSTRAP_MANIFEST
+printf "%s\n" "- $(pwd)/$TRAVIS_CDEP_JAR" >>$BOOTSTRAP_MANIFEST
+printf "%s\n" "- https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.17/snakeyaml-1.17.jar" >>$BOOTSTRAP_MANIFEST
+cat $BOOTSTRAP_MANIFEST
+pushd smoke-test
+echo ./cdep $BOOTSTRAP_MANIFEST
+../redist/cdep-redist/cdep $BOOTSTRAP_MANIFEST wrapper
+rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
+./cdep $BOOTSTRAP_MANIFEST
+rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
+popd
+
+
