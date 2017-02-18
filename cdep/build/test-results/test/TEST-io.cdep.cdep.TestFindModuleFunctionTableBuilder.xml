@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.cdep.cdep.TestFindModuleFunctionTableBuilder" tests="7" skipped="0" failures="0" errors="0" timestamp="2017-02-18T18:06:52" hostname="LAPTOP-HG3Q20N1" time="0.084">
+  <properties/>
+  <testcase name="testArchivePathIsFull" classname="io.cdep.cdep.TestFindModuleFunctionTableBuilder" time="0.021"/>
+  <testcase name="testMultipleZipReferences" classname="io.cdep.cdep.TestFindModuleFunctionTableBuilder" time="0.047"/>
+  <testcase name="testCheckPlatformSwitch" classname="io.cdep.cdep.TestFindModuleFunctionTableBuilder" time="0.0"/>
+  <testcase name="testHeaderOnly" classname="io.cdep.cdep.TestFindModuleFunctionTableBuilder" time="0.0"/>
+  <testcase name="testHeaderOnlyGitHubCoordinate" classname="io.cdep.cdep.TestFindModuleFunctionTableBuilder" time="0.0"/>
+  <testcase name="testSimple" classname="io.cdep.cdep.TestFindModuleFunctionTableBuilder" time="0.0"/>
+  <testcase name="testFoundIncludeAndLib" classname="io.cdep.cdep.TestFindModuleFunctionTableBuilder" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

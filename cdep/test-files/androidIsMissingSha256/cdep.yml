@@ -1,0 +1,3 @@
+builders: [cmake]
+dependencies:
+- compile: com.github.jomof:low-level-statistics:0.0.8

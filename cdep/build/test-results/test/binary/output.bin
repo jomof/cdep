@@ -1,0 +1,39 @@
+ËGenerating C:\Users\jomof\projects\mega\cdep\test-files\localPathsWork\.cdep\modules\cdep-dependencies-config.cmake
+Generating C:\Users\jomof\projects\mega\cdep\test-files\localPathsWork\.cdep\modules\cdep-dependencies-config.cmake
+èRedownloading https://github.com/jomof/low-level-statistics/releases/download/0.0.11/cdep-manifest.yml
+Redownloading https://github.com/jomof/low-level-statistics/releases/download/0.0.11/low-level-statistics-android-cxx_shared-platform-21.zip
+Redownloading https://github.com/jomof/low-level-statistics/releases/download/0.0.11/low-level-statistics-android-cxx_shared-platform-9.zip
+Redownloading https://github.com/jomof/low-level-statistics/releases/download/0.0.11/low-level-statistics-android-cxx_static-platform-21.zip
+Redownloading https://github.com/jomof/low-level-statistics/releases/download/0.0.11/low-level-statistics-android-cxx_static-platform-9.zip
+Generating C:\Users\jomof\projects\mega\cdep\test-files\simpleDependency\.cdep\modules\cdep-dependencies-config.cmake
+Ü!!io.cdep.cdep.yml.cdep.CDepYml
+builders: []
+dependencies: []
+Nothing to do. Add dependencies to test-files\simpleDependency\cdep.yml
+çDownloads: C:\Users\jomof\.cdep\downloads
+Exploded: C:\Users\jomof\.cdep\exploded
+Modules: C:\Users\jomof\projects\mega\cdep\.\.cdep\modules
+µcdep dev
+ cdep: download dependencies and generate build modules for current cdep.yml
+ cdep show folders: show local download and archive folders
+ cdep show manifest: show cdep interpretation of cdep.yml
+ cdep redownload: redownload dependencies for current cdep.yml
+ cdep --version: show version information
+¶!!io.cdep.cdep.yml.cdep.CDepYml
+builders: []
+dependencies: []
+builders: [cmake]
+dependencies:
+- compile: com.github.jomof:cmakeify:alpha-0.0.59
+- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml
+- compile: com.github.jomof:low-level-statistics:0.0.11
+_C:\Users\jomof
+!!io.cdep.cdep.yml.cdep.CDepYml
+builders: []
+dependencies: []
+builders: [cmake]
+¡Installing cdep wrapper from C:\Users\jomof\projects\mega\cdep\test-files\testWrapper\redist
+Installing test-files\testWrapper\working\cdep.bat
+Installing test-files\testWrapper\working\cdep
+Installing test-files\testWrapper\working\bootstrap\wrapper\bootstrap.jar
+Not overwriting test-files\testWrapper\working\cdep.yml

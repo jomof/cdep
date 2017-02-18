@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.cdep.TestCDep" tests="15" skipped="0" failures="0" errors="0" timestamp="2017-02-18T18:06:53" hostname="LAPTOP-HG3Q20N1" time="3.674">
+  <properties/>
+  <testcase name="localPathsWork" classname="io.cdep.TestCDep" time="0.053"/>
+  <testcase name="redownload" classname="io.cdep.TestCDep" time="3.505"/>
+  <testcase name="noDependencies" classname="io.cdep.TestCDep" time="0.015"/>
+  <testcase name="androidIsMissingSha256" classname="io.cdep.TestCDep" time="0.016"/>
+  <testcase name="wfFlag" classname="io.cdep.TestCDep" time="0.0"/>
+  <testcase name="showFolders" classname="io.cdep.TestCDep" time="0.0"/>
+  <testcase name="testVersion" classname="io.cdep.TestCDep" time="0.0"/>
+  <testcase name="help" classname="io.cdep.TestCDep" time="0.0"/>
+  <testcase name="testNakedCall" classname="io.cdep.TestCDep" time="0.0"/>
+  <testcase name="workingFolderFlag" classname="io.cdep.TestCDep" time="0.0"/>
+  <testcase name="wrongZipHashNotAllowed" classname="io.cdep.TestCDep" time="0.0"/>
+  <testcase name="someKnownUrls" classname="io.cdep.TestCDep" time="0.022"/>
+  <testcase name="dumpIsSelfHost" classname="io.cdep.TestCDep" time="0.015"/>
+  <testcase name="missingConfigurationFile" classname="io.cdep.TestCDep" time="0.0"/>
+  <testcase name="testWrapper" classname="io.cdep.TestCDep" time="0.032"/>
+  <system-out><![CDATA[Generating C:\Users\jomof\projects\mega\cdep\test-files\localPathsWork\.cdep\modules\cdep-dependencies-config.cmake
+Generating C:\Users\jomof\projects\mega\cdep\test-files\localPathsWork\.cdep\modules\cdep-dependencies-config.cmake
+Redownloading https://github.com/jomof/low-level-statistics/releases/download/0.0.11/cdep-manifest.yml
+Redownloading https://github.com/jomof/low-level-statistics/releases/download/0.0.11/low-level-statistics-android-cxx_shared-platform-21.zip
+Redownloading https://github.com/jomof/low-level-statistics/releases/download/0.0.11/low-level-statistics-android-cxx_shared-platform-9.zip
+Redownloading https://github.com/jomof/low-level-statistics/releases/download/0.0.11/low-level-statistics-android-cxx_static-platform-21.zip
+Redownloading https://github.com/jomof/low-level-statistics/releases/download/0.0.11/low-level-statistics-android-cxx_static-platform-9.zip
+Generating C:\Users\jomof\projects\mega\cdep\test-files\simpleDependency\.cdep\modules\cdep-dependencies-config.cmake
+!!io.cdep.cdep.yml.cdep.CDepYml
+builders: []
+dependencies: []
+Nothing to do. Add dependencies to test-files\simpleDependency\cdep.yml
+Downloads: C:\Users\jomof\.cdep\downloads
+Exploded: C:\Users\jomof\.cdep\exploded
+Modules: C:\Users\jomof\projects\mega\cdep\.\.cdep\modules
+cdep dev
+ cdep: download dependencies and generate build modules for current cdep.yml
+ cdep show folders: show local download and archive folders
+ cdep show manifest: show cdep interpretation of cdep.yml
+ cdep redownload: redownload dependencies for current cdep.yml
+ cdep --version: show version information
+!!io.cdep.cdep.yml.cdep.CDepYml
+builders: []
+dependencies: []
+builders: [cmake]
+dependencies:
+- compile: com.github.jomof:cmakeify:alpha-0.0.59
+- compile: https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml
+- compile: com.github.jomof:low-level-statistics:0.0.11
+C:\Users\jomof
+!!io.cdep.cdep.yml.cdep.CDepYml
+builders: []
+dependencies: []
+builders: [cmake]
+Installing cdep wrapper from C:\Users\jomof\projects\mega\cdep\test-files\testWrapper\redist
+Installing test-files\testWrapper\working\cdep.bat
+Installing test-files\testWrapper\working\cdep
+Installing test-files\testWrapper\working\bootstrap\wrapper\bootstrap.jar
+Not overwriting test-files\testWrapper\working\cdep.yml
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
