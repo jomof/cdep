@@ -20,7 +20,7 @@ buildscript {
 
 class GenerateBuildInfo extends DefaultTask {
     @OutputFile
-    public File buildInfoFile = new File("src/main/java/io/cdep/bootstrap/BuildInfo.java")
+    public File buildInfoFile = new File("bootstrap/src/main/java/io/cdep/bootstrap/BuildInfo.java")
 
     @TaskAction
     def generate() {

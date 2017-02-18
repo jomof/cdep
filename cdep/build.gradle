@@ -19,7 +19,7 @@ buildscript {
 
 class GenerateBuildInfo extends DefaultTask {
     @OutputFile
-    public File buildInfoFile = new File("src/main/java/io/cdep/BuildInfo.java")
+    public File buildInfoFile = new File("cdep/src/main/java/io/cdep/BuildInfo.java")
 
     @TaskAction
     def generate() {
