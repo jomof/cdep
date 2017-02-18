@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bootstrap/bootstrap.iml" filepath="$PROJECT_DIR$/.idea/modules/bootstrap/bootstrap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bootstrap_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bootstrap_main.iml" group="bootstrap" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bootstrap_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bootstrap_test.iml" group="bootstrap" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep/cdep.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep/cdep.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep_main.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep_main.iml" group="cdep" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep_test.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep_test.iml" group="cdep" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/integration/integration.iml" filepath="$PROJECT_DIR$/.idea/modules/integration/integration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/integration_main.iml" filepath="$PROJECT_DIR$/.idea/modules/integration_main.iml" group="integration" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/integration_test.iml" filepath="$PROJECT_DIR$/.idea/modules/integration_test.iml" group="integration" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mega.iml" filepath="$PROJECT_DIR$/.idea/modules/mega.iml" />
     </modules>
   </component>
 </project>

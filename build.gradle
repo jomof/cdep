@@ -1,60 +1,8 @@
 apply plugin: 'java'
-
-group 'jomofisher'
-if (System.getenv()["TRAVIS_TAG"] != null) {
-    version System.getenv()["TRAVIS_TAG"]
-} else {
-    version 'dev'
-}
-
 repositories {
-  jcenter()
-}
-
-buildscript {
-  repositories {
-      jcenter()
-  }
-}
-
-class GenerateBuildInfo extends DefaultTask {
-    @OutputFile
-    public File buildInfoFile = new File("src/main/java/io/cdep/BuildInfo.java")
-
-    @TaskAction
-    def generate() {
-        buildInfoFile.parentFile.mkdirs()
-        buildInfoFile.write(
-                """package io.cdep;
-public class BuildInfo {
-  static final String PROJECT_VERSION = "$project.version";
-}""")
-    }
-}
-
-task generateBuildInfo(type : GenerateBuildInfo)
-compileJava.dependsOn generateBuildInfo
-//compileJava.source generateBuildInfo.buildInfoFile
-
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
+    mavenCentral()
 }
 
 dependencies {
-    compile 'org.yaml:snakeyaml:1.17'
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile group: 'com.google.guava', name: 'guava', version: '20.0'
-    testCompile group: 'com.google.truth', name: 'truth', version: '0.31'
+    testCompile 'junit:junit:4.11'
 }
