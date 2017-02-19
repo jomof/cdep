@@ -1,3 +1,5 @@
+import java.nio.file.Files
+
 group 'io.cdep'
 version '1.0-SNAPSHOT'
 
@@ -31,10 +33,10 @@ task prepareToZip << {
     packageFolder.deleteDir()
     redistFolder.mkdirs()
     bootstrapFolder.mkdirs()
-    new File(redistFolder, 'cdep.bat') << file('../redist/cdep.bat')
-    new File(redistFolder, 'cdep') << file('../redist/cdep')
-    new File(redistFolder, 'cdep').setExecutable(true);
-    new File(bootstrapFolder, 'bootstrap.jar') << bootstrapFile
+    new File(redistFolder, 'cdep.bat').text = file('../redist/cdep.bat').text
+    new File(redistFolder, 'cdep').text = file('../redist/cdep').text
+    new File(bootstrapFolder, 'bootstrap.jar').bytes = bootstrapFile.bytes
+    new File(redistFolder, 'cdep').setExecutable(true)
     println '-----------------------------------------------------------------------------------------'
 }
 
