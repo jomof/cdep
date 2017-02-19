@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/travis_cdep" afterPath="$PROJECT_DIR$/travis_cdep" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
@@ -124,8 +123,8 @@
       <file leaf-file-name="travis_cdep" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/travis_cdep">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="15" column="11" lean-forward="false" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
+            <state relative-caret-position="231">
+              <caret line="7" column="30" lean-forward="false" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -1569,7 +1568,14 @@
       <option name="project" value="LOCAL" />
       <updated>1487466122375</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="packageArtifacts">
+      <created>1487468010529</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1487468010529</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1642,7 +1648,8 @@
     <MESSAGE value="Optimize imports" />
     <MESSAGE value="Added root project" />
     <MESSAGE value="Mega" />
-    <option name="LAST_COMMIT_MESSAGE" value="Mega" />
+    <MESSAGE value="packageArtifacts" />
+    <option name="LAST_COMMIT_MESSAGE" value="packageArtifacts" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2039,8 +2046,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/travis_cdep">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="15" column="11" lean-forward="false" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
+        <state relative-caret-position="231">
+          <caret line="7" column="30" lean-forward="false" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
           <folding />
         </state>
       </provider>

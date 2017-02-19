@@ -1,11 +1,11 @@
-TRAVIS_CDEP_JAR=build/libs/cdep.jar
-if [ -f "build/libs/cdep-dev.jar" ]; then
-    TRAVIS_CDEP_JAR=build/libs/cdep-dev.jar
+TRAVIS_CDEP_JAR=cdep/build/libs/cdep.jar
+if [ -f "cdep/build/libs/cdep-dev.jar" ]; then
+    TRAVIS_CDEP_JAR=cdep/build/libs/cdep-dev.jar
 fi
-if [ -f "build/libs/cdep-${TRAVIS_TAG}.jar" ]; then
-    TRAVIS_CDEP_JAR=build/libs/cdep-${TRAVIS_TAG}.jar
+if [ -f "cdep/build/libs/cdep-${TRAVIS_TAG}.jar" ]; then
+    TRAVIS_CDEP_JAR=cdep/build/libs/cdep-${TRAVIS_TAG}.jar
 fi
-BOOTSTRAP_MANIFEST=$(pwd)/build/libs/bootstrap.yml
+BOOTSTRAP_MANIFEST=$(pwd)/cdep/build/libs/bootstrap.yml
 echo entry: io.cdep.CDep > $BOOTSTRAP_MANIFEST
 echo dependencies: >> $BOOTSTRAP_MANIFEST
 printf "%s\n" "- $(pwd)/$TRAVIS_CDEP_JAR" >>$BOOTSTRAP_MANIFEST
