@@ -3,9 +3,8 @@ matrix:
   include:
   - jdk: oraclejdk7
     os: linux
-    script:
-    - ./gradlew assemble check
-    - ./gradlew packageArtifacts
+    script:ch
+    - ./gradlew assemble check packageArtifacts
     - ./travis_cdep
     - cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
     - ./cmakeify -wf smoke-test --cmake-flags "-Dcdep-dependencies_DIR=$(pwd)/smoke-test/.cdep/modules"
