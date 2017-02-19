@@ -29,9 +29,9 @@ task prepareToZip << {
     redistFolder.mkdirs()
     bootstrapFolder.mkdirs()
     new File(redistFolder, 'cdep.bat').text = file('../redist/cdep.bat').text
-//    new File(redistFolder, 'cdep').text = file('../redist/cdep').text
-//    new File(bootstrapFolder, 'bootstrap.jar').bytes = bootstrapFile.bytes
-//    new File(redistFolder, 'cdep').setExecutable(true)
+    new File(redistFolder, 'cdep').text = file('../redist/cdep').text
+    new File(redistFolder, 'cdep').setExecutable(true)
+    new File(bootstrapFolder, 'bootstrap.jar').bytes = bootstrapFile.bytes
     println '-----------------------------------------------------------------------------------------'
 }
 

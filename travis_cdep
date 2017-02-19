@@ -13,6 +13,7 @@ printf "%s\n" "- https://search.maven.org/remotecontent?filepath=org/yaml/snakey
 cat $BOOTSTRAP_MANIFEST
 pushd smoke-test
 echo ./cdep $BOOTSTRAP_MANIFEST
+find .. -name cdep
 ../.package/redist/cdep $BOOTSTRAP_MANIFEST wrapper
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 ./cdep $BOOTSTRAP_MANIFEST
