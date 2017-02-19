@@ -4,8 +4,8 @@ matrix:
   - jdk: oraclejdk7
     os: linux
     script:
-    - ./gradlew assemble check packageArtifacts
-    - find `pwd` -name 'boo*.zip'
+    - ./gradlew assemble check
+    - find `pwd` -name 'boo*.jar'
     - ./gradlew packageArtifacts
     - ./travis_cdep
     - cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
