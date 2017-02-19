@@ -16,6 +16,7 @@
 package io.cdep;
 
 import com.google.common.io.Files;
+import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
@@ -98,6 +99,20 @@ public class TestCDep {
         String result = main("redownload", "-wf", yaml.getParent());
         System.out.printf(result);
         assertThat(result).contains("Redownload");
+    }
+
+    @Test
+    public void createHashes() throws Exception {
+        File yaml = new File(".test-files/simpleDependency/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake]\n"
+                + "dependencies:\n"
+                + "- compile: com.github.jomof:low-level-statistics:0.0.11\n",
+            yaml, StandardCharsets.UTF_8);
+        // Download first.
+        main("-wf", "create", "hashes");
+        File hashFile = new File(".test-files/simpleDependency/cdep.yml");
+        assertThat(hashFile.isFile());
     }
 
     @Test

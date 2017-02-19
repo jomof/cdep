@@ -64,6 +64,7 @@ public class CDep {
         handleDownloadFolder(args);
         if (handleWrapper(args)) return;
         if (handleShow(args)) return;
+        if (handleCreate(args)) return;
         if (!handleReadCDepYml()) {
             return;
         }
@@ -86,6 +87,20 @@ public class CDep {
                 true /* forceRedownload */);
 
             new CMakeGenerator(environment).generate(table);
+            return true;
+        }
+        return false;
+    }
+
+        private boolean handleCreate(String args[]) throws IOException, NoSuchAlgorithmException, URISyntaxException {
+        if (args.length > 0 && "create".equals(args[0])) {
+            if (args.length > 1 && "hashes".equals(args[1])) {
+                GeneratorEnvironment environment = getGeneratorEnvironment();
+                getFunctionTableExpression(environment, false);
+                environment.writeCDepSHA2566File();
+                return true;
+            }
+            out.print("Usage: cdep create hashes'\n");
             return true;
         }
         return false;
@@ -260,6 +275,7 @@ public class CDep {
         out.printf(" cdep show folders: show local download and archive folders\n");
         out.printf(" cdep show manifest: show cdep interpretation of cdep.yml\n");
         out.printf(" cdep redownload: redownload dependencies for current cdep.yml\n");
+        out.printf(" cdep create hashes: create or recreate cdep.sha256 file\n");
         out.printf(" cdep --version: show version information\n");
         return false;
     }
