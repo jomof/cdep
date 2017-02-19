@@ -5,7 +5,6 @@ matrix:
     os: linux
     script:
     - ./gradlew assemble check
-    - find `pwd` -name 'boo*.jar'
     - ./gradlew packageArtifacts
     - ./travis_cdep
     - cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
@@ -17,7 +16,8 @@ deploy:
   file:
     - cdep/build/libs/cdep-${TRAVIS_TAG}.jar
     - cdep/build/libs/cdep-${TRAVIS_TAG}-sources.jar
-    - cdepbuild/libs/cdep-${TRAVIS_TAG}-javadoc.jar
+    - cdep/build/libs/cdep-${TRAVIS_TAG}-javadoc.jar
+    - .package/redist.zip
   provider: releases
   skip_cleanup: true
   true:
