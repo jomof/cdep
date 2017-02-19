@@ -5,10 +5,11 @@ matrix:
     os: linux
     script:
     - ./gradlew assemble check packageArtifacts
+    - find `pwd` -name 'boo*.zip'
+    - ./gradlew packageArtifacts
     - ./travis_cdep
     - cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
     - ./cmakeify -wf smoke-test --cmake-flags "-Dcdep-dependencies_DIR=$(pwd)/smoke-test/.cdep/modules"
-    - find `pwd` -name '*.zip'
 
 deploy:
   api_key:
