@@ -9,7 +9,50 @@ repositories {
     mavenCentral()
 }
 
+String tag = 'dev'
+if (System.getenv()["TRAVIS_TAG"] != null) {
+    tag = System.getenv()["TRAVIS_TAG"]
+}
+
+def packageFolder = file('../.package').absoluteFile
+def redistFolder = file('../.package/redist').absoluteFile
+def redistZip = file('../.package/redist.zip')
+
+task prepareToZip << {
+    def bootstrapFolder = file('../.package/redist/bootstrap/wrapper').absoluteFile
+    def bootstrapFile = file('../bootstrap/build/libs/bootstrap-'+ tag +'.jar')
+    println '-----------------------------------------------------------------------------------------'
+    println 'Package folder: ' + packageFolder
+    println 'Redist folder: ' + redistFolder
+    println 'Redist zip: ' + redistZip
+    println 'Bootstrap folder: ' + bootstrapFolder
+    println 'Bootstrap file: ' + bootstrapFile
+    println 'Tag: ' + tag
+    packageFolder.deleteDir()
+    redistFolder.mkdirs()
+    bootstrapFolder.mkdirs()
+    new File(redistFolder, 'cdep.bat') << file('../redist/cdep.bat')
+    new File(redistFolder, 'cdep') << file('../redist/cdep')
+    new File(bootstrapFolder, 'bootstrap.jar') << bootstrapFile
+    println '-----------------------------------------------------------------------------------------'
+}
+
+task zipRedist(type: Zip) {
+    from fileTree(redistFolder)
+    destinationDir packageFolder
+    archiveName 'redist.zip'
+}
+
+task packageArtifacts << {
+
+}
+
+zipRedist.dependsOn(prepareToZip)
+packageArtifacts.dependsOn(assemble)
+packageArtifacts.dependsOn(zipRedist)
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile project(':cdep')
     compile project(':bootstrap')
 }
