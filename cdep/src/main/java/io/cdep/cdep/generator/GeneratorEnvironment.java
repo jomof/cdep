@@ -134,9 +134,18 @@ public class GeneratorEnvironment {
             entries[i] = new HashEntry(coordinate, cdepSha256Hashes.get(coordinate));
             ++i;
         }
-        String text = new CDepSHA256(entries).toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append(
+                "# This file is automatically maintained by CDep.\n#\n" +
+                        "#     MANUAL EDITS WILL BE LOST ON THE NEXT CDEP RUN\n#\n");
+        sb.append("# This file contains a list of CDep coordinates along with the SHA256 hash of their\n");
+        sb.append("# manifest file. This is to ensure that a manifest hasn't changed since the last\n");
+        sb.append("# time CDep ran.\n");
+        sb.append("# The recommended best practice is to check this file into source control so that\n");
+        sb.append("# anyone else who builds this project is guaranteed to get the same dependencies.\n\n");
+        sb.append(new CDepSHA256(entries).toString());
         try (PrintWriter out = new PrintWriter(file)) {
-            out.println(text);
+            out.println(sb);
         }
     }
 
