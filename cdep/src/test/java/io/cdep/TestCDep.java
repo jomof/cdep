@@ -239,7 +239,7 @@ public class TestCDep {
         try {
             main("-wf", yaml.getParent());
         } catch (RuntimeException e) {
-            assertThat(e.toString()).contains("is missing required sha256");
+            assertThat(e.toString()).contains("missing android.sha256 ");
             return;
         }
         throw new RuntimeException("Expected a hash code error but didn't get one");

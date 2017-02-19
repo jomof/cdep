@@ -20,8 +20,7 @@ public class CDepManifestYml {
 
     final public Coordinate coordinate;
     final public Android android[];
-    @SuppressWarnings("WeakerAccess")
-    final public Object[] linux;
+    final public Linux[] linux;
 
     CDepManifestYml() {
         this.coordinate = null;

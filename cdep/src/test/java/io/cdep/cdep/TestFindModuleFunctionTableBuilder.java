@@ -78,9 +78,8 @@ public class TestFindModuleFunctionTableBuilder {
             builder.addManifest(resolved);
             builder.build();
         } catch (RuntimeException e) {
-            assertThat(e).hasMessage("Module 'com.github.jomof:cmakeify:alpha-0.0.32' contains "
-                + "multiple references to the same zip file: cmakeify-android-cmake-3.7.1-r13b-4.9"
-                + "-platform-9.zip");
+            assertThat(e).hasMessage("Package 'com.github.jomof:cmakeify:alpha-0.0.32' contains multiple references to" +
+                    " the same zip file for android target: cmakeify-android-cmake-3.7.1-r13b-4.9-platform-9.zip");
             return;
         }
         throw new RuntimeException("Expected an error");
