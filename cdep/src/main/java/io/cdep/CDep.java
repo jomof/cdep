@@ -64,10 +64,10 @@ public class CDep {
         handleDownloadFolder(args);
         if (handleWrapper(args)) return;
         if (handleShow(args)) return;
-        if (handleCreate(args)) return;
         if (!handleReadCDepYml()) {
             return;
         }
+        if (handleCreate(args)) return;
         if (handleRedownload(args)) {
             return;
         }
