@@ -33,6 +33,7 @@ task prepareToZip << {
     bootstrapFolder.mkdirs()
     new File(redistFolder, 'cdep.bat') << file('../redist/cdep.bat')
     new File(redistFolder, 'cdep') << file('../redist/cdep')
+    new File(redistFolder, 'cdep').setExecutable(true);
     new File(bootstrapFolder, 'bootstrap.jar') << bootstrapFile
     println '-----------------------------------------------------------------------------------------'
 }
