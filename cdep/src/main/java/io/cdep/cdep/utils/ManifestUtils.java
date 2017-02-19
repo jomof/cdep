@@ -26,10 +26,8 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 public class ManifestUtils {
-    private static Pattern VERSION_THREE_NUMBERS = Pattern.compile("[0..9]");
 
     public static CDepManifestYml convertStringToManifest(String content) {
         Yaml yaml = new Yaml(new Constructor(CDepManifestYml.class));
@@ -71,7 +69,12 @@ public class ManifestUtils {
     }
 
     private static void checkForMalformedCoordinateVersion(Coordinate coordinate) {
-
+        String versionDiagnosis = VersionUtils.checkVersion(coordinate.version);
+        if (versionDiagnosis == null) {
+            return;
+        }
+        throw new RuntimeException(String.format("Package '%s' has malformed version, %s",
+                coordinate, versionDiagnosis));
     }
 
     private static void validateAndroid(Coordinate coordinate, Android android) {

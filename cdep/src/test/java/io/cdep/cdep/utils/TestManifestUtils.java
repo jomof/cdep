@@ -8,6 +8,16 @@ import static org.junit.Assert.fail;
 
 public class TestManifestUtils {
 
+    private static class CoverConstructor extends ManifestUtils {
+
+    }
+
+    @Test
+    public void coverConstructor() {
+        // Call constructor of tested class to cover that code.
+        new CoverConstructor();
+    }
+
     @Test
     public void empty() {
         try {
@@ -74,6 +84,21 @@ public class TestManifestUtils {
         } catch (Exception e) {
             assertThat(e).hasMessage(
                     "Package 'com.github.jomof:boost:1.0.63-rev10' does not contain any files");
+        }
+    }
+
+    @Test
+    public void malformedVersion() {
+        try {
+            check("coordinate:\n" +
+                    "  groupId: com.github.jomof\n" +
+                    "  artifactId: boost\n" +
+                    "  version: 1.0");
+            fail("Expected an exception");
+        } catch (Exception e) {
+            assertThat(e).hasMessage(
+                    "Package 'com.github.jomof:boost:1.0' has malformed version, " +
+                            "expected major.minor.point[-tweak] but there was only one dot");
         }
     }
 

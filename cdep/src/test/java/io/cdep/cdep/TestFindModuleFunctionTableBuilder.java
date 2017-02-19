@@ -43,11 +43,11 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testSimple() throws IOException, URISyntaxException {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml"),
+            "https://github.com/jomof/cmakeify/releases/download/0.0.61/cdep-manifest.yml"),
             false);
         assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
         assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("alpha-0.0.59");
+        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.61");
         assertThat(resolved.cdepManifestYml.android.length).isEqualTo(4);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -62,37 +62,14 @@ public class TestFindModuleFunctionTableBuilder {
         assertThat(zip).endsWith("cmakeify-android-cxx_shared-platform-21.zip");
     }
 
-    // Test case where a manifest points to the same zip file multiple times (not allowed)
-    @Test
-    public void testMultipleZipReferences() throws IOException, URISyntaxException {
-        try {
-            ResolvedManifest resolved = environment.resolveAny(createReference(
-                "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.32/cdep-manifest.yml"),
-                false);
-            assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
-            assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
-            assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("alpha-0.0.32");
-            assertThat(resolved.cdepManifestYml.android.length).isEqualTo(208);
-
-            FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
-            builder.addManifest(resolved);
-            builder.build();
-        } catch (RuntimeException e) {
-            assertThat(e).hasMessage("Package 'com.github.jomof:cmakeify:alpha-0.0.32' contains multiple references to" +
-                    " the same zip file for android target: cmakeify-android-cmake-3.7.1-r13b-4.9-platform-9.zip");
-            return;
-        }
-        throw new RuntimeException("Expected an error");
-    }
-
     @Test
     public void testCheckPlatformSwitch() throws IOException, URISyntaxException {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml"),
+            "https://github.com/jomof/cmakeify/releases/download/0.0.61/cdep-manifest.yml"),
             false);
         assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
         assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("alpha-0.0.59");
+        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.61");
         assertThat(resolved.cdepManifestYml.android.length).isEqualTo(4);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -121,7 +98,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testArchivePathIsFull() throws IOException, URISyntaxException {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/cdep-manifest.yml"),
+            "https://github.com/jomof/cmakeify/releases/download/0.0.61/cdep-manifest.yml"),
             false);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -134,7 +111,7 @@ public class TestFindModuleFunctionTableBuilder {
             "c++_shared",
             "x86");
         assertThat(found.archive.toString()).isEqualTo(
-            "https://github.com/jomof/cmakeify/releases/download/alpha-0.0.59/"
+            "https://github.com/jomof/cmakeify/releases/download/0.0.61/"
                 + "cmakeify-android-cxx_shared-platform-21.zip");
     }
 
