@@ -23,8 +23,6 @@ import io.cdep.cdep.yml.cdep.Dependency;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -41,7 +39,7 @@ public class TestFindModuleFunctionTableBuilder {
     }
 
     @Test
-    public void testSimple() throws IOException, URISyntaxException {
+    public void testSimple() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
             "https://github.com/jomof/cmakeify/releases/download/0.0.61/cdep-manifest.yml"),
             false);
@@ -63,7 +61,7 @@ public class TestFindModuleFunctionTableBuilder {
     }
 
     @Test
-    public void testCheckPlatformSwitch() throws IOException, URISyntaxException {
+    public void testCheckPlatformSwitch() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
             "https://github.com/jomof/cmakeify/releases/download/0.0.61/cdep-manifest.yml"),
             false);
@@ -96,7 +94,7 @@ public class TestFindModuleFunctionTableBuilder {
     }
 
     @Test
-    public void testArchivePathIsFull() throws IOException, URISyntaxException {
+    public void testArchivePathIsFull() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
             "https://github.com/jomof/cmakeify/releases/download/0.0.61/cdep-manifest.yml"),
             false);
@@ -116,7 +114,7 @@ public class TestFindModuleFunctionTableBuilder {
     }
 
     @Test
-    public void testFoundIncludeAndLib() throws IOException, URISyntaxException {
+    public void testFoundIncludeAndLib() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
             "https://github.com/jomof/sqllite/releases/download/3.16.2-rev11/cdep-manifest.yml"),
             false);
@@ -135,7 +133,7 @@ public class TestFindModuleFunctionTableBuilder {
     }
 
     @Test
-    public void testHeaderOnly() throws IOException, URISyntaxException {
+    public void testHeaderOnly() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
             "https://github.com/jomof/boost/releases/download/1.0.63-rev10/cdep-manifest.yml"),
             false);
@@ -157,7 +155,7 @@ public class TestFindModuleFunctionTableBuilder {
 
 
     @Test
-    public void testHeaderOnlyGitHubCoordinate() throws IOException, URISyntaxException {
+    public void testHeaderOnlyGitHubCoordinate() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
             "com.github.jomof:boost:1.0.63-rev10"), false);
 

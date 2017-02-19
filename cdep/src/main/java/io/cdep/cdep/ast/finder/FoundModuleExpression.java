@@ -15,7 +15,7 @@
 */
 package io.cdep.cdep.ast.finder;
 
-import io.cdep.cdep.yml.cdepmanifest.Coordinate;
+import io.cdep.cdep.yml.Coordinate;
 
 import java.net.URL;
 

@@ -17,7 +17,7 @@ package io.cdep.cdep.utils;
 
 import io.cdep.cdep.yml.cdepmanifest.Android;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import io.cdep.cdep.yml.cdepmanifest.Coordinate;
+import io.cdep.cdep.yml.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.Linux;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ManifestUtils {
+public class CDepManifestYmlUtils {
 
     public static CDepManifestYml convertStringToManifest(String content) {
         Yaml yaml = new Yaml(new Constructor(CDepManifestYml.class));

@@ -20,37 +20,46 @@ import io.cdep.cdep.resolver.GithubReleasesCoordinateResolver;
 import io.cdep.cdep.resolver.GithubStyleUrlResolver;
 import io.cdep.cdep.resolver.LocalFilePathResolver;
 import io.cdep.cdep.resolver.Resolver;
-import io.cdep.cdep.utils.ManifestUtils;
+import io.cdep.cdep.utils.CDepManifestYmlUtils;
+import io.cdep.cdep.utils.HashUtils;
+import io.cdep.cdep.yml.Coordinate;
 import io.cdep.cdep.yml.cdep.Dependency;
-import io.cdep.cdep.yml.cdepmanifest.Coordinate;
+import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
+import io.cdep.cdep.yml.cdepsha25.HashEntry;
 
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GeneratorEnvironment {
 
     final private static Resolver resolvers[] = new Resolver[]{
-        new GithubStyleUrlResolver(),
-        new GithubReleasesCoordinateResolver(),
-        new LocalFilePathResolver()
+            new GithubStyleUrlResolver(),
+            new GithubReleasesCoordinateResolver(),
+            new LocalFilePathResolver()
     };
 
     final public PrintStream out;
     final public File downloadFolder;
     final public File unzippedArchivesFolder;
     final public File modulesFolder;
+    final public File workingFolder;
+    final public Map<String, String> cdepSha256Hashes = new HashMap<>();
 
     public GeneratorEnvironment(
-        PrintStream out,
-        File workingFolder,
-        File userFolder) {
+            PrintStream out,
+            File workingFolder,
+            File userFolder) {
         if (userFolder == null) {
             userFolder = new File(System.getProperty("user.home"));
         }
         this.out = out;
+        this.workingFolder = workingFolder;
         this.downloadFolder = new File(userFolder, ".cdep/downloads").getAbsoluteFile();
         this.unzippedArchivesFolder = new File(userFolder, ".cdep/exploded").getAbsoluteFile();
         this.modulesFolder = new File(workingFolder, ".cdep/modules").getAbsoluteFile();
@@ -80,10 +89,10 @@ public class GeneratorEnvironment {
     }
 
     public File getLocalDownloadedFile(
-        Coordinate coordinate,
-        URL remoteArchive,
-        boolean forceRedownload)
-        throws IOException {
+            Coordinate coordinate,
+            URL remoteArchive,
+            boolean forceRedownload)
+            throws IOException {
         File local = getLocalDownloadFilename(coordinate, remoteArchive);
         if (!local.isFile()) {
             out.printf("Downloading %s\n", remoteArchive);
@@ -99,13 +108,13 @@ public class GeneratorEnvironment {
     }
 
     public String getLocalDownloadedFileText(
-        Coordinate coordinate,
-        URL remoteArchive,
-        boolean forceRedownload)
-        throws IOException {
+            Coordinate coordinate,
+            URL remoteArchive,
+            boolean forceRedownload)
+            throws IOException {
         return new String(Files.readAllBytes(
-            Paths.get(getLocalDownloadedFile(coordinate, remoteArchive, forceRedownload)
-                .getCanonicalPath())));
+                Paths.get(getLocalDownloadedFile(coordinate, remoteArchive, forceRedownload)
+                        .getCanonicalPath())));
     }
 
     public File getLocalUnzipFolder(Coordinate coordinate, URL remoteArchive) {
@@ -117,34 +126,55 @@ public class GeneratorEnvironment {
         return local;
     }
 
+    public void writeCDepSHA2566File() throws FileNotFoundException {
+        File file = new File(workingFolder, "cdep.sha256");
+        HashEntry entries[] = new HashEntry[cdepSha256Hashes.size()];
+        int i = 0;
+        for (String coordinate : cdepSha256Hashes.keySet()) {
+            entries[i] = new HashEntry(coordinate, cdepSha256Hashes.get(coordinate));
+            ++i;
+        }
+        String text = new CDepSHA256(entries).toString();
+        try (PrintWriter out = new PrintWriter(file)) {
+            out.println(text);
+        }
+    }
+
     private String getUrlBaseName(URL url) {
         String urlString = url.getFile();
         return urlString.substring(urlString.lastIndexOf('/') + 1, urlString.length());
     }
 
     public ResolvedManifest resolveAny(
-        Dependency dependency,
-        boolean forceRedownload) throws IOException {
+            Dependency dependency,
+            boolean forceRedownload) throws IOException, NoSuchAlgorithmException {
         ResolvedManifest resolved = null;
         for (Resolver resolver : resolvers) {
             ResolvedManifest attempt = resolver.resolve(this, dependency, forceRedownload);
             if (attempt != null) {
                 if (resolved != null) {
                     throw new RuntimeException("Multiple resolvers matched coordinate:\n"
-                        + dependency);
+                            + dependency);
                 }
                 resolved = attempt;
             }
         }
         if (resolved != null) {
-            ManifestUtils.checkManifestSanity(resolved.cdepManifestYml);
+            CDepManifestYmlUtils.checkManifestSanity(resolved.cdepManifestYml);
             File local = getLocalDownloadFilename(resolved.cdepManifestYml.coordinate,
-                resolved.remote);
+                    resolved.remote);
             if (!local.exists()) {
                 // Copy the file local if the resolver didn't
                 getLocalDownloadedFile(resolved.cdepManifestYml.coordinate, resolved.remote,
-                    forceRedownload);
+                        forceRedownload);
             }
+            String sha256 = HashUtils.getSHA256OfFile(local);
+            String priorSha256 = this.cdepSha256Hashes.get(resolved.cdepManifestYml.coordinate.toString());
+            if (priorSha256 != null && !priorSha256.equals(sha256)) {
+                throw new RuntimeException(String.format("SHA256 of cdep-manifest.yml for package '%s' changed",
+                        resolved.cdepManifestYml.coordinate));
+            }
+            this.cdepSha256Hashes.put(resolved.cdepManifestYml.coordinate.toString(), sha256);
         }
         return resolved;
     }

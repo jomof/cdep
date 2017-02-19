@@ -17,10 +17,10 @@ package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.utils.ManifestUtils;
+import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.Dependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import io.cdep.cdep.yml.cdepmanifest.Coordinate;
+import io.cdep.cdep.yml.Coordinate;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,7 +54,7 @@ public class GithubStyleUrlResolver extends Resolver {
       String manifestContent = environment.getLocalDownloadedFileText(
           provisionalCoordinate,
           new URL(coordinate), forceRedownload);
-      CDepManifestYml cdepManifestYml = ManifestUtils.convertStringToManifest(manifestContent);
+      CDepManifestYml cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(manifestContent);
 
       // Ensure that the manifest coordinate agrees with the url provided
       assert cdepManifestYml.coordinate != null;

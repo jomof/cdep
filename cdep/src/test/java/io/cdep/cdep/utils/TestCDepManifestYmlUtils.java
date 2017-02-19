@@ -6,9 +6,9 @@ import org.junit.Test;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
-public class TestManifestUtils {
+public class TestCDepManifestYmlUtils {
 
-    private static class CoverConstructor extends ManifestUtils {
+    private static class CoverConstructor extends CDepManifestYmlUtils {
 
     }
 
@@ -210,7 +210,7 @@ public class TestManifestUtils {
     }
 
     private void check(String content) {
-        CDepManifestYml manifest = ManifestUtils.convertStringToManifest(content);
-        ManifestUtils.checkManifestSanity(manifest);
+        CDepManifestYml manifest = CDepManifestYmlUtils.convertStringToManifest(content);
+        CDepManifestYmlUtils.checkManifestSanity(manifest);
     }
 }

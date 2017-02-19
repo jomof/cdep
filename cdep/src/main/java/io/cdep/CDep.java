@@ -64,7 +64,7 @@ public class CDep {
         handleDownloadFolder(args);
         if (handleWrapper(args)) return;
         if (handleShow(args)) return;
-        if (!handleReadConfig()) {
+        if (!handleReadCDepYml()) {
             return;
         }
         if (handleRedownload(args)) {
@@ -76,8 +76,8 @@ public class CDep {
     private boolean handleRedownload(String[] args)
         throws IOException, URISyntaxException, NoSuchAlgorithmException {
         if (args.length > 0 && "redownload".equals(args[0])) {
-            FunctionTableExpression table = getFunctionTableExpression(true);
             GeneratorEnvironment environment = getGeneratorEnvironment();
+            FunctionTableExpression table = getFunctionTableExpression(environment, true);
 
             // Download and unzip archives.
             GeneratorEnvironmentUtils.downloadReferencedModules(
@@ -91,7 +91,7 @@ public class CDep {
         return false;
     }
 
-    private boolean handleShow(String args[]) throws IOException {
+    private boolean handleShow(String args[]) throws IOException, NoSuchAlgorithmException {
         if (args.length > 0 && "show".equals(args[0])) {
             if (args.length > 1 && "folders".equals(args[1])) {
                 GeneratorEnvironment environment = getGeneratorEnvironment();
@@ -120,7 +120,7 @@ public class CDep {
                 return true;
             }
             if (args.length > 1 && "manifest".equals(args[1])) {
-                handleReadConfig();
+                handleReadCDepYml();
                 out.print(config.toString());
                 return true;
             }
@@ -180,8 +180,8 @@ public class CDep {
             out.printf("Nothing to do. Add dependencies to %s\n", configFile);
             return;
         }
-        FunctionTableExpression table = getFunctionTableExpression(false);
         GeneratorEnvironment environment = getGeneratorEnvironment();
+        FunctionTableExpression table = getFunctionTableExpression(environment, false);
 
         // Download and unzip archives.
         GeneratorEnvironmentUtils.downloadReferencedModules(
@@ -190,10 +190,13 @@ public class CDep {
             false /* forceRedownload */);
 
         new CMakeGenerator(environment).generate(table);
+        environment.writeCDepSHA2566File();
     }
 
-    private FunctionTableExpression getFunctionTableExpression(boolean forceRedownload)
-        throws IOException, URISyntaxException {
+    private FunctionTableExpression getFunctionTableExpression(
+            GeneratorEnvironment environment,
+            boolean forceRedownload)
+            throws IOException, URISyntaxException, NoSuchAlgorithmException {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         Set<String> seen = new HashSet<>();
         for (Dependency dependency : config.dependencies) {
@@ -203,7 +206,7 @@ public class CDep {
             if (seen.contains(dependency.compile)) {
                 continue;
             }
-            ResolvedManifest resolved = getGeneratorEnvironment().resolveAny(
+            ResolvedManifest resolved = environment.resolveAny(
                 dependency, forceRedownload);
             if (resolved == null) {
                 throw new RuntimeException("Could not resolve: " + dependency.compile);
@@ -219,7 +222,7 @@ public class CDep {
         return new GeneratorEnvironment(out, workingFolder, downloadFolder);
     }
 
-    private boolean handleReadConfig() throws IOException {
+    private boolean handleReadCDepYml() throws IOException {
         configFile = new File(workingFolder, "cdep.yml");
         if (!configFile.exists()) {
             out.printf("Expected a configuration file at %s\n", configFile.getCanonicalFile());

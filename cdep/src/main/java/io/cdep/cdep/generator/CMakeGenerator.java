@@ -16,7 +16,7 @@
 package io.cdep.cdep.generator;
 
 import io.cdep.cdep.ast.finder.*;
-import io.cdep.cdep.yml.cdepmanifest.Coordinate;
+import io.cdep.cdep.yml.Coordinate;
 
 import java.io.BufferedWriter;
 import java.io.File;

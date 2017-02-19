@@ -17,7 +17,7 @@ package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.utils.ManifestUtils;
+import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.Dependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 
@@ -39,8 +39,8 @@ public class LocalFilePathResolver extends Resolver {
             return null;
         }
         String content = new String(Files.readAllBytes(Paths.get(local.getCanonicalPath())));
-        CDepManifestYml cdepManifestYml = ManifestUtils.convertStringToManifest(content);
-        ManifestUtils.checkManifestSanity(cdepManifestYml);
+        CDepManifestYml cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(content);
+        CDepManifestYmlUtils.checkManifestSanity(cdepManifestYml);
 
         if (dependency.enforceSourceUrlMatchesManifest == null
             || dependency.enforceSourceUrlMatchesManifest) {

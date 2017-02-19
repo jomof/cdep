@@ -18,7 +18,7 @@ package io.cdep.cdep;
 import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.yml.cdepmanifest.Android;
-import io.cdep.cdep.yml.cdepmanifest.Coordinate;
+import io.cdep.cdep.yml.Coordinate;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
