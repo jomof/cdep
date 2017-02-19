@@ -1,19 +1,14 @@
 import java.nio.file.Files
-
-group 'io.cdep'
-version '1.0-SNAPSHOT'
-
 apply plugin: 'java'
+group 'io.cdep'
 
-sourceCompatibility = 1.7
-
+if (System.getenv()["TRAVIS_TAG"] != null && System.getenv()["TRAVIS_TAG"].length() > 0) {
+    version System.getenv()["TRAVIS_TAG"]
+} else {
+    version 'dev'
+}
 repositories {
     mavenCentral()
-}
-
-String tag = 'dev'
-if (System.getenv()["TRAVIS_TAG"] != null) {
-    tag = System.getenv()["TRAVIS_TAG"]
 }
 
 def packageFolder = file('../.package').absoluteFile
@@ -22,14 +17,14 @@ def redistZip = file('../.package/redist.zip')
 
 task prepareToZip << {
     def bootstrapFolder = file('../.package/redist/bootstrap/wrapper').absoluteFile
-    def bootstrapFile = file('../bootstrap/build/libs/bootstrap-'+ tag +'.jar')
+    def bootstrapFile = file('../bootstrap/build/libs/bootstrap-' + version +'.jar')
     println '-----------------------------------------------------------------------------------------'
     println 'Package folder: ' + packageFolder
     println 'Redist folder: ' + redistFolder
     println 'Redist zip: ' + redistZip
     println 'Bootstrap folder: ' + bootstrapFolder
     println 'Bootstrap file: ' + bootstrapFile
-    println 'Tag: ' + tag
+    println 'Version: ' + version
     packageFolder.deleteDir()
     redistFolder.mkdirs()
     bootstrapFolder.mkdirs()
