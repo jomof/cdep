@@ -98,7 +98,7 @@ public class CDep {
                 GeneratorEnvironment environment = getGeneratorEnvironment();
                 getFunctionTableExpression(environment, false);
                 environment.writeCDepSHA256File();
-                out.printf("Created cdep.sha256");
+                out.printf("Created cdep.sha256\n");
                 return true;
             }
             out.print("Usage: cdep create hashes'\n");
