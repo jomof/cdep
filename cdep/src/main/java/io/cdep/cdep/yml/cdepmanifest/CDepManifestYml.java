@@ -21,11 +21,13 @@ import io.cdep.cdep.yml.Coordinate;
 public class CDepManifestYml {
 
     final public Coordinate coordinate;
+    final public Dependency dependencies[];
     final public Android android[];
     final public Linux[] linux;
 
     CDepManifestYml() {
         this.coordinate = null;
+        this.dependencies = null;
         this.android = null;
         this.linux = null;
     }
