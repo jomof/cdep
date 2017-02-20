@@ -92,12 +92,13 @@ public class CDep {
         return false;
     }
 
-        private boolean handleCreate(String args[]) throws IOException, NoSuchAlgorithmException, URISyntaxException {
+    private boolean handleCreate(String args[]) throws IOException, NoSuchAlgorithmException, URISyntaxException {
         if (args.length > 0 && "create".equals(args[0])) {
             if (args.length > 1 && "hashes".equals(args[1])) {
                 GeneratorEnvironment environment = getGeneratorEnvironment();
                 getFunctionTableExpression(environment, false);
-                environment.writeCDepSHA2566File();
+                environment.writeCDepSHA256File();
+                out.printf("Created cdep.sha256");
                 return true;
             }
             out.print("Usage: cdep create hashes'\n");
@@ -196,6 +197,7 @@ public class CDep {
             return;
         }
         GeneratorEnvironment environment = getGeneratorEnvironment();
+        environment.readCDepSHA256File();
         FunctionTableExpression table = getFunctionTableExpression(environment, false);
 
         // Download and unzip archives.
@@ -205,7 +207,7 @@ public class CDep {
             false /* forceRedownload */);
 
         new CMakeGenerator(environment).generate(table);
-        environment.writeCDepSHA2566File();
+        environment.writeCDepSHA256File();
     }
 
     private FunctionTableExpression getFunctionTableExpression(

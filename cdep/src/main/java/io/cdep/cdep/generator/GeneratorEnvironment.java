@@ -21,6 +21,8 @@ import io.cdep.cdep.resolver.GithubStyleUrlResolver;
 import io.cdep.cdep.resolver.LocalFilePathResolver;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
+import io.cdep.cdep.utils.CDepSHA256Utils;
+import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.Coordinate;
 import io.cdep.cdep.yml.cdep.Dependency;
@@ -30,8 +32,6 @@ import io.cdep.cdep.yml.cdepsha25.HashEntry;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
@@ -112,9 +112,8 @@ public class GeneratorEnvironment {
             URL remoteArchive,
             boolean forceRedownload)
             throws IOException {
-        return new String(Files.readAllBytes(
-                Paths.get(getLocalDownloadedFile(coordinate, remoteArchive, forceRedownload)
-                        .getCanonicalPath())));
+        File file = getLocalDownloadedFile(coordinate, remoteArchive, forceRedownload);
+        return FileUtils.readAllText(file);
     }
 
     public File getLocalUnzipFolder(Coordinate coordinate, URL remoteArchive) {
@@ -126,7 +125,19 @@ public class GeneratorEnvironment {
         return local;
     }
 
-    public void writeCDepSHA2566File() throws FileNotFoundException {
+    public void readCDepSHA256File() throws IOException {
+        File file = new File(workingFolder, "cdep.sha256");
+        if (!file.exists()) {
+            return;
+        }
+        String text = FileUtils.readAllText(file);
+        CDepSHA256 cdepSha256 = CDepSHA256Utils.convertStringToCDepSHA256(text);
+        for (HashEntry entry : cdepSha256.hashes) {
+            this.cdepSha256Hashes.put(entry.coordinate, entry.sha256);
+        }
+    }
+
+    public void writeCDepSHA256File() throws FileNotFoundException {
         File file = new File(workingFolder, "cdep.sha256");
         HashEntry entries[] = new HashEntry[cdepSha256Hashes.size()];
         int i = 0;
@@ -180,7 +191,9 @@ public class GeneratorEnvironment {
             String sha256 = HashUtils.getSHA256OfFile(local);
             String priorSha256 = this.cdepSha256Hashes.get(resolved.cdepManifestYml.coordinate.toString());
             if (priorSha256 != null && !priorSha256.equals(sha256)) {
-                throw new RuntimeException(String.format("SHA256 of cdep-manifest.yml for package '%s' changed",
+                throw new RuntimeException(String.format(
+                        "SHA256 of cdep-manifest.yml for package '%s' does not agree with value in " +
+                                "cdep.sha256. Something changed.",
                         resolved.cdepManifestYml.coordinate));
             }
             this.cdepSha256Hashes.put(resolved.cdepManifestYml.coordinate.toString(), sha256);

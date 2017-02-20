@@ -28,6 +28,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 public class TestCDep {
 
@@ -109,10 +110,32 @@ public class TestCDep {
                 + "dependencies:\n"
                 + "- compile: com.github.jomof:low-level-statistics:0.0.11\n",
             yaml, StandardCharsets.UTF_8);
-        // Download first.
-        main("-wf", "create", "hashes");
-        File hashFile = new File(".test-files/simpleDependency/cdep.yml");
+        String text = main("create", "hashes", "-wf", yaml.getParent());
+        assertThat(text).contains("Created cdep.sha256");
+        File hashFile = new File(".test-files/simpleDependency/cdep.sha256");
         assertThat(hashFile.isFile());
+    }
+
+    @Test
+    public void checkThatHashesWork() throws Exception {
+        File yaml = new File(".test-files/checkThatHashesWork/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake]\n"
+                + "dependencies:\n"
+                + "- compile: com.github.jomof:low-level-statistics:0.0.11\n",
+            yaml, StandardCharsets.UTF_8);
+        File hashes = new File(".test-files/checkThatHashesWork/cdep.sha256");
+        Files.write("- coordinate: com.github.jomof:low-level-statistics:0.0.11\n" +
+                         "  sha256: dogbone",
+            hashes, StandardCharsets.UTF_8);
+        try {
+            main("-wf", yaml.getParent());
+            fail("Expected failure");
+        } catch (RuntimeException e) {
+            assertThat(e).hasMessage("SHA256 of cdep-manifest.yml for package " +
+                    "'com.github.jomof:low-level-statistics:0.0.11' does not agree with value in cdep.sha256. " +
+                    "Something changed.");
+        }
     }
 
     @Test
