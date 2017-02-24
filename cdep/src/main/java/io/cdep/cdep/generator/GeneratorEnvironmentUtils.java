@@ -17,6 +17,7 @@ package io.cdep.cdep.generator;
 
 import io.cdep.cdep.ast.finder.FoundModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.ModuleArchive;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.utils.HashUtils;
@@ -43,21 +44,23 @@ public class GeneratorEnvironmentUtils {
 
         // Download and unzip any modules.
         for (FoundModuleExpression foundModule : foundModules) {
-            File local = environment.getLocalDownloadedFile(
-                foundModule.coordinate, foundModule.archive, forceRedownload);
-            String localSha256String = HashUtils.getSHA256OfFile(local);
-            if (!localSha256String.equals(foundModule.archiveSHA256)) {
-                throw new RuntimeException(String.format(
-                    "SHA256 for %s did not match value from manifest", foundModule.archive));
-            }
+            for (ModuleArchive archive : foundModule.archives) {
+                File local = environment.getLocalDownloadedFile(
+                    foundModule.coordinate, archive.file, forceRedownload);
+                String localSha256String = HashUtils.getSHA256OfFile(local);
+                if (!localSha256String.equals(archive.sha256)) {
+                    throw new RuntimeException(String.format(
+                        "SHA256 for %s did not match value from manifest", archive.sha256));
+                }
 
-            File unzipFolder = environment.getLocalUnzipFolder(
-                foundModule.coordinate, foundModule.archive);
-            if (!unzipFolder.exists()) {
-                //noinspection ResultOfMethodCallIgnored
-                unzipFolder.mkdirs();
-                environment.out.printf("Exploding %s\n", foundModule.archive);
-                ArchiveUtils.unzip(local, unzipFolder);
+                File unzipFolder = environment.getLocalUnzipFolder(
+                    foundModule.coordinate, archive.file);
+                if (!unzipFolder.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
+                    unzipFolder.mkdirs();
+                    environment.out.printf("Exploding %s\n", archive.file);
+                    ArchiveUtils.unzip(local, unzipFolder);
+                }
             }
         }
     }

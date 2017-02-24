@@ -169,18 +169,25 @@ public class CMakeGenerator {
         } else if (expression instanceof FoundModuleExpression) {
             FoundModuleExpression specific = (FoundModuleExpression) expression;
             assert specific.coordinate.artifactId != null;
-            File exploded = environment.getLocalUnzipFolder(specific.coordinate, specific.archive);
-            sb.append(String.format("%sset(%s_FOUND true)\n", prefix, upperArtifactID));
-            sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, upperArtifactID,
-                new File(exploded, specific.include).toString().replace("\\", "\\\\")));
-            String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
+            for (ModuleArchive archive : specific.archives) {
+                File exploded = environment
+                    .getLocalUnzipFolder(specific.coordinate, archive.file);
+                sb.append(String.format("%sset(%s_FOUND true)\n", prefix, upperArtifactID));
+                sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, upperArtifactID,
+                    new File(exploded, specific.include).toString().replace("\\", "\\\\")));
+                String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
 
-            if (specific.libraryName != null && specific.libraryName.length() > 0) {
-                sb.append(String.format("%sset(%s_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%s%s\")\n",
-                        prefix, upperArtifactID, libFolder, slash, slash, specific.libraryName));
-                if (specific.libraryName.endsWith(".so")) {
-                    sb.append(String.format("%sset(%s_SHARED_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%s%s\")\n",
-                        prefix, upperArtifactID, libFolder, slash, slash, specific.libraryName));
+                if (specific.libraryName != null && specific.libraryName.length() > 0) {
+                    sb.append(String
+                        .format("%sset(%s_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%s%s\")\n",
+                            prefix, upperArtifactID, libFolder, slash, slash,
+                            specific.libraryName));
+                    if (specific.libraryName.endsWith(".so")) {
+                        sb.append(String.format(
+                            "%sset(%s_SHARED_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%s%s\")\n",
+                            prefix, upperArtifactID, libFolder, slash, slash,
+                            specific.libraryName));
+                    }
                 }
             }
             return;

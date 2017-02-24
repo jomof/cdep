@@ -18,6 +18,7 @@ package io.cdep.cdep.yml.cdepmanifest;
 
 @SuppressWarnings("unused")
 public class Android {
+  final public Archive archives[] = null;
   final public String file = null;
   final public String sha256 = null;
   final public String ndk = null;

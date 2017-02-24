@@ -26,7 +26,7 @@ import java.util.zip.ZipFile;
 public class ArchiveUtils {
 
     /*
-     * Unzip the given archive.
+     * Unzip the given file.
      */
     public static void unzip(File localArchive, File localUnzipFolder) throws IOException {
         ZipFile zipFile = new ZipFile(localArchive.getPath());

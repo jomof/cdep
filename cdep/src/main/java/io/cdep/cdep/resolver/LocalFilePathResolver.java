@@ -54,11 +54,25 @@ public class LocalFilePathResolver extends Resolver {
                         cdepManifestYml.coordinate.groupId));
             }
             assert cdepManifestYml.coordinate.artifactId != null;
-            if (!coordinate.contains(cdepManifestYml.coordinate.artifactId)) {
-                throw new RuntimeException(
-                    String.format("local file name '%s' did not contain artifactId '%s'"
-                            + "", coordinate,
-                        cdepManifestYml.coordinate.artifactId));
+            String artifactId = cdepManifestYml.coordinate.artifactId;
+            if (artifactId.contains("/")) {
+                // This is partitioned manifest
+                String parts[] = artifactId.split("/");
+                for (String part : parts) {
+                    if (!coordinate.contains(part)) {
+                        throw new RuntimeException(
+                            String.format("local file name '%s' did not contain artifactId partition '%s'"
+                                    + "", coordinate,
+                                cdepManifestYml.coordinate.artifactId));
+                    }
+                }
+            } else {
+                if (!coordinate.contains(cdepManifestYml.coordinate.artifactId)) {
+                    throw new RuntimeException(
+                        String.format("local file name '%s' did not contain artifactId '%s'"
+                                + "", coordinate,
+                            cdepManifestYml.coordinate.artifactId));
+                }
             }
             assert cdepManifestYml.coordinate.version != null;
             if (!coordinate.contains(cdepManifestYml.coordinate.version)) {

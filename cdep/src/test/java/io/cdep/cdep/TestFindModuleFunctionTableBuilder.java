@@ -56,7 +56,7 @@ public class TestFindModuleFunctionTableBuilder {
             "Android",
             "21",
             "c++_shared",
-            "x86").archive.getPath();
+            "x86").archives[0].file.getPath();
         assertThat(zip).endsWith("cmakeify-android-cxx_shared-platform-21.zip");
     }
 
@@ -78,19 +78,19 @@ public class TestFindModuleFunctionTableBuilder {
             "Android",
             "21",
             "c++_shared",
-            "x86").archive.getPath().contains("platform-21");
+            "x86").archives[0].file.getPath().contains("platform-21");
         FindModuleInterpreter.find(table,
             resolved.cdepManifestYml.coordinate.toString(),
             "Android",
             "22",
             "c++_shared",
-            "x86").archive.getPath().contains("platform-21");
+            "x86").archives[0].file.getPath().contains("platform-21");
         FindModuleInterpreter.find(table,
             resolved.cdepManifestYml.coordinate.toString(),
             "Android",
             "20",
             "c++_shared",
-            "x86").archive.getPath().contains("platform-9");
+            "x86").archives[0].file.getPath().contains("platform-9");
     }
 
     @Test
@@ -108,7 +108,7 @@ public class TestFindModuleFunctionTableBuilder {
             "21",
             "c++_shared",
             "x86");
-        assertThat(found.archive.toString()).isEqualTo(
+        assertThat(found.archives[0].file.toString()).isEqualTo(
             "https://github.com/jomof/cmakeify/releases/download/0.0.61/"
                 + "cmakeify-android-cxx_shared-platform-21.zip");
     }
@@ -149,7 +149,7 @@ public class TestFindModuleFunctionTableBuilder {
             "x86");
         assertThat(found.include.toString()).isEqualTo("boost_1_63_0");
         assertThat(found.libraryName).isNull();
-        assertThat(found.archive.toString()).isEqualTo(
+        assertThat(found.archives[0].file.toString()).isEqualTo(
             "https://github.com/jomof/boost/releases/download/1.0.63-rev10/boost_1_63_0.zip");
     }
 
@@ -170,7 +170,7 @@ public class TestFindModuleFunctionTableBuilder {
             "x86");
         assertThat(found.include).isEqualTo("boost_1_63_0");
         assertThat(found.libraryName).isNull();
-        assertThat(found.archive.toString()).isEqualTo(
+        assertThat(found.archives[0].file.toString()).isEqualTo(
             "https://github.com/jomof/boost/releases/download/1.0.63-rev10/boost_1_63_0.zip");
     }
 }

@@ -20,6 +20,7 @@ import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.yml.cdepmanifest.Android;
 import io.cdep.cdep.yml.Coordinate;
 
+import io.cdep.cdep.yml.cdepmanifest.Archive;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -167,12 +168,30 @@ public class FindModuleFunctionTableBuilder {
                 androids.size()));
         }
         Android android = androids.get(0);
-        URL url = resolved.remote.toURI()
-            .resolve(".")
-            .resolve(android.file)
-            .toURL();
+        if (android.file != null) {
+            ModuleArchive archives[] = new ModuleArchive[1];
+            URL url = resolved.remote.toURI()
+                .resolve(".")
+                .resolve(android.file)
+                .toURL();
+            archives[0] = new ModuleArchive(url, android.sha256, null);
+            String include = android.include;
+            return new FoundModuleExpression(resolved.cdepManifestYml.coordinate, archives,
+                include, android.lib);
+        }
+        ModuleArchive archives[] = new ModuleArchive[android.archives.length];
+        int i = 0;
+        for (Archive archive : android.archives) {
+            archives[i++] = new ModuleArchive(
+                resolved.remote.toURI()
+                    .resolve(".")
+                    .resolve(archive.file)
+                    .toURL(),
+                archive.sha256,
+                archive.size);
+        }
         String include = android.include;
-        return new FoundModuleExpression(resolved.cdepManifestYml.coordinate, url,
-            android.sha256, include, android.lib);
+        return new FoundModuleExpression(resolved.cdepManifestYml.coordinate, archives,
+            include, android.lib);
     }
 }

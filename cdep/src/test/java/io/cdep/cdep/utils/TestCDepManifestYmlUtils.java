@@ -166,7 +166,7 @@ public class TestCDepManifestYmlUtils {
             fail("Expected an exception");
         } catch (Exception e) {
             assertThat(e).hasMessage(
-                    "Package 'com.github.jomof:boost:1.0.63-rev10' has missing android.file");
+                    "Package 'com.github.jomof:boost:1.0.63-rev10' does not contain any files");
         }
     }
 

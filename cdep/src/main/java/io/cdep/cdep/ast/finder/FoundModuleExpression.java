@@ -22,20 +22,18 @@ import java.net.URL;
 public class FoundModuleExpression extends Expression {
 
     final public Coordinate coordinate; // Coordinate of the module.
-    final public URL archive; // The zip file.
-    final public String archiveSHA256;
+    final public ModuleArchive archives[];
     final public String include; // The relative path of include files under the zip
     final public String libraryName; // The library name
 
     public FoundModuleExpression(
             Coordinate coordinate,
-        URL archive,
-        String archiveSHA256,
+            ModuleArchive archives[],
             String include,
             String libraryName) {
+        for (ModuleArchive archive : archives) assert archive != null;
         this.coordinate = coordinate;
-        this.archive = archive;
-        this.archiveSHA256 = archiveSHA256;
+        this.archives = archives;
         this.include = include;
         this.libraryName = libraryName;
     }

@@ -274,7 +274,7 @@ public class CDep {
         out.printf("cdep %s\n", BuildInfo.PROJECT_VERSION);
         out.printf(
             " cdep: download dependencies and generate build modules for current cdep.yml\n");
-        out.printf(" cdep show folders: show local download and archive folders\n");
+        out.printf(" cdep show folders: show local download and file folders\n");
         out.printf(" cdep show manifest: show cdep interpretation of cdep.yml\n");
         out.printf(" cdep redownload: redownload dependencies for current cdep.yml\n");
         out.printf(" cdep create hashes: create or recreate cdep.sha256 file\n");

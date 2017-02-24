@@ -16,6 +16,7 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.cdep.yml.cdepmanifest.Android;
+import io.cdep.cdep.yml.cdepmanifest.Archive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.Linux;
@@ -78,13 +79,33 @@ public class CDepManifestYmlUtils {
     }
 
     private static void validateAndroid(Coordinate coordinate, Android android) {
-        if (android.file == null) {
-            throw new RuntimeException(String.format("Package '%s' has missing android.file", coordinate));
+        if (android.file == null && (android.archives == null || android.archives.length == 0)) {
+            throw new RuntimeException(
+                String.format("Package '%s' has missing android.archives", coordinate));
         }
-        if (android.sha256 == null) {
+        if (android.file != null && android.sha256 == null) {
             throw new RuntimeException(
                 String.format("Package '%s' has missing android.sha256 for '%s'",
                     coordinate, android.file));
+        }
+        if (android.archives != null) {
+            for (Archive archive : android.archives) {
+                if (archive.file == null) {
+                    throw new RuntimeException(
+                        String.format("Package '%s' has missing android.file.file",
+                            coordinate));
+                }
+                if (archive.sha256 == null) {
+                    throw new RuntimeException(
+                        String.format("Package '%s' has missing android.file.sha256 for: %s",
+                            coordinate, archive.file));
+                }
+                if (archive.size == null) {
+                    throw new RuntimeException(
+                        String.format("Package '%s' has missing android.file.size for: %s",
+                            coordinate, archive.file));
+                }
+            }
         }
     }
 
@@ -93,14 +114,27 @@ public class CDepManifestYmlUtils {
         if (cdepManifestYml.android != null) {
             Set<String> targetZips = new HashSet<>();
             for (Android android : cdepManifestYml.android) {
-                if (targetZips.contains(android.file)) {
+                if (android.file != null && android.archives != null) {
                     throw new RuntimeException(
-                            String.format(
-                                    "Package '%s' contains multiple references to the same zip file for android target: %s",
-                                    cdepManifestYml.coordinate, android.file));
+                        String.format(
+                            "Package '%s' contains both android.file and android.file",
+                            cdepManifestYml.coordinate));
                 }
-                zips.add(android.file);
-                targetZips.add(android.file);
+                if (android.file != null) {
+                    if (targetZips.contains(android.file)) {
+                        throw new RuntimeException(
+                            String.format(
+                                "Package '%s' contains multiple references to the same zip file for android target: %s",
+                                cdepManifestYml.coordinate, android.file));
+                    }
+                    zips.add(android.file);
+                    targetZips.add(android.file);
+                }
+                if (android.archives != null) {
+                    for (Archive archive : android.archives) {
+                        zips.add(archive.file);
+                    }
+                }
             }
         }
         if (cdepManifestYml.linux != null) {
