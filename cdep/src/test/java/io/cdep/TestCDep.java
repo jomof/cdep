@@ -71,11 +71,11 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
-                + "- compile: com.github.jomof:cmakeify:0.0.61\n"
+//                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
+//                + "- compile: com.github.jomof:cmakeify:0.0.67\n"
                 + "- compile: com.github.jomof:mathfu:1.0.2-rev1\n"
-                + "- compile: https://github.com/jomof/cmakeify/releases/download/0.0.61/cdep-manifest.yml\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.11\n",
+                + "- compile: https://github.com/jomof/cmakeify/releases/download/0.0.67/cdep-manifest.yml\n"
+                + "- compile: com.github.jomof:low-level-statistics:0.0.13\n",
             yaml, StandardCharsets.UTF_8);
         String result1 = main("show", "manifest", "-wf", yaml.getParent());
         yaml.delete();
@@ -83,7 +83,7 @@ public class TestCDep {
         System.out.print(result1);
         String result2 = main("show", "manifest", "-wf", yaml.getParent());
         assertThat(result2).isEqualTo(result1);
-        assertThat(result2).contains("0.0.61");
+        assertThat(result2).contains("0.0.67");
         String result3 = main("-wf", yaml.getParent());
     }
 
@@ -113,7 +113,7 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.11\n",
+                + "- compile: com.github.jomof:low-level-statistics:0.0.13\n",
             yaml, StandardCharsets.UTF_8);
         // Download first.
         main("-wf", yaml.getParent());
@@ -129,7 +129,7 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.11\n",
+                + "- compile: com.github.jomof:low-level-statistics:0.0.13\n",
             yaml, StandardCharsets.UTF_8);
         String text = main("create", "hashes", "-wf", yaml.getParent());
         assertThat(text).contains("Created cdep.sha256");
@@ -143,10 +143,10 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.11\n",
+                + "- compile: com.github.jomof:low-level-statistics:0.0.13\n",
             yaml, StandardCharsets.UTF_8);
         File hashes = new File(".test-files/checkThatHashesWork/cdep.sha256");
-        Files.write("- coordinate: com.github.jomof:low-level-statistics:0.0.11\n" +
+        Files.write("- coordinate: com.github.jomof:low-level-statistics:0.0.13\n" +
                          "  sha256: dogbone",
             hashes, StandardCharsets.UTF_8);
         try {
@@ -154,7 +154,7 @@ public class TestCDep {
             fail("Expected failure");
         } catch (RuntimeException e) {
             assertThat(e).hasMessage("SHA256 of cdep-manifest.yml for package " +
-                    "'com.github.jomof:low-level-statistics:0.0.11' does not agree with value in cdep.sha256. " +
+                    "'com.github.jomof:low-level-statistics:0.0.13' does not agree with value in cdep.sha256. " +
                     "Something changed.");
         }
     }
@@ -249,12 +249,12 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.11\n",
+                + "- compile: com.github.jomof:low-level-statistics:0.0.13\n",
             yaml, StandardCharsets.UTF_8);
         // Download everything
         String resultRemote = main("-wf", yaml.getParent());
         // Ask for the local path to the manifes.
-        String localPath = main("show", "local", "com.github.jomof:low-level-statistics:0.0.11");
+        String localPath = main("show", "local", "com.github.jomof:low-level-statistics:0.0.13");
         assertThat(localPath).contains("cdep-manifest.yml");
         // Write a new manifest with the local path.
         Files.write(String.format("builders: [cmake]\n"
@@ -266,41 +266,5 @@ public class TestCDep {
         System.out.print(resultLocal);
         resultLocal = main("-wf", yaml.getParent());
         System.out.print(resultLocal);
-    }
-
-    @Test
-    public void wrongZipHashNotAllowed() throws Exception {
-        File yaml = new File(".test-files/wrongZipHashNotAllowed/cdep.yml");
-        yaml.getParentFile().mkdirs();
-        Files.write("builders: [cmake]\n"
-                + "dependencies:\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.10\n",
-            yaml, StandardCharsets.UTF_8);
-        // Download everything
-        try {
-            main("-wf", yaml.getParent());
-        } catch (RuntimeException e) {
-            assertThat(e.toString()).contains("SHA256");
-            return;
-        }
-        throw new RuntimeException("Expected a hash code error but didn't get one");
-    }
-
-    @Test
-    public void androidIsMissingSha256() throws Exception {
-        File yaml = new File(".test-files/androidIsMissingSha256/cdep.yml");
-        yaml.getParentFile().mkdirs();
-        Files.write("builders: [cmake]\n"
-                + "dependencies:\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.8\n",
-            yaml, StandardCharsets.UTF_8);
-        // Download everything
-        try {
-            main("-wf", yaml.getParent());
-        } catch (RuntimeException e) {
-            assertThat(e.toString()).contains("missing android.sha256 ");
-            return;
-        }
-        throw new RuntimeException("Expected a hash code error but didn't get one");
     }
 }

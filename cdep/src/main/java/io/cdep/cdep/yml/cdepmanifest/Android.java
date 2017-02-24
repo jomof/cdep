@@ -19,8 +19,6 @@ package io.cdep.cdep.yml.cdepmanifest;
 @SuppressWarnings("unused")
 public class Android {
   final public Archive archives[] = null;
-  final public String file = null;
-  final public String sha256 = null;
   final public String ndk = null;
   final public String compiler = null;
   final public String runtime = null;
@@ -29,6 +27,7 @@ public class Android {
   final public String abis[] = null;
   final public String include;
   final public String lib = null;
+  final public String flavor = null;
 
   Android() {
     include = "include";
