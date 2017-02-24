@@ -71,6 +71,7 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
+                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
                 + "- compile: com.github.jomof:cmakeify:0.0.61\n"
                 + "- compile: com.github.jomof:mathfu:1.0.2-rev1\n"
                 + "- compile: https://github.com/jomof/cmakeify/releases/download/0.0.61/cdep-manifest.yml\n"

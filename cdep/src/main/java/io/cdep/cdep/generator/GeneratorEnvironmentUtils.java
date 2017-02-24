@@ -50,8 +50,16 @@ public class GeneratorEnvironmentUtils {
 
                 if (archive.size != null) {
                     if (archive.size != local.length()) {
-                        throw new RuntimeException(String.format(
-                            "file size for %s did not match value from manifest", archive.size));
+                        // It may have been an interrupted download. Try again.
+                        if (!forceRedownload) {
+                            environment.getLocalDownloadedFile(
+                                foundModule.coordinate, archive.file, true /* forceRedownload */);
+                        }
+                        if (archive.size != local.length()) {
+                            throw new RuntimeException(String.format(
+                                "file size for %s did not match value from manifest",
+                                archive.size));
+                        }
                     }
                 }
 

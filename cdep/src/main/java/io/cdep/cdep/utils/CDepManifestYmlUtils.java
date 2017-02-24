@@ -117,7 +117,7 @@ public class CDepManifestYmlUtils {
                 if (android.file != null && android.archives != null) {
                     throw new RuntimeException(
                         String.format(
-                            "Package '%s' contains both android.file and android.file",
+                            "Package '%s' contains both android.file and android.archives",
                             cdepManifestYml.coordinate));
                 }
                 if (android.file != null) {
@@ -140,14 +140,27 @@ public class CDepManifestYmlUtils {
         if (cdepManifestYml.linux != null) {
             Set<String> targetZips = new HashSet<>();
             for (Linux linux : cdepManifestYml.linux) {
-                if (targetZips.contains(linux.file)) {
+                if (linux.file != null && linux.archives != null) {
                     throw new RuntimeException(
-                            String.format(
-                                    "Package '%s' contains multiple references to the same zip file for linux target: %s",
-                                    cdepManifestYml.coordinate, linux.file));
+                        String.format(
+                            "Package '%s' contains both linux.file and linux.archives",
+                            cdepManifestYml.coordinate));
                 }
-                zips.add(linux.file);
-                targetZips.add(linux.file);
+                if (linux.file != null) {
+                    if (targetZips.contains(linux.file)) {
+                        throw new RuntimeException(
+                            String.format(
+                                "Package '%s' contains multiple references to the same zip file for linux target: %s",
+                                cdepManifestYml.coordinate, linux.file));
+                    }
+                    zips.add(linux.file);
+                    targetZips.add(linux.file);
+                }
+                if (linux.archives != null) {
+                    for (Archive archive : linux.archives) {
+                        zips.add(archive.file);
+                    }
+                }
             }
         }
         if (zips.isEmpty()) {
