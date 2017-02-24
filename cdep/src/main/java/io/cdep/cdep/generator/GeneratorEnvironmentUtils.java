@@ -47,6 +47,14 @@ public class GeneratorEnvironmentUtils {
             for (ModuleArchive archive : foundModule.archives) {
                 File local = environment.getLocalDownloadedFile(
                     foundModule.coordinate, archive.file, forceRedownload);
+
+                if (archive.size != null) {
+                    if (archive.size != local.length()) {
+                        throw new RuntimeException(String.format(
+                            "file size for %s did not match value from manifest", archive.size));
+                    }
+                }
+
                 String localSha256String = HashUtils.getSHA256OfFile(local);
                 if (!localSha256String.equals(archive.sha256)) {
                     throw new RuntimeException(String.format(

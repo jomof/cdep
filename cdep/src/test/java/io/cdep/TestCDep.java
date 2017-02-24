@@ -86,24 +86,24 @@ public class TestCDep {
         String result3 = main("-wf", yaml.getParent());
     }
 
-//    @Test
-//    public void firebase() throws Exception {
-//        CDepYml config = new CDepYml();
-//        System.out.printf(new Yaml().dump(config));
-//        File yaml = new File(".test-files/firebase/cdep.yml");
-//        yaml.getParentFile().mkdirs();
-//        Files.write("builders: [cmake]\n"
-//                + "dependencies:\n"
-//                + "- compile: /usr/local/google/home/jomof/projects/firebase/.deploy/"
-//                + "com.jomofisher/firebase/2.1.3-rev1/cdep-manifest-storage.yml\n",
-//            yaml, StandardCharsets.UTF_8);
-//        String result1 = main("show", "manifest", "-wf", yaml.getParent());
-//        yaml.delete();
-//        Files.write(result1, yaml, StandardCharsets.UTF_8);
-//        System.out.print(result1);
-//        String result = main("-wf", yaml.getParent());
-//        System.out.printf(result);
-//    }
+    @Test
+    public void firebase() throws Exception {
+        CDepYml config = new CDepYml();
+        System.out.printf(new Yaml().dump(config));
+        File yaml = new File(".test-files/firebase/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake]\n"
+                + "dependencies:\n"
+                + "- compile: /usr/local/google/home/jomof/projects/firebase/.deploy/"
+                + "com.jomofisher/firebase/2.1.3-rev1/cdep-manifest-storage.yml\n",
+            yaml, StandardCharsets.UTF_8);
+        String result1 = main("show", "manifest", "-wf", yaml.getParent());
+        yaml.delete();
+        Files.write(result1, yaml, StandardCharsets.UTF_8);
+        System.out.print(result1);
+        String result = main("-wf", yaml.getParent());
+        System.out.printf(result);
+    }
 
     @Test
     public void redownload() throws Exception {
