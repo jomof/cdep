@@ -1,8 +1,10 @@
 builders: [cmake]
 
 dependencies:
-- compile: com.github.jomof:low-level-statistics:0.0.11
-- compile: com.github.jomof:sqlite:3.16.2-rev14
-- compile: com.github.jomof:boost:1.0.63-rev10
-- compile: com.github.jomof:yaml-cpp:0.5.3-rev5
+- compile: com.github.jomof:sqlite:3.16.2-rev18
+- compile: com.github.jomof:boost:1.0.63-rev12
+- compile: com.github.jomof:vectorial:0.0.0-rev5
+- compile: com.github.jomof:mathfu:1.0.2-rev3
+- compile: com.github.jomof:sdl2:2.0.5-rev8
+
 
