@@ -116,7 +116,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testFoundIncludeAndLib() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/sqlite/releases/download/3.16.2-rev18/cdep-manifest.yml"),
+            "https://github.com/jomof/sqlite/releases/download/3.16.2-rev19/cdep-manifest.yml"),
             false);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -129,7 +129,7 @@ public class TestFindModuleFunctionTableBuilder {
             "c++_shared",
             "x86");
         assertThat(found.include).isEqualTo("include");
-        assertThat(found.libraryName).isEqualTo("libsqlite.so");
+        assertThat(found.libraryName).isEqualTo("libsqlite.a");
     }
 
     @Test

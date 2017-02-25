@@ -93,6 +93,12 @@ public class CDepManifestYmlUtils {
             throw new RuntimeException(
                 String.format("Package '%s' has missing android.archives", coordinate));
         }
+        if (android.lib != null && !android.lib.endsWith(".a")) {
+            // Android NDK team best practice recommendation is to use only static libraries.
+            throw new RuntimeException(
+                    String.format("Package '%s' has non-static android lib '%s'",
+                        coordinate, android.lib));
+        }
         if (android.archives != null) {
             Set<String> zips = new HashSet<>();
             for (Archive archive : android.archives) {
