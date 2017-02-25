@@ -72,9 +72,9 @@ public class TestCDep {
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
 //                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
-//                + "- compile: com.github.jomof:cmakeify:0.0.67\n"
-                + "- compile: com.github.jomof:mathfu:1.0.2-rev1\n"
-                + "- compile: https://github.com/jomof/cmakeify/releases/download/0.0.67/cdep-manifest.yml\n"
+//                + "- compile: com.github.jomof:cmakeify:0.0.70\n"
+                + "- compile: com.github.jomof:mathfu:1.0.2-rev3\n"
+                + "- compile: https://github.com/jomof/cmakeify/releases/download/0.0.71/cdep-manifest.yml\n"
                 + "- compile: com.github.jomof:low-level-statistics:0.0.13\n",
             yaml, StandardCharsets.UTF_8);
         String result1 = main("show", "manifest", "-wf", yaml.getParent());
@@ -83,7 +83,7 @@ public class TestCDep {
         System.out.print(result1);
         String result2 = main("show", "manifest", "-wf", yaml.getParent());
         assertThat(result2).isEqualTo(result1);
-        assertThat(result2).contains("0.0.67");
+        assertThat(result2).contains("0.0.71");
         String result3 = main("-wf", yaml.getParent());
     }
 

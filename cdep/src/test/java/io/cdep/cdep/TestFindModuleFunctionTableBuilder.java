@@ -41,11 +41,11 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testSimple() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.61/cdep-manifest.yml"),
+            "https://github.com/jomof/cmakeify/releases/download/0.0.70/cdep-manifest.yml"),
             false);
         assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
         assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.61");
+        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.70");
         assertThat(resolved.cdepManifestYml.android.length).isEqualTo(4);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -63,11 +63,11 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testCheckPlatformSwitch() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.61/cdep-manifest.yml"),
+            "https://github.com/jomof/cmakeify/releases/download/0.0.70/cdep-manifest.yml"),
             false);
         assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
         assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.61");
+        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.70");
         assertThat(resolved.cdepManifestYml.android.length).isEqualTo(4);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -96,7 +96,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testArchivePathIsFull() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.61/cdep-manifest.yml"),
+            "https://github.com/jomof/cmakeify/releases/download/0.0.70/cdep-manifest.yml"),
             false);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -109,14 +109,14 @@ public class TestFindModuleFunctionTableBuilder {
             "c++_shared",
             "x86");
         assertThat(found.archives[0].file.toString()).isEqualTo(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.61/"
+            "https://github.com/jomof/cmakeify/releases/download/0.0.70/"
                 + "cmakeify-android-cxx_shared-platform-21.zip");
     }
 
     @Test
     public void testFoundIncludeAndLib() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/sqllite/releases/download/3.16.2-rev11/cdep-manifest.yml"),
+            "https://github.com/jomof/sqlite/releases/download/3.16.2-rev18/cdep-manifest.yml"),
             false);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -129,13 +129,13 @@ public class TestFindModuleFunctionTableBuilder {
             "c++_shared",
             "x86");
         assertThat(found.include).isEqualTo("include");
-        assertThat(found.libraryName).isEqualTo("libsqllite.so");
+        assertThat(found.libraryName).isEqualTo("libsqlite.so");
     }
 
     @Test
     public void testHeaderOnly() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/boost/releases/download/1.0.63-rev10/cdep-manifest.yml"),
+            "https://github.com/jomof/boost/releases/download/1.0.63-rev12/cdep-manifest.yml"),
             false);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -150,14 +150,14 @@ public class TestFindModuleFunctionTableBuilder {
         assertThat(found.include.toString()).isEqualTo("boost_1_63_0");
         assertThat(found.libraryName).isNull();
         assertThat(found.archives[0].file.toString()).isEqualTo(
-            "https://github.com/jomof/boost/releases/download/1.0.63-rev10/boost_1_63_0.zip");
+            "https://github.com/jomof/boost/releases/download/1.0.63-rev12/boost_1_63_0.zip");
     }
 
 
     @Test
     public void testHeaderOnlyGitHubCoordinate() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "com.github.jomof:boost:1.0.63-rev10"), false);
+            "com.github.jomof:boost:1.0.63-rev12"), false);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
@@ -171,6 +171,6 @@ public class TestFindModuleFunctionTableBuilder {
         assertThat(found.include).isEqualTo("boost_1_63_0");
         assertThat(found.libraryName).isNull();
         assertThat(found.archives[0].file.toString()).isEqualTo(
-            "https://github.com/jomof/boost/releases/download/1.0.63-rev10/boost_1_63_0.zip");
+            "https://github.com/jomof/boost/releases/download/1.0.63-rev12/boost_1_63_0.zip");
     }
 }

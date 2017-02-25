@@ -110,13 +110,16 @@ public class TestCDepManifestYmlUtils {
                     "  artifactId: boost\n" +
                     "  version: 1.0.63-rev10\n" +
                     "android:\n" +
-                    "  - file: bob.zip\n" +
-                    "  - file: bob.zip\n");
+                    "  - archives:\n" +
+                    "    - file: bob.zip\n" +
+                    "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" +
+                    "    - file: bob.zip\n" +
+                    "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
             fail("Expected an exception");
         } catch (Exception e) {
             assertThat(e).hasMessage(
                     "Package 'com.github.jomof:boost:1.0.63-rev10' contains multiple references " +
-                            "to the same zip file for android target: bob.zip");
+                            "to the same zip file 'bob.zip'");
         }
     }
 
@@ -126,15 +129,16 @@ public class TestCDepManifestYmlUtils {
             check("coordinate:\n" +
                     "  groupId: com.github.jomof\n" +
                     "  artifactId: boost\n" +
-                    "  version: 1.0.63-rev10\n" +
+                    "  version: 1.0.63-rev12\n" +
                     "linux:\n" +
-                    "  - file: bob.zip\n" +
-                    "  - file: bob.zip\n");
+                    "  - archives:\n" +
+                    "    - file: bob.zip\n" +
+                    "    - file: bob.zip\n");
             fail("Expected an exception");
         } catch (Exception e) {
             assertThat(e).hasMessage(
-                    "Package 'com.github.jomof:boost:1.0.63-rev10' contains multiple references " +
-                            "to the same zip file for linux target: bob.zip");
+                    "Package 'com.github.jomof:boost:1.0.63-rev12' contains multiple references " +
+                            "to the same zip file 'bob.zip'");
         }
     }
 
@@ -146,11 +150,29 @@ public class TestCDepManifestYmlUtils {
                     "  artifactId: boost\n" +
                     "  version: 1.0.63-rev10\n" +
                     "android:\n" +
-                    "  - file: bob.zip\n");
+                    "  - archives:\n" +
+                    "    - file: bob.zip\n");
             fail("Expected an exception");
         } catch (Exception e) {
             assertThat(e).hasMessage(
-                    "Package 'com.github.jomof:boost:1.0.63-rev10' has missing android.sha256 for 'bob.zip'");
+                    "Package 'com.github.jomof:boost:1.0.63-rev10' has missing android.archive.sha256 for 'bob.zip'");
+        }
+    }
+
+   @Test
+    public void missingLinuxSha() {
+        try {
+            check("coordinate:\n" +
+                    "  groupId: com.github.jomof\n" +
+                    "  artifactId: boost\n" +
+                    "  version: 1.0.63-rev10\n" +
+                    "linux:\n" +
+                    "  - archives:\n" +
+                    "    - file: bob.zip\n");
+            fail("Expected an exception");
+        } catch (Exception e) {
+            assertThat(e).hasMessage(
+                    "Package 'com.github.jomof:boost:1.0.63-rev10' has missing linux.archive.sha256 for 'bob.zip'");
         }
     }
 
@@ -162,11 +184,65 @@ public class TestCDepManifestYmlUtils {
                     "  artifactId: boost\n" +
                     "  version: 1.0.63-rev10\n" +
                     "android:\n" +
-                    "  - sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+                    "  - archives:\n" +
+                    "    - sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
             fail("Expected an exception");
         } catch (Exception e) {
             assertThat(e).hasMessage(
-                    "Package 'com.github.jomof:boost:1.0.63-rev10' does not contain any files");
+                    "Package 'com.github.jomof:boost:1.0.63-rev10' has missing android.archive.file");
+        }
+    }
+
+    @Test
+    public void missingLinuxFile() {
+        try {
+            check("coordinate:\n" +
+                    "  groupId: com.github.jomof\n" +
+                    "  artifactId: boost\n" +
+                    "  version: 1.0.63-rev10\n" +
+                    "linux:\n" +
+                    "  - archives:\n" +
+                    "    - sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+            fail("Expected an exception");
+        } catch (Exception e) {
+            assertThat(e).hasMessage(
+                    "Package 'com.github.jomof:boost:1.0.63-rev10' has missing linux.archive.file");
+        }
+    }
+
+    @Test
+    public void missingAndroidSize() {
+        try {
+            check("coordinate:\n" +
+                    "  groupId: com.github.jomof\n" +
+                    "  artifactId: boost\n" +
+                    "  version: 1.0.63-rev10\n" +
+                    "android:\n" +
+                    "  - archives:\n" +
+                    "    - file: bob.zip\n" +
+                    "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+            fail("Expected an exception");
+        } catch (Exception e) {
+            assertThat(e).hasMessage(
+                    "Package 'com.github.jomof:boost:1.0.63-rev10' has missing android.archive.size for 'bob.zip'");
+        }
+    }
+
+    @Test
+    public void missingLinuxSize() {
+        try {
+            check("coordinate:\n" +
+                    "  groupId: com.github.jomof\n" +
+                    "  artifactId: boost\n" +
+                    "  version: 1.0.63-rev10\n" +
+                    "linux:\n" +
+                    "  - archives:\n" +
+                    "    - file: bob.zip\n" +
+                    "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+            fail("Expected an exception");
+        } catch (Exception e) {
+            assertThat(e).hasMessage(
+                    "Package 'com.github.jomof:boost:1.0.63-rev10' has missing linux.archive.size for 'bob.zip'");
         }
     }
 
@@ -177,14 +253,18 @@ public class TestCDepManifestYmlUtils {
                 "  artifactId: boost\n" +
                 "  version: 1.0.63-rev10\n" +
                 "android:\n" +
-                "  - file: boost_1_63_0.zip\n" +
-                "    sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" +
+                "  - archives:\n" +
+                "    - file: boost_1_63_0.zip\n" +
+                "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" +
+                "      size: 192\n" +
                 "    include: boost_1_63_0\n" +
                 "\n" +
                 "linux:\n" +
-                "  - file: boost_1_63_0.zip\n" +
-                "    include: boost_1_63_0\n" +
-                "    sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b");
+                "  - archives:\n" +
+                "    - file: boost_1_63_0.zip\n" +
+                "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" +
+                "      size: 192\n" +
+                "    include: boost_1_63_0\n");
     }
 
     @Test
@@ -194,8 +274,10 @@ public class TestCDepManifestYmlUtils {
                 "  artifactId: boost\n" +
                 "  version: 1.0.63-rev10\n" +
                 "android:\n" +
-                "  - file: bob.zip\n" +
-                "    sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+                "  - archives:\n" +
+                "    - file: bob.zip\n" +
+                "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" +
+                "      size: 192\n");
     }
 
     @Test
@@ -203,10 +285,12 @@ public class TestCDepManifestYmlUtils {
         check("coordinate:\n" +
                 "  groupId: com.github.jomof\n" +
                 "  artifactId: boost\n" +
-                "  version: 1.0.63-rev10\n" +
+                "  version: 1.0.63-rev12\n" +
                 "linux:\n" +
-                "  - file: bob.zip\n" +
-                "    sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+                "  - archives:\n" +
+                "    - file: bob.zip\n" +
+                "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" +
+                "      size: 192");
     }
 
     private void check(String content) {

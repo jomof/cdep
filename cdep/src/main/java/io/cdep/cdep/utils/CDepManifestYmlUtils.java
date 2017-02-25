@@ -58,6 +58,7 @@ public class CDepManifestYmlUtils {
         checkForMalformedCoordinateVersion(cdepManifestYml.coordinate);
         checkForDuplicateOrMissingZipFiles(cdepManifestYml);
         checkAndroid(cdepManifestYml);
+        checkLinux(cdepManifestYml);
     }
 
     private static void checkAndroid(CDepManifestYml cdepManifestYml) {
@@ -66,6 +67,15 @@ public class CDepManifestYmlUtils {
         }
         for (Android android : cdepManifestYml.android) {
             validateAndroid(cdepManifestYml.coordinate, android);
+        }
+    }
+
+    private static void checkLinux(CDepManifestYml cdepManifestYml) {
+        if (cdepManifestYml.linux == null) {
+            return;
+        }
+        for (Linux linux : cdepManifestYml.linux) {
+            validateLinux(cdepManifestYml.coordinate, linux);
         }
     }
 
@@ -84,22 +94,66 @@ public class CDepManifestYmlUtils {
                 String.format("Package '%s' has missing android.archives", coordinate));
         }
         if (android.archives != null) {
+            Set<String> zips = new HashSet<>();
             for (Archive archive : android.archives) {
                 if (archive.file == null) {
                     throw new RuntimeException(
-                        String.format("Package '%s' has missing android.file.file",
-                            coordinate));
+                            String.format("Package '%s' has missing android.archive.file",
+                                    coordinate));
                 }
+                if (zips.contains(archive.file)) {
+                    throw new RuntimeException(String.format("Package '%s' contains multiple references to the same" +
+                            " zip file '%s'", coordinate, archive.file));
+                }
+                zips.add(archive.file);
+            }
+            for (Archive archive : android.archives) {
                 if (archive.sha256 == null) {
                     throw new RuntimeException(
-                        String.format("Package '%s' has missing android.file.sha256 for: %s",
+                        String.format("Package '%s' has missing android.archive.sha256 for '%s'",
                             coordinate, archive.file));
                 }
                 if (archive.size == null) {
                     throw new RuntimeException(
-                        String.format("Package '%s' has missing android.file.size for: %s",
+                        String.format("Package '%s' has missing android.archive.size for '%s'",
                             coordinate, archive.file));
                 }
+
+            }
+        }
+    }
+
+    private static void validateLinux(Coordinate coordinate, Linux linux) {
+        if (linux.archives == null || linux.archives.length == 0) {
+            throw new RuntimeException(
+                String.format("Package '%s' has missing linux.archives", coordinate));
+        }
+        if (linux.archives != null) {
+            Set<String> zips = new HashSet<>();
+            for (Archive archive : linux.archives) {
+                if (archive.file == null) {
+                    throw new RuntimeException(
+                            String.format("Package '%s' has missing linux.archive.file",
+                                    coordinate));
+                }
+                if (zips.contains(archive.file)) {
+                    throw new RuntimeException(String.format("Package '%s' contains multiple references to the same" +
+                            " zip file '%s'", coordinate, archive.file));
+                }
+                zips.add(archive.file);
+            }
+            for (Archive archive : linux.archives) {
+                if (archive.sha256 == null) {
+                    throw new RuntimeException(
+                        String.format("Package '%s' has missing linux.archive.sha256 for '%s'",
+                            coordinate, archive.file));
+                }
+                if (archive.size == null) {
+                    throw new RuntimeException(
+                        String.format("Package '%s' has missing linux.archive.size for '%s'",
+                            coordinate, archive.file));
+                }
+
             }
         }
     }
