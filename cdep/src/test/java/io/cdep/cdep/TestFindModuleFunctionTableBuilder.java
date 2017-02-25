@@ -41,12 +41,12 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testSimple() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.70/cdep-manifest.yml"),
+            "https://github.com/jomof/cmakeify/releases/download/0.0.74/cdep-manifest.yml"),
             false);
         assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
         assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.70");
-        assertThat(resolved.cdepManifestYml.android.length).isEqualTo(4);
+        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.74");
+        assertThat(resolved.cdepManifestYml.android.length).isEqualTo(2);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
@@ -57,18 +57,18 @@ public class TestFindModuleFunctionTableBuilder {
             "21",
             "c++_shared",
             "x86").archives[0].file.getPath();
-        assertThat(zip).endsWith("cmakeify-android-cxx_shared-platform-21.zip");
+        assertThat(zip).endsWith("cmakeify-android-platform-21.zip");
     }
 
     @Test
     public void testCheckPlatformSwitch() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.70/cdep-manifest.yml"),
+            "https://github.com/jomof/cmakeify/releases/download/0.0.74/cdep-manifest.yml"),
             false);
         assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
         assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
-        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.70");
-        assertThat(resolved.cdepManifestYml.android.length).isEqualTo(4);
+        assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.74");
+        assertThat(resolved.cdepManifestYml.android.length).isEqualTo(2);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
@@ -96,7 +96,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testArchivePathIsFull() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.70/cdep-manifest.yml"),
+            "https://github.com/jomof/cmakeify/releases/download/0.0.74/cdep-manifest.yml"),
             false);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -109,14 +109,14 @@ public class TestFindModuleFunctionTableBuilder {
             "c++_shared",
             "x86");
         assertThat(found.archives[0].file.toString()).isEqualTo(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.70/"
-                + "cmakeify-android-cxx_shared-platform-21.zip");
+            "https://github.com/jomof/cmakeify/releases/download/0.0.74/"
+                + "cmakeify-android-platform-21.zip");
     }
 
     @Test
     public void testFoundIncludeAndLib() throws Exception {
         ResolvedManifest resolved = environment.resolveAny(createReference(
-            "https://github.com/jomof/sqlite/releases/download/3.16.2-rev19/cdep-manifest.yml"),
+            "https://github.com/jomof/sqlite/releases/download/3.16.2-rev21/cdep-manifest.yml"),
             false);
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();

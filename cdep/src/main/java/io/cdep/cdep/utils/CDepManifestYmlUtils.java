@@ -99,6 +99,18 @@ public class CDepManifestYmlUtils {
                     String.format("Package '%s' has non-static android lib '%s'",
                         coordinate, android.lib));
         }
+        if (android.runtime != null) {
+            switch (android.runtime) {
+                case "c++":
+                case "stlport":
+                case "gnustl":
+                    break;
+                default:
+                    throw new RuntimeException(String.format("" +
+                            "Package '%s' has unexpected android runtime '%s'. Allowed: c++, stlport, gnustl",
+                            coordinate, android.runtime));
+            }
+        }
         if (android.archives != null) {
             Set<String> zips = new HashSet<>();
             for (Archive archive : android.archives) {

@@ -74,8 +74,8 @@ public class TestCDep {
 //                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
 //                + "- compile: com.github.jomof:cmakeify:0.0.70\n"
                 + "- compile: com.github.jomof:mathfu:1.0.2-rev3\n"
-                + "- compile: https://github.com/jomof/cmakeify/releases/download/0.0.71/cdep-manifest.yml\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.13\n",
+                + "- compile: https://github.com/jomof/cmakeify/releases/download/0.0.74/cdep-manifest.yml\n"
+                + "- compile: com.github.jomof:low-level-statistics:0.0.15\n",
             yaml, StandardCharsets.UTF_8);
         String result1 = main("show", "manifest", "-wf", yaml.getParent());
         yaml.delete();
@@ -83,7 +83,7 @@ public class TestCDep {
         System.out.print(result1);
         String result2 = main("show", "manifest", "-wf", yaml.getParent());
         assertThat(result2).isEqualTo(result1);
-        assertThat(result2).contains("0.0.71");
+        assertThat(result2).contains("0.0.74");
         String result3 = main("-wf", yaml.getParent());
     }
 
@@ -113,7 +113,7 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.13\n",
+                + "- compile: com.github.jomof:low-level-statistics:0.0.15\n",
             yaml, StandardCharsets.UTF_8);
         // Download first.
         main("-wf", yaml.getParent());
@@ -129,7 +129,7 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.13\n",
+                + "- compile: com.github.jomof:low-level-statistics:0.0.15\n",
             yaml, StandardCharsets.UTF_8);
         String text = main("create", "hashes", "-wf", yaml.getParent());
         assertThat(text).contains("Created cdep.sha256");
@@ -143,10 +143,10 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.13\n",
+                + "- compile: com.github.jomof:low-level-statistics:0.0.15\n",
             yaml, StandardCharsets.UTF_8);
         File hashes = new File(".test-files/checkThatHashesWork/cdep.sha256");
-        Files.write("- coordinate: com.github.jomof:low-level-statistics:0.0.13\n" +
+        Files.write("- coordinate: com.github.jomof:low-level-statistics:0.0.15\n" +
                          "  sha256: dogbone",
             hashes, StandardCharsets.UTF_8);
         try {
@@ -154,7 +154,7 @@ public class TestCDep {
             fail("Expected failure");
         } catch (RuntimeException e) {
             assertThat(e).hasMessage("SHA256 of cdep-manifest.yml for package " +
-                    "'com.github.jomof:low-level-statistics:0.0.13' does not agree with value in cdep.sha256. " +
+                    "'com.github.jomof:low-level-statistics:0.0.15' does not agree with value in cdep.sha256. " +
                     "Something changed.");
         }
     }
@@ -249,12 +249,12 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:low-level-statistics:0.0.13\n",
+                + "- compile: com.github.jomof:low-level-statistics:0.0.15\n",
             yaml, StandardCharsets.UTF_8);
         // Download everything
         String resultRemote = main("-wf", yaml.getParent());
         // Ask for the local path to the manifes.
-        String localPath = main("show", "local", "com.github.jomof:low-level-statistics:0.0.13");
+        String localPath = main("show", "local", "com.github.jomof:low-level-statistics:0.0.15");
         assertThat(localPath).contains("cdep-manifest.yml");
         // Write a new manifest with the local path.
         Files.write(String.format("builders: [cmake]\n"

@@ -106,7 +106,10 @@ public class FindModuleFunctionTableBuilder {
         String runtimes = "";
         for (String stlType : stlTypes.keySet()) {
             runtimes += stlType + " ";
-            cases.put(stlType, buildAndroidPlatformExpression(
+            cases.put(stlType + "_shared", buildAndroidPlatformExpression(
+                resolved,
+                stlTypes.get(stlType)));
+            cases.put(stlType + "_static", buildAndroidPlatformExpression(
                 resolved,
                 stlTypes.get(stlType)));
         }
