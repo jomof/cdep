@@ -155,7 +155,7 @@ public class CDep {
             }
             File applicationBase = new File(appname).getParentFile();
             if (applicationBase == null || !applicationBase.isDirectory()) {
-                throw new RuntimeException(String.format("Could not find folder for io.cdep.cdep.appname='%s'",
+                throw new RuntimeException(String.format("Could not find folder for io.cdep.appname='%s'",
                         appname));
             }
             out.printf("Installing cdep wrapper from %s\n", applicationBase);
