@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-#include <statistics.h>
+
 #include <sqlite3.h>
 
 int f() {
-    jaf_sum(0, 0);
     sqlite3_initialize();
     return 1;
 }
