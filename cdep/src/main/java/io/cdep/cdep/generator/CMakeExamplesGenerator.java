@@ -44,7 +44,8 @@ public class CMakeExamplesGenerator {
                     .replace("{ADDFUNCTION}", cmake.getAddDependencyFunctionName(coordinate));
             environment.out.printf("Generating %s\n", exampleCMakeListsFile);
             FileUtils.writeTextToFile(exampleCMakeListsFile, cmakeLists);
-            root.append(String.format("include(\"%s\")\r\n", exampleCMakeListsFile.getAbsolutePath()));
+            root.append(String.format("add_subdirectory(\"%s\")\r\n",
+                    exampleCMakeListsFile.getParentFile().getAbsolutePath()));
         }
         File rootFile = new File(getExampleRootFolder(), "CMakeLists.txt");
         environment.out.printf("Generating %s\n", rootFile);

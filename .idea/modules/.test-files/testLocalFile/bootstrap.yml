@@ -1,4 +1,0 @@
-entry: com.jomofisher.cdep.CDep
-dependencies:
-- C:\Users\jomof\projects\hold\cdep\bootstrap\local-test-files\cdep-alpha-0.0.29.jar
-- C:\Users\jomof\projects\hold\cdep\bootstrap\local-test-files\snakeyaml-1.17.jar
