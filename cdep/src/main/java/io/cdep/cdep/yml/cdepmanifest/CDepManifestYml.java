@@ -24,11 +24,13 @@ public class CDepManifestYml {
     final public Dependency dependencies[];
     final public Android android[];
     final public Linux[] linux;
+    final public String example;
 
     CDepManifestYml() {
         this.coordinate = null;
         this.dependencies = null;
         this.android = null;
         this.linux = null;
+        this.example = null;
     }
 }
