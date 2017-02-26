@@ -1,10 +1,9 @@
 targets: [android]
 android:
-  lib: libhello.a
   flavors:
     default: >
       -Dcdep-dependencies_DIR=$(pwd)/smoke-test/.cdep/modules
       -DCMAKE_SYSTEM_VERSION=21
+      -DCMAKE_CPP_FLAGS=-std=c++11
   ndk:
     platforms: [9, 21]
-
