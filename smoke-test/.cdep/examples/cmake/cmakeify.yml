@@ -4,4 +4,4 @@ android:
     default: >
       -DCMAKE_CPP_FLAGS=-std=c++11
   ndk:
-    platforms: [9, 21]
+    platforms: [21]
