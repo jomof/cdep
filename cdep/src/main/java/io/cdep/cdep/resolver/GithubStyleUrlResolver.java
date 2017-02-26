@@ -28,7 +28,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GithubStyleUrlResolver extends Resolver {
-  final private Pattern pattern = Pattern.compile("^https://(.*)/(.*)/(.*)/releases/download/(.*)/cdep-manifest.yml$");
+  final private Pattern pattern = Pattern.compile("^https://(.*)/(.*)/(.*)/releases/download/(.*)/cdep-manifest(.*).yml$");
 
   @Override
   public ResolvedManifest resolve(GeneratorEnvironment environment,
@@ -49,6 +49,13 @@ public class GithubStyleUrlResolver extends Resolver {
       groupId += user;
       String artifactId = match.group(3);
       String version = match.group(4);
+      String subArtifact = match.group(5);
+      if (subArtifact.length() > 0) {
+        if (!subArtifact.startsWith("-")) {
+          throw new RuntimeException(String.format("Url is incorrectly formed at '%s': %s", subArtifact, coordinate));
+        }
+        artifactId += "/" + subArtifact.substring(1);
+      }
 
       Coordinate provisionalCoordinate = new Coordinate(groupId, artifactId, version);
       String manifestContent = environment.getLocalDownloadedFileText(

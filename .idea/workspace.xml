@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestGithubReleasesCoordinateResolver.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestGithubStyleUrlResolver.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestGithubStyleUrlResolver.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smoke-test/cdep.yml" afterPath="$PROJECT_DIR$/smoke-test/cdep.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlResolver.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlResolver.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -79,17 +82,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CDepManifestYml.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYml.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="22" column="20" lean-forward="false" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="99">
@@ -111,6 +104,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="GithubStyleUrlResolver.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlResolver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="280">
+              <caret line="56" column="28" lean-forward="false" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="FindModuleInterpreter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -122,21 +125,13 @@
         </entry>
       </file>
       <file leaf-file-name="TestGithubStyleUrlResolver.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestGithubStyleUrlResolver.java">
+        <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestGithubStyleUrlResolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="643">
-              <caret line="42" column="67" lean-forward="false" selection-start-line="42" selection-start-column="67" selection-end-line="42" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestCDepManifestYmlUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="119" column="0" lean-forward="false" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="292">
+              <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="55" selection-end-column="3" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -144,9 +139,21 @@
       <file leaf-file-name="GithubReleasesCoordinateResolver.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+            <state relative-caret-position="660">
+              <caret line="46" column="56" lean-forward="false" selection-start-line="46" selection-start-column="56" selection-end-line="46" selection-end-column="56" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestGithubReleasesCoordinateResolver.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestGithubReleasesCoordinateResolver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -861,8 +868,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/FunctionTableExpression.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/IfGreaterThanOrEqualExpression.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/LongConstantExpression.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ParameterExpression.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/FileUtils.java" />
@@ -875,8 +880,6 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/FindModuleExpression.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/service/ResolvedManifest.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlResolver.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/Resolver.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ManifestUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CDep.java" />
@@ -905,13 +908,17 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Linux.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Android.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
-        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestGithubStyleUrlResolver.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
         <option value="$PROJECT_DIR$/smoke-test/cdep.yml" />
+        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestGithubStyleUrlResolver.java" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlResolver.java" />
+        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestGithubStyleUrlResolver.java" />
+        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestGithubReleasesCoordinateResolver.java" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.java" />
       </list>
     </option>
   </component>
@@ -1024,6 +1031,116 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resolver" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1206,6 +1323,44 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resolver" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1481,19 +1636,45 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="TestGithubStyleUrlResolver.testSimple" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="TestGithubStyleUrlResolver" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="io.cdep.cdep.generator.*" />
+          <option name="PATTERN" value="io.cdep.cdep.resolver.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <module name="cdep_test" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="io.cdep.cdep.generator" />
-      <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.generator.TestGithubStyleUrlResolver" />
-      <option name="METHOD_NAME" value="testSimple" />
+      <option name="PACKAGE_NAME" value="io.cdep.cdep.resolver" />
+      <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.resolver.TestGithubStyleUrlResolver" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestGithubStyleUrlResolver.testCompound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="io.cdep.cdep.resolver.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="cdep_test" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="io.cdep.cdep.resolver" />
+      <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.resolver.TestGithubStyleUrlResolver" />
+      <option name="METHOD_NAME" value="testCompound" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -1507,19 +1688,19 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="TestCDepManifestYmlUtils.duplicateLinuxZips" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="TestGithubReleasesCoordinateResolver.testCompound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="io.cdep.cdep.utils.*" />
+          <option name="PATTERN" value="io.cdep.cdep.resolver.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <module name="cdep_test" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="io.cdep.cdep.utils" />
-      <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.utils.TestCDepManifestYmlUtils" />
-      <option name="METHOD_NAME" value="duplicateLinuxZips" />
+      <option name="PACKAGE_NAME" value="io.cdep.cdep.resolver" />
+      <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.resolver.TestGithubReleasesCoordinateResolver" />
+      <option name="METHOD_NAME" value="testCompound" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -1533,44 +1714,18 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="TestCDepManifestYmlUtils.duplicateAndroidZips" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="TestGithubReleasesCoordinateResolver" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="io.cdep.cdep.utils.*" />
+          <option name="PATTERN" value="io.cdep.cdep.resolver.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <module name="cdep_test" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="io.cdep.cdep.utils" />
-      <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.utils.TestCDepManifestYmlUtils" />
-      <option name="METHOD_NAME" value="duplicateAndroidZips" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="false" name="TestCDepManifestYmlUtils" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="io.cdep.cdep.utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="cdep_test" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="io.cdep.cdep.utils" />
-      <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.utils.TestCDepManifestYmlUtils" />
+      <option name="PACKAGE_NAME" value="io.cdep.cdep.resolver" />
+      <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.resolver.TestGithubReleasesCoordinateResolver" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -1752,18 +1907,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="JUnit.All in cdep_test" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.TestGithubStyleUrlResolver.testSimple" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.duplicateLinuxZips" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.duplicateAndroidZips" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.TestGithubStyleUrlResolver" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.TestGithubStyleUrlResolver.testCompound" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.TestGithubReleasesCoordinateResolver.testCompound" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TestGithubReleasesCoordinateResolver" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="JUnit.All in cdep_test" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.duplicateAndroidZips" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.duplicateLinuxZips" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.TestGithubStyleUrlResolver.testSimple" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.TestGithubReleasesCoordinateResolver" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.TestGithubReleasesCoordinateResolver.testCompound" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.TestGithubStyleUrlResolver.testCompound" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.TestGithubStyleUrlResolver" />
       </list>
     </recent_temporary>
   </component>
@@ -2040,44 +2195,51 @@
       <option name="project" value="LOCAL" />
       <updated>1488063350188</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Remove _static / _share">
+      <created>1488063515598</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1488063515598</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_cdep_test - 2017.02.25 at 11h 22m 01s.xml">
+    <history-entry file="All_in_cdep_test - 2017.02.25 at 17h 54m 03s.xml">
       <configuration name="All in cdep_test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_cdep_test - 2017.02.25 at 11h 33m 00s.xml">
+    <history-entry file="All_in_cdep_test - 2017.02.25 at 17h 54m 36s.xml">
       <configuration name="All in cdep_test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_cdep_test - 2017.02.25 at 11h 33m 51s.xml">
+    <history-entry file="All_in_cdep_test - 2017.02.25 at 17h 58m 08s.xml">
       <configuration name="All in cdep_test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_cdep_test - 2017.02.25 at 14h 34m 07s.xml">
+    <history-entry file="All_in_cdep_test - 2017.02.25 at 17h 58m 47s.xml">
       <configuration name="All in cdep_test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_cdep_test - 2017.02.25 at 14h 34m 33s.xml">
+    <history-entry file="All_in_cdep_test - 2017.02.25 at 18h 10m 27s.xml">
       <configuration name="All in cdep_test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_cdep_test - 2017.02.25 at 14h 47m 15s.xml">
+    <history-entry file="All_in_cdep_test - 2017.02.25 at 18h 11m 49s.xml">
       <configuration name="All in cdep_test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_cdep_test - 2017.02.25 at 14h 48m 10s.xml">
+    <history-entry file="All_in_cdep_test - 2017.02.25 at 18h 21m 15s.xml">
       <configuration name="All in cdep_test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_cdep_test - 2017.02.25 at 14h 52m 27s.xml">
-      <configuration name="All in cdep_test" configurationId="JUnit" />
+    <history-entry file="TestGithubReleasesCoordinateResolver - 2017.02.25 at 18h 20m 55s.xml">
+      <configuration name="TestGithubReleasesCoordinateResolver" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_cdep_test - 2017.02.25 at 14h 53m 47s.xml">
-      <configuration name="All in cdep_test" configurationId="JUnit" />
+    <history-entry file="TestGithubReleasesCoordinateResolver_testCompound - 2017.02.25 at 18h 13m 16s.xml">
+      <configuration name="TestGithubReleasesCoordinateResolver.testCompound" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_cdep_test - 2017.02.25 at 14h 54m 40s.xml">
-      <configuration name="All in cdep_test" configurationId="JUnit" />
+    <history-entry file="TestGithubReleasesCoordinateResolver_testCompound - 2017.02.25 at 18h 20m 20s.xml">
+      <configuration name="TestGithubReleasesCoordinateResolver.testCompound" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="3226" height="1746" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2086,7 +2248,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296417" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32899022" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32899022" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.286875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -2156,8 +2318,20 @@
           <properties />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlResolver.java</url>
+          <line>35</line>
+          <properties />
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.java</url>
+          <line>41</line>
+          <properties />
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="15" />
+      <option name="time" value="17" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2166,13 +2340,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/LongConstantExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="15" column="21" lean-forward="false" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ParameterExpression.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -2451,30 +2618,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlResolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestGithubStyleUrlResolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="643">
-          <caret line="42" column="67" lean-forward="false" selection-start-line="42" selection-start-column="67" selection-end-line="42" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
@@ -2538,6 +2681,42 @@
         <state relative-caret-position="99">
           <caret line="3" column="47" lean-forward="false" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="47" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="56" column="28" lean-forward="false" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestGithubStyleUrlResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="55" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="46" column="56" lean-forward="false" selection-start-line="46" selection-start-column="56" selection-end-line="46" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestGithubReleasesCoordinateResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

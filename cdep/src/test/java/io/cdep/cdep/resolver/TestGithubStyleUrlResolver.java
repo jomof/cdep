@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package io.cdep.cdep.generator;
+package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.ast.service.ResolvedManifest;
-import io.cdep.cdep.resolver.GithubStyleUrlResolver;
+import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.yml.cdep.Dependency;
 import org.junit.Test;
 
@@ -41,5 +41,17 @@ public class TestGithubStyleUrlResolver {
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
     assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.70");
     assertThat(resolved.cdepManifestYml.android.length).isEqualTo(4);
+  }
+
+  @Test
+  public void testCompound() throws IOException {
+    ResolvedManifest resolved = new GithubStyleUrlResolver()
+        .resolve(environment, new Dependency(
+                "https://github.com/jomof/firebase/releases/download/2.1.3-rev3/cdep-manifest-database.yml"),
+            false);
+    assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
+    assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("firebase/database");
+    assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("2.1.3-rev3");
+    assertThat(resolved.cdepManifestYml.android.length).isEqualTo(3);
   }
 }

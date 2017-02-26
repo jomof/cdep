@@ -38,13 +38,20 @@ public class GithubReleasesCoordinateResolver extends Resolver {
         Matcher match = pattern.matcher(coordinate);
         if (match.find()) {
             String user = match.group(1);
-            String groupId = match.group(2);
+            String artifactId = match.group(2);
             String version = match.group(3);
+            String subArtifact = "";
+            if (artifactId.contains("/")) {
+                int pos = artifactId.indexOf("/");
+                subArtifact = "-" + artifactId.substring(pos + 1);
+                artifactId = artifactId.substring(0, pos);
+            }
             String manifest = String.format(
-                "https://github.com/%s/%s/releases/download/%s/cdep-manifest.yml",
+                "https://github.com/%s/%s/releases/download/%s/cdep-manifest%s.yml",
                 user,
-                groupId,
-                version);
+                artifactId,
+                version,
+                subArtifact);
             return urlResolver.resolve(environment, new Dependency(manifest), forceRedownload);
         }
         return null;
