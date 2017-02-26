@@ -15,7 +15,7 @@
 */
 package io.cdep.cdep.ast.finder;
 
-import io.cdep.cdep.yml.Coordinate;
+import io.cdep.cdep.Coordinate;
 
 public class FindModuleExpression extends Expression {
 

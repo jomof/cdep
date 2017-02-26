@@ -16,14 +16,14 @@
 package io.cdep.cdep.generator;
 
 import io.cdep.cdep.ast.finder.*;
-import io.cdep.cdep.yml.Coordinate;
+import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.utils.FileUtils;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class CMakeGenerator {
+    final static private String CONFIG_FILE_NAME = "cdep-dependencies-config.cmake";
 
     final private GeneratorEnvironment environment;
     final private String slash;
@@ -34,8 +34,6 @@ public class CMakeGenerator {
     }
 
     public void generate(FunctionTableExpression table) throws IOException {
-
-
         // Generate CMake Find*.cmake files
         StringBuilder sb = new StringBuilder();
         sb.append("# GENERATED FILE. DO NOT EDIT.\n");
@@ -53,32 +51,20 @@ public class CMakeGenerator {
             generateFinderExpression(0, findFunction, findFunction, sb);
             // TODO: If two artifact IDs conflict then generate a Find*.cmake that emits an error
         }
-        File file = new File(environment.modulesFolder, "cdep-dependencies-config.cmake");
+
         sb.append("\nfunction(add_all_cdep_dependencies target)\n");
         for (FindModuleExpression findFunction : table.functions.values()) {
             String function = getAddDependencyFunctionName(findFunction.coordinate);
             sb.append(String.format("  %s(${target})\n", function));
         }
         sb.append("endfunction(add_all_cdep_dependencies)\n");
-        writeTextToFile(file, sb.toString());
+        File file = getCMakeConfigurationFile();
+        environment.out.printf("Generating %s\n", file);
+        FileUtils.writeTextToFile(file, sb.toString());
     }
 
-
-    private void writeTextToFile(File file, String body) throws IOException {
-        environment.out.printf("Generating %s\n", file);
-        BufferedWriter writer = null;
-        //noinspection ResultOfMethodCallIgnored
-        file.getParentFile().mkdirs();
-        //noinspection ResultOfMethodCallIgnored
-        file.delete();
-        try {
-            writer = new BufferedWriter(new FileWriter(file));
-            writer.write(body);
-        } finally {
-            if (writer != null) {
-                writer.close();
-            }
-        }
+    File getCMakeConfigurationFile() {
+        return new File(environment.modulesFolder, CONFIG_FILE_NAME);
     }
 
     private void generateFinderExpression(
@@ -207,7 +193,7 @@ public class CMakeGenerator {
         throw new RuntimeException(expression.toString());
     }
 
-    private String getAddDependencyFunctionName(Coordinate coordinate) {
+    String getAddDependencyFunctionName(Coordinate coordinate) {
         return String.format("add_cdep_%s_dependency", coordinate.artifactId)
                 .replace("-", "_")
                 .replace("/", "_");

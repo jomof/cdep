@@ -15,9 +15,7 @@
 */
 package io.cdep.cdep.ast.finder;
 
-import io.cdep.cdep.yml.Coordinate;
-
-import java.net.URL;
+import io.cdep.cdep.Coordinate;
 
 public class FoundModuleExpression extends Expression {
 

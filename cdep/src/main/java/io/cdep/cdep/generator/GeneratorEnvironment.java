@@ -24,7 +24,7 @@ import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.CDepSHA256Utils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.utils.HashUtils;
-import io.cdep.cdep.yml.Coordinate;
+import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdep.Dependency;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
@@ -48,6 +48,7 @@ public class GeneratorEnvironment {
     final public File downloadFolder;
     final public File unzippedArchivesFolder;
     final public File modulesFolder;
+    final public File examplesFolder;
     final public File workingFolder;
     final public Map<String, String> cdepSha256Hashes = new HashMap<>();
 
@@ -63,6 +64,7 @@ public class GeneratorEnvironment {
         this.downloadFolder = new File(userFolder, ".cdep/downloads").getAbsoluteFile();
         this.unzippedArchivesFolder = new File(userFolder, ".cdep/exploded").getAbsoluteFile();
         this.modulesFolder = new File(workingFolder, ".cdep/modules").getAbsoluteFile();
+        this.examplesFolder = new File(workingFolder, ".cdep/examples").getAbsoluteFile();
     }
 
     private static void copyUrlToLocalFile(URL url, File localFile) throws IOException {

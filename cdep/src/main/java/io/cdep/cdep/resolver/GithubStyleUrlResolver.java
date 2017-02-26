@@ -20,7 +20,7 @@ import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.Dependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import io.cdep.cdep.yml.Coordinate;
+import io.cdep.cdep.Coordinate;
 
 import java.io.IOException;
 import java.net.URL;

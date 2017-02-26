@@ -15,10 +15,7 @@
 */
 package io.cdep.cdep.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -51,5 +48,22 @@ public class FileUtils {
     public static String readAllText(File file) throws IOException {
         return new String(Files.readAllBytes(
                 Paths.get(file.getCanonicalPath())));
+    }
+
+    public static void writeTextToFile(File file, String body) throws IOException {
+
+        BufferedWriter writer = null;
+        //noinspection ResultOfMethodCallIgnored
+        file.getParentFile().mkdirs();
+        //noinspection ResultOfMethodCallIgnored
+        file.delete();
+        try {
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(body);
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
+        }
     }
 }

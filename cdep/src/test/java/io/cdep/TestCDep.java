@@ -64,12 +64,26 @@ public class TestCDep {
     }
 
     @Test
+    public void runVectorial() throws Exception {
+        CDepYml config = new CDepYml();
+        System.out.printf(new Yaml().dump(config));
+        File yaml = new File(".test-files/runVectorial/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake, cmakeExamples]\n"
+                + "dependencies:\n"
+                + "- compile: com.github.jomof:vectorial:0.0.0-rev6\n",
+            yaml, StandardCharsets.UTF_8);
+        String result = main("-wf", yaml.getParent());
+        System.out.printf(result);
+    }
+
+    @Test
     public void someKnownUrls() throws Exception {
         CDepYml config = new CDepYml();
         System.out.printf(new Yaml().dump(config));
-        File yaml = new File(".test-files/simpleDependency/cdep.yml");
+        File yaml = new File(".test-files/someKnownUrls/cdep.yml");
         yaml.getParentFile().mkdirs();
-        Files.write("builders: [cmake]\n"
+        Files.write("builders: [cmake, cmakeExamples]\n"
                 + "dependencies:\n"
 //                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
 //                + "- compile: com.github.jomof:cmakeify:0.0.70\n"
@@ -93,7 +107,7 @@ public class TestCDep {
 //        System.out.printf(new Yaml().dump(config));
 //        File yaml = new File(".test-files/firebase/cdep.yml");
 //        yaml.getParentFile().mkdirs();
-//        Files.write("builders: [cmake]\n"
+//        Files.write("builders: [cmake, cmakeExamples]\n"
 //                + "dependencies:\n"
 //                + "- compile: /usr/local/google/home/jomof/projects/firebase/.deploy/"
 //                + "com.jomofisher/firebase/2.1.3-rev1/cdep-manifest-storage.yml\n",
@@ -111,7 +125,7 @@ public class TestCDep {
         CDepYml config = new CDepYml();
         File yaml = new File(".test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
-        Files.write("builders: [cmake]\n"
+        Files.write("builders: [cmake, cmakeExamples]\n"
                 + "dependencies:\n"
                 + "- compile: com.github.jomof:low-level-statistics:0.0.15\n",
             yaml, StandardCharsets.UTF_8);
@@ -127,7 +141,7 @@ public class TestCDep {
     public void createHashes() throws Exception {
         File yaml = new File(".test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
-        Files.write("builders: [cmake]\n"
+        Files.write("builders: [cmake, cmakeExamples]\n"
                 + "dependencies:\n"
                 + "- compile: com.github.jomof:low-level-statistics:0.0.15\n",
             yaml, StandardCharsets.UTF_8);
@@ -141,7 +155,7 @@ public class TestCDep {
     public void checkThatHashesWork() throws Exception {
         File yaml = new File(".test-files/checkThatHashesWork/cdep.yml");
         yaml.getParentFile().mkdirs();
-        Files.write("builders: [cmake]\n"
+        Files.write("builders: [cmake, cmakeExamples]\n"
                 + "dependencies:\n"
                 + "- compile: com.github.jomof:low-level-statistics:0.0.15\n",
             yaml, StandardCharsets.UTF_8);
@@ -165,7 +179,7 @@ public class TestCDep {
         System.out.printf(new Yaml().dump(config));
         File yaml = new File(".test-files/simpleDependency/cdep.yml");
         yaml.getParentFile().mkdirs();
-        Files.write("builders: [cmake]\n"
+        Files.write("builders: [cmake, cmakeExamples]\n"
                 + "dependencies:\n",
             yaml, StandardCharsets.UTF_8);
         String result1 = main("-wf", yaml.getParent());
@@ -180,7 +194,7 @@ public class TestCDep {
         System.out.printf(new Yaml().dump(config));
         File yaml = new File(".test-files/simpleConfiguration/cdep.yml");
         yaml.getParentFile().mkdirs();
-        Files.write("builders: [cmake]", yaml, StandardCharsets.UTF_8);
+        Files.write("builders: [cmake, cmakeExamples]", yaml, StandardCharsets.UTF_8);
         String result1 = main("show", "manifest", "-wf", yaml.getParent());
         yaml.delete();
         Files.write(result1, yaml, StandardCharsets.UTF_8);
@@ -247,7 +261,7 @@ public class TestCDep {
     public void localPathsWork() throws Exception {
         File yaml = new File(".test-files/localPathsWork/cdep.yml");
         yaml.getParentFile().mkdirs();
-        Files.write("builders: [cmake]\n"
+        Files.write("builders: [cmake, cmakeExamples]\n"
                 + "dependencies:\n"
                 + "- compile: com.github.jomof:low-level-statistics:0.0.15\n",
             yaml, StandardCharsets.UTF_8);
@@ -257,7 +271,7 @@ public class TestCDep {
         String localPath = main("show", "local", "com.github.jomof:low-level-statistics:0.0.15");
         assertThat(localPath).contains("cdep-manifest.yml");
         // Write a new manifest with the local path.
-        Files.write(String.format("builders: [cmake]\n"
+        Files.write(String.format("builders: [cmake, cmakeExamples]\n"
                 + "dependencies:\n"
                 + "- compile: %s\n", localPath),
             yaml, StandardCharsets.UTF_8);

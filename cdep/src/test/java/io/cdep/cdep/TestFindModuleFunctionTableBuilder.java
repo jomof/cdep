@@ -52,7 +52,7 @@ public class TestFindModuleFunctionTableBuilder {
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         String zip = FindModuleInterpreter.find(table,
-            resolved.cdepManifestYml.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate,
             "Android",
             "21",
             "c++_shared",
@@ -74,19 +74,19 @@ public class TestFindModuleFunctionTableBuilder {
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         FindModuleInterpreter.find(table,
-            resolved.cdepManifestYml.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate,
             "Android",
             "21",
             "c++_shared",
             "x86").archives[0].file.getPath().contains("platform-21");
         FindModuleInterpreter.find(table,
-            resolved.cdepManifestYml.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate,
             "Android",
             "22",
             "c++_shared",
             "x86").archives[0].file.getPath().contains("platform-21");
         FindModuleInterpreter.find(table,
-            resolved.cdepManifestYml.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate,
             "Android",
             "20",
             "c++_shared",
@@ -103,7 +103,7 @@ public class TestFindModuleFunctionTableBuilder {
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
-            resolved.cdepManifestYml.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate,
             "Android",
             "21",
             "c++_shared",
@@ -123,7 +123,7 @@ public class TestFindModuleFunctionTableBuilder {
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
-            resolved.cdepManifestYml.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate,
             "Android",
             "21",
             "c++_shared",
@@ -142,7 +142,7 @@ public class TestFindModuleFunctionTableBuilder {
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
-            resolved.cdepManifestYml.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate,
             "Android",
             "21",
             "c++_shared",
@@ -163,7 +163,7 @@ public class TestFindModuleFunctionTableBuilder {
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
         FoundModuleExpression found = FindModuleInterpreter.find(table,
-            resolved.cdepManifestYml.coordinate.toString(),
+            resolved.cdepManifestYml.coordinate,
             "Android",
             "21",
             "c++_shared",

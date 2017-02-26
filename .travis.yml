@@ -6,8 +6,10 @@ matrix:
     script:
     - ./gradlew assemble check packageArtifacts
     - ./travis_cdep
-    - cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
+    #- cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
     - ./cmakeify -wf smoke-test
+    - cp smoke-test/cmakeify.yml smoketest/.cdep/examples/cmake/cmakeify.yml
+    - ./cmakeify -wf smoketest/.cdep/examples/cmake
 
 deploy:
   api_key:

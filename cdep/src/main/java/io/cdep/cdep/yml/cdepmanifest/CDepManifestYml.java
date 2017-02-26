@@ -15,7 +15,7 @@
 */
 package io.cdep.cdep.yml.cdepmanifest;
 
-import io.cdep.cdep.yml.Coordinate;
+import io.cdep.cdep.Coordinate;
 
 @SuppressWarnings("unused")
 public class CDepManifestYml {

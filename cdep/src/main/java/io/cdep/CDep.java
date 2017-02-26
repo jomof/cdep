@@ -18,9 +18,11 @@ package io.cdep;
 import io.cdep.cdep.FindModuleFunctionTableBuilder;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.service.ResolvedManifest;
+import io.cdep.cdep.generator.CMakeExamplesGenerator;
 import io.cdep.cdep.generator.CMakeGenerator;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
+import io.cdep.cdep.utils.CDepYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
@@ -74,6 +76,22 @@ public class CDep {
         handleGenerateScript();
     }
 
+    private void runBuilders(GeneratorEnvironment environment, FunctionTableExpression table) throws IOException {
+        for (BuildSystem buildSystem : config.builders) {
+            switch(buildSystem) {
+                case cmake:
+                    new CMakeGenerator(environment).generate(table);
+                    break;
+                case cmakeExamples:
+                    new CMakeExamplesGenerator(environment).generate(table);
+                    break;
+                default:
+                    throw new RuntimeException("Unknown builder: " + buildSystem);
+            }
+
+        }
+    }
+
     private boolean handleRedownload(String[] args)
         throws IOException, URISyntaxException, NoSuchAlgorithmException {
         if (args.length > 0 && "redownload".equals(args[0])) {
@@ -86,7 +104,7 @@ public class CDep {
                 table,
                 true /* forceRedownload */);
 
-            new CMakeGenerator(environment).generate(table);
+            runBuilders(environment, table);
             return true;
         }
         return false;
@@ -206,7 +224,7 @@ public class CDep {
             table,
             false /* forceRedownload */);
 
-        new CMakeGenerator(environment).generate(table);
+        runBuilders(environment, table);
         environment.writeCDepSHA256File();
     }
 
@@ -251,20 +269,8 @@ public class CDep {
         if (this.config == null) {
             this.config = new CDepYml();
         }
-        validateConfig(configFile);
+        CDepYmlUtils.checkSanity(config, configFile);
         return true;
-    }
-
-    private void validateConfig(File configurationFile) {
-        if (config.builders.length == 0) {
-            StringBuilder sb = new StringBuilder();
-            for (BuildSystem builder : BuildSystem.values()) {
-                sb.append(builder.toString());
-                sb.append(" ");
-            }
-            throw new RuntimeException(String.format("Error in '%s'. The 'builders' section is "
-                + "missing or empty. Valid values are: %s.", configurationFile, sb));
-        }
     }
 
     private boolean handleHelp(String[] args) throws IOException {
@@ -272,8 +278,7 @@ public class CDep {
             return true;
         }
         out.printf("cdep %s\n", BuildInfo.PROJECT_VERSION);
-        out.printf(
-            " cdep: download dependencies and generate build modules for current cdep.yml\n");
+        out.printf(" cdep: download dependencies and generate build modules for current cdep.yml\n");
         out.printf(" cdep show folders: show local download and file folders\n");
         out.printf(" cdep show manifest: show cdep interpretation of cdep.yml\n");
         out.printf(" cdep redownload: redownload dependencies for current cdep.yml\n");

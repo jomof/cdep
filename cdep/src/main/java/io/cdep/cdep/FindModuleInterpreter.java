@@ -25,7 +25,7 @@ class FindModuleInterpreter {
     @SuppressWarnings("SameParameterValue")
     static FoundModuleExpression find(
         FunctionTableExpression table,
-        String functionName,
+        Coordinate functionName,
         String targetPlatform,
         String systemVersion, // On android, "platform"
         String androidStlType,

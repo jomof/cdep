@@ -15,9 +15,12 @@
 */
 package io.cdep.cdep.ast.finder;
 
+import io.cdep.cdep.Coordinate;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class FunctionTableExpression extends Expression {
-    final public Map<String, FindModuleExpression> functions = new HashMap<>();
+    final public Map<Coordinate, FindModuleExpression> functions = new HashMap<>();
+    final public Map<Coordinate, ExampleExpression> examples = new HashMap<>();
 }

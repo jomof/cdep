@@ -16,5 +16,6 @@
 package io.cdep.cdep.yml.cdep;
 
 public enum BuildSystem {
-    cmake
+    cmake,
+    cmakeExamples
 }

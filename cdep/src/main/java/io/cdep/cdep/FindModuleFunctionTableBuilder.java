@@ -18,12 +18,10 @@ package io.cdep.cdep;
 import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.yml.cdepmanifest.Android;
-import io.cdep.cdep.yml.Coordinate;
 
 import io.cdep.cdep.yml.cdepmanifest.Archive;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.*;
 
 public class FindModuleFunctionTableBuilder {
@@ -44,10 +42,21 @@ public class FindModuleFunctionTableBuilder {
 
     public FunctionTableExpression build() throws MalformedURLException, URISyntaxException {
         FunctionTableExpression functionTable = new FunctionTableExpression();
+
+        // Build module lookup functions
         for (ResolvedManifest resolved : manifests.values()) {
             assert resolved.cdepManifestYml.coordinate != null;
-            functionTable.functions.put(resolved.cdepManifestYml.coordinate.toString(),
+            functionTable.functions.put(resolved.cdepManifestYml.coordinate,
                 buildFindModule(resolved));
+        }
+
+        // Build examples
+        for (ResolvedManifest resolved : manifests.values()) {
+            if (resolved.cdepManifestYml.example == null) {
+                continue;
+            }
+            functionTable.examples.put(resolved.cdepManifestYml.coordinate,
+                new ExampleExpression(resolved.cdepManifestYml.example));
         }
         return functionTable;
     }

@@ -18,7 +18,7 @@ package io.cdep.cdep.utils;
 import io.cdep.cdep.yml.cdepmanifest.Android;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import io.cdep.cdep.yml.Coordinate;
+import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.Linux;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
