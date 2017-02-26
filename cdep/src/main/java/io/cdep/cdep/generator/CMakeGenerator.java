@@ -208,6 +208,7 @@ public class CMakeGenerator {
     }
 
     private String getAddDependencyFunctionName(Coordinate coordinate) {
+        String name = coordinate.artifactId.replace("/", "-");
         return String.format("add_cdep_%s_dependency", coordinate.artifactId)
                 .replace("-", "_");
     }
