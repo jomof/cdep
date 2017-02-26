@@ -7,7 +7,7 @@ matrix:
     - ./gradlew assemble check packageArtifacts
     - ./travis_cdep
     - cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
-    - ./cmakeify -wf smoke-test --cmake-flags "-Dcdep-dependencies_DIR=$(pwd)/smoke-test/.cdep/modules"
+    - ./cmakeify -wf smoke-test
 
 deploy:
   api_key:
