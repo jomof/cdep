@@ -18,18 +18,9 @@ package io.cdep.cdep.yml.cdepmanifest;
 
 @SuppressWarnings("unused")
 public class Android {
-  final public Archive archives[] = null;
-  final public String ndk = null;
-  final public String compiler = null;
-  final public String runtime = null;
-  final public String platform = null;
-  final public String builder = null;
-  final public String abis[] = null;
-  final public String include;
-  final public String lib = null;
-  final public String flavor = null;
+  final public Dependency dependencies[] = null;
+  final public AndroidArchive archives[] = null;
 
   Android() {
-    include = "include";
   }
 }

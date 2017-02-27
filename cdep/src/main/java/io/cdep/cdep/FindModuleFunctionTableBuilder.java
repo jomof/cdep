@@ -19,6 +19,7 @@ import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.yml.cdepmanifest.Android;
 
+import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -87,10 +88,10 @@ public class FindModuleFunctionTableBuilder {
         ResolvedManifest resolved) throws MalformedURLException, URISyntaxException {
 
         // Gather up the runtime names
-        Map<String, List<Android>> stlTypes = new HashMap<>();
+        Map<String, List<AndroidArchive>> stlTypes = new HashMap<>();
         assert resolved.cdepManifestYml.android != null;
-        for (Android android : resolved.cdepManifestYml.android) {
-            List<Android> androids = stlTypes.get(android.runtime);
+        for (AndroidArchive android : resolved.cdepManifestYml.android.archives) {
+            List<AndroidArchive> androids = stlTypes.get(android.runtime);
             if (androids == null) {
                 androids = new ArrayList<>();
                 stlTypes.put(android.runtime, androids);
@@ -98,7 +99,7 @@ public class FindModuleFunctionTableBuilder {
             androids.add(android);
         }
 
-        List<Android> noRuntimeAndroids = stlTypes.get(null);
+        List<AndroidArchive> noRuntimeAndroids = stlTypes.get(null);
         if (noRuntimeAndroids != null) {
             if (stlTypes.size() == 1) {
                 // If there are no runtimes, then skip the runtime check. This is likely a
@@ -133,7 +134,7 @@ public class FindModuleFunctionTableBuilder {
 
     private Expression buildAndroidPlatformExpression(
         ResolvedManifest resolved,
-        List<Android> androids) throws MalformedURLException, URISyntaxException {
+        List<AndroidArchive> androids) throws MalformedURLException, URISyntaxException {
 
         // If there's only one android left and it doesn't have a platform then this is
         // a header-only module.
@@ -141,10 +142,10 @@ public class FindModuleFunctionTableBuilder {
             return returnOnly(resolved, androids);
         }
 
-        Map<Long, List<Android>> grouped = new HashMap<>();
-        for (Android android : androids) {
+        Map<Long, List<AndroidArchive>> grouped = new HashMap<>();
+        for (AndroidArchive android : androids) {
             Long platform = Long.parseLong(android.platform);
-            List<Android> group = grouped.get(platform);
+            List<AndroidArchive> group = grouped.get(platform);
             if (group == null) {
                 group = new ArrayList<>();
                 grouped.put(platform, group);
@@ -169,25 +170,24 @@ public class FindModuleFunctionTableBuilder {
         return prior;
     }
 
-    private FoundModuleExpression returnOnly(ResolvedManifest resolved, List<Android> androids)
+    private FoundModuleExpression returnOnly(
+            ResolvedManifest resolved,
+            List<AndroidArchive> androids)
         throws URISyntaxException, MalformedURLException {
         if (androids.size() != 1) {
             throw new RuntimeException(String.format(
-                "Expected only one android zip upon reaching ABI level. There were %s.",
+                "Expected only one android archive upon reaching ABI level. There were %s.",
                 androids.size()));
         }
-        Android android = androids.get(0);
-        ModuleArchive archives[] = new ModuleArchive[android.archives.length];
-        int i = 0;
-        for (Archive archive : android.archives) {
-            archives[i++] = new ModuleArchive(
-                resolved.remote.toURI()
-                    .resolve(".")
-                    .resolve(archive.file)
-                    .toURL(),
-                archive.sha256,
-                archive.size);
-        }
+        AndroidArchive android = androids.get(0);
+        ModuleArchive archives[] = new ModuleArchive[1];
+        archives[0] = new ModuleArchive(
+            resolved.remote.toURI()
+                .resolve(".")
+                .resolve(android.file)
+                .toURL(),
+            android.sha256,
+            android.size);
         String include = android.include;
         return new FoundModuleExpression(resolved.cdepManifestYml.coordinate, archives,
             include, android.lib);

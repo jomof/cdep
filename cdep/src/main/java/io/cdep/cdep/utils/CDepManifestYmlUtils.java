@@ -15,11 +15,8 @@
 */
 package io.cdep.cdep.utils;
 
-import io.cdep.cdep.yml.cdepmanifest.Android;
-import io.cdep.cdep.yml.cdepmanifest.Archive;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.*;
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.yml.cdepmanifest.Linux;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -58,26 +55,16 @@ public class CDepManifestYmlUtils {
         checkForMalformedCoordinateVersion(cdepManifestYml.coordinate);
         checkForDuplicateOrMissingZipFiles(cdepManifestYml);
         checkAndroid(cdepManifestYml);
-        checkLinux(cdepManifestYml);
     }
 
     private static void checkAndroid(CDepManifestYml cdepManifestYml) {
         if (cdepManifestYml.android == null) {
             return;
         }
-        for (Android android : cdepManifestYml.android) {
-            validateAndroid(cdepManifestYml.coordinate, android);
-        }
+
+        validateAndroid(cdepManifestYml.coordinate, cdepManifestYml.android);
     }
 
-    private static void checkLinux(CDepManifestYml cdepManifestYml) {
-        if (cdepManifestYml.linux == null) {
-            return;
-        }
-        for (Linux linux : cdepManifestYml.linux) {
-            validateLinux(cdepManifestYml.coordinate, linux);
-        }
-    }
 
     private static void checkForMalformedCoordinateVersion(Coordinate coordinate) {
         String versionDiagnosis = VersionUtils.checkVersion(coordinate.version);
@@ -93,52 +80,50 @@ public class CDepManifestYmlUtils {
             throw new RuntimeException(
                 String.format("Package '%s' has missing android.archives", coordinate));
         }
-        if (android.lib != null && !android.lib.endsWith(".a")) {
-            // Android NDK team best practice recommendation is to use only static libraries.
-            throw new RuntimeException(
-                    String.format("Package '%s' has non-static android lib '%s'",
-                        coordinate, android.lib));
-        }
-        if (android.runtime != null) {
-            switch (android.runtime) {
-                case "c++":
-                case "stlport":
-                case "gnustl":
-                    break;
-                default:
-                    throw new RuntimeException(String.format("" +
-                            "Package '%s' has unexpected android runtime '%s'. Allowed: c++, stlport, gnustl",
-                            coordinate, android.runtime));
+        Set<String> zips = new HashSet<>();
+        for(AndroidArchive archive : android.archives) {
+            if (archive.lib != null && !archive.lib.endsWith(".a")) {
+                // Android NDK team best practice recommendation is to use only static libraries.
+                throw new RuntimeException(
+                        String.format("Package '%s' has non-static android lib '%s'",
+                            coordinate, archive.lib));
             }
-        }
-        if (android.archives != null) {
-            Set<String> zips = new HashSet<>();
-            for (Archive archive : android.archives) {
-                if (archive.file == null) {
-                    throw new RuntimeException(
-                            String.format("Package '%s' has missing android.archive.file",
-                                    coordinate));
+            if (archive.runtime != null) {
+                switch (archive.runtime) {
+                    case "c++":
+                    case "stlport":
+                    case "gnustl":
+                        break;
+                    default:
+                        throw new RuntimeException(String.format("" +
+                                "Package '%s' has unexpected android runtime '%s'. Allowed: c++, stlport, gnustl",
+                                coordinate, archive.runtime));
                 }
-                if (zips.contains(archive.file)) {
-                    throw new RuntimeException(String.format("Package '%s' contains multiple references to the same" +
-                            " zip file '%s'", coordinate, archive.file));
-                }
-                zips.add(archive.file);
             }
-            for (Archive archive : android.archives) {
-                if (archive.sha256 == null) {
-                    throw new RuntimeException(
-                        String.format("Package '%s' has missing android.archive.sha256 for '%s'",
-                            coordinate, archive.file));
-                }
-                if (archive.size == null) {
-                    throw new RuntimeException(
-                        String.format("Package '%s' has missing android.archive.size for '%s'",
-                            coordinate, archive.file));
-                }
 
+            if (archive.file == null) {
+                throw new RuntimeException(
+                        String.format("Package '%s' has missing android.archive.file",
+                                coordinate));
             }
-        }
+
+            if (zips.contains(archive.file)) {
+                throw new RuntimeException(String.format("Package '%s' contains multiple references to the same" +
+                        " archive file '%s'", coordinate, archive.file));
+            }
+            zips.add(archive.file);
+
+            if (archive.sha256 == null) {
+                throw new RuntimeException(
+                    String.format("Package '%s' has missing android.archive.sha256 for '%s'",
+                        coordinate, archive.file));
+            }
+            if (archive.size == null) {
+                throw new RuntimeException(
+                    String.format("Package '%s' has missing android.archive.size for '%s'",
+                        coordinate, archive.file));
+            }
+       }
     }
 
     private static void validateLinux(Coordinate coordinate, Linux linux) {
@@ -179,21 +164,8 @@ public class CDepManifestYmlUtils {
     private static void checkForDuplicateOrMissingZipFiles(CDepManifestYml cdepManifestYml) {
         Set<String> zips = new HashSet<>();
         if (cdepManifestYml.android != null) {
-            for (Android android : cdepManifestYml.android) {
-                if (android.archives != null) {
-                    for (Archive archive : android.archives) {
-                        zips.add(archive.file);
-                    }
-                }
-            }
-        }
-        if (cdepManifestYml.linux != null) {
-            for (Linux linux : cdepManifestYml.linux) {
-                if (linux.archives != null) {
-                    for (Archive archive : linux.archives) {
-                        zips.add(archive.file);
-                    }
-                }
+            for (AndroidArchive android : cdepManifestYml.android.archives) {
+                zips.add(android.file);
             }
         }
         if (zips.isEmpty()) {

@@ -22,13 +22,15 @@ public class CDepManifestYml {
 
     final public Coordinate coordinate;
     final public Dependency dependencies[];
-    final public Android android[];
-    final public Linux[] linux;
+    final public Archive archive;
+    final public Android android;
+    final public Object linux;
     final public String example;
 
     CDepManifestYml() {
         this.coordinate = null;
         this.dependencies = null;
+        this.archive = null;
         this.android = null;
         this.linux = null;
         this.example = null;

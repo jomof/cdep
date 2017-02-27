@@ -20,11 +20,11 @@ public class TestGithubReleasesCoordinateResolver {
   public void testCompound() throws IOException {
     ResolvedManifest resolved = new GithubReleasesCoordinateResolver()
         .resolve(environment, new Dependency(
-                "com.github.jomof:firebase/database:2.1.3-rev3"),
+                "com.github.jomof:firebase/database:2.1.3-rev5"),
             false);
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("firebase/database");
-    assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("2.1.3-rev3");
-    assertThat(resolved.cdepManifestYml.android.length).isEqualTo(3);
+    assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("2.1.3-rev5");
+    assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(3);
   }
 }
