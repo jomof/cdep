@@ -17,10 +17,10 @@ package io.cdep.cdep.ast.finder;
 
 import io.cdep.cdep.Coordinate;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FunctionTableExpression extends Expression {
-    final public Map<Coordinate, FindModuleExpression> functions = new HashMap<>();
+    final public List<FunctionExpression> functions = new ArrayList<>();
+    final public Map<Coordinate, FindModuleExpression> findFunctions = new HashMap<>();
     final public Map<Coordinate, ExampleExpression> examples = new HashMap<>();
 }

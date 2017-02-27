@@ -23,7 +23,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Cryptographic hashing utility functions.
+ * Cryptographic hashing utility findFunctions.
  */
 public class HashUtils {
 

@@ -53,7 +53,7 @@ abstract public class ExpressionUtils {
             return;
         } else if (expression instanceof FunctionTableExpression) {
             FunctionTableExpression table = (FunctionTableExpression) expression;
-            for (FindModuleExpression function : table.functions.values()) {
+            for (FindModuleExpression function : table.findFunctions.values()) {
                 getAllFoundModuleExpressions(function, foundModules);
             }
             return;

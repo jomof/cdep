@@ -30,7 +30,7 @@ class FindModuleInterpreter {
         String systemVersion, // On android, "platform"
         String androidStlType,
         String androidTargetAbi) {
-        FindModuleExpression function = table.functions.get(functionName);
+        FindModuleExpression function = table.findFunctions.get(functionName);
         Map<ParameterExpression, String> parameters = new HashMap<>();
         parameters.put(function.targetPlatform, targetPlatform);
         parameters.put(function.systemVersion, systemVersion);

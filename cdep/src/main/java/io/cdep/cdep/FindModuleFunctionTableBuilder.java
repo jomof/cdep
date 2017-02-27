@@ -43,10 +43,10 @@ public class FindModuleFunctionTableBuilder {
     public FunctionTableExpression build() throws MalformedURLException, URISyntaxException {
         FunctionTableExpression functionTable = new FunctionTableExpression();
 
-        // Build module lookup functions
+        // Build module lookup findFunctions
         for (ResolvedManifest resolved : manifests.values()) {
             assert resolved.cdepManifestYml.coordinate != null;
-            functionTable.functions.put(resolved.cdepManifestYml.coordinate,
+            functionTable.findFunctions.put(resolved.cdepManifestYml.coordinate,
                 buildFindModule(resolved));
         }
 
@@ -131,8 +131,6 @@ public class FindModuleFunctionTableBuilder {
                     resolved.cdepManifestYml.coordinate, runtimes), androidStlType));
     }
 
-
-
     private Expression buildAndroidPlatformExpression(
         ResolvedManifest resolved,
         List<Android> androids) throws MalformedURLException, URISyntaxException {
@@ -142,7 +140,6 @@ public class FindModuleFunctionTableBuilder {
         if (androids.size() == 1 && androids.get(0).platform == null) {
             return returnOnly(resolved, androids);
         }
-
 
         Map<Long, List<Android>> grouped = new HashMap<>();
         for (Android android : androids) {
@@ -172,7 +169,7 @@ public class FindModuleFunctionTableBuilder {
         return prior;
     }
 
-    private Expression returnOnly(ResolvedManifest resolved, List<Android> androids)
+    private FoundModuleExpression returnOnly(ResolvedManifest resolved, List<Android> androids)
         throws URISyntaxException, MalformedURLException {
         if (androids.size() != 1) {
             throw new RuntimeException(String.format(
