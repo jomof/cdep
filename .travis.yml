@@ -6,7 +6,7 @@ matrix:
     script:
     - ./gradlew assemble check packageArtifacts
     - ./travis_cdep
-    #- cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
+    - cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
     - ./cmakeify -wf smoke-test
     - ./cmakeify -wf smoke-test/.cdep/examples/cmake
 
