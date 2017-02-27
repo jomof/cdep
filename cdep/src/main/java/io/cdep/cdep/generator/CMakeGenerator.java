@@ -79,15 +79,19 @@ public class CMakeGenerator {
         String upperArtifactID = signature.coordinate.artifactId.toUpperCase()
                 .replace("-", "_")
                 .replace("/", "_");
-        String lowerArtifactID = upperArtifactID.toLowerCase();
 
         if (expression instanceof FindModuleExpression) {
             FindModuleExpression specific = (FindModuleExpression) expression;
             sb.append("\n###\n");
-            sb.append(String.format("### FindAppender for CDep module: %s\n",
+            sb.append(String.format("### Add dependency for CDep module: %s\n",
                 specific.coordinate.toString()));
             sb.append("###\n");
-            String appenderFunctionName = "add_cdep_{lowerArtifactId}_dependency".replace("{lowerArtifactId}", lowerArtifactID);
+            String coordinateVar = String.format("%s_CDEP_COORDINATE", upperArtifactID);
+            sb.append(String.format("%sif(%s)\n", prefix, coordinateVar));
+            sb.append(String.format("%s  message(FATAL_ERROR \"CDep module '$(%s}' was already defined\")\n", prefix, coordinateVar));
+            sb.append(String.format("%sendif(%s)\n", prefix, coordinateVar));
+            sb.append(String.format("%sSET(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate));
+            String appenderFunctionName = getAddDependencyFunctionName(signature.coordinate);
             sb.append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
             generateFindAppender(indent + 1, signature, specific.expression, sb);
             sb.append("endfunction({appenderFunctionName})\n".replace("{appenderFunctionName}", appenderFunctionName));
@@ -169,132 +173,6 @@ public class CMakeGenerator {
             for (int i = 0; i < parms.length; ++i) {
                 StringBuilder argBuilder = new StringBuilder();
                 generateFindAppender(0, signature, specific.parameters[i], argBuilder);
-                parms[i] = String.format("${%s}", argBuilder.toString());
-            }
-            String message = String.format(specific.message, parms);
-            sb.append(String.format("%smessage(FATAL_ERROR \"%s\")\n", prefix, message));
-            return;
-        }
-
-        throw new RuntimeException(expression.toString());
-    }
-
-    private void generateFinderExpression(
-        int indent,
-        FindModuleExpression signature,
-        Expression expression,
-        StringBuilder sb) {
-
-        String prefix = new String(new char[indent * 2]).replace('\0', ' ');
-
-        String upperArtifactID = signature.coordinate.artifactId.toUpperCase().replace("-", "_");
-
-        if (expression instanceof FindModuleExpression) {
-            FindModuleExpression specific = (FindModuleExpression) expression;
-            sb.append("\n###\n");
-            sb.append(String.format("### FindModule for CDep module: %s\n",
-                specific.coordinate.toString()));
-            sb.append("###\n");
-
-            generateFinderExpression(indent, signature, specific.expression, sb);
-            String functionName = getAddDependencyFunctionName(specific.coordinate);
-            sb.append(String.format("\nfunction(%s target)\n",functionName));
-            sb.append(String.format("   target_include_directories(${target} PRIVATE ${%s_INCLUDE_DIRS})\n",
-                    upperArtifactID));
-            sb.append(String.format("   target_link_libraries(${target} ${%s_LIBRARIES})\n",upperArtifactID));
-            sb.append(String.format("   if(%s_SHARED_LIBRARIES AND CMAKE_LIBRARY_OUTPUT_DIRECTORY)\n",upperArtifactID));
-            sb.append(String.format("     add_custom_command(TARGET ${target} " +
-                    "POST_BUILD COMMAND ${CMAKE_COMMAND} -E " +
-                    "copy ${%s_SHARED_LIBRARIES} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})\n",upperArtifactID));
-            sb.append(String.format("   endif(%s_SHARED_LIBRARIES AND CMAKE_LIBRARY_OUTPUT_DIRECTORY)\n",
-                    upperArtifactID));
-            sb.append(String.format("endfunction(%s)\n",functionName));
-            return;
-        } else if (expression instanceof CaseExpression) {
-            CaseExpression specific = (CaseExpression) expression;
-            StringBuilder varBuilder = new StringBuilder();
-            generateFinderExpression(indent, signature, specific.var, varBuilder);
-            String var = varBuilder.toString();
-            boolean first = true;
-            for (String matchValue : specific.cases.keySet()) {
-                if (first) {
-                    sb.append(String.format("%sif(%s STREQUAL \"%s\")\n", prefix, var, matchValue));
-                    first = false;
-                } else {
-                    sb.append(String.format("%selseif(%s STREQUAL \"%s\")\n", prefix, var, matchValue));
-                }
-                generateFinderExpression(indent + 1, signature, specific.cases.get(matchValue), sb);
-            }
-            sb.append(String.format("%selse()\n", prefix));
-            generateFinderExpression(indent + 1, signature, specific.defaultCase, sb);
-            sb.append(String.format("%sendif()\n", prefix));
-
-            return;
-        } else if (expression instanceof IfGreaterThanOrEqualExpression) {
-            IfGreaterThanOrEqualExpression specific = (IfGreaterThanOrEqualExpression) expression;
-            StringBuilder varBuilder = new StringBuilder();
-            generateFinderExpression(indent, signature, specific.value, varBuilder);
-            String var = varBuilder.toString();
-            StringBuilder compareToBuilder = new StringBuilder();
-            generateFinderExpression(indent, signature, specific.compareTo, compareToBuilder);
-            String compareTo = compareToBuilder.toString();
-            sb.append(String.format("%sif((%s GREATER %s) OR (%s EQUAL %s))\n",
-                prefix, var, compareTo, var, compareTo));
-            generateFinderExpression(indent + 1, signature, specific.trueExpression, sb);
-            sb.append(String.format("%selse()\n", prefix));
-            generateFinderExpression(indent + 1, signature, specific.falseExpression, sb);
-            sb.append(String.format("%sendif()\n", prefix));
-            return;
-        } else if (expression instanceof ParameterExpression) {
-            ParameterExpression specific = (ParameterExpression) expression;
-            if (specific == signature.targetPlatform) {
-                sb.append("CMAKE_SYSTEM_NAME");
-                return;
-            }
-            if (specific == signature.androidStlType) {
-                sb.append("CDEP_DETERMINED_ANDROID_RUNTIME");
-                return;
-            }
-            if (specific == signature.systemVersion) {
-                sb.append("CMAKE_SYSTEM_VERSION");
-                return;
-            }
-            throw new RuntimeException(specific.name);
-        } else if (expression instanceof LongConstantExpression) {
-            LongConstantExpression specific = (LongConstantExpression) expression;
-            sb.append(specific.value.toString());
-            return;
-        } else if (expression instanceof FoundModuleExpression) {
-            FoundModuleExpression specific = (FoundModuleExpression) expression;
-            assert specific.coordinate.artifactId != null;
-            for (ModuleArchive archive : specific.archives) {
-                File exploded = environment
-                    .getLocalUnzipFolder(specific.coordinate, archive.file);
-                sb.append(String.format("%sset(%s_FOUND true)\n", prefix, upperArtifactID));
-                sb.append(String.format("%sset(%s_INCLUDE_DIRS \"%s\")\n", prefix, upperArtifactID,
-                    new File(exploded, specific.include).toString().replace("\\", "\\\\")));
-                String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
-
-                if (specific.libraryName != null && specific.libraryName.length() > 0) {
-                    sb.append(String
-                        .format("%sset(%s_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%s%s\")\n",
-                            prefix, upperArtifactID, libFolder, slash, slash,
-                            specific.libraryName));
-                    if (specific.libraryName.endsWith(".so")) {
-                        sb.append(String.format(
-                            "%sset(%s_SHARED_LIBRARIES \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%s%s\")\n",
-                            prefix, upperArtifactID, libFolder, slash, slash,
-                            specific.libraryName));
-                    }
-                }
-            }
-            return;
-        } else if (expression instanceof AbortExpression) {
-            AbortExpression specific = (AbortExpression) expression;
-            Object parms[] = new String[specific.parameters.length];
-            for (int i = 0; i < parms.length; ++i) {
-                StringBuilder argBuilder = new StringBuilder();
-                generateFinderExpression(0, signature, specific.parameters[i], argBuilder);
                 parms[i] = String.format("${%s}", argBuilder.toString());
             }
             String message = String.format(specific.message, parms);

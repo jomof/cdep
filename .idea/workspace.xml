@@ -111,20 +111,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CMakeGenerator.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CMakeGenerator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="154" column="88" lean-forward="false" selection-start-line="154" selection-start-column="88" selection-end-line="154" selection-end-column="88" />
+            <state relative-caret-position="396">
+              <caret line="90" column="40" lean-forward="false" selection-start-line="90" selection-start-column="40" selection-end-line="90" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cdep-dependencies-config.cmake" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cdep-dependencies-config.cmake" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.idea/modules/.test-files/localPathsWork/.cdep/modules/cdep-dependencies-config.cmake">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-330">
+            <state relative-caret-position="-264">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -178,6 +178,8 @@
       <find>builders: [cmake]</find>
       <find>resolved.cdepManifestYml.coordinate.toString()</find>
       <find>writeTextToFile</find>
+      <find>getAddDependencyFunctionName</find>
+      <find>FAT</find>
     </findStrings>
     <replaceStrings>
       <replace>io.cdep.cdep.ast.</replace>
@@ -2048,13 +2050,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00013" summary="Mega">
-      <created>1487462422024</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1487462422025</updated>
-    </task>
     <task id="LOCAL-00014" summary="Mega">
       <created>1487466122375</created>
       <option name="number" value="00014" />
@@ -2391,16 +2386,17 @@
       <option name="project" value="LOCAL" />
       <updated>1488220096226</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Examples support">
+      <created>1488220410882</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1488220410882</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_cdep_test_(1) - 2017.02.27 at 09h 56m 38s.xml">
-      <configuration name="All in cdep_test (1)" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_cdep_test_(1) - 2017.02.27 at 09h 57m 20s.xml">
-      <configuration name="All in cdep_test (1)" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_cdep_test_(1) - 2017.02.27 at 10h 01m 21s.xml">
       <configuration name="All in cdep_test (1)" configurationId="JUnit" />
     </history-entry>
@@ -2420,6 +2416,12 @@
       <configuration name="All in cdep_test (1)" configurationId="JUnit" />
     </history-entry>
     <history-entry file="All_in_cdep_test_(1) - 2017.02.27 at 10h 26m 49s.xml">
+      <configuration name="All in cdep_test (1)" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep_test_(1) - 2017.02.27 at 10h 40m 38s.xml">
+      <configuration name="All in cdep_test (1)" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep_test_(1) - 2017.02.27 at 10h 45m 58s.xml">
       <configuration name="All in cdep_test (1)" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestCDep_localPathsWork - 2017.02.27 at 10h 01m 10s.xml">
@@ -2934,18 +2936,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/modules/.test-files/localPathsWork/.cdep/modules/cdep-dependencies-config.cmake">
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-330">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="396">
+          <caret line="90" column="40" lean-forward="false" selection-start-line="90" selection-start-column="40" selection-end-line="90" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
+    <entry file="file://$PROJECT_DIR$/.idea/modules/.test-files/localPathsWork/.cdep/modules/cdep-dependencies-config.cmake">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="154" column="88" lean-forward="false" selection-start-line="154" selection-start-column="88" selection-end-line="154" selection-end-column="88" />
+        <state relative-caret-position="-264">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
