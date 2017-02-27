@@ -263,11 +263,11 @@ public class TestCDep {
         yaml.getParentFile().mkdirs();
         Files.write("builders: [cmake, cmakeExamples]\n"
                 + "dependencies:\n"
-                + "- compile: com.github.jomof:cmakeify:0.0.81\n",
+                + "- compile: com.github.jomof:low-level-statistics:0.0.16\n",
             yaml, StandardCharsets.UTF_8);
         // Download everything
         String resultRemote = main("-wf", yaml.getParent());
-        // Ask for the local path to the manifes.
+        // Ask for the local path to the manifest.
         String localPath = main("show", "local", "com.github.jomof:low-level-statistics:0.0.16");
         assertThat(localPath).contains("cdep-manifest.yml");
         // Write a new manifest with the local path.
