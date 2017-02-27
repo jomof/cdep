@@ -89,18 +89,6 @@ public class CMakeGenerator {
             sb.append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
             generateFindAppender(indent + 1, signature, specific.expression, sb);
             sb.append("endfunction({appenderFunctionName})\n".replace("{appenderFunctionName}", appenderFunctionName));
-//            String functionName = getAddDependencyFunctionName(specific.coordinate);
-//            sb.append(String.format("\nfunction(%s target)\n",functionName));
-//            sb.append(String.format("   target_include_directories(${target} PRIVATE ${%s_INCLUDE_DIRS})\n",
-//                    upperArtifactID));
-//            sb.append(String.format("   target_link_libraries(${target} ${%s_LIBRARIES})\n",upperArtifactID));
-//            sb.append(String.format("   if(%s_SHARED_LIBRARIES AND CMAKE_LIBRARY_OUTPUT_DIRECTORY)\n",upperArtifactID));
-//            sb.append(String.format("     add_custom_command(TARGET ${target} " +
-//                    "POST_BUILD COMMAND ${CMAKE_COMMAND} -E " +
-//                    "copy ${%s_SHARED_LIBRARIES} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})\n",upperArtifactID));
-//            sb.append(String.format("   endif(%s_SHARED_LIBRARIES AND CMAKE_LIBRARY_OUTPUT_DIRECTORY)\n",
-//                    upperArtifactID));
-//            sb.append(String.format("endfunction(%s)\n",functionName));
             return;
         } else if (expression instanceof CaseExpression) {
             CaseExpression specific = (CaseExpression) expression;
@@ -162,7 +150,7 @@ public class CMakeGenerator {
             for (ModuleArchive archive : specific.archives) {
                 File exploded = environment
                     .getLocalUnzipFolder(specific.coordinate, archive.file);
-                sb.append(String.format("%starget_include_directories(${target} %s)\n",
+                sb.append(String.format("%starget_include_directories(${target} \"%s\")\n",
                         prefix, new File(exploded, specific.include).toString().replace("\\", "\\\\")));
                 String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
 
