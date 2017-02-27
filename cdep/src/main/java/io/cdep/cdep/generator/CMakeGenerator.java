@@ -76,7 +76,9 @@ public class CMakeGenerator {
 
         String prefix = new String(new char[indent * 2]).replace('\0', ' ');
 
-        String upperArtifactID = signature.coordinate.artifactId.toUpperCase().replace("-", "_");
+        String upperArtifactID = signature.coordinate.artifactId.toUpperCase()
+                .replace("-", "_")
+                .replace("/", "_");
         String lowerArtifactID = upperArtifactID.toLowerCase();
 
         if (expression instanceof FindModuleExpression) {
