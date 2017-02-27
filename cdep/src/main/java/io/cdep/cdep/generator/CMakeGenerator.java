@@ -152,7 +152,7 @@ public class CMakeGenerator {
             for (ModuleArchive archive : specific.archives) {
                 File exploded = environment
                     .getLocalUnzipFolder(specific.coordinate, archive.file);
-                sb.append(String.format("%starget_include_directories(${target} \"%s\")\n",
+                sb.append(String.format("%starget_include_directories(${target} PRIVATE \"%s\")\n",
                         prefix, new File(exploded, specific.include).toString().replace("\\", "\\\\")));
                 String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
 

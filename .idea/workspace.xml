@@ -114,8 +114,8 @@
       <file leaf-file-name="CMakeGenerator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2525">
-              <caret line="92" column="53" lean-forward="false" selection-start-line="92" selection-start-column="53" selection-end-line="92" selection-end-column="53" />
+            <state relative-caret-position="294">
+              <caret line="154" column="88" lean-forward="false" selection-start-line="154" selection-start-column="88" selection-end-line="154" selection-end-column="88" />
               <folding />
             </state>
           </provider>
@@ -2048,13 +2048,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00012" summary="Mega">
-      <created>1487449703903</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1487449703903</updated>
-    </task>
     <task id="LOCAL-00013" summary="Mega">
       <created>1487462422024</created>
       <option name="number" value="00013" />
@@ -2391,7 +2384,14 @@
       <option name="project" value="LOCAL" />
       <updated>1488219648502</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="Examples support">
+      <created>1488220096226</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1488220096226</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2944,8 +2944,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2525">
-          <caret line="92" column="53" lean-forward="false" selection-start-line="92" selection-start-column="53" selection-end-line="92" selection-end-column="53" />
+        <state relative-caret-position="294">
+          <caret line="154" column="88" lean-forward="false" selection-start-line="154" selection-start-column="88" selection-end-line="154" selection-end-column="88" />
           <folding />
         </state>
       </provider>
