@@ -78,6 +78,20 @@ public class TestCDep {
     }
 
     @Test
+    public void runMathfu() throws Exception {
+        CDepYml config = new CDepYml();
+        System.out.printf(new Yaml().dump(config));
+        File yaml = new File(".test-files/runMathfu/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake, cmakeExamples]\n"
+                + "dependencies:\n"
+                + "- compile: com.github.jomof:mathfu:1.0.2-rev7\n",
+            yaml, StandardCharsets.UTF_8);
+        String result = main("-wf", yaml.getParent());
+        System.out.printf(result);
+    }
+
+    @Test
     public void someKnownUrls() throws Exception {
         CDepYml config = new CDepYml();
         System.out.printf(new Yaml().dump(config));

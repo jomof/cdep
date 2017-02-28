@@ -17,10 +17,13 @@ package io.cdep.cdep;
 
 import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.ast.service.ResolvedManifest;
+import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdepmanifest.Android;
 
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -67,10 +70,17 @@ public class FindModuleFunctionTableBuilder {
 
         Map<String, Expression> cases = new HashMap<>();
         String supported = "";
+        Set<Coordinate> dependencies = new HashSet<>();
+        if (resolved.cdepManifestYml.dependencies != null) {
+            for (HardNameDependency dependency : resolved.cdepManifestYml.dependencies) {
+                Coordinate coordinate = CoordinateUtils.tryParse(dependency.compile);
+                dependencies.add(coordinate);
+            }
+        }
         if (resolved.cdepManifestYml.android != null) {
             supported += "'Android' ";
             cases.put("Android",
-                buildAndroidStlTypeCase(resolved));
+                buildAndroidStlTypeCase(resolved, dependencies));
         }
         CaseExpression expression = new CaseExpression(
             targetPlatform,
@@ -85,7 +95,8 @@ public class FindModuleFunctionTableBuilder {
     }
 
     private Expression buildAndroidStlTypeCase(
-        ResolvedManifest resolved) throws MalformedURLException, URISyntaxException {
+        ResolvedManifest resolved,
+        Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
 
         // Gather up the runtime names
         Map<String, List<AndroidArchive>> stlTypes = new HashMap<>();
@@ -104,7 +115,7 @@ public class FindModuleFunctionTableBuilder {
             if (stlTypes.size() == 1) {
                 // If there are no runtimes, then skip the runtime check. This is likely a
                 // header-only module.
-                return buildAndroidPlatformExpression(resolved, noRuntimeAndroids);
+                return buildAndroidPlatformExpression(resolved, noRuntimeAndroids, dependencies);
             }
             // There are some android sub modules with runtime and some without
             return new AbortExpression(
@@ -118,10 +129,12 @@ public class FindModuleFunctionTableBuilder {
             runtimes += stlType + " ";
             cases.put(stlType + "_shared", buildAndroidPlatformExpression(
                 resolved,
-                stlTypes.get(stlType)));
+                stlTypes.get(stlType),
+                dependencies));
             cases.put(stlType + "_static", buildAndroidPlatformExpression(
                 resolved,
-                stlTypes.get(stlType)));
+                stlTypes.get(stlType),
+                dependencies));
         }
 
         return new CaseExpression(
@@ -134,12 +147,13 @@ public class FindModuleFunctionTableBuilder {
 
     private Expression buildAndroidPlatformExpression(
         ResolvedManifest resolved,
-        List<AndroidArchive> androids) throws MalformedURLException, URISyntaxException {
+        List<AndroidArchive> androids,
+        Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
 
         // If there's only one android left and it doesn't have a platform then this is
         // a header-only module.
         if (androids.size() == 1 && androids.get(0).platform == null) {
-            return returnOnly(resolved, androids);
+            return returnOnly(resolved, androids, dependencies);
         }
 
         Map<Long, List<AndroidArchive>> grouped = new HashMap<>();
@@ -164,7 +178,7 @@ public class FindModuleFunctionTableBuilder {
             prior = new IfGreaterThanOrEqualExpression(
                 systemVersion,
                 new LongConstantExpression(platform),
-                returnOnly(resolved, grouped.get(platform)),
+                returnOnly(resolved, grouped.get(platform), dependencies),
                 prior);
         }
         return prior;
@@ -172,7 +186,8 @@ public class FindModuleFunctionTableBuilder {
 
     private FoundModuleExpression returnOnly(
             ResolvedManifest resolved,
-            List<AndroidArchive> androids)
+            List<AndroidArchive> androids,
+            Set<Coordinate> dependencies)
         throws URISyntaxException, MalformedURLException {
         if (androids.size() != 1) {
             throw new RuntimeException(String.format(
@@ -190,6 +205,6 @@ public class FindModuleFunctionTableBuilder {
             android.size);
         String include = android.include;
         return new FoundModuleExpression(resolved.cdepManifestYml.coordinate, archives,
-            include, android.lib);
+            include, android.lib, dependencies);
     }
 }

@@ -153,6 +153,9 @@ public class CMakeGenerator {
         } else if (expression instanceof FoundModuleExpression) {
             FoundModuleExpression specific = (FoundModuleExpression) expression;
             assert specific.coordinate.artifactId != null;
+            for (Coordinate dependency : specific.dependencies) {
+                sb.append(String.format("%s%s(target)\n", prefix, getAddDependencyFunctionName(dependency)));
+            }
             for (ModuleArchive archive : specific.archives) {
                 File exploded = environment
                     .getLocalUnzipFolder(specific.coordinate, archive.file);
