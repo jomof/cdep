@@ -154,7 +154,7 @@ public class CMakeGenerator {
             FoundModuleExpression specific = (FoundModuleExpression) expression;
             assert specific.coordinate.artifactId != null;
             for (Coordinate dependency : specific.dependencies) {
-                sb.append(String.format("%s%s(target)\n", prefix, getAddDependencyFunctionName(dependency)));
+                sb.append(String.format("%s%s(${target})\n", prefix, getAddDependencyFunctionName(dependency)));
             }
             for (ModuleArchive archive : specific.archives) {
                 File exploded = environment
