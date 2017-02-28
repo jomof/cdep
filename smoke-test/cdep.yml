@@ -4,7 +4,7 @@ dependencies:
 - compile: com.github.jomof:sqlite:3.16.2-rev25
 - compile: com.github.jomof:boost:1.0.63-rev18
 - compile: com.github.jomof:vectorial:0.0.0-rev11
-- compile: com.github.jomof:mathfu:1.0.2-rev6
+- compile: com.github.jomof:mathfu:1.0.2-rev7
 - compile: com.github.jomof:sdl2:2.0.5-rev11
 - compile: com.github.jomof:firebase/database:2.1.3-rev5
 - compile: com.github.jomof:firebase/admob:2.1.3-rev5
