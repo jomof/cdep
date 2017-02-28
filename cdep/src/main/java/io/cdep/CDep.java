@@ -18,15 +18,12 @@ package io.cdep;
 import io.cdep.cdep.FindModuleFunctionTableBuilder;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.service.ResolvedManifest;
-import io.cdep.cdep.generator.CMakeExamplesGenerator;
-import io.cdep.cdep.generator.CMakeGenerator;
-import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
+import io.cdep.cdep.generator.*;
 import io.cdep.cdep.utils.CDepYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
-import io.cdep.cdep.yml.cdep.Dependency;
+import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -140,7 +137,7 @@ public class CDep {
                     out.printf("Usage: cdep show local %s\n", EXAMPLE_COORDINATE);
                     return true;
                 }
-                Dependency dependency = new Dependency(args[2]);
+                SoftNameDependency dependency = new SoftNameDependency(args[2]);
                 ResolvedManifest resolved = environment.resolveAny(dependency, false);
                 if (resolved == null) {
                     out.printf("Could not resolve manifest coordinate %s\n", args[2]);
@@ -233,21 +230,12 @@ public class CDep {
             boolean forceRedownload)
             throws IOException, URISyntaxException, NoSuchAlgorithmException {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
-        Set<String> seen = new HashSet<>();
-        for (Dependency dependency : config.dependencies) {
-            if (dependency.compile == null) {
-                continue;
+        ResolutionScope scope = new ResolutionScope(config.dependencies);
+        environment.resolveAll(scope, forceRedownload);
+        for (ResolutionScope.Resolution resolved : scope.resolved.values()) {
+            if (resolved instanceof  ResolutionScope.FoundManifestResolution) {
+                builder.addManifest(((ResolutionScope.FoundManifestResolution) resolved).resolved);
             }
-            if (seen.contains(dependency.compile)) {
-                continue;
-            }
-            ResolvedManifest resolved = environment.resolveAny(
-                dependency, forceRedownload);
-            if (resolved == null) {
-                throw new RuntimeException("Could not resolve: " + dependency.compile);
-            }
-            builder.addManifest(resolved);
-            seen.add(dependency.compile);
         }
 
         return builder.build();

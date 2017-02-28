@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package io.cdep.cdep.yml.cdepmanifest;
+package io.cdep.cdep.utils;
 
 import io.cdep.cdep.Coordinate;
 
-@SuppressWarnings("unused")
-public class CDepManifestYml {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-    final public Coordinate coordinate;
-    final public HardNameDependency dependencies[];
-    final public Archive archive;
-    final public Android android;
-    final public Object linux;
-    final public String example;
+import static java.util.regex.Pattern.compile;
 
-    CDepManifestYml() {
-        this.coordinate = null;
-        this.dependencies = null;
-        this.archive = null;
-        this.android = null;
-        this.linux = null;
-        this.example = null;
+public class CoordinateUtils {
+    final private static Pattern pattern = compile("^(.*):(.*):(.*)$");
+
+    public static Coordinate tryParse(String value) {
+        Matcher match = pattern.matcher(value);
+        if (!match.find()) {
+            return null;
+        }
+        String groupId = match.group(1);
+        String artifactId = match.group(2);
+        String version = match.group(3);
+        return new Coordinate(groupId, artifactId, version);
     }
 }

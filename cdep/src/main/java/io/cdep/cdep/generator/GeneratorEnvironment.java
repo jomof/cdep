@@ -25,7 +25,8 @@ import io.cdep.cdep.utils.CDepSHA256Utils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.yml.cdep.Dependency;
+import io.cdep.cdep.yml.cdep.SoftNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
 
@@ -34,6 +35,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GeneratorEnvironment {
@@ -167,8 +169,28 @@ public class GeneratorEnvironment {
         return urlString.substring(urlString.lastIndexOf('/') + 1, urlString.length());
     }
 
+    public void resolveAll(ResolutionScope scope, boolean forceRedownload)
+            throws IOException, NoSuchAlgorithmException {
+
+        // Progressively resolve dependencies
+        while(scope.unresolved.size() > 0) {
+            String unresolvedName = scope.unresolved.keySet().iterator().next();
+            SoftNameDependency softname = scope.unresolved.get(unresolvedName);
+            ResolvedManifest resolved = resolveAny(softname, forceRedownload);
+            if (resolved == null) {
+                scope.recordUnresolvable(softname);
+            } else {
+                if (!scope.isResolved(resolved.cdepManifestYml.coordinate.toString())) {
+                    List<HardNameDependency> transitive =
+                            CDepManifestYmlUtils.getTransitiveDependencies(resolved.cdepManifestYml);
+                    scope.recordResolved(unresolvedName, resolved, transitive);
+                }
+            }
+        }
+    }
+
     public ResolvedManifest resolveAny(
-            Dependency dependency,
+            SoftNameDependency dependency,
             boolean forceRedownload) throws IOException, NoSuchAlgorithmException {
         ResolvedManifest resolved = null;
         for (Resolver resolver : resolvers) {

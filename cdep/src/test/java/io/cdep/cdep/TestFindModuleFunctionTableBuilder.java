@@ -19,7 +19,7 @@ import io.cdep.cdep.ast.finder.FoundModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.yml.cdep.Dependency;
+import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import org.junit.Test;
 
 import java.io.File;
@@ -33,8 +33,8 @@ public class TestFindModuleFunctionTableBuilder {
         new File("./test-files/TestFindModuleFunctionTableBuilder/working"),
         null);
 
-    private static Dependency createReference(String compile) {
-        return new Dependency(compile);
+    private static SoftNameDependency createReference(String compile) {
+        return new SoftNameDependency(compile);
 
     }
 

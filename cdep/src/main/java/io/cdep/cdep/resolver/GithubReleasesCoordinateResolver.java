@@ -17,7 +17,7 @@ package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.yml.cdep.Dependency;
+import io.cdep.cdep.yml.cdep.SoftNameDependency;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -32,7 +32,7 @@ public class GithubReleasesCoordinateResolver extends Resolver {
 
     @Override
     public ResolvedManifest resolve(GeneratorEnvironment environment,
-        Dependency dependency, boolean forceRedownload) throws IOException {
+                                    SoftNameDependency dependency, boolean forceRedownload) throws IOException {
         String coordinate = dependency.compile;
         assert coordinate != null;
         Matcher match = pattern.matcher(coordinate);
@@ -52,7 +52,7 @@ public class GithubReleasesCoordinateResolver extends Resolver {
                 artifactId,
                 version,
                 subArtifact);
-            return urlResolver.resolve(environment, new Dependency(manifest), forceRedownload);
+            return urlResolver.resolve(environment, new SoftNameDependency(manifest), forceRedownload);
         }
         return null;
     }

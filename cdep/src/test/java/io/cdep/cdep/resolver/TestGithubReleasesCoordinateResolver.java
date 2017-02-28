@@ -2,7 +2,7 @@ package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.yml.cdep.Dependency;
+import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import org.junit.Test;
 
 import java.io.File;
@@ -19,7 +19,7 @@ public class TestGithubReleasesCoordinateResolver {
   @Test
   public void testCompound() throws IOException {
     ResolvedManifest resolved = new GithubReleasesCoordinateResolver()
-        .resolve(environment, new Dependency(
+        .resolve(environment, new SoftNameDependency(
                 "com.github.jomof:firebase/database:2.1.3-rev5"),
             false);
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");

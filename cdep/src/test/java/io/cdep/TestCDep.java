@@ -87,7 +87,7 @@ public class TestCDep {
                 + "dependencies:\n"
 //                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
 //                + "- compile: com.github.jomof:cmakeify:0.0.70\n"
-                + "- compile: com.github.jomof:mathfu:1.0.2-rev5\n"
+                + "- compile: com.github.jomof:mathfu:1.0.2-rev7\n"
                 + "- compile: https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml\n"
                 + "- compile: com.github.jomof:low-level-statistics:0.0.16\n",
             yaml, StandardCharsets.UTF_8);

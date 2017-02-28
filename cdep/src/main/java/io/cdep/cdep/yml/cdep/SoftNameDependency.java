@@ -16,16 +16,16 @@
 package io.cdep.cdep.yml.cdep;
 
 @SuppressWarnings("unused")
-public class Dependency {
+public class SoftNameDependency {
   final public String compile;
   final public Boolean enforceSourceUrlMatchesManifest; // null means yes
 
-  public Dependency() {
+  public SoftNameDependency() {
     compile = null;
     enforceSourceUrlMatchesManifest = null;
   }
 
-  public Dependency(String compile) {
+  public SoftNameDependency(String compile) {
     this.compile = compile;
     this.enforceSourceUrlMatchesManifest = null;
   }

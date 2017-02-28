@@ -18,7 +18,7 @@ package io.cdep.cdep.yml.cdepmanifest;
 
 @SuppressWarnings("unused")
 public class Android {
-  final public Dependency dependencies[] = null;
+  final public HardNameDependency dependencies[] = null;
   final public AndroidArchive archives[] = null;
 
   Android() {

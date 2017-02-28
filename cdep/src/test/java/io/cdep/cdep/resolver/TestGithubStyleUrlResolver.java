@@ -17,7 +17,7 @@ package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.yml.cdep.Dependency;
+import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import org.junit.Test;
 
 import java.io.File;
@@ -34,7 +34,7 @@ public class TestGithubStyleUrlResolver {
   @Test
   public void testSimple() throws IOException {
     ResolvedManifest resolved = new GithubStyleUrlResolver()
-        .resolve(environment, new Dependency(
+        .resolve(environment, new SoftNameDependency(
                 "https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"),
             false);
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
@@ -46,7 +46,7 @@ public class TestGithubStyleUrlResolver {
   @Test
   public void testCompound() throws IOException {
     ResolvedManifest resolved = new GithubStyleUrlResolver()
-        .resolve(environment, new Dependency(
+        .resolve(environment, new SoftNameDependency(
                 "https://github.com/jomof/firebase/releases/download/2.1.3-rev5/cdep-manifest-database.yml"),
             false);
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");

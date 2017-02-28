@@ -18,7 +18,7 @@ package io.cdep.cdep.yml.cdep;
 public class CDepYml {
 
     final public BuildSystem builders[] = new BuildSystem[0];
-    final public Dependency dependencies[] = new Dependency[0];
+    final public SoftNameDependency dependencies[] = new SoftNameDependency[0];
 
     public CDepYml() {
     }
@@ -37,7 +37,7 @@ public class CDepYml {
 
         if (dependencies.length > 0) {
             sb.append(String.format("%sdependencies:\n", prefix));
-            for (Dependency dependency : dependencies) {
+            for (SoftNameDependency dependency : dependencies) {
                 sb.append("- ");
                 sb.append(dependency.toYaml(indent + 1));
             }

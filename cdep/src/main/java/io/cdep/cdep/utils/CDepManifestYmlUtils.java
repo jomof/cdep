@@ -22,7 +22,9 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CDepManifestYmlUtils {
@@ -173,5 +175,15 @@ public class CDepManifestYmlUtils {
                     String.format(
                             "Package '%s' does not contain any files", cdepManifestYml.coordinate));
         }
+    }
+
+    public static List<HardNameDependency> getTransitiveDependencies(CDepManifestYml cdepManifestYml) {
+        List<HardNameDependency> dependencies = new ArrayList<>();
+        if (cdepManifestYml.dependencies != null) {
+            for (HardNameDependency dependency : cdepManifestYml.dependencies) {
+                dependencies.add(dependency);
+            }
+        }
+        return dependencies;
     }
 }

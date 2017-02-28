@@ -18,9 +18,10 @@ package io.cdep.cdep.resolver;
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
-import io.cdep.cdep.yml.cdep.Dependency;
+import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.Coordinate;
+import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +33,7 @@ public class GithubStyleUrlResolver extends Resolver {
 
   @Override
   public ResolvedManifest resolve(GeneratorEnvironment environment,
-      Dependency dependency, boolean forceRedownload) throws IOException {
+                                  SoftNameDependency dependency, boolean forceRedownload) throws IOException {
     String coordinate = dependency.compile;
     assert coordinate != null;
     Matcher match = pattern.matcher(coordinate);
@@ -61,7 +62,12 @@ public class GithubStyleUrlResolver extends Resolver {
       String manifestContent = environment.getLocalDownloadedFileText(
           provisionalCoordinate,
           new URL(coordinate), forceRedownload);
-      CDepManifestYml cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(manifestContent);
+      CDepManifestYml cdepManifestYml = null;
+      try {
+        cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(manifestContent);
+      } catch (YAMLException e) {
+        throw new RuntimeException(String.format("Parsing '%s'", coordinate), e);
+      }
 
       // Ensure that the manifest coordinate agrees with the url provided
       assert cdepManifestYml.coordinate != null;

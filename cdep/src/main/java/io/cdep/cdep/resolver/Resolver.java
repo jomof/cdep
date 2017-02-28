@@ -17,7 +17,7 @@ package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.yml.cdep.Dependency;
+import io.cdep.cdep.yml.cdep.SoftNameDependency;
 
 import java.io.IOException;
 
@@ -25,6 +25,6 @@ public abstract class Resolver {
 
     public abstract ResolvedManifest resolve(
         GeneratorEnvironment environment,
-        Dependency dependency,
+        SoftNameDependency dependency,
         boolean forceRedownload) throws IOException;
 }
