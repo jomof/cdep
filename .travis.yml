@@ -4,6 +4,7 @@ matrix:
   - jdk: oraclejdk7
     os: linux
     script:
+    - set -e
     - ./gradlew assemble check packageArtifacts
     - ./travis_cdep
     - cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
