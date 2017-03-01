@@ -15,7 +15,6 @@
 */
 package io.cdep.cdep.generator;
 
-import static com.sun.xml.internal.fastinfoset.stax.events.EmptyIterator.instance;
 import static io.cdep.cdep.generator.ResolutionScope.UNPARSEABLE_RESOLUTION;
 import static io.cdep.cdep.generator.ResolutionScope.UNRESOLVEABLE_RESOLUTION;
 
