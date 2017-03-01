@@ -92,6 +92,53 @@ public class TestCDep {
     }
 
     @Test
+    public void emptyCdepSha256() throws Exception {
+        CDepYml config = new CDepYml();
+        System.out.printf(new Yaml().dump(config));
+        File yaml = new File(".test-files/emptyCdepSha256/cdep.yml");
+        File yamlSha256 = new File(".test-files/emptyCdepSha256/cdep.sha256");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake, cmakeExamples]\n"
+                + "dependencies:\n"
+                + "- compile: com.github.jomof:mathfu:1.0.2-rev7\n",
+            yaml, StandardCharsets.UTF_8);
+        Files.write("# This file is automatically maintained by CDep.\n"
+                + "#\n"
+                + "#     MANUAL EDITS WILL BE LOST ON THE NEXT CDEP RUN\n"
+                + "#\n"
+                + "# This file contains a list of CDep coordinates along with the SHA256 hash of their\n"
+                + "# manifest file. This is to ensure that a manifest hasn't changed since the last\n"
+                + "# time CDep ran.\n"
+                + "# The recommended best practice is to check this file into source control so that\n"
+                + "# anyone else who builds this project is guaranteed to get the same dependencies.\n"
+                + "\n"
+                + "\n",
+            yamlSha256, StandardCharsets.UTF_8);
+        String result = main("-wf", yaml.getParent());
+        System.out.printf(result);
+    }
+
+    @Test
+    public void unfindableLocalFile() throws Exception {
+        CDepYml config = new CDepYml();
+        System.out.printf(new Yaml().dump(config));
+        File yaml = new File(".test-files/unfindableLocalFile/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake, cmakeExamples]\n"
+                + "dependencies:\n"
+                + "- compile: ../not-a-file/cdep-manifest.yml\n",
+            yaml, StandardCharsets.UTF_8);
+
+        try {
+            main("-wf", yaml.getParent());
+            fail("Expected failure");
+        } catch (RuntimeException e) {
+            assertThat(e).hasMessage("Could not resolve '../not-a-file/cdep-manifest.yml'."
+                + " It doesn't exist.");
+        }
+    }
+
+    @Test
     public void someKnownUrls() throws Exception {
         CDepYml config = new CDepYml();
         System.out.printf(new Yaml().dump(config));

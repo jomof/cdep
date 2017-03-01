@@ -14,7 +14,9 @@ public class CDepSHA256Utils {
         HashEntry[] result =
                 (HashEntry[]) yaml.load(new ByteArrayInputStream(content.getBytes(
                         StandardCharsets.UTF_8)));
-        assert result != null;
+        if (result == null) {
+            result = new HashEntry[0];
+        }
         return new CDepSHA256(result);
     }
 }

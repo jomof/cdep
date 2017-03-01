@@ -15,7 +15,13 @@
 */
 package io.cdep.cdep.generator;
 
+import static com.sun.xml.internal.fastinfoset.stax.events.EmptyIterator.instance;
+import static io.cdep.cdep.generator.ResolutionScope.UNPARSEABLE_RESOLUTION;
+import static io.cdep.cdep.generator.ResolutionScope.UNRESOLVEABLE_RESOLUTION;
+
 import io.cdep.cdep.ast.service.ResolvedManifest;
+import io.cdep.cdep.generator.ResolutionScope.FoundManifestResolution;
+import io.cdep.cdep.generator.ResolutionScope.Resolution;
 import io.cdep.cdep.resolver.GithubReleasesCoordinateResolver;
 import io.cdep.cdep.resolver.GithubStyleUrlResolver;
 import io.cdep.cdep.resolver.LocalFilePathResolver;
@@ -186,6 +192,26 @@ public class GeneratorEnvironment {
                     scope.recordResolved(unresolvedName, resolved, transitive);
                 }
             }
+        }
+
+        // Throw some exceptions if we didn't resolve something.
+        for (String softname : scope.resolved.keySet()) {
+            Resolution resolution = scope.resolved.get(softname);
+            if (resolution instanceof FoundManifestResolution) {
+                continue;
+            }
+
+            // The resolution was something besides success.
+            if (resolution == UNRESOLVEABLE_RESOLUTION) {
+                throw new RuntimeException(String.format(
+                    "Could not resolve '%s'. It doesn't exist.", softname));
+            }
+
+            if (resolution == UNPARSEABLE_RESOLUTION) {
+                throw new RuntimeException(String.format(
+                    "Could not resolve '%s'. It didn't look like a coordinate.", softname));
+            }
+
         }
     }
 
