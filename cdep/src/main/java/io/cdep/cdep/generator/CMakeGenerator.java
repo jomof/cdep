@@ -145,6 +145,10 @@ public class CMakeGenerator {
                 sb.append("CMAKE_SYSTEM_VERSION");
                 return;
             }
+            if (specific == signature.androidTargetAbi) {
+                sb.append("CDEP_DETERMINED_ANDROID_ABI");
+                return;
+            }
             throw new RuntimeException(specific.name);
         } else if (expression instanceof LongConstantExpression) {
             LongConstantExpression specific = (LongConstantExpression) expression;

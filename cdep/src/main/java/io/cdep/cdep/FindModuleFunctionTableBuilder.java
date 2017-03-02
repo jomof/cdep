@@ -17,6 +17,7 @@ package io.cdep.cdep;
 
 import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.ast.service.ResolvedManifest;
+import io.cdep.cdep.generator.AndroidAbi;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdepmanifest.Android;
 
@@ -39,6 +40,7 @@ public class FindModuleFunctionTableBuilder {
         new ParameterExpression("androidStlType");
     private final ParameterExpression systemVersion =
         new ParameterExpression("systemVersion");
+
 
     public void addManifest(ResolvedManifest resolved) {
         manifests.put(resolved.cdepManifestYml.coordinate, resolved);
@@ -153,7 +155,7 @@ public class FindModuleFunctionTableBuilder {
         // If there's only one android left and it doesn't have a platform then this is
         // a header-only module.
         if (androids.size() == 1 && androids.get(0).platform == null) {
-            return returnOnly(resolved, androids, dependencies);
+            return buildAndroidAbiExpression(resolved, androids, dependencies);
         }
 
         Map<Long, List<AndroidArchive>> grouped = new HashMap<>();
@@ -178,17 +180,16 @@ public class FindModuleFunctionTableBuilder {
             prior = new IfGreaterThanOrEqualExpression(
                 systemVersion,
                 new LongConstantExpression(platform),
-                returnOnly(resolved, grouped.get(platform), dependencies),
+                buildAndroidAbiExpression(resolved, grouped.get(platform), dependencies),
                 prior);
         }
         return prior;
     }
 
-    private FoundModuleExpression returnOnly(
-            ResolvedManifest resolved,
-            List<AndroidArchive> androids,
-            Set<Coordinate> dependencies)
-        throws URISyntaxException, MalformedURLException {
+    private Expression buildAndroidAbiExpression(
+        ResolvedManifest resolved,
+        List<AndroidArchive> androids,
+        Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
         if (androids.size() != 1) {
             throw new RuntimeException(String.format(
                 "Expected only one android archive upon reaching ABI level. There were %s.",
@@ -204,7 +205,31 @@ public class FindModuleFunctionTableBuilder {
             android.sha256,
             android.size);
         String include = android.include;
-        return new FoundModuleExpression(resolved.cdepManifestYml.coordinate, archives,
-            include, android.lib, dependencies);
+
+        Map<String, Expression> cases = new HashMap<>();
+        String supported = "";
+        String abis[] = android.abis;
+        if (abis == null) {
+            abis = AndroidAbi.getNames();
+        }
+        for (String abi : abis) {
+            supported += abi + " ";
+            cases.put(abi, new FoundModuleExpression(
+                resolved.cdepManifestYml.coordinate,
+                archives,
+                include,
+                android.lib,
+                dependencies));
+        }
+
+
+        Expression prior = new AbortExpression(
+            String.format("Android ABI '%%s' is not supported by module '%s'. Supported: %s",
+                resolved.cdepManifestYml.coordinate, supported), androidArchAbi);
+
+        return new CaseExpression(
+            androidArchAbi,
+            cases,
+            prior);
     }
 }
