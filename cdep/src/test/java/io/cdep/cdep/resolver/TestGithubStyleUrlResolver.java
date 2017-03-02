@@ -31,6 +31,7 @@ public class TestGithubStyleUrlResolver {
       System.out,
       new File("./test-files/TestFindModuleFunctionTableBuilder/working"),
       null);
+
   @Test
   public void testSimple() throws IOException {
     ResolvedManifest resolved = new GithubStyleUrlResolver()
@@ -53,5 +54,15 @@ public class TestGithubStyleUrlResolver {
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("firebase/database");
     assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("2.1.3-rev5");
     assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(3);
+  }
+
+  @Test
+  public void testMissing() throws IOException {
+    // Missing URL should return null because the coordinate may be resolvable in other ways.
+    ResolvedManifest resolved = new GithubStyleUrlResolver()
+        .resolve(environment, new SoftNameDependency(
+                "https://github.com/jomof/firebase/releases/download/0.0.0/cdep-manifest-app.yml"),
+            false);
+    assertThat(resolved).isNull();
   }
 }

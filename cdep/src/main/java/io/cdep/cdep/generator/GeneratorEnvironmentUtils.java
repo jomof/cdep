@@ -45,21 +45,30 @@ public class GeneratorEnvironmentUtils {
         // Download and unzip any modules.
         for (FoundModuleExpression foundModule : foundModules) {
             for (ModuleArchive archive : foundModule.archives) {
-                File local = environment.getLocalDownloadedFile(
-                    foundModule.coordinate, archive.file, forceRedownload);
 
-                if (archive.size != null) {
+                File local = environment.tryGetLocalDownloadedFile(
+                    foundModule.coordinate, archive.file, forceRedownload);
+                if (local == null) {
+                    throw new RuntimeException(
+                        String.format("Resolved archive '%s' didn't exist", archive.file));
+                }
+
+                boolean forceUnzip = forceRedownload;
+                if (archive.size != local.length()) {
+                    // It may have been an interrupted download. Try again.
+                    if (!forceRedownload) {
+                        forceUnzip = true;
+                        local = environment.tryGetLocalDownloadedFile(
+                            foundModule.coordinate, archive.file, true /* forceRedownload */);
+                        if (local == null) {
+                            throw new RuntimeException(
+                                String.format("Resolved archive '%s' didn't exist", archive.file));
+                        }
+                    }
                     if (archive.size != local.length()) {
-                        // It may have been an interrupted download. Try again.
-                        if (!forceRedownload) {
-                            environment.getLocalDownloadedFile(
-                                foundModule.coordinate, archive.file, true /* forceRedownload */);
-                        }
-                        if (archive.size != local.length()) {
-                            throw new RuntimeException(String.format(
-                                "file size for %s did not match value from manifest",
-                                archive.size));
-                        }
+                        throw new RuntimeException(String.format(
+                            "file size for %s did not match value from manifest",
+                            archive.size));
                     }
                 }
 
@@ -71,7 +80,7 @@ public class GeneratorEnvironmentUtils {
 
                 File unzipFolder = environment.getLocalUnzipFolder(
                     foundModule.coordinate, archive.file);
-                if (!unzipFolder.exists()) {
+                if (!unzipFolder.exists() || forceUnzip) {
                     //noinspection ResultOfMethodCallIgnored
                     unzipFolder.mkdirs();
                     environment.out.printf("Exploding %s\n", archive.file);

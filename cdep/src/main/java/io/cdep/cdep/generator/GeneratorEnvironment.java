@@ -74,10 +74,19 @@ public class GeneratorEnvironment {
         this.examplesFolder = new File(workingFolder, ".cdep/examples").getAbsoluteFile();
     }
 
-    private static void copyUrlToLocalFile(URL url, File localFile) throws IOException {
+    private static InputStream tryGetUrlInputStream(URL url) throws IOException {
         URLConnection con = url.openConnection();
         con.connect();
-        InputStream input = con.getInputStream();
+        try {
+            return con.getInputStream();
+        } catch (FileNotFoundException e) {
+            // If the file wasn't found we may want to look for it in other places. Continue by
+            // returning null;
+            return null;
+        }
+    }
+
+    private static void copyInputStreamToLocalFile(InputStream input, File localFile) throws IOException {
         byte[] buffer = new byte[4096];
         int n;
 
@@ -97,31 +106,45 @@ public class GeneratorEnvironment {
         return local;
     }
 
-    public File getLocalDownloadedFile(
+    public File tryGetLocalDownloadedFile(
             Coordinate coordinate,
             URL remoteArchive,
             boolean forceRedownload)
             throws IOException {
         File local = getLocalDownloadFilename(coordinate, remoteArchive);
-        if (!local.isFile()) {
-            out.printf("Downloading %s\n", remoteArchive);
-        } else if (forceRedownload) {
-            out.printf("Redownloading %s\n", remoteArchive);
-        } else {
+        if (local.isFile() && !forceRedownload) {
             return local;
         }
+
+        // Try to get the content at the remote. If it doesn't exist return null.
+        InputStream input = tryGetUrlInputStream(remoteArchive);
+        if (input == null) {
+            return null;
+        }
+
+        // Indicate whether download or force redownload
+        if (forceRedownload) {
+            out.printf("Redownloading %s\n", remoteArchive);
+        } else {
+            out.printf("Downloading %s\n", remoteArchive);
+        }
+
         //noinspection ResultOfMethodCallIgnored
         local.getParentFile().mkdirs();
-        copyUrlToLocalFile(remoteArchive, local);
+        copyInputStreamToLocalFile(input, local);
         return local;
     }
 
-    public String getLocalDownloadedFileText(
+    public String tryGetLocalDownloadedFileText(
             Coordinate coordinate,
             URL remoteArchive,
             boolean forceRedownload)
             throws IOException {
-        File file = getLocalDownloadedFile(coordinate, remoteArchive, forceRedownload);
+        File file = tryGetLocalDownloadedFile(coordinate, remoteArchive, forceRedownload);
+        if (file == null) {
+            // The remote didn't exist. Return null;
+            return null;
+        }
         return FileUtils.readAllText(file);
     }
 
@@ -234,8 +257,14 @@ public class GeneratorEnvironment {
                     resolved.remote);
             if (!local.exists()) {
                 // Copy the file local if the resolver didn't
-                getLocalDownloadedFile(resolved.cdepManifestYml.coordinate, resolved.remote,
-                        forceRedownload);
+                local = tryGetLocalDownloadedFile(
+                    resolved.cdepManifestYml.coordinate,
+                    resolved.remote,
+                    forceRedownload);
+                if (local == null) {
+                    throw new RuntimeException(
+                        String.format("Remote '%s' didn't exist", resolved.remote));
+                }
             }
             String sha256 = HashUtils.getSHA256OfFile(local);
             String priorSha256 = this.cdepSha256Hashes.get(resolved.cdepManifestYml.coordinate.toString());

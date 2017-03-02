@@ -59,10 +59,14 @@ public class GithubStyleUrlResolver extends Resolver {
       }
 
       Coordinate provisionalCoordinate = new Coordinate(groupId, artifactId, version);
-      String manifestContent = environment.getLocalDownloadedFileText(
+      String manifestContent = environment.tryGetLocalDownloadedFileText(
           provisionalCoordinate,
           new URL(coordinate), forceRedownload);
-      CDepManifestYml cdepManifestYml = null;
+      if (manifestContent == null) {
+        // The URL didn't exist.
+        return null;
+      }
+      CDepManifestYml cdepManifestYml;
       try {
         cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(manifestContent);
       } catch (YAMLException e) {

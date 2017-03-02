@@ -92,6 +92,26 @@ public class TestCDep {
     }
 
     @Test
+    public void testMissingGithubCoordinate() throws Exception {
+        CDepYml config = new CDepYml();
+        System.out.printf(new Yaml().dump(config));
+        File yaml = new File(".test-files/runMathfu/cdep.yml");
+        yaml.getParentFile().mkdirs();
+        Files.write("builders: [cmake, cmakeExamples]\n"
+                + "dependencies:\n"
+                + "- compile: com.github.jomof:mathfoo:1.0.2-rev7\n",
+            yaml, StandardCharsets.UTF_8);
+        try {
+            String result = main("-wf", yaml.getParent());
+            System.out.printf(result);
+            fail("Expected an exception");
+        } catch (RuntimeException e) {
+            assertThat(e).hasMessage("Could not resolve 'com.github.jomof:mathfoo:1.0.2-rev7'. "
+                + "It doesn't exist.");
+        }
+    }
+
+    @Test
     public void emptyCdepSha256() throws Exception {
         CDepYml config = new CDepYml();
         System.out.printf(new Yaml().dump(config));
