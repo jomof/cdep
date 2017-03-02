@@ -201,6 +201,8 @@ public class GeneratorEnvironment {
             throws IOException, NoSuchAlgorithmException {
 
         // Progressively resolve dependencies
+        int iteration = 0;
+        int limit = scope.unresolved.size() * 100;
         while(scope.unresolved.size() > 0) {
             String unresolvedName = scope.unresolved.keySet().iterator().next();
             SoftNameDependency softname = scope.unresolved.get(unresolvedName);
@@ -214,6 +216,11 @@ public class GeneratorEnvironment {
                     scope.recordResolved(unresolvedName, resolved, transitive);
                 }
             }
+            if (iteration > limit) {
+                // Stop after a reasonable amount of iterations.
+                break;
+            }
+            ++iteration;
         }
 
         // Throw some exceptions if we didn't resolve something.
