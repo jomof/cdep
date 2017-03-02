@@ -210,11 +210,9 @@ public class GeneratorEnvironment {
             if (resolved == null) {
                 scope.recordUnresolvable(softname);
             } else {
-                if (!scope.isResolved(resolved.cdepManifestYml.coordinate.toString())) {
-                    List<HardNameDependency> transitive =
-                            CDepManifestYmlUtils.getTransitiveDependencies(resolved.cdepManifestYml);
-                    scope.recordResolved(unresolvedName, resolved, transitive);
-                }
+                List<HardNameDependency> transitive =
+                        CDepManifestYmlUtils.getTransitiveDependencies(resolved.cdepManifestYml);
+                scope.recordResolved(unresolvedName, resolved, transitive);
             }
             if (iteration > limit) {
                 // Stop after a reasonable amount of iterations.

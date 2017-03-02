@@ -61,7 +61,7 @@ public class TestGithubStyleUrlResolver {
     // Missing URL should return null because the coordinate may be resolvable in other ways.
     ResolvedManifest resolved = new GithubStyleUrlResolver()
         .resolve(environment, new SoftNameDependency(
-                "https://github.com/jomof/firebase/releases/download/0.0.0/cdep-manifest-app.yml"),
+                "https://github.com/jomof/firebase/releases/download/0.0.0/cdep-manifest-appx.yml"),
             false);
     assertThat(resolved).isNull();
   }
