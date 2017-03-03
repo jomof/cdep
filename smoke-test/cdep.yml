@@ -13,4 +13,4 @@ dependencies:
 - compile: com.github.jomof:vectorial:0.0.0-rev11
 - compile: com.github.jomof:mathfu:1.0.2-rev7
 - compile: com.github.jomof:sdl2:2.0.5-rev11
-- compile: com.github.jomof:yaml-cpp:0.5.3-rev10
+#- compile: com.github.jomof:yaml-cpp:0.5.3-rev10
