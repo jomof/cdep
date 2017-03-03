@@ -81,20 +81,15 @@ public class ResolutionScope {
             SoftNameDependency softname,
         ResolvedManifest resolved,
             List<HardNameDependency> transitiveDependencies) {
-        assert !isResolved(resolved.cdepManifestYml.coordinate.toString());
-        this.resolved.put(resolved.cdepManifestYml.coordinate.toString(),
-                new FoundManifestResolution(resolved));
-        if (unresolved.containsKey(resolved.cdepManifestYml.coordinate.toString())) {
-          unresolved.remove(resolved.cdepManifestYml.coordinate.toString());
-        }
-      if (unresolved.containsKey(softname.compile)) {
-        unresolved.remove(softname.compile);
-      }
+      assert !isResolved(resolved.cdepManifestYml.coordinate.toString());
+
+      this.resolved.put(resolved.cdepManifestYml.coordinate.toString(),
+          new FoundManifestResolution(resolved));
+
+      unresolved.remove(resolved.cdepManifestYml.coordinate.toString());
+      unresolved.remove(softname.compile);
 
       for (HardNameDependency hardname : transitiveDependencies) {
-            if (isResolved(hardname.compile)) {
-                continue;
-            }
             Coordinate coordinate = CoordinateUtils.tryParse(hardname.compile);
             if (coordinate == null) {
                 this.resolved.put(hardname.compile, UNPARSEABLE_RESOLUTION);

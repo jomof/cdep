@@ -87,10 +87,8 @@ public class TestResolutionScope {
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();
-    transitiveDependencies.add(new HardNameDependency(
-        "com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
     scope.recordResolved(unresolved, resolved, transitiveDependencies);
-    assertThat(scope.isResolutionComplete()).isFalse();
+    assertThat(scope.isResolutionComplete()).isTrue();
     assertThat(scope.getResolutions()).hasSize(1);
   }
 
