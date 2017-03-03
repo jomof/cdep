@@ -79,6 +79,8 @@ public class FindModuleFunctionTableBuilder {
                 dependencies.add(coordinate);
             }
         }
+
+
         if (resolved.cdepManifestYml.android != null) {
             supported += "'Android' ";
             cases.put("Android",
@@ -196,7 +198,11 @@ public class FindModuleFunctionTableBuilder {
                 androids.size()));
         }
         AndroidArchive android = androids.get(0);
-        ModuleArchive archives[] = new ModuleArchive[1];
+        int archiveCount = 1;
+        if (resolved.cdepManifestYml.archive != null) {
+            ++archiveCount;
+        }
+        ModuleArchive archives[] = new ModuleArchive[archiveCount];
         archives[0] = new ModuleArchive(
             resolved.remote.toURI()
                 .resolve(".")
@@ -204,7 +210,17 @@ public class FindModuleFunctionTableBuilder {
                 .toURL(),
             android.sha256,
             android.size);
-        String include = android.include;
+
+        if (resolved.cdepManifestYml.archive != null) {
+            // This is the global zip file from the top level of the manifest.
+            archives[1] = new ModuleArchive(
+                resolved.remote.toURI()
+                    .resolve(".")
+                    .resolve(resolved.cdepManifestYml.archive.file)
+                    .toURL(),
+                resolved.cdepManifestYml.archive.sha256,
+                resolved.cdepManifestYml.archive.size);
+        }
 
         Map<String, Expression> cases = new HashMap<>();
         String supported = "";
@@ -217,7 +233,7 @@ public class FindModuleFunctionTableBuilder {
             cases.put(abi, new FoundModuleExpression(
                 resolved.cdepManifestYml.coordinate,
                 archives,
-                include,
+                android.include,
                 android.lib,
                 dependencies));
         }
