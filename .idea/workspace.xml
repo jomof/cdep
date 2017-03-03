@@ -88,20 +88,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResolutionScope.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ResolutionScope.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+            <state relative-caret-position="594">
+              <caret line="51" column="5" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
               <folding>
-                <element signature="e#1816#1817#0" expanded="true" />
-                <element signature="e#1855#1856#0" expanded="true" />
-                <element signature="e#4030#4031#0" expanded="true" />
-                <element signature="e#4064#4065#0" expanded="true" />
-                <element signature="e#4193#4194#0" expanded="true" />
-                <element signature="e#4228#4229#0" expanded="true" />
-                <element signature="e#4359#4360#0" expanded="true" />
-                <element signature="e#4393#4394#0" expanded="true" />
+                <element signature="e#1804#1805#0" expanded="true" />
+                <element signature="e#1843#1844#0" expanded="true" />
+                <element signature="e#3997#3998#0" expanded="true" />
+                <element signature="e#4035#4036#0" expanded="true" />
+                <element signature="e#4172#4173#0" expanded="true" />
+                <element signature="e#4211#4212#0" expanded="true" />
+                <element signature="e#4350#4351#0" expanded="true" />
+                <element signature="e#4388#4389#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -137,11 +137,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestResolutionScope.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TestResolutionScope.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestResolutionScope.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="90" column="51" selection-start-line="90" selection-start-column="51" selection-end-line="90" selection-end-column="51" />
+            <state relative-caret-position="119">
+              <caret line="37" column="69" selection-start-line="37" selection-start-column="69" selection-end-line="37" selection-end-column="69" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -947,8 +947,8 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/HardNameDependency.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
-        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestResolutionScope.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java" />
+        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestResolutionScope.java" />
       </list>
     </option>
   </component>
@@ -1865,8 +1865,8 @@
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="JUnit.All in cdep_test (1)" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.TestResolutionScope.testLocalPathResolution" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.TestResolutionScope" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.TestResolutionScope" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.TestResolutionScope.testLocalPathResolution" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.TestResolutionScope.testTransitiveResolutionWithDependencyAlsoRoot" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.TestCDep.unfindableLocalFile" />
       </list>
@@ -1885,13 +1885,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Compound artifact">
-      <created>1488075731349</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1488075731349</updated>
     </task>
     <task id="LOCAL-00040" summary="Compound artifact">
       <created>1488076175142</created>
@@ -2229,21 +2222,25 @@
       <option name="project" value="LOCAL" />
       <updated>1488575335147</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="100% line coverage for ResolutionScope">
+      <created>1488575781510</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1488575781510</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_cdep_test_(1) - 2017.03.03 at 13h 08m 13s.xml">
-      <configuration name="All in cdep_test (1)" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_cdep_test_(1) - 2017.03.03 at 13h 09m 54s.xml">
-      <configuration name="All in cdep_test (1)" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_cdep_test_(1) - 2017.03.03 at 13h 16m 08s.xml">
       <configuration name="All in cdep_test (1)" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestResolutionScope - 2017.03.03 at 13h 09m 24s.xml">
-      <configuration name="TestResolutionScope" configurationId="JUnit" />
+    <history-entry file="All_in_cdep_test_(1) - 2017.03.03 at 13h 19m 53s.xml">
+      <configuration name="All in cdep_test (1)" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep_test_(1) - 2017.03.03 at 13h 21m 12s.xml">
+      <configuration name="All in cdep_test (1)" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestResolutionScope - 2017.03.03 at 13h 11m 31s.xml">
       <configuration name="TestResolutionScope" configurationId="JUnit" />
@@ -2252,6 +2249,9 @@
       <configuration name="TestResolutionScope" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestResolutionScope - 2017.03.03 at 13h 13m 45s.xml">
+      <configuration name="TestResolutionScope" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestResolutionScope - 2017.03.03 at 13h 17m 53s.xml">
       <configuration name="TestResolutionScope" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestResolutionScope_testLocalPathResolution - 2017.03.03 at 13h 14m 10s.xml">
@@ -2375,7 +2375,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java</url>
-          <line>89</line>
+          <line>87</line>
           <properties />
           <option name="timeStamp" value="31" />
         </line-breakpoint>
@@ -2687,29 +2687,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestResolutionScope.java">
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="90" column="51" selection-start-line="90" selection-start-column="51" selection-end-line="90" selection-end-column="51" />
+        <state relative-caret-position="594">
+          <caret line="51" column="5" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#1804#1805#0" expanded="true" />
+            <element signature="e#1843#1844#0" expanded="true" />
+            <element signature="e#3997#3998#0" expanded="true" />
+            <element signature="e#4035#4036#0" expanded="true" />
+            <element signature="e#4172#4173#0" expanded="true" />
+            <element signature="e#4211#4212#0" expanded="true" />
+            <element signature="e#4350#4351#0" expanded="true" />
+            <element signature="e#4388#4389#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java">
+    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestResolutionScope.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+        <state relative-caret-position="119">
+          <caret line="37" column="69" selection-start-line="37" selection-start-column="69" selection-end-line="37" selection-end-column="69" />
           <folding>
-            <element signature="e#1816#1817#0" expanded="true" />
-            <element signature="e#1855#1856#0" expanded="true" />
-            <element signature="e#4030#4031#0" expanded="true" />
-            <element signature="e#4064#4065#0" expanded="true" />
-            <element signature="e#4193#4194#0" expanded="true" />
-            <element signature="e#4228#4229#0" expanded="true" />
-            <element signature="e#4359#4360#0" expanded="true" />
-            <element signature="e#4393#4394#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

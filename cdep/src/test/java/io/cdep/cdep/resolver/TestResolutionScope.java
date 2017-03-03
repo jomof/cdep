@@ -34,7 +34,8 @@ public class TestResolutionScope {
     Coordinate coordinate = CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7");
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
-    scope.recordResolved(unresolved, resolved, new ArrayList<>());
+    List<HardNameDependency> transitiveDependencies = new ArrayList<>();
+    scope.recordResolved(unresolved, resolved, transitiveDependencies);
     assertThat(scope.isResolutionComplete()).isTrue();
   }
 

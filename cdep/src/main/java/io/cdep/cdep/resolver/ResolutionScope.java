@@ -43,9 +43,9 @@ public class ResolutionScope {
    */
   private void addUnresolved(SoftNameDependency softname) {
     if (!resolved.containsKey(softname.compile)) {
-            unresolved.put(softname.compile, softname);
-        }
+      unresolved.put(softname.compile, softname);
     }
+  }
 
   /**
    * Return true if there are no more references to resolve.
@@ -77,10 +77,8 @@ public class ResolutionScope {
      * @param resolved the resolved manifest and hard name.
      * @param transitiveDependencies any new dependencies that were discovered during resolution
      */
-    public void recordResolved(
-            SoftNameDependency softname,
-        ResolvedManifest resolved,
-            List<HardNameDependency> transitiveDependencies) {
+    public void recordResolved(SoftNameDependency softname, ResolvedManifest resolved,
+        List<HardNameDependency> transitiveDependencies) {
       assert !isResolved(resolved.cdepManifestYml.coordinate.toString());
 
       this.resolved.put(resolved.cdepManifestYml.coordinate.toString(),
@@ -134,6 +132,9 @@ public class ResolutionScope {
 
   }
 
+  /**
+   * A resolution that indicates a manifest was found.
+   */
   public static class FoundManifestResolution extends Resolution {
 
     final public ResolvedManifest resolved;
