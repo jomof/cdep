@@ -17,22 +17,21 @@ package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.service.ResolvedManifest;
-import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.yaml.snakeyaml.error.YAMLException;
 
 public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
   final private Pattern pattern = Pattern.compile("^https://(.*)/(.*)/(.*)/releases/download/(.*)/cdep-manifest(.*).yml$");
 
   @Override
-  public ResolvedManifest resolve(GeneratorEnvironment environment,
-                                  SoftNameDependency dependency, boolean forceRedownload) throws IOException {
+  public ResolvedManifest resolve(ManifestProvider environment,
+      SoftNameDependency dependency, boolean forceRedownload)
+      throws IOException, NoSuchAlgorithmException {
     String coordinate = dependency.compile;
     assert coordinate != null;
     Matcher match = pattern.matcher(coordinate);
@@ -58,18 +57,12 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
       }
 
       Coordinate provisionalCoordinate = new Coordinate(groupId, artifactId, version);
-      String manifestContent = environment.tryGetLocalDownloadedFileText(
+      CDepManifestYml cdepManifestYml = environment.tryGetManifest(
           provisionalCoordinate,
-          new URL(coordinate), forceRedownload);
-      if (manifestContent == null) {
+          new URL(coordinate));
+      if (cdepManifestYml == null) {
         // The URL didn't exist.
         return null;
-      }
-      CDepManifestYml cdepManifestYml;
-      try {
-        cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(manifestContent);
-      } catch (YAMLException e) {
-        throw new RuntimeException(String.format("Parsing '%s'", coordinate), e);
       }
 
       // Ensure that the manifest coordinate agrees with the url provided

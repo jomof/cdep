@@ -16,7 +16,6 @@
 package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.ast.service.ResolvedManifest;
-import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
@@ -28,7 +27,7 @@ import java.nio.file.Paths;
 public class LocalFilePathCoordinateResolver extends CoordinateResolver {
 
     @Override
-    public ResolvedManifest resolve(GeneratorEnvironment environment, SoftNameDependency dependency,
+    public ResolvedManifest resolve(ManifestProvider environment, SoftNameDependency dependency,
         boolean forceRedownload)
         throws IOException {
         String coordinate = dependency.compile;

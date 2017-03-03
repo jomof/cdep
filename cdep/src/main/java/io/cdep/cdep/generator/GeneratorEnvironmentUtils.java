@@ -21,7 +21,6 @@ import io.cdep.cdep.ast.finder.ModuleArchive;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.utils.HashUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -47,7 +46,7 @@ public class GeneratorEnvironmentUtils {
             for (ModuleArchive archive : foundModule.archives) {
 
                 File local = environment.tryGetLocalDownloadedFile(
-                    foundModule.coordinate, archive.file, forceRedownload);
+                    foundModule.coordinate, archive.file);
                 if (local == null) {
                     throw new RuntimeException(
                         String.format("Resolved archive '%s' didn't exist", archive.file));
@@ -59,7 +58,7 @@ public class GeneratorEnvironmentUtils {
                     if (!forceRedownload) {
                         forceUnzip = true;
                         local = environment.tryGetLocalDownloadedFile(
-                            foundModule.coordinate, archive.file, true /* forceRedownload */);
+                            foundModule.coordinate, archive.file);
                         if (local == null) {
                             throw new RuntimeException(
                                 String.format("Resolved archive '%s' didn't exist", archive.file));

@@ -23,6 +23,7 @@ import io.cdep.cdep.generator.CMakeGenerator;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
 import io.cdep.cdep.resolver.ResolutionScope;
+import io.cdep.cdep.resolver.ResolutionScopeResolver;
 import io.cdep.cdep.utils.CDepYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.BuildSystem;
@@ -99,7 +100,7 @@ public class CDep {
     private boolean handleRedownload(String[] args)
         throws IOException, URISyntaxException, NoSuchAlgorithmException {
         if (args.length > 0 && "redownload".equals(args[0])) {
-            GeneratorEnvironment environment = getGeneratorEnvironment();
+            GeneratorEnvironment environment = getGeneratorEnvironment(true);
             FunctionTableExpression table = getFunctionTableExpression(environment, true);
 
             // Download and unzip archives.
@@ -117,7 +118,7 @@ public class CDep {
     private boolean handleCreate(String args[]) throws IOException, NoSuchAlgorithmException, URISyntaxException {
         if (args.length > 0 && "create".equals(args[0])) {
             if (args.length > 1 && "hashes".equals(args[1])) {
-                GeneratorEnvironment environment = getGeneratorEnvironment();
+                GeneratorEnvironment environment = getGeneratorEnvironment(false);
                 getFunctionTableExpression(environment, false);
                 environment.writeCDepSHA256File();
                 out.printf("Created cdep.sha256\n");
@@ -132,20 +133,21 @@ public class CDep {
     private boolean handleShow(String args[]) throws IOException, NoSuchAlgorithmException {
         if (args.length > 0 && "show".equals(args[0])) {
             if (args.length > 1 && "folders".equals(args[1])) {
-                GeneratorEnvironment environment = getGeneratorEnvironment();
+                GeneratorEnvironment environment = getGeneratorEnvironment(false);
                 out.printf("Downloads: %s\n", environment.downloadFolder.getAbsolutePath());
                 out.printf("Exploded: %s\n", environment.unzippedArchivesFolder.getAbsolutePath());
                 out.printf("Modules: %s\n", environment.modulesFolder.getAbsolutePath());
                 return true;
             }
             if (args.length > 1 && "local".equals(args[1])) {
-                GeneratorEnvironment environment = getGeneratorEnvironment();
+                GeneratorEnvironment environment = getGeneratorEnvironment(false);
                 if (args.length == 2) {
                     out.printf("Usage: cdep show local %s\n", EXAMPLE_COORDINATE);
                     return true;
                 }
                 SoftNameDependency dependency = new SoftNameDependency(args[2]);
-                ResolvedManifest resolved = environment.resolveAny(dependency, false);
+                ResolutionScopeResolver resolver = new ResolutionScopeResolver(environment);
+                ResolvedManifest resolved = resolver.resolveAny(dependency, false);
                 if (resolved == null) {
                     out.printf("Could not resolve manifest coordinate %s\n", args[2]);
                     return true;
@@ -218,7 +220,7 @@ public class CDep {
             out.printf("Nothing to do. Add dependencies to %s\n", configFile);
             return;
         }
-        GeneratorEnvironment environment = getGeneratorEnvironment();
+        GeneratorEnvironment environment = getGeneratorEnvironment(false);
         environment.readCDepSHA256File();
         FunctionTableExpression table = getFunctionTableExpression(environment, false);
 
@@ -238,7 +240,8 @@ public class CDep {
             throws IOException, URISyntaxException, NoSuchAlgorithmException {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         ResolutionScope scope = new ResolutionScope(config.dependencies);
-        environment.resolveAll(scope, forceRedownload);
+        ResolutionScopeResolver resolver = new ResolutionScopeResolver(environment);
+        resolver.resolveAll(scope, forceRedownload);
         for (ResolutionScope.Resolution resolved : scope.getResolutions()) {
             if (resolved instanceof  ResolutionScope.FoundManifestResolution) {
                 builder.addManifest(((ResolutionScope.FoundManifestResolution) resolved).resolved);
@@ -248,8 +251,8 @@ public class CDep {
         return builder.build();
     }
 
-    private GeneratorEnvironment getGeneratorEnvironment() {
-        return new GeneratorEnvironment(out, workingFolder, downloadFolder);
+    private GeneratorEnvironment getGeneratorEnvironment(boolean forceRedownload) {
+        return new GeneratorEnvironment(out, workingFolder, downloadFolder, forceRedownload);
     }
 
     private boolean handleReadCDepYml() throws IOException {

@@ -21,7 +21,6 @@ import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import java.io.File;
-import java.io.IOException;
 import org.junit.Test;
 
 public class TestGithubStyleUrlCoordinateResolver {
@@ -29,10 +28,11 @@ public class TestGithubStyleUrlCoordinateResolver {
   final private GeneratorEnvironment environment = new GeneratorEnvironment(
       System.out,
       new File("./test-files/TestFindModuleFunctionTableBuilder/working"),
-      null);
+      null,
+      false);
 
   @Test
-  public void testSimple() throws IOException {
+  public void testSimple() throws Exception {
     ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver()
         .resolve(environment, new SoftNameDependency(
                 "https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"),
@@ -44,7 +44,7 @@ public class TestGithubStyleUrlCoordinateResolver {
   }
 
   @Test
-  public void testCompound() throws IOException {
+  public void testCompound() throws Exception {
     ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver()
         .resolve(environment, new SoftNameDependency(
                 "https://github.com/jomof/firebase/releases/download/2.1.3-rev5/cdep-manifest-database.yml"),
@@ -56,7 +56,7 @@ public class TestGithubStyleUrlCoordinateResolver {
   }
 
   @Test
-  public void testMissing() throws IOException {
+  public void testMissing() throws Exception {
     // Missing URL should return null because the coordinate may be resolvable in other ways.
     ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver()
         .resolve(environment, new SoftNameDependency(

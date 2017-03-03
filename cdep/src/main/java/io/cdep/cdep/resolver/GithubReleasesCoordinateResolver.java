@@ -18,20 +18,21 @@ package io.cdep.cdep.resolver;
 import static java.util.regex.Pattern.compile;
 
 import io.cdep.cdep.ast.service.ResolvedManifest;
-import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GithubReleasesCoordinateResolver extends CoordinateResolver {
 
     final private Pattern pattern = compile("^com\\.github\\.(.*):(.*):(.*)$");
-  final private GithubStyleUrlCoordinateResolver urlResolver = new GithubStyleUrlCoordinateResolver();
+    final private GithubStyleUrlCoordinateResolver urlResolver = new GithubStyleUrlCoordinateResolver();
 
     @Override
-    public ResolvedManifest resolve(GeneratorEnvironment environment,
-                                    SoftNameDependency dependency, boolean forceRedownload) throws IOException {
+    public ResolvedManifest resolve(ManifestProvider environment,
+        SoftNameDependency dependency, boolean forceRedownload)
+        throws IOException, NoSuchAlgorithmException {
         String coordinate = dependency.compile;
         assert coordinate != null;
         Matcher match = pattern.matcher(coordinate);

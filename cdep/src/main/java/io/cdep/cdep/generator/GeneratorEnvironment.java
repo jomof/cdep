@@ -15,24 +15,14 @@
 */
 package io.cdep.cdep.generator;
 
-import static io.cdep.cdep.resolver.ResolutionScope.UNPARSEABLE_RESOLUTION;
-import static io.cdep.cdep.resolver.ResolutionScope.UNRESOLVEABLE_RESOLUTION;
 
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.service.ResolvedManifest;
-import io.cdep.cdep.resolver.CoordinateResolver;
-import io.cdep.cdep.resolver.GithubReleasesCoordinateResolver;
-import io.cdep.cdep.resolver.GithubStyleUrlCoordinateResolver;
-import io.cdep.cdep.resolver.LocalFilePathCoordinateResolver;
-import io.cdep.cdep.resolver.ResolutionScope;
-import io.cdep.cdep.resolver.ResolutionScope.FoundManifestResolution;
-import io.cdep.cdep.resolver.ResolutionScope.Resolution;
+import io.cdep.cdep.resolver.ManifestProvider;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.CDepSHA256Utils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.utils.HashUtils;
-import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
 import java.io.File;
@@ -47,16 +37,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import org.yaml.snakeyaml.error.YAMLException;
 
-public class GeneratorEnvironment {
-
-    final private static CoordinateResolver resolvers[] = new CoordinateResolver[]{
-        new GithubStyleUrlCoordinateResolver(),
-            new GithubReleasesCoordinateResolver(),
-        new LocalFilePathCoordinateResolver()
-    };
+public class GeneratorEnvironment implements ManifestProvider {
 
     final public PrintStream out;
     final public File downloadFolder;
@@ -65,11 +49,13 @@ public class GeneratorEnvironment {
     final public File examplesFolder;
     final public File workingFolder;
     final public Map<String, String> cdepSha256Hashes = new HashMap<>();
+    final public boolean forceRedownload;
 
     public GeneratorEnvironment(
             PrintStream out,
             File workingFolder,
-            File userFolder) {
+        File userFolder,
+        boolean forceRedownload) {
         if (userFolder == null) {
             userFolder = new File(System.getProperty("user.home"));
         }
@@ -79,6 +65,7 @@ public class GeneratorEnvironment {
         this.unzippedArchivesFolder = new File(userFolder, ".cdep/exploded").getAbsoluteFile();
         this.modulesFolder = new File(workingFolder, ".cdep/modules").getAbsoluteFile();
         this.examplesFolder = new File(workingFolder, ".cdep/examples").getAbsoluteFile();
+        this.forceRedownload = forceRedownload;
     }
 
     private static InputStream tryGetUrlInputStream(URL url) throws IOException {
@@ -115,8 +102,7 @@ public class GeneratorEnvironment {
 
     public File tryGetLocalDownloadedFile(
             Coordinate coordinate,
-            URL remoteArchive,
-            boolean forceRedownload)
+        URL remoteArchive)
             throws IOException {
         File local = getLocalDownloadFilename(coordinate, remoteArchive);
         if (local.isFile() && !forceRedownload) {
@@ -142,17 +128,31 @@ public class GeneratorEnvironment {
         return local;
     }
 
-    public String tryGetLocalDownloadedFileText(
+    public CDepManifestYml tryGetManifest(
             Coordinate coordinate,
-            URL remoteArchive,
-            boolean forceRedownload)
-            throws IOException {
-        File file = tryGetLocalDownloadedFile(coordinate, remoteArchive, forceRedownload);
+        URL remoteArchive) throws IOException, NoSuchAlgorithmException {
+        File file = tryGetLocalDownloadedFile(coordinate, remoteArchive);
         if (file == null) {
             // The remote didn't exist. Return null;
             return null;
         }
-        return FileUtils.readAllText(file);
+        String text = FileUtils.readAllText(file);
+        CDepManifestYml cdepManifestYml;
+        try {
+            cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(text);
+        } catch (YAMLException e) {
+            throw new RuntimeException(String.format("Parsing '%s'", coordinate), e);
+        }
+        String sha256 = HashUtils.getSHA256OfFile(file);
+        String priorSha256 = this.cdepSha256Hashes.get(cdepManifestYml.coordinate.toString());
+        if (priorSha256 != null && !priorSha256.equals(sha256)) {
+            throw new RuntimeException(String.format(
+                "SHA256 of cdep-manifest.yml for package '%s' does not agree with value in " +
+                    "cdep.sha256. Something changed.",
+                cdepManifestYml.coordinate));
+        }
+        this.cdepSha256Hashes.put(cdepManifestYml.coordinate.toString(), sha256);
+        return cdepManifestYml;
     }
 
     public File getLocalUnzipFolder(Coordinate coordinate, URL remoteArchive) {
@@ -202,85 +202,5 @@ public class GeneratorEnvironment {
     private String getUrlBaseName(URL url) {
         String urlString = url.getFile();
         return urlString.substring(urlString.lastIndexOf('/') + 1, urlString.length());
-    }
-
-    public void resolveAll(ResolutionScope scope, boolean forceRedownload)
-            throws IOException, NoSuchAlgorithmException {
-
-        // Progressively resolve dependencies
-        while (!scope.isResolutionComplete()) {
-            for (SoftNameDependency softname : scope.getUnresolvedReferences()) {
-                ResolvedManifest resolved = resolveAny(softname, forceRedownload);
-                if (resolved == null) {
-                    scope.recordUnresolvable(softname);
-                } else {
-                    List<HardNameDependency> transitive =
-                        CDepManifestYmlUtils.getTransitiveDependencies(resolved.cdepManifestYml);
-                    scope.recordResolved(softname, resolved, transitive);
-                }
-            }
-        }
-
-        // Throw some exceptions if we didn't resolve something.
-        for (String softname : scope.getResolvedNames()) {
-            Resolution resolution = scope.getResolution(softname);
-            if (resolution instanceof FoundManifestResolution) {
-                continue;
-            }
-
-            // The resolution was something besides success.
-            if (resolution == UNRESOLVEABLE_RESOLUTION) {
-                throw new RuntimeException(String.format(
-                    "Could not resolve '%s'. It doesn't exist.", softname));
-            }
-
-            if (resolution == UNPARSEABLE_RESOLUTION) {
-                throw new RuntimeException(String.format(
-                    "Could not resolve '%s'. It didn't look like a coordinate.", softname));
-            }
-
-        }
-    }
-
-    public ResolvedManifest resolveAny(
-            SoftNameDependency dependency,
-            boolean forceRedownload) throws IOException, NoSuchAlgorithmException {
-        ResolvedManifest resolved = null;
-        for (CoordinateResolver resolver : resolvers) {
-            ResolvedManifest attempt = resolver.resolve(this, dependency, forceRedownload);
-            if (attempt != null) {
-                if (resolved != null) {
-                    throw new RuntimeException("Multiple resolvers matched coordinate:\n"
-                            + dependency);
-                }
-                resolved = attempt;
-            }
-        }
-        if (resolved != null) {
-            CDepManifestYmlUtils.checkManifestSanity(resolved.cdepManifestYml);
-            File local = getLocalDownloadFilename(resolved.cdepManifestYml.coordinate,
-                    resolved.remote);
-            if (!local.exists()) {
-                // Copy the file local if the resolver didn't
-                local = tryGetLocalDownloadedFile(
-                    resolved.cdepManifestYml.coordinate,
-                    resolved.remote,
-                    forceRedownload);
-                if (local == null) {
-                    throw new RuntimeException(
-                        String.format("Remote '%s' didn't exist", resolved.remote));
-                }
-            }
-            String sha256 = HashUtils.getSHA256OfFile(local);
-            String priorSha256 = this.cdepSha256Hashes.get(resolved.cdepManifestYml.coordinate.toString());
-            if (priorSha256 != null && !priorSha256.equals(sha256)) {
-                throw new RuntimeException(String.format(
-                        "SHA256 of cdep-manifest.yml for package '%s' does not agree with value in " +
-                                "cdep.sha256. Something changed.",
-                        resolved.cdepManifestYml.coordinate));
-            }
-            this.cdepSha256Hashes.put(resolved.cdepManifestYml.coordinate.toString(), sha256);
-        }
-        return resolved;
     }
 }

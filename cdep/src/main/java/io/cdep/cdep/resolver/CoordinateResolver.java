@@ -16,14 +16,14 @@
 package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.ast.service.ResolvedManifest;
-import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 public abstract class CoordinateResolver {
 
     public abstract ResolvedManifest resolve(
-        GeneratorEnvironment environment,
+        ManifestProvider environment,
         SoftNameDependency dependency,
-        boolean forceRedownload) throws IOException;
+        boolean forceRedownload) throws IOException, NoSuchAlgorithmException;
 }
