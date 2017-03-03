@@ -38,7 +38,7 @@ import java.util.Set;
 
 public class CDep {
 
-    final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev10";
+    final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev18";
     private PrintStream out = System.out;
     private File workingFolder = new File(".");
     private File downloadFolder = null;
