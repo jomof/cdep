@@ -31,13 +31,13 @@ public class ResolutionScopeResolver {
     this.manifestProvider = manifestProvider;
   }
 
-  public void resolveAll(ResolutionScope scope, boolean forceRedownload)
+  public void resolveAll(ResolutionScope scope)
       throws IOException, NoSuchAlgorithmException {
 
     // Progressively resolve dependencies
     while (!scope.isResolutionComplete()) {
       for (SoftNameDependency softname : scope.getUnresolvedReferences()) {
-        ResolvedManifest resolved = resolveAny(softname, forceRedownload);
+        ResolvedManifest resolved = resolveAny(softname);
         if (resolved == null) {
           scope.recordUnresolvable(softname);
         } else {
@@ -68,11 +68,11 @@ public class ResolutionScopeResolver {
     }
   }
 
-  public ResolvedManifest resolveAny(SoftNameDependency dependency, boolean forceRedownload)
+  public ResolvedManifest resolveAny(SoftNameDependency dependency)
       throws IOException, NoSuchAlgorithmException {
     ResolvedManifest resolved = null;
     for (CoordinateResolver resolver : resolvers) {
-      ResolvedManifest attempt = resolver.resolve(manifestProvider, dependency, forceRedownload);
+      ResolvedManifest attempt = resolver.resolve(manifestProvider, dependency);
       if (attempt != null) {
         if (resolved != null) {
           throw new RuntimeException("Multiple resolvers matched coordinate:\n" + dependency);

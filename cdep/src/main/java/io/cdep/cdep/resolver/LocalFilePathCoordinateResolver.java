@@ -27,8 +27,7 @@ import java.nio.file.Paths;
 public class LocalFilePathCoordinateResolver extends CoordinateResolver {
 
     @Override
-    public ResolvedManifest resolve(ManifestProvider environment, SoftNameDependency dependency,
-        boolean forceRedownload)
+    public ResolvedManifest resolve(ManifestProvider environment, SoftNameDependency dependency)
         throws IOException {
         String coordinate = dependency.compile;
         assert coordinate != null;

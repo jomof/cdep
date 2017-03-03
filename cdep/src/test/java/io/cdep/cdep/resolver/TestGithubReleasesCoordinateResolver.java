@@ -19,8 +19,7 @@ public class TestGithubReleasesCoordinateResolver {
   public void testCompound() throws Exception {
     ResolvedManifest resolved = new GithubReleasesCoordinateResolver()
         .resolve(environment, new SoftNameDependency(
-                "com.github.jomof:firebase/database:2.1.3-rev5"),
-            false);
+            "com.github.jomof:firebase/database:2.1.3-rev5"));
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("firebase/database");
     assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("2.1.3-rev5");

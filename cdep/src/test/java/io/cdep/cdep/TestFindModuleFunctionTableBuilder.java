@@ -43,8 +43,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testSimple() throws Exception {
         ResolvedManifest resolved = resolver.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"),
-            false);
+            "https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
         assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
         assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
         assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.81");
@@ -65,8 +64,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testCheckPlatformSwitch() throws Exception {
         ResolvedManifest resolved = resolver.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"),
-            false);
+            "https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
         assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
         assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
         assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.81");
@@ -98,8 +96,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testArchivePathIsFull() throws Exception {
         ResolvedManifest resolved = resolver.resolveAny(createReference(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"),
-            false);
+            "https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
@@ -118,8 +115,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testFoundIncludeAndLib() throws Exception {
         ResolvedManifest resolved = resolver.resolveAny(createReference(
-            "https://github.com/jomof/sqlite/releases/download/3.16.2-rev25/cdep-manifest.yml"),
-            false);
+            "https://github.com/jomof/sqlite/releases/download/3.16.2-rev25/cdep-manifest.yml"));
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
@@ -137,8 +133,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testHeaderOnly() throws Exception {
         ResolvedManifest resolved = resolver.resolveAny(createReference(
-            "https://github.com/jomof/boost/releases/download/1.0.63-rev18/cdep-manifest.yml"),
-            false);
+            "https://github.com/jomof/boost/releases/download/1.0.63-rev18/cdep-manifest.yml"));
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
@@ -159,7 +154,7 @@ public class TestFindModuleFunctionTableBuilder {
     @Test
     public void testHeaderOnlyGitHubCoordinate() throws Exception {
         ResolvedManifest resolved = resolver.resolveAny(createReference(
-            "com.github.jomof:boost:1.0.63-rev18"), false);
+            "com.github.jomof:boost:1.0.63-rev18"));
 
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);

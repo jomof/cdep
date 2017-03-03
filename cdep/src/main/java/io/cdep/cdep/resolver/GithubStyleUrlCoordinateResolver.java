@@ -30,7 +30,7 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
 
   @Override
   public ResolvedManifest resolve(ManifestProvider environment,
-      SoftNameDependency dependency, boolean forceRedownload)
+      SoftNameDependency dependency)
       throws IOException, NoSuchAlgorithmException {
     String coordinate = dependency.compile;
     assert coordinate != null;

@@ -31,7 +31,7 @@ public class GithubReleasesCoordinateResolver extends CoordinateResolver {
 
     @Override
     public ResolvedManifest resolve(ManifestProvider environment,
-        SoftNameDependency dependency, boolean forceRedownload)
+        SoftNameDependency dependency)
         throws IOException, NoSuchAlgorithmException {
         String coordinate = dependency.compile;
         assert coordinate != null;
@@ -52,7 +52,7 @@ public class GithubReleasesCoordinateResolver extends CoordinateResolver {
                 artifactId,
                 version,
                 subArtifact);
-            return urlResolver.resolve(environment, new SoftNameDependency(manifest), forceRedownload);
+            return urlResolver.resolve(environment, new SoftNameDependency(manifest));
         }
         return null;
     }

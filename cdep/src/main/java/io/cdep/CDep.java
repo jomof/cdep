@@ -101,7 +101,7 @@ public class CDep {
         throws IOException, URISyntaxException, NoSuchAlgorithmException {
         if (args.length > 0 && "redownload".equals(args[0])) {
             GeneratorEnvironment environment = getGeneratorEnvironment(true);
-            FunctionTableExpression table = getFunctionTableExpression(environment, true);
+            FunctionTableExpression table = getFunctionTableExpression(environment);
 
             // Download and unzip archives.
             GeneratorEnvironmentUtils.downloadReferencedModules(
@@ -119,7 +119,7 @@ public class CDep {
         if (args.length > 0 && "create".equals(args[0])) {
             if (args.length > 1 && "hashes".equals(args[1])) {
                 GeneratorEnvironment environment = getGeneratorEnvironment(false);
-                getFunctionTableExpression(environment, false);
+                getFunctionTableExpression(environment);
                 environment.writeCDepSHA256File();
                 out.printf("Created cdep.sha256\n");
                 return true;
@@ -147,7 +147,7 @@ public class CDep {
                 }
                 SoftNameDependency dependency = new SoftNameDependency(args[2]);
                 ResolutionScopeResolver resolver = new ResolutionScopeResolver(environment);
-                ResolvedManifest resolved = resolver.resolveAny(dependency, false);
+                ResolvedManifest resolved = resolver.resolveAny(dependency);
                 if (resolved == null) {
                     out.printf("Could not resolve manifest coordinate %s\n", args[2]);
                     return true;
@@ -222,7 +222,7 @@ public class CDep {
         }
         GeneratorEnvironment environment = getGeneratorEnvironment(false);
         environment.readCDepSHA256File();
-        FunctionTableExpression table = getFunctionTableExpression(environment, false);
+        FunctionTableExpression table = getFunctionTableExpression(environment);
 
         // Download and unzip archives.
         GeneratorEnvironmentUtils.downloadReferencedModules(
@@ -234,14 +234,12 @@ public class CDep {
         environment.writeCDepSHA256File();
     }
 
-    private FunctionTableExpression getFunctionTableExpression(
-            GeneratorEnvironment environment,
-            boolean forceRedownload)
+    private FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment)
             throws IOException, URISyntaxException, NoSuchAlgorithmException {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         ResolutionScope scope = new ResolutionScope(config.dependencies);
         ResolutionScopeResolver resolver = new ResolutionScopeResolver(environment);
-        resolver.resolveAll(scope, forceRedownload);
+        resolver.resolveAll(scope);
         for (ResolutionScope.Resolution resolved : scope.getResolutions()) {
             if (resolved instanceof  ResolutionScope.FoundManifestResolution) {
                 builder.addManifest(((ResolutionScope.FoundManifestResolution) resolved).resolved);

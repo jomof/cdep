@@ -24,6 +24,5 @@ public abstract class CoordinateResolver {
 
     public abstract ResolvedManifest resolve(
         ManifestProvider environment,
-        SoftNameDependency dependency,
-        boolean forceRedownload) throws IOException, NoSuchAlgorithmException;
+        SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException;
 }
