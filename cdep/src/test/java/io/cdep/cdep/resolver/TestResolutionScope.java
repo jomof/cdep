@@ -123,7 +123,6 @@ public class TestResolutionScope {
     assertThat(scope.isResolutionComplete()).isFalse();
     assertThat(scope.getUnresolvedReferences()).hasSize(2);
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
-    assertThat(unresolved.compile).isEqualTo("com.github.jomof:firebase/admob:2.1.3-rev7");
 
     Coordinate coordinate = CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7");
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
