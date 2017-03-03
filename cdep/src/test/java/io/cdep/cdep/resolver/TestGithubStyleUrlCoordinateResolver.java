@@ -15,17 +15,16 @@
 */
 package io.cdep.cdep.resolver;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import org.junit.Test;
-
 import java.io.File;
 import java.io.IOException;
+import org.junit.Test;
 
-import static com.google.common.truth.Truth.assertThat;
-
-public class TestGithubStyleUrlResolver {
+public class TestGithubStyleUrlCoordinateResolver {
 
   final private GeneratorEnvironment environment = new GeneratorEnvironment(
       System.out,
@@ -34,7 +33,7 @@ public class TestGithubStyleUrlResolver {
 
   @Test
   public void testSimple() throws IOException {
-    ResolvedManifest resolved = new GithubStyleUrlResolver()
+    ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver()
         .resolve(environment, new SoftNameDependency(
                 "https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"),
             false);
@@ -46,7 +45,7 @@ public class TestGithubStyleUrlResolver {
 
   @Test
   public void testCompound() throws IOException {
-    ResolvedManifest resolved = new GithubStyleUrlResolver()
+    ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver()
         .resolve(environment, new SoftNameDependency(
                 "https://github.com/jomof/firebase/releases/download/2.1.3-rev5/cdep-manifest-database.yml"),
             false);
@@ -59,7 +58,7 @@ public class TestGithubStyleUrlResolver {
   @Test
   public void testMissing() throws IOException {
     // Missing URL should return null because the coordinate may be resolvable in other ways.
-    ResolvedManifest resolved = new GithubStyleUrlResolver()
+    ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver()
         .resolve(environment, new SoftNameDependency(
                 "https://github.com/jomof/firebase/releases/download/0.0.0/cdep-manifest-appx.yml"),
             false);

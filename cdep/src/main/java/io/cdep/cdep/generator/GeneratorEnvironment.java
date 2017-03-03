@@ -15,27 +15,34 @@
 */
 package io.cdep.cdep.generator;
 
-import static io.cdep.cdep.generator.ResolutionScope.UNPARSEABLE_RESOLUTION;
-import static io.cdep.cdep.generator.ResolutionScope.UNRESOLVEABLE_RESOLUTION;
+import static io.cdep.cdep.resolver.ResolutionScope.UNPARSEABLE_RESOLUTION;
+import static io.cdep.cdep.resolver.ResolutionScope.UNRESOLVEABLE_RESOLUTION;
 
+import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.service.ResolvedManifest;
-import io.cdep.cdep.generator.ResolutionScope.FoundManifestResolution;
-import io.cdep.cdep.generator.ResolutionScope.Resolution;
+import io.cdep.cdep.resolver.CoordinateResolver;
 import io.cdep.cdep.resolver.GithubReleasesCoordinateResolver;
-import io.cdep.cdep.resolver.GithubStyleUrlResolver;
-import io.cdep.cdep.resolver.LocalFilePathResolver;
-import io.cdep.cdep.resolver.Resolver;
+import io.cdep.cdep.resolver.GithubStyleUrlCoordinateResolver;
+import io.cdep.cdep.resolver.LocalFilePathCoordinateResolver;
+import io.cdep.cdep.resolver.ResolutionScope;
+import io.cdep.cdep.resolver.ResolutionScope.FoundManifestResolution;
+import io.cdep.cdep.resolver.ResolutionScope.Resolution;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.CDepSHA256Utils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.utils.HashUtils;
-import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.NoSuchAlgorithmException;
@@ -45,10 +52,10 @@ import java.util.Map;
 
 public class GeneratorEnvironment {
 
-    final private static Resolver resolvers[] = new Resolver[]{
-            new GithubStyleUrlResolver(),
+    final private static CoordinateResolver resolvers[] = new CoordinateResolver[]{
+        new GithubStyleUrlCoordinateResolver(),
             new GithubReleasesCoordinateResolver(),
-            new LocalFilePathResolver()
+        new LocalFilePathCoordinateResolver()
     };
 
     final public PrintStream out;
@@ -201,29 +208,22 @@ public class GeneratorEnvironment {
             throws IOException, NoSuchAlgorithmException {
 
         // Progressively resolve dependencies
-        int iteration = 0;
-        int limit = scope.unresolved.size() * 100;
-        while(scope.unresolved.size() > 0) {
-            String unresolvedName = scope.unresolved.keySet().iterator().next();
-            SoftNameDependency softname = scope.unresolved.get(unresolvedName);
-            ResolvedManifest resolved = resolveAny(softname, forceRedownload);
-            if (resolved == null) {
-                scope.recordUnresolvable(softname);
-            } else {
-                List<HardNameDependency> transitive =
+        while (!scope.isResolutionComplete()) {
+            for (SoftNameDependency softname : scope.getUnresolvedReferences()) {
+                ResolvedManifest resolved = resolveAny(softname, forceRedownload);
+                if (resolved == null) {
+                    scope.recordUnresolvable(softname);
+                } else {
+                    List<HardNameDependency> transitive =
                         CDepManifestYmlUtils.getTransitiveDependencies(resolved.cdepManifestYml);
-                scope.recordResolved(unresolvedName, resolved, transitive);
+                    scope.recordResolved(softname, resolved, transitive);
+                }
             }
-            if (iteration > limit) {
-                // Stop after a reasonable amount of iterations.
-                break;
-            }
-            ++iteration;
         }
 
         // Throw some exceptions if we didn't resolve something.
-        for (String softname : scope.resolved.keySet()) {
-            Resolution resolution = scope.resolved.get(softname);
+        for (String softname : scope.getResolvedNames()) {
+            Resolution resolution = scope.getResolution(softname);
             if (resolution instanceof FoundManifestResolution) {
                 continue;
             }
@@ -246,7 +246,7 @@ public class GeneratorEnvironment {
             SoftNameDependency dependency,
             boolean forceRedownload) throws IOException, NoSuchAlgorithmException {
         ResolvedManifest resolved = null;
-        for (Resolver resolver : resolvers) {
+        for (CoordinateResolver resolver : resolvers) {
             ResolvedManifest attempt = resolver.resolve(this, dependency, forceRedownload);
             if (attempt != null) {
                 if (resolved != null) {

@@ -20,13 +20,12 @@ import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class LocalFilePathResolver extends Resolver {
+public class LocalFilePathCoordinateResolver extends CoordinateResolver {
 
     @Override
     public ResolvedManifest resolve(GeneratorEnvironment environment, SoftNameDependency dependency,

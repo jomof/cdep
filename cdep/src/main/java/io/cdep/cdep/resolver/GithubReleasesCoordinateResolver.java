@@ -15,20 +15,19 @@
 */
 package io.cdep.cdep.resolver;
 
+import static java.util.regex.Pattern.compile;
+
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.util.regex.Pattern.compile;
-
-public class GithubReleasesCoordinateResolver extends Resolver {
+public class GithubReleasesCoordinateResolver extends CoordinateResolver {
 
     final private Pattern pattern = compile("^com\\.github\\.(.*):(.*):(.*)$");
-    final private GithubStyleUrlResolver urlResolver = new GithubStyleUrlResolver();
+  final private GithubStyleUrlCoordinateResolver urlResolver = new GithubStyleUrlCoordinateResolver();
 
     @Override
     public ResolvedManifest resolve(GeneratorEnvironment environment,

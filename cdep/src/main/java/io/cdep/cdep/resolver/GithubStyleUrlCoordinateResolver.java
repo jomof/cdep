@@ -15,20 +15,19 @@
 */
 package io.cdep.cdep.resolver;
 
+import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import io.cdep.cdep.Coordinate;
-import org.yaml.snakeyaml.error.YAMLException;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.yaml.snakeyaml.error.YAMLException;
 
-public class GithubStyleUrlResolver extends Resolver {
+public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
   final private Pattern pattern = Pattern.compile("^https://(.*)/(.*)/(.*)/releases/download/(.*)/cdep-manifest(.*).yml$");
 
   @Override

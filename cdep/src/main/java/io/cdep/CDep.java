@@ -18,23 +18,24 @@ package io.cdep;
 import io.cdep.cdep.FindModuleFunctionTableBuilder;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.service.ResolvedManifest;
-import io.cdep.cdep.generator.*;
+import io.cdep.cdep.generator.CMakeExamplesGenerator;
+import io.cdep.cdep.generator.CMakeGenerator;
+import io.cdep.cdep.generator.GeneratorEnvironment;
+import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
+import io.cdep.cdep.resolver.ResolutionScope;
 import io.cdep.cdep.utils.CDepYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashSet;
-import java.util.Set;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 public class CDep {
 
@@ -238,7 +239,7 @@ public class CDep {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         ResolutionScope scope = new ResolutionScope(config.dependencies);
         environment.resolveAll(scope, forceRedownload);
-        for (ResolutionScope.Resolution resolved : scope.resolved.values()) {
+        for (ResolutionScope.Resolution resolved : scope.getResolutions()) {
             if (resolved instanceof  ResolutionScope.FoundManifestResolution) {
                 builder.addManifest(((ResolutionScope.FoundManifestResolution) resolved).resolved);
             }

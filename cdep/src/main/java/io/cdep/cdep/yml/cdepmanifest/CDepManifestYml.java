@@ -27,8 +27,17 @@ public class CDepManifestYml {
     final public Object linux;
     final public String example;
 
-    CDepManifestYml() {
+    public CDepManifestYml() {
         this.coordinate = null;
+        this.dependencies = null;
+        this.archive = null;
+        this.android = null;
+        this.linux = null;
+        this.example = null;
+    }
+
+    public CDepManifestYml(Coordinate coordinate) {
+        this.coordinate = coordinate;
         this.dependencies = null;
         this.archive = null;
         this.android = null;
