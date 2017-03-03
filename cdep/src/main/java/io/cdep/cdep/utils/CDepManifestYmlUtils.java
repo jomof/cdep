@@ -87,7 +87,7 @@ public class CDepManifestYmlUtils {
             if (archive.lib != null && !archive.lib.endsWith(".a")) {
                 // Android NDK team best practice recommendation is to use only static libraries.
                 throw new RuntimeException(
-                        String.format("Package '%s' has non-static android lib '%s'",
+                        String.format("Package '%s' has non-static android libraryName '%s'",
                             coordinate, archive.lib));
             }
             if (archive.runtime != null) {

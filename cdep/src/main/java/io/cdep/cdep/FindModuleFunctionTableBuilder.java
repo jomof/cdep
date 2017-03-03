@@ -209,7 +209,9 @@ public class FindModuleFunctionTableBuilder {
                 .resolve(android.file)
                 .toURL(),
             android.sha256,
-            android.size);
+            android.size,
+            android.include,
+            android.lib);
 
         if (resolved.cdepManifestYml.archive != null) {
             // This is the global zip file from the top level of the manifest.
@@ -219,7 +221,9 @@ public class FindModuleFunctionTableBuilder {
                     .resolve(resolved.cdepManifestYml.archive.file)
                     .toURL(),
                 resolved.cdepManifestYml.archive.sha256,
-                resolved.cdepManifestYml.archive.size);
+                resolved.cdepManifestYml.archive.size,
+                "include",
+                null);
         }
 
         Map<String, Expression> cases = new HashMap<>();
@@ -233,8 +237,6 @@ public class FindModuleFunctionTableBuilder {
             cases.put(abi, new FoundModuleExpression(
                 resolved.cdepManifestYml.coordinate,
                 archives,
-                android.include,
-                android.lib,
                 dependencies));
         }
 

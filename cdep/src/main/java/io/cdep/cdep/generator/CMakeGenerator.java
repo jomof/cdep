@@ -164,13 +164,13 @@ public class CMakeGenerator {
                 File exploded = environment
                     .getLocalUnzipFolder(specific.coordinate, archive.file);
                 sb.append(String.format("%starget_include_directories(${target} PRIVATE \"%s\")\n",
-                        prefix, new File(exploded, specific.include).toString().replace("\\", "\\\\")));
-                String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
+                        prefix, new File(exploded, archive.include).toString().replace("\\", "\\\\")));
+                String libFolder = new File(exploded, "libraryName").toString().replace("\\", "\\\\");
 
-                if (specific.libraryName != null && specific.libraryName.length() > 0) {
+                if (archive.libraryName != null && archive.libraryName.length() > 0) {
                     sb.append(String.format(
                             "%starget_link_libraries(${target} \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%s%s\")\n",
-                        prefix, libFolder, slash, slash, specific.libraryName));
+                        prefix, libFolder, slash, slash, archive.libraryName));
                 }
             }
             return;
