@@ -1,4 +1,4 @@
 entry: io.cdep.CDep
 dependencies:
-- https://github.com/jomof/cdep/releases/download/alpha-0.0.82/cdep-alpha-0.0.82.jar
+- https://github.com/jomof/cdep/releases/download/alpha-0.0.85/cdep-alpha-0.0.85.jar
 - https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.17/snakeyaml-1.17.jar
