@@ -23,7 +23,7 @@ import io.cdep.cdep.generator.CMakeGenerator;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
 import io.cdep.cdep.resolver.ResolutionScope;
-import io.cdep.cdep.resolver.ResolutionScopeResolver;
+import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.CDepYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.BuildSystem;
@@ -146,7 +146,7 @@ public class CDep {
                     return true;
                 }
                 SoftNameDependency dependency = new SoftNameDependency(args[2]);
-                ResolutionScopeResolver resolver = new ResolutionScopeResolver(environment);
+              Resolver resolver = new Resolver(environment);
                 ResolvedManifest resolved = resolver.resolveAny(dependency);
                 if (resolved == null) {
                     out.printf("Could not resolve manifest coordinate %s\n", args[2]);
@@ -238,7 +238,7 @@ public class CDep {
             throws IOException, URISyntaxException, NoSuchAlgorithmException {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         ResolutionScope scope = new ResolutionScope(config.dependencies);
-        ResolutionScopeResolver resolver = new ResolutionScopeResolver(environment);
+      Resolver resolver = new Resolver(environment);
         resolver.resolveAll(scope);
         for (ResolutionScope.Resolution resolved : scope.getResolutions()) {
             if (resolved instanceof  ResolutionScope.FoundManifestResolution) {

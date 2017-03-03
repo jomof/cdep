@@ -21,14 +21,14 @@ import io.cdep.cdep.ast.finder.FoundModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.resolver.ResolutionScopeResolver;
+import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import java.io.File;
 import org.junit.Test;
 
 public class TestFindModuleFunctionTableBuilder {
 
-    final private ResolutionScopeResolver resolver = new ResolutionScopeResolver(
+  final private Resolver resolver = new Resolver(
         new GeneratorEnvironment(
             System.out,
             new File("./test-files/TestFindModuleFunctionTableBuilder/working"),

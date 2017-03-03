@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Resolve references and groups of references (ResolutionScope)
  */
-public class ResolutionScopeResolver {
+public class Resolver {
 
   final private static CoordinateResolver resolvers[] = new CoordinateResolver[]{
       new GithubStyleUrlCoordinateResolver(),
@@ -27,7 +27,7 @@ public class ResolutionScopeResolver {
 
   final private ManifestProvider manifestProvider;
 
-  public ResolutionScopeResolver(ManifestProvider manifestProvider) {
+  public Resolver(ManifestProvider manifestProvider) {
     this.manifestProvider = manifestProvider;
   }
 

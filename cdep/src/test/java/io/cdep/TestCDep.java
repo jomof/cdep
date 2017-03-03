@@ -15,20 +15,18 @@
 */
 package io.cdep;
 
-import com.google.common.io.Files;
-import io.cdep.cdep.utils.FileUtils;
-import io.cdep.cdep.yml.cdep.CDepYml;
-import org.junit.Test;
-import org.yaml.snakeyaml.Yaml;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
+import com.google.common.io.Files;
+import io.cdep.cdep.yml.cdep.CDepYml;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
+import org.yaml.snakeyaml.Yaml;
 
 public class TestCDep {
 

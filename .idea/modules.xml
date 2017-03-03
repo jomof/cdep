@@ -5,9 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/bootstrap_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bootstrap_main.iml" group="bootstrap" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/bootstrap_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bootstrap_test.iml" group="bootstrap" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep/cdep-cdep.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep/cdep-cdep.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep_main.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep_main.iml" group="cdep" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep_test.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep_test.iml" group="cdep" />
       <module fileurl="file://$PROJECT_DIR$/integration/integration.iml" filepath="$PROJECT_DIR$/integration/integration.iml" group="integration" />
+      <module fileurl="file://$PROJECT_DIR$/cdep/src/main/main.iml" filepath="$PROJECT_DIR$/cdep/src/main/main.iml" group="cdep" />
+      <module fileurl="file://$PROJECT_DIR$/cdep/src/test/test.iml" filepath="$PROJECT_DIR$/cdep/src/test/test.iml" group="cdep" />
     </modules>
   </component>
 </project>
