@@ -15,17 +15,21 @@
 */
 package io.cdep.cdep.utils;
 
-import io.cdep.cdep.yml.cdepmanifest.*;
 import io.cdep.cdep.Coordinate;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-
+import io.cdep.cdep.yml.cdepmanifest.Android;
+import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
+import io.cdep.cdep.yml.cdepmanifest.Archive;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.Linux;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 public class CDepManifestYmlUtils {
 
@@ -165,6 +169,9 @@ public class CDepManifestYmlUtils {
 
     private static void checkForDuplicateOrMissingZipFiles(CDepManifestYml cdepManifestYml) {
         Set<String> zips = new HashSet<>();
+        if (cdepManifestYml.archive != null) {
+            zips.add(cdepManifestYml.archive.file);
+        }
         if (cdepManifestYml.android != null) {
             for (AndroidArchive android : cdepManifestYml.android.archives) {
                 zips.add(android.file);

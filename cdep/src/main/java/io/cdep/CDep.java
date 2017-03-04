@@ -237,9 +237,8 @@ public class CDep {
     private FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment)
             throws IOException, URISyntaxException, NoSuchAlgorithmException {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
-        ResolutionScope scope = new ResolutionScope(config.dependencies);
-      Resolver resolver = new Resolver(environment);
-        resolver.resolveAll(scope);
+        Resolver resolver = new Resolver(environment);
+        ResolutionScope scope = resolver.resolveAll(config.dependencies);
         for (ResolutionScope.Resolution resolved : scope.getResolutions()) {
             if (resolved instanceof  ResolutionScope.FoundManifestResolution) {
                 builder.addManifest(((ResolutionScope.FoundManifestResolution) resolved).resolved);
