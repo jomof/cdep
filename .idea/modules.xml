@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bootstrap_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bootstrap_main.iml" group="bootstrap" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bootstrap_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bootstrap_test.iml" group="bootstrap" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bootstrap/bootstrap.iml" filepath="$PROJECT_DIR$/.idea/modules/bootstrap/bootstrap.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdep/cdep-cdep.iml" filepath="$PROJECT_DIR$/.idea/modules/cdep/cdep-cdep.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/integration/integration.iml" filepath="$PROJECT_DIR$/.idea/modules/integration/integration.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cdep/src/main/main.iml" filepath="$PROJECT_DIR$/cdep/src/main/main.iml" group="cdep" />
-      <module fileurl="file://$PROJECT_DIR$/cdep/src/test/test.iml" filepath="$PROJECT_DIR$/cdep/src/test/test.iml" group="cdep" />
     </modules>
   </component>
 </project>

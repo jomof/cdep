@@ -21,6 +21,7 @@ import io.cdep.cdep.ast.finder.ModuleArchive;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.utils.HashUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -31,7 +32,7 @@ import java.util.List;
  */
 public class GeneratorEnvironmentUtils {
 
-    /*
+    /**
      * Given a function table and generator environment, download all of the files referenced.
      */
     public static void downloadReferencedModules(

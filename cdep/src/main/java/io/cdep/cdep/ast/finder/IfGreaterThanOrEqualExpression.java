@@ -24,18 +24,6 @@ public class IfGreaterThanOrEqualExpression extends Expression {
 
     public IfGreaterThanOrEqualExpression(Expression value, Expression compareTo,
         Expression trueExpression, Expression falseExpression) {
-        if (value == null) {
-            throw new RuntimeException("value");
-        }
-        if (compareTo == null) {
-            throw new RuntimeException("compareTo");
-        }
-        if (trueExpression == null) {
-            throw new RuntimeException("trueExpression");
-        }
-        if (falseExpression == null) {
-            throw new RuntimeException("falseExpression");
-        }
         this.value = value;
         this.compareTo = compareTo;
         this.trueExpression = trueExpression;
