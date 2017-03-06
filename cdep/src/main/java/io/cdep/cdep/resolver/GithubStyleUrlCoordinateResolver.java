@@ -16,7 +16,6 @@
 package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import java.io.IOException;

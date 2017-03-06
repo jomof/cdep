@@ -17,12 +17,12 @@ package io.cdep;
 
 import io.cdep.cdep.FindModuleFunctionTableBuilder;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.CMakeExamplesGenerator;
 import io.cdep.cdep.generator.CMakeGenerator;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
 import io.cdep.cdep.resolver.ResolutionScope;
+import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.CDepYmlUtils;
 import io.cdep.cdep.utils.FileUtils;

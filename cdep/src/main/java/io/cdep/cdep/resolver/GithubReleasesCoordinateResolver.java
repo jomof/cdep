@@ -17,7 +17,6 @@ package io.cdep.cdep.resolver;
 
 import static java.util.regex.Pattern.compile;
 
-import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;

@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package io.cdep.cdep.ast.service;
+package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-
 import java.net.URL;
 
 public class ResolvedManifest {

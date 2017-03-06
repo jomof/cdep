@@ -19,8 +19,8 @@ import static com.google.common.truth.Truth.assertThat;
 
 import io.cdep.cdep.ast.finder.FoundModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.generator.GeneratorEnvironment;
+import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import java.io.File;

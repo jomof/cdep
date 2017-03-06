@@ -4,7 +4,6 @@ package io.cdep.cdep.resolver;
 import static io.cdep.cdep.resolver.ResolutionScope.UNPARSEABLE_RESOLUTION;
 import static io.cdep.cdep.resolver.ResolutionScope.UNRESOLVEABLE_RESOLUTION;
 
-import io.cdep.cdep.ast.service.ResolvedManifest;
 import io.cdep.cdep.resolver.ResolutionScope.Resolution;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
