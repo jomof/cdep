@@ -25,6 +25,7 @@ public class CDepManifestYml {
     final public Archive archive;
     final public Android android;
     final public Object linux;
+    final public Object iOS;
     final public String example;
 
     public CDepManifestYml() {
@@ -33,6 +34,7 @@ public class CDepManifestYml {
         this.archive = null;
         this.android = null;
         this.linux = null;
+        this.iOS = null;
         this.example = null;
     }
 
@@ -42,6 +44,7 @@ public class CDepManifestYml {
         this.archive = null;
         this.android = null;
         this.linux = null;
+        this.iOS = null;
         this.example = null;
     }
 }
