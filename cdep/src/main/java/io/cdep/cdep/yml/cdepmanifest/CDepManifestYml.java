@@ -25,7 +25,7 @@ public class CDepManifestYml {
     final public Archive archive;
     final public Android android;
     final public Object linux;
-    final public Object iOS;
+    final public iOS iOS;
     final public String example;
 
     public CDepManifestYml() {

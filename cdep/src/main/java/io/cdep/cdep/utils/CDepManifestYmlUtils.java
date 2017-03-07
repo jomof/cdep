@@ -18,10 +18,10 @@ package io.cdep.cdep.utils;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.Android;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
-import io.cdep.cdep.yml.cdepmanifest.Archive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
-import io.cdep.cdep.yml.cdepmanifest.Linux;
+import io.cdep.cdep.yml.cdepmanifest.iOS;
+import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -61,6 +61,7 @@ public class CDepManifestYmlUtils {
         checkForMalformedCoordinateVersion(cdepManifestYml.coordinate);
         checkForDuplicateOrMissingZipFiles(cdepManifestYml);
         checkAndroid(cdepManifestYml);
+      checkiOS(cdepManifestYml);
     }
 
     private static void checkAndroid(CDepManifestYml cdepManifestYml) {
@@ -71,8 +72,16 @@ public class CDepManifestYmlUtils {
         validateAndroid(cdepManifestYml.coordinate, cdepManifestYml.android);
     }
 
+  private static void checkiOS(CDepManifestYml cdepManifestYml) {
+    if (cdepManifestYml.iOS == null) {
+      return;
+    }
 
-    private static void checkForMalformedCoordinateVersion(Coordinate coordinate) {
+    validateiOS(cdepManifestYml.coordinate, cdepManifestYml.iOS);
+  }
+
+
+  private static void checkForMalformedCoordinateVersion(Coordinate coordinate) {
         String versionDiagnosis = VersionUtils.checkVersion(coordinate.version);
         if (versionDiagnosis == null) {
             return;
@@ -113,10 +122,6 @@ public class CDepManifestYmlUtils {
                                 coordinate));
             }
 
-            if (zips.contains(archive.file)) {
-                throw new RuntimeException(String.format("Package '%s' contains multiple references to the same" +
-                        " archive file '%s'", coordinate, archive.file));
-            }
             zips.add(archive.file);
 
             if (archive.sha256 == null) {
@@ -132,40 +137,40 @@ public class CDepManifestYmlUtils {
        }
     }
 
-    private static void validateLinux(Coordinate coordinate, Linux linux) {
-        if (linux.archives == null || linux.archives.length == 0) {
-            throw new RuntimeException(
-                String.format("Package '%s' has missing linux.archives", coordinate));
-        }
-        if (linux.archives != null) {
-            Set<String> zips = new HashSet<>();
-            for (Archive archive : linux.archives) {
-                if (archive.file == null) {
-                    throw new RuntimeException(
-                            String.format("Package '%s' has missing linux.archive.file",
-                                    coordinate));
-                }
-                if (zips.contains(archive.file)) {
-                    throw new RuntimeException(String.format("Package '%s' contains multiple references to the same" +
-                            " zip file '%s'", coordinate, archive.file));
-                }
-                zips.add(archive.file);
-            }
-            for (Archive archive : linux.archives) {
-                if (archive.sha256 == null) {
-                    throw new RuntimeException(
-                        String.format("Package '%s' has missing linux.archive.sha256 for '%s'",
-                            coordinate, archive.file));
-                }
-                if (archive.size == null) {
-                    throw new RuntimeException(
-                        String.format("Package '%s' has missing linux.archive.size for '%s'",
-                            coordinate, archive.file));
-                }
-
-            }
-        }
+  private static void validateiOS(Coordinate coordinate, iOS ios) {
+    if (ios.archives == null || ios.archives.length == 0) {
+      throw new RuntimeException(
+          String.format("Package '%s' has missing ios.archives", coordinate));
     }
+    Set<String> zips = new HashSet<>();
+    for (iOSArchive archive : ios.archives) {
+      if (archive.lib != null && !archive.lib.endsWith(".a")) {
+        throw new RuntimeException(
+            String.format("Package '%s' has non-static iOS libraryName '%s'",
+                coordinate, archive.lib));
+        }
+
+      if (archive.file == null) {
+        throw new RuntimeException(
+            String.format("Package '%s' has missing ios.archive.file",
+                coordinate));
+        }
+
+      zips.add(archive.file);
+
+      if (archive.sha256 == null) {
+        throw new RuntimeException(
+            String.format("Package '%s' has missing ios.archive.sha256 for '%s'",
+                coordinate, archive.file));
+      }
+      if (archive.size == null) {
+        throw new RuntimeException(
+            String.format("Package '%s' has missing ios.archive.size for '%s'",
+                coordinate, archive.file));
+      }
+    }
+    }
+
 
     private static void checkForDuplicateOrMissingZipFiles(CDepManifestYml cdepManifestYml) {
         Set<String> zips = new HashSet<>();
@@ -173,10 +178,25 @@ public class CDepManifestYmlUtils {
             zips.add(cdepManifestYml.archive.file);
         }
         if (cdepManifestYml.android != null) {
-            for (AndroidArchive android : cdepManifestYml.android.archives) {
-                zips.add(android.file);
+          for (AndroidArchive archive : cdepManifestYml.android.archives) {
+            if (zips.contains(archive.file)) {
+              throw new RuntimeException(
+                  String.format("Package '%s' contains multiple references to the same" +
+                      " archive file '%s'", cdepManifestYml.coordinate, archive.file));
+            }
+            zips.add(archive.file);
             }
         }
+      if (cdepManifestYml.iOS != null) {
+        for (iOSArchive archive : cdepManifestYml.iOS.archives) {
+          if (zips.contains(archive.file)) {
+            throw new RuntimeException(
+                String.format("Package '%s' contains multiple references to the same" +
+                    " archive file '%s'", cdepManifestYml.coordinate, archive.file));
+          }
+          zips.add(archive.file);
+        }
+      }
         if (zips.isEmpty()) {
             throw new RuntimeException(
                     String.format(
