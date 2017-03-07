@@ -21,7 +21,6 @@ import io.cdep.cdep.ast.finder.ModuleArchive;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.utils.HashUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -68,7 +67,7 @@ public class GeneratorEnvironmentUtils {
                     if (archive.size != local.length()) {
                         throw new RuntimeException(String.format(
                             "file size for %s did not match value from manifest",
-                            archive.size));
+                            archive.file));
                     }
                 }
 
