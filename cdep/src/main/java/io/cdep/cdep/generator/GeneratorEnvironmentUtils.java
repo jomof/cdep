@@ -76,7 +76,7 @@ public class GeneratorEnvironmentUtils {
                 String localSha256String = HashUtils.getSHA256OfFile(local);
                 if (!localSha256String.equals(archive.sha256)) {
                     throw new RuntimeException(String.format(
-                        "SHA256 for %s did not match value from manifest", archive.sha256));
+                        "SHA256 for %s did not match value from manifest", archive.file));
                 }
 
                 File unzipFolder = environment.getLocalUnzipFolder(
