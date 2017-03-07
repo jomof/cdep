@@ -66,8 +66,10 @@ public class GeneratorEnvironmentUtils {
                     }
                     if (archive.size != local.length()) {
                         throw new RuntimeException(String.format(
-                            "file size for %s did not match value from manifest",
-                            archive.file));
+                            "File size for %s was %s which did not match value %s from the manifest",
+                            archive.file,
+                            local.length(),
+                            archive.size));
                     }
                 }
 
