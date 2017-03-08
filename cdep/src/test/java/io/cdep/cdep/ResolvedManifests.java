@@ -3,7 +3,6 @@ package io.cdep.cdep;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -70,17 +69,12 @@ public class ResolvedManifests {
                 "    file: sqlite-ios-platform-iPhone.zip\n" +
                 "    sha256: 7126dfb6282a53c16cd648fcfca3bd8c3ac306def1b5bc8cefb3b82b459fca80\n" +
                 "    size: 1293737\n" +
-                "    platform: iPhone\n" +
+            "    platform: iPhoneOS\n" +
                 "  - lib: libsqlite.a\n" +
                 "    file: sqlite-ios-platform-simulator.zip\n" +
                 "    sha256: 266f16031afd5aef8adf19394fdcf946cb6a28d19a41b7db1ff87487733b91df\n" +
                 "    size: 546921\n" +
-                "    platform: simulator\n" +
-                "  - lib: libsqlite.a\n" +
-                "    file: sqlite-ios-platform-simulator64.zip\n" +
-                "    sha256: ae9cd54aa94422f482fdc55abbd07c1b673ed9ab48e7eda493325857bbe634ff\n" +
-                "    size: 546924\n" +
-                "    platform: simulator64\n" +
+            "    platform: iPhoneSimulator\n" +
                 "example: |\n" +
                 "  #include <sqlite3.h>\n" +
                 "  void test() {\n" +

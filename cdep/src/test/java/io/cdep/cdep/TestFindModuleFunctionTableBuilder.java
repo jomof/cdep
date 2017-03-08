@@ -15,6 +15,9 @@
 */
 package io.cdep.cdep;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+
 import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.generator.CMakeGenerator;
@@ -23,12 +26,8 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import org.junit.Test;
-
 import java.io.File;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 
 public class TestFindModuleFunctionTableBuilder {
 
@@ -74,13 +73,13 @@ public class TestFindModuleFunctionTableBuilder {
         String zip = FindModuleInterpreter.findiOS(table,
                 resolved.cdepManifestYml.coordinate,
                 "Darwin",
-                "iPhone").archives[0].file.getPath();
+            "iPhoneOS").archives[0].file.getPath();
         assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
 
         zip = FindModuleInterpreter.findiOS(table,
                 resolved.cdepManifestYml.coordinate,
                 "Darwin",
-                "simulator").archives[0].file.getPath();
+            "iPhoneSimulator").archives[0].file.getPath();
         assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
 
         new CMakeGenerator(environment).generate(table);
@@ -100,8 +99,8 @@ public class TestFindModuleFunctionTableBuilder {
                     "iPad").archives[0].file.getPath();
             fail("Expected exception");
         } catch (RuntimeException e) {
-            assertThat(e).hasMessage("iOS platform 'iPad' is not supported by module " +
-                    "'com.github.jomof:sqlite:0.0.0'. Supported: iPhone simulator simulator64 ");
+          assertThat(e).hasMessage("iOS platform 'iPad' is not supported by module "
+              + "'com.github.jomof:sqlite:0.0.0'. Supported: iPhoneOS iPhoneSimulator ");
         }
     }
 

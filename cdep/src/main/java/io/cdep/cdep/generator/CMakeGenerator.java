@@ -16,9 +16,20 @@
 package io.cdep.cdep.generator;
 
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.CaseExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
+import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.IfGreaterThanOrEqualExpression;
+import io.cdep.cdep.ast.finder.LongConstantExpression;
+import io.cdep.cdep.ast.finder.ModuleArchive;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.iOSPlatformExpression;
 import io.cdep.cdep.utils.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -220,12 +231,10 @@ public class CMakeGenerator {
         if (expression instanceof iOSPlatformExpression) {
             iOSPlatformExpression specific = (iOSPlatformExpression) expression;
             switch (specific.platform) {
-                case iPhone:
+              case iPhoneOS:
                     return "OS";
-                case simulator:
+              case iPhoneSimulator:
                     return "SIMULATOR";
-                case simulator64:
-                    return "SIMULATOR64";
                 default:
                     throw new RuntimeException(specific.toString());
             }
