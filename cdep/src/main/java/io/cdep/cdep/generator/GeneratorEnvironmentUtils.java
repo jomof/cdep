@@ -15,9 +15,8 @@
 */
 package io.cdep.cdep.generator;
 
-import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.ModuleArchive;
+import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.utils.HashUtils;
@@ -39,15 +38,26 @@ public class GeneratorEnvironmentUtils {
         GeneratorEnvironment environment,
         FunctionTableExpression table,
         boolean forceRedownload) throws IOException, NoSuchAlgorithmException {
-        List<FoundAndroidModuleExpression> foundModules =
+        List<Expression> foundModules =
             ExpressionUtils.getAllFoundModuleExpressions(table);
 
         // Download and unzip any modules.
-        for (FoundAndroidModuleExpression foundModule : foundModules) {
-            for (ModuleArchive archive : foundModule.archives) {
+        for (Expression foundModule : foundModules) {
+            ModuleArchive archives[] = null;
+            Coordinate coordinate = null;
+            if (foundModule instanceof FoundAndroidModuleExpression) {
+                FoundAndroidModuleExpression specific = (FoundAndroidModuleExpression) foundModule;
+                archives = specific.archives;
+                coordinate = specific.coordinate;
+            } else if (foundModule instanceof FoundiOSModuleExpression) {
+                FoundiOSModuleExpression specific = (FoundiOSModuleExpression) foundModule;
+                archives = specific.archives;
+                coordinate = specific.coordinate;
+            }
+            for (ModuleArchive archive : archives) {
 
                 File local = environment.tryGetLocalDownloadedFile(
-                    foundModule.coordinate, archive.file);
+                        coordinate, archive.file);
                 if (local == null) {
                     throw new RuntimeException(
                         String.format("Resolved archive '%s' didn't exist", archive.file));
@@ -59,7 +69,7 @@ public class GeneratorEnvironmentUtils {
                     if (!forceRedownload) {
                         forceUnzip = true;
                         local = environment.tryGetLocalDownloadedFile(
-                            foundModule.coordinate, archive.file);
+                                coordinate, archive.file);
                         if (local == null) {
                             throw new RuntimeException(
                                 String.format("Resolved archive '%s' didn't exist", archive.file));
@@ -81,7 +91,7 @@ public class GeneratorEnvironmentUtils {
                 }
 
                 File unzipFolder = environment.getLocalUnzipFolder(
-                    foundModule.coordinate, archive.file);
+                        coordinate, archive.file);
                 if (!unzipFolder.exists() || forceUnzip) {
                     //noinspection ResultOfMethodCallIgnored
                     unzipFolder.mkdirs();

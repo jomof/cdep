@@ -26,7 +26,7 @@ import java.util.List;
 abstract public class ExpressionUtils {
 
     private static void getAllFoundModuleExpressions(
-            Expression expression, List<FoundAndroidModuleExpression> foundModules) {
+            Expression expression, List<Expression> foundModules) {
         if (expression instanceof CaseExpression) {
             CaseExpression caseExpression = (CaseExpression) expression;
             getAllFoundModuleExpressions(caseExpression.var, foundModules);
@@ -49,7 +49,10 @@ abstract public class ExpressionUtils {
         } else if (expression instanceof LongConstantExpression) {
             return;
         } else if (expression instanceof FoundAndroidModuleExpression) {
-            foundModules.add((FoundAndroidModuleExpression) expression);
+            foundModules.add(expression);
+            return;
+        } else if (expression instanceof FoundiOSModuleExpression) {
+            foundModules.add(expression);
             return;
         } else if (expression instanceof FunctionTableExpression) {
             FunctionTableExpression table = (FunctionTableExpression) expression;
@@ -70,8 +73,8 @@ abstract public class ExpressionUtils {
      * These expressions contain the local module location as well as the resolved coordinate
      * and other information
      */
-    public static List<FoundAndroidModuleExpression> getAllFoundModuleExpressions(Expression expression) {
-        List<FoundAndroidModuleExpression> foundModules = new ArrayList<>();
+    public static List<Expression> getAllFoundModuleExpressions(Expression expression) {
+        List<Expression> foundModules = new ArrayList<>();
         getAllFoundModuleExpressions(expression, foundModules);
         return foundModules;
     }
