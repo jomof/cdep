@@ -15,12 +15,13 @@
 */
 package io.cdep.cdep.generator;
 
-import io.cdep.cdep.ast.finder.FoundModuleExpression;
+import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.ModuleArchive;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.utils.HashUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -38,11 +39,11 @@ public class GeneratorEnvironmentUtils {
         GeneratorEnvironment environment,
         FunctionTableExpression table,
         boolean forceRedownload) throws IOException, NoSuchAlgorithmException {
-        List<FoundModuleExpression> foundModules =
+        List<FoundAndroidModuleExpression> foundModules =
             ExpressionUtils.getAllFoundModuleExpressions(table);
 
         // Download and unzip any modules.
-        for (FoundModuleExpression foundModule : foundModules) {
+        for (FoundAndroidModuleExpression foundModule : foundModules) {
             for (ModuleArchive archive : foundModule.archives) {
 
                 File local = environment.tryGetLocalDownloadedFile(

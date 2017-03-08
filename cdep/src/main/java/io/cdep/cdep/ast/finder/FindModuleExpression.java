@@ -24,20 +24,23 @@ public class FindModuleExpression extends Expression {
     final public ParameterExpression systemVersion;
     final public ParameterExpression androidTargetAbi;
     final public ParameterExpression androidStlType;
+    final public ParameterExpression iOSPlatform;
     final public CaseExpression expression;
 
     public FindModuleExpression(
-        Coordinate coordinate,
-        ParameterExpression targetPlatform,
-        ParameterExpression systemVersion,
-        ParameterExpression androidTargetAbi,
-        ParameterExpression androidStlType,
-        CaseExpression expression) {
+            Coordinate coordinate,
+            ParameterExpression targetPlatform,
+            ParameterExpression systemVersion,
+            ParameterExpression androidTargetAbi,
+            ParameterExpression androidStlType,
+            ParameterExpression iOSPlatform,
+            CaseExpression expression) {
         this.coordinate = coordinate;
         this.targetPlatform = targetPlatform;
         this.systemVersion = systemVersion;
         this.androidTargetAbi = androidTargetAbi;
         this.androidStlType = androidStlType;
+        this.iOSPlatform = iOSPlatform;
         this.expression = expression;
     }
 }

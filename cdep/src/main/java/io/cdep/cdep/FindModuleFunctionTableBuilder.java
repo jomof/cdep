@@ -15,35 +15,23 @@
 */
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.CaseExpression;
-import io.cdep.cdep.ast.finder.ExampleExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FoundModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.IfGreaterThanOrEqualExpression;
-import io.cdep.cdep.ast.finder.LongConstantExpression;
-import io.cdep.cdep.ast.finder.ModuleArchive;
-import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.generator.AndroidAbi;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
+
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class FindModuleFunctionTableBuilder {
 
     private final Map<Coordinate, ResolvedManifest> manifests = new HashMap<>();
+    private final ParameterExpression iOSPlatform =
+            new ParameterExpression("iOSPlatform");
     private final ParameterExpression targetPlatform =
         new ParameterExpression("targetPlatform");
     private final ParameterExpression androidArchAbi =
@@ -82,7 +70,7 @@ public class FindModuleFunctionTableBuilder {
     private FindModuleExpression buildFindModule(ResolvedManifest resolved)
         throws MalformedURLException, URISyntaxException {
 
-        Map<String, Expression> cases = new HashMap<>();
+        Map<Expression, Expression> cases = new HashMap<>();
         String supported = "";
         Set<Coordinate> dependencies = new HashSet<>();
         if (resolved.cdepManifestYml.dependencies != null) {
@@ -95,8 +83,13 @@ public class FindModuleFunctionTableBuilder {
 
         if (resolved.cdepManifestYml.android != null) {
             supported += "'Android' ";
-            cases.put("Android",
+            cases.put(new StringExpression("Android"),
                 buildAndroidStlTypeCase(resolved, dependencies));
+        }
+        if (resolved.cdepManifestYml.iOS != null) {
+            supported += "'Darwin' ";
+            cases.put(new StringExpression("Darwin"),
+                    buildDarwinPlatformCase(resolved, dependencies));
         }
         CaseExpression expression = new CaseExpression(
             targetPlatform,
@@ -107,7 +100,74 @@ public class FindModuleFunctionTableBuilder {
                     resolved.cdepManifestYml.coordinate, supported), targetPlatform));
 
         return new FindModuleExpression(resolved.cdepManifestYml.coordinate, targetPlatform,
-            systemVersion, androidArchAbi, androidStlType, expression);
+                systemVersion, androidArchAbi, androidStlType, iOSPlatform, expression);
+    }
+
+    private Expression buildDarwinPlatformCase(
+            ResolvedManifest resolved,
+            Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+
+        // Gather up the platform names
+        Map<Expression, Expression> platforms = new HashMap<>();
+        assert resolved.cdepManifestYml.iOS != null;
+        String supported = "";
+        for (iOSArchive archive : resolved.cdepManifestYml.iOS.archives) {
+            Expression found = platforms.get(archive.platform);
+            if (found != null) {
+                throw new RuntimeException(
+                        String.format("iOS platform '%s' seen in multiple archives"));
+            }
+
+            supported += archive.platform.toString() + " ";
+            platforms.put(new iOSPlatformExpression(archive.platform),
+                    buildiosArchiveExpression(
+                            resolved,
+                            archive,
+                            dependencies));
+        }
+
+        return new CaseExpression(iOSPlatform,
+                platforms,
+                new AbortExpression(
+                        String.format("iOS platform '%%s' is not supported by module '%s'. Supported: %s",
+                                resolved.cdepManifestYml.coordinate, supported), iOSPlatform));
+    }
+
+    private Expression buildiosArchiveExpression(
+            ResolvedManifest resolved,
+            iOSArchive archive,
+            Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+        int archiveCount = 1;
+        if (resolved.cdepManifestYml.archive != null) {
+            ++archiveCount;
+        }
+        ModuleArchive archives[] = new ModuleArchive[archiveCount];
+        archives[0] = new ModuleArchive(
+                resolved.remote.toURI()
+                        .resolve(".")
+                        .resolve(archive.file)
+                        .toURL(),
+                archive.sha256,
+                archive.size,
+                archive.include,
+                archive.lib);
+
+        if (resolved.cdepManifestYml.archive != null) {
+            // This is the global zip file from the top level of the manifest.
+            archives[1] = new ModuleArchive(
+                    resolved.remote.toURI()
+                            .resolve(".")
+                            .resolve(resolved.cdepManifestYml.archive.file)
+                            .toURL(),
+                    resolved.cdepManifestYml.archive.sha256,
+                    resolved.cdepManifestYml.archive.size,
+                    "include",
+                    null);
+        }
+        return new FoundiOSModuleExpression(
+                resolved.cdepManifestYml.coordinate,
+                archives,
+                dependencies);
     }
 
     private Expression buildAndroidStlTypeCase(
@@ -139,15 +199,15 @@ public class FindModuleFunctionTableBuilder {
                     resolved.cdepManifestYml.coordinate));
         }
 
-        Map<String, Expression> cases = new HashMap<>();
+        Map<Expression, Expression> cases = new HashMap<>();
         String runtimes = "";
         for (String stlType : stlTypes.keySet()) {
             runtimes += stlType + " ";
-            cases.put(stlType + "_shared", buildAndroidPlatformExpression(
+            cases.put(new StringExpression(stlType + "_shared"), buildAndroidPlatformExpression(
                 resolved,
                 stlTypes.get(stlType),
                 dependencies));
-            cases.put(stlType + "_static", buildAndroidPlatformExpression(
+            cases.put(new StringExpression(stlType + "_static"), buildAndroidPlatformExpression(
                 resolved,
                 stlTypes.get(stlType),
                 dependencies));
@@ -238,7 +298,7 @@ public class FindModuleFunctionTableBuilder {
                 null);
         }
 
-        Map<String, Expression> cases = new HashMap<>();
+        Map<Expression, Expression> cases = new HashMap<>();
         String supported = "";
         String abis[] = android.abis;
         if (abis == null) {
@@ -246,12 +306,11 @@ public class FindModuleFunctionTableBuilder {
         }
         for (String abi : abis) {
             supported += abi + " ";
-            cases.put(abi, new FoundModuleExpression(
+            cases.put(new StringExpression(abi), new FoundAndroidModuleExpression(
                 resolved.cdepManifestYml.coordinate,
                 archives,
                 dependencies));
         }
-
 
         Expression prior = new AbortExpression(
             String.format("Android ABI '%%s' is not supported by module '%s'. Supported: %s",

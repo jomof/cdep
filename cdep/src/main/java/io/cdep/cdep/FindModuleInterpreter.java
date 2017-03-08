@@ -23,20 +23,32 @@ import java.util.Map;
 class FindModuleInterpreter {
 
     @SuppressWarnings("SameParameterValue")
-    static FoundModuleExpression find(
-        FunctionTableExpression table,
-        Coordinate functionName,
-        String targetPlatform,
-        String systemVersion, // On android, "platform"
-        String androidStlType,
-        String androidTargetAbi) {
+    static FoundAndroidModuleExpression findAndroid(
+            FunctionTableExpression table,
+            Coordinate functionName,
+            String targetPlatform,
+            String systemVersion, // On android, platform like 21
+            String androidStlType,
+            String androidTargetAbi) {
         FindModuleExpression function = table.findFunctions.get(functionName);
         Map<ParameterExpression, String> parameters = new HashMap<>();
         parameters.put(function.targetPlatform, targetPlatform);
         parameters.put(function.systemVersion, systemVersion);
         parameters.put(function.androidStlType, androidStlType);
         parameters.put(function.androidTargetAbi, androidTargetAbi);
-        return (FoundModuleExpression) interpret(parameters, function.expression);
+        return (FoundAndroidModuleExpression) interpret(parameters, function.expression);
+    }
+
+    static FoundiOSModuleExpression findiOS(
+            FunctionTableExpression table,
+            Coordinate functionName,
+            String targetPlatform,
+            String iOSPlatform) {
+        FindModuleExpression function = table.findFunctions.get(functionName);
+        Map<ParameterExpression, String> parameters = new HashMap<>();
+        parameters.put(function.targetPlatform, targetPlatform);
+        parameters.put(function.iOSPlatform, iOSPlatform);
+        return (FoundiOSModuleExpression) interpret(parameters, function.expression);
     }
 
     private static Object interpret(Map<ParameterExpression, String> parameters,
@@ -44,9 +56,10 @@ class FindModuleInterpreter {
         if (expression instanceof CaseExpression) {
             CaseExpression caseExpression = (CaseExpression) expression;
             String caseVar = (String) interpret(parameters, caseExpression.var);
-            for (String caseValue : caseExpression.cases.keySet()) {
-                if (caseValue.equals(caseVar)) {
-                    return interpret(parameters, caseExpression.cases.get(caseValue));
+            for (Expression caseValueExpression : caseExpression.cases.keySet()) {
+                if (caseValueExpression.toString().equals(caseVar)) {
+                    return interpret(parameters,
+                            caseExpression.cases.get(caseValueExpression));
                 }
             }
             return interpret(parameters, caseExpression.defaultCase);
@@ -70,7 +83,9 @@ class FindModuleInterpreter {
         } else if (expression instanceof LongConstantExpression) {
             LongConstantExpression longConst = (LongConstantExpression) expression;
             return longConst.value;
-        } else if (expression instanceof FoundModuleExpression) {
+        } else if (expression instanceof FoundAndroidModuleExpression) {
+            return expression;
+        } else if (expression instanceof FoundiOSModuleExpression) {
             return expression;
         }
         throw new RuntimeException(expression.toString());

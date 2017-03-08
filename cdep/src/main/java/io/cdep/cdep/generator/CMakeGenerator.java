@@ -15,8 +15,8 @@
 */
 package io.cdep.cdep.generator;
 
-import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.utils.FileUtils;
 
 import java.io.File;
@@ -49,8 +49,6 @@ public class CMakeGenerator {
 
         for (FindModuleExpression findFunction : table.findFunctions.values()) {
             generateFindAppender(0, findFunction, findFunction, sb);
-            //generateFinderExpression(0, findFunction, findFunction, sb);
-            // TODO: If two artifact IDs conflict then generate a Find*.cmake that emits an error
         }
 
         sb.append("\nfunction(add_all_cdep_dependencies target)\n");
@@ -69,10 +67,10 @@ public class CMakeGenerator {
     }
 
     private void generateFindAppender(
-        int indent,
-        FindModuleExpression signature,
-        Expression expression,
-        StringBuilder sb) {
+            int indent,
+            FindModuleExpression signature,
+            Expression expression,
+            StringBuilder sb) {
 
         String prefix = new String(new char[indent * 2]).replace('\0', ' ');
 
@@ -84,7 +82,7 @@ public class CMakeGenerator {
             FindModuleExpression specific = (FindModuleExpression) expression;
             sb.append("\n###\n");
             sb.append(String.format("### Add dependency for CDep module: %s\n",
-                specific.coordinate.toString()));
+                    specific.coordinate.toString()));
             sb.append("###\n");
             String coordinateVar = String.format("%s_CDEP_COORDINATE", upperArtifactID);
             sb.append(String.format("%sif(%s)\n", prefix, coordinateVar));
@@ -102,14 +100,15 @@ public class CMakeGenerator {
             generateFindAppender(indent, signature, specific.var, varBuilder);
             String var = varBuilder.toString();
             boolean first = true;
-            for (String matchValue : specific.cases.keySet()) {
+            for (Expression matchValueExpression : specific.cases.keySet()) {
+                String matchValue = getStringValue(matchValueExpression);
                 if (first) {
                     sb.append(String.format("%sif(%s STREQUAL \"%s\")\n", prefix, var, matchValue));
                     first = false;
                 } else {
                     sb.append(String.format("%selseif(%s STREQUAL \"%s\")\n", prefix, var, matchValue));
                 }
-                generateFindAppender(indent + 1, signature, specific.cases.get(matchValue), sb);
+                generateFindAppender(indent + 1, signature, specific.cases.get(matchValueExpression), sb);
             }
             sb.append(String.format("%selse()\n", prefix));
             generateFindAppender(indent + 1, signature, specific.defaultCase, sb);
@@ -125,7 +124,7 @@ public class CMakeGenerator {
             generateFindAppender(indent, signature, specific.compareTo, compareToBuilder);
             String compareTo = compareToBuilder.toString();
             sb.append(String.format("%sif((%s GREATER %s) OR (%s EQUAL %s))\n",
-                prefix, var, compareTo, var, compareTo));
+                    prefix, var, compareTo, var, compareTo));
             generateFindAppender(indent + 1, signature, specific.trueExpression, sb);
             sb.append(String.format("%selse()\n", prefix));
             generateFindAppender(indent + 1, signature, specific.falseExpression, sb);
@@ -149,20 +148,24 @@ public class CMakeGenerator {
                 sb.append("CDEP_DETERMINED_ANDROID_ABI");
                 return;
             }
+            if (specific == signature.iOSPlatform) {
+                sb.append("IOS_PLATFORM");
+                return;
+            }
             throw new RuntimeException(specific.name);
         } else if (expression instanceof LongConstantExpression) {
             LongConstantExpression specific = (LongConstantExpression) expression;
             sb.append(specific.value.toString());
             return;
-        } else if (expression instanceof FoundModuleExpression) {
-            FoundModuleExpression specific = (FoundModuleExpression) expression;
+        } else if (expression instanceof FoundAndroidModuleExpression) {
+            FoundAndroidModuleExpression specific = (FoundAndroidModuleExpression) expression;
             assert specific.coordinate.artifactId != null;
             for (Coordinate dependency : specific.dependencies) {
                 sb.append(String.format("%s%s(${target})\n", prefix, getAddDependencyFunctionName(dependency)));
             }
             for (ModuleArchive archive : specific.archives) {
                 File exploded = environment
-                    .getLocalUnzipFolder(specific.coordinate, archive.file);
+                        .getLocalUnzipFolder(specific.coordinate, archive.file);
                 sb.append(String.format("%starget_include_directories(${target} PRIVATE \"%s\")\n",
                         prefix, new File(exploded, archive.include).toString().replace("\\", "\\\\")));
                 String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
@@ -170,7 +173,27 @@ public class CMakeGenerator {
                 if (archive.libraryName != null && archive.libraryName.length() > 0) {
                     sb.append(String.format(
                             "%starget_link_libraries(${target} \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%s%s\")\n",
-                        prefix, libFolder, slash, slash, archive.libraryName));
+                            prefix, libFolder, slash, slash, archive.libraryName));
+                }
+            }
+            return;
+        } else if (expression instanceof FoundiOSModuleExpression) {
+            FoundiOSModuleExpression specific = (FoundiOSModuleExpression) expression;
+            assert specific.coordinate.artifactId != null;
+            for (Coordinate dependency : specific.dependencies) {
+                sb.append(String.format("%s%s(${target})\n", prefix, getAddDependencyFunctionName(dependency)));
+            }
+            for (ModuleArchive archive : specific.archives) {
+                File exploded = environment
+                        .getLocalUnzipFolder(specific.coordinate, archive.file);
+                sb.append(String.format("%starget_include_directories(${target} PRIVATE \"%s\")\n",
+                        prefix, new File(exploded, archive.include).toString().replace("\\", "\\\\")));
+                String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
+
+                if (archive.libraryName != null && archive.libraryName.length() > 0) {
+                    sb.append(String.format(
+                            "%starget_link_libraries(${target} \"%s%s%s\")\n",
+                            prefix, libFolder, slash, archive.libraryName));
                 }
             }
             return;
@@ -187,6 +210,26 @@ public class CMakeGenerator {
             return;
         }
 
+        throw new RuntimeException(expression.toString());
+    }
+
+    private String getStringValue(Expression expression) {
+        if (expression instanceof StringExpression) {
+            return ((StringExpression) expression).value;
+        }
+        if (expression instanceof iOSPlatformExpression) {
+            iOSPlatformExpression specific = (iOSPlatformExpression) expression;
+            switch (specific.platform) {
+                case iPhone:
+                    return "OS";
+                case simulator:
+                    return "SIMULATOR";
+                case simulator64:
+                    return "SIMULATOR64";
+                default:
+                    throw new RuntimeException(specific.toString());
+            }
+        }
         throw new RuntimeException(expression.toString());
     }
 

@@ -26,11 +26,11 @@ import java.util.List;
 abstract public class ExpressionUtils {
 
     private static void getAllFoundModuleExpressions(
-        Expression expression, List<FoundModuleExpression> foundModules) {
+            Expression expression, List<FoundAndroidModuleExpression> foundModules) {
         if (expression instanceof CaseExpression) {
             CaseExpression caseExpression = (CaseExpression) expression;
             getAllFoundModuleExpressions(caseExpression.var, foundModules);
-            for (String caseValue : caseExpression.cases.keySet()) {
+            for (Expression caseValue : caseExpression.cases.keySet()) {
                 getAllFoundModuleExpressions(caseExpression.cases.get(caseValue), foundModules);
             }
             getAllFoundModuleExpressions(caseExpression.defaultCase, foundModules);
@@ -48,8 +48,8 @@ abstract public class ExpressionUtils {
             return;
         } else if (expression instanceof LongConstantExpression) {
             return;
-        } else if (expression instanceof FoundModuleExpression) {
-            foundModules.add((FoundModuleExpression) expression);
+        } else if (expression instanceof FoundAndroidModuleExpression) {
+            foundModules.add((FoundAndroidModuleExpression) expression);
             return;
         } else if (expression instanceof FunctionTableExpression) {
             FunctionTableExpression table = (FunctionTableExpression) expression;
@@ -70,8 +70,8 @@ abstract public class ExpressionUtils {
      * These expressions contain the local module location as well as the resolved coordinate
      * and other information
      */
-    public static List<FoundModuleExpression> getAllFoundModuleExpressions(Expression expression) {
-        List<FoundModuleExpression> foundModules = new ArrayList<>();
+    public static List<FoundAndroidModuleExpression> getAllFoundModuleExpressions(Expression expression) {
+        List<FoundAndroidModuleExpression> foundModules = new ArrayList<>();
         getAllFoundModuleExpressions(expression, foundModules);
         return foundModules;
     }

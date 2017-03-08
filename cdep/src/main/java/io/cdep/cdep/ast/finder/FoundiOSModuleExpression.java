@@ -19,13 +19,13 @@ import io.cdep.cdep.Coordinate;
 
 import java.util.Set;
 
-public class FoundModuleExpression extends Expression {
+public class FoundiOSModuleExpression extends Expression {
 
     final public Coordinate coordinate; // Coordinate of the module.
     final public ModuleArchive archives[];
     final public Set<Coordinate> dependencies;
 
-    public FoundModuleExpression(
+    public FoundiOSModuleExpression(
             Coordinate coordinate,
             ModuleArchive archives[],
             Set<Coordinate> dependencies) {
