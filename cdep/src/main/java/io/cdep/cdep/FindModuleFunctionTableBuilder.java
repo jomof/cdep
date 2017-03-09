@@ -81,12 +81,12 @@ public class FindModuleFunctionTableBuilder {
         }
 
 
-        if (resolved.cdepManifestYml.android != null) {
+        if (resolved.cdepManifestYml.android != null && resolved.cdepManifestYml.android.archives != null) {
             supported += "'Android' ";
             cases.put(new StringExpression("Android"),
                 buildAndroidStlTypeCase(resolved, dependencies));
         }
-        if (resolved.cdepManifestYml.iOS != null) {
+        if (resolved.cdepManifestYml.iOS != null && resolved.cdepManifestYml.iOS.archives != null) {
             supported += "'Darwin' ";
             cases.put(new StringExpression("Darwin"),
                     buildDarwinPlatformCase(resolved, dependencies));

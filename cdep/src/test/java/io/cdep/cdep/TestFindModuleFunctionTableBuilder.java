@@ -15,9 +15,6 @@
 */
 package io.cdep.cdep;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-
 import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.generator.CMakeGenerator;
@@ -26,8 +23,12 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import java.io.File;
 import org.junit.Test;
+
+import java.io.File;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 public class TestFindModuleFunctionTableBuilder {
 
@@ -102,6 +103,22 @@ public class TestFindModuleFunctionTableBuilder {
           assertThat(e).hasMessage("iOS platform 'iPad' is not supported by module "
               + "'com.github.jomof:sqlite:0.0.0'. Supported: iPhoneOS iPhoneSimulator ");
         }
+    }
+
+    @Test
+    public void testEmptyiOSArchive() throws Exception {
+        ResolvedManifest resolved = ResolvedManifests.emptyiOSArchive();
+        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+        builder.addManifest(resolved);
+        FunctionTableExpression table = builder.build();
+    }
+
+    @Test
+    public void testEmptyAndroidArchive() throws Exception {
+        ResolvedManifest resolved = ResolvedManifests.emptyAndroidArchive();
+        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+        builder.addManifest(resolved);
+        FunctionTableExpression table = builder.build();
     }
 
     @Test

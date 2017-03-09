@@ -3,6 +3,7 @@ package io.cdep.cdep;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -69,12 +70,61 @@ public class ResolvedManifests {
                 "    file: sqlite-ios-platform-iPhone.zip\n" +
                 "    sha256: 7126dfb6282a53c16cd648fcfca3bd8c3ac306def1b5bc8cefb3b82b459fca80\n" +
                 "    size: 1293737\n" +
-            "    platform: iPhoneOS\n" +
+                "    platform: iPhoneOS\n" +
                 "  - lib: libsqlite.a\n" +
                 "    file: sqlite-ios-platform-simulator.zip\n" +
                 "    sha256: 266f16031afd5aef8adf19394fdcf946cb6a28d19a41b7db1ff87487733b91df\n" +
                 "    size: 546921\n" +
-            "    platform: iPhoneSimulator\n" +
+                "    platform: iPhoneSimulator\n" +
+                "example: |\n" +
+                "  #include <sqlite3.h>\n" +
+                "  void test() {\n" +
+                "    sqlite3_initialize();\n" +
+                "  }";
+        CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
+        return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+    }
+
+    static ResolvedManifest emptyiOSArchive() throws MalformedURLException {
+        String manifest = "coordinate:\n" +
+                "  groupId: com.github.jomof\n" +
+                "  artifactId: sqlite\n" +
+                "  version: 0.0.0\n" +
+                "android:\n" +
+                "  archives:\n" +
+                "  - lib: libsqlite.a\n" +
+                "    file: sqlite-android-cxx-platform-12.zip\n" +
+                "    sha256: 45a104d61786eaf163b3006aa989922c5c04b8e787073e1cbd60c7895943162c\n" +
+                "    size: 2676245\n" +
+                "    runtime: c++\n" +
+                "    platform: 12\n" +
+                "    ndk: r13b\n" +
+                "    abis: [ armeabi, armeabi-v7a, x86 ]\n" +
+                "iOS:\n" +
+                "  archives:\n" +
+                "example: |\n" +
+                "  #include <sqlite3.h>\n" +
+                "  void test() {\n" +
+                "    sqlite3_initialize();\n" +
+                "  }";
+        CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
+        return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+    }
+
+    static ResolvedManifest emptyAndroidArchive() throws MalformedURLException {
+        String manifest = "coordinate:\n" +
+                "  groupId: com.github.jomof\n" +
+                "  artifactId: sqlite\n" +
+                "  version: 0.0.0\n" +
+                "iOS:\n" +
+                "  archives:\n" +
+                "  - lib: libsqlite.a\n" +
+                "    file: sqlite-android-cxx-platform-12.zip\n" +
+                "    sha256: 45a104d61786eaf163b3006aa989922c5c04b8e787073e1cbd60c7895943162c\n" +
+                "    platform: iPhoneOS\n" +
+                "    size: 2676245\n" +
+                "android:\n" +
+                "  archives:\n" +
                 "example: |\n" +
                 "  #include <sqlite3.h>\n" +
                 "  void test() {\n" +
