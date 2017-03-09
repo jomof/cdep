@@ -16,20 +16,16 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.yml.cdepmanifest.Android;
-import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
-import io.cdep.cdep.yml.cdepmanifest.iOS;
-import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
+import io.cdep.cdep.yml.cdepmanifest.*;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 
 public class CDepManifestYmlUtils {
 
@@ -65,7 +61,7 @@ public class CDepManifestYmlUtils {
     }
 
     private static void checkAndroid(CDepManifestYml cdepManifestYml) {
-        if (cdepManifestYml.android == null) {
+        if (cdepManifestYml.android == null || cdepManifestYml.android.archives == null) {
             return;
         }
 
@@ -73,7 +69,7 @@ public class CDepManifestYmlUtils {
     }
 
   private static void checkiOS(CDepManifestYml cdepManifestYml) {
-    if (cdepManifestYml.iOS == null) {
+      if (cdepManifestYml.iOS == null || cdepManifestYml.iOS.archives == null) {
       return;
     }
 
@@ -177,7 +173,7 @@ public class CDepManifestYmlUtils {
         if (cdepManifestYml.archive != null) {
             zips.add(cdepManifestYml.archive.file);
         }
-        if (cdepManifestYml.android != null) {
+        if (cdepManifestYml.android != null && cdepManifestYml.android.archives != null) {
           for (AndroidArchive archive : cdepManifestYml.android.archives) {
             if (zips.contains(archive.file)) {
               throw new RuntimeException(
@@ -187,7 +183,7 @@ public class CDepManifestYmlUtils {
             zips.add(archive.file);
             }
         }
-      if (cdepManifestYml.iOS != null) {
+        if (cdepManifestYml.iOS != null && cdepManifestYml.iOS.archives != null) {
         for (iOSArchive archive : cdepManifestYml.iOS.archives) {
           if (zips.contains(archive.file)) {
             throw new RuntimeException(

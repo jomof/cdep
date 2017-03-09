@@ -1,10 +1,10 @@
 package io.cdep.cdep.utils;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 public class TestCDepManifestYmlUtils {
 
@@ -167,6 +167,36 @@ public class TestCDepManifestYmlUtils {
                 "Package 'com.github.jomof:boost:1.0.63-rev10' contains multiple references " +
                     "to the same archive file 'bob.zip'");
         }
+    }
+
+    @Test
+    public void emptyiOSArchive() {
+        check("coordinate:\n" +
+                "  groupId: com.github.jomof\n" +
+                "  artifactId: boost\n" +
+                "  version: 1.0.63-rev10\n" +
+                "android:\n" +
+                "  archives:\n" +
+                "  - file: bob.zip\n" +
+                "    size: 99\n" +
+                "    sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" +
+                "iOS:\n" +
+                "  archives:\n");
+    }
+
+    @Test
+    public void emptyAndroidArchive() {
+        check("coordinate:\n" +
+                "  groupId: com.github.jomof\n" +
+                "  artifactId: boost\n" +
+                "  version: 1.0.63-rev10\n" +
+                "iOS:\n" +
+                "  archives:\n" +
+                "  - file: bob.zip\n" +
+                "    size: 99\n" +
+                "    sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" +
+                "android:\n" +
+                "  archives:\n");
     }
 
     @Test
