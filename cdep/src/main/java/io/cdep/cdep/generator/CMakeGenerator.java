@@ -159,7 +159,7 @@ public class CMakeGenerator {
                 sb.append("CDEP_DETERMINED_ANDROID_ABI");
                 return;
             }
-            if (specific == signature.iOSPlatform) {
+          if (specific == signature.osxSysroot) {
                 sb.append("IOS_PLATFORM");
                 return;
             }

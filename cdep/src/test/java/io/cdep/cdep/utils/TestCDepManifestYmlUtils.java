@@ -1,10 +1,10 @@
 package io.cdep.cdep.utils;
 
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import org.junit.Test;
-
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
+
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import org.junit.Test;
 
 public class TestCDepManifestYmlUtils {
 
@@ -195,6 +195,9 @@ public class TestCDepManifestYmlUtils {
                 "  - file: bob.zip\n" +
                 "    size: 99\n" +
                 "    sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" +
+            "    platform: iPhoneSimulator\n" +
+            "    sdk: 10.2\n" +
+            "    architecture: i386\n" +
                 "android:\n" +
                 "  archives:\n");
     }
