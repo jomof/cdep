@@ -16,6 +16,7 @@
 package io.cdep.cdep;
 
 import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
 import io.cdep.cdep.ast.finder.CallExpression;
 import io.cdep.cdep.ast.finder.CaseExpression;
 import io.cdep.cdep.ast.finder.CurryExpression;
@@ -26,6 +27,7 @@ import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
 import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.IfExpression;
 import io.cdep.cdep.ast.finder.IfGreaterThanOrEqualExpression;
 import io.cdep.cdep.ast.finder.IntegerExpression;
 import io.cdep.cdep.ast.finder.LongConstantExpression;
@@ -132,24 +134,26 @@ public class FindModuleFunctionTableBuilder {
       Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
 
     // Something like iPhone10.2.sdk or iPhone.sdk
-    Expression osxSysrootSDKName =
-        new CallExpression(
-            new CurryExpression(ExternalFunctionExpression.FILE_GETNAME, osxSysroot));
+    AssignmentExpression osxSysrootSDKName =
+        new AssignmentExpression(
+            "osxSysrootSDKName",
+            new CallExpression(
+                new CurryExpression(ExternalFunctionExpression.FILE_GETNAME, osxSysroot))
+        );
 
     // Something like iPhone10.2 or iPhone
-    CurryExpression indexOfLastDot =
-        new CurryExpression(
-            new CurryExpression(ExternalFunctionExpression.STRING_LASTINDEXOF,
-                new StringExpression(".")),
-            osxSysrootSDKName);
-
-    Expression qualified =
-        new CurryExpression(
+    AssignmentExpression combinedPlatformAndSDK =
+        new AssignmentExpression(
+            "combinedPlatformAndSDK",
             new CurryExpression(
-                new CurryExpression(ExternalFunctionExpression.STRING_SUBSTRING_BEGIN_END,
-                    indexOfLastDot),
-                new IntegerExpression(0)),
-            osxSysrootSDKName);
+                new CurryExpression(
+                    new CurryExpression(ExternalFunctionExpression.STRING_SUBSTRING_BEGIN_END,
+                        new CurryExpression(
+                            new CurryExpression(ExternalFunctionExpression.STRING_LASTINDEXOF,
+                                new StringExpression(".")),
+                            osxSysrootSDKName)),
+                    new IntegerExpression(0)),
+                osxSysrootSDKName));
 
     // Gather up the platform names
     Map<Expression, Expression> platforms = new HashMap<>();
@@ -171,12 +175,27 @@ public class FindModuleFunctionTableBuilder {
               dependencies));
     }
 
+    Expression prior = new AbortExpression(
+        String.format("OSX SDK '%%s' is not supported by module '%s'. Supported: %s",
+            resolved.cdepManifestYml.coordinate, supported), combinedPlatformAndSDK);
+
+    for (iOSArchive archive : resolved.cdepManifestYml.iOS.archives) {
+      prior = new IfExpression(
+          new CurryExpression(
+              new CurryExpression(ExternalFunctionExpression.STRING_STARTSWITH,
+                  new StringExpression(archive.platform.toString())),
+              combinedPlatformAndSDK),
+          buildiosArchiveExpression(
+              resolved,
+              archive,
+              dependencies),
+          prior);
+    }
+
     return new CaseExpression(
-        qualified,
+        combinedPlatformAndSDK,
         platforms,
-        new AbortExpression(
-            String.format("OSX SDK '%%s' is not supported by module '%s'. Supported: %s",
-                resolved.cdepManifestYml.coordinate, supported), qualified));
+        prior);
   }
 
   private Expression buildiosArchiveExpression(

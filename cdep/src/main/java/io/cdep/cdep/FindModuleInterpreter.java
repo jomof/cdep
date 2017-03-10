@@ -16,6 +16,7 @@
 package io.cdep.cdep;
 
 import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
 import io.cdep.cdep.ast.finder.CallExpression;
 import io.cdep.cdep.ast.finder.CaseExpression;
 import io.cdep.cdep.ast.finder.CurryExpression;
@@ -25,6 +26,7 @@ import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
 import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.IfExpression;
 import io.cdep.cdep.ast.finder.IfGreaterThanOrEqualExpression;
 import io.cdep.cdep.ast.finder.IntegerExpression;
 import io.cdep.cdep.ast.finder.LongConstantExpression;
@@ -50,7 +52,7 @@ class FindModuleInterpreter {
       String androidStlType,
       String androidTargetAbi) throws InvocationTargetException, IllegalAccessException {
     FindModuleExpression function = table.findFunctions.get(functionName);
-    Map<ParameterExpression, String> parameters = new HashMap<>();
+    Map<ParameterExpression, Object> parameters = new HashMap<>();
     parameters.put(function.targetPlatform, targetPlatform);
     parameters.put(function.systemVersion, systemVersion);
     parameters.put(function.androidStlType, androidStlType);
@@ -65,14 +67,14 @@ class FindModuleInterpreter {
       String osxArchitecture[],
       String osxSysroot) throws InvocationTargetException, IllegalAccessException {
     FindModuleExpression function = table.findFunctions.get(functionName);
-    Map<ParameterExpression, String> parameters = new HashMap<>();
+    Map<ParameterExpression, Object> parameters = new HashMap<>();
     parameters.put(function.targetPlatform, targetPlatform);
     parameters.put(function.osxSysroot, osxSysroot);
     return (FoundiOSModuleExpression) interpret(parameters, function.expression);
   }
 
   private static Object interpret(
-      Map<ParameterExpression, String> parameters,
+      Map<ParameterExpression, Object> parameters,
       Object expression) throws InvocationTargetException, IllegalAccessException {
 
     if (expression instanceof String) {
@@ -87,6 +89,15 @@ class FindModuleInterpreter {
         }
       }
       return interpret(parameters, caseExpression.defaultCase);
+    } else if (expression instanceof AssignmentExpression) {
+      Object result = parameters.get(expression);
+      if (result != null) {
+        return result;
+      }
+      AssignmentExpression specific = (AssignmentExpression) expression;
+      result = interpret(parameters, specific.expression);
+      parameters.put(specific, result);
+      return result;
     } else if (expression instanceof ParameterExpression) {
       return parameters.get(expression);
     } else if (expression instanceof AbortExpression) {
@@ -148,7 +159,11 @@ class FindModuleInterpreter {
           parms[i] = coerce(values.get(i + parmStart),
               method.getParameterTypes()[i]);
         }
-        return method.invoke(thiz, parms);
+        try {
+          return method.invoke(thiz, parms);
+        } catch (Exception e) {
+          throw e;
+        }
       }
 
       throw new RuntimeException(originalFunction.toString());
@@ -162,6 +177,13 @@ class FindModuleInterpreter {
     } else if (expression instanceof IntegerExpression) {
       IntegerExpression specific = (IntegerExpression) expression;
       return specific.value;
+    } else if (expression instanceof IfExpression) {
+      IfExpression specific = (IfExpression) expression;
+      boolean value = (boolean) interpret(parameters, specific.bool);
+
+      return value
+          ? interpret(parameters, specific.trueExpression)
+          : interpret(parameters, specific.falseExpression);
     }
     throw new RuntimeException(expression.toString());
   }

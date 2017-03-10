@@ -25,6 +25,12 @@ public class ExternalFunctionExpression extends FunctionExpression {
           int.class,
           int.class);
 
+  final public static ExternalFunctionExpression STRING_STARTSWITH =
+      new ExternalFunctionExpression(
+          String.class,
+          "startsWith",
+          String.class);
+
   final public Method method;
 
   private ExternalFunctionExpression(Class clazz, String functionName, Class<?>... parameterTypes) {

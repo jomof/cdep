@@ -88,6 +88,32 @@ public class TestFindModuleFunctionTableBuilder {
 //        ExpressionUtils.getAllFoundModuleExpressions(table);
     }
 
+  @Test
+  public void testiOSNonSpecificSDK() throws Exception {
+    ResolvedManifest resolved = ResolvedManifests.sqlite();
+    FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+    builder.addManifest(resolved);
+    FunctionTableExpression table = builder.build();
+    String zip = FindModuleInterpreter.findiOS(table,
+        resolved.cdepManifestYml.coordinate,
+        "Darwin",
+        new String[]{"armv7s"},
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
+        .archives[0].file.getPath();
+    assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
+
+    zip = FindModuleInterpreter.findiOS(table,
+        resolved.cdepManifestYml.coordinate,
+        "Darwin",
+        new String[]{"x86"},
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk")
+        .archives[0].file.getPath();
+    assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
+
+//        new CMakeGenerator(environment).generate(table);
+//        ExpressionUtils.getAllFoundModuleExpressions(table);
+  }
+
     @Test
     public void testiOSUnknownPlatform() throws Exception {
         ResolvedManifest resolved = ResolvedManifests.sqlite();
