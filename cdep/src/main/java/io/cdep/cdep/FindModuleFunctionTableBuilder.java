@@ -15,17 +15,35 @@
 */
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.CaseExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
+import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.IfGreaterThanOrEqualExpression;
+import io.cdep.cdep.ast.finder.LongConstantExpression;
+import io.cdep.cdep.ast.finder.ModuleArchive;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.iOSPlatformExpression;
 import io.cdep.cdep.generator.AndroidAbi;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
-
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class FindModuleFunctionTableBuilder {
 
@@ -126,7 +144,8 @@ public class FindModuleFunctionTableBuilder {
                             dependencies));
         }
 
-        return new CaseExpression(iOSPlatform,
+      return new CaseExpression(
+          iOSPlatform,
                 platforms,
                 new AbortExpression(
                         String.format("iOS platform '%%s' is not supported by module '%s'. Supported: %s",
