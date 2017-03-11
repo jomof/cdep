@@ -3,11 +3,11 @@ package io.cdep.cdep.ast.finder;
 
 import java.lang.reflect.Modifier;
 
-public class CallFunctionExpression extends Expression {
+public class InvokeFunctionExpression extends Expression {
     final public ExternalFunctionExpression function;
     final public Expression parameters[];
 
-    public CallFunctionExpression(ExternalFunctionExpression function, Expression... parameters) {
+    public InvokeFunctionExpression(ExternalFunctionExpression function, Expression... parameters) {
         this.function = function;
         this.parameters = parameters;
         int expectedParameters = function.method.getParameterCount();
@@ -16,7 +16,7 @@ public class CallFunctionExpression extends Expression {
         }
         if (parameters.length != expectedParameters) {
             throw new RuntimeException(String.format(
-                    "CallFunctionExpression '%s' expected %s parameters but received %s",
+                    "InvokeFunctionExpression '%s' expected %s parameters but received %s",
                     function.method, expectedParameters, parameters.length));
         }
     }

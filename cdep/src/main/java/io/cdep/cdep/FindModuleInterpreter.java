@@ -97,15 +97,15 @@ class FindModuleInterpreter {
         return interpret(parameters, ifexpr.trueExpression);
       }
       return interpret(parameters, ifexpr.falseExpression);
-    } else if (expression instanceof LongConstantExpression) {
-      LongConstantExpression longConst = (LongConstantExpression) expression;
+    } else if (expression instanceof LongExpression) {
+      LongExpression longConst = (LongExpression) expression;
       return longConst.value;
     } else if (expression instanceof FoundAndroidModuleExpression) {
       return expression;
     } else if (expression instanceof FoundiOSModuleExpression) {
       return expression;
-    } else if (expression instanceof CallFunctionExpression) {
-      CallFunctionExpression specific = (CallFunctionExpression) expression;
+    } else if (expression instanceof InvokeFunctionExpression) {
+      InvokeFunctionExpression specific = (InvokeFunctionExpression) expression;
       Object thiz = null;
       int firstParameter = 0;
       if (!Modifier.isStatic(specific.function.method.getModifiers())) {

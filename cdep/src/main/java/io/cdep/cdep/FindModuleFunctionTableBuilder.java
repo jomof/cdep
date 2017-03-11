@@ -114,14 +114,14 @@ public class FindModuleFunctionTableBuilder {
         AssignmentExpression osxSysrootSDKName =
                 new AssignmentExpression(
                         "osxSysrootSDKName",
-                        new CallFunctionExpression(
+                        new InvokeFunctionExpression(
                                 ExternalFunctionExpression.FILE_GETNAME,
                                 osxSysroot));
 
         // The position of the right-most dot
         AssignmentExpression lastDotPosition = new AssignmentExpression(
                 "lastDotPosition",
-                new CallFunctionExpression(
+                new InvokeFunctionExpression(
                         ExternalFunctionExpression.STRING_LASTINDEXOF,
                         osxSysrootSDKName,
                         new StringExpression(".")));
@@ -130,7 +130,7 @@ public class FindModuleFunctionTableBuilder {
         AssignmentExpression combinedPlatformAndSDK =
                 new AssignmentExpression(
                         "combinedPlatformAndSDK",
-                        new CallFunctionExpression(
+                        new InvokeFunctionExpression(
                                 ExternalFunctionExpression.STRING_SUBSTRING_BEGIN_END,
                                 osxSysrootSDKName,
                                 new IntegerExpression(0),
@@ -162,7 +162,7 @@ public class FindModuleFunctionTableBuilder {
 
         for (iOSArchive archive : resolved.cdepManifestYml.iOS.archives) {
             prior = new IfExpression(
-                    new CallFunctionExpression(
+                    new InvokeFunctionExpression(
                             ExternalFunctionExpression.STRING_STARTSWITH,
                             combinedPlatformAndSDK,
                             new StringExpression(archive.platform.toString())),
@@ -299,7 +299,7 @@ public class FindModuleFunctionTableBuilder {
         for (long platform : platforms) {
             prior = new IfGreaterThanOrEqualExpression(
                     systemVersion,
-                    new LongConstantExpression(platform),
+                    new LongExpression(platform),
                     buildAndroidAbiExpression(resolved, grouped.get(platform), dependencies),
                     prior);
         }

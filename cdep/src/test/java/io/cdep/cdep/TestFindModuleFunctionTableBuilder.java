@@ -15,17 +15,19 @@
 */
 package io.cdep.cdep;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-
 import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.generator.CMakeGenerator;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import java.io.File;
 import org.junit.Test;
+
+import java.io.File;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 public class TestFindModuleFunctionTableBuilder {
 
@@ -84,7 +86,7 @@ public class TestFindModuleFunctionTableBuilder {
             .archives[0].file.getPath();
         assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
 
-//        new CMakeGenerator(environment).generate(table);
+        new CMakeGenerator(environment).generate(table);
 //        ExpressionUtils.getAllFoundModuleExpressions(table);
     }
 

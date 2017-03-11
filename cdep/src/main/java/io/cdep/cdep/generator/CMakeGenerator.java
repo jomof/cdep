@@ -16,28 +16,20 @@
 package io.cdep.cdep.generator;
 
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.CaseExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
-import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.IfGreaterThanOrEqualExpression;
-import io.cdep.cdep.ast.finder.LongConstantExpression;
-import io.cdep.cdep.ast.finder.ModuleArchive;
-import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
-import io.cdep.cdep.ast.finder.iOSPlatformExpression;
+import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.utils.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CMakeGenerator {
     final static private String CONFIG_FILE_NAME = "cdep-dependencies-config.cmake";
 
     final private GeneratorEnvironment environment;
     final private String slash;
+    final private Map<ParameterExpression, String> assignments = new HashMap<>();
 
     public CMakeGenerator(GeneratorEnvironment environment) {
         this.environment = environment;
@@ -49,17 +41,17 @@ public class CMakeGenerator {
         StringBuilder sb = new StringBuilder();
         sb.append("# GENERATED FILE. DO NOT EDIT.\n");
         sb.append("\n" +
-            "# Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
-            "if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
-            "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" +
-            "  set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n" +
-            "else()\n" +
-            "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" +
-            "  set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
-            "endif()\n");
+                "# Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
+                "if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
+                "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" +
+                "  set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n" +
+                "else()\n" +
+                "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" +
+                "  set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
+                "endif()\n");
 
         for (FindModuleExpression findFunction : table.findFunctions.values()) {
-            generateFindAppender(0, findFunction, findFunction, sb);
+            generateFindAppender(0, findFunction, findFunction, null, sb);
         }
 
         sb.append("\nfunction(add_all_cdep_dependencies target)\n");
@@ -81,6 +73,7 @@ public class CMakeGenerator {
             int indent,
             FindModuleExpression signature,
             Expression expression,
+            String returnValueName,
             StringBuilder sb) {
 
         String prefix = new String(new char[indent * 2]).replace('\0', ' ');
@@ -102,13 +95,14 @@ public class CMakeGenerator {
             sb.append(String.format("%sSET(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate));
             String appenderFunctionName = getAddDependencyFunctionName(signature.coordinate);
             sb.append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
-            generateFindAppender(indent + 1, signature, specific.expression, sb);
+            generateFindAppender(indent + 1, signature, specific.expression, null, sb);
             sb.append("endfunction({appenderFunctionName})\n".replace("{appenderFunctionName}", appenderFunctionName));
             return;
         } else if (expression instanceof CaseExpression) {
             CaseExpression specific = (CaseExpression) expression;
             StringBuilder varBuilder = new StringBuilder();
-            generateFindAppender(indent, signature, specific.var, varBuilder);
+            generateAssignments(prefix, signature, specific.var, sb, null);
+            generateFindAppender(indent, signature, specific.var, null, varBuilder);
             String var = varBuilder.toString();
             boolean first = true;
             for (Expression matchValueExpression : specific.cases.keySet()) {
@@ -119,54 +113,96 @@ public class CMakeGenerator {
                 } else {
                     sb.append(String.format("%selseif(%s STREQUAL \"%s\")\n", prefix, var, matchValue));
                 }
-                generateFindAppender(indent + 1, signature, specific.cases.get(matchValueExpression), sb);
+                generateFindAppender(indent + 1, signature, specific.cases.get(matchValueExpression), null, sb);
             }
             sb.append(String.format("%selse()\n", prefix));
-            generateFindAppender(indent + 1, signature, specific.defaultCase, sb);
+            generateFindAppender(indent + 1, signature, specific.defaultCase, null, sb);
             sb.append(String.format("%sendif()\n", prefix));
 
             return;
         } else if (expression instanceof IfGreaterThanOrEqualExpression) {
             IfGreaterThanOrEqualExpression specific = (IfGreaterThanOrEqualExpression) expression;
             StringBuilder varBuilder = new StringBuilder();
-            generateFindAppender(indent, signature, specific.value, varBuilder);
+            generateFindAppender(indent, signature, specific.value, null, varBuilder);
             String var = varBuilder.toString();
             StringBuilder compareToBuilder = new StringBuilder();
-            generateFindAppender(indent, signature, specific.compareTo, compareToBuilder);
+            generateFindAppender(indent, signature, specific.compareTo, null, compareToBuilder);
             String compareTo = compareToBuilder.toString();
             sb.append(String.format("%sif((%s GREATER %s) OR (%s EQUAL %s))\n",
                     prefix, var, compareTo, var, compareTo));
-            generateFindAppender(indent + 1, signature, specific.trueExpression, sb);
+            generateFindAppender(indent + 1, signature, specific.trueExpression, null, sb);
             sb.append(String.format("%selse()\n", prefix));
-            generateFindAppender(indent + 1, signature, specific.falseExpression, sb);
+            generateFindAppender(indent + 1, signature, specific.falseExpression, null, sb);
             sb.append(String.format("%sendif()\n", prefix));
+            return;
+        } else if (expression instanceof IfExpression) {
+            IfExpression specific = (IfExpression) expression;
+            StringBuilder varBuilder = new StringBuilder();
+            generateAssignments(prefix, signature, specific.bool, sb, null);
+            generateFindAppender(indent, signature, specific.bool, null, varBuilder);
+            String var = varBuilder.toString();
+            sb.append(String.format("%sif(%s)\n", prefix, var));
+            generateFindAppender(indent + 1, signature, specific.trueExpression, null, sb);
+            sb.append(String.format("%selse(%s)\n", prefix, var));
+            generateFindAppender(indent + 1, signature, specific.falseExpression, null, sb);
+            sb.append(String.format("%sendif(%s)\n", prefix, var));
+            return;
+        } else if (expression instanceof AssignmentExpression) {
+            String identifier = assignments.get(expression);
+            if (identifier != null) {
+                sb.append(identifier);
+                return;
+            }
+            throw new RuntimeException("Should have called generateAssignments before now");
+        } else if (expression instanceof InvokeFunctionExpression) {
+            InvokeFunctionExpression specific = (InvokeFunctionExpression) expression;
+            String parms[] = new String[specific.parameters.length];
+            for (int i = 0; i < specific.parameters.length; ++i) {
+                Expression parm = specific.parameters[i];
+                generateFindAppender(indent + 1, signature, parm, null, sb);
+                parms[i] = assignments.get(parm);
+            }
+            if (specific.function == ExternalFunctionExpression.FILE_GETNAME) {
+                sb.append(String.format("%sget_filename_component(%s %s NAME)\n",
+                        prefix,
+                        returnValueName,
+                        parms[0]));
+            } else if (specific.function == ExternalFunctionExpression.STRING_LASTINDEXOF) {
+                sb.append(String.format("%sstring(FIND %s %s %s REVERSE)\n",
+                        prefix,
+                        parms[0],
+                        parms[1],
+                        returnValueName));
+            } else if (specific.function == ExternalFunctionExpression.STRING_SUBSTRING_BEGIN_END) {
+                sb.append(String.format("%sstring(SUBSTRING %s %s %s %s REVERSE)\n",
+                        prefix,
+                        parms[0],
+                        parms[1],
+                        parms[2],
+                        returnValueName));
+            } else if (specific.function == ExternalFunctionExpression.STRING_STARTSWITH) {
+                sb.append(String.format("%s MATCHES \"$%s.*\"",
+                        parms[0],
+                        parms[1]));
+            } else {
+                throw new RuntimeException(specific.function.method.getName());
+            }
             return;
         } else if (expression instanceof ParameterExpression) {
             ParameterExpression specific = (ParameterExpression) expression;
-            if (specific == signature.targetPlatform) {
-                sb.append("CMAKE_SYSTEM_NAME");
-                return;
-            }
-            if (specific == signature.androidStlType) {
-                sb.append("CDEP_DETERMINED_ANDROID_RUNTIME");
-                return;
-            }
-            if (specific == signature.systemVersion) {
-                sb.append("CMAKE_SYSTEM_VERSION");
-                return;
-            }
-            if (specific == signature.androidTargetAbi) {
-                sb.append("CDEP_DETERMINED_ANDROID_ABI");
-                return;
-            }
-          if (specific == signature.osxSysroot) {
-                sb.append("IOS_PLATFORM");
-                return;
-            }
-            throw new RuntimeException(specific.name);
-        } else if (expression instanceof LongConstantExpression) {
-            LongConstantExpression specific = (LongConstantExpression) expression;
+            sb.append(parameterName(signature, specific));
+            return;
+        } else if (expression instanceof LongExpression) {
+            LongExpression specific = (LongExpression) expression;
             sb.append(specific.value.toString());
+            return;
+        } else if (expression instanceof IntegerExpression) {
+            IntegerExpression specific = (IntegerExpression) expression;
+            sb.append(specific.value);
+            return;
+        } else if (expression instanceof StringExpression) {
+            StringExpression specific = (StringExpression) expression;
+            sb.append(specific.value);
             return;
         } else if (expression instanceof FoundAndroidModuleExpression) {
             FoundAndroidModuleExpression specific = (FoundAndroidModuleExpression) expression;
@@ -213,7 +249,7 @@ public class CMakeGenerator {
             Object parms[] = new String[specific.parameters.length];
             for (int i = 0; i < parms.length; ++i) {
                 StringBuilder argBuilder = new StringBuilder();
-                generateFindAppender(0, signature, specific.parameters[i], argBuilder);
+                generateFindAppender(0, signature, specific.parameters[i], null, argBuilder);
                 parms[i] = String.format("${%s}", argBuilder.toString());
             }
             String message = String.format(specific.message, parms);
@@ -221,7 +257,108 @@ public class CMakeGenerator {
             return;
         }
 
-        throw new RuntimeException(expression.toString());
+        throw new RuntimeException(expression.getClass().toString());
+    }
+
+    private String parameterName(FindModuleExpression signature, ParameterExpression expr) {
+        if (expr == signature.targetPlatform) {
+            return "CMAKE_SYSTEM_NAME";
+        }
+        if (expr == signature.androidStlType) {
+            return "CDEP_DETERMINED_ANDROID_RUNTIME";
+        }
+        if (expr == signature.systemVersion) {
+            return "CMAKE_SYSTEM_VERSION";
+        }
+        if (expr == signature.androidTargetAbi) {
+            return "CDEP_DETERMINED_ANDROID_ABI";
+        }
+        if (expr == signature.osxSysroot) {
+            return "CMAKE_OSX_SYSROOT";
+        }
+
+        throw new RuntimeException();
+    }
+
+    private String generateAssignments(String prefix, FindModuleExpression signature, Expression expr, StringBuilder sb, String assignResult) {
+        if (expr instanceof AssignmentExpression) {
+            AssignmentExpression specific = (AssignmentExpression) expr;
+            String identifier = "CDEP_" + specific.name.toUpperCase();
+            if (assignments.get(specific) != null) {
+                return String.format("${%s}", identifier);
+            }
+            assignments.put(specific, identifier);
+            generateAssignments(prefix, signature, specific.expression, sb, identifier);
+            return String.format("${%s}", identifier);
+        } else if (expr instanceof ExternalFunctionExpression) {
+            ExternalFunctionExpression specific = (ExternalFunctionExpression) expr;
+            if (specific == ExternalFunctionExpression.STRING_STARTSWITH) {
+                assert assignResult == null;
+                return null;
+            }
+            throw new RuntimeException(specific.method.toString());
+        } else if (expr instanceof InvokeFunctionExpression) {
+            InvokeFunctionExpression specific = (InvokeFunctionExpression) expr;
+            String values[] = new String[specific.parameters.length];
+            for (int i = 0; i < specific.parameters.length; ++i) {
+                values[i] = generateAssignments(prefix, signature, specific.parameters[i], sb, null);
+                if (values[i] == null) {
+                    throw new RuntimeException(specific.parameters[i].getClass().toString());
+                }
+            }
+
+            if (specific.function == ExternalFunctionExpression.FILE_GETNAME) {
+                if (assignResult == null) {
+                    throw new RuntimeException();
+                }
+                sb.append(String.format("%sget_filename_component(%s %s NAME)\n",
+                        prefix,
+                        assignResult,
+                        values[0]));
+                return null;
+
+            } else if (specific.function == ExternalFunctionExpression.STRING_LASTINDEXOF) {
+                if (assignResult == null) {
+                    throw new RuntimeException();
+                }
+                sb.append(String.format("%sstring(FIND %s %s %s REVERSE)\n",
+                        prefix,
+                        values[0],
+                        values[1],
+                        assignResult));
+                return null;
+            } else if (specific.function == ExternalFunctionExpression.STRING_SUBSTRING_BEGIN_END) {
+                if (assignResult == null) {
+                    throw new RuntimeException();
+                }
+                sb.append(String.format("%sstring(SUBSTRING %s %s %s %s REVERSE)\n",
+                        prefix,
+                        values[0],
+                        values[1],
+                        values[2],
+                        assignResult));
+                return null;
+            } else if (specific.function == ExternalFunctionExpression.STRING_STARTSWITH) {
+                if (assignResult != null) {
+                    throw new RuntimeException();
+                }
+                return null;
+            }
+            throw new RuntimeException(specific.function.method.getName());
+        } else if (expr instanceof StringExpression) {
+            assert assignResult == null;
+            StringExpression specific = (StringExpression) expr;
+            return "\"" + specific.value + "\"";
+        } else if (expr instanceof ParameterExpression) {
+            ParameterExpression specific = (ParameterExpression) expr;
+            assert assignResult == null;
+            return String.format("${%s}", parameterName(signature, specific));
+        } else if (expr instanceof IntegerExpression) {
+            assert assignResult == null;
+            IntegerExpression specific = (IntegerExpression) expr;
+            return String.format("%s", specific.value);
+        }
+        throw new RuntimeException(expr.getClass().toString());
     }
 
     private String getStringValue(Expression expression) {
@@ -231,9 +368,9 @@ public class CMakeGenerator {
         if (expression instanceof iOSPlatformExpression) {
             iOSPlatformExpression specific = (iOSPlatformExpression) expression;
             switch (specific.platform) {
-              case iPhoneOS:
+                case iPhoneOS:
                     return "OS";
-              case iPhoneSimulator:
+                case iPhoneSimulator:
                     return "SIMULATOR";
                 default:
                     throw new RuntimeException(specific.toString());

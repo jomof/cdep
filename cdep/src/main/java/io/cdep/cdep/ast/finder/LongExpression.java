@@ -15,11 +15,11 @@
 */
 package io.cdep.cdep.ast.finder;
 
-public class LongConstantExpression extends Expression {
+public class LongExpression extends Expression {
 
     final public Long value;
 
-    public LongConstantExpression(Long value) {
+    public LongExpression(Long value) {
         this.value = value;
     }
 }

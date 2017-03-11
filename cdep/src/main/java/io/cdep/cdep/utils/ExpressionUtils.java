@@ -46,7 +46,7 @@ abstract public class ExpressionUtils {
             getAllFoundModuleExpressions(ifexpr.trueExpression, foundModules);
             getAllFoundModuleExpressions(ifexpr.falseExpression, foundModules);
             return;
-        } else if (expression instanceof LongConstantExpression) {
+        } else if (expression instanceof LongExpression) {
             return;
         } else if (expression instanceof FoundAndroidModuleExpression) {
             foundModules.add(expression);
