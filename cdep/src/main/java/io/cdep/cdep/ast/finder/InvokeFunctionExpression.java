@@ -10,7 +10,7 @@ public class InvokeFunctionExpression extends Expression {
     public InvokeFunctionExpression(ExternalFunctionExpression function, Expression... parameters) {
         this.function = function;
         this.parameters = parameters;
-        int expectedParameters = function.method.getParameterCount();
+        int expectedParameters = function.method.getParameterTypes().length;
         if (!Modifier.isStatic(function.method.getModifiers())) {
             expectedParameters++;
         }
