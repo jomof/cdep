@@ -85,10 +85,10 @@ public class CMakeGenerator {
             sb.append(String.format("%sif(%s)\n", prefix, coordinateVar));
             sb.append(String.format("%s  message(FATAL_ERROR \"CDep module '$(%s}' was already defined\")\n", prefix, coordinateVar));
             sb.append(String.format("%sendif(%s)\n", prefix, coordinateVar));
-            sb.append(String.format("%set(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate));
+            sb.append(String.format("%sset(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate));
             String appenderFunctionName = getAddDependencyFunctionName(signature.coordinate);
             sb.append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
-            sb.append(String.format("  set(CDEP_EXPLODED_ARCHIVE_FOLDER \"%s\")\n\n",
+            sb.append(String.format("%sset(CDEP_EXPLODED_ARCHIVE_FOLDER \"%s\")\n\n", prefix,
                     getCMakePath(environment.getPackageUnzipFolder(specific.coordinate))));
             sb.append("  # Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
                     "  if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
