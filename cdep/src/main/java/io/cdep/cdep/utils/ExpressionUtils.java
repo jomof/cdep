@@ -46,6 +46,12 @@ abstract public class ExpressionUtils {
             getAllFoundModuleExpressions(ifexpr.trueExpression, foundModules);
             getAllFoundModuleExpressions(ifexpr.falseExpression, foundModules);
             return;
+        } else if (expression instanceof IfExpression) {
+            IfExpression ifexpr = (IfExpression) expression;
+            getAllFoundModuleExpressions(ifexpr.bool, foundModules);
+            getAllFoundModuleExpressions(ifexpr.trueExpression, foundModules);
+            getAllFoundModuleExpressions(ifexpr.falseExpression, foundModules);
+            return;
         } else if (expression instanceof LongExpression) {
             return;
         } else if (expression instanceof FoundAndroidModuleExpression) {
@@ -64,8 +70,16 @@ abstract public class ExpressionUtils {
             FindModuleExpression findModule = (FindModuleExpression) expression;
             getAllFoundModuleExpressions(findModule.expression, foundModules);
             return;
+        } else if (expression instanceof InvokeFunctionExpression) {
+            InvokeFunctionExpression specific = (InvokeFunctionExpression) expression;
+            for (int i = 0; i < specific.parameters.length; ++i) {
+                getAllFoundModuleExpressions(specific.parameters[i], foundModules);
+            }
+            return;
+        } else if (expression instanceof StringExpression) {
+            return;
         }
-        throw new RuntimeException(expression.toString());
+        throw new RuntimeException(expression.getClass().toString());
     }
 
     /*
