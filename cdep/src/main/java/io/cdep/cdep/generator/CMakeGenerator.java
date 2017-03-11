@@ -162,25 +162,7 @@ public class CMakeGenerator {
                 generateFindAppender(indent + 1, signature, parm, null, sb);
                 parms[i] = assignments.get(parm);
             }
-            if (specific.function == ExternalFunctionExpression.FILE_GETNAME) {
-                sb.append(String.format("%sget_filename_component(%s %s NAME)\n",
-                        prefix,
-                        returnValueName,
-                        parms[0]));
-            } else if (specific.function == ExternalFunctionExpression.STRING_LASTINDEXOF) {
-                sb.append(String.format("%sstring(FIND %s %s %s REVERSE)\n",
-                        prefix,
-                        parms[0],
-                        parms[1],
-                        returnValueName));
-            } else if (specific.function == ExternalFunctionExpression.STRING_SUBSTRING_BEGIN_END) {
-                sb.append(String.format("%sstring(SUBSTRING %s %s %s %s)\n",
-                        prefix,
-                        parms[0],
-                        parms[1],
-                        parms[2],
-                        returnValueName));
-            } else if (specific.function == ExternalFunctionExpression.STRING_STARTSWITH) {
+            if (specific.function == ExternalFunctionExpression.STRING_STARTSWITH) {
                 sb.append(String.format("%s MATCHES \"$%s.*\"",
                         parms[0],
                         parms[1]));
@@ -290,13 +272,6 @@ public class CMakeGenerator {
             assignments.put(specific, identifier);
             generateAssignments(prefix, signature, specific.expression, sb, identifier);
             return String.format("${%s}", identifier);
-        } else if (expr instanceof ExternalFunctionExpression) {
-            ExternalFunctionExpression specific = (ExternalFunctionExpression) expr;
-            if (specific == ExternalFunctionExpression.STRING_STARTSWITH) {
-                assert assignResult == null;
-                return null;
-            }
-            throw new RuntimeException(specific.method.toString());
         } else if (expr instanceof InvokeFunctionExpression) {
             InvokeFunctionExpression specific = (InvokeFunctionExpression) expr;
             String values[] = new String[specific.parameters.length];
@@ -331,7 +306,7 @@ public class CMakeGenerator {
                 if (assignResult == null) {
                     throw new RuntimeException();
                 }
-                sb.append(String.format("%sstring(SUBSTRING %s %s %s %s REVERSE)\n",
+                sb.append(String.format("%sstring(SUBSTRING %s %s %s %s)\n",
                         prefix,
                         values[0],
                         values[1],
@@ -364,17 +339,6 @@ public class CMakeGenerator {
     private String getStringValue(Expression expression) {
         if (expression instanceof StringExpression) {
             return ((StringExpression) expression).value;
-        }
-        if (expression instanceof iOSPlatformExpression) {
-            iOSPlatformExpression specific = (iOSPlatformExpression) expression;
-            switch (specific.platform) {
-                case iPhoneOS:
-                    return "OS";
-                case iPhoneSimulator:
-                    return "SIMULATOR";
-                default:
-                    throw new RuntimeException(specific.toString());
-            }
         }
         throw new RuntimeException(expression.toString());
     }
