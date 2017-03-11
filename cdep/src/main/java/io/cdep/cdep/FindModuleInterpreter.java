@@ -15,30 +15,12 @@
 */
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.CallExpression;
-import io.cdep.cdep.ast.finder.CaseExpression;
-import io.cdep.cdep.ast.finder.CurryExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
-import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.IfExpression;
-import io.cdep.cdep.ast.finder.IfGreaterThanOrEqualExpression;
-import io.cdep.cdep.ast.finder.IntegerExpression;
-import io.cdep.cdep.ast.finder.LongConstantExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.*;
+
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 class FindModuleInterpreter {
@@ -122,52 +104,22 @@ class FindModuleInterpreter {
       return expression;
     } else if (expression instanceof FoundiOSModuleExpression) {
       return expression;
-    } else if (expression instanceof CallExpression) {
-      CallExpression specific = (CallExpression) expression;
-      return interpret(parameters, specific.function);
-    } else if (expression instanceof CurryExpression) {
-      CurryExpression specific = (CurryExpression) expression;
-      Object value = interpret(parameters, specific.finalParameter);
-      List<Object> values = new ArrayList<>();
-      values.add(value);
-
-      Object originalFunction = interpret(parameters, specific.originalFunction);
-      if (originalFunction instanceof IncompleteMethod) {
-        IncompleteMethod incomplete = (IncompleteMethod) originalFunction;
-        originalFunction = incomplete.method;
-        values.addAll(incomplete.parameters);
+    } else if (expression instanceof CallFunctionExpression) {
+      CallFunctionExpression specific = (CallFunctionExpression) expression;
+      Object thiz = null;
+      int firstParameter = 0;
+      if (!Modifier.isStatic(specific.function.method.getModifiers())) {
+        thiz = coerce(interpret(parameters, specific.parameters[0]),
+                specific.function.method.getDeclaringClass());
+        ++firstParameter;
       }
-
-      if (originalFunction instanceof Method) {
-        Method method = (Method) originalFunction;
-        int expectedParameters = method.getParameterTypes().length;
-        if (!Modifier.isStatic(method.getModifiers())) {
-          expectedParameters++;
-        }
-        if (expectedParameters != values.size()) {
-          return new IncompleteMethod(method, values);
-        }
-        Object thiz = null;
-        int parmStart = 0;
-        if (!Modifier.isStatic(method.getModifiers())) {
-          ++parmStart;
-          thiz = coerce(values.get(0),
-              method.getDeclaringClass());
-        }
-        Object parms[] = new Object[method.getParameterTypes().length];
-        for (int i = 0; i < parms.length; ++i) {
-          parms[i] = coerce(values.get(i + parmStart),
-              method.getParameterTypes()[i]);
-        }
-        try {
-          return method.invoke(thiz, parms);
-        } catch (Exception e) {
-          throw e;
-        }
+      Object parms[] = new Object[specific.parameters.length - firstParameter];
+      for (int i = firstParameter; i < specific.parameters.length; ++i) {
+        parms[i - firstParameter] = coerce(
+                interpret(parameters, specific.parameters[i]),
+                specific.function.method.getParameterTypes()[i - firstParameter]);
       }
-
-      throw new RuntimeException(originalFunction.toString());
-
+      return specific.function.method.invoke(thiz, parms);
     } else if (expression instanceof StringExpression) {
       StringExpression specific = (StringExpression) expression;
       return specific.value;
@@ -180,7 +132,6 @@ class FindModuleInterpreter {
     } else if (expression instanceof IfExpression) {
       IfExpression specific = (IfExpression) expression;
       boolean value = (boolean) interpret(parameters, specific.bool);
-
       return value
           ? interpret(parameters, specific.trueExpression)
           : interpret(parameters, specific.falseExpression);
@@ -207,17 +158,6 @@ class FindModuleInterpreter {
     }
 
     throw new RuntimeException(String.format("Did not coerce %s to %s", o.getClass(), clazz));
-  }
-
-  private static class IncompleteMethod {
-
-    public final List<Object> parameters;
-    public final Method method;
-
-    public IncompleteMethod(Method method, List<Object> parameters) {
-      this.parameters = parameters;
-      this.method = method;
-    }
   }
 
 }
