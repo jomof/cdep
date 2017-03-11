@@ -28,27 +28,16 @@ public class CMakeGenerator {
     final static private String CONFIG_FILE_NAME = "cdep-dependencies-config.cmake";
 
     final private GeneratorEnvironment environment;
-    final private String slash;
     final private Map<ParameterExpression, String> assignments = new HashMap<>();
 
     public CMakeGenerator(GeneratorEnvironment environment) {
         this.environment = environment;
-        this.slash = File.separator.replace("\\", "\\\\");
     }
 
     public void generate(FunctionTableExpression table) throws IOException {
         // Generate CMake Find*.cmake files
         StringBuilder sb = new StringBuilder();
         sb.append("# GENERATED FILE. DO NOT EDIT.\n");
-        sb.append("\n" +
-                "# Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
-                "if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
-                "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" +
-                "  set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n" +
-                "else()\n" +
-                "  set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" +
-                "  set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
-                "endif()\n");
 
         for (FindModuleExpression findFunction : table.findFunctions.values()) {
             generateFindAppender(0, findFunction, findFunction, null, sb);
@@ -63,6 +52,11 @@ public class CMakeGenerator {
         File file = getCMakeConfigurationFile();
         environment.out.printf("Generating %s\n", file);
         FileUtils.writeTextToFile(file, sb.toString());
+    }
+
+    private String getCMakePath(File file) {
+        return file.toString()
+                .replace("\\", "/");
     }
 
     File getCMakeConfigurationFile() {
@@ -95,6 +89,16 @@ public class CMakeGenerator {
             sb.append(String.format("%sSET(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate));
             String appenderFunctionName = getAddDependencyFunctionName(signature.coordinate);
             sb.append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
+            sb.append(String.format("  set(CDEP_EXPLODED_ARCHIVE_FOLDER \"%s\")\n\n",
+                    getCMakePath(environment.unzippedArchivesFolder)));
+            sb.append("  # Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
+                    "  if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
+                    "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" +
+                    "    set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n" +
+                    "  else()\n" +
+                    "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" +
+                    "    set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
+                    "  endif()\n\n");
             generateFindAppender(indent + 1, signature, specific.expression, null, sb);
             sb.append("endfunction({appenderFunctionName})\n".replace("{appenderFunctionName}", appenderFunctionName));
             return;
@@ -193,16 +197,19 @@ public class CMakeGenerator {
                 sb.append(String.format("%s%s(${target})\n", prefix, getAddDependencyFunctionName(dependency)));
             }
             for (ModuleArchive archive : specific.archives) {
-                File exploded = environment
-                        .getLocalUnzipFolder(specific.coordinate, archive.file);
-                sb.append(String.format("%starget_include_directories(${target} PRIVATE \"%s\")\n",
-                        prefix, new File(exploded, archive.include).toString().replace("\\", "\\\\")));
-                String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
+                File relativeUnzipFolder = environment
+                        .getRelativeUnzipFolder(specific.coordinate, archive.file);
+                sb.append(String.format("%sset(CDEP_EXPLODED_PACKAGE_FOLDER ${CDEP_EXPLODED_ARCHIVE_FOLDER} \"%s\")\n",
+                        prefix, getCMakePath(relativeUnzipFolder)));
+                sb.append(String.format(
+                        "%starget_include_directories(${target} PRIVATE \"${CDEP_EXPLODED_PACKAGE_FOLDER}/%s\")\n",
+                        prefix,
+                        archive.include));
 
                 if (archive.libraryName != null && archive.libraryName.length() > 0) {
                     sb.append(String.format(
-                            "%starget_link_libraries(${target} \"%s%s${CDEP_DETERMINED_ANDROID_ABI}%s%s\")\n",
-                            prefix, libFolder, slash, slash, archive.libraryName));
+                            "%starget_link_libraries(${target} \"${CDEP_EXPLODED_PACKAGE_FOLDER}/lib/${CDEP_DETERMINED_ANDROID_ABI}/%s\")\n",
+                            prefix, archive.libraryName));
                 }
             }
             return;
@@ -214,15 +221,14 @@ public class CMakeGenerator {
             }
             for (ModuleArchive archive : specific.archives) {
                 File exploded = environment
-                        .getLocalUnzipFolder(specific.coordinate, archive.file);
+                        .getRelativeUnzipFolder(specific.coordinate, archive.file);
                 sb.append(String.format("%starget_include_directories(${target} PRIVATE \"%s\")\n",
-                        prefix, new File(exploded, archive.include).toString().replace("\\", "\\\\")));
-                String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
-
+                        prefix, getCMakePath(new File(exploded, archive.include))));
                 if (archive.libraryName != null && archive.libraryName.length() > 0) {
+                    String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
                     sb.append(String.format(
-                            "%starget_link_libraries(${target} \"%s%s%s\")\n",
-                            prefix, libFolder, slash, archive.libraryName));
+                            "%starget_link_libraries(${target} \"%s/%s\")\n",
+                            prefix, libFolder, archive.libraryName));
                 }
             }
             return;

@@ -25,20 +25,14 @@ import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
+import org.yaml.snakeyaml.error.YAMLException;
+
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
-import org.yaml.snakeyaml.error.YAMLException;
 
 public class GeneratorEnvironment implements ManifestProvider {
 
@@ -157,6 +151,15 @@ public class GeneratorEnvironment implements ManifestProvider {
 
     public File getLocalUnzipFolder(Coordinate coordinate, URL remoteArchive) {
         File local = unzippedArchivesFolder;
+        local = new File(local, coordinate.groupId);
+        local = new File(local, coordinate.artifactId);
+        local = new File(local, coordinate.version);
+        local = new File(local, getUrlBaseName(remoteArchive));
+        return local;
+    }
+
+    public File getRelativeUnzipFolder(Coordinate coordinate, URL remoteArchive) {
+        File local = new File(".");
         local = new File(local, coordinate.groupId);
         local = new File(local, coordinate.artifactId);
         local = new File(local, coordinate.version);
