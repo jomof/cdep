@@ -20,18 +20,14 @@ import io.cdep.cdep.Coordinate;
 import java.util.Set;
 
 public class FoundAndroidModuleExpression extends Expression {
-
-    final public Coordinate coordinate; // Coordinate of the module.
     final public ModuleArchive archives[];
     final public Set<Coordinate> dependencies;
 
     public FoundAndroidModuleExpression(
-            Coordinate coordinate,
             ModuleArchive archives[],
             Set<Coordinate> dependencies) {
         assert dependencies != null;
         for (ModuleArchive archive : archives) assert archive != null;
-        this.coordinate = coordinate;
         this.archives = archives;
         this.dependencies = dependencies;
     }

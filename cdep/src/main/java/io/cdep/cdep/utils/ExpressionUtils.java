@@ -15,10 +15,13 @@
 */
 package io.cdep.cdep.utils;
 
+import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Methods for dealing with FinderExpressions.
@@ -26,14 +29,16 @@ import java.util.List;
 abstract public class ExpressionUtils {
 
     private static void getAllFoundModuleExpressions(
-            Expression expression, List<Expression> foundModules) {
+            Expression expression,
+            Map<Coordinate, List<Expression>> foundModules,
+            Coordinate coordinate) {
         if (expression instanceof CaseExpression) {
             CaseExpression caseExpression = (CaseExpression) expression;
-            getAllFoundModuleExpressions(caseExpression.var, foundModules);
+            getAllFoundModuleExpressions(caseExpression.var, foundModules, coordinate);
             for (Expression caseValue : caseExpression.cases.keySet()) {
-                getAllFoundModuleExpressions(caseExpression.cases.get(caseValue), foundModules);
+                getAllFoundModuleExpressions(caseExpression.cases.get(caseValue), foundModules, coordinate);
             }
-            getAllFoundModuleExpressions(caseExpression.defaultCase, foundModules);
+            getAllFoundModuleExpressions(caseExpression.defaultCase, foundModules, coordinate);
             return;
         } else if (expression instanceof ParameterExpression) {
             return;
@@ -41,39 +46,39 @@ abstract public class ExpressionUtils {
             return;
         } else if (expression instanceof IfGreaterThanOrEqualExpression) {
             IfGreaterThanOrEqualExpression ifexpr = (IfGreaterThanOrEqualExpression) expression;
-            getAllFoundModuleExpressions(ifexpr.value, foundModules);
-            getAllFoundModuleExpressions(ifexpr.compareTo, foundModules);
-            getAllFoundModuleExpressions(ifexpr.trueExpression, foundModules);
-            getAllFoundModuleExpressions(ifexpr.falseExpression, foundModules);
+            getAllFoundModuleExpressions(ifexpr.value, foundModules, coordinate);
+            getAllFoundModuleExpressions(ifexpr.compareTo, foundModules, coordinate);
+            getAllFoundModuleExpressions(ifexpr.trueExpression, foundModules, coordinate);
+            getAllFoundModuleExpressions(ifexpr.falseExpression, foundModules, coordinate);
             return;
         } else if (expression instanceof IfExpression) {
             IfExpression ifexpr = (IfExpression) expression;
-            getAllFoundModuleExpressions(ifexpr.bool, foundModules);
-            getAllFoundModuleExpressions(ifexpr.trueExpression, foundModules);
-            getAllFoundModuleExpressions(ifexpr.falseExpression, foundModules);
+            getAllFoundModuleExpressions(ifexpr.bool, foundModules, coordinate);
+            getAllFoundModuleExpressions(ifexpr.trueExpression, foundModules, coordinate);
+            getAllFoundModuleExpressions(ifexpr.falseExpression, foundModules, coordinate);
             return;
         } else if (expression instanceof LongExpression) {
             return;
         } else if (expression instanceof FoundAndroidModuleExpression) {
-            foundModules.add(expression);
+            addModule(foundModules, expression, coordinate);
             return;
         } else if (expression instanceof FoundiOSModuleExpression) {
-            foundModules.add(expression);
+            addModule(foundModules, expression, coordinate);
             return;
         } else if (expression instanceof FunctionTableExpression) {
             FunctionTableExpression table = (FunctionTableExpression) expression;
             for (FindModuleExpression function : table.findFunctions.values()) {
-                getAllFoundModuleExpressions(function, foundModules);
+                getAllFoundModuleExpressions(function, foundModules, coordinate);
             }
             return;
         } else if (expression instanceof FindModuleExpression) {
             FindModuleExpression findModule = (FindModuleExpression) expression;
-            getAllFoundModuleExpressions(findModule.expression, foundModules);
+            getAllFoundModuleExpressions(findModule.expression, foundModules, findModule.coordinate);
             return;
         } else if (expression instanceof InvokeFunctionExpression) {
             InvokeFunctionExpression specific = (InvokeFunctionExpression) expression;
             for (int i = 0; i < specific.parameters.length; ++i) {
-                getAllFoundModuleExpressions(specific.parameters[i], foundModules);
+                getAllFoundModuleExpressions(specific.parameters[i], foundModules, coordinate);
             }
             return;
         } else if (expression instanceof StringExpression) {
@@ -82,14 +87,28 @@ abstract public class ExpressionUtils {
         throw new RuntimeException(expression.getClass().toString());
     }
 
+    private static void addModule(
+            Map<Coordinate, List<Expression>> foundModules,
+            Expression expression,
+            Coordinate coordinate) {
+        List<Expression> modules = foundModules.get(coordinate);
+        if (modules == null) {
+            modules = new ArrayList<>();
+            foundModules.put(coordinate, modules);
+            addModule(foundModules, expression, coordinate);
+            return;
+        }
+        modules.add(expression);
+    }
+
     /*
      * Traverse the given expression and locate all of the FoundModuleExpressions.
      * These expressions contain the local module location as well as the resolved coordinate
      * and other information
      */
-    public static List<Expression> getAllFoundModuleExpressions(Expression expression) {
-        List<Expression> foundModules = new ArrayList<>();
-        getAllFoundModuleExpressions(expression, foundModules);
+    public static Map<Coordinate, List<Expression>> getAllFoundModuleExpressions(Expression expression) {
+        Map<Coordinate, List<Expression>> foundModules = new HashMap<>();
+        getAllFoundModuleExpressions(expression, foundModules, null);
         return foundModules;
     }
 

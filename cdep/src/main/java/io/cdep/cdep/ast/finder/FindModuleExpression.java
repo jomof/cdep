@@ -24,8 +24,8 @@ public class FindModuleExpression extends Expression {
     final public ParameterExpression systemVersion;
     final public ParameterExpression androidTargetAbi;
     final public ParameterExpression androidStlType;
-  final public ParameterExpression osxSysroot;
-  final public ParameterExpression osxArchitecture;
+    final public ParameterExpression osxSysroot;
+    final public ParameterExpression osxArchitecture;
     final public CaseExpression expression;
 
     public FindModuleExpression(
@@ -34,16 +34,16 @@ public class FindModuleExpression extends Expression {
             ParameterExpression systemVersion,
             ParameterExpression androidTargetAbi,
             ParameterExpression androidStlType,
-        ParameterExpression osxSysroot,
-        ParameterExpression osxArchitecture,
+            ParameterExpression osxSysroot,
+            ParameterExpression osxArchitecture,
             CaseExpression expression) {
         this.coordinate = coordinate;
         this.targetPlatform = targetPlatform;
         this.systemVersion = systemVersion;
         this.androidTargetAbi = androidTargetAbi;
         this.androidStlType = androidStlType;
-      this.osxSysroot = osxSysroot;
-      this.osxArchitecture = osxArchitecture;
+        this.osxSysroot = osxSysroot;
+        this.osxArchitecture = osxArchitecture;
         this.expression = expression;
     }
 }

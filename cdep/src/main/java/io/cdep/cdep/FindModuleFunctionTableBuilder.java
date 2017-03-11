@@ -211,7 +211,6 @@ public class FindModuleFunctionTableBuilder {
                     null);
         }
         return new FoundiOSModuleExpression(
-                resolved.cdepManifestYml.coordinate,
                 archives,
                 dependencies);
     }
@@ -353,7 +352,6 @@ public class FindModuleFunctionTableBuilder {
         for (String abi : abis) {
             supported += abi + " ";
             cases.put(new StringExpression(abi), new FoundAndroidModuleExpression(
-                    resolved.cdepManifestYml.coordinate,
                     archives,
                     dependencies));
         }

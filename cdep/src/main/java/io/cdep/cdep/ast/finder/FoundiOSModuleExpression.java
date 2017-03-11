@@ -21,17 +21,14 @@ import java.util.Set;
 
 public class FoundiOSModuleExpression extends Expression {
 
-    final public Coordinate coordinate; // Coordinate of the module.
     final public ModuleArchive archives[];
     final public Set<Coordinate> dependencies;
 
     public FoundiOSModuleExpression(
-            Coordinate coordinate,
             ModuleArchive archives[],
             Set<Coordinate> dependencies) {
         assert dependencies != null;
         for (ModuleArchive archive : archives) assert archive != null;
-        this.coordinate = coordinate;
         this.archives = archives;
         this.dependencies = dependencies;
     }

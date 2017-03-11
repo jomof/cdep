@@ -158,12 +158,16 @@ public class GeneratorEnvironment implements ManifestProvider {
         return local;
     }
 
-    public File getRelativeUnzipFolder(Coordinate coordinate, URL remoteArchive) {
-        File local = new File(".");
+    public File getPackageUnzipFolder(Coordinate coordinate) {
+        File local = unzippedArchivesFolder;
         local = new File(local, coordinate.groupId);
         local = new File(local, coordinate.artifactId);
         local = new File(local, coordinate.version);
-        local = new File(local, getUrlBaseName(remoteArchive));
+        return local;
+    }
+
+    public File getRelativeUnzipFolder(URL remoteArchive) {
+        File local = new File(getUrlBaseName(remoteArchive));
         return local;
     }
 
