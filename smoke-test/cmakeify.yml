@@ -1,4 +1,4 @@
-targets: [iOS, android]
+targets: [android]
 android:
   lib: libhello.a
   flavors:

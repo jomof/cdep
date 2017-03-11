@@ -4,6 +4,7 @@ import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.ExampleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.utils.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -30,10 +31,11 @@ public class CMakeExamplesGenerator {
             FileUtils.writeTextToFile(exampleSourceFile, example.sourceCode);
             File exampleCMakeListsFile = new File(exampleFolder, "CMakeLists.txt");
             String cmakeLists =
-                    "project({ARTIFACTID}_example_project)\n" +
-                    "include(\"{MODULE}\")\n" +
-                    "add_library({ARTIFACTID}_target SHARED {SOURCE})\n" +
-                    "{ADDFUNCTION}({ARTIFACTID}_target)\n";
+                    "cmake_minimum_required(VERSION 3.0.2)\n" +
+                            "project({ARTIFACTID}_example_project)\n" +
+                            "include(\"{MODULE}\")\n" +
+                            "add_library({ARTIFACTID}_target SHARED {SOURCE})\n" +
+                            "{ADDFUNCTION}({ARTIFACTID}_target)\n";
             cmakeLists = cmakeLists
                     .replace("{MODULE}", cmake.getCMakeConfigurationFile().getAbsolutePath())
                     .replace("{ARTIFACTID}", artifact)
