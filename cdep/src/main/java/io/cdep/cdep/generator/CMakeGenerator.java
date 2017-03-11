@@ -174,7 +174,7 @@ public class CMakeGenerator {
                         parms[1],
                         returnValueName));
             } else if (specific.function == ExternalFunctionExpression.STRING_SUBSTRING_BEGIN_END) {
-                sb.append(String.format("%sstring(SUBSTRING %s %s %s %s REVERSE)\n",
+                sb.append(String.format("%sstring(SUBSTRING %s %s %s %s)\n",
                         prefix,
                         parms[0],
                         parms[1],
