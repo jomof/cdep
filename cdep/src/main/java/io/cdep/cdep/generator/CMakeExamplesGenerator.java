@@ -20,6 +20,7 @@ public class CMakeExamplesGenerator {
 
     public void generate(FunctionTableExpression table) throws IOException {
         StringBuilder root = new StringBuilder();
+        root.append("cmake_minimum_required(VERSION 3.0.2)\n");
         for (Coordinate coordinate : table.examples.keySet()) {
             File exampleFolder = getExampleFolder(coordinate);
             ExampleExpression example = table.examples.get(coordinate);
