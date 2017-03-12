@@ -163,7 +163,7 @@ public class CMakeGenerator {
         } else if (expression instanceof FoundAndroidModuleExpression) {
             FoundAndroidModuleExpression specific = (FoundAndroidModuleExpression) expression;
             for (Coordinate dependency : specific.dependencies) {
-                sb.append(String.format("%s%s(${target})\n", prefix, getAddDependencyFunctionName(dependency)));
+                sb.append(String.format("\n%s%s(${target})", prefix, getAddDependencyFunctionName(dependency)));
             }
             for (ModuleArchiveExpression archive : specific.archives) {
                 File relativeUnzipFolder = environment.getRelativeUnzipFolder(archive.file);
