@@ -71,6 +71,8 @@ public class TestFindModuleFunctionTableBuilder {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
+
+        System.out.printf(CreateStringVisitor.convert(table));
         String zip = FindModuleInterpreter.findiOS(table,
                 resolved.cdepManifestYml.coordinate,
                 "Darwin",

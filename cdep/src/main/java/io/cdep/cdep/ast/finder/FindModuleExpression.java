@@ -20,24 +20,27 @@ import io.cdep.cdep.Coordinate;
 public class FindModuleExpression extends Expression {
 
     final public Coordinate coordinate;
+    final public ParameterExpression cdepExplodedRoot;
     final public ParameterExpression targetPlatform;
     final public ParameterExpression systemVersion;
     final public ParameterExpression androidTargetAbi;
     final public ParameterExpression androidStlType;
     final public ParameterExpression osxSysroot;
     final public ParameterExpression osxArchitecture;
-    final public CaseExpression expression;
+    final public Expression expression;
 
     public FindModuleExpression(
             Coordinate coordinate,
+            ParameterExpression cdepExplodedRoot,
             ParameterExpression targetPlatform,
             ParameterExpression systemVersion,
             ParameterExpression androidTargetAbi,
             ParameterExpression androidStlType,
             ParameterExpression osxSysroot,
             ParameterExpression osxArchitecture,
-            CaseExpression expression) {
+            Expression expression) {
         this.coordinate = coordinate;
+        this.cdepExplodedRoot = cdepExplodedRoot;
         this.targetPlatform = targetPlatform;
         this.systemVersion = systemVersion;
         this.androidTargetAbi = androidTargetAbi;

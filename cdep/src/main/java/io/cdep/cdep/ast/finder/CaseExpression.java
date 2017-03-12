@@ -17,7 +17,7 @@ package io.cdep.cdep.ast.finder;
 
 import java.util.Map;
 
-public class CaseExpression extends Expression {
+public class CaseExpression extends StatementExpression {
 
     final public Expression var;
     final public Map<Expression, Expression> cases;

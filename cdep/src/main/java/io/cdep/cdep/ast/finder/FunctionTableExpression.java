@@ -23,4 +23,5 @@ import java.util.Map;
 public class FunctionTableExpression extends Expression {
     final public Map<Coordinate, FindModuleExpression> findFunctions = new HashMap<>();
     final public Map<Coordinate, ExampleExpression> examples = new HashMap<>();
+
 }

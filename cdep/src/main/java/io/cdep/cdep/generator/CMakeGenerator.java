@@ -197,8 +197,11 @@ public class CMakeGenerator {
                 sb.append(String.format("%s%s(${target})\n", prefix, getAddDependencyFunctionName(dependency)));
             }
             for (ModuleArchive archive : specific.archives) {
+                if (archive.fullIncludePath != null) {
+                    generateAssignments(prefix, signature, archive.fullIncludePath, sb, null);
+                }
                 File relativeUnzipFolder = environment.getRelativeUnzipFolder(archive.file);
-                sb.append(String.format("%sset(CDEP_EXPLODED_PACKAGE_FOLDER  \"${CDEP_EXPLODED_ARCHIVE_FOLDER}/%s\")\n",
+                sb.append(String.format("%sset(CDEP_EXPLODED_PACKAGE_FOLDER \"${CDEP_EXPLODED_ARCHIVE_FOLDER}/%s\")\n",
                         prefix, getCMakePath(relativeUnzipFolder)));
                 sb.append(String.format(
                         "%starget_include_directories(${target} PRIVATE \"${CDEP_EXPLODED_PACKAGE_FOLDER}/%s\")\n",
@@ -240,6 +243,13 @@ public class CMakeGenerator {
             String message = String.format(specific.message, parms);
             sb.append(String.format("%smessage(FATAL_ERROR \"%s\")\n", prefix, message));
             return;
+        } else if (expression instanceof AssignmentBlockExpression) {
+            AssignmentBlockExpression specific = (AssignmentBlockExpression) expression;
+            for (int i = 0; i < specific.assignments.size(); i++) {
+                generateAssignments(prefix, signature, specific.assignments.get(i), sb, null);
+            }
+            generateFindAppender(indent, signature, specific.statement, sb);
+            return;
         }
 
         throw new RuntimeException(expression.getClass().toString());
@@ -247,25 +257,28 @@ public class CMakeGenerator {
 
     private String parameterName(FindModuleExpression signature, ParameterExpression expr) {
         if (expr == signature.targetPlatform) {
-            return "CMAKE_SYSTEM_NAME";
+            return "${CMAKE_SYSTEM_NAME}";
         }
         if (expr == signature.androidStlType) {
-            return "CDEP_DETERMINED_ANDROID_RUNTIME";
+            return "${CDEP_DETERMINED_ANDROID_RUNTIME}";
         }
         if (expr == signature.systemVersion) {
-            return "CMAKE_SYSTEM_VERSION";
+            return "${CMAKE_SYSTEM_VERSION}";
         }
         if (expr == signature.androidTargetAbi) {
-            return "CDEP_DETERMINED_ANDROID_ABI";
+            return "${CDEP_DETERMINED_ANDROID_ABI}";
         }
         if (expr == signature.osxSysroot) {
-            return "CMAKE_OSX_SYSROOT";
+            return "${CMAKE_OSX_SYSROOT}";
+        }
+        if (expr == signature.cdepExplodedRoot) {
+            return getCMakePath(environment.unzippedArchivesFolder);
         }
 
-        throw new RuntimeException();
+        throw new RuntimeException(expr.name);
     }
 
-    private String generateAssignments(String prefix, FindModuleExpression signature, Expression expr, StringBuilder sb, String assignResult) {
+    private Object generateAssignments(String prefix, FindModuleExpression signature, Expression expr, StringBuilder sb, String assignResult) {
         if (expr instanceof AssignmentExpression) {
             AssignmentExpression specific = (AssignmentExpression) expr;
             String identifier = "CDEP_" + specific.name.toUpperCase();
@@ -277,12 +290,13 @@ public class CMakeGenerator {
             return String.format("${%s}", identifier);
         } else if (expr instanceof InvokeFunctionExpression) {
             InvokeFunctionExpression specific = (InvokeFunctionExpression) expr;
-            String values[] = new String[specific.parameters.length];
+            Object values[] = new Object[specific.parameters.length];
             for (int i = 0; i < specific.parameters.length; ++i) {
-                values[i] = generateAssignments(prefix, signature, specific.parameters[i], sb, null);
-                if (values[i] == null) {
+                Object value = generateAssignments(prefix, signature, specific.parameters[i], sb, null);
+                if (values == null) {
                     throw new RuntimeException(specific.parameters[i].getClass().toString());
                 }
+                values[i] = value;
             }
 
             if (specific.function == ExternalFunctionExpression.FILE_GETNAME) {
@@ -321,20 +335,48 @@ public class CMakeGenerator {
                     throw new RuntimeException();
                 }
                 return null;
+            } else if (specific.function == ExternalFunctionExpression.FILE_JOIN_SEGMENTS) {
+                if (assignResult == null) {
+                    throw new RuntimeException();
+                }
+                String assign = (String) values[0];
+                String segments[] = (String[]) values[1];
+                for (int i = 0; i < segments.length; ++i) {
+                    assign += "/" + segments[i];
+                }
+                sb.append(String.format("%sset(%s %s)\n",
+                        prefix,
+                        assignResult,
+                        assign));
+                return null;
             }
             throw new RuntimeException(specific.function.method.getName());
         } else if (expr instanceof StringExpression) {
-            assert assignResult == null;
             StringExpression specific = (StringExpression) expr;
-            return "\"" + specific.value + "\"";
+            String result = "\"" + specific.value + "\"";
+            if (assignResult != null) {
+                sb.append(String.format("%sset(%s %s)\n",
+                        prefix,
+                        assignResult,
+                        result));
+                return null;
+            }
+            return result;
         } else if (expr instanceof ParameterExpression) {
             ParameterExpression specific = (ParameterExpression) expr;
             assert assignResult == null;
-            return String.format("${%s}", parameterName(signature, specific));
+            return parameterName(signature, specific);
         } else if (expr instanceof IntegerExpression) {
             assert assignResult == null;
             IntegerExpression specific = (IntegerExpression) expr;
             return String.format("%s", specific.value);
+        } else if (expr instanceof ArrayExpression) {
+            ArrayExpression specific = (ArrayExpression) expr;
+            Object array[] = new String[specific.elements.length];
+            for (int i = 0; i < array.length; ++i) {
+                array[i] = generateAssignments(prefix, signature, specific.elements[i], sb, null);
+            }
+            return array;
         }
         throw new RuntimeException(expr.getClass().toString());
     }

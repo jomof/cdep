@@ -31,6 +31,8 @@ import java.util.*;
 public class FindModuleFunctionTableBuilder {
 
     private final Map<Coordinate, ResolvedManifest> manifests = new HashMap<>();
+    private final ParameterExpression cdepExplodedRoot =
+            new ParameterExpression("cdepExplodedRoot");
     private final ParameterExpression osxSysroot =
             new ParameterExpression("osxSysroot");
     private final ParameterExpression osxArchitectures =
@@ -66,6 +68,10 @@ public class FindModuleFunctionTableBuilder {
             functionTable.examples.put(resolved.cdepManifestYml.coordinate,
                     new ExampleExpression(resolved.cdepManifestYml.example));
         }
+
+        // Lift assignments up to the highest correct scope
+        functionTable = (FunctionTableExpression) new LiftAssignmentVisitor().visitFunctionTableExpression(functionTable);
+
         return functionTable;
     }
 
@@ -82,11 +88,39 @@ public class FindModuleFunctionTableBuilder {
             }
         }
 
+        AssignmentExpression coordinateGroupId = new AssignmentExpression(
+                "coordinate_group_id",
+                new StringExpression(resolved.cdepManifestYml.coordinate.groupId)
+        );
+
+        AssignmentExpression coordinateArtifactId = new AssignmentExpression(
+                "coordinate_artifact_id",
+                new StringExpression(resolved.cdepManifestYml.coordinate.artifactId)
+        );
+
+        AssignmentExpression coordinateVersion = new AssignmentExpression(
+                "coordinate_version",
+                new StringExpression(resolved.cdepManifestYml.coordinate.version)
+        );
+
+        AssignmentExpression explodedArchiveFolder = new AssignmentExpression(
+                "exploded_archive_folder",
+                new InvokeFunctionExpression(
+                        ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
+                        cdepExplodedRoot,
+                        new ArrayExpression(
+                                coordinateGroupId,
+                                coordinateArtifactId,
+                                coordinateVersion
+                        )
+                )
+        );
+
         if (resolved.cdepManifestYml.android != null
                 && resolved.cdepManifestYml.android.archives != null) {
             supported += "'Android' ";
             cases.put(new StringExpression("Android"),
-                    buildAndroidStlTypeCase(resolved, dependencies));
+                    buildAndroidStlTypeCase(resolved, explodedArchiveFolder, dependencies));
         }
         if (resolved.cdepManifestYml.iOS != null && resolved.cdepManifestYml.iOS.archives != null) {
             supported += "'Darwin' ";
@@ -101,7 +135,7 @@ public class FindModuleFunctionTableBuilder {
                                         + "Supported: %s",
                                 resolved.cdepManifestYml.coordinate, supported), targetPlatform));
 
-        return new FindModuleExpression(resolved.cdepManifestYml.coordinate, targetPlatform,
+        return new FindModuleExpression(resolved.cdepManifestYml.coordinate, cdepExplodedRoot, targetPlatform,
                 systemVersion, androidArchAbi, androidStlType, osxSysroot, osxArchitectures,
                 expression);
     }
@@ -196,6 +230,7 @@ public class FindModuleFunctionTableBuilder {
                 archive.sha256,
                 archive.size,
                 archive.include,
+                null,
                 archive.lib);
 
         if (resolved.cdepManifestYml.archive != null) {
@@ -208,6 +243,7 @@ public class FindModuleFunctionTableBuilder {
                     resolved.cdepManifestYml.archive.sha256,
                     resolved.cdepManifestYml.archive.size,
                     "include",
+                    null,
                     null);
         }
         return new FoundiOSModuleExpression(
@@ -217,6 +253,7 @@ public class FindModuleFunctionTableBuilder {
 
     private Expression buildAndroidStlTypeCase(
             ResolvedManifest resolved,
+            AssignmentExpression explodedArchiveFolder,
             Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
 
         // Gather up the runtime names
@@ -236,7 +273,7 @@ public class FindModuleFunctionTableBuilder {
             if (stlTypes.size() == 1) {
                 // If there are no runtimes, then skip the runtime check. This is likely a
                 // header-only module.
-                return buildAndroidPlatformExpression(resolved, noRuntimeAndroids, dependencies);
+                return buildAndroidPlatformExpression(resolved, noRuntimeAndroids, explodedArchiveFolder, dependencies);
             }
             // There are some android sub modules with runtime and some without
             return new AbortExpression(
@@ -251,10 +288,12 @@ public class FindModuleFunctionTableBuilder {
             cases.put(new StringExpression(stlType + "_shared"), buildAndroidPlatformExpression(
                     resolved,
                     stlTypes.get(stlType),
+                    explodedArchiveFolder,
                     dependencies));
             cases.put(new StringExpression(stlType + "_static"), buildAndroidPlatformExpression(
                     resolved,
                     stlTypes.get(stlType),
+                    explodedArchiveFolder,
                     dependencies));
         }
 
@@ -269,12 +308,13 @@ public class FindModuleFunctionTableBuilder {
     private Expression buildAndroidPlatformExpression(
             ResolvedManifest resolved,
             List<AndroidArchive> androids,
+            AssignmentExpression explodedArchiveFolder, // Parent of all .zip folders for this coordinate
             Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
 
         // If there's only one android left and it doesn't have a platform then this is
         // a header-only module.
         if (androids.size() == 1 && androids.get(0).platform == null) {
-            return buildAndroidAbiExpression(resolved, androids, dependencies);
+            return buildAndroidAbiExpression(resolved, androids, explodedArchiveFolder, dependencies);
         }
 
         Map<Long, List<AndroidArchive>> grouped = new HashMap<>();
@@ -299,7 +339,7 @@ public class FindModuleFunctionTableBuilder {
             prior = new IfGreaterThanOrEqualExpression(
                     systemVersion,
                     new LongExpression(platform),
-                    buildAndroidAbiExpression(resolved, grouped.get(platform), dependencies),
+                    buildAndroidAbiExpression(resolved, grouped.get(platform), explodedArchiveFolder, dependencies),
                     prior);
         }
         return prior;
@@ -308,6 +348,7 @@ public class FindModuleFunctionTableBuilder {
     private Expression buildAndroidAbiExpression(
             ResolvedManifest resolved,
             List<AndroidArchive> androids,
+            AssignmentExpression explodedArchiveFolder, // Parent of all .zip folders for this coordinate
             Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
         if (androids.size() != 1) {
             throw new RuntimeException(String.format(
@@ -328,6 +369,7 @@ public class FindModuleFunctionTableBuilder {
                 android.sha256,
                 android.size,
                 android.include,
+                explodedArchiveFolder,
                 android.lib);
 
         if (resolved.cdepManifestYml.archive != null) {
@@ -340,6 +382,7 @@ public class FindModuleFunctionTableBuilder {
                     resolved.cdepManifestYml.archive.sha256,
                     resolved.cdepManifestYml.archive.size,
                     "include",
+                    explodedArchiveFolder,
                     null);
         }
 

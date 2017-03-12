@@ -31,7 +31,18 @@ public class ExternalFunctionExpression extends FunctionExpression {
           "startsWith",
           String.class);
 
+  final public static ExternalFunctionExpression FILE_JOIN_SEGMENTS =
+          new ExternalFunctionExpression(
+                  ExternalFunctionExpression.class,
+                  "fileJoinSegments",
+                  File.class,
+                  String[].class);
+
   final public Method method;
+
+  public ExternalFunctionExpression(Method method) {
+    this.method = method;
+  }
 
   private ExternalFunctionExpression(Class clazz, String functionName, Class<?>... parameterTypes) {
     try {
@@ -39,5 +50,12 @@ public class ExternalFunctionExpression extends FunctionExpression {
     } catch (NoSuchMethodException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  static public File fileJoinSegments(File base, String... segments) {
+    for (int i = 0; i < segments.length; ++i) {
+      base = new File(base, segments[i]);
+    }
+    return base;
   }
 }

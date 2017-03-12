@@ -16,7 +16,11 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ReadonlyVisitor;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
+import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,89 +31,49 @@ import java.util.Map;
  * Methods for dealing with FinderExpressions.
  */
 abstract public class ExpressionUtils {
-
-    private static void getAllFoundModuleExpressions(
-            Expression expression,
-            Map<Coordinate, List<Expression>> foundModules,
-            Coordinate coordinate) {
-        if (expression instanceof CaseExpression) {
-            CaseExpression caseExpression = (CaseExpression) expression;
-            getAllFoundModuleExpressions(caseExpression.var, foundModules, coordinate);
-            for (Expression caseValue : caseExpression.cases.keySet()) {
-                getAllFoundModuleExpressions(caseExpression.cases.get(caseValue), foundModules, coordinate);
-            }
-            getAllFoundModuleExpressions(caseExpression.defaultCase, foundModules, coordinate);
-            return;
-        } else if (expression instanceof ParameterExpression) {
-            return;
-        } else if (expression instanceof AbortExpression) {
-            return;
-        } else if (expression instanceof IfGreaterThanOrEqualExpression) {
-            IfGreaterThanOrEqualExpression ifexpr = (IfGreaterThanOrEqualExpression) expression;
-            getAllFoundModuleExpressions(ifexpr.value, foundModules, coordinate);
-            getAllFoundModuleExpressions(ifexpr.compareTo, foundModules, coordinate);
-            getAllFoundModuleExpressions(ifexpr.trueExpression, foundModules, coordinate);
-            getAllFoundModuleExpressions(ifexpr.falseExpression, foundModules, coordinate);
-            return;
-        } else if (expression instanceof IfExpression) {
-            IfExpression ifexpr = (IfExpression) expression;
-            getAllFoundModuleExpressions(ifexpr.bool, foundModules, coordinate);
-            getAllFoundModuleExpressions(ifexpr.trueExpression, foundModules, coordinate);
-            getAllFoundModuleExpressions(ifexpr.falseExpression, foundModules, coordinate);
-            return;
-        } else if (expression instanceof LongExpression) {
-            return;
-        } else if (expression instanceof FoundAndroidModuleExpression) {
-            addModule(foundModules, expression, coordinate);
-            return;
-        } else if (expression instanceof FoundiOSModuleExpression) {
-            addModule(foundModules, expression, coordinate);
-            return;
-        } else if (expression instanceof FunctionTableExpression) {
-            FunctionTableExpression table = (FunctionTableExpression) expression;
-            for (FindModuleExpression function : table.findFunctions.values()) {
-                getAllFoundModuleExpressions(function, foundModules, coordinate);
-            }
-            return;
-        } else if (expression instanceof FindModuleExpression) {
-            FindModuleExpression findModule = (FindModuleExpression) expression;
-            getAllFoundModuleExpressions(findModule.expression, foundModules, findModule.coordinate);
-            return;
-        } else if (expression instanceof InvokeFunctionExpression) {
-            InvokeFunctionExpression specific = (InvokeFunctionExpression) expression;
-            for (int i = 0; i < specific.parameters.length; ++i) {
-                getAllFoundModuleExpressions(specific.parameters[i], foundModules, coordinate);
-            }
-            return;
-        } else if (expression instanceof StringExpression) {
-            return;
-        }
-        throw new RuntimeException(expression.getClass().toString());
-    }
-
-    private static void addModule(
-            Map<Coordinate, List<Expression>> foundModules,
-            Expression expression,
-            Coordinate coordinate) {
-        List<Expression> modules = foundModules.get(coordinate);
-        if (modules == null) {
-            modules = new ArrayList<>();
-            foundModules.put(coordinate, modules);
-            addModule(foundModules, expression, coordinate);
-            return;
-        }
-        modules.add(expression);
-    }
-
     /*
      * Traverse the given expression and locate all of the FoundModuleExpressions.
      * These expressions contain the local module location as well as the resolved coordinate
      * and other information
      */
     public static Map<Coordinate, List<Expression>> getAllFoundModuleExpressions(Expression expression) {
-        Map<Coordinate, List<Expression>> foundModules = new HashMap<>();
-        getAllFoundModuleExpressions(expression, foundModules, null);
-        return foundModules;
+        return new Finder(expression).foundModules;
+    }
+
+    private static class Finder extends ReadonlyVisitor {
+        final private Map<Coordinate, List<Expression>> foundModules = new HashMap<>();
+        private Coordinate coordinate;
+
+        Finder(Expression expression) {
+            visit(expression);
+        }
+
+        @Override
+        protected void visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
+            addModule(expr);
+        }
+
+        @Override
+        protected void visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
+            super.visitFoundiOSModuleExpression(expr);
+        }
+
+        @Override
+        protected void visitFindModuleExpression(FindModuleExpression expr) {
+            super.visitFindModuleExpression(expr);
+            coordinate = expr.coordinate;
+        }
+
+        private void addModule(Expression expression) {
+            List<Expression> modules = foundModules.get(coordinate);
+            if (modules == null) {
+                modules = new ArrayList<>();
+                foundModules.put(coordinate, modules);
+                addModule(expression);
+                return;
+            }
+            modules.add(expression);
+        }
     }
 
 }

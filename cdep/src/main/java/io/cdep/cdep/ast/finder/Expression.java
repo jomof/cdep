@@ -15,6 +15,16 @@
 */
 package io.cdep.cdep.ast.finder;
 
-public class Expression {
+import io.cdep.cdep.CreateStringVisitor;
 
+public class Expression {
+    private String string = null;
+
+    @Override
+    public String toString() {
+        if (string == null) {
+            string = CreateStringVisitor.convert(this);
+        }
+        return string;
+    }
 }

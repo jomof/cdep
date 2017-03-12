@@ -8,13 +8,17 @@ public class ModuleArchive {
     final public Long size;
     final public String include;
     final public String libraryName;
-    public ModuleArchive(URL file, String sha256, Long size, String include, String libraryName) {
+    final public AssignmentExpression fullIncludePath;
+
+    public ModuleArchive(URL file, String sha256, Long size, String include,
+                         AssignmentExpression fullIncludePath, String libraryName) {
         assert file != null;
         assert sha256 != null;
         this.file = file;
         this.sha256 = sha256;
         this.size = size;
         this.include = include;
+        this.fullIncludePath = fullIncludePath;
         this.libraryName = libraryName;
     }
 }

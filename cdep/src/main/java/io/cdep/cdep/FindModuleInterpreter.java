@@ -74,12 +74,12 @@ class FindModuleInterpreter {
     } else if (expression instanceof AssignmentExpression) {
       Object result = parameters.get(expression);
       if (result != null) {
-        return result;
+        return null;
       }
       AssignmentExpression specific = (AssignmentExpression) expression;
       result = interpret(parameters, specific.expression);
       parameters.put(specific, result);
-      return result;
+      return null;
     } else if (expression instanceof ParameterExpression) {
       return parameters.get(expression);
     } else if (expression instanceof AbortExpression) {
@@ -119,7 +119,11 @@ class FindModuleInterpreter {
                 interpret(parameters, specific.parameters[i]),
                 specific.function.method.getParameterTypes()[i - firstParameter]);
       }
-      return specific.function.method.invoke(thiz, parms);
+      try {
+        return specific.function.method.invoke(thiz, parms);
+      } catch (Exception e) {
+        throw e;
+      }
     } else if (expression instanceof StringExpression) {
       StringExpression specific = (StringExpression) expression;
       return specific.value;
@@ -133,8 +137,24 @@ class FindModuleInterpreter {
       IfExpression specific = (IfExpression) expression;
       boolean value = (boolean) interpret(parameters, specific.bool);
       return value
-          ? interpret(parameters, specific.trueExpression)
-          : interpret(parameters, specific.falseExpression);
+              ? interpret(parameters, specific.trueExpression)
+              : interpret(parameters, specific.falseExpression);
+    } else if (expression instanceof ArrayExpression) {
+      ArrayExpression specific = (ArrayExpression) expression;
+      Object elements[] = new Object[specific.elements.length];
+      for (int i = 0; i < elements.length; ++i) {
+        elements[i] = interpret(parameters, specific.elements[i]);
+      }
+      return elements;
+    } else if (expression instanceof AssignmentBlockExpression) {
+      AssignmentBlockExpression specific = (AssignmentBlockExpression) expression;
+      for (int i = 0; i < specific.assignments.size(); i++) {
+        interpret(parameters, specific.assignments.get(i));
+      }
+      return null;
+    } else if (expression instanceof AssignmentReferenceExpression) {
+      AssignmentReferenceExpression specific = (AssignmentReferenceExpression) expression;
+      return parameters.get(specific.assignment);
     }
     throw new RuntimeException(expression.toString());
   }

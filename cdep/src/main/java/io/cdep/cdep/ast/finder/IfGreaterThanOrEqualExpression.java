@@ -15,7 +15,7 @@
 */
 package io.cdep.cdep.ast.finder;
 
-public class IfGreaterThanOrEqualExpression extends Expression {
+public class IfGreaterThanOrEqualExpression extends StatementExpression {
 
     final public Expression value;
     final public Expression compareTo;
