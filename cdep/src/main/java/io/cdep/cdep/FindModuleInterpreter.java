@@ -90,14 +90,6 @@ class FindModuleInterpreter {
         parms[i] = interpret(parameters, abortExpression.parameters[i]);
       }
       throw new RuntimeException(String.format(abortExpression.message, parms));
-    } else if (expression instanceof IfGreaterThanOrEqualExpression) {
-      IfGreaterThanOrEqualExpression ifexpr = (IfGreaterThanOrEqualExpression) expression;
-      Long value = Long.parseLong((String) interpret(parameters, ifexpr.value));
-      Long compareTo = (Long) interpret(parameters, ifexpr.compareTo);
-      if (value >= compareTo) {
-        return interpret(parameters, ifexpr.trueExpression);
-      }
-      return interpret(parameters, ifexpr.falseExpression);
     } else if (expression instanceof LongExpression) {
       LongExpression longConst = (LongExpression) expression;
       return longConst.value;
@@ -175,6 +167,9 @@ class FindModuleInterpreter {
     if (clazz.equals(int.class)) {
       if (o instanceof Integer) {
         return o;
+      }
+      if (o instanceof String) {
+        return Integer.parseInt((String) o);
       }
     }
     if (clazz.equals(String[].class)) {

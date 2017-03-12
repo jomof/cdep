@@ -37,10 +37,6 @@ public class ReadonlyVisitor {
             visitInvokeFunctionExpression((InvokeFunctionExpression) expr);
             return;
         }
-        if (expr.getClass().equals(IfGreaterThanOrEqualExpression.class)) {
-            visitIfGreaterThanOrEqualExpression((IfGreaterThanOrEqualExpression) expr);
-            return;
-        }
         if (expr.getClass().equals(LongExpression.class)) {
             visitLongExpression((LongExpression) expr);
             return;
@@ -138,13 +134,6 @@ public class ReadonlyVisitor {
     }
 
     protected void visitLongExpression(LongExpression expr) {
-    }
-
-    protected void visitIfGreaterThanOrEqualExpression(IfGreaterThanOrEqualExpression expr) {
-        visit(expr.value);
-        visit(expr.compareTo);
-        visit(expr.trueExpression);
-        visit(expr.falseExpression);
     }
 
     protected void visitInvokeFunctionExpression(InvokeFunctionExpression expr) {

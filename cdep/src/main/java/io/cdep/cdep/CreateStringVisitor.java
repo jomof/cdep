@@ -63,26 +63,6 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     }
 
     @Override
-    protected void visitIfGreaterThanOrEqualExpression(IfGreaterThanOrEqualExpression expr) {
-        append("\n");
-        appendIndented("if(");
-        visit(expr.value);
-        append(" >= ");
-        visit(expr.compareTo);
-        append(") ");
-        ++indent;
-        visit(expr.trueExpression);
-        --indent;
-        append("\n");
-        appendIndented("else ");
-        ++indent;
-        visit(expr.falseExpression);
-        append("\n");
-        --indent;
-        appendIndented("end_if");
-    }
-
-    @Override
     protected void visitIfExpression(IfExpression expr) {
         append("\n");
         appendIndented("if(");

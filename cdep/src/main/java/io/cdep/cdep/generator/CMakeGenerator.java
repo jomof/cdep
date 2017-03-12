@@ -122,21 +122,6 @@ public class CMakeGenerator {
             sb.append(String.format("%sendif()\n", prefix));
 
             return;
-        } else if (expression instanceof IfGreaterThanOrEqualExpression) {
-            IfGreaterThanOrEqualExpression specific = (IfGreaterThanOrEqualExpression) expression;
-            StringBuilder varBuilder = new StringBuilder();
-            generateFindAppender(indent, signature, specific.value, varBuilder);
-            String var = varBuilder.toString();
-            StringBuilder compareToBuilder = new StringBuilder();
-            generateFindAppender(indent, signature, specific.compareTo, compareToBuilder);
-            String compareTo = compareToBuilder.toString();
-            sb.append(String.format("%sif((%s GREATER %s) OR (%s EQUAL %s))\n",
-                    prefix, var, compareTo, var, compareTo));
-            generateFindAppender(indent + 1, signature, specific.trueExpression, sb);
-            sb.append(String.format("%selse()\n", prefix));
-            generateFindAppender(indent + 1, signature, specific.falseExpression, sb);
-            sb.append(String.format("%sendif()\n", prefix));
-            return;
         } else if (expression instanceof IfExpression) {
             IfExpression specific = (IfExpression) expression;
             StringBuilder varBuilder = new StringBuilder();
@@ -168,6 +153,12 @@ public class CMakeGenerator {
             // These are non-assignment function calls.
             if (specific.function == ExternalFunctionExpression.STRING_STARTSWITH) {
                 sb.append(String.format("%s MATCHES \"$%s.*\"",
+                        parms[0],
+                        parms[1]));
+            } else if (specific.function == ExternalFunctionExpression.BOOL_GTE) {
+                sb.append(String.format("(%s GREATER %s) OR (%s EQUAL %s)",
+                        parms[0],
+                        parms[1],
                         parms[0],
                         parms[1]));
             } else {

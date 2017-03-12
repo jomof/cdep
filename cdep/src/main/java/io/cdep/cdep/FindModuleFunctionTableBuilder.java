@@ -322,9 +322,9 @@ public class FindModuleFunctionTableBuilder {
             return buildAndroidAbiExpression(resolved, androids, explodedArchiveFolder, dependencies);
         }
 
-        Map<Long, List<AndroidArchive>> grouped = new HashMap<>();
+        Map<Integer, List<AndroidArchive>> grouped = new HashMap<>();
         for (AndroidArchive android : androids) {
-            Long platform = Long.parseLong(android.platform);
+            Integer platform = Integer.parseInt(android.platform);
             List<AndroidArchive> group = grouped.get(platform);
             if (group == null) {
                 group = new ArrayList<>();
@@ -333,17 +333,20 @@ public class FindModuleFunctionTableBuilder {
             group.add(android);
         }
 
-        List<Long> platforms = new ArrayList<>();
+        List<Integer> platforms = new ArrayList<>();
         platforms.addAll(grouped.keySet());
         Collections.sort(platforms);
 
         Expression prior = new AbortExpression(
                 String.format("Android API level '%%s' is not supported by module '%s'",
                         resolved.cdepManifestYml.coordinate), systemVersion);
-        for (long platform : platforms) {
-            prior = new IfGreaterThanOrEqualExpression(
-                    systemVersion,
-                    new LongExpression(platform),
+        for (int platform : platforms) {
+            prior = new IfExpression(
+                    new InvokeFunctionExpression(
+                            ExternalFunctionExpression.BOOL_GTE,
+                            systemVersion,
+                            new IntegerExpression(platform)
+                    ),
                     buildAndroidAbiExpression(resolved, grouped.get(platform), explodedArchiveFolder, dependencies),
                     prior);
         }

@@ -38,6 +38,13 @@ public class ExternalFunctionExpression extends FunctionExpression {
                   File.class,
                   String[].class);
 
+    final public static ExternalFunctionExpression BOOL_GTE =
+            new ExternalFunctionExpression(
+                    ExternalFunctionExpression.class,
+                    "gte",
+                    int.class,
+                    int.class);
+
   final public Method method;
 
   private ExternalFunctionExpression(Class clazz, String functionName, Class<?>... parameterTypes) {
@@ -54,4 +61,8 @@ public class ExternalFunctionExpression extends FunctionExpression {
     }
     return base;
   }
+
+    static public boolean gte(int left, int right) {
+        return left >= right;
+    }
 }

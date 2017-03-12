@@ -46,9 +46,6 @@ public class RewritingVisitor {
         if (expr.getClass().equals(InvokeFunctionExpression.class)) {
             return visitInvokeFunctionExpression((InvokeFunctionExpression) expr);
         }
-        if (expr.getClass().equals(IfGreaterThanOrEqualExpression.class)) {
-            return visitIfGreaterThanOrEqualExpression((IfGreaterThanOrEqualExpression) expr);
-        }
         if (expr.getClass().equals(LongExpression.class)) {
             return visitLongExpression((LongExpression) expr);
         }
@@ -168,14 +165,6 @@ public class RewritingVisitor {
         return new LongExpression(expr.value);
     }
 
-    protected Expression visitIfGreaterThanOrEqualExpression(IfGreaterThanOrEqualExpression expr) {
-        return new IfGreaterThanOrEqualExpression(
-                visit(expr.value),
-                visit(expr.compareTo),
-                visit(expr.trueExpression),
-                visit(expr.falseExpression)
-        );
-    }
 
     protected Expression visitInvokeFunctionExpression(InvokeFunctionExpression expr) {
         return new InvokeFunctionExpression(
