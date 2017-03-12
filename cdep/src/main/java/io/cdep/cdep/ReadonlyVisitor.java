@@ -6,9 +6,8 @@ import java.util.Map;
 
 public class ReadonlyVisitor {
     protected void visit(Expression expr) {
-        if (expr == null) {
-            return;
-        }
+        assert expr != null;
+
         if (expr.getClass().equals(FunctionTableExpression.class)) {
             visitFunctionTableExpression((FunctionTableExpression) expr);
             return;

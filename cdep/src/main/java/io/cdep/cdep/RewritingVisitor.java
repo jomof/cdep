@@ -12,9 +12,7 @@ public class RewritingVisitor {
     final protected Map<Expression, Expression> identity = new HashMap<>();
 
     protected Expression visit(Expression expr) {
-        if (expr == null) {
-            return null;
-        }
+        assert expr != null;
         Expression prior = identity.get(expr);
         if (prior != null) {
             return prior;
@@ -183,14 +181,6 @@ public class RewritingVisitor {
                 visitArray(expr.expressions),
                 visit(expr.elseExpression)
         );
-    }
-
-    protected Map<Expression, Expression> visitMap(Map<Expression, Expression> original) {
-        Map<Expression, Expression> map = new HashMap();
-        for (Map.Entry<Expression, Expression> entry : original.entrySet()) {
-            map.put(visit(entry.getKey()), visit(entry.getValue()));
-        }
-        return map;
     }
 
     protected Expression visitParameterExpression(ParameterExpression expr) {

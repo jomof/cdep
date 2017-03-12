@@ -109,7 +109,7 @@ public class TestFindModuleFunctionTableBuilder {
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
 
-        System.out.printf(CreateStringVisitor.convert(table));
+        System.out.printf(table.toString());
         String zip = FindModuleInterpreter.findiOS(table,
                 resolved.cdepManifestYml.coordinate,
                 "Darwin",
