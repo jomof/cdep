@@ -56,6 +56,7 @@ public class TestFindModuleFunctionTableBuilder {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
+        System.out.printf(CreateStringVisitor.convert(table));
         String zip = FindModuleInterpreter.findAndroid(table,
                 resolved.cdepManifestYml.coordinate,
                 "Android",
@@ -63,10 +64,11 @@ public class TestFindModuleFunctionTableBuilder {
                 "c++_shared",
                 "x86").archives[0].file.getPath();
         assertThat(zip).endsWith("cmakeify-android-platform-21.zip");
+        new CMakeGenerator(environment).generate(table);
     }
 
     @Test
-    public void testTiny() throws Exception {
+    public void testTinyiOS() throws Exception {
         ResolvedManifest resolved = ResolvedManifests.emptyAndroidArchive();
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
@@ -79,6 +81,7 @@ public class TestFindModuleFunctionTableBuilder {
                 "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk")
                 .archives[0].file.getPath();
         assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
+        new CMakeGenerator(environment).generate(table);
     }
 
     @Test

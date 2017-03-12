@@ -5,11 +5,9 @@ import io.cdep.cdep.ast.finder.*;
 import java.util.*;
 
 public class LiftToCommonAncestor extends RewritingVisitor {
-
     Set<AssignmentExpression> captured = new HashSet<>();
     List<AssignmentExpression> functionOrder = new ArrayList<>();
     Map<AssignmentExpression, Integer> functionCounts = new HashMap<>();
-
 
     public LiftToCommonAncestor() {
     }
@@ -40,10 +38,6 @@ public class LiftToCommonAncestor extends RewritingVisitor {
         List<AssignmentExpression> order = new ArrayList<>();
         Map<AssignmentExpression, Integer> count = new HashMap<>();
         assignments(result, order, count);
-        return getAssignmentBlock(order, count);
-    }
-
-    private List<AssignmentExpression> getAssignmentBlock(List<AssignmentExpression> order, Map<AssignmentExpression, Integer> count) {
         List<AssignmentExpression> block = new ArrayList<>();
         for (AssignmentExpression assignment : order) {
             if (captured.contains(assignment)) {
@@ -88,15 +82,4 @@ public class LiftToCommonAncestor extends RewritingVisitor {
             counts.put(assignment, n);
         }
     }
-
-//    private void countAssignments(Map<AssignmentExpression, Integer> count, Expression expr) {
-//        List<AssignmentExpression> set = new GetContainedReferences(expr).list;
-//        for (AssignmentExpression assignment : set) {
-//            Integer last = count.get(assignment);
-//            if (last == null) {
-//                last = 0;
-//            }
-//            count.put(assignment, last + 1);
-//        }
-//    }
 }

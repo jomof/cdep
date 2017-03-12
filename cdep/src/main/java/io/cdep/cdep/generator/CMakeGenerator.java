@@ -104,7 +104,6 @@ public class CMakeGenerator {
         } else if (expression instanceof CaseExpression) {
             CaseExpression specific = (CaseExpression) expression;
             StringBuilder varBuilder = new StringBuilder();
-            generateAssignments(prefix, signature, specific.var, sb, null);
             generateFindAppender(indent, signature, specific.var, varBuilder);
             String var = varBuilder.toString();
             boolean first = true;
@@ -141,7 +140,6 @@ public class CMakeGenerator {
         } else if (expression instanceof IfExpression) {
             IfExpression specific = (IfExpression) expression;
             StringBuilder varBuilder = new StringBuilder();
-            generateAssignments(prefix, signature, specific.bool, sb, null);
             generateFindAppender(indent, signature, specific.bool, varBuilder);
             String var = varBuilder.toString();
             sb.append(String.format("%sif(%s)\n", prefix, var));
@@ -156,7 +154,8 @@ public class CMakeGenerator {
                 sb.append(identifier);
                 return;
             }
-            throw new RuntimeException("Should have called generateAssignments before now");
+//            throw new RuntimeException("Should have called generateAssignments before now");
+            return;
         } else if (expression instanceof InvokeFunctionExpression) {
             InvokeFunctionExpression specific = (InvokeFunctionExpression) expression;
             String parms[] = new String[specific.parameters.length];
@@ -197,9 +196,6 @@ public class CMakeGenerator {
                 sb.append(String.format("%s%s(${target})\n", prefix, getAddDependencyFunctionName(dependency)));
             }
             for (ModuleArchiveExpression archive : specific.archives) {
-                if (archive.fullIncludePath != null) {
-                    generateAssignments(prefix, signature, archive.fullIncludePath, sb, null);
-                }
                 File relativeUnzipFolder = environment.getRelativeUnzipFolder(archive.file);
                 sb.append(String.format("%sset(CDEP_EXPLODED_PACKAGE_FOLDER \"${CDEP_EXPLODED_ARCHIVE_FOLDER}/%s\")\n",
                         prefix, getCMakePath(relativeUnzipFolder)));
@@ -246,7 +242,7 @@ public class CMakeGenerator {
         } else if (expression instanceof AssignmentBlockExpression) {
             AssignmentBlockExpression specific = (AssignmentBlockExpression) expression;
             for (int i = 0; i < specific.assignments.size(); i++) {
-                generateAssignments(prefix, signature, specific.assignments.get(i), sb, null);
+                generateFindAppender(indent, signature, specific.assignments.get(i), sb);
             }
             generateFindAppender(indent, signature, specific.statement, sb);
             return;
@@ -283,7 +279,7 @@ public class CMakeGenerator {
         throw new RuntimeException(expr.name);
     }
 
-    private Object generateAssignments(String prefix, FindModuleExpression signature, Expression expr, StringBuilder sb, String assignResult) {
+    private Object generateAssignmentsx(String prefix, FindModuleExpression signature, Expression expr, StringBuilder sb, String assignResult) {
         if (expr instanceof AssignmentExpression) {
             AssignmentExpression specific = (AssignmentExpression) expr;
             String identifier = "CDEP_" + specific.name.toUpperCase();
@@ -291,13 +287,13 @@ public class CMakeGenerator {
                 return String.format("${%s}", identifier);
             }
             assignments.put(specific, identifier);
-            generateAssignments(prefix, signature, specific.expression, sb, identifier);
+            generateAssignmentsx(prefix, signature, specific.expression, sb, identifier);
             return String.format("${%s}", identifier);
         } else if (expr instanceof InvokeFunctionExpression) {
             InvokeFunctionExpression specific = (InvokeFunctionExpression) expr;
             Object values[] = new Object[specific.parameters.length];
             for (int i = 0; i < specific.parameters.length; ++i) {
-                Object value = generateAssignments(prefix, signature, specific.parameters[i], sb, null);
+                Object value = generateAssignmentsx(prefix, signature, specific.parameters[i], sb, null);
                 if (values == null) {
                     throw new RuntimeException(specific.parameters[i].getClass().toString());
                 }
@@ -379,7 +375,7 @@ public class CMakeGenerator {
             ArrayExpression specific = (ArrayExpression) expr;
             Object array[] = new String[specific.elements.length];
             for (int i = 0; i < array.length; ++i) {
-                array[i] = generateAssignments(prefix, signature, specific.elements[i], sb, null);
+                array[i] = generateAssignmentsx(prefix, signature, specific.elements[i], sb, null);
             }
             return array;
         } else if (expr instanceof AssignmentReferenceExpression) {
