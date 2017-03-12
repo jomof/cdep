@@ -110,7 +110,7 @@ public class CMakeGenerator {
                 generateFindAppender(indent + 1, signature, specific.conditions[i], sb);
                 sb.append(")");
                 generateFindAppender(indent + 1, signature, specific.expressions[i], sb);
-                sb.append(String.format("%selse ", prefix));
+                sb.append(String.format("%selse", prefix));
             }
             generateFindAppender(indent + 1, signature, specific.elseExpression, sb);
             sb.append(String.format("%sendif()\n", prefix));
