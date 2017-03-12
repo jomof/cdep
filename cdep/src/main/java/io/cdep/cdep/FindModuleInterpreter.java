@@ -65,7 +65,8 @@ class FindModuleInterpreter {
       CaseExpression caseExpression = (CaseExpression) expression;
       Object caseVar = interpret(parameters, interpret(parameters, caseExpression.var));
       for (Expression caseValueExpression : caseExpression.cases.keySet()) {
-        if (caseValueExpression.toString().equals(caseVar)) {
+          Object caseValue = interpret(parameters, caseValueExpression);
+          if (caseValue.equals(caseVar)) {
           return interpret(parameters,
               caseExpression.cases.get(caseValueExpression));
         }
@@ -151,7 +152,7 @@ class FindModuleInterpreter {
       for (int i = 0; i < specific.assignments.size(); i++) {
         interpret(parameters, specific.assignments.get(i));
       }
-      return null;
+        return interpret(parameters, specific.statement);
     } else if (expression instanceof AssignmentReferenceExpression) {
       AssignmentReferenceExpression specific = (AssignmentReferenceExpression) expression;
       return parameters.get(specific.assignment);
