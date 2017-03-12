@@ -6,6 +6,9 @@ import java.util.Map;
 
 public class ReadonlyVisitor {
     protected void visit(Expression expr) {
+        if (expr == null) {
+            return;
+        }
         if (expr.getClass().equals(FunctionTableExpression.class)) {
             visitFunctionTableExpression((FunctionTableExpression) expr);
             return;
@@ -82,8 +85,15 @@ public class ReadonlyVisitor {
             visitAssignmentReferenceExpression((AssignmentReferenceExpression) expr);
             return;
         }
-
+        if (expr.getClass().equals(ModuleArchiveExpression.class)) {
+            visitModuleArchiveExpression((ModuleArchiveExpression) expr);
+            return;
+        }
         throw new RuntimeException(expr.getClass().toString());
+    }
+
+    private void visitModuleArchiveExpression(ModuleArchiveExpression expr) {
+        visit(expr.fullIncludePath);
     }
 
     public void visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
@@ -120,9 +130,11 @@ public class ReadonlyVisitor {
     }
 
     protected void visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
+        visitArray(expr.archives);
     }
 
     protected void visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
+        visitArray(expr.archives);
     }
 
     protected void visitLongExpression(LongExpression expr) {

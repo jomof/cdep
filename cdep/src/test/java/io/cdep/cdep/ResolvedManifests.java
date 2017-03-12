@@ -3,6 +3,7 @@ package io.cdep.cdep;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -125,7 +126,7 @@ public class ResolvedManifests {
         "iOS:\n" +
         "  archives:\n" +
         "  - lib: libsqlite.a\n" +
-        "    file: sqlite-android-cxx-platform-12.zip\n" +
+            "    file: sqlite-ios-platform-iPhone.zip\n" +
         "    sha256: 45a104d61786eaf163b3006aa989922c5c04b8e787073e1cbd60c7895943162c\n" +
         "    platform: iPhoneOS\n" +
         "    size: 2676245\n" +

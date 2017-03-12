@@ -44,9 +44,10 @@ public class GeneratorEnvironmentUtils {
 
         // Download and unzip any modules.
         for (Coordinate coordinate : foundModules.keySet()) {
+            assert coordinate != null;
             List<Expression> foundModuleExpressions = foundModules.get(coordinate);
             for (Expression foundModule : foundModuleExpressions) {
-                ModuleArchive archives[] = null;
+                ModuleArchiveExpression archives[] = null;
                 if (foundModule instanceof FoundAndroidModuleExpression) {
                     FoundAndroidModuleExpression specific = (FoundAndroidModuleExpression) foundModule;
                     archives = specific.archives;
@@ -54,7 +55,7 @@ public class GeneratorEnvironmentUtils {
                     FoundiOSModuleExpression specific = (FoundiOSModuleExpression) foundModule;
                     archives = specific.archives;
                 }
-                for (ModuleArchive archive : archives) {
+                for (ModuleArchiveExpression archive : archives) {
                     File local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
                     if (local == null) {
                         throw new RuntimeException(

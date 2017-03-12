@@ -60,8 +60,8 @@ abstract public class ExpressionUtils {
 
         @Override
         protected void visitFindModuleExpression(FindModuleExpression expr) {
-            super.visitFindModuleExpression(expr);
             coordinate = expr.coordinate;
+            super.visitFindModuleExpression(expr);
         }
 
         private void addModule(Expression expression) {

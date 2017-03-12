@@ -196,7 +196,7 @@ public class CMakeGenerator {
             for (Coordinate dependency : specific.dependencies) {
                 sb.append(String.format("%s%s(${target})\n", prefix, getAddDependencyFunctionName(dependency)));
             }
-            for (ModuleArchive archive : specific.archives) {
+            for (ModuleArchiveExpression archive : specific.archives) {
                 if (archive.fullIncludePath != null) {
                     generateAssignments(prefix, signature, archive.fullIncludePath, sb, null);
                 }
@@ -220,7 +220,7 @@ public class CMakeGenerator {
             for (Coordinate dependency : specific.dependencies) {
                 sb.append(String.format("%s%s(${target})\n", prefix, getAddDependencyFunctionName(dependency)));
             }
-            for (ModuleArchive archive : specific.archives) {
+            for (ModuleArchiveExpression archive : specific.archives) {
                 File exploded = environment.getRelativeUnzipFolder(archive.file);
                 sb.append(String.format("%starget_include_directories(${target} PRIVATE \"%s\")\n",
                         prefix, getCMakePath(new File(exploded, archive.include))));
@@ -249,6 +249,11 @@ public class CMakeGenerator {
                 generateAssignments(prefix, signature, specific.assignments.get(i), sb, null);
             }
             generateFindAppender(indent, signature, specific.statement, sb);
+            return;
+        } else if (expression instanceof AssignmentReferenceExpression) {
+            AssignmentReferenceExpression specific = (AssignmentReferenceExpression) expression;
+            String identifier = "CDEP_" + specific.assignment.name.toUpperCase();
+            sb.append(String.format("${%s}", identifier));
             return;
         }
 
@@ -377,6 +382,8 @@ public class CMakeGenerator {
                 array[i] = generateAssignments(prefix, signature, specific.elements[i], sb, null);
             }
             return array;
+        } else if (expr instanceof AssignmentReferenceExpression) {
+            return null;
         }
         throw new RuntimeException(expr.getClass().toString());
     }

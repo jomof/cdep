@@ -3,7 +3,7 @@ package io.cdep.cdep.ast.finder;
 
 import java.util.List;
 
-public class AssignmentBlockExpression extends Expression {
+public class AssignmentBlockExpression extends StatementExpression {
     final public List<AssignmentExpression> assignments;
     final public StatementExpression statement;
 

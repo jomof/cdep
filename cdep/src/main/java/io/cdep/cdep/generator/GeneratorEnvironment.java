@@ -86,6 +86,8 @@ public class GeneratorEnvironment implements ManifestProvider {
     }
 
     public File getLocalDownloadFilename(Coordinate coordinate, URL remoteArchive) {
+        assert coordinate != null;
+        assert remoteArchive != null;
         File local = downloadFolder;
         local = new File(local, coordinate.groupId);
         local = new File(local, coordinate.artifactId);
@@ -94,10 +96,9 @@ public class GeneratorEnvironment implements ManifestProvider {
         return local;
     }
 
-    public File tryGetLocalDownloadedFile(
-            Coordinate coordinate,
-        URL remoteArchive)
-            throws IOException {
+    public File tryGetLocalDownloadedFile(Coordinate coordinate, URL remoteArchive) throws IOException {
+        assert coordinate != null;
+        assert remoteArchive != null;
         File local = getLocalDownloadFilename(coordinate, remoteArchive);
         if (local.isFile() && !forceRedownload) {
             return local;

@@ -177,6 +177,16 @@ class FindModuleInterpreter {
         return o;
       }
     }
+    if (clazz.equals(String[].class)) {
+      if (o instanceof Object[]) {
+        Object objarr[] = (Object[]) o;
+        String result[] = new String[objarr.length];
+        for (int i = 0; i < result.length; ++i) {
+          result[i] = objarr.toString();
+        }
+        return result;
+      }
+    }
 
     throw new RuntimeException(String.format("Did not coerce %s to %s", o.getClass(), clazz));
   }

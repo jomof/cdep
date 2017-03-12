@@ -66,6 +66,22 @@ public class TestFindModuleFunctionTableBuilder {
     }
 
     @Test
+    public void testTiny() throws Exception {
+        ResolvedManifest resolved = ResolvedManifests.emptyAndroidArchive();
+        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+        builder.addManifest(resolved);
+        FunctionTableExpression table = builder.build();
+        System.out.printf(CreateStringVisitor.convert(table));
+        String zip = FindModuleInterpreter.findiOS(table,
+                resolved.cdepManifestYml.coordinate,
+                "Darwin",
+                new String[]{"armv7s"},
+                "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk")
+                .archives[0].file.getPath();
+        assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
+    }
+
+    @Test
     public void testiOS() throws Exception {
         ResolvedManifest resolved = ResolvedManifests.sqlite();
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();

@@ -2,16 +2,16 @@ package io.cdep.cdep.ast.finder;
 
 import java.net.URL;
 
-public class ModuleArchive {
+public class ModuleArchiveExpression extends Expression {
     final public URL file; // The zip file.
     final public String sha256;
     final public Long size;
     final public String include;
     final public String libraryName;
-    final public AssignmentExpression fullIncludePath;
+    final public Expression fullIncludePath;
 
-    public ModuleArchive(URL file, String sha256, Long size, String include,
-                         AssignmentExpression fullIncludePath, String libraryName) {
+    public ModuleArchiveExpression(URL file, String sha256, Long size, String include,
+                                   Expression fullIncludePath, String libraryName) {
         assert file != null;
         assert sha256 != null;
         this.file = file;

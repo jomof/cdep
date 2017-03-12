@@ -11,7 +11,11 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     }
 
     public static String convert(Expression expr) {
-        return new CreateStringVisitor(expr).sb.toString();
+        String result = new CreateStringVisitor(expr).sb.toString();
+        while (result.startsWith("\n")) {
+            result = result.substring(1);
+        }
+        return result;
     }
 
     @Override
@@ -98,7 +102,7 @@ public class CreateStringVisitor extends ReadonlyVisitor {
 
     @Override
     protected void visitAbortExpression(AbortExpression expr) {
-        String parms[] = new String[expr.parameters.length];
+        Object parms[] = new String[expr.parameters.length];
         for (int i = 0; i < parms.length; ++i) {
             StringBuilder old = sb;
             sb = new StringBuilder();
@@ -128,6 +132,18 @@ public class CreateStringVisitor extends ReadonlyVisitor {
             visit(expr.parameters[i]);
         }
         append(")");
+    }
+
+    @Override
+    protected void visitArray(Expression[] array) {
+        append("[");
+        for (int i = 0; i < array.length; ++i) {
+            if (i > 0) {
+                append(", ");
+            }
+            visit(array[i]);
+        }
+        append("]");
     }
 
     @Override

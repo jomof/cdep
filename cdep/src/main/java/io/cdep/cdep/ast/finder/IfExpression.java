@@ -1,6 +1,6 @@
 package io.cdep.cdep.ast.finder;
 
-public class IfExpression extends Expression {
+public class IfExpression extends StatementExpression {
   final public Expression bool;
   final public Expression trueExpression;
   final public Expression falseExpression;

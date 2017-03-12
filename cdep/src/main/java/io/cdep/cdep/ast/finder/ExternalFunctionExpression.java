@@ -40,10 +40,6 @@ public class ExternalFunctionExpression extends FunctionExpression {
 
   final public Method method;
 
-  public ExternalFunctionExpression(Method method) {
-    this.method = method;
-  }
-
   private ExternalFunctionExpression(Class clazz, String functionName, Class<?>... parameterTypes) {
     try {
       this.method = clazz.getMethod(functionName, parameterTypes);

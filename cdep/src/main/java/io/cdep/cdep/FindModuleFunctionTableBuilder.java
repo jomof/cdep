@@ -70,7 +70,8 @@ public class FindModuleFunctionTableBuilder {
         }
 
         // Lift assignments up to the highest correct scope
-        functionTable = (FunctionTableExpression) new LiftAssignmentVisitor().visitFunctionTableExpression(functionTable);
+        functionTable = (FunctionTableExpression) new LiftAssignmentVisitor().visit(functionTable);
+        functionTable = (FunctionTableExpression) new LiftToCommonAncestor().visit(functionTable);
 
         return functionTable;
     }
@@ -125,7 +126,7 @@ public class FindModuleFunctionTableBuilder {
         if (resolved.cdepManifestYml.iOS != null && resolved.cdepManifestYml.iOS.archives != null) {
             supported += "'Darwin' ";
             cases.put(new StringExpression("Darwin"),
-                    buildDarwinPlatformCase(resolved, dependencies));
+                    buildDarwinPlatformCase(resolved, explodedArchiveFolder, dependencies));
         }
         CaseExpression expression = new CaseExpression(
                 targetPlatform,
@@ -142,6 +143,7 @@ public class FindModuleFunctionTableBuilder {
 
     private Expression buildDarwinPlatformCase(
             ResolvedManifest resolved,
+            AssignmentExpression explodedArchiveFolder,
             Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
 
         // Something like iPhone10.2.sdk or iPhone.sdk
@@ -187,6 +189,7 @@ public class FindModuleFunctionTableBuilder {
                     buildiosArchiveExpression(
                             resolved,
                             archive,
+                            explodedArchiveFolder,
                             dependencies));
         }
 
@@ -203,6 +206,7 @@ public class FindModuleFunctionTableBuilder {
                     buildiosArchiveExpression(
                             resolved,
                             archive,
+                            explodedArchiveFolder,
                             dependencies),
                     prior);
         }
@@ -216,13 +220,14 @@ public class FindModuleFunctionTableBuilder {
     private Expression buildiosArchiveExpression(
             ResolvedManifest resolved,
             iOSArchive archive,
+            AssignmentExpression explodedArchiveFolder,
             Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
         int archiveCount = 1;
         if (resolved.cdepManifestYml.archive != null) {
             ++archiveCount;
         }
-        ModuleArchive archives[] = new ModuleArchive[archiveCount];
-        archives[0] = new ModuleArchive(
+        ModuleArchiveExpression archives[] = new ModuleArchiveExpression[archiveCount];
+        archives[0] = new ModuleArchiveExpression(
                 resolved.remote.toURI()
                         .resolve(".")
                         .resolve(archive.file)
@@ -230,12 +235,12 @@ public class FindModuleFunctionTableBuilder {
                 archive.sha256,
                 archive.size,
                 archive.include,
-                null,
+                explodedArchiveFolder,
                 archive.lib);
 
         if (resolved.cdepManifestYml.archive != null) {
             // This is the global zip file from the top level of the manifest.
-            archives[1] = new ModuleArchive(
+            archives[1] = new ModuleArchiveExpression(
                     resolved.remote.toURI()
                             .resolve(".")
                             .resolve(resolved.cdepManifestYml.archive.file)
@@ -243,7 +248,7 @@ public class FindModuleFunctionTableBuilder {
                     resolved.cdepManifestYml.archive.sha256,
                     resolved.cdepManifestYml.archive.size,
                     "include",
-                    null,
+                    explodedArchiveFolder,
                     null);
         }
         return new FoundiOSModuleExpression(
@@ -360,8 +365,8 @@ public class FindModuleFunctionTableBuilder {
         if (resolved.cdepManifestYml.archive != null) {
             ++archiveCount;
         }
-        ModuleArchive archives[] = new ModuleArchive[archiveCount];
-        archives[0] = new ModuleArchive(
+        ModuleArchiveExpression archives[] = new ModuleArchiveExpression[archiveCount];
+        archives[0] = new ModuleArchiveExpression(
                 resolved.remote.toURI()
                         .resolve(".")
                         .resolve(android.file)
@@ -374,7 +379,7 @@ public class FindModuleFunctionTableBuilder {
 
         if (resolved.cdepManifestYml.archive != null) {
             // This is the global zip file from the top level of the manifest.
-            archives[1] = new ModuleArchive(
+            archives[1] = new ModuleArchiveExpression(
                     resolved.remote.toURI()
                             .resolve(".")
                             .resolve(resolved.cdepManifestYml.archive.file)

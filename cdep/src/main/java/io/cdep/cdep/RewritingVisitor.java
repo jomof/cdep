@@ -2,14 +2,19 @@ package io.cdep.cdep;
 
 import io.cdep.cdep.ast.finder.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class RewritingVisitor {
     final protected Map<Expression, Expression> identity = new HashMap<>();
 
-    Expression visit(Expression expr) {
+    protected Expression visit(Expression expr) {
+        if (expr == null) {
+            return null;
+        }
         Expression prior = identity.get(expr);
         if (prior != null) {
             return prior;
@@ -71,8 +76,35 @@ public class RewritingVisitor {
         if (expr.getClass().equals(ArrayExpression.class)) {
             return visitArrayExpression((ArrayExpression) expr);
         }
-
+        if (expr.getClass().equals(ModuleArchiveExpression.class)) {
+            return visitModuleArchiveExpression((ModuleArchiveExpression) expr);
+        }
+        if (expr.getClass().equals(AssignmentBlockExpression.class)) {
+            return visitAssignmentBlockExpression((AssignmentBlockExpression) expr);
+        }
+        if (expr.getClass().equals(AssignmentReferenceExpression.class)) {
+            return visitAssignmentReferenceExpression((AssignmentReferenceExpression) expr);
+        }
         throw new RuntimeException(expr.getClass().toString());
+    }
+
+    private Expression visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
+        return expr;
+    }
+
+    private Expression visitAssignmentBlockExpression(AssignmentBlockExpression expr) {
+        return new AssignmentBlockExpression(
+                visitList(expr.assignments),
+                (StatementExpression) visit(expr.statement)
+        );
+    }
+
+    private List<AssignmentExpression> visitList(List<AssignmentExpression> assignments) {
+        List<AssignmentExpression> result = new ArrayList<>();
+        for (AssignmentExpression assignment : assignments) {
+            result.add((AssignmentExpression) visit(assignment));
+        }
+        return result;
     }
 
     protected Expression visitArrayExpression(ArrayExpression expr) {
@@ -102,9 +134,27 @@ public class RewritingVisitor {
 
     protected Expression visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
         return new FoundAndroidModuleExpression(
-                expr.archives,
+                visitArchiveArray(expr.archives),
                 expr.dependencies
         );
+    }
+
+    private ModuleArchiveExpression[] visitArchiveArray(ModuleArchiveExpression[] archives) {
+        ModuleArchiveExpression result[] = new ModuleArchiveExpression[archives.length];
+        for (int i = 0; i < result.length; ++i) {
+            result[i] = (ModuleArchiveExpression) visit(archives[i]);
+        }
+        return result;
+    }
+
+    private Expression visitModuleArchiveExpression(ModuleArchiveExpression expr) {
+        return new ModuleArchiveExpression(
+                expr.file,
+                expr.sha256,
+                expr.size,
+                expr.include,
+                visit(expr.fullIncludePath),
+                expr.libraryName);
     }
 
     protected Expression visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
