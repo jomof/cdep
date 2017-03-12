@@ -85,6 +85,24 @@ public class TestFindModuleFunctionTableBuilder {
     }
 
     @Test
+    public void testTinyAndroid() throws Exception {
+        ResolvedManifest resolved = ResolvedManifests.emptyiOSArchive();
+        FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+        builder.addManifest(resolved);
+        FunctionTableExpression table = builder.build();
+        System.out.printf(CreateStringVisitor.convert(table));
+        FoundAndroidModuleExpression found = FindModuleInterpreter.findAndroid(table,
+                resolved.cdepManifestYml.coordinate,
+                "Android",
+                "21",
+                "c++_shared",
+                "x86");
+        assertThat(found.archives[0].include).isEqualTo("include");
+        assertThat(found.archives[0].file.toString()).contains("sqlite-android-cxx-platform-12.zip");
+        new CMakeGenerator(environment).generate(table);
+    }
+
+    @Test
     public void testiOS() throws Exception {
         ResolvedManifest resolved = ResolvedManifests.sqlite();
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -186,24 +204,25 @@ public class TestFindModuleFunctionTableBuilder {
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         builder.addManifest(resolved);
         FunctionTableExpression table = builder.build();
-        FindModuleInterpreter.findAndroid(table,
+        assertThat(FindModuleInterpreter.findAndroid(table,
                 resolved.cdepManifestYml.coordinate,
                 "Android",
                 "21",
                 "c++_shared",
-                "x86").archives[0].file.getPath().contains("platform-21");
-        FindModuleInterpreter.findAndroid(table,
+                "x86").archives[0].file.getPath())
+                .contains("platform-21");
+        assertThat(FindModuleInterpreter.findAndroid(table,
                 resolved.cdepManifestYml.coordinate,
                 "Android",
                 "22",
                 "c++_shared",
-                "x86").archives[0].file.getPath().contains("platform-21");
-        FindModuleInterpreter.findAndroid(table,
+                "x86").archives[0].file.getPath()).contains("platform-21");
+        assertThat(FindModuleInterpreter.findAndroid(table,
                 resolved.cdepManifestYml.coordinate,
                 "Android",
                 "20",
                 "c++_shared",
-                "x86").archives[0].file.getPath().contains("platform-9");
+                "x86").archives[0].file.getPath()).contains("platform-9");
     }
 
     @Test

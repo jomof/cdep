@@ -83,7 +83,7 @@ public class CMakeGenerator {
             sb.append("###\n");
             String coordinateVar = String.format("%s_CDEP_COORDINATE", upperArtifactID);
             sb.append(String.format("%sif(%s)\n", prefix, coordinateVar));
-            sb.append(String.format("%smessage(FATAL_ERROR \"CDep module '$(%s}' was already defined\")\n", prefix, coordinateVar));
+            sb.append(String.format("%s  message(FATAL_ERROR \"CDep module '$(%s}' was already defined\")\n", prefix, coordinateVar));
             sb.append(String.format("%sendif(%s)\n", prefix, coordinateVar));
             sb.append(String.format("%sset(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate));
             String appenderFunctionName = getAddDependencyFunctionName(signature.coordinate);
@@ -103,6 +103,7 @@ public class CMakeGenerator {
             return;
         } else if (expression instanceof IfSwitchExpression) {
             IfSwitchExpression specific = (IfSwitchExpression) expression;
+            sb.append("\n");
             sb.append(prefix);
             for (int i = 0; i < specific.conditions.length; ++i) {
                 sb.append("if(");
@@ -115,12 +116,7 @@ public class CMakeGenerator {
             sb.append(String.format("%sendif()\n", prefix));
             return;
         } else if (expression instanceof AssignmentExpression) {
-            String identifier = assignments.get(expression);
-            if (identifier != null) {
-                sb.append(identifier);
-                return;
-            }
-//            throw new RuntimeException("Should have called generateAssignments before now");
+            generateAssignments(prefix, signature, expression, sb, null);
             return;
         } else if (expression instanceof InvokeFunctionExpression) {
             InvokeFunctionExpression specific = (InvokeFunctionExpression) expression;
@@ -137,13 +133,11 @@ public class CMakeGenerator {
                         parms[0],
                         parms[1]));
             } else if (specific.function == ExternalFunctionExpression.INTEGER_GTE) {
-                sb.append(String.format("(%s GREATER %s) OR (%s EQUAL %s)",
+                sb.append(String.format("%s GREATER %s",
                         parms[0],
-                        parms[1],
-                        parms[0],
-                        parms[1]));
+                        Integer.parseInt(parms[1]) - 1));
             } else if (specific.function == ExternalFunctionExpression.STRING_EQUALS) {
-                sb.append(String.format("(%s STREQUALS %s)",
+                sb.append(String.format("%s STREQUALS %s",
                         parms[0],
                         parms[1]));
             } else {
@@ -164,7 +158,7 @@ public class CMakeGenerator {
             return;
         } else if (expression instanceof StringExpression) {
             StringExpression specific = (StringExpression) expression;
-            sb.append(specific.value);
+            sb.append("\"" + specific.value + "\"");
             return;
         } else if (expression instanceof FoundAndroidModuleExpression) {
             FoundAndroidModuleExpression specific = (FoundAndroidModuleExpression) expression;
@@ -173,7 +167,7 @@ public class CMakeGenerator {
             }
             for (ModuleArchiveExpression archive : specific.archives) {
                 File relativeUnzipFolder = environment.getRelativeUnzipFolder(archive.file);
-                sb.append(String.format("%sset(CDEP_EXPLODED_PACKAGE_FOLDER \"${CDEP_EXPLODED_ARCHIVE_FOLDER}/%s\")\n",
+                sb.append(String.format("\n%sset(CDEP_EXPLODED_PACKAGE_FOLDER \"${CDEP_EXPLODED_ARCHIVE_FOLDER}/%s\")\n",
                         prefix, getCMakePath(relativeUnzipFolder)));
                 sb.append(String.format(
                         "%starget_include_directories(${target} PRIVATE \"${CDEP_EXPLODED_PACKAGE_FOLDER}/%s\")\n",
@@ -189,6 +183,7 @@ public class CMakeGenerator {
             return;
         } else if (expression instanceof FoundiOSModuleExpression) {
             FoundiOSModuleExpression specific = (FoundiOSModuleExpression) expression;
+            sb.append("\n");
             for (Coordinate dependency : specific.dependencies) {
                 sb.append(String.format("%s%s(${target})\n", prefix, getAddDependencyFunctionName(dependency)));
             }
@@ -197,10 +192,9 @@ public class CMakeGenerator {
                 sb.append(String.format("%starget_include_directories(${target} PRIVATE \"%s\")\n",
                         prefix, getCMakePath(new File(exploded, archive.include))));
                 if (archive.libraryName != null && archive.libraryName.length() > 0) {
-                    String libFolder = new File(exploded, "lib").toString().replace("\\", "\\\\");
                     sb.append(String.format(
-                            "%starget_link_libraries(${target} \"%s/%s\")\n",
-                            prefix, libFolder, archive.libraryName));
+                            "%starget_link_libraries(${target} \"%s/lib/%s\")\n",
+                            prefix, exploded, archive.libraryName));
                 }
             }
             return;
@@ -210,12 +204,16 @@ public class CMakeGenerator {
             for (int i = 0; i < parms.length; ++i) {
                 StringBuilder argBuilder = new StringBuilder();
                 generateFindAppender(0, signature, specific.parameters[i], argBuilder);
-                parms[i] = String.format("${%s}", argBuilder.toString());
+                if (argBuilder.toString().startsWith("$")) {
+                    System.out.printf("x");
+                }
+                parms[i] = "${" + argBuilder.toString() + "}";
             }
             String message = String.format(specific.message, parms);
-            sb.append(String.format("%smessage(FATAL_ERROR \"%s\")\n", prefix, message));
+            sb.append(String.format("\n%smessage(FATAL_ERROR \"%s\")\n", prefix, message));
             return;
         } else if (expression instanceof AssignmentBlockExpression) {
+            sb.append("\n");
             AssignmentBlockExpression specific = (AssignmentBlockExpression) expression;
             for (int i = 0; i < specific.assignments.size(); i++) {
                 generateFindAppender(indent, signature, specific.assignments.get(i), sb);
@@ -224,8 +222,7 @@ public class CMakeGenerator {
             return;
         } else if (expression instanceof AssignmentReferenceExpression) {
             AssignmentReferenceExpression specific = (AssignmentReferenceExpression) expression;
-            String identifier = "CDEP_" + specific.assignment.name.toUpperCase();
-            sb.append(String.format("${%s}", identifier));
+            sb.append(String.format("%s", specific.assignment.name));
             return;
         }
 
@@ -234,19 +231,19 @@ public class CMakeGenerator {
 
     private String parameterName(FindModuleExpression signature, ParameterExpression expr) {
         if (expr == signature.targetPlatform) {
-            return "${CMAKE_SYSTEM_NAME}";
+            return "CMAKE_SYSTEM_NAME";
         }
         if (expr == signature.androidStlType) {
-            return "${CDEP_DETERMINED_ANDROID_RUNTIME}";
+            return "CDEP_DETERMINED_ANDROID_RUNTIME";
         }
         if (expr == signature.systemVersion) {
-            return "${CMAKE_SYSTEM_VERSION}";
+            return "CMAKE_SYSTEM_VERSION";
         }
         if (expr == signature.androidTargetAbi) {
-            return "${CDEP_DETERMINED_ANDROID_ABI}";
+            return "CDEP_DETERMINED_ANDROID_ABI";
         }
         if (expr == signature.osxSysroot) {
-            return "${CMAKE_OSX_SYSROOT}";
+            return "CMAKE_OSX_SYSROOT";
         }
         if (expr == signature.cdepExplodedRoot) {
             return getCMakePath(environment.unzippedArchivesFolder);
@@ -255,21 +252,21 @@ public class CMakeGenerator {
         throw new RuntimeException(expr.name);
     }
 
-    private Object generateAssignmentsx(String prefix, FindModuleExpression signature, Expression expr, StringBuilder sb, String assignResult) {
+    private Object generateAssignments(String prefix, FindModuleExpression signature, Expression expr, StringBuilder sb, String assignResult) {
         if (expr instanceof AssignmentExpression) {
             AssignmentExpression specific = (AssignmentExpression) expr;
-            String identifier = "CDEP_" + specific.name.toUpperCase();
+            String identifier = specific.name;
             if (assignments.get(specific) != null) {
                 return String.format("${%s}", identifier);
             }
             assignments.put(specific, identifier);
-            generateAssignmentsx(prefix, signature, specific.expression, sb, identifier);
+            generateAssignments(prefix, signature, specific.expression, sb, identifier);
             return String.format("${%s}", identifier);
         } else if (expr instanceof InvokeFunctionExpression) {
             InvokeFunctionExpression specific = (InvokeFunctionExpression) expr;
             Object values[] = new Object[specific.parameters.length];
             for (int i = 0; i < specific.parameters.length; ++i) {
-                Object value = generateAssignmentsx(prefix, signature, specific.parameters[i], sb, null);
+                Object value = generateAssignments(prefix, signature, specific.parameters[i], sb, null);
                 if (values == null) {
                     throw new RuntimeException(specific.parameters[i].getClass().toString());
                 }
@@ -321,7 +318,7 @@ public class CMakeGenerator {
                 for (int i = 0; i < segments.length; ++i) {
                     assign += "/" + segments[i];
                 }
-                sb.append(String.format("%sset(%s %s)\n",
+                sb.append(String.format("%sset(%s \"%s\")\n",
                         prefix,
                         assignResult,
                         assign));
@@ -351,21 +348,16 @@ public class CMakeGenerator {
             ArrayExpression specific = (ArrayExpression) expr;
             Object array[] = new String[specific.elements.length];
             for (int i = 0; i < array.length; ++i) {
-                array[i] = generateAssignmentsx(prefix, signature, specific.elements[i], sb, null);
+                array[i] = generateAssignments(prefix, signature, specific.elements[i], sb, null);
             }
             return array;
         } else if (expr instanceof AssignmentReferenceExpression) {
-            return null;
+            AssignmentReferenceExpression specific = (AssignmentReferenceExpression) expr;
+            return String.format("${%s}", specific.assignment.name);
         }
         throw new RuntimeException(expr.getClass().toString());
     }
 
-    private String getStringValue(Expression expression) {
-        if (expression instanceof StringExpression) {
-            return ((StringExpression) expression).value;
-        }
-        throw new RuntimeException(expression.toString());
-    }
 
     String getAddDependencyFunctionName(Coordinate coordinate) {
         return String.format("add_cdep_%s_dependency", coordinate.artifactId)

@@ -140,7 +140,6 @@ public class FindModuleFunctionTableBuilder {
             ++i;
         }
 
-
         IfSwitchExpression expression = new IfSwitchExpression(
                 bool,
                 expressions,
@@ -162,14 +161,14 @@ public class FindModuleFunctionTableBuilder {
         // Something like iPhone10.2.sdk or iPhone.sdk
         AssignmentExpression osxSysrootSDKName =
                 new AssignmentExpression(
-                        "osxSysrootSDKName",
+                        "osx_sysroot_sdk_name",
                         new InvokeFunctionExpression(
                                 ExternalFunctionExpression.FILE_GETNAME,
                                 osxSysroot));
 
         // The position of the right-most dot
         AssignmentExpression lastDotPosition = new AssignmentExpression(
-                "lastDotPosition",
+                "last_dot_position",
                 new InvokeFunctionExpression(
                         ExternalFunctionExpression.STRING_LASTINDEXOF,
                         osxSysrootSDKName,
@@ -178,7 +177,7 @@ public class FindModuleFunctionTableBuilder {
         // Something like iPhone10.2 or iPhone
         AssignmentExpression combinedPlatformAndSDK =
                 new AssignmentExpression(
-                        "combinedPlatformAndSDK",
+                        "combined_platform_and_sdk",
                         new InvokeFunctionExpression(
                                 ExternalFunctionExpression.STRING_SUBSTRING_BEGIN_END,
                                 osxSysrootSDKName,
@@ -200,10 +199,10 @@ public class FindModuleFunctionTableBuilder {
                     new StringExpression(platformSDK)
             ));
             expressionList.add(buildiosArchiveExpression(
-                            resolved,
-                            archive,
-                            explodedArchiveFolder,
-                            dependencies));
+                    resolved,
+                    archive,
+                    explodedArchiveFolder,
+                    dependencies));
 
             supported += platformSDK + " ";
         }
@@ -217,9 +216,9 @@ public class FindModuleFunctionTableBuilder {
                     new StringExpression(archive.platform.toString())
             ));
             expressionList.add(buildiosArchiveExpression(
-                            resolved,
-                            archive,
-                            explodedArchiveFolder,
+                    resolved,
+                    archive,
+                    explodedArchiveFolder,
                     dependencies));
         }
 
@@ -370,8 +369,8 @@ public class FindModuleFunctionTableBuilder {
         for (int platform : platforms) {
             conditions.add(0, new InvokeFunctionExpression(
                     ExternalFunctionExpression.INTEGER_GTE,
-                            systemVersion,
-                            new IntegerExpression(platform)
+                    systemVersion,
+                    new IntegerExpression(platform)
             ));
             expressions.add(0, buildAndroidAbiExpression(resolved, grouped.get(platform),
                     explodedArchiveFolder, dependencies));
