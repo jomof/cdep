@@ -138,7 +138,7 @@ public class CMakeGenerator {
                         parms[0],
                         Integer.parseInt(parms[1]) - 1));
             } else if (specific.function == ExternalFunctionExpression.STRING_EQUALS) {
-                sb.append(String.format("%s STREQUALS %s",
+                sb.append(String.format("%s STREQUAL %s",
                         parms[0],
                         parms[1]));
             } else {
