@@ -56,11 +56,6 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     }
 
     @Override
-    protected void visitLongExpression(LongExpression expr) {
-        append("%s", expr.value);
-    }
-
-    @Override
     protected void visitAbortExpression(AbortExpression expr) {
         Object parms[] = new String[expr.parameters.length];
         for (int i = 0; i < parms.length; ++i) {

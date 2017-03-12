@@ -88,9 +88,6 @@ class FindModuleInterpreter {
         parms[i] = interpret(parameters, abortExpression.parameters[i]);
       }
       throw new RuntimeException(String.format(abortExpression.message, parms));
-    } else if (expression instanceof LongExpression) {
-      LongExpression longConst = (LongExpression) expression;
-      return longConst.value;
     } else if (expression instanceof FoundAndroidModuleExpression) {
       return expression;
     } else if (expression instanceof FoundiOSModuleExpression) {

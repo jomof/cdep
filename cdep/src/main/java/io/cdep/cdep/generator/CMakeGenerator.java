@@ -149,10 +149,6 @@ public class CMakeGenerator {
             ParameterExpression specific = (ParameterExpression) expression;
             sb.append(parameterName(signature, specific));
             return;
-        } else if (expression instanceof LongExpression) {
-            LongExpression specific = (LongExpression) expression;
-            sb.append(specific.value.toString());
-            return;
         } else if (expression instanceof IntegerExpression) {
             IntegerExpression specific = (IntegerExpression) expression;
             sb.append(specific.value);

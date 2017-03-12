@@ -37,10 +37,6 @@ public class ReadonlyVisitor {
             visitInvokeFunctionExpression((InvokeFunctionExpression) expr);
             return;
         }
-        if (expr.getClass().equals(LongExpression.class)) {
-            visitLongExpression((LongExpression) expr);
-            return;
-        }
         if (expr.getClass().equals(FoundAndroidModuleExpression.class)) {
             visitFoundAndroidModuleExpression((FoundAndroidModuleExpression) expr);
             return;
@@ -121,9 +117,6 @@ public class ReadonlyVisitor {
 
     protected void visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
         visitArray(expr.archives);
-    }
-
-    protected void visitLongExpression(LongExpression expr) {
     }
 
     protected void visitInvokeFunctionExpression(InvokeFunctionExpression expr) {
