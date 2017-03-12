@@ -61,17 +61,15 @@ class FindModuleInterpreter {
 
     if (expression instanceof String) {
       return expression;
-    } else if (expression instanceof CaseExpression) {
-      CaseExpression caseExpression = (CaseExpression) expression;
-      Object caseVar = interpret(parameters, interpret(parameters, caseExpression.var));
-      for (Expression caseValueExpression : caseExpression.cases.keySet()) {
-          Object caseValue = interpret(parameters, caseValueExpression);
-          if (caseValue.equals(caseVar)) {
-          return interpret(parameters,
-              caseExpression.cases.get(caseValueExpression));
+    } else if (expression instanceof IfSwitchExpression) {
+      IfSwitchExpression specific = (IfSwitchExpression) expression;
+      for (int i = 0; i < specific.conditions.length; ++i) {
+        boolean value = (boolean) interpret(parameters, specific.conditions[i]);
+        if (value) {
+          return interpret(parameters, specific.expressions[i]);
         }
       }
-      return interpret(parameters, caseExpression.defaultCase);
+      return interpret(parameters, specific.elseExpression);
     } else if (expression instanceof AssignmentExpression) {
       Object result = parameters.get(expression);
       if (result != null) {
@@ -126,12 +124,6 @@ class FindModuleInterpreter {
     } else if (expression instanceof IntegerExpression) {
       IntegerExpression specific = (IntegerExpression) expression;
       return specific.value;
-    } else if (expression instanceof IfExpression) {
-      IfExpression specific = (IfExpression) expression;
-      boolean value = (boolean) interpret(parameters, specific.bool);
-      return value
-              ? interpret(parameters, specific.trueExpression)
-              : interpret(parameters, specific.falseExpression);
     } else if (expression instanceof ArrayExpression) {
       ArrayExpression specific = (ArrayExpression) expression;
       Object elements[] = new Object[specific.elements.length];

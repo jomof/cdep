@@ -101,37 +101,18 @@ public class CMakeGenerator {
             generateFindAppender(indent + 1, signature, specific.expression, sb);
             sb.append("endfunction({appenderFunctionName})\n".replace("{appenderFunctionName}", appenderFunctionName));
             return;
-        } else if (expression instanceof CaseExpression) {
-            CaseExpression specific = (CaseExpression) expression;
-            StringBuilder varBuilder = new StringBuilder();
-            generateFindAppender(indent, signature, specific.var, varBuilder);
-            String var = varBuilder.toString();
-            boolean first = true;
-            for (Expression matchValueExpression : specific.cases.keySet()) {
-                String matchValue = getStringValue(matchValueExpression);
-                if (first) {
-                    sb.append(String.format("%sif(%s STREQUAL \"%s\")\n", prefix, var, matchValue));
-                    first = false;
-                } else {
-                    sb.append(String.format("%selseif(%s STREQUAL \"%s\")\n", prefix, var, matchValue));
-                }
-                generateFindAppender(indent + 1, signature, specific.cases.get(matchValueExpression), sb);
+        } else if (expression instanceof IfSwitchExpression) {
+            IfSwitchExpression specific = (IfSwitchExpression) expression;
+            sb.append(prefix);
+            for (int i = 0; i < specific.conditions.length; ++i) {
+                sb.append("if(");
+                generateFindAppender(indent + 1, signature, specific.conditions[i], sb);
+                sb.append(")");
+                generateFindAppender(indent + 1, signature, specific.expressions[i], sb);
+                sb.append(String.format("%selse ", prefix));
             }
-            sb.append(String.format("%selse()\n", prefix));
-            generateFindAppender(indent + 1, signature, specific.defaultCase, sb);
+            generateFindAppender(indent + 1, signature, specific.elseExpression, sb);
             sb.append(String.format("%sendif()\n", prefix));
-
-            return;
-        } else if (expression instanceof IfExpression) {
-            IfExpression specific = (IfExpression) expression;
-            StringBuilder varBuilder = new StringBuilder();
-            generateFindAppender(indent, signature, specific.bool, varBuilder);
-            String var = varBuilder.toString();
-            sb.append(String.format("%sif(%s)\n", prefix, var));
-            generateFindAppender(indent + 1, signature, specific.trueExpression, sb);
-            sb.append(String.format("%selse(%s)\n", prefix, var));
-            generateFindAppender(indent + 1, signature, specific.falseExpression, sb);
-            sb.append(String.format("%sendif(%s)\n", prefix, var));
             return;
         } else if (expression instanceof AssignmentExpression) {
             String identifier = assignments.get(expression);
@@ -155,10 +136,14 @@ public class CMakeGenerator {
                 sb.append(String.format("%s MATCHES \"$%s.*\"",
                         parms[0],
                         parms[1]));
-            } else if (specific.function == ExternalFunctionExpression.BOOL_GTE) {
+            } else if (specific.function == ExternalFunctionExpression.INTEGER_GTE) {
                 sb.append(String.format("(%s GREATER %s) OR (%s EQUAL %s)",
                         parms[0],
                         parms[1],
+                        parms[0],
+                        parms[1]));
+            } else if (specific.function == ExternalFunctionExpression.STRING_EQUALS) {
+                sb.append(String.format("(%s STREQUALS %s)",
                         parms[0],
                         parms[1]));
             } else {

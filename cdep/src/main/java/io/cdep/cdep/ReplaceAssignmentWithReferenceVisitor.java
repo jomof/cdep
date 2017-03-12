@@ -8,7 +8,7 @@ import io.cdep.cdep.ast.finder.Expression;
 /**
  * Replace AssignmentExpression with AssignmentReferenceExpression and lift assignments to the nearest block.
  */
-public class LiftAssignmentVisitor extends RewritingVisitor {
+public class ReplaceAssignmentWithReferenceVisitor extends RewritingVisitor {
 
     @Override
     protected Expression visitAssignmentExpression(AssignmentExpression expr) {

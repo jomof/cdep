@@ -23,8 +23,8 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     }
 
     @Override
-    protected Expression visitCaseExpression(CaseExpression expr) {
-        Expression result = super.visitCaseExpression(expr);
+    protected Expression visitIfSwitchExpression(IfSwitchExpression expr) {
+        Expression result = super.visitIfSwitchExpression(expr);
         List<AssignmentExpression> block = extractBlocks(result);
 
         if (block.size() > 0) {
@@ -54,18 +54,6 @@ public class LiftToCommonAncestor extends RewritingVisitor {
             }
         }
         return block;
-    }
-
-    @Override
-    protected Expression visitIfExpression(IfExpression expr) {
-        Expression result = super.visitIfExpression(expr);
-        List<AssignmentExpression> block = extractBlocks(result);
-
-        if (block.size() > 0) {
-            return new AssignmentBlockExpression(block, (StatementExpression) result);
-        }
-
-        return result;
     }
 
     void assignments(Expression expr,

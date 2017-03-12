@@ -19,7 +19,7 @@ public class LongExpression extends Expression {
 
     final public Long value;
 
-    public LongExpression(Long value) {
+    private LongExpression(Long value) {
         this.value = value;
     }
 }

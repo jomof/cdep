@@ -21,8 +21,8 @@ public class ReadonlyVisitor {
             visitParameterExpression((ParameterExpression) expr);
             return;
         }
-        if (expr.getClass().equals(CaseExpression.class)) {
-            visitCaseExpression((CaseExpression) expr);
+        if (expr.getClass().equals(IfSwitchExpression.class)) {
+            visitIfSwitchExpression((IfSwitchExpression) expr);
             return;
         }
         if (expr.getClass().equals(StringExpression.class)) {
@@ -65,10 +65,6 @@ public class ReadonlyVisitor {
             visitFoundiOSModuleExpression((FoundiOSModuleExpression) expr);
             return;
         }
-        if (expr.getClass().equals(IfExpression.class)) {
-            visitIfExpression((IfExpression) expr);
-            return;
-        }
         if (expr.getClass().equals(ArrayExpression.class)) {
             visitArrayExpression((ArrayExpression) expr);
             return;
@@ -104,12 +100,6 @@ public class ReadonlyVisitor {
 
     protected void visitArrayExpression(ArrayExpression expr) {
         visitArray(expr.elements);
-    }
-
-    protected void visitIfExpression(IfExpression expr) {
-        visit(expr.bool);
-        visit(expr.trueExpression);
-        visit(expr.falseExpression);
     }
 
     protected void visitIntegerExpression(IntegerExpression expr) {
@@ -154,10 +144,10 @@ public class ReadonlyVisitor {
     protected void visitStringExpression(StringExpression expr) {
     }
 
-    protected void visitCaseExpression(CaseExpression expr) {
-        visit(expr.var);
-        visitMap(expr.cases);
-        visit(expr.defaultCase);
+    protected void visitIfSwitchExpression(IfSwitchExpression expr) {
+        visitArray(expr.conditions);
+        visitArray(expr.expressions);
+        visit(expr.elseExpression);
     }
 
     protected void visitMap(Map<Expression, Expression> original) {

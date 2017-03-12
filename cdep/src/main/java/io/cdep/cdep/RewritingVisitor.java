@@ -34,8 +34,8 @@ public class RewritingVisitor {
         if (expr.getClass().equals(ParameterExpression.class)) {
             return visitParameterExpression((ParameterExpression) expr);
         }
-        if (expr.getClass().equals(CaseExpression.class)) {
-            return visitCaseExpression((CaseExpression) expr);
+        if (expr.getClass().equals(IfSwitchExpression.class)) {
+            return visitIfSwitchExpression((IfSwitchExpression) expr);
         }
         if (expr.getClass().equals(StringExpression.class)) {
             return visitStringExpression((StringExpression) expr);
@@ -45,9 +45,6 @@ public class RewritingVisitor {
         }
         if (expr.getClass().equals(InvokeFunctionExpression.class)) {
             return visitInvokeFunctionExpression((InvokeFunctionExpression) expr);
-        }
-        if (expr.getClass().equals(LongExpression.class)) {
-            return visitLongExpression((LongExpression) expr);
         }
         if (expr.getClass().equals(FoundAndroidModuleExpression.class)) {
             return visitFoundAndroidModuleExpression((FoundAndroidModuleExpression) expr);
@@ -66,9 +63,6 @@ public class RewritingVisitor {
         }
         if (expr.getClass().equals(FoundiOSModuleExpression.class)) {
             return visitFoundiOSModuleExpression((FoundiOSModuleExpression) expr);
-        }
-        if (expr.getClass().equals(IfExpression.class)) {
-            return visitIfExpression((IfExpression) expr);
         }
         if (expr.getClass().equals(ArrayExpression.class)) {
             return visitArrayExpression((ArrayExpression) expr);
@@ -106,10 +100,6 @@ public class RewritingVisitor {
 
     protected Expression visitArrayExpression(ArrayExpression expr) {
         return new ArrayExpression(visitArray(expr.elements));
-    }
-
-    protected Expression visitIfExpression(IfExpression expr) {
-        return new IfExpression(visit(expr.bool), visit(expr.trueExpression), visit(expr.falseExpression));
     }
 
     protected Expression visitIntegerExpression(IntegerExpression expr) {
@@ -161,11 +151,6 @@ public class RewritingVisitor {
         );
     }
 
-    protected Expression visitLongExpression(LongExpression expr) {
-        return new LongExpression(expr.value);
-    }
-
-
     protected Expression visitInvokeFunctionExpression(InvokeFunctionExpression expr) {
         return new InvokeFunctionExpression(
                 (ExternalFunctionExpression) visit(expr.function),
@@ -192,11 +177,11 @@ public class RewritingVisitor {
         return new StringExpression(expr.value);
     }
 
-    protected Expression visitCaseExpression(CaseExpression expr) {
-        return new CaseExpression(
-                visit(expr.var),
-                visitMap(expr.cases),
-                visit(expr.defaultCase)
+    protected Expression visitIfSwitchExpression(IfSwitchExpression expr) {
+        return new IfSwitchExpression(
+                visitArray(expr.conditions),
+                visitArray(expr.expressions),
+                visit(expr.elseExpression)
         );
     }
 

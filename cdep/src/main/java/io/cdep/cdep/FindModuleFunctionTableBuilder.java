@@ -70,7 +70,7 @@ public class FindModuleFunctionTableBuilder {
         }
 
         // Lift assignments up to the highest correct scope
-        functionTable = (FunctionTableExpression) new LiftAssignmentVisitor().visit(functionTable);
+        functionTable = (FunctionTableExpression) new ReplaceAssignmentWithReferenceVisitor().visit(functionTable);
         functionTable = (FunctionTableExpression) new LiftToCommonAncestor().visit(functionTable);
 
         return functionTable;
@@ -128,9 +128,22 @@ public class FindModuleFunctionTableBuilder {
             cases.put(new StringExpression("Darwin"),
                     buildDarwinPlatformCase(resolved, explodedArchiveFolder, dependencies));
         }
-        CaseExpression expression = new CaseExpression(
-                targetPlatform,
-                cases,
+        Expression bool[] = new Expression[cases.size()];
+        Expression expressions[] = new Expression[cases.size()];
+        int i = 0;
+        for (Map.Entry<Expression, Expression> entry : cases.entrySet()) {
+            bool[i] = new InvokeFunctionExpression(
+                    ExternalFunctionExpression.STRING_EQUALS,
+                    targetPlatform,
+                    entry.getKey());
+            expressions[i] = entry.getValue();
+            ++i;
+        }
+
+
+        IfSwitchExpression expression = new IfSwitchExpression(
+                bool,
+                expressions,
                 new AbortExpression(
                         String.format("Target platform '%%s' is not supported by module '%s'. "
                                         + "Supported: %s",
@@ -172,49 +185,52 @@ public class FindModuleFunctionTableBuilder {
                                 new IntegerExpression(0),
                                 lastDotPosition));
 
-        // Gather up the platform names
-        Map<Expression, Expression> platforms = new HashMap<>();
-        assert resolved.cdepManifestYml.iOS != null;
-        String supported = "";
-        for (iOSArchive archive : resolved.cdepManifestYml.iOS.archives) {
-            String exact = archive.platform + archive.sdk;
-            Expression found = platforms.get(exact);
-            if (found != null) {
-                throw new RuntimeException(
-                        String.format("iOS platform '%s' seen in multiple archives", exact));
-            }
 
-            supported += exact + " ";
-            platforms.put(new StringExpression(exact),
-                    buildiosArchiveExpression(
+        List<Expression> conditionList = new ArrayList<>();
+        List<Expression> expressionList = new ArrayList<>();
+        String supported = "";
+
+        // Exact matches. For example, path ends with exactly iPhoneOS10.2
+        // TODO:  Linter should verify that there is not duplicate exact platforms (ie platform+sdk)
+        for (iOSArchive archive : resolved.cdepManifestYml.iOS.archives) {
+            String platformSDK = archive.platform + archive.sdk;
+            conditionList.add(new InvokeFunctionExpression(
+                    ExternalFunctionExpression.STRING_EQUALS,
+                    combinedPlatformAndSDK,
+                    new StringExpression(platformSDK)
+            ));
+            expressionList.add(buildiosArchiveExpression(
                             resolved,
                             archive,
                             explodedArchiveFolder,
                             dependencies));
+
+            supported += platformSDK + " ";
         }
 
-        Expression prior = new AbortExpression(
-                String.format("OSX SDK '%%s' is not supported by module '%s'. Supported: %s",
-                        resolved.cdepManifestYml.coordinate, supported), combinedPlatformAndSDK);
-
+        // If there was no exact match then do a startsWith match like, starts  with iPhone*
+        // TODO: Need to match on the highest SDK version. This matches the first seen.
         for (iOSArchive archive : resolved.cdepManifestYml.iOS.archives) {
-            prior = new IfExpression(
-                    new InvokeFunctionExpression(
-                            ExternalFunctionExpression.STRING_STARTSWITH,
-                            combinedPlatformAndSDK,
-                            new StringExpression(archive.platform.toString())),
-                    buildiosArchiveExpression(
+            conditionList.add(new InvokeFunctionExpression(
+                    ExternalFunctionExpression.STRING_STARTSWITH,
+                    combinedPlatformAndSDK,
+                    new StringExpression(archive.platform.toString())
+            ));
+            expressionList.add(buildiosArchiveExpression(
                             resolved,
                             archive,
                             explodedArchiveFolder,
-                            dependencies),
-                    prior);
+                    dependencies));
         }
 
-        return new CaseExpression(
-                combinedPlatformAndSDK,
-                platforms,
-                prior);
+        Expression notFound = new AbortExpression(
+                String.format("OSX SDK '%%s' is not supported by module '%s'. Supported: %s",
+                        resolved.cdepManifestYml.coordinate, supported), combinedPlatformAndSDK);
+
+        return new IfSwitchExpression(
+                conditionList,
+                expressionList,
+                notFound);
     }
 
     private Expression buildiosArchiveExpression(
@@ -302,9 +318,20 @@ public class FindModuleFunctionTableBuilder {
                     dependencies));
         }
 
-        return new CaseExpression(
-                androidStlType,
-                cases,
+        Expression bool[] = new Expression[cases.size()];
+        Expression expressions[] = new Expression[cases.size()];
+        int i = 0;
+        for (Map.Entry<Expression, Expression> entry : cases.entrySet()) {
+            bool[i] = new InvokeFunctionExpression(
+                    ExternalFunctionExpression.STRING_EQUALS,
+                    androidStlType,
+                    entry.getKey());
+            expressions[i] = entry.getValue();
+            ++i;
+        }
+        return new IfSwitchExpression(
+                bool,
+                expressions,
                 new AbortExpression(
                         String.format("Android runtime '%%s' is not supported by module '%s'. Supported: %s",
                                 resolved.cdepManifestYml.coordinate, runtimes), androidStlType));
@@ -337,20 +364,24 @@ public class FindModuleFunctionTableBuilder {
         platforms.addAll(grouped.keySet());
         Collections.sort(platforms);
 
-        Expression prior = new AbortExpression(
-                String.format("Android API level '%%s' is not supported by module '%s'",
-                        resolved.cdepManifestYml.coordinate), systemVersion);
+        List<Expression> conditions = new ArrayList<>();
+        List<Expression> expressions = new ArrayList<>();
+
         for (int platform : platforms) {
-            prior = new IfExpression(
-                    new InvokeFunctionExpression(
-                            ExternalFunctionExpression.BOOL_GTE,
+            conditions.add(0, new InvokeFunctionExpression(
+                    ExternalFunctionExpression.INTEGER_GTE,
                             systemVersion,
                             new IntegerExpression(platform)
-                    ),
-                    buildAndroidAbiExpression(resolved, grouped.get(platform), explodedArchiveFolder, dependencies),
-                    prior);
+            ));
+            expressions.add(0, buildAndroidAbiExpression(resolved, grouped.get(platform),
+                    explodedArchiveFolder, dependencies));
         }
-        return prior;
+        return new IfSwitchExpression(
+                conditions,
+                expressions,
+                new AbortExpression(
+                        String.format("Android API level '%%s' is not supported by module '%s'",
+                                resolved.cdepManifestYml.coordinate), systemVersion));
     }
 
     private Expression buildAndroidAbiExpression(
@@ -411,9 +442,20 @@ public class FindModuleFunctionTableBuilder {
                 String.format("Android ABI '%%s' is not supported by module '%s'. Supported: %s",
                         resolved.cdepManifestYml.coordinate, supported), androidArchAbi);
 
-        return new CaseExpression(
-                androidArchAbi,
-                cases,
+        Expression bool[] = new Expression[cases.size()];
+        Expression expressions[] = new Expression[cases.size()];
+        int i = 0;
+        for (Map.Entry<Expression, Expression> entry : cases.entrySet()) {
+            bool[i] = new InvokeFunctionExpression(
+                    ExternalFunctionExpression.STRING_EQUALS,
+                    androidArchAbi,
+                    entry.getKey());
+            expressions[i] = entry.getValue();
+            ++i;
+        }
+        return new IfSwitchExpression(
+                bool,
+                expressions,
                 prior);
     }
 }

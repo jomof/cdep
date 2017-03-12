@@ -24,32 +24,30 @@ public class CreateStringVisitor extends ReadonlyVisitor {
         ++indent;
         visit(expr.expression);
         --indent;
+        append("\n");
         appendIndented("end_find");
+        append("\n");
     }
 
     @Override
-    protected void visitCaseExpression(CaseExpression expr) {
+    protected void visitIfSwitchExpression(IfSwitchExpression expr) {
         append("\n");
-        appendIndented("switch(");
-        visit(expr.var);
-        append(")\n");
-        ++indent;
-        for (Expression key : expr.cases.keySet()) {
-            appendIndented("case ");
-            visit(key);
-            append(": ");
+        appendIndented("");
+        for (int i = 0; i < expr.conditions.length; ++i) {
+            append("if(");
+            visit(expr.conditions[i]);
+            append(") ");
             ++indent;
-            visit(expr.cases.get(key));
-            append("\n");
+            visit(expr.expressions[i]);
             --indent;
+            append("\n");
+            appendIndented("else ");
         }
-        appendIndented("default: ");
         ++indent;
-        visit(expr.defaultCase);
+        visit(expr.elseExpression);
+        --indent;
         append("\n");
-        --indent;
-        --indent;
-        appendIndented("end_switch");
+        appendIndented("end_if");
     }
 
     @Override
@@ -63,24 +61,6 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     }
 
     @Override
-    protected void visitIfExpression(IfExpression expr) {
-        append("\n");
-        appendIndented("if(");
-        visit(expr.bool);
-        append(") ");
-        ++indent;
-        visit(expr.trueExpression);
-        --indent;
-        append("\n");
-        appendIndented("else ");
-        ++indent;
-        visit(expr.falseExpression);
-        append("\n");
-        --indent;
-        appendIndented("end_if");
-    }
-
-    @Override
     protected void visitAbortExpression(AbortExpression expr) {
         Object parms[] = new String[expr.parameters.length];
         for (int i = 0; i < parms.length; ++i) {
@@ -91,7 +71,8 @@ public class CreateStringVisitor extends ReadonlyVisitor {
             sb = old;
         }
 
-        append("abort " + expr.message, parms);
+        append("\n");
+        appendIndented("abort " + expr.message, parms);
     }
 
 
