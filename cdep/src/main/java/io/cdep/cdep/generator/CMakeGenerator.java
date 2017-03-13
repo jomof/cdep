@@ -86,7 +86,7 @@ public class CMakeGenerator {
             sb.append(String.format("%sset(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate));
             String appenderFunctionName = getAddDependencyFunctionName(signature.coordinate);
             sb.append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
-            sb.append(String.format("  set(CDEP_EXPLODED_ARCHIVE_FOLDER \"%s\")\n\n",
+            sb.append(String.format("  set(CDEP_EXPLODED_ARCHIVE_FOLDER \"%s\")\n",
                     getCMakePath(environment.getPackageUnzipFolder(specific.coordinate))));
             sb.append("  # Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
                     "  if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
@@ -96,6 +96,8 @@ public class CMakeGenerator {
                     "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" +
                     "    set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
                     "  endif()\n\n");
+            sb.append(String.format("  set(cdep_exploded_root \"%s\")\n",
+                    getCMakePath(environment.unzippedArchivesFolder)));
             generateFindAppender(indent + 1, signature, specific.expression, sb);
             sb.append("endfunction({appenderFunctionName})\n".replace("{appenderFunctionName}", appenderFunctionName));
             return;
@@ -242,6 +244,7 @@ public class CMakeGenerator {
         if (expr == signature.osxSysroot) {
             return "CMAKE_OSX_SYSROOT";
         }
+
         throw new RuntimeException(expr.name);
     }
 
@@ -292,6 +295,11 @@ public class CMakeGenerator {
                         values[1],
                         values[2],
                         assignResult));
+                return null;
+            } else if (specific.function == ExternalFunctionExpression.STRING_STARTSWITH) {
+                if (assignResult != null) {
+                    throw new RuntimeException();
+                }
                 return null;
             }
             throw new RuntimeException(specific.function.method.getName());

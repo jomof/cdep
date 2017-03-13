@@ -1,5 +1,6 @@
 package io.cdep.cdep;
 
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
 import io.cdep.cdep.ast.finder.AssignmentExpression;
 import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
 import io.cdep.cdep.ast.finder.Expression;
@@ -18,5 +19,11 @@ public class GetContainedReferences extends ReadonlyVisitor {
     public void visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
         super.visit(expr.assignment);
         list.add(expr.assignment);
+    }
+
+    @Override
+    protected void visitAssignmentBlockExpression(AssignmentBlockExpression expr) {
+        // Don't count assign block
+        visit(expr.statement);
     }
 }

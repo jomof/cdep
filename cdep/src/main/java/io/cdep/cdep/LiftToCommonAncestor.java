@@ -8,6 +8,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     Set<AssignmentExpression> captured = new HashSet<>();
     List<AssignmentExpression> functionOrder = new ArrayList<>();
     Map<AssignmentExpression, Integer> functionCounts = new HashMap<>();
+    FindModuleExpression latest = null;
 
     public LiftToCommonAncestor() {
     }
@@ -19,13 +20,18 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     }
 
     @Override
-    Expression visitFunctionTableExpression(FunctionTableExpression expr) {
+    protected Expression visitFindModuleExpression(FindModuleExpression expr) {
         List<AssignmentExpression> order = new ArrayList<>();
         Map<AssignmentExpression, Integer> counts = new HashMap<>();
         assignments(expr, order, counts);
         this.functionCounts = counts;
         this.functionOrder = order;
-        return super.visitFunctionTableExpression(expr);
+        latest = expr;
+        Expression result = super.visitFindModuleExpression(expr);
+        latest = null;
+        this.functionOrder = null;
+        this.functionCounts = null;
+        return result;
     }
 
     @Override
@@ -36,7 +42,6 @@ public class LiftToCommonAncestor extends RewritingVisitor {
         if (block.size() > 0) {
             return new AssignmentBlockExpression(block, (StatementExpression) result);
         }
-
         return result;
     }
 
@@ -48,7 +53,6 @@ public class LiftToCommonAncestor extends RewritingVisitor {
         if (block.size() > 0) {
             return new AssignmentBlockExpression(block, (StatementExpression) result);
         }
-
         return result;
     }
 
@@ -60,7 +64,6 @@ public class LiftToCommonAncestor extends RewritingVisitor {
         if (block.size() > 0) {
             return new AssignmentBlockExpression(block, (StatementExpression) result);
         }
-
         return result;
     }
 
@@ -69,6 +72,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
         Map<AssignmentExpression, Integer> count = new HashMap<>();
         assignments(result, order, count);
         List<AssignmentExpression> block = new ArrayList<>();
+
         for (AssignmentExpression assignment : order) {
             if (captured.contains(assignment)) {
                 continue;
@@ -100,7 +104,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
                 n = 0;
             }
             order.add(assignment);
-            counts.put(assignment, n++);
+            counts.put(assignment, ++n);
         }
     }
 }

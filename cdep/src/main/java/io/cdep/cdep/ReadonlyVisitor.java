@@ -86,7 +86,7 @@ public class ReadonlyVisitor {
     public void visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
     }
 
-    private void visitAssignmentBlockExpression(AssignmentBlockExpression expr) {
+    protected void visitAssignmentBlockExpression(AssignmentBlockExpression expr) {
         for (AssignmentExpression assignment : expr.assignments) {
             visit(assignment);
         }

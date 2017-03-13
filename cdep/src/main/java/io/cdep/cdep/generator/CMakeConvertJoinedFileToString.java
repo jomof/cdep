@@ -19,6 +19,11 @@ public class CMakeConvertJoinedFileToString extends RewritingVisitor {
         return super.visitInvokeFunctionExpression(expr);
     }
 
+    @Override
+    protected Expression visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
+        return super.visitFoundAndroidModuleExpression(expr);
+    }
+
     /**
      * If a string the return xyz without quotes.
      * If an assignment reference then return ${xyz}.
