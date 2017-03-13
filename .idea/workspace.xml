@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="iOS">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindMultiplyReferencedArchives.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/DownloadProvider.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ManifestProvider.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ManifestProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolvedManifest.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolvedManifest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/Resolver.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/Resolver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestResolutionScope.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestResolutionScope.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smoke-test/cdep.yml" afterPath="$PROJECT_DIR$/smoke-test/cdep.yml" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -107,8 +92,10 @@
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-306">
-              <caret line="49" column="69" lean-forward="false" selection-start-line="49" selection-start-column="69" selection-end-line="49" selection-end-column="69" />
-              <folding />
+              <caret line="69" column="69" lean-forward="false" selection-start-line="69" selection-start-column="69" selection-end-line="69" selection-end-column="69" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -129,8 +116,10 @@
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="478">
-              <caret line="85" column="13" lean-forward="false" selection-start-line="85" selection-start-column="13" selection-end-line="85" selection-end-column="13" />
-              <folding />
+              <caret line="101" column="11" lean-forward="false" selection-start-line="101" selection-start-column="11" selection-end-line="101" selection-end-column="11" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2155,13 +2144,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00053" summary="Examples support">
-      <created>1488152244992</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1488152244992</updated>
-    </task>
     <task id="LOCAL-00054" summary="Examples support">
       <created>1488152277883</created>
       <option name="number" value="00054" />
@@ -2498,7 +2480,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489184223356</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="iOS">
+      <created>1489444970694</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1489444970694</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2663,7 +2652,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java</url>
-          <line>52</line>
+          <line>49</line>
           <properties />
           <option name="timeStamp" value="67" />
         </line-breakpoint>
@@ -2675,7 +2664,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java</url>
-          <line>64</line>
+          <line>61</line>
           <properties />
           <option name="timeStamp" value="72" />
         </line-breakpoint>
@@ -2693,7 +2682,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindMultiplyReferencedArchives.java</url>
-          <line>60</line>
+          <line>57</line>
           <properties />
           <option name="timeStamp" value="80" />
         </line-breakpoint>
@@ -2969,7 +2958,7 @@
         <state relative-caret-position="194">
           <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3065,8 +3054,10 @@
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="478">
-          <caret line="85" column="13" lean-forward="false" selection-start-line="85" selection-start-column="13" selection-end-line="85" selection-end-column="13" />
-          <folding />
+          <caret line="101" column="11" lean-forward="false" selection-start-line="101" selection-start-column="11" selection-end-line="101" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3089,8 +3080,10 @@
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-306">
-          <caret line="49" column="69" lean-forward="false" selection-start-line="49" selection-start-column="69" selection-end-line="49" selection-end-column="69" />
-          <folding />
+          <caret line="69" column="69" lean-forward="false" selection-start-line="69" selection-start-column="69" selection-end-line="69" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
