@@ -1,10 +1,7 @@
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
-import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +29,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor{
       Coordinate to) {
     List<Coordinate> tos = edges.get(from);
     if (tos == null) {
-      edges.put(from, new ArrayList<>());
+        edges.put(from, new ArrayList<Coordinate>());
       addEdge(edges, from, to);
       return;
     }
@@ -46,7 +43,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor{
     assert currentFindModule != null;
     List<ModuleArchiveExpression> tos = moduleArchives.get(currentFindModule);
     if (tos == null) {
-      moduleArchives.put(currentFindModule, new ArrayList<>());
+        moduleArchives.put(currentFindModule, new ArrayList<ModuleArchiveExpression>());
       addModuleArchive(archive);
       return;
     }
@@ -99,14 +96,6 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor{
       copy.putAll(original);
     }
     for (ModuleArchiveExpression archive : moduleArchives.get(coordinate)) {
-//      if (copy.get(archive.sha256) != null) {
-//        throw new RuntimeException(
-//            String.format("A file %s has the same SHA256 as another dependency of %s (sha256:%s)",
-//                archive.file,
-//                coordinate,
-//                archive.sha256.substring(0, 8)));
-//
-//      }
       copy.put(archive.sha256, coordinate);
     }
     return copy;
