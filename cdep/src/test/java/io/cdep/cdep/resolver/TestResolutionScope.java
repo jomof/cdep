@@ -1,17 +1,18 @@
 package io.cdep.cdep.resolver;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
 
 public class TestResolutionScope {
 
@@ -139,7 +140,7 @@ public class TestResolutionScope {
     Coordinate coordinate = CoordinateUtils.tryParse(unresolved.compile);
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
-    scope.recordResolved(unresolved, resolved, new ArrayList<>());
+      scope.recordResolved(unresolved, resolved, new ArrayList<HardNameDependency>());
 
     // Make sure resolution complete
     assertThat(scope.isResolutionComplete()).isTrue();
