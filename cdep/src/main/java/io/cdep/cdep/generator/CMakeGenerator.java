@@ -139,10 +139,6 @@ public class CMakeGenerator {
                 sb.append(String.format("%s STREQUAL %s",
                         parms[0],
                         parms[1]));
-            } else if (specific.function == ExternalFunctionExpression.FILE_JOIN_SEGMENTS) {
-                sb.append(String.format("%s/%s",
-                        getUnquotedConcatenation(specific.parameters[0], "/"),
-                        getUnquotedConcatenation(specific.parameters[1], "/")));
             } else {
                 throw new RuntimeException(specific.function.method.getName());
             }
@@ -225,37 +221,9 @@ public class CMakeGenerator {
             AssignmentReferenceExpression specific = (AssignmentReferenceExpression) expression;
             sb.append(String.format("%s", specific.assignment.name));
             return;
-        } else if (expression instanceof ArrayExpression) {
-            return;
         }
 
         throw new RuntimeException(expression.getClass().toString());
-    }
-
-    /**
-     * If a string the return xyz without quotes.
-     * If an assignment reference then return ${xyz}.
-     */
-    private String getUnquotedConcatenation(Expression expr, String joinOn) {
-        if (expr instanceof StringExpression) {
-            return ((StringExpression) expr).value;
-        }
-        if (expr instanceof AssignmentReferenceExpression) {
-            return String.format("${%s}",
-                    ((AssignmentReferenceExpression) expr).assignment.name);
-        }
-        if (expr instanceof ArrayExpression) {
-            ArrayExpression specific = (ArrayExpression) expr;
-            String result = "";
-            for (int i = 0; i < specific.elements.length; ++i) {
-                if (i > 0) {
-                    result += joinOn;
-                }
-                result += getUnquotedConcatenation(specific.elements[i], joinOn);
-            }
-            return result;
-        }
-        throw new RuntimeException(expr.getClass().toString());
     }
 
     private String parameterName(FindModuleExpression signature, ParameterExpression expr) {
@@ -274,10 +242,6 @@ public class CMakeGenerator {
         if (expr == signature.osxSysroot) {
             return "CMAKE_OSX_SYSROOT";
         }
-        if (expr == signature.cdepExplodedRoot) {
-            return getCMakePath(environment.unzippedArchivesFolder);
-        }
-
         throw new RuntimeException(expr.name);
     }
 
@@ -329,25 +293,6 @@ public class CMakeGenerator {
                         values[2],
                         assignResult));
                 return null;
-            } else if (specific.function == ExternalFunctionExpression.STRING_STARTSWITH) {
-                if (assignResult != null) {
-                    throw new RuntimeException();
-                }
-                return null;
-            } else if (specific.function == ExternalFunctionExpression.FILE_JOIN_SEGMENTS) {
-                if (assignResult == null) {
-                    throw new RuntimeException();
-                }
-                String assign = (String) values[0];
-                String segments[] = (String[]) values[1];
-                for (int i = 0; i < segments.length; ++i) {
-                    assign += "/" + segments[i];
-                }
-                sb.append(String.format("%sset(%s \"%s\")\n",
-                        prefix,
-                        assignResult,
-                        assign));
-                return null;
             }
             throw new RuntimeException(specific.function.method.getName());
         } else if (expr instanceof StringExpression) {
@@ -369,13 +314,6 @@ public class CMakeGenerator {
             assert assignResult == null;
             IntegerExpression specific = (IntegerExpression) expr;
             return String.format("%s", specific.value);
-        } else if (expr instanceof ArrayExpression) {
-            ArrayExpression specific = (ArrayExpression) expr;
-            Object array[] = new String[specific.elements.length];
-            for (int i = 0; i < array.length; ++i) {
-                array[i] = generateAssignments(prefix, signature, specific.elements[i], sb, null);
-            }
-            return array;
         } else if (expr instanceof AssignmentReferenceExpression) {
             AssignmentReferenceExpression specific = (AssignmentReferenceExpression) expr;
             return String.format("${%s}", specific.assignment.name);
