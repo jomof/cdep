@@ -11,7 +11,7 @@ import java.util.Map;
 public class RewritingVisitor {
     final protected Map<Expression, Expression> identity = new HashMap<>();
 
-    protected Expression visit(Expression expr) {
+    public Expression visit(Expression expr) {
         assert expr != null;
         Expression prior = identity.get(expr);
         if (prior != null) {
@@ -137,7 +137,7 @@ public class RewritingVisitor {
                 expr.file,
                 expr.sha256,
                 expr.size,
-                visit(expr.fullIncludePath), expr.include,
+                visit(expr.fullIncludePath),
                 expr.libraryName);
     }
 

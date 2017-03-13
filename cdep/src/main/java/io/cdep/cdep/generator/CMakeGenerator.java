@@ -32,7 +32,8 @@ public class CMakeGenerator {
     }
 
     public void generate(FunctionTableExpression table) throws IOException {
-        // Generate CMake Find*.cmake files
+        table = (FunctionTableExpression) new CMakeConvertJoinedFileToString().visit(table);
+
         StringBuilder sb = new StringBuilder();
         sb.append("# GENERATED FILE. DO NOT EDIT.\n");
 
@@ -169,10 +170,10 @@ public class CMakeGenerator {
                         prefix, getCMakePath(relativeUnzipFolder)));
 
                 sb.append(String.format(
-                        "%starget_include_directories(${target} PRIVATE \"",
+                        "%starget_include_directories(${target} PRIVATE ",
                         prefix));
                 generateFindAppender(indent, signature, archive.fullIncludePath, sb);
-                sb.append(String.format("\")\n"));
+                sb.append(String.format(")\n"));
 
                 if (archive.libraryName != null && archive.libraryName.length() > 0) {
                     sb.append(String.format(
@@ -190,10 +191,10 @@ public class CMakeGenerator {
             for (ModuleArchiveExpression archive : specific.archives) {
                 File exploded = environment.getRelativeUnzipFolder(archive.file);
                 sb.append(String.format(
-                        "%starget_include_directories(${target} PRIVATE \"",
+                        "%starget_include_directories(${target} PRIVATE ",
                         prefix));
                 generateFindAppender(indent, signature, archive.fullIncludePath, sb);
-                sb.append(String.format("\")\n"));
+                sb.append(String.format(")\n"));
                 if (archive.libraryName != null && archive.libraryName.length() > 0) {
                     sb.append(String.format(
                             "%starget_link_libraries(${target} \"%s/lib/%s\")\n",
@@ -285,7 +286,7 @@ public class CMakeGenerator {
             AssignmentExpression specific = (AssignmentExpression) expr;
             String identifier = specific.name;
             generateAssignments(prefix, signature, specific.expression, sb, identifier);
-            return String.format("${%s}", identifier);
+            return null;
         } else if (expr instanceof InvokeFunctionExpression) {
             InvokeFunctionExpression specific = (InvokeFunctionExpression) expr;
             Object values[] = new Object[specific.parameters.length];

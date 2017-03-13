@@ -32,7 +32,7 @@ public class FindModuleFunctionTableBuilder {
 
     private final Map<Coordinate, ResolvedManifest> manifests = new HashMap<>();
     private final ParameterExpression cdepExplodedRoot =
-            new ParameterExpression("cdepExplodedRoot");
+            new ParameterExpression("cdep_exploded_root");
     private final ParameterExpression osxSysroot =
             new ParameterExpression("osxSysroot");
     private final ParameterExpression osxArchitectures =
@@ -264,7 +264,6 @@ public class FindModuleFunctionTableBuilder {
                         ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
                         zipFolder,
                         new ArrayExpression(new StringExpression(archive.include))),
-                archive.include,
                 archive.lib);
 
         if (resolved.cdepManifestYml.archive != null) {
@@ -280,7 +279,6 @@ public class FindModuleFunctionTableBuilder {
                             ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
                             zipFolder,
                             new ArrayExpression(new StringExpression("include"))),
-                    "include",
                     null);
         }
         return new FoundiOSModuleExpression(
@@ -437,7 +435,6 @@ public class FindModuleFunctionTableBuilder {
                         ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
                         zipFolder,
                         new ArrayExpression(new StringExpression(android.include))),
-                android.include,
                 android.lib);
 
         if (resolved.cdepManifestYml.archive != null) {
@@ -453,7 +450,6 @@ public class FindModuleFunctionTableBuilder {
                             ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
                             zipFolder,
                             new ArrayExpression(new StringExpression("include"))),
-                    "include",
                     null);
         }
 
