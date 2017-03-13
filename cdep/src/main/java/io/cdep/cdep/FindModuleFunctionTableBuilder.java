@@ -15,17 +15,37 @@
 */
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.ArrayExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
+import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.IntegerExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StringExpression;
 import io.cdep.cdep.generator.AndroidAbi;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
-
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 public class FindModuleFunctionTableBuilder {
@@ -72,6 +92,9 @@ public class FindModuleFunctionTableBuilder {
         // Lift assignments up to the highest correct scope
         functionTable = (FunctionTableExpression) new ReplaceAssignmentWithReferenceVisitor().visit(functionTable);
         functionTable = (FunctionTableExpression) new LiftToCommonAncestor().visit(functionTable);
+
+      // Check sanity of the function system
+      new FindMultiplyReferencedArchives().visit(functionTable);
 
         return functionTable;
     }

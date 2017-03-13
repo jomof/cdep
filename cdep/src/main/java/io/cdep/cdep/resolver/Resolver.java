@@ -97,7 +97,6 @@ public class Resolver {
     }
     if (resolved != null) {
       CDepManifestYmlUtils.checkManifestSanity(resolved.cdepManifestYml);
-
     }
     return resolved;
   }

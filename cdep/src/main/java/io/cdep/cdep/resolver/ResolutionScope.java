@@ -17,8 +17,10 @@ public class ResolutionScope {
 
   final static public Resolution UNPARSEABLE_RESOLUTION = new Resolution();
   final static public Resolution UNRESOLVEABLE_RESOLUTION = new Resolution();
-  // Map of dependency edges. Key is dependant and value is dependee.
-    final public Map<Coordinate, Coordinate> edges = new HashMap<>();
+  // Map of dependency edges. Key is dependant and value is dependees.
+  final public Map<Coordinate, List<Coordinate>> forwardEdges = new HashMap<>();
+  // Map of dependency edges. Key is dependee and value is dependants.
+  final public Map<Coordinate, List<Coordinate>> backwardEdges = new HashMap<>();
   // Dependencies that are not yet resolved but where resolution is possible
   final private Map<String, SoftNameDependency> unresolved = new HashMap<>();
   // Dependencies that have been resolved (successfully or unsuccessfully)
@@ -29,11 +31,27 @@ public class ResolutionScope {
    *
    * @param roots are the top level dependencies from cdep.yml.
    */
-    public ResolutionScope(SoftNameDependency[] roots) {
-        for (int i = 0; i < roots.length; ++i) {
-          addUnresolved(roots[i]);
-        }
+  public ResolutionScope(SoftNameDependency[] roots) {
+    for (int i = 0; i < roots.length; ++i) {
+      addUnresolved(roots[i]);
     }
+  }
+
+  /**
+   * Utility function to add a new edge to an edge map.
+   */
+  private static void addEdge(
+      Map<Coordinate, List<Coordinate>> edges,
+      Coordinate from,
+      Coordinate to) {
+    List<Coordinate> tos = edges.get(from);
+    if (tos == null) {
+      edges.put(from, new ArrayList<>());
+      addEdge(edges, from, to);
+      return;
+    }
+    tos.add(to);
+  }
 
   /**
    * Add an unresolved dependency to be resolved later.
@@ -68,43 +86,46 @@ public class ResolutionScope {
    */
   private boolean isResolved(String name) {
     return resolved.containsKey(name);
-    }
+  }
 
-    /**
-     * Record the fact that the given dependency has been resolved.
-     * @param softname the name that started the resolution.
-     * @param resolved the resolved manifest and hard name.
-     * @param transitiveDependencies any new dependencies that were discovered during resolution
-     */
-    public void recordResolved(SoftNameDependency softname, ResolvedManifest resolved,
-        List<HardNameDependency> transitiveDependencies) {
-      assert !isResolved(resolved.cdepManifestYml.coordinate.toString());
+  /**
+   * Record the fact that the given dependency has been resolved.
+   *
+   * @param softname the name that started the resolution.
+   * @param resolved the resolved manifest and hard name.
+   * @param transitiveDependencies any new dependencies that were discovered during resolution
+   */
+  public void recordResolved(SoftNameDependency softname, ResolvedManifest resolved,
+      List<HardNameDependency> transitiveDependencies) {
+    assert !isResolved(resolved.cdepManifestYml.coordinate.toString());
 
-      this.resolved.put(resolved.cdepManifestYml.coordinate.toString(),
-          new FoundManifestResolution(resolved));
+    this.resolved.put(resolved.cdepManifestYml.coordinate.toString(),
+        new FoundManifestResolution(resolved));
 
-      unresolved.remove(resolved.cdepManifestYml.coordinate.toString());
-      unresolved.remove(softname.compile);
+    unresolved.remove(resolved.cdepManifestYml.coordinate.toString());
+    unresolved.remove(softname.compile);
 
-      for (HardNameDependency hardname : transitiveDependencies) {
-            Coordinate coordinate = CoordinateUtils.tryParse(hardname.compile);
-            if (coordinate == null) {
-                this.resolved.put(hardname.compile, UNPARSEABLE_RESOLUTION);
-                continue;
-            }
-            edges.put(resolved.cdepManifestYml.coordinate, coordinate);
-            addUnresolved(new SoftNameDependency(coordinate.toString()));
+    for (HardNameDependency hardname : transitiveDependencies) {
+      Coordinate coordinate = CoordinateUtils.tryParse(hardname.compile);
+      if (coordinate == null) {
+        this.resolved.put(hardname.compile, UNPARSEABLE_RESOLUTION);
+        continue;
       }
+      addEdge(forwardEdges, resolved.cdepManifestYml.coordinate, coordinate);
+      addEdge(backwardEdges, coordinate, resolved.cdepManifestYml.coordinate);
+      addUnresolved(new SoftNameDependency(coordinate.toString()));
     }
+  }
 
-    /**
-     * Record fact that a given dependency could not be resolved.
-     * @param softname the name of the unresolvable dependency.
-     */
-    public void recordUnresolvable(SoftNameDependency softname) {
-        this.unresolved.remove(softname.compile);
-        this.resolved.put(softname.compile, UNRESOLVEABLE_RESOLUTION);
-    }
+  /**
+   * Record fact that a given dependency could not be resolved.
+   *
+   * @param softname the name of the unresolvable dependency.
+   */
+  public void recordUnresolvable(SoftNameDependency softname) {
+    this.unresolved.remove(softname.compile);
+    this.resolved.put(softname.compile, UNRESOLVEABLE_RESOLUTION);
+  }
 
   /**
    * Return the set of resolved names (coordinates or soft names).
@@ -140,6 +161,6 @@ public class ResolutionScope {
 
     FoundManifestResolution(ResolvedManifest resolved) {
       this.resolved = resolved;
-        }
     }
+  }
 }

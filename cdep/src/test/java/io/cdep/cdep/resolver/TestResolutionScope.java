@@ -114,6 +114,49 @@ public class TestResolutionScope {
   }
 
   @Test
+  public void testTransitiveDependenciesLeadingToSameRoot() throws IOException {
+    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
+        new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7"),
+        new SoftNameDependency("com.github.jomof:firebase/database:2.1.3-rev7"),
+    });
+    assertThat(scope.isResolutionComplete()).isFalse();
+    assertThat(scope.getUnresolvedReferences()).hasSize(2);
+
+    List<HardNameDependency> transitiveDependencies = new ArrayList<>();
+    transitiveDependencies.add(new HardNameDependency(
+        "com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
+
+    // Resolve the first level dependencies: admob and database respectively
+    for (SoftNameDependency unresolved : scope.getUnresolvedReferences()) {
+      Coordinate coordinate = CoordinateUtils.tryParse(unresolved.compile);
+      CDepManifestYml manifest = new CDepManifestYml(coordinate);
+      ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
+      scope.recordResolved(unresolved, resolved, transitiveDependencies);
+    }
+
+    // Resolve the transitive dependency to app
+    SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
+    Coordinate coordinate = CoordinateUtils.tryParse(unresolved.compile);
+    CDepManifestYml manifest = new CDepManifestYml(coordinate);
+    ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
+    scope.recordResolved(unresolved, resolved, new ArrayList<>());
+
+    // Make sure resolution complete
+    assertThat(scope.isResolutionComplete()).isTrue();
+    assertThat(scope.getResolutions()).hasSize(3);
+
+    // Check edges
+    assertThat(scope.forwardEdges).hasSize(2);
+    assertThat(scope.backwardEdges).hasSize(1);
+    assertThat(scope.forwardEdges.get(
+        CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7")))
+        .containsExactly(CoordinateUtils.tryParse("com.github.jomof:firebase/app:2.1.3-rev7"));
+    assertThat(scope.forwardEdges.get(
+        CoordinateUtils.tryParse("com.github.jomof:firebase/database:2.1.3-rev7")))
+        .containsExactly(CoordinateUtils.tryParse("com.github.jomof:firebase/app:2.1.3-rev7"));
+  }
+
+  @Test
   public void testTwoTransitiveReferencesToSameDependency() throws IOException {
     ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
         new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7"),

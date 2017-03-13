@@ -16,89 +16,91 @@
 package io.cdep.cdep.generator;
 
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
+import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
 import io.cdep.cdep.utils.ArchiveUtils;
-import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.utils.HashUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Methods for dealing with GeneratorEnvironment.
  */
 public class GeneratorEnvironmentUtils {
 
-    /**
-     * Given a function table and generator environment, download all of the files referenced.
-     */
-    public static void downloadReferencedModules(
-            GeneratorEnvironment environment,
-            FunctionTableExpression table,
-            boolean forceRedownload) throws IOException, NoSuchAlgorithmException {
-        Map<Coordinate, List<Expression>> foundModules =
-                ExpressionUtils.getAllFoundModuleExpressions(table);
+  /**
+   * Given a function table and generator environment, download all of the files referenced.
+   */
+  public static void downloadReferencedModules(
+      GeneratorEnvironment environment,
+      Map<Coordinate, List<Expression>> foundModules,
+      boolean forceRedownload) throws IOException, NoSuchAlgorithmException {
 
-        // Download and unzip any modules.
-        for (Coordinate coordinate : foundModules.keySet()) {
-            assert coordinate != null;
-            List<Expression> foundModuleExpressions = foundModules.get(coordinate);
-            for (Expression foundModule : foundModuleExpressions) {
-                ModuleArchiveExpression archives[] = null;
-                if (foundModule instanceof FoundAndroidModuleExpression) {
-                    FoundAndroidModuleExpression specific = (FoundAndroidModuleExpression) foundModule;
-                    archives = specific.archives;
-                } else if (foundModule instanceof FoundiOSModuleExpression) {
-                    FoundiOSModuleExpression specific = (FoundiOSModuleExpression) foundModule;
-                    archives = specific.archives;
-                }
-                for (ModuleArchiveExpression archive : archives) {
-                    File local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
-                    if (local == null) {
-                        throw new RuntimeException(
-                                String.format("Resolved archive '%s' didn't exist", archive.file));
-                    }
+    Set<File> alreadyExploded = new HashSet<>();
 
-                    boolean forceUnzip = forceRedownload;
-                    if (archive.size != local.length()) {
-                        // It may have been an interrupted download. Try again.
-                        if (!forceRedownload) {
-                            forceUnzip = true;
-                            local = environment.tryGetLocalDownloadedFile(
-                                    coordinate, archive.file);
-                            if (local == null) {
-                                throw new RuntimeException(
-                                        String.format("Resolved archive '%s' didn't exist", archive.file));
-                            }
-                        }
-                        if (archive.size != local.length()) {
-                            throw new RuntimeException(String.format(
-                                    "File size for %s was %s which did not match value %s from the manifest",
-                                    archive.file,
-                                    local.length(),
-                                    archive.size));
-                        }
-                    }
-
-                    String localSha256String = HashUtils.getSHA256OfFile(local);
-                    if (!localSha256String.equals(archive.sha256)) {
-                        throw new RuntimeException(String.format(
-                                "SHA256 for %s did not match value from manifest", archive.file));
-                    }
-
-                    File unzipFolder = environment.getLocalUnzipFolder(
-                            coordinate, archive.file);
-                    if (!unzipFolder.exists() || forceUnzip) {
-                        //noinspection ResultOfMethodCallIgnored
-                        unzipFolder.mkdirs();
-                        environment.out.printf("Exploding %s\n", archive.file);
-                        ArchiveUtils.unzip(local, unzipFolder);
-                    }
-                }
-            }
+    // Download and unzip any modules.
+    for (Coordinate coordinate : foundModules.keySet()) {
+      assert coordinate != null;
+      List<Expression> foundModuleExpressions = foundModules.get(coordinate);
+      for (Expression foundModule : foundModuleExpressions) {
+        ModuleArchiveExpression archives[] = null;
+        if (foundModule instanceof FoundAndroidModuleExpression) {
+          FoundAndroidModuleExpression specific = (FoundAndroidModuleExpression) foundModule;
+          archives = specific.archives;
+        } else if (foundModule instanceof FoundiOSModuleExpression) {
+          FoundiOSModuleExpression specific = (FoundiOSModuleExpression) foundModule;
+          archives = specific.archives;
         }
+        for (ModuleArchiveExpression archive : archives) {
+          File local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
+          if (local == null) {
+            throw new RuntimeException(
+                String.format("Resolved archive '%s' didn't exist", archive.file));
+          }
+
+          boolean forceUnzip = forceRedownload && !alreadyExploded.contains(local);
+          if (archive.size != local.length()) {
+            // It may have been an interrupted download. Try again.
+            if (!forceRedownload) {
+              forceUnzip = true;
+              local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
+              if (local == null) {
+                throw new RuntimeException(
+                    String.format("Resolved archive '%s' didn't exist", archive.file));
+              }
+            }
+            if (archive.size != local.length()) {
+              throw new RuntimeException(String.format(
+                  "File size for %s was %s which did not match value %s from the manifest",
+                  archive.file,
+                  local.length(),
+                  archive.size));
+            }
+          }
+
+          String localSha256String = HashUtils.getSHA256OfFile(local);
+          if (!localSha256String.equals(archive.sha256)) {
+            throw new RuntimeException(String.format(
+                "SHA256 for %s did not match value from manifest", archive.file));
+          }
+
+          File unzipFolder = environment.getLocalUnzipFolder(coordinate, archive.file);
+          if (!unzipFolder.exists() || forceUnzip) {
+            //noinspection ResultOfMethodCallIgnored
+            unzipFolder.mkdirs();
+            //environment.out.printf("Exploding %s\n", archive.file);
+            ArchiveUtils.unzip(local, unzipFolder);
+            alreadyExploded.add(local);
+          }
+        }
+      }
     }
+  }
 }

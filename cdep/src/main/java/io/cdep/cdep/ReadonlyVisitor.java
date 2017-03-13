@@ -1,7 +1,23 @@
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.*;
-
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.ArrayExpression;
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
+import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.IntegerExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StringExpression;
 import java.util.Map;
 
 public class ReadonlyVisitor {
@@ -79,11 +95,11 @@ public class ReadonlyVisitor {
         throw new RuntimeException(expr.getClass().toString());
     }
 
-    private void visitModuleArchiveExpression(ModuleArchiveExpression expr) {
+  protected void visitModuleArchiveExpression(ModuleArchiveExpression expr) {
         visit(expr.fullIncludePath);
     }
 
-    public void visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
+  protected void visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
     }
 
     protected void visitAssignmentBlockExpression(AssignmentBlockExpression expr) {

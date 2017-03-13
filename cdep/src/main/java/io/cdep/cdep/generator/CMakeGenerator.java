@@ -16,9 +16,23 @@
 package io.cdep.cdep.generator;
 
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
+import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.IntegerExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StringExpression;
 import io.cdep.cdep.utils.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -86,6 +100,10 @@ public class CMakeGenerator {
             sb.append(String.format("%sset(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate));
             String appenderFunctionName = getAddDependencyFunctionName(signature.coordinate);
             sb.append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
+
+          sb.append("  message(\"calling {appenderFunctionName}\")\n"
+              .replace("{appenderFunctionName}", appenderFunctionName));
+
             sb.append(String.format("  set(CDEP_EXPLODED_ARCHIVE_FOLDER \"%s\")\n",
                     getCMakePath(environment.getPackageUnzipFolder(specific.coordinate))));
             sb.append("  # Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
@@ -172,6 +190,10 @@ public class CMakeGenerator {
                         prefix));
                 generateFindAppender(indent, signature, archive.fullIncludePath, sb);
                 sb.append(String.format(")\n"));
+
+              sb.append(String.format("%smessage(\"  cdep including \" ", prefix));
+              generateFindAppender(indent, signature, archive.fullIncludePath, sb);
+              sb.append(")\n");
 
                 if (archive.libraryName != null && archive.libraryName.length() > 0) {
                     sb.append(String.format(
