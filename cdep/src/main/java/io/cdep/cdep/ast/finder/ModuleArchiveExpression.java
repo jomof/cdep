@@ -10,8 +10,13 @@ public class ModuleArchiveExpression extends Expression {
     final public String libraryName;
     final public Expression fullIncludePath;
 
-    public ModuleArchiveExpression(URL file, String sha256, Long size, String include,
-                                   Expression fullIncludePath, String libraryName) {
+    public ModuleArchiveExpression(
+            URL file,
+            String sha256,
+            Long size,
+            Expression fullIncludePath,
+            String include,
+            String libraryName) {
         assert file != null;
         assert sha256 != null;
         this.file = file;

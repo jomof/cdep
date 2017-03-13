@@ -21,14 +21,11 @@ import io.cdep.cdep.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CMakeGenerator {
     final static private String CONFIG_FILE_NAME = "cdep-dependencies-config.cmake";
 
     final private GeneratorEnvironment environment;
-    final private Map<ParameterExpression, String> assignments = new HashMap<>();
 
     public CMakeGenerator(GeneratorEnvironment environment) {
         this.environment = environment;
@@ -141,6 +138,10 @@ public class CMakeGenerator {
                 sb.append(String.format("%s STREQUAL %s",
                         parms[0],
                         parms[1]));
+            } else if (specific.function == ExternalFunctionExpression.FILE_JOIN_SEGMENTS) {
+                sb.append(String.format("%s/%s",
+                        getUnquotedConcatenation(specific.parameters[0], "/"),
+                        getUnquotedConcatenation(specific.parameters[1], "/")));
             } else {
                 throw new RuntimeException(specific.function.method.getName());
             }
@@ -166,10 +167,12 @@ public class CMakeGenerator {
                 File relativeUnzipFolder = environment.getRelativeUnzipFolder(archive.file);
                 sb.append(String.format("\n%sset(CDEP_EXPLODED_PACKAGE_FOLDER \"${CDEP_EXPLODED_ARCHIVE_FOLDER}/%s\")\n",
                         prefix, getCMakePath(relativeUnzipFolder)));
+
                 sb.append(String.format(
-                        "%starget_include_directories(${target} PRIVATE \"${CDEP_EXPLODED_PACKAGE_FOLDER}/%s\")\n",
-                        prefix,
-                        archive.include));
+                        "%starget_include_directories(${target} PRIVATE \"",
+                        prefix));
+                generateFindAppender(indent, signature, archive.fullIncludePath, sb);
+                sb.append(String.format("\")\n"));
 
                 if (archive.libraryName != null && archive.libraryName.length() > 0) {
                     sb.append(String.format(
@@ -186,8 +189,11 @@ public class CMakeGenerator {
             }
             for (ModuleArchiveExpression archive : specific.archives) {
                 File exploded = environment.getRelativeUnzipFolder(archive.file);
-                sb.append(String.format("%starget_include_directories(${target} PRIVATE \"%s\")\n",
-                        prefix, getCMakePath(new File(exploded, archive.include))));
+                sb.append(String.format(
+                        "%starget_include_directories(${target} PRIVATE \"",
+                        prefix));
+                generateFindAppender(indent, signature, archive.fullIncludePath, sb);
+                sb.append(String.format("\")\n"));
                 if (archive.libraryName != null && archive.libraryName.length() > 0) {
                     sb.append(String.format(
                             "%starget_link_libraries(${target} \"%s/lib/%s\")\n",
@@ -201,9 +207,6 @@ public class CMakeGenerator {
             for (int i = 0; i < parms.length; ++i) {
                 StringBuilder argBuilder = new StringBuilder();
                 generateFindAppender(0, signature, specific.parameters[i], argBuilder);
-                if (argBuilder.toString().startsWith("$")) {
-                    System.out.printf("x");
-                }
                 parms[i] = "${" + argBuilder.toString() + "}";
             }
             String message = String.format(specific.message, parms);
@@ -221,9 +224,37 @@ public class CMakeGenerator {
             AssignmentReferenceExpression specific = (AssignmentReferenceExpression) expression;
             sb.append(String.format("%s", specific.assignment.name));
             return;
+        } else if (expression instanceof ArrayExpression) {
+            return;
         }
 
         throw new RuntimeException(expression.getClass().toString());
+    }
+
+    /**
+     * If a string the return xyz without quotes.
+     * If an assignment reference then return ${xyz}.
+     */
+    private String getUnquotedConcatenation(Expression expr, String joinOn) {
+        if (expr instanceof StringExpression) {
+            return ((StringExpression) expr).value;
+        }
+        if (expr instanceof AssignmentReferenceExpression) {
+            return String.format("${%s}",
+                    ((AssignmentReferenceExpression) expr).assignment.name);
+        }
+        if (expr instanceof ArrayExpression) {
+            ArrayExpression specific = (ArrayExpression) expr;
+            String result = "";
+            for (int i = 0; i < specific.elements.length; ++i) {
+                if (i > 0) {
+                    result += joinOn;
+                }
+                result += getUnquotedConcatenation(specific.elements[i], joinOn);
+            }
+            return result;
+        }
+        throw new RuntimeException(expr.getClass().toString());
     }
 
     private String parameterName(FindModuleExpression signature, ParameterExpression expr) {
@@ -253,10 +284,6 @@ public class CMakeGenerator {
         if (expr instanceof AssignmentExpression) {
             AssignmentExpression specific = (AssignmentExpression) expr;
             String identifier = specific.name;
-            if (assignments.get(specific) != null) {
-                return String.format("${%s}", identifier);
-            }
-            assignments.put(specific, identifier);
             generateAssignments(prefix, signature, specific.expression, sb, identifier);
             return String.format("${%s}", identifier);
         } else if (expr instanceof InvokeFunctionExpression) {

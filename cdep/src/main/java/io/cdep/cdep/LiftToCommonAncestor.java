@@ -13,6 +13,12 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     }
 
     @Override
+    protected Expression visitAssignmentExpression(AssignmentExpression expr) {
+        // Don't duplicate any assignments
+        return expr;
+    }
+
+    @Override
     Expression visitFunctionTableExpression(FunctionTableExpression expr) {
         List<AssignmentExpression> order = new ArrayList<>();
         Map<AssignmentExpression, Integer> counts = new HashMap<>();
@@ -34,6 +40,30 @@ public class LiftToCommonAncestor extends RewritingVisitor {
         return result;
     }
 
+    @Override
+    protected Expression visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
+        Expression result = super.visitFoundAndroidModuleExpression(expr);
+        List<AssignmentExpression> block = extractBlocks(result);
+
+        if (block.size() > 0) {
+            return new AssignmentBlockExpression(block, (StatementExpression) result);
+        }
+
+        return result;
+    }
+
+    @Override
+    protected Expression visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
+        Expression result = super.visitFoundiOSModuleExpression(expr);
+        List<AssignmentExpression> block = extractBlocks(result);
+
+        if (block.size() > 0) {
+            return new AssignmentBlockExpression(block, (StatementExpression) result);
+        }
+
+        return result;
+    }
+
     private List<AssignmentExpression> extractBlocks(Expression result) {
         List<AssignmentExpression> order = new ArrayList<>();
         Map<AssignmentExpression, Integer> count = new HashMap<>();
@@ -45,7 +75,9 @@ public class LiftToCommonAncestor extends RewritingVisitor {
             }
             long functionCount = functionCounts.get(assignment);
             long currentCount = count.get(assignment);
-            assert currentCount <= functionCount;
+            if (currentCount > functionCount) {
+                assert currentCount <= functionCount;
+            }
             if (currentCount == functionCount) {
                 // Current scope covers all references in the function so
                 // we can lift the assignments to this level.
@@ -59,15 +91,16 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     void assignments(Expression expr,
                      List<AssignmentExpression> order,
                      Map<AssignmentExpression, Integer> counts) {
+        assert order.size() == 0;
+        assert counts.size() == 0;
         List<AssignmentExpression> assignments = new GetContainedReferences(expr).list;
         for (AssignmentExpression assignment : assignments) {
             Integer n = counts.get(assignment);
             if (n == null) {
                 n = 0;
-                order.add(assignment);
             }
-            ++n;
-            counts.put(assignment, n);
+            order.add(assignment);
+            counts.put(assignment, n++);
         }
     }
 }

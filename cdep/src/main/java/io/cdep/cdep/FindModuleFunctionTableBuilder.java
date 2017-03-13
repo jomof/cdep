@@ -104,6 +104,7 @@ public class FindModuleFunctionTableBuilder {
                 new StringExpression(resolved.cdepManifestYml.coordinate.version)
         );
 
+        // Like, {root}/com.github.jomof/vectorial/1.0.0
         AssignmentExpression explodedArchiveFolder = new AssignmentExpression(
                 "exploded_archive_folder",
                 new InvokeFunctionExpression(
@@ -241,6 +242,16 @@ public class FindModuleFunctionTableBuilder {
         if (resolved.cdepManifestYml.archive != null) {
             ++archiveCount;
         }
+
+        AssignmentExpression zipFolder = new AssignmentExpression(
+                "zip_folder",
+                new InvokeFunctionExpression(
+                        ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
+                        explodedArchiveFolder,
+                        new ArrayExpression(new StringExpression(archive.file))
+                )
+        );
+
         ModuleArchiveExpression archives[] = new ModuleArchiveExpression[archiveCount];
         archives[0] = new ModuleArchiveExpression(
                 resolved.remote.toURI()
@@ -249,8 +260,11 @@ public class FindModuleFunctionTableBuilder {
                         .toURL(),
                 archive.sha256,
                 archive.size,
+                new InvokeFunctionExpression(
+                        ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
+                        zipFolder,
+                        new ArrayExpression(new StringExpression(archive.include))),
                 archive.include,
-                explodedArchiveFolder,
                 archive.lib);
 
         if (resolved.cdepManifestYml.archive != null) {
@@ -262,8 +276,11 @@ public class FindModuleFunctionTableBuilder {
                             .toURL(),
                     resolved.cdepManifestYml.archive.sha256,
                     resolved.cdepManifestYml.archive.size,
+                    new InvokeFunctionExpression(
+                            ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
+                            zipFolder,
+                            new ArrayExpression(new StringExpression("include"))),
                     "include",
-                    explodedArchiveFolder,
                     null);
         }
         return new FoundiOSModuleExpression(
@@ -398,6 +415,16 @@ public class FindModuleFunctionTableBuilder {
         if (resolved.cdepManifestYml.archive != null) {
             ++archiveCount;
         }
+
+        AssignmentExpression zipFolder = new AssignmentExpression(
+                "zip_folder",
+                new InvokeFunctionExpression(
+                        ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
+                        explodedArchiveFolder,
+                        new ArrayExpression(new StringExpression(android.file))
+                )
+        );
+
         ModuleArchiveExpression archives[] = new ModuleArchiveExpression[archiveCount];
         archives[0] = new ModuleArchiveExpression(
                 resolved.remote.toURI()
@@ -406,8 +433,11 @@ public class FindModuleFunctionTableBuilder {
                         .toURL(),
                 android.sha256,
                 android.size,
+                new InvokeFunctionExpression(
+                        ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
+                        zipFolder,
+                        new ArrayExpression(new StringExpression(android.include))),
                 android.include,
-                explodedArchiveFolder,
                 android.lib);
 
         if (resolved.cdepManifestYml.archive != null) {
@@ -419,8 +449,11 @@ public class FindModuleFunctionTableBuilder {
                             .toURL(),
                     resolved.cdepManifestYml.archive.sha256,
                     resolved.cdepManifestYml.archive.size,
+                    new InvokeFunctionExpression(
+                            ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
+                            zipFolder,
+                            new ArrayExpression(new StringExpression("include"))),
                     "include",
-                    explodedArchiveFolder,
                     null);
         }
 

@@ -19,7 +19,7 @@ import io.cdep.cdep.Coordinate;
 
 import java.util.Set;
 
-public class FoundAndroidModuleExpression extends Expression {
+public class FoundAndroidModuleExpression extends StatementExpression {
     final public ModuleArchiveExpression archives[];
     final public Set<Coordinate> dependencies;
 
