@@ -4,11 +4,8 @@ import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 /**
  * Records the current state of resolving top-level and transitive dependencies.
@@ -46,7 +43,7 @@ public class ResolutionScope {
       Coordinate to) {
     List<Coordinate> tos = edges.get(from);
     if (tos == null) {
-      edges.put(from, new ArrayList<>());
+        edges.put(from, new ArrayList<Coordinate>());
       addEdge(edges, from, to);
       return;
     }
