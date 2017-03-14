@@ -15,6 +15,7 @@
 */
 package io.cdep;
 
+import io.cdep.cdep.CheckLocalFileSystemIntegrityVisitor;
 import io.cdep.cdep.FindModuleFunctionTableBuilder;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.generator.CMakeExamplesGenerator;
@@ -121,6 +122,10 @@ public class CDep {
           environment,
           ExpressionUtils.getAllFoundModuleExpressions(table),
           true /* forceRedownload */);
+
+      // Check that the expected files were downloaded
+      new CheckLocalFileSystemIntegrityVisitor(environment.unzippedArchivesFolder)
+          .visit(table);
 
       runBuilders(environment, table);
       return true;
@@ -273,6 +278,10 @@ public class CDep {
         environment,
         ExpressionUtils.getAllFoundModuleExpressions(table),
         false /* forceRedownload */);
+
+    // Check that the expected files were downloaded
+    new CheckLocalFileSystemIntegrityVisitor(environment.unzippedArchivesFolder)
+        .visit(table);
 
     runBuilders(environment, table);
     environment.writeCDepSHA256File();

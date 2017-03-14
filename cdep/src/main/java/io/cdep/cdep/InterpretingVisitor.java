@@ -59,7 +59,7 @@ public class InterpretingVisitor {
         Object objarr[] = (Object[]) o;
         String result[] = new String[objarr.length];
         for (int i = 0; i < result.length; ++i) {
-          result[i] = objarr.toString();
+          result[i] = (String) objarr[i];
         }
         return result;
       }
@@ -68,7 +68,7 @@ public class InterpretingVisitor {
     throw new RuntimeException(String.format("Did not coerce %s to %s", o.getClass(), clazz));
   }
 
-  protected Object visit(Expression expr) {
+  public Object visit(Expression expr) {
     assert expr != null;
 
     if (expr.getClass().equals(FunctionTableExpression.class)) {
