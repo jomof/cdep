@@ -15,37 +15,17 @@
 */
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.ArrayExpression;
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.ExampleExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
-import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.IntegerExpression;
-import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.generator.AndroidAbi;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
+
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 public class FindModuleFunctionTableBuilder {
@@ -266,15 +246,6 @@ public class FindModuleFunctionTableBuilder {
             ++archiveCount;
         }
 
-        AssignmentExpression zipFolder = new AssignmentExpression(
-                "zip_folder",
-                new InvokeFunctionExpression(
-                        ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
-                        explodedArchiveFolder,
-                        new ArrayExpression(new StringExpression(archive.file))
-                )
-        );
-
         ModuleArchiveExpression archives[] = new ModuleArchiveExpression[archiveCount];
         archives[0] = new ModuleArchiveExpression(
                 resolved.remote.toURI()
@@ -285,8 +256,10 @@ public class FindModuleFunctionTableBuilder {
                 archive.size,
                 new InvokeFunctionExpression(
                         ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
-                        zipFolder,
-                        new ArrayExpression(new StringExpression(archive.include))),
+                        explodedArchiveFolder,
+                        new ArrayExpression(
+                                new StringExpression(archive.file),
+                                new StringExpression(archive.include))),
                 archive.lib);
 
         if (resolved.cdepManifestYml.archive != null) {
@@ -300,8 +273,10 @@ public class FindModuleFunctionTableBuilder {
                     resolved.cdepManifestYml.archive.size,
                     new InvokeFunctionExpression(
                             ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
-                            zipFolder,
-                            new ArrayExpression(new StringExpression("include"))),
+                            explodedArchiveFolder,
+                            new ArrayExpression(
+                                    new StringExpression(resolved.cdepManifestYml.archive.file),
+                                    new StringExpression("include"))),
                     null);
         }
         return new FoundiOSModuleExpression(
@@ -437,15 +412,6 @@ public class FindModuleFunctionTableBuilder {
             ++archiveCount;
         }
 
-        AssignmentExpression zipFolder = new AssignmentExpression(
-                "zip_folder",
-                new InvokeFunctionExpression(
-                        ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
-                        explodedArchiveFolder,
-                        new ArrayExpression(new StringExpression(android.file))
-                )
-        );
-
         ModuleArchiveExpression archives[] = new ModuleArchiveExpression[archiveCount];
         archives[0] = new ModuleArchiveExpression(
                 resolved.remote.toURI()
@@ -456,8 +422,10 @@ public class FindModuleFunctionTableBuilder {
                 android.size,
                 new InvokeFunctionExpression(
                         ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
-                        zipFolder,
-                        new ArrayExpression(new StringExpression(android.include))),
+                        explodedArchiveFolder,
+                        new ArrayExpression(
+                                new StringExpression(android.file),
+                                new StringExpression(android.include))),
                 android.lib);
 
         if (resolved.cdepManifestYml.archive != null) {
@@ -471,8 +439,11 @@ public class FindModuleFunctionTableBuilder {
                     resolved.cdepManifestYml.archive.size,
                     new InvokeFunctionExpression(
                             ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
-                            zipFolder,
-                            new ArrayExpression(new StringExpression("include"))),
+                            explodedArchiveFolder,
+                            new ArrayExpression(
+                                    new StringExpression(resolved.cdepManifestYml.archive.file),
+                                    new StringExpression("include")
+                            )),
                     null);
         }
 
