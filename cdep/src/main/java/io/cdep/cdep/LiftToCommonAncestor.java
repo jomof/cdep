@@ -1,8 +1,20 @@
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.*;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.assignmentBlock;
 
-import java.util.*;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
+import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.StatementExpression;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class LiftToCommonAncestor extends RewritingVisitor {
     Set<AssignmentExpression> captured = new HashSet<>();
@@ -40,7 +52,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
         List<AssignmentExpression> block = extractBlocks(result);
 
         if (block.size() > 0) {
-            return new AssignmentBlockExpression(block, (StatementExpression) result);
+          return assignmentBlock(block, (StatementExpression) result);
         }
         return result;
     }
@@ -51,7 +63,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
         List<AssignmentExpression> block = extractBlocks(result);
 
         if (block.size() > 0) {
-            return new AssignmentBlockExpression(block, (StatementExpression) result);
+          return assignmentBlock(block, (StatementExpression) result);
         }
         return result;
     }
@@ -62,7 +74,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
         List<AssignmentExpression> block = extractBlocks(result);
 
         if (block.size() > 0) {
-            return new AssignmentBlockExpression(block, (StatementExpression) result);
+          return assignmentBlock(block, (StatementExpression) result);
         }
         return result;
     }

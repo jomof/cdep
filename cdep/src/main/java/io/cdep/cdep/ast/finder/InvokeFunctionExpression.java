@@ -7,7 +7,7 @@ public class InvokeFunctionExpression extends Expression {
     final public ExternalFunctionExpression function;
     final public Expression parameters[];
 
-    public InvokeFunctionExpression(ExternalFunctionExpression function, Expression... parameters) {
+  InvokeFunctionExpression(ExternalFunctionExpression function, Expression parameters[]) {
         this.function = function;
         this.parameters = parameters;
         int expectedParameters = function.method.getParameterTypes().length;

@@ -3,7 +3,7 @@ package io.cdep.cdep.ast.finder;
 public class StringExpression extends Expression {
     final public String value;
 
-    public StringExpression(String value) {
+  StringExpression(String value) {
         assert value != null;
         this.value = value;
     }

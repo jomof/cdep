@@ -16,14 +16,13 @@
 package io.cdep.cdep.ast.finder;
 
 import io.cdep.cdep.Coordinate;
-
 import java.util.Set;
 
 public class FoundAndroidModuleExpression extends StatementExpression {
     final public ModuleArchiveExpression archives[];
     final public Set<Coordinate> dependencies;
 
-    public FoundAndroidModuleExpression(
+  FoundAndroidModuleExpression(
             ModuleArchiveExpression archives[],
             Set<Coordinate> dependencies) {
         assert dependencies != null;

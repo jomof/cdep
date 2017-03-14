@@ -3,7 +3,7 @@ package io.cdep.cdep.ast.finder;
 import java.io.File;
 import java.lang.reflect.Method;
 
-public class ExternalFunctionExpression extends FunctionExpression {
+public class ExternalFunctionExpression extends Expression {
 
     // Given /a/b/c.txt returns c.txt
     final public static ExternalFunctionExpression FILE_GETNAME =

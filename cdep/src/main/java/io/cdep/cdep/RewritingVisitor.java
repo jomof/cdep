@@ -1,7 +1,36 @@
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.*;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.abort;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.androidModule;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.array;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.assign;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.assignmentBlock;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.ifSwitch;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.integer;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.invoke;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.iosModule;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
 
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.ArrayExpression;
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
+import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.IntegerExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StatementExpression;
+import io.cdep.cdep.ast.finder.StringExpression;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +111,7 @@ public class RewritingVisitor {
     }
 
     private Expression visitAssignmentBlockExpression(AssignmentBlockExpression expr) {
-        return new AssignmentBlockExpression(
+      return assignmentBlock(
                 visitList(expr.assignments),
                 (StatementExpression) visit(expr.statement)
         );
@@ -97,11 +126,11 @@ public class RewritingVisitor {
     }
 
     protected Expression visitArrayExpression(ArrayExpression expr) {
-        return new ArrayExpression(visitArray(expr.elements));
+      return array(visitArray(expr.elements));
     }
 
     protected Expression visitIntegerExpression(IntegerExpression expr) {
-        return new IntegerExpression(expr.value);
+      return integer(expr.value);
     }
 
     protected Expression visitExternalFunctionExpression(ExternalFunctionExpression expr) {
@@ -114,11 +143,11 @@ public class RewritingVisitor {
     }
 
     protected Expression visitAbortExpression(AbortExpression expr) {
-        return new AbortExpression(expr.message, visitArray(expr.parameters));
+      return abort(expr.message, visitArray(expr.parameters));
     }
 
     protected Expression visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
-        return new FoundAndroidModuleExpression(
+      return androidModule(
                 visitArchiveArray(expr.archives),
                 expr.dependencies
         );
@@ -133,7 +162,7 @@ public class RewritingVisitor {
     }
 
     private Expression visitModuleArchiveExpression(ModuleArchiveExpression expr) {
-        return new ModuleArchiveExpression(
+      return archive(
                 expr.file,
                 expr.sha256,
                 expr.size,
@@ -142,14 +171,14 @@ public class RewritingVisitor {
     }
 
     protected Expression visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
-        return new FoundiOSModuleExpression(
+      return iosModule(
                 visitArchiveArray(expr.archives),
                 expr.dependencies
         );
     }
 
     protected Expression visitInvokeFunctionExpression(InvokeFunctionExpression expr) {
-        return new InvokeFunctionExpression(
+      return invoke(
                 (ExternalFunctionExpression) visit(expr.function),
                 visitArray(expr.parameters)
         );
@@ -164,18 +193,18 @@ public class RewritingVisitor {
     }
 
     protected Expression visitAssignmentExpression(AssignmentExpression expr) {
-        return new AssignmentExpression(
+      return assign(
                 expr.name,
                 visit(expr.expression)
         );
     }
 
     protected Expression visitStringExpression(StringExpression expr) {
-        return new StringExpression(expr.value);
+      return string(expr.value);
     }
 
     protected Expression visitIfSwitchExpression(IfSwitchExpression expr) {
-        return new IfSwitchExpression(
+      return ifSwitch(
                 visitArray(expr.conditions),
                 visitArray(expr.expressions),
                 visit(expr.elseExpression)

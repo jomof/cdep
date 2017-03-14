@@ -9,7 +9,7 @@ public class ModuleArchiveExpression extends Expression {
     final public String libraryName;
     final public Expression fullIncludePath;
 
-    public ModuleArchiveExpression(
+  ModuleArchiveExpression(
             URL file,
             String sha256,
             Long size,

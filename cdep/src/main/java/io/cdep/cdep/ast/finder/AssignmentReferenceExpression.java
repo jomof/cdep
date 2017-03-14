@@ -9,7 +9,7 @@ public class AssignmentReferenceExpression extends Expression {
     final public int created;
     final public AssignmentExpression assignment;
 
-    public AssignmentReferenceExpression(AssignmentExpression assignment) {
+  AssignmentReferenceExpression(AssignmentExpression assignment) {
         this.assignment = assignment;
         this.created = next++;
     }
