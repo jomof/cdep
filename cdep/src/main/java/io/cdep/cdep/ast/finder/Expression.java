@@ -23,7 +23,7 @@ public class Expression {
     @Override
     public String toString() {
         if (string == null) {
-            string = CreateStringVisitor.convert(this);
+          string = getClass() + ": " + CreateStringVisitor.convert(this);
         }
         return string;
     }

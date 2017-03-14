@@ -18,7 +18,6 @@ import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
 import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
 import io.cdep.cdep.ast.finder.StringExpression;
-import java.util.Map;
 
 public class ReadonlyVisitor {
     protected void visit(Expression expr) {
@@ -156,13 +155,6 @@ public class ReadonlyVisitor {
         visitArray(expr.conditions);
         visitArray(expr.expressions);
         visit(expr.elseExpression);
-    }
-
-    protected void visitMap(Map<Expression, Expression> original) {
-        for (Map.Entry<Expression, Expression> entry : original.entrySet()) {
-            visit(entry.getKey());
-            visit(entry.getValue());
-        }
     }
 
     protected void visitParameterExpression(ParameterExpression expr) {
