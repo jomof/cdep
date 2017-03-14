@@ -1,10 +1,7 @@
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.*;
+
 import java.io.File;
 
 /**
@@ -22,18 +19,20 @@ public class CheckLocalFileSystemIntegrityVisitor extends InterpretingVisitor {
   @Override
   protected ModuleArchive visitModuleArchiveExpression(ModuleArchiveExpression expr) {
     ModuleArchive archive = super.visitModuleArchiveExpression(expr);
-    if (!archive.fullIncludePath.getParentFile().isDirectory()) {
-      throw new RuntimeException(
-          String.format("Expected '%s' folder to be created but it wasn't.",
-              archive.fullIncludePath.getParentFile()));
-    }
-    if (!archive.fullIncludePath.isDirectory()) {
-      throw new RuntimeException(
-          String.format(
-              "Downloaded '%s' did not contain include folder '%s' at it's root.\nLocal path: %s",
-              archive.remote,
-              archive.fullIncludePath.getName(),
-              archive.fullIncludePath));
+    if (archive.fullIncludePath != null) {
+      if (!archive.fullIncludePath.getParentFile().isDirectory()) {
+        throw new RuntimeException(
+                String.format("Expected '%s' folder to be created but it wasn't.",
+                        archive.fullIncludePath.getParentFile()));
+      }
+      if (!archive.fullIncludePath.isDirectory()) {
+        throw new RuntimeException(
+                String.format(
+                        "Downloaded '%s' did not contain include folder '%s' at it's root.\nLocal path: %s",
+                        archive.remote,
+                        archive.fullIncludePath.getName(),
+                        archive.fullIncludePath));
+      }
     }
     return archive;
   }
