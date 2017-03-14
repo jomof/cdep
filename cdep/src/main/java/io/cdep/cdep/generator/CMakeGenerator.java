@@ -16,23 +16,9 @@
 package io.cdep.cdep.generator;
 
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
-import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.IntegerExpression;
-import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.utils.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -185,15 +171,17 @@ public class CMakeGenerator {
                 sb.append(String.format("\n%sset(CDEP_EXPLODED_PACKAGE_FOLDER \"${CDEP_EXPLODED_ARCHIVE_FOLDER}/%s\")\n",
                         prefix, getCMakePath(relativeUnzipFolder)));
 
-                sb.append(String.format(
-                        "%starget_include_directories(${target} PRIVATE ",
-                        prefix));
-                generateFindAppender(indent, signature, archive.fullIncludePath, sb);
-                sb.append(String.format(")\n"));
+                if (archive.fullIncludePath != null) {
+                    sb.append(String.format(
+                            "%starget_include_directories(${target} PRIVATE ",
+                            prefix));
+                    generateFindAppender(indent, signature, archive.fullIncludePath, sb);
+                    sb.append(String.format(")\n"));
 
-              sb.append(String.format("%smessage(\"  cdep including \" ", prefix));
-              generateFindAppender(indent, signature, archive.fullIncludePath, sb);
-              sb.append(")\n");
+                    sb.append(String.format("%smessage(\"  cdep including \" ", prefix));
+                    generateFindAppender(indent, signature, archive.fullIncludePath, sb);
+                    sb.append(")\n");
+                }
 
                 if (archive.libraryName != null && archive.libraryName.length() > 0) {
                     sb.append(String.format(
@@ -210,11 +198,13 @@ public class CMakeGenerator {
             }
             for (ModuleArchiveExpression archive : specific.archives) {
                 File exploded = environment.getRelativeUnzipFolder(archive.file);
-                sb.append(String.format(
-                        "%starget_include_directories(${target} PRIVATE ",
-                        prefix));
-                generateFindAppender(indent, signature, archive.fullIncludePath, sb);
-                sb.append(String.format(")\n"));
+                if (archive.fullIncludePath != null) {
+                    sb.append(String.format(
+                            "%starget_include_directories(${target} PRIVATE ",
+                            prefix));
+                    generateFindAppender(indent, signature, archive.fullIncludePath, sb);
+                    sb.append(String.format(")\n"));
+                }
                 if (archive.libraryName != null && archive.libraryName.length() > 0) {
                     sb.append(String.format(
                             "%starget_link_libraries(${target} \"%s/lib/%s\")\n",
