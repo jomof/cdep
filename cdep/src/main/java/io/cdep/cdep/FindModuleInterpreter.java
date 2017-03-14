@@ -29,11 +29,11 @@ class FindModuleInterpreter {
   static ModuleArchive[] findAndroid(
       FunctionTableExpression table,
       Coordinate functionName,
-      String cdepExplodedRoot,
-      String targetPlatform,
-      String systemVersion, // On android, platform like 21
-      String androidStlType,
-      String androidTargetAbi) throws InvocationTargetException, IllegalAccessException {
+      final String cdepExplodedRoot,
+      final String targetPlatform,
+      final String systemVersion, // On android, platform like 21
+      final String androidStlType,
+      final String androidTargetAbi) throws InvocationTargetException, IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     Map<ParameterExpression, Object> parameters = new HashMap<>();
     parameters.put(function.targetPlatform, targetPlatform);
@@ -66,10 +66,10 @@ class FindModuleInterpreter {
   static ModuleArchive[] findiOS(
       FunctionTableExpression table,
       Coordinate functionName,
-      String cdepExplodedRoot,
-      String targetPlatform,
-      String osxArchitecture[],
-      String osxSysroot) throws InvocationTargetException, IllegalAccessException {
+      final String cdepExplodedRoot,
+      final String targetPlatform,
+      final String osxArchitecture[],
+      final String osxSysroot) throws InvocationTargetException, IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     Map<ParameterExpression, Object> parameters = new HashMap<>();
     parameters.put(function.targetPlatform, targetPlatform);
