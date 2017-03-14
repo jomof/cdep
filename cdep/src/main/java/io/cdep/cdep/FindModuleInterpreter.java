@@ -34,7 +34,7 @@ class FindModuleInterpreter {
       String systemVersion, // On android, platform like 21
       String androidStlType,
       String androidTargetAbi) throws InvocationTargetException, IllegalAccessException {
-    FindModuleExpression function = table.findFunctions.get(functionName);
+    final FindModuleExpression function = table.findFunctions.get(functionName);
     Map<ParameterExpression, Object> parameters = new HashMap<>();
     parameters.put(function.targetPlatform, targetPlatform);
     parameters.put(function.systemVersion, systemVersion);
@@ -70,7 +70,7 @@ class FindModuleInterpreter {
       String targetPlatform,
       String osxArchitecture[],
       String osxSysroot) throws InvocationTargetException, IllegalAccessException {
-    FindModuleExpression function = table.findFunctions.get(functionName);
+    final FindModuleExpression function = table.findFunctions.get(functionName);
     Map<ParameterExpression, Object> parameters = new HashMap<>();
     parameters.put(function.targetPlatform, targetPlatform);
     parameters.put(function.osxSysroot, osxSysroot);

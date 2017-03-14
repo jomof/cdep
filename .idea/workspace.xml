@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="iOS">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CheckLocalFileSystemIntegrityVisitor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -143,17 +141,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FindModuleInterpreter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FindModuleInterpreter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="25" column="6" lean-forward="false" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
+            <state relative-caret-position="504">
+              <caret line="72" column="10" lean-forward="false" selection-start-line="72" selection-start-column="10" selection-end-line="72" selection-end-column="10" />
               <folding>
-                <element signature="e#1767#2409#0" expanded="true" />
-                <element signature="e#2408#2409#0" expanded="true" />
-                <element signature="e#3006#3458#0" expanded="true" />
-                <element signature="e#3457#3458#0" expanded="true" />
-                <marker date="1489518373297" expanded="true" signature="677:701" ph="..." />
+                <element signature="e#1773#2415#0" expanded="true" />
+                <element signature="e#2414#2415#0" expanded="true" />
+                <element signature="e#3018#3470#0" expanded="true" />
+                <element signature="e#3469#3470#0" expanded="true" />
+                <marker date="1489520503157" expanded="true" signature="677:701" ph="..." />
               </folding>
             </state>
           </provider>
@@ -183,11 +181,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="288">
+              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1146,10 +1144,10 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/Expression.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CheckLocalFileSystemIntegrityVisitor.java" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java" />
       </list>
     </option>
   </component>
@@ -1487,7 +1485,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.3086207" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
-    <property name="SearchEverywhereHistoryKey" value="FindMultiplyReferencedArchives.java&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/cdep/src/main/java/io/cdep/cdep/FindMultiplyReferencedArchives.java&#10;Scop&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java&#10;TestResolutionScope&#9;PSI&#9;JAVA://io.cdep.cdep.resolver.TestResolutionScope&#10;travis_cd&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/travis_cdep&#10;ExpressionU&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/ExpressionUtils.java&#10;cmakeify.yml&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/smoke-test/cmakeify.yml&#10;cdep.ym&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/smoke-test/cdep.yml&#10;cdep.yml&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/smoke-test/cdep.yml&#10;Generator&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java&#10;runMathfu/&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.idea/modules/.test-files/runMathfu&#10;.cmake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.idea/modules/.test-files/localPathsWork/.cdep/modules/cdep-dependencies-config.cmake&#10;vectorial&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.idea/modules/.test-files/runVectorial/.cdep/examples/cmake/com.github.jomof/vectorial/0.0.0-rev6/vectorial.cpp&#10;CMak&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/CMakeExamplesGenerator.java&#10;CONFIG_&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator#CONFIG_FILE_NAME&#10;CDep.&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;Hash&#9;FILE&#9;file://C:/Users/jomof/projects/mega/cdep/src/main/java/io/cdep/cdep/utils/HashUtils.java&#10;Expr&#9;FILE&#9;file://C:/Users/jomof/projects/mega/cdep/src/main/java/io/cdep/cdep/utils/ExpressionUtils.java&#10;Archive&#9;FILE&#9;file://C:/Users/jomof/projects/mega/cdep/src/main/java/io/cdep/cdep/utils/ArchiveUtils.java" />
+    <property name="SearchEverywhereHistoryKey" value="FindModuleInterpreter.java&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java&#10;FindMultiplyReferencedArchives.java&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/cdep/src/main/java/io/cdep/cdep/FindMultiplyReferencedArchives.java&#10;Scop&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java&#10;TestResolutionScope&#9;PSI&#9;JAVA://io.cdep.cdep.resolver.TestResolutionScope&#10;travis_cd&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/travis_cdep&#10;ExpressionU&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/ExpressionUtils.java&#10;cmakeify.yml&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/smoke-test/cmakeify.yml&#10;cdep.ym&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/smoke-test/cdep.yml&#10;cdep.yml&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/smoke-test/cdep.yml&#10;Generator&#9;FILE&#9;file:///usr/local/google/home/jomof/projects/cdep/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java&#10;runMathfu/&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.idea/modules/.test-files/runMathfu&#10;.cmake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.idea/modules/.test-files/localPathsWork/.cdep/modules/cdep-dependencies-config.cmake&#10;vectorial&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.idea/modules/.test-files/runVectorial/.cdep/examples/cmake/com.github.jomof/vectorial/0.0.0-rev6/vectorial.cpp&#10;CMak&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/CMakeExamplesGenerator.java&#10;CONFIG_&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator#CONFIG_FILE_NAME&#10;CDep.&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;Hash&#9;FILE&#9;file://C:/Users/jomof/projects/mega/cdep/src/main/java/io/cdep/cdep/utils/HashUtils.java&#10;Expr&#9;FILE&#9;file://C:/Users/jomof/projects/mega/cdep/src/main/java/io/cdep/cdep/utils/ExpressionUtils.java&#10;Archive&#9;FILE&#9;file://C:/Users/jomof/projects/mega/cdep/src/main/java/io/cdep/cdep/utils/ArchiveUtils.java" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/cdep" />
     <property name="extract.method.default.visibility" value="packageLocal" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
@@ -2139,13 +2137,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00057" summary="Examples support">
-      <created>1488153298223</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1488153298223</updated>
-    </task>
     <task id="LOCAL-00058" summary="Examples support">
       <created>1488153721868</created>
       <option name="number" value="00058" />
@@ -2482,7 +2473,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489518378397</updated>
     </task>
-    <option name="localTasksCounter" value="106" />
+    <task id="LOCAL-00106" summary="iOS">
+      <created>1489520302645</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1489520302645</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -3054,20 +3052,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="25" column="6" lean-forward="false" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
-          <folding>
-            <element signature="e#1767#2409#0" expanded="true" />
-            <element signature="e#2408#2409#0" expanded="true" />
-            <element signature="e#3006#3458#0" expanded="true" />
-            <element signature="e#3457#3458#0" expanded="true" />
-            <marker date="1489518373297" expanded="true" signature="677:701" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="457">
@@ -3124,9 +3108,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="288">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="72" column="10" lean-forward="false" selection-start-line="72" selection-start-column="10" selection-end-line="72" selection-end-column="10" />
+          <folding>
+            <element signature="e#1773#2415#0" expanded="true" />
+            <element signature="e#2414#2415#0" expanded="true" />
+            <element signature="e#3018#3470#0" expanded="true" />
+            <element signature="e#3469#3470#0" expanded="true" />
+            <marker date="1489520503157" expanded="true" signature="677:701" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
