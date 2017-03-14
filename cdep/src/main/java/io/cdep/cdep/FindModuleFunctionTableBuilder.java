@@ -267,7 +267,8 @@ public class FindModuleFunctionTableBuilder {
             .toURL(),
         archive.sha256,
         archive.size,
-        joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
+        archive.include == null ? null
+            : joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
         archive.lib);
 
     if (resolved.cdepManifestYml.archive != null) {
@@ -418,7 +419,8 @@ public class FindModuleFunctionTableBuilder {
             .toURL(),
         android.sha256,
         android.size,
-        joinFileSegments(explodedArchiveFolder, android.file, android.include),
+        android.include == null ? null
+            : joinFileSegments(explodedArchiveFolder, android.file, android.include),
         android.lib);
 
     if (resolved.cdepManifestYml.archive != null) {
