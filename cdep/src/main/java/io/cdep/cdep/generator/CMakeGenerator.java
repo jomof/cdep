@@ -171,10 +171,10 @@ public class CMakeGenerator {
               prefix));
           generateFindAppender(indent, signature, archive.fullIncludePath, sb);
           sb.append(String.format(")\n"));
-//
-//                    sb.append(String.format("%smessage(\"  cdep including \" ", prefix));
-//                    generateFindAppender(indent, signature, archive.fullIncludePath, sb);
-//                    sb.append(")\n");
+
+          sb.append(String.format("%smessage(\"  cdep including \" ", prefix));
+          generateFindAppender(indent, signature, archive.fullIncludePath, sb);
+          sb.append(")\n");
         }
 
         if (archive.fullLibraryName != null) {
@@ -183,10 +183,10 @@ public class CMakeGenerator {
               prefix));
           generateFindAppender(indent, signature, archive.fullLibraryName, sb);
           sb.append(String.format(")\n"));
-//
-//                    sb.append(String.format("%smessage(\"  cdep linking ${target} with \" ", prefix));
-//                    generateFindAppender(indent, signature, archive.fullLibraryName, sb);
-//                    sb.append(")\n");
+
+          sb.append(String.format("%smessage(\"  cdep linking ${target} with \" ", prefix));
+          generateFindAppender(indent, signature, archive.fullLibraryName, sb);
+          sb.append(")\n");
         }
       }
       return;
