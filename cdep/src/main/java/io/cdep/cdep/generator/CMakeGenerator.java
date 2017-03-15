@@ -286,7 +286,7 @@ public class CMakeGenerator {
         if (assignResult == null) {
           throw new RuntimeException();
         }
-        sb.append(String.format("%sget_filename_component(%s %s NAME)\n",
+        sb.append(String.format("%sget_filename_component(%s ${%s} NAME)\n",
             prefix,
             assignResult,
             values[0]));
