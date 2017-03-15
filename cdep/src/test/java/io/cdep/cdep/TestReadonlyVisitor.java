@@ -1,10 +1,9 @@
 package io.cdep.cdep;
 
-import org.junit.Test;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
 
 import java.net.URL;
-
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
+import org.junit.Test;
 
 public class TestReadonlyVisitor {
   @Test
@@ -14,6 +13,8 @@ public class TestReadonlyVisitor {
             new URL("https://google.com"),
             "sha256",
             192L,
+            null,
+            null,
             null,
             null));
   }

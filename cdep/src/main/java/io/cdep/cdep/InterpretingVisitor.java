@@ -56,12 +56,16 @@ public class InterpretingVisitor {
         Object objarr[] = (Object[]) o;
         String result[] = new String[objarr.length];
         for (int i = 0; i < result.length; ++i) {
-          result[i] = (String) objarr[i];
+          result[i] = (String) coerce(objarr[i], String.class);
         }
         return result;
       }
     }
-
+    if (clazz.equals(String.class)) {
+      if (o instanceof File) {
+        return o.toString();
+      }
+    }
     throw new RuntimeException(String.format("Did not coerce %s to %s", o.getClass(), clazz));
   }
 
@@ -122,8 +126,8 @@ public class InterpretingVisitor {
   }
 
   protected ModuleArchive visitModuleArchiveExpression(ModuleArchiveExpression expr) {
-    Object fullIncludePath = visit(expr.fullIncludePath);
-    Object fullLibraryName = visit(expr.fullLibraryName);
+    Object fullIncludePath = visit(expr.includePath);
+    Object fullLibraryName = visit(expr.libraryPath);
     return new ModuleArchive(expr.file, (File) fullIncludePath, (File) fullLibraryName);
   }
 

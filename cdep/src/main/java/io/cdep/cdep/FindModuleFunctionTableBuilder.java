@@ -15,19 +15,45 @@
 */
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.*;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.abort;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.assign;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.eq;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.getFileName;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.gte;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.ifSwitch;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.integer;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.joinFileSegments;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.lastIndexOfString;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.module;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.parameter;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.stringStartsWith;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.substring;
+
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
 import io.cdep.cdep.generator.AndroidAbi;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
-
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.*;
-
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 public class FindModuleFunctionTableBuilder {
@@ -110,11 +136,15 @@ public class FindModuleFunctionTableBuilder {
         string(resolved.cdepManifestYml.coordinate.version)
     );
 
+    AssignmentExpression explodedArchiveTail = assign(
+        "exploded_archive_tail",
+        joinFileSegments(coordinateGroupId, coordinateArtifactId, coordinateVersion)
+    );
+
     // Like, {root}/com.github.jomof/vectorial/1.0.0
     AssignmentExpression explodedArchiveFolder = assign(
         "exploded_archive_folder",
-        joinFileSegments(cdepExplodedRoot, coordinateGroupId,
-            coordinateArtifactId, coordinateVersion)
+        joinFileSegments(cdepExplodedRoot, explodedArchiveTail)
     );
 
     if (resolved.cdepManifestYml.android != null
@@ -240,8 +270,10 @@ public class FindModuleFunctionTableBuilder {
             .toURL(),
         archive.sha256,
         archive.size,
+        archive.include,
         archive.include == null ? null
             : joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
+        archive.lib == null ? null : "lib/" + archive.lib,
         archive.lib == null ? null
             : joinFileSegments(explodedArchiveFolder, archive.file, "lib", archive.lib));
 
@@ -254,8 +286,10 @@ public class FindModuleFunctionTableBuilder {
               .toURL(),
           resolved.cdepManifestYml.archive.sha256,
           resolved.cdepManifestYml.archive.size,
+          "include",
           joinFileSegments(explodedArchiveFolder,
               resolved.cdepManifestYml.archive.file, "include"),
+          null,
           null);
     }
     return module(archives, dependencies);
@@ -401,8 +435,10 @@ public class FindModuleFunctionTableBuilder {
               .toURL(),
           archive.sha256,
           archive.size,
+          archive.include,
           archive.include == null ? null
               : joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
+          archive.lib == null ? null : "lib/" + archive.lib,
           archive.lib == null ? null
               : joinFileSegments(explodedArchiveFolder, archive.file, "lib", abi, archive.lib));
 
@@ -415,8 +451,10 @@ public class FindModuleFunctionTableBuilder {
                 .toURL(),
             resolved.cdepManifestYml.archive.sha256,
             resolved.cdepManifestYml.archive.size,
+            "include",
             joinFileSegments(explodedArchiveFolder,
                 resolved.cdepManifestYml.archive.file, "include"),
+            null,
             null);
       }
       cases.put(string(abi), module(archives, dependencies));

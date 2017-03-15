@@ -27,9 +27,12 @@ public class ExpressionBuilder {
       URL file,
       String sha256,
       Long size,
-      Expression fullIncludePath,
-      Expression fullLibraryName) {
-    return new ModuleArchiveExpression(file, sha256, size, fullIncludePath, fullLibraryName);
+      String include,
+      Expression includePath,
+      String library,
+      Expression libraryPath) {
+    return new ModuleArchiveExpression(file, sha256, size, include, includePath, library,
+        libraryPath);
   }
 
   public static ModuleExpression module(
