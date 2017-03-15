@@ -15,9 +15,6 @@
 */
 package io.cdep.cdep;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.generator.CMakeGenerator;
@@ -26,8 +23,12 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import java.io.File;
 import org.junit.Test;
+
+import java.io.File;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 public class TestFindModuleFunctionTableBuilder {
 
@@ -269,7 +270,7 @@ public class TestFindModuleFunctionTableBuilder {
         "21",
         "c++_shared",
         "x86");
-    assertThat(found[0].libraryName).isEqualTo("libsqlite.a");
+    assertThat(found[0].fullLibraryName.getName()).isEqualTo("libsqlite.a");
   }
 
   @Test
@@ -287,7 +288,7 @@ public class TestFindModuleFunctionTableBuilder {
         "21",
         "c++_shared",
         "x86");
-    assertThat(found[0].libraryName).isNull();
+    assertThat(found[0].fullLibraryName).isNull();
     assertThat(found[0].remote.toString()).isEqualTo(
         "https://github.com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
   }
@@ -307,7 +308,7 @@ public class TestFindModuleFunctionTableBuilder {
         "21",
         "c++_shared",
         "x86");
-    assertThat(found[0].libraryName).isNull();
+    assertThat(found[0].fullLibraryName).isNull();
     assertThat(found[0].remote.toString()).isEqualTo(
         "https://github.com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
   }

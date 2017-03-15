@@ -142,7 +142,7 @@ public class RewritingVisitor {
                 expr.sha256,
                 expr.size,
                 visit(expr.fullIncludePath),
-                expr.libraryName);
+            visit(expr.fullLibraryName));
     }
 
     protected Expression visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {

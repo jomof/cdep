@@ -126,7 +126,7 @@ public class ResolvedManifests {
         "iOS:\n" +
         "  archives:\n" +
         "  - lib: libsqlite.a\n" +
-            "    file: sqlite-ios-platform-iPhone.zip\n" +
+        "    file: sqlite-ios-platform-iPhone.zip\n" +
         "    sha256: 45a104d61786eaf163b3006aa989922c5c04b8e787073e1cbd60c7895943162c\n" +
         "    platform: iPhoneOS\n" +
         "    size: 2676245\n" +

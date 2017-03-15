@@ -16,19 +16,20 @@
 package io.cdep.cdep.ast.finder;
 
 import io.cdep.cdep.Coordinate;
+
 import java.util.Set;
 
 public class FoundiOSModuleExpression extends StatementExpression {
 
-    final public ModuleArchiveExpression archives[];
-    final public Set<Coordinate> dependencies;
+  final public ModuleArchiveExpression archives[];
+  final public Set<Coordinate> dependencies;
 
   FoundiOSModuleExpression(
-            ModuleArchiveExpression archives[],
-            Set<Coordinate> dependencies) {
-        assert dependencies != null;
-        for (ModuleArchiveExpression archive : archives) assert archive != null;
-        this.archives = archives;
-        this.dependencies = dependencies;
-    }
+      ModuleArchiveExpression archives[],
+      Set<Coordinate> dependencies) {
+    assert dependencies != null;
+    for (ModuleArchiveExpression archive : archives) assert archive != null;
+    this.archives = archives;
+    this.dependencies = dependencies;
+  }
 }

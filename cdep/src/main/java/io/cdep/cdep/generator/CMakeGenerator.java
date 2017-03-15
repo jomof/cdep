@@ -167,10 +167,6 @@ public class CMakeGenerator {
                 sb.append(String.format("\n%s%s(${target})", prefix, getAddDependencyFunctionName(dependency)));
             }
             for (ModuleArchiveExpression archive : specific.archives) {
-                File relativeUnzipFolder = environment.getRelativeUnzipFolder(archive.file);
-                sb.append(String.format("\n%sset(CDEP_EXPLODED_PACKAGE_FOLDER \"${CDEP_EXPLODED_ARCHIVE_FOLDER}/%s\")\n",
-                        prefix, getCMakePath(relativeUnzipFolder)));
-
                 if (archive.fullIncludePath != null) {
                     sb.append(String.format(
                             "%starget_include_directories(${target} PRIVATE ",
@@ -183,32 +179,47 @@ public class CMakeGenerator {
                     sb.append(")\n");
                 }
 
-                if (archive.libraryName != null && archive.libraryName.length() > 0) {
+                if (archive.fullLibraryName != null) {
                     sb.append(String.format(
-                            "%starget_link_libraries(${target} \"${CDEP_EXPLODED_PACKAGE_FOLDER}/lib/${CDEP_DETERMINED_ANDROID_ABI}/%s\")\n",
-                            prefix, archive.libraryName));
+                        "%starget_link_libraries((${target} ",
+                        prefix));
+                    generateFindAppender(indent, signature, archive.fullLibraryName, sb);
+                    sb.append(String.format(")\n"));
+
+                    sb.append(String.format("%smessage(\"  cdep linking with \" ", prefix));
+                    generateFindAppender(indent, signature, archive.fullLibraryName, sb);
+                    sb.append(")\n");
                 }
             }
             return;
         } else if (expression instanceof FoundiOSModuleExpression) {
             FoundiOSModuleExpression specific = (FoundiOSModuleExpression) expression;
-            sb.append("\n");
             for (Coordinate dependency : specific.dependencies) {
-                sb.append(String.format("%s%s(${target})\n", prefix, getAddDependencyFunctionName(dependency)));
+                sb.append(String.format("\n%s%s(${target})", prefix, getAddDependencyFunctionName(dependency)));
             }
             for (ModuleArchiveExpression archive : specific.archives) {
-                File exploded = environment.getRelativeUnzipFolder(archive.file);
                 if (archive.fullIncludePath != null) {
                     sb.append(String.format(
                             "%starget_include_directories(${target} PRIVATE ",
                             prefix));
                     generateFindAppender(indent, signature, archive.fullIncludePath, sb);
                     sb.append(String.format(")\n"));
+
+                    sb.append(String.format("%smessage(\"  cdep including \" ", prefix));
+                    generateFindAppender(indent, signature, archive.fullIncludePath, sb);
+                    sb.append(")\n");
                 }
-                if (archive.libraryName != null && archive.libraryName.length() > 0) {
+
+                if (archive.fullLibraryName != null) {
                     sb.append(String.format(
-                            "%starget_link_libraries(${target} \"%s/lib/%s\")\n",
-                            prefix, exploded, archive.libraryName));
+                        "%starget_link_libraries((${target} ",
+                        prefix));
+                    generateFindAppender(indent, signature, archive.fullLibraryName, sb);
+                    sb.append(String.format(")\n"));
+
+                    sb.append(String.format("%smessage(\"  cdep linking with \" ", prefix));
+                    generateFindAppender(indent, signature, archive.fullLibraryName, sb);
+                    sb.append(")\n");
                 }
             }
             return;

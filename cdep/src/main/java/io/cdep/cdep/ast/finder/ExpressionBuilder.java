@@ -1,6 +1,7 @@
 package io.cdep.cdep.ast.finder;
 
 import io.cdep.cdep.Coordinate;
+
 import java.net.URL;
 import java.util.List;
 import java.util.Set;
@@ -20,8 +21,8 @@ public class ExpressionBuilder {
       String sha256,
       Long size,
       Expression fullIncludePath,
-      String libraryName) {
-    return new ModuleArchiveExpression(file, sha256, size, fullIncludePath, libraryName);
+      Expression fullLibraryName) {
+    return new ModuleArchiveExpression(file, sha256, size, fullIncludePath, fullLibraryName);
   }
 
   public static FoundiOSModuleExpression iosModule(ModuleArchiveExpression archives[],

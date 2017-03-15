@@ -113,7 +113,8 @@ public class InterpretingVisitor {
 
   protected ModuleArchive visitModuleArchiveExpression(ModuleArchiveExpression expr) {
     Object fullIncludePath = visit(expr.fullIncludePath);
-    return new ModuleArchive(expr.file, (File) fullIncludePath, expr.libraryName);
+    Object fullLibraryName = visit(expr.fullLibraryName);
+    return new ModuleArchive(expr.file, (File) fullIncludePath, (File) fullLibraryName);
   }
 
   protected Object visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
@@ -276,15 +277,14 @@ public class InterpretingVisitor {
   }
 
   static class ModuleArchive {
-
     final public URL remote;
     final public File fullIncludePath;
-    final public String libraryName;
+    final public File fullLibraryName;
 
-    ModuleArchive(URL remote, File fullIncludePath, String libraryName) {
+    ModuleArchive(URL remote, File fullIncludePath, File fullLibraryName) {
       this.remote = remote;
       this.fullIncludePath = fullIncludePath;
-      this.libraryName = libraryName;
+      this.fullLibraryName = fullLibraryName;
     }
   }
 }

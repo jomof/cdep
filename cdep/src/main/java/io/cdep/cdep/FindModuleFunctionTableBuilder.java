@@ -15,46 +15,19 @@
 */
 package io.cdep.cdep;
 
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.abort;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.androidModule;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.assign;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.eq;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.getFileName;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.gte;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.ifSwitch;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.integer;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.iosModule;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.joinFileSegments;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.lastIndexOfString;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.parameter;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.stringStartsWith;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.substring;
-
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.ExampleExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.generator.AndroidAbi;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
+
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
 
 
 public class FindModuleFunctionTableBuilder {
@@ -269,7 +242,8 @@ public class FindModuleFunctionTableBuilder {
         archive.size,
         archive.include == null ? null
             : joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
-        archive.lib);
+        archive.lib == null ? null
+            : joinFileSegments(explodedArchiveFolder, archive.file, "lib", archive.lib));
 
     if (resolved.cdepManifestYml.archive != null) {
       // This is the global zip file from the top level of the manifest.
@@ -405,46 +379,46 @@ public class FindModuleFunctionTableBuilder {
           "Expected only one android archive upon reaching ABI level. There were %s.",
           androids.size()));
     }
-    AndroidArchive android = androids.get(0);
+    AndroidArchive archive = androids.get(0);
     int archiveCount = 1;
     if (resolved.cdepManifestYml.archive != null) {
       ++archiveCount;
     }
 
-    ModuleArchiveExpression archives[] = new ModuleArchiveExpression[archiveCount];
-    archives[0] = archive(
-        resolved.remote.toURI()
-            .resolve(".")
-            .resolve(android.file)
-            .toURL(),
-        android.sha256,
-        android.size,
-        android.include == null ? null
-            : joinFileSegments(explodedArchiveFolder, android.file, android.include),
-        android.lib);
-
-    if (resolved.cdepManifestYml.archive != null) {
-      // This is the global zip file from the top level of the manifest.
-      archives[1] = archive(
-          resolved.remote.toURI()
-              .resolve(".")
-              .resolve(resolved.cdepManifestYml.archive.file)
-              .toURL(),
-          resolved.cdepManifestYml.archive.sha256,
-          resolved.cdepManifestYml.archive.size,
-          joinFileSegments(explodedArchiveFolder,
-              resolved.cdepManifestYml.archive.file, "include"),
-          null);
-    }
-
     Map<Expression, Expression> cases = new HashMap<>();
     String supported = "";
-    String abis[] = android.abis;
+    String abis[] = archive.abis;
     if (abis == null) {
       abis = AndroidAbi.getNames();
     }
     for (String abi : abis) {
       supported += abi + " ";
+      ModuleArchiveExpression archives[] = new ModuleArchiveExpression[archiveCount];
+      archives[0] = archive(
+          resolved.remote.toURI()
+              .resolve(".")
+              .resolve(archive.file)
+              .toURL(),
+          archive.sha256,
+          archive.size,
+          archive.include == null ? null
+              : joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
+          archive.lib == null ? null
+              : joinFileSegments(explodedArchiveFolder, archive.file, "lib", abi, archive.lib));
+
+      if (resolved.cdepManifestYml.archive != null) {
+        // This is the global zip file from the top level of the manifest.
+        archives[1] = archive(
+            resolved.remote.toURI()
+                .resolve(".")
+                .resolve(resolved.cdepManifestYml.archive.file)
+                .toURL(),
+            resolved.cdepManifestYml.archive.sha256,
+            resolved.cdepManifestYml.archive.size,
+            joinFileSegments(explodedArchiveFolder,
+                resolved.cdepManifestYml.archive.file, "include"),
+            null);
+      }
       cases.put(string(abi), androidModule(archives, dependencies));
     }
 
