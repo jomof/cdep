@@ -264,8 +264,8 @@ public class CMakeGenerator {
     if (expr == signature.osxSysroot) {
       return "CMAKE_OSX_SYSROOT";
     }
-    if (expr == signature.osxArchitecture) {
-      return "CMAKE_OSX_ARCHITECTURE";
+    if (expr == signature.osxArchitectures) {
+      return "CMAKE_OSX_ARCHITECTURES";
     }
 
     throw new RuntimeException(expr.name);

@@ -68,7 +68,7 @@ class FindModuleInterpreter {
       Coordinate functionName,
       final String cdepExplodedRoot,
       final String targetPlatform,
-      final String osxArchitecture[],
+      final String osxArchitectures[],
       final String osxSysroot) throws InvocationTargetException, IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     Map<ParameterExpression, Object> parameters = new HashMap<>();
@@ -86,8 +86,8 @@ class FindModuleInterpreter {
         if (expr == function.cdepExplodedRoot) {
           return cdepExplodedRoot;
         }
-        if (expr == function.osxArchitecture) {
-          return osxArchitecture;
+        if (expr == function.osxArchitectures) {
+          return osxArchitectures;
         }
         return super.visitParameterExpression(expr);
       }

@@ -161,7 +161,7 @@ public class ReadonlyVisitor {
         visit(expr.androidTargetAbi);
         visit(expr.androidStlType);
         visit(expr.osxSysroot);
-        visit(expr.osxArchitecture);
+      visit(expr.osxArchitectures);
         visit(expr.expression);
     }
 

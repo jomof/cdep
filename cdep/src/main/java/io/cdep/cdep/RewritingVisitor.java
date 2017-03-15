@@ -216,7 +216,7 @@ public class RewritingVisitor {
         (ParameterExpression) visit(expr.androidTargetAbi),
         (ParameterExpression) visit(expr.androidStlType),
         (ParameterExpression) visit(expr.osxSysroot),
-        (ParameterExpression) visit(expr.osxArchitecture),
+        (ParameterExpression) visit(expr.osxArchitectures),
         visit(expr.expression)
     );
   }
