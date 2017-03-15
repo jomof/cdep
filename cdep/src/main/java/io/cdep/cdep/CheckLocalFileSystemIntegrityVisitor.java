@@ -16,9 +16,13 @@ public class CheckLocalFileSystemIntegrityVisitor extends InterpretingVisitor {
     this.explodedRoot = explodedRoot;
   }
 
+  protected ModuleArchive superVisitModuleArchiveExpression(ModuleArchiveExpression expr) {
+    return super.visitModuleArchiveExpression(expr);
+  }
+
   @Override
   protected ModuleArchive visitModuleArchiveExpression(ModuleArchiveExpression expr) {
-    ModuleArchive archive = super.visitModuleArchiveExpression(expr);
+    ModuleArchive archive = superVisitModuleArchiveExpression(expr);
     if (archive.fullIncludePath != null) {
       if (!archive.fullIncludePath.getParentFile().isDirectory()) {
         throw new RuntimeException(

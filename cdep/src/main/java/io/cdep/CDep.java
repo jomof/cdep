@@ -17,6 +17,7 @@ package io.cdep;
 
 import io.cdep.cdep.CheckLocalFileSystemIntegrityVisitor;
 import io.cdep.cdep.FindModuleFunctionTableBuilder;
+import io.cdep.cdep.StubCheckLocalFileSystemIntegrityVisitor;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.generator.CMakeExamplesGenerator;
 import io.cdep.cdep.generator.CMakeGenerator;
@@ -31,14 +32,15 @@ import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 
 public class CDep {
 
@@ -139,10 +141,11 @@ public class CDep {
       if (args.length > 1) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false);
 
-        SoftNameDependency dependencies[] = new SoftNameDependency[]{
-            new SoftNameDependency(args[1])
-        };
+        SoftNameDependency dependencies[] = new SoftNameDependency[args.length - 1];
+        for (int i = 1; i < args.length; ++i) {
+          dependencies[i - 1] = new SoftNameDependency(args[i]);
 
+        }
         FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
         Resolver resolver = new Resolver(environment);
         ResolutionScope scope = resolver.resolveAll(dependencies);
@@ -153,7 +156,11 @@ public class CDep {
             throw new RuntimeException(String.format("Linter could not resolve %s", args[1]));
           }
         }
-        builder.build();
+        FunctionTableExpression table = builder.build();
+
+        // Check that the expected files were downloaded
+        new StubCheckLocalFileSystemIntegrityVisitor(environment.unzippedArchivesFolder)
+            .visit(table);
         return true;
       } else {
         out.print("Usage: cdep lint (coordinate or path/to/cdep-manifest.yml)'\n");

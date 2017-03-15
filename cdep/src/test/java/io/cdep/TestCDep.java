@@ -15,18 +15,19 @@
 */
 package io.cdep;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-
 import com.google.common.io.Files;
 import io.cdep.cdep.yml.cdep.CDepYml;
+import org.junit.Test;
+import org.yaml.snakeyaml.Yaml;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import org.junit.Test;
-import org.yaml.snakeyaml.Yaml;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 public class TestCDep {
 
@@ -55,6 +56,24 @@ public class TestCDep {
           .contains(" The file should only be in the lowest level package "
               + "'com.github.jomof:firebase/app:2.1.3-rev8'");
     }
+  }
+
+  @Test
+  public void lintSomeKnownLibraries() throws Exception {
+    main(main("lint",
+        "com.github.jomof:firebase/admob:2.1.3-rev11",
+        "com.github.jomof:firebase/analytics:2.1.3-rev11",
+        "com.github.jomof:firebase/auth:2.1.3-rev11",
+        "com.github.jomof:firebase/database:2.1.3-rev11",
+        "com.github.jomof:firebase/invites:2.1.3-rev11",
+        "com.github.jomof:firebase/messaging:2.1.3-rev11",
+        "com.github.jomof:firebase/remote_config:2.1.3-rev11",
+        "com.github.jomof:firebase/storage:2.1.3-rev11",
+        "com.github.jomof:sqlite:3.16.2-rev25",
+        "com.github.jomof:boost:1.0.63-rev18",
+        "com.github.jomof:vectorial:0.0.0-rev11",
+        "com.github.jomof:mathfu:1.0.2-rev7",
+        "com.github.jomof:sdl2:2.0.5-rev11"));
   }
 
   @Test

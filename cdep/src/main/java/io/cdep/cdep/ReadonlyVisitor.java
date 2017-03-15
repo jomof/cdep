@@ -81,6 +81,7 @@ public class ReadonlyVisitor {
 
   protected void visitModuleArchiveExpression(ModuleArchiveExpression expr) {
         visit(expr.fullIncludePath);
+    visit(expr.fullLibraryName);
     }
 
   protected void visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
