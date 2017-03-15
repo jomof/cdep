@@ -166,6 +166,7 @@ public class CMakeGenerator {
             for (Coordinate dependency : specific.dependencies) {
                 sb.append(String.format("\n%s%s(${target})", prefix, getAddDependencyFunctionName(dependency)));
             }
+            sb.append("\n");
             for (ModuleArchiveExpression archive : specific.archives) {
                 if (archive.fullIncludePath != null) {
                     sb.append(String.format(
@@ -186,7 +187,7 @@ public class CMakeGenerator {
                     generateFindAppender(indent, signature, archive.fullLibraryName, sb);
                     sb.append(String.format(")\n"));
 
-                    sb.append(String.format("%smessage(\"  cdep linking with \" ", prefix));
+                    sb.append(String.format("%smessage(\"  cdep linking ${target} with \" ", prefix));
                     generateFindAppender(indent, signature, archive.fullLibraryName, sb);
                     sb.append(")\n");
                 }
@@ -197,6 +198,7 @@ public class CMakeGenerator {
             for (Coordinate dependency : specific.dependencies) {
                 sb.append(String.format("\n%s%s(${target})", prefix, getAddDependencyFunctionName(dependency)));
             }
+            sb.append("\n");
             for (ModuleArchiveExpression archive : specific.archives) {
                 if (archive.fullIncludePath != null) {
                     sb.append(String.format(
@@ -217,7 +219,7 @@ public class CMakeGenerator {
                     generateFindAppender(indent, signature, archive.fullLibraryName, sb);
                     sb.append(String.format(")\n"));
 
-                    sb.append(String.format("%smessage(\"  cdep linking with \" ", prefix));
+                    sb.append(String.format("%smessage(\"  cdep linking ${target} with \" ", prefix));
                     generateFindAppender(indent, signature, archive.fullLibraryName, sb);
                     sb.append(")\n");
                 }
