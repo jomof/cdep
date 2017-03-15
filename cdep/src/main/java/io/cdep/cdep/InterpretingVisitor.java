@@ -1,14 +1,27 @@
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.*;
-
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.ArrayExpression;
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.IntegerExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StringExpression;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,7 +29,7 @@ import java.util.Map;
  */
 public class InterpretingVisitor {
 
-  private List<Map<AssignmentExpression, Object>> stack = new ArrayList<>();
+  private Frame stack = null;
 
   private static Object coerce(Object o, Class<?> clazz) {
     if (o == null) {
@@ -115,28 +128,25 @@ public class InterpretingVisitor {
   }
 
   protected Object visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
-    return lookup(expr.assignment);
-  }
-
-  private Object lookup(AssignmentExpression assignment) {
-    for (int i = 0; i < stack.size(); ++i) {
-      Object result = stack.get(i).get(assignment);
-      if (result != null) {
-        return result;
-      }
+    AssignmentFuture future = stack.lookup(expr.assignment);
+    if (future.value == null) {
+      Frame oldStack = stack;
+      stack = future.stack;
+      future.value = visit(future.expr);
+      stack = oldStack;
+      return visitAssignmentReferenceExpression(expr);
     }
-    throw new RuntimeException(String.format("%s was not assigned a value", assignment.name));
+    return future.value;
   }
 
   protected Object visitAssignmentBlockExpression(AssignmentBlockExpression expr) {
-    Map<AssignmentExpression, Object> frame = new HashMap<>();
-    stack.add(0, frame);
+    stack = new Frame(stack);
     for (AssignmentExpression assignment : expr.assignments) {
       visitAssignmentExpression(assignment);
     }
     visit(expr.statement);
     Object result = visit(expr.statement);
-    stack.remove(0);
+    stack = stack.prior;
     return result;
   }
 
@@ -210,12 +220,7 @@ public class InterpretingVisitor {
   }
 
   protected Object visitAssignmentExpression(AssignmentExpression expr) {
-    Object rhs = visit(expr.expression);
-    if (rhs == null) {
-      throw new RuntimeException(
-          String.format("Did not expect %s to return null", expr.expression.getClass()));
-    }
-    stack.get(0).put(expr, rhs);
+    stack.assignments.put(expr, new AssignmentFuture(stack, expr.expression));
     return null;
   }
 
@@ -267,6 +272,44 @@ public class InterpretingVisitor {
       visit(expr.examples.get(coordinate));
     }
     return null;
+  }
+
+  private static class AssignmentFuture {
+
+    public Expression expr;
+    public Object value;
+    public Frame stack;
+
+    AssignmentFuture(Frame stack, Expression expr) {
+      if (expr instanceof AssignmentExpression) {
+        throw new RuntimeException();
+      }
+      this.expr = expr;
+      this.value = null;
+      this.stack = stack;
+    }
+  }
+
+  private static class Frame {
+
+    final public Frame prior;
+    final public Map<AssignmentExpression, AssignmentFuture> assignments;
+
+    Frame(Frame prior) {
+      this.prior = prior;
+      this.assignments = new HashMap<>();
+    }
+
+    AssignmentFuture lookup(AssignmentExpression assignment) {
+      AssignmentFuture value = assignments.get(assignment);
+      if (value == null) {
+        if (prior == null) {
+          throw new RuntimeException(String.format("Could not resolve '%s", assignment.name));
+        }
+        return prior.lookup(assignment);
+      }
+      return value;
+    }
   }
 
   static class ModuleArchive {

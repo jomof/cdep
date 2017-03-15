@@ -1,8 +1,8 @@
 package io.cdep.cdep.ast.finder;
 
 import io.cdep.cdep.Coordinate;
-
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +13,13 @@ public class ExpressionBuilder {
 
   public static AssignmentBlockExpression assignmentBlock(List<AssignmentExpression> assignments,
       StatementExpression statement) {
+    return new AssignmentBlockExpression(assignments, statement);
+  }
+
+  public static AssignmentBlockExpression assignmentBlock(AssignmentExpression assignment,
+      StatementExpression statement) {
+    List<AssignmentExpression> assignments = new ArrayList<>();
+    assignments.add(assignment);
     return new AssignmentBlockExpression(assignments, statement);
   }
 
@@ -52,6 +59,13 @@ public class ExpressionBuilder {
       assert expressions[i] != null;
     }
     return ifSwitch(conditions, expressions, elseExpression);
+  }
+
+  public static IfSwitchExpression ifSwitch(Expression condition, Expression trueExpression,
+      Expression falseExpression) {
+    Expression conditions[] = new Expression[]{condition};
+    Expression expressions[] = new Expression[]{trueExpression};
+    return ifSwitch(conditions, expressions, falseExpression);
   }
 
   public static IfSwitchExpression ifSwitch(Expression conditions[], Expression expressions[],
