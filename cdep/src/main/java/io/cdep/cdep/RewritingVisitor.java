@@ -48,8 +48,8 @@ public class RewritingVisitor {
     if (expr.getClass().equals(InvokeFunctionExpression.class)) {
       return visitInvokeFunctionExpression((InvokeFunctionExpression) expr);
     }
-    if (expr.getClass().equals(FoundAndroidModuleExpression.class)) {
-      return visitFoundAndroidModuleExpression((FoundAndroidModuleExpression) expr);
+    if (expr.getClass().equals(ModuleExpression.class)) {
+      return visitModuleExpression((ModuleExpression) expr);
     }
     if (expr.getClass().equals(AbortExpression.class)) {
       return visitAbortExpression((AbortExpression) expr);
@@ -62,9 +62,6 @@ public class RewritingVisitor {
     }
     if (expr.getClass().equals(IntegerExpression.class)) {
       return visitIntegerExpression((IntegerExpression) expr);
-    }
-    if (expr.getClass().equals(FoundiOSModuleExpression.class)) {
-      return visitFoundiOSModuleExpression((FoundiOSModuleExpression) expr);
     }
     if (expr.getClass().equals(ArrayExpression.class)) {
       return visitArrayExpression((ArrayExpression) expr);
@@ -121,8 +118,8 @@ public class RewritingVisitor {
     return abort(expr.message, visitArray(expr.parameters));
   }
 
-  protected Expression visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
-    return androidModule(
+  protected Expression visitModuleExpression(ModuleExpression expr) {
+    return module(
         visitArchiveArray(expr.archives),
         expr.dependencies
     );
@@ -143,13 +140,6 @@ public class RewritingVisitor {
         expr.size,
         visit(expr.fullIncludePath),
         visit(expr.fullLibraryName));
-  }
-
-  protected Expression visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
-    return iosModule(
-        visitArchiveArray(expr.archives),
-        expr.dependencies
-    );
   }
 
   protected Expression visitInvokeFunctionExpression(InvokeFunctionExpression expr) {

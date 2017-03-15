@@ -108,13 +108,8 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     }
 
     @Override
-    protected void visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
-        append("{iOS Package}");
-    }
-
-    @Override
-    protected void visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
-        append("{Android Package}");
+    protected void visitModuleExpression(ModuleExpression expr) {
+        append("{Module}");
     }
 
     @Override

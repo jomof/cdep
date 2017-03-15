@@ -19,8 +19,7 @@ import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ReadonlyVisitor;
 import io.cdep.cdep.ast.finder.Expression;
 import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
-import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,13 +48,8 @@ abstract public class ExpressionUtils {
         }
 
         @Override
-        protected void visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
+        protected void visitModuleExpression(ModuleExpression expr) {
             addModule(expr);
-        }
-
-        @Override
-        protected void visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
-            super.visitFoundiOSModuleExpression(expr);
         }
 
         @Override

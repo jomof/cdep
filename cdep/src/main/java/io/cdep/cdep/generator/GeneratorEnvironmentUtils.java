@@ -17,11 +17,11 @@ package io.cdep.cdep.generator;
 
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
-import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
 import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.utils.HashUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -51,11 +51,8 @@ public class GeneratorEnvironmentUtils {
       List<Expression> foundModuleExpressions = foundModules.get(coordinate);
       for (Expression foundModule : foundModuleExpressions) {
         ModuleArchiveExpression archives[] = null;
-        if (foundModule instanceof FoundAndroidModuleExpression) {
-          FoundAndroidModuleExpression specific = (FoundAndroidModuleExpression) foundModule;
-          archives = specific.archives;
-        } else if (foundModule instanceof FoundiOSModuleExpression) {
-          FoundiOSModuleExpression specific = (FoundiOSModuleExpression) foundModule;
+        if (foundModule instanceof ModuleExpression) {
+          ModuleExpression specific = (ModuleExpression) foundModule;
           archives = specific.archives;
         }
         for (ModuleArchiveExpression archive : archives) {

@@ -36,8 +36,8 @@ public class ReadonlyVisitor {
             visitInvokeFunctionExpression((InvokeFunctionExpression) expr);
             return;
         }
-        if (expr.getClass().equals(FoundAndroidModuleExpression.class)) {
-            visitFoundAndroidModuleExpression((FoundAndroidModuleExpression) expr);
+      if (expr.getClass().equals(ModuleExpression.class)) {
+        visitModuleExpression((ModuleExpression) expr);
             return;
         }
         if (expr.getClass().equals(AbortExpression.class)) {
@@ -54,10 +54,6 @@ public class ReadonlyVisitor {
         }
         if (expr.getClass().equals(IntegerExpression.class)) {
             visitIntegerExpression((IntegerExpression) expr);
-            return;
-        }
-        if (expr.getClass().equals(FoundiOSModuleExpression.class)) {
-            visitFoundiOSModuleExpression((FoundiOSModuleExpression) expr);
             return;
         }
         if (expr.getClass().equals(ArrayExpression.class)) {
@@ -111,11 +107,7 @@ public class ReadonlyVisitor {
         visitArray(expr.parameters);
     }
 
-    protected void visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
-        visitArray(expr.archives);
-    }
-
-    protected void visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
+  protected void visitModuleExpression(ModuleExpression expr) {
         visitArray(expr.archives);
     }
 

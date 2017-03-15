@@ -1,20 +1,10 @@
 package io.cdep.cdep;
 
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.assignmentBlock;
+import io.cdep.cdep.ast.finder.*;
 
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
-import io.cdep.cdep.ast.finder.FoundiOSModuleExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.StatementExpression;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.assignmentBlock;
 
 public class LiftToCommonAncestor extends RewritingVisitor {
     Set<AssignmentExpression> captured = new HashSet<>();
@@ -58,19 +48,8 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     }
 
     @Override
-    protected Expression visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
-        Expression result = super.visitFoundAndroidModuleExpression(expr);
-        List<AssignmentExpression> block = extractBlocks(result);
-
-        if (block.size() > 0) {
-          return assignmentBlock(block, (StatementExpression) result);
-        }
-        return result;
-    }
-
-    @Override
-    protected Expression visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
-        Expression result = super.visitFoundiOSModuleExpression(expr);
+    protected Expression visitModuleExpression(ModuleExpression expr) {
+        Expression result = super.visitModuleExpression(expr);
         List<AssignmentExpression> block = extractBlocks(result);
 
         if (block.size() > 0) {

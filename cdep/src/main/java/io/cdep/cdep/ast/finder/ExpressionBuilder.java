@@ -25,15 +25,10 @@ public class ExpressionBuilder {
     return new ModuleArchiveExpression(file, sha256, size, fullIncludePath, fullLibraryName);
   }
 
-  public static FoundiOSModuleExpression iosModule(ModuleArchiveExpression archives[],
-      Set<Coordinate> dependencies) {
-    return new FoundiOSModuleExpression(archives, dependencies);
-  }
-
-  public static FoundAndroidModuleExpression androidModule(
+  public static ModuleExpression module(
       ModuleArchiveExpression archives[],
       Set<Coordinate> dependencies) {
-    return new FoundAndroidModuleExpression(archives, dependencies);
+    return new ModuleExpression(archives, dependencies);
   }
 
   public static AssignmentReferenceExpression reference(AssignmentExpression assignment) {

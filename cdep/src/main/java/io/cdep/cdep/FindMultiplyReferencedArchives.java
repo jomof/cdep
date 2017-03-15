@@ -1,6 +1,9 @@
 package io.cdep.cdep;
 
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -109,24 +112,13 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor{
   }
 
   @Override
-  protected void visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
+  protected void visitModuleExpression(ModuleExpression expr) {
     assert currentFindModule != null;
     for (Coordinate coordinate : expr.dependencies) {
       addEdge(forwardEdges, currentFindModule, coordinate);
       addEdge(backwardEdges, coordinate, currentFindModule);
     }
-    super.visitFoundAndroidModuleExpression(expr);
-  }
-
-  @Override
-  protected void visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
-    assert currentFindModule != null;
-    for (Coordinate coordinate : expr.dependencies) {
-      addEdge(forwardEdges, currentFindModule, coordinate);
-      addEdge(backwardEdges, coordinate, currentFindModule);
-    }
-
-    super.visitFoundiOSModuleExpression(expr);
+    super.visitModuleExpression(expr);
   }
 
   @Override

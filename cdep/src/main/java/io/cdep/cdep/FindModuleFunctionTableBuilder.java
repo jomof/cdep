@@ -258,7 +258,7 @@ public class FindModuleFunctionTableBuilder {
               resolved.cdepManifestYml.archive.file, "include"),
           null);
     }
-    return iosModule(archives, dependencies);
+    return module(archives, dependencies);
   }
 
   private Expression buildAndroidStlTypeCase(
@@ -419,7 +419,7 @@ public class FindModuleFunctionTableBuilder {
                 resolved.cdepManifestYml.archive.file, "include"),
             null);
       }
-      cases.put(string(abi), androidModule(archives, dependencies));
+      cases.put(string(abi), module(archives, dependencies));
     }
 
     Expression prior = abort(

@@ -1,16 +1,9 @@
 package io.cdep.cdep.generator;
 
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
-
 import io.cdep.cdep.RewritingVisitor;
-import io.cdep.cdep.ast.finder.ArrayExpression;
-import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
-import io.cdep.cdep.ast.finder.FoundAndroidModuleExpression;
-import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.*;
+
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
 
 /**
  * Locate File.join statements and join them into strings.
@@ -29,8 +22,8 @@ public class CMakeConvertJoinedFileToString extends RewritingVisitor {
     }
 
     @Override
-    protected Expression visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
-        return super.visitFoundAndroidModuleExpression(expr);
+    protected Expression visitModuleExpression(ModuleExpression expr) {
+        return super.visitModuleExpression(expr);
     }
 
     /**

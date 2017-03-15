@@ -78,8 +78,8 @@ public class InterpretingVisitor {
     if (expr.getClass().equals(InvokeFunctionExpression.class)) {
       return visitInvokeFunctionExpression((InvokeFunctionExpression) expr);
     }
-    if (expr.getClass().equals(FoundAndroidModuleExpression.class)) {
-      return visitFoundAndroidModuleExpression((FoundAndroidModuleExpression) expr);
+    if (expr.getClass().equals(ModuleExpression.class)) {
+      return visitModuleExpression((ModuleExpression) expr);
     }
     if (expr.getClass().equals(AbortExpression.class)) {
       return visitAbortExpression((AbortExpression) expr);
@@ -92,9 +92,6 @@ public class InterpretingVisitor {
     }
     if (expr.getClass().equals(IntegerExpression.class)) {
       return visitIntegerExpression((IntegerExpression) expr);
-    }
-    if (expr.getClass().equals(FoundiOSModuleExpression.class)) {
-      return visitFoundiOSModuleExpression((FoundiOSModuleExpression) expr);
     }
     if (expr.getClass().equals(ArrayExpression.class)) {
       return visitArrayExpression((ArrayExpression) expr);
@@ -164,11 +161,7 @@ public class InterpretingVisitor {
     throw new RuntimeException(String.format(expr.message, parameters));
   }
 
-  protected ModuleArchive[] visitFoundAndroidModuleExpression(FoundAndroidModuleExpression expr) {
-    return visitArray(expr.archives);
-  }
-
-  protected ModuleArchive[] visitFoundiOSModuleExpression(FoundiOSModuleExpression expr) {
+  protected ModuleArchive[] visitModuleExpression(ModuleExpression expr) {
     return visitArray(expr.archives);
   }
 
