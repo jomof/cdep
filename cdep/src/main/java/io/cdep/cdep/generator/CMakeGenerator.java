@@ -174,22 +174,22 @@ public class CMakeGenerator {
                             prefix));
                     generateFindAppender(indent, signature, archive.fullIncludePath, sb);
                     sb.append(String.format(")\n"));
-
-                    sb.append(String.format("%smessage(\"  cdep including \" ", prefix));
-                    generateFindAppender(indent, signature, archive.fullIncludePath, sb);
-                    sb.append(")\n");
+//
+//                    sb.append(String.format("%smessage(\"  cdep including \" ", prefix));
+//                    generateFindAppender(indent, signature, archive.fullIncludePath, sb);
+//                    sb.append(")\n");
                 }
 
                 if (archive.fullLibraryName != null) {
                     sb.append(String.format(
-                        "%starget_link_libraries((${target} ",
+                        "%starget_link_libraries(${target} ",
                         prefix));
                     generateFindAppender(indent, signature, archive.fullLibraryName, sb);
                     sb.append(String.format(")\n"));
-
-                    sb.append(String.format("%smessage(\"  cdep linking ${target} with \" ", prefix));
-                    generateFindAppender(indent, signature, archive.fullLibraryName, sb);
-                    sb.append(")\n");
+//
+//                    sb.append(String.format("%smessage(\"  cdep linking ${target} with \" ", prefix));
+//                    generateFindAppender(indent, signature, archive.fullLibraryName, sb);
+//                    sb.append(")\n");
                 }
             }
             return;
@@ -214,7 +214,7 @@ public class CMakeGenerator {
 
                 if (archive.fullLibraryName != null) {
                     sb.append(String.format(
-                        "%starget_link_libraries((${target} ",
+                        "%starget_link_libraries(${target} ",
                         prefix));
                     generateFindAppender(indent, signature, archive.fullLibraryName, sb);
                     sb.append(String.format(")\n"));
