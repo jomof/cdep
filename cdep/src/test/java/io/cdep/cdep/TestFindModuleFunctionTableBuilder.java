@@ -15,6 +15,9 @@
 */
 package io.cdep.cdep;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.generator.CMakeGenerator;
@@ -23,12 +26,8 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import org.junit.Test;
-
 import java.io.File;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 
 public class TestFindModuleFunctionTableBuilder {
 
@@ -79,7 +78,7 @@ public class TestFindModuleFunctionTableBuilder {
         resolved.cdepManifestYml.coordinate,
         environment.unzippedArchivesFolder.getAbsolutePath(),
         "Darwin",
-        new String[]{"armv7s"},
+        new String[]{"armv7"},
         "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk")
         [0].remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
@@ -125,7 +124,7 @@ public class TestFindModuleFunctionTableBuilder {
         resolved.cdepManifestYml.coordinate,
         environment.unzippedArchivesFolder.getAbsolutePath(),
         "Darwin",
-        new String[]{"x86"},
+        new String[]{"i386"},
         "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator10.2.sdk")
         [0].remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
@@ -153,8 +152,9 @@ public class TestFindModuleFunctionTableBuilder {
         resolved.cdepManifestYml.coordinate,
         environment.unzippedArchivesFolder.getAbsolutePath(),
         "Darwin",
-        new String[]{"x86"},
-        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk")
+        new String[]{"i386"},
+        "/Applications/Xcode.app/Contents/Developer/Platforms/"
+            + "iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk")
         [0].remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
 
@@ -174,12 +174,14 @@ public class TestFindModuleFunctionTableBuilder {
           environment.unzippedArchivesFolder.getAbsolutePath(),
           "Darwin",
           new String[]{"armv7s"},
-          "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPad10.2.sdk")
+          "/Applications/Xcode.app/Contents/Developer/Platforms/"
+              + "iPhoneSimulator.platform/Developer/SDKs/iPad10.2.sdk")
           [0].remote.getPath();
       fail("Expected exception");
     } catch (RuntimeException e) {
       assertThat(e).hasMessage(
-          "OSX SDK 'iPad10.2' is not supported by module 'com.github.jomof:sqlite:0.0.0'. Supported: iPhoneOS10.2 iPhoneSimulator10.2 ");
+          "OSX SDK 'iPad10.2' is not supported by module 'com.github.jomof:sqlite:0.0.0' "
+              + "and architecture 'armv7s'. Supported: iPhoneOS10.2 ");
     }
   }
 

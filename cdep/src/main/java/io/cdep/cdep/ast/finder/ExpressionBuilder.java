@@ -104,6 +104,15 @@ public class ExpressionBuilder {
     );
   }
 
+  public static InvokeFunctionExpression arrayHasOnlyElement(Expression array, Expression value) {
+    return invoke(
+        ExternalFunctionExpression.ARRAY_HAS_ONLY_ELEMENT,
+        array,
+        value
+    );
+  }
+
+
   /**
    * Extract a substring.
    */

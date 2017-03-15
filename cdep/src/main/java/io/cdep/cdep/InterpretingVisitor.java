@@ -65,6 +65,19 @@ public class InterpretingVisitor {
       if (o instanceof File) {
         return o.toString();
       }
+      if (o instanceof String[]) {
+        String specific[] = (String[]) o;
+        String result = "[";
+        for (int i = 0; i < specific.length; ++i) {
+          if (i != 0) {
+            result += ", ";
+          }
+          result += specific[i];
+
+        }
+        result += "]";
+        return result;
+      }
     }
     throw new RuntimeException(String.format("Did not coerce %s to %s", o.getClass(), clazz));
   }
@@ -171,7 +184,7 @@ public class InterpretingVisitor {
   }
 
   protected Object visitAbortExpression(AbortExpression expr) {
-    Object parameters[] = visitArray(expr.parameters);
+    String parameters[] = (String[]) coerce(visitArray(expr.parameters), String[].class);
     throw new RuntimeException(String.format(expr.message, parameters));
   }
 
@@ -317,6 +330,7 @@ public class InterpretingVisitor {
   }
 
   static class ModuleArchive {
+
     final public URL remote;
     final public File fullIncludePath;
     final public File fullLibraryName;

@@ -160,6 +160,10 @@ public class CMakeGenerator {
         sb.append(String.format("%s STREQUAL %s",
             parms[0],
             parms[1]));
+      } else if (specific.function == ExternalFunctionExpression.ARRAY_HAS_ONLY_ELEMENT) {
+        sb.append(String.format("%s STREQUAL %s",
+            parms[0],
+            parms[1]));
       } else {
         throw new RuntimeException(specific.function.method.getName());
       }
@@ -259,6 +263,9 @@ public class CMakeGenerator {
     }
     if (expr == signature.osxSysroot) {
       return "CMAKE_OSX_SYSROOT";
+    }
+    if (expr == signature.osxArchitecture) {
+      return "CMAKE_OSX_ARCHITECTURE";
     }
 
     throw new RuntimeException(expr.name);

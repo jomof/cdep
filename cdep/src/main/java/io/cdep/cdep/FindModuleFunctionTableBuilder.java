@@ -17,6 +17,7 @@ package io.cdep.cdep;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.abort;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.arrayHasOnlyElement;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.assign;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.eq;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.getFileName;
@@ -44,7 +45,9 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.iOSArchitecture;
 import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
+import io.cdep.cdep.yml.cdepmanifest.iOSPlatform;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -209,14 +212,55 @@ public class FindModuleFunctionTableBuilder {
                 osxSysrootSDKName,
                 integer(0),
                 lastDotPosition));
+    return buildiosArchitectureSwitch(
+        resolved,
+        resolved.cdepManifestYml.iOS.archives,
+        explodedArchiveFolder,
+        combinedPlatformAndSDK,
+        dependencies);
+  }
 
+  private Expression buildiosArchitectureSwitch(
+      ResolvedManifest resolved,
+      iOSArchive archive[],
+      AssignmentExpression explodedArchiveFolder,
+      AssignmentExpression combinedPlatformAndSDK,
+      Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+    Map<iOSArchitecture, List<iOSArchive>> grouped = groupByArchitecture(archive);
+    List<Expression> conditions = new ArrayList<>();
+    List<Expression> expressions = new ArrayList<>();
+    String supported = "";
+    for (iOSArchitecture architecture : grouped.keySet()) {
+      conditions.add(arrayHasOnlyElement(osxArchitectures, string(architecture.toString())));
+      expressions.add(buildiOSPlatformSdkSwitch(
+          resolved,
+          grouped.get(architecture),
+          explodedArchiveFolder,
+          combinedPlatformAndSDK,
+          architecture,
+          dependencies));
+
+      supported += " " + architecture.toString();
+    }
+    return ifSwitch(conditions, expressions, abort(
+        String.format("OSX architecture '%%s' is not supported by module '%s'. Supported: %s",
+            resolved.cdepManifestYml.coordinate, supported), osxArchitectures));
+  }
+
+  private Expression buildiOSPlatformSdkSwitch(
+      ResolvedManifest resolved,
+      List<iOSArchive> archives,
+      AssignmentExpression explodedArchiveFolder,
+      AssignmentExpression combinedPlatformAndSDK,
+      iOSArchitecture architecture,
+      Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
     List<Expression> conditionList = new ArrayList<>();
     List<Expression> expressionList = new ArrayList<>();
     String supported = "";
 
     // Exact matches. For example, path ends with exactly iPhoneOS10.2
     // TODO:  Linter should verify that there is not duplicate exact platforms (ie platform+sdk)
-    for (iOSArchive archive : resolved.cdepManifestYml.iOS.archives) {
+    for (iOSArchive archive : archives) {
       String platformSDK = archive.platform + archive.sdk;
       conditionList.add(eq(
           combinedPlatformAndSDK,
@@ -246,10 +290,37 @@ public class FindModuleFunctionTableBuilder {
     }
 
     Expression notFound = abort(
-        String.format("OSX SDK '%%s' is not supported by module '%s'. Supported: %s",
-            resolved.cdepManifestYml.coordinate, supported), combinedPlatformAndSDK);
+        String.format(
+            "OSX SDK '%%s' is not supported by module '%s' and architecture '%s'. Supported: %s",
+            resolved.cdepManifestYml.coordinate, architecture, supported), combinedPlatformAndSDK);
 
     return ifSwitch(conditionList, expressionList, notFound);
+  }
+
+  private Map<iOSPlatform, List<iOSArchive>> groupByPlatform(List<iOSArchive> archives) {
+    Map<iOSPlatform, List<iOSArchive>> result = new HashMap<>();
+    for (iOSArchive archive : archives) {
+      List<iOSArchive> list = result.get(archive.architecture);
+      if (list == null) {
+        list = new ArrayList<>();
+        result.put(archive.platform, list);
+      }
+      list.add(archive);
+    }
+    return result;
+  }
+
+  private Map<iOSArchitecture, List<iOSArchive>> groupByArchitecture(iOSArchive archives[]) {
+    Map<iOSArchitecture, List<iOSArchive>> result = new HashMap<>();
+    for (iOSArchive archive : archives) {
+      List<iOSArchive> list = result.get(archive.architecture);
+      if (list == null) {
+        list = new ArrayList<>();
+        result.put(archive.architecture, list);
+      }
+      list.add(archive);
+    }
+    return result;
   }
 
   private Expression buildiosArchiveExpression(

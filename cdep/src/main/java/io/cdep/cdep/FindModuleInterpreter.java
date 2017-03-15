@@ -86,6 +86,9 @@ class FindModuleInterpreter {
         if (expr == function.cdepExplodedRoot) {
           return cdepExplodedRoot;
         }
+        if (expr == function.osxArchitecture) {
+          return osxArchitecture;
+        }
         return super.visitParameterExpression(expr);
       }
     }.visit(function.expression);
