@@ -8,11 +8,11 @@ import java.io.File;
  * Locates every referenced local file and ensures that those files are present in the right
  * place on the local file system.
  */
-public class CheckLocalFileSystemIntegrityVisitor extends InterpretingVisitor {
+public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
 
   final private File explodedRoot;
 
-  public CheckLocalFileSystemIntegrityVisitor(File explodedRoot) {
+  public CheckLocalFileSystemIntegrity(File explodedRoot) {
     this.explodedRoot = explodedRoot;
   }
 

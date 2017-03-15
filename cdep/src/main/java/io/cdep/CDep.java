@@ -15,9 +15,9 @@
 */
 package io.cdep;
 
-import io.cdep.cdep.CheckLocalFileSystemIntegrityVisitor;
+import io.cdep.cdep.CheckLocalFileSystemIntegrity;
 import io.cdep.cdep.FindModuleFunctionTableBuilder;
-import io.cdep.cdep.StubCheckLocalFileSystemIntegrityVisitor;
+import io.cdep.cdep.StubCheckLocalFileSystemIntegrity;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.generator.CMakeExamplesGenerator;
 import io.cdep.cdep.generator.CMakeGenerator;
@@ -126,7 +126,7 @@ public class CDep {
           true /* forceRedownload */);
 
       // Check that the expected files were downloaded
-      new CheckLocalFileSystemIntegrityVisitor(environment.unzippedArchivesFolder)
+      new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder)
           .visit(table);
 
       runBuilders(environment, table);
@@ -159,7 +159,7 @@ public class CDep {
         FunctionTableExpression table = builder.build();
 
         // Check that the expected files were downloaded
-        new StubCheckLocalFileSystemIntegrityVisitor(environment.unzippedArchivesFolder)
+        new StubCheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder)
             .visit(table);
         return true;
       } else {
@@ -287,7 +287,7 @@ public class CDep {
         false /* forceRedownload */);
 
     // Check that the expected files were downloaded
-    new CheckLocalFileSystemIntegrityVisitor(environment.unzippedArchivesFolder)
+    new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder)
         .visit(table);
 
     runBuilders(environment, table);

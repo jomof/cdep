@@ -72,7 +72,7 @@ public class FindModuleFunctionTableBuilder {
     }
 
     // Lift assignments up to the highest correct scope
-    functionTable = (FunctionTableExpression) new ReplaceAssignmentWithReferenceVisitor()
+    functionTable = (FunctionTableExpression) new ReplaceAssignmentWithReference()
         .visit(functionTable);
     functionTable = (FunctionTableExpression) new LiftToCommonAncestor().visit(functionTable);
 

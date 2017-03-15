@@ -4,8 +4,8 @@ import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
 
 import java.io.File;
 
-public class StubCheckLocalFileSystemIntegrityVisitor extends CheckLocalFileSystemIntegrityVisitor {
-  public StubCheckLocalFileSystemIntegrityVisitor(File explodedRoot) {
+public class StubCheckLocalFileSystemIntegrity extends CheckLocalFileSystemIntegrity {
+  public StubCheckLocalFileSystemIntegrity(File explodedRoot) {
     super(explodedRoot);
   }
 
