@@ -12,6 +12,10 @@ public class CDepManifestYmlReadonlyVisitor {
 
   }
 
+  public void visitHardNameDependency(String name, HardNameDependency value) {
+    visit(value);
+  }
+
   public void visitCoordinate(String name, Coordinate node) {
     visit(node);
   }
@@ -116,7 +120,9 @@ public class CDepManifestYmlReadonlyVisitor {
         String methodName = getVisitorName(field.getType());
         Method method = getClass().getMethod(methodName, String.class, field.getType());
         Object fieldValue = field.get(node);
-        method.invoke(this, field.getName(), fieldValue);
+        if (fieldValue != null) {
+          method.invoke(this, field.getName(), fieldValue);
+        }
       }
     } catch (IllegalAccessException e) {
       throw new RuntimeException(e);

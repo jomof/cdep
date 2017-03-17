@@ -1,5 +1,8 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
+import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.utils.StringUtils;
+
 public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor {
   private int indent = 0;
   private int eatIndent = 0;
@@ -20,10 +23,34 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
+  public void visitCoordinate(String name, Coordinate node) {
+    append("%s:\n", name);
+    ++indent;
+    super.visitCoordinate(name, node);
+    --indent;
+  }
+
+  @Override
   public void visitiOS(String name, iOS value) {
     appendIndented("%s:\n", name);
     ++indent;
     super.visitiOS(name, value);
+    --indent;
+  }
+
+  @Override
+  public void visitObject(String name, Object value) {
+    appendIndented("%s:\n", name);
+    ++indent;
+    super.visitObject(name, value);
+    --indent;
+  }
+
+  @Override
+  public void visitArchive(String name, Archive value) {
+    appendIndented("%s:\n", name);
+    ++indent;
+    super.visitObject(name, value);
     --indent;
   }
 
@@ -35,6 +62,17 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
     if (name == null) {
       // Likely array element
       appendIndented("%s\n", node);
+      return;
+    }
+
+    if (node.contains("\n")) {
+      String lines[] = node.split("\\r?\\n");
+      appendIndented("%s: |\n", name);
+      ++indent;
+      for (String line : lines) {
+        appendIndented("%s\r\n", line);
+      }
+      --indent;
       return;
     }
     appendIndented("%s: %s\n", name, node);
@@ -52,20 +90,54 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
+  public void visitStringArray(String name, String[] array) {
+    if (array == null) {
+      return;
+    }
+    appendIndented("%s: [%s]\n", name, StringUtils.joinOn(", ", array));
+  }
+
+  @Override
   public void visitArray(Object[] array, Class<?> elementType) {
     if (array == null) {
       return;
     }
-    for (int i = 0; i < array.length; ++i) {
-      if (i == 0) {
-        appendIndented("- ");
-        ++eatIndent;
-        ++indent;
-      }
 
+    ++indent;
+    for (int i = 0; i < array.length; ++i) {
+      appendIndented("- ");
+      ++eatIndent;
       visitElement(array[i], elementType);
+      --indent;
     }
     --indent;
+  }
+
+  @Override
+  public void visitHardNameDependencyArray(String name, HardNameDependency[] array) {
+    if (array == null) {
+      return;
+    }
+    appendIndented("%s:\n", name);
+    super.visitHardNameDependencyArray(name, array);
+  }
+
+  @Override
+  public void visitAndroidArchiveArray(String name, AndroidArchive[] array) {
+    if (array == null) {
+      return;
+    }
+    appendIndented("%s:\n", name);
+    super.visitAndroidArchiveArray(name, array);
+  }
+
+  @Override
+  public void visitiOSArchiveArray(String name, iOSArchive[] array) {
+    if (array == null) {
+      return;
+    }
+    appendIndented("%s:\n", name);
+    super.visitiOSArchiveArray(name, array);
   }
 
   private void append(String format, Object... parms) {
@@ -77,6 +149,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
     if (eatIndent > 0) {
       prefix = "";
       --eatIndent;
+      ++indent;
     }
     sb.append(String.format(prefix + format, parms));
   }

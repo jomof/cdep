@@ -34,7 +34,14 @@ public class CDepManifestYmlUtils {
     CDepManifestYml dependencyConfig =
         (CDepManifestYml) yaml.load(new ByteArrayInputStream(content.getBytes(
             StandardCharsets.UTF_8)));
-    new CDepManifestYmlReadonlyVisitor().visit(dependencyConfig);
+
+    String x = CreateCDepManifestYmlString.create(dependencyConfig);
+    try {
+      yaml.load(new ByteArrayInputStream(x.getBytes(StandardCharsets.UTF_8)));
+    } catch (Exception e) {
+      throw e;
+    }
+
     if (dependencyConfig == null) {
       throw new RuntimeException("Manifest was empty");
     }
