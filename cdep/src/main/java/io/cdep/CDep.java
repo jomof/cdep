@@ -26,13 +26,16 @@ import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
 import io.cdep.cdep.resolver.ResolutionScope;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
+import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.CDepYmlUtils;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
+import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -220,6 +223,18 @@ public class CDep {
         FileUtils.writeTextToFile(output, body);
         return true;
       }
+
+      // If both exist then merge
+      CDepManifestYml merged = MergeCDepManifestYmls.merge(resolved1.cdepManifestYml,
+          resolved2.cdepManifestYml);
+
+      // Check the merge for sanity
+      CDepManifestYmlUtils.checkManifestSanity(merged);
+
+      // Write the merged manifest out
+      String body = CreateCDepManifestYmlString.create(merged);
+      FileUtils.writeTextToFile(output, body);
+
     }
     return false;
   }
