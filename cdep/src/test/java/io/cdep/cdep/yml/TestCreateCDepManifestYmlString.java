@@ -8,6 +8,7 @@ import static io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString.create;
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
 import org.junit.Test;
 
 public class TestCreateCDepManifestYmlString {
@@ -20,6 +21,7 @@ public class TestCreateCDepManifestYmlString {
     CDepManifestYml manifest2 = CDepManifestYmlUtils.convertStringToManifest(result);
 
     // Would like to compare equality here.
+    assertThat(CDepManifestYmlEquality.areDeeplyIdentical(manifest, manifest2)).isTrue();
   }
 
   @Test
