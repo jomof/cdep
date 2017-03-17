@@ -1,6 +1,5 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
-import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.utils.StringUtils;
 
 public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor {
@@ -15,42 +14,14 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitAndroid(String name, Android android) {
+  public void visitPlainOldDataObject(String name, Object value) {
+    if (name == null) {
+      super.visitPlainOldDataObject(name, value);
+      return;
+    }
     appendIndented("%s:\n", name);
     ++indent;
-    super.visitAndroid(name, android);
-    --indent;
-  }
-
-  @Override
-  public void visitCoordinate(String name, Coordinate node) {
-    append("%s:\n", name);
-    ++indent;
-    super.visitCoordinate(name, node);
-    --indent;
-  }
-
-  @Override
-  public void visitiOS(String name, iOS value) {
-    appendIndented("%s:\n", name);
-    ++indent;
-    super.visitiOS(name, value);
-    --indent;
-  }
-
-  @Override
-  public void visitObject(String name, Object value) {
-    appendIndented("%s:\n", name);
-    ++indent;
-    super.visitObject(name, value);
-    --indent;
-  }
-
-  @Override
-  public void visitArchive(String name, Archive value) {
-    appendIndented("%s:\n", name);
-    ++indent;
-    super.visitObject(name, value);
+    super.visitPlainOldDataObject(name, value);
     --indent;
   }
 
@@ -124,9 +95,6 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitAndroidArchiveArray(String name, AndroidArchive[] array) {
-    if (array == null) {
-      return;
-    }
     appendIndented("%s:\n", name);
     super.visitAndroidArchiveArray(name, array);
   }

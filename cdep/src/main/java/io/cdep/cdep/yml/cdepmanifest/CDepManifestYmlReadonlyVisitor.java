@@ -8,16 +8,20 @@ import java.lang.reflect.Method;
 
 public class CDepManifestYmlReadonlyVisitor {
 
+  public void visitPlainOldDataObject(String name, Object value) {
+    visit(value);
+  }
+
   public void visitString(String name, String node) {
 
   }
 
   public void visitHardNameDependency(String name, HardNameDependency value) {
-    visit(value);
+    visitPlainOldDataObject(name, value);
   }
 
-  public void visitCoordinate(String name, Coordinate node) {
-    visit(node);
+  public void visitCoordinate(String name, Coordinate value) {
+    visitPlainOldDataObject(name, value);
   }
 
   public void visitCDepManifestYml(String name, CDepManifestYml node) {
@@ -48,12 +52,12 @@ public class CDepManifestYmlReadonlyVisitor {
     visit(value);
   }
 
-  public void visitArchive(String name, Archive archive) {
-    visit(archive);
+  public void visitArchive(String name, Archive value) {
+    visitPlainOldDataObject(name, value);
   }
 
-  public void visitAndroid(String name, Android android) {
-    visit(android);
+  public void visitAndroid(String name, Android value) {
+    visitPlainOldDataObject(name, value);
   }
 
   public void visitLong(String name, Long value) {
@@ -65,15 +69,15 @@ public class CDepManifestYmlReadonlyVisitor {
   }
 
   public void visitiOS(String name, iOS value) {
-    visit(value);
+    visitPlainOldDataObject(name, value);
   }
 
   public void visitAndroidArchive(String name, AndroidArchive value) {
-    visit(value);
+    visitPlainOldDataObject(name, value);
   }
 
   public void visitiOSArchive(String name, iOSArchive value) {
-    visit(value);
+    visitPlainOldDataObject(name, value);
   }
 
   public void visitArray(Object[] array, Class<?> elementType) {
