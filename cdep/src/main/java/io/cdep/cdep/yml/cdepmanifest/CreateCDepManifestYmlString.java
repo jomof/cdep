@@ -9,7 +9,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   public static String create(Object node) {
     CreateCDepManifestYmlString thiz = new CreateCDepManifestYmlString();
-    thiz.visit(node);
+    thiz.visitPlainOldDataObject(null, node);
     return thiz.sb.toString();
   }
 
@@ -51,7 +51,6 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitLong(String name, Long node) {
-
     if (name == null) {
       // Likely array element
       appendIndented("%s\n", node);
@@ -70,10 +69,6 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitArray(Object[] array, Class<?> elementType) {
-    if (array == null) {
-      return;
-    }
-
     ++indent;
     for (int i = 0; i < array.length; ++i) {
       appendIndented("- ");

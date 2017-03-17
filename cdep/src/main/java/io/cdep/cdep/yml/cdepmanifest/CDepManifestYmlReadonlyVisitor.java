@@ -1,20 +1,9 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.pod.PlainOldDataReadonlyVisitor;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-public class CDepManifestYmlReadonlyVisitor {
-
-  public void visitPlainOldDataObject(String name, Object value) {
-    visit(value);
-  }
-
-  public void visitString(String name, String node) {
-
-  }
+public class CDepManifestYmlReadonlyVisitor extends PlainOldDataReadonlyVisitor {
 
   public void visitHardNameDependency(String name, HardNameDependency value) {
     visitPlainOldDataObject(name, value);
@@ -25,15 +14,11 @@ public class CDepManifestYmlReadonlyVisitor {
   }
 
   public void visitCDepManifestYml(String name, CDepManifestYml node) {
-    visit(node);
+    visitPlainOldDataObject(null, node);
   }
 
   public void visitHardNameDependencyArray(String name, HardNameDependency array[]) {
     visitArray(array, HardNameDependency.class);
-  }
-
-  public void visitStringArray(String name, String array[]) {
-    visitArray(array, String.class);
   }
 
   public void visitAndroidArchiveArray(String name, AndroidArchive array[]) {
@@ -45,11 +30,11 @@ public class CDepManifestYmlReadonlyVisitor {
   }
 
   public void visitiOSPlatform(String name, iOSPlatform value) {
-    visit(value);
+    visitPlainOldDataObject(null, value);
   }
 
   public void visitiOSArchitecture(String name, iOSArchitecture value) {
-    visit(value);
+    visitPlainOldDataObject(null, value);
   }
 
   public void visitArchive(String name, Archive value) {
@@ -58,14 +43,6 @@ public class CDepManifestYmlReadonlyVisitor {
 
   public void visitAndroid(String name, Android value) {
     visitPlainOldDataObject(name, value);
-  }
-
-  public void visitLong(String name, Long value) {
-
-  }
-
-  public void visitObject(String name, Object value) {
-    visit(value);
   }
 
   public void visitiOS(String name, iOS value) {
@@ -78,73 +55,5 @@ public class CDepManifestYmlReadonlyVisitor {
 
   public void visitiOSArchive(String name, iOSArchive value) {
     visitPlainOldDataObject(name, value);
-  }
-
-  public void visitArray(Object[] array, Class<?> elementType) {
-    if (array == null) {
-      return;
-    }
-    for (Object value : array) {
-      visitElement(value, elementType);
-    }
-  }
-
-  public void visitElement(Object element, Class<?> elementClass) {
-    if (element == null) {
-      return;
-    }
-    try {
-      String methodName = getVisitorName(elementClass);
-      Method method = getClass().getMethod(methodName, String.class, elementClass);
-      method.invoke(this, null, element);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  public void visit(Object node) {
-    if (node == null) {
-      return;
-    }
-    if (node.getClass().isEnum()) {
-      return;
-    }
-    try {
-      for (Field field : node.getClass().getFields()) {
-        if (field.getDeclaringClass() == Object.class) {
-          continue;
-        }
-        if (field.getDeclaringClass() == String.class) {
-          continue;
-        }
-        String methodName = getVisitorName(field.getType());
-        Method method = getClass().getMethod(methodName, String.class, field.getType());
-        Object fieldValue = field.get(node);
-        if (fieldValue != null) {
-          method.invoke(this, field.getName(), fieldValue);
-        }
-      }
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  private String getVisitorName(Class<?> type) {
-    String name = type.getName();
-    name = name.substring(name.lastIndexOf(".") + 1);
-    name = "visit" + name;
-    if (type.isArray()) {
-      name = name.substring(0, name.length() - 1);
-      name += "Array";
-    }
-    return name;
   }
 }
