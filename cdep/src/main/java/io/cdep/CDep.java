@@ -84,6 +84,9 @@ public class CDep {
     if (handleLint(args)) {
       return;
     }
+    if (handleMerge(args)) {
+      return;
+    }
     if (!handleReadCDepYml()) {
       return;
     }
@@ -93,6 +96,7 @@ public class CDep {
     if (handleRedownload(args)) {
       return;
     }
+
     handleGenerateScript();
   }
 
@@ -182,6 +186,35 @@ public class CDep {
       }
       out.print("Usage: cdep create hashes'\n");
       return true;
+    }
+    return false;
+  }
+
+  private boolean handleMerge(String args[]) throws IOException, NoSuchAlgorithmException {
+    if (args.length > 0 && "merge".equals(args[0])) {
+      if (args.length != 4) {
+        out.printf("Usage: cdep merge manifest1 manifest2 outputmanifest");
+        return true;
+      }
+      File output = new File(args[3]);
+      if (output.exists()) {
+        throw new RuntimeException(String.format("File %s already exists", output.getAbsolutePath()));
+      }
+      GeneratorEnvironment environment = getGeneratorEnvironment(false);
+      SoftNameDependency name1 = new SoftNameDependency(args[1]);
+      SoftNameDependency name2 = new SoftNameDependency(args[2]);
+      ResolvedManifest resolved1 = new Resolver(environment).resolveAny(name1);
+      ResolvedManifest resolved2 = new Resolver(environment).resolveAny(name2);
+      if (resolved1 == null && resolved2 != null) {
+        out.printf("%s didn't exist, copying %s to %s\n", name1, name2, output);
+        FileUtils.writeTextToFile(output, new Yaml().dump(resolved2.cdepManifestYml));
+        return true;
+      }
+      if (resolved2 == null && resolved1 != null) {
+        out.printf("%s didn't exist, copying %s to %s\n", name2, name1, output);
+        FileUtils.writeTextToFile(output, new Yaml().dump(resolved1.cdepManifestYml));
+        return true;
+      }
     }
     return false;
   }
@@ -301,7 +334,8 @@ public class CDep {
     ResolutionScope scope = resolver.resolveAll(config.dependencies);
     for (ResolutionScope.Resolution resolved : scope.getResolutions()) {
       if (resolved instanceof ResolutionScope.FoundManifestResolution) {
-        builder.addManifest(((ResolutionScope.FoundManifestResolution) resolved).resolved);
+        ResolutionScope.FoundManifestResolution found = (ResolutionScope.FoundManifestResolution) resolved;
+        builder.addManifest(found.resolved);
       }
     }
 

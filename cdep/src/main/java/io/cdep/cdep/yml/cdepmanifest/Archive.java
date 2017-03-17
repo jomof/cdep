@@ -9,4 +9,10 @@ public class Archive {
         this.sha256 = null;
         this.size = null;
     }
+
+  public Archive(String file, String sha256, long size) {
+    this.file = file;
+    this.sha256 = sha256;
+    this.size = size;
+  }
 }

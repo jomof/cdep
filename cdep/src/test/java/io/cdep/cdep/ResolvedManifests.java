@@ -10,7 +10,7 @@ import java.net.URL;
 
 public class ResolvedManifests {
 
-  static ResolvedManifest sqlite() throws MalformedURLException {
+  public static ResolvedManifest sqlite() throws MalformedURLException {
     String manifest = "coordinate:\n" +
         "  groupId: com.github.jomof\n" +
         "  artifactId: sqlite\n" +

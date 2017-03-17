@@ -1,16 +1,17 @@
 package io.cdep.cdep.resolver;
 
 
-import static io.cdep.cdep.resolver.ResolutionScope.UNPARSEABLE_RESOLUTION;
-import static io.cdep.cdep.resolver.ResolutionScope.UNRESOLVEABLE_RESOLUTION;
-
 import io.cdep.cdep.resolver.ResolutionScope.Resolution;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import static io.cdep.cdep.resolver.ResolutionScope.UNPARSEABLE_RESOLUTION;
+import static io.cdep.cdep.resolver.ResolutionScope.UNRESOLVEABLE_RESOLUTION;
 
 /**
  * Resolve references and groups of references (ResolutionScope)
@@ -78,7 +79,7 @@ public class Resolver {
   /**
    * Resolve a single reference. Don't look at transitive references.
    * @param dependency is the reference to resolve.
-   * @return the resolved manifest.
+   * @return the resolved manifest or null if not resolved.
    * @throws IOException
    * @throws NoSuchAlgorithmException
    */

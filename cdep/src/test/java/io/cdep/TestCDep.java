@@ -59,6 +59,11 @@ public class TestCDep {
   }
 
   @Test
+  public void mergeSecondMissing() throws Exception {
+    main(main("merge", "com.github.jomof:firebase/admob:2.1.3-rev8", "bon", "merged.yml"));
+  }
+
+  @Test
   public void lintSomeKnownLibraries() throws Exception {
     main(main("lint",
         "com.github.jomof:firebase/admob:2.1.3-rev11",
