@@ -21,7 +21,6 @@ public class PlainOldDataReadonlyVisitor {
   }
 
   public void visitLong(String name, Long value) {
-
   }
 
   public void visitObject(String name, Object value) {
