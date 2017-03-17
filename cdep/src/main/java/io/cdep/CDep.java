@@ -234,7 +234,7 @@ public class CDep {
       // Write the merged manifest out
       String body = CreateCDepManifestYmlString.create(merged);
       FileUtils.writeTextToFile(output, body);
-
+      return true;
     }
     return false;
   }
