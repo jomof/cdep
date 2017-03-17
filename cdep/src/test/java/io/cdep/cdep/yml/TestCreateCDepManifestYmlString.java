@@ -1,15 +1,26 @@
 package io.cdep.cdep.yml;
 
-import io.cdep.cdep.ResolvedManifests;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import org.junit.Test;
-
 import static com.google.common.truth.Truth.assertThat;
 import static io.cdep.cdep.yml.CDepManifestBuilder.archive;
 import static io.cdep.cdep.yml.CDepManifestBuilder.hardname;
 import static io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString.create;
 
+import io.cdep.cdep.ResolvedManifests;
+import io.cdep.cdep.utils.CDepManifestYmlUtils;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import org.junit.Test;
+
 public class TestCreateCDepManifestYmlString {
+
+  private static void check(CDepManifestYml manifest) {
+    // Convert to string
+    String result = create(manifest);
+
+    // Convert from string
+    CDepManifestYml manifest2 = CDepManifestYmlUtils.convertStringToManifest(result);
+
+    // Would like to compare equality here.
+  }
 
   @Test
   public void testSimple() {
@@ -31,9 +42,11 @@ public class TestCreateCDepManifestYmlString {
 
   @Test
   public void testSqlite() throws Exception {
-    CDepManifestYml cdepManifestYml = ResolvedManifests.sqlite().cdepManifestYml;
-    String result = create(cdepManifestYml);
-    System.out.printf(result);
+    check(ResolvedManifests.sqlite().cdepManifestYml);
+  }
 
+  @Test
+  public void testAdmob() throws Exception {
+    check(ResolvedManifests.admob().cdepManifestYml);
   }
 }

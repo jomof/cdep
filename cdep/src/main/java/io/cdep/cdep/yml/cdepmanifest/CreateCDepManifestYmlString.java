@@ -27,15 +27,8 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitString(String name, String node) {
-    if (node == null) {
-      return;
-    }
-    if (name == null) {
-      // Likely array element
-      appendIndented("%s\n", node);
-      return;
-    }
-
+    assert node != null;
+    assert name != null;
     if (node.contains("\n")) {
       String lines[] = node.split("\\r?\\n");
       appendIndented("%s: |\n", name);
@@ -51,11 +44,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitLong(String name, Long node) {
-    if (name == null) {
-      // Likely array element
-      appendIndented("%s\n", node);
-      return;
-    }
+    assert name != null;
     appendIndented("%s: %s\n", name, node);
   }
 
@@ -75,11 +64,6 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
       --indent;
     }
     --indent;
-  }
-
-
-  private void append(String format, Object... parms) {
-    sb.append(String.format(format, parms));
   }
 
   private void appendIndented(String format, Object... parms) {

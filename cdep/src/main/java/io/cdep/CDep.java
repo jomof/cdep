@@ -32,15 +32,15 @@ import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-
+import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 public class CDep {
 
@@ -198,7 +198,8 @@ public class CDep {
       }
       File output = new File(args[3]);
       if (output.exists()) {
-        throw new RuntimeException(String.format("File %s already exists", output.getAbsolutePath()));
+        throw new RuntimeException(
+            String.format("File %s already exists", output.getAbsolutePath()));
       }
       GeneratorEnvironment environment = getGeneratorEnvironment(false);
       SoftNameDependency name1 = new SoftNameDependency(args[1]);
@@ -206,13 +207,17 @@ public class CDep {
       ResolvedManifest resolved1 = new Resolver(environment).resolveAny(name1);
       ResolvedManifest resolved2 = new Resolver(environment).resolveAny(name2);
       if (resolved1 == null && resolved2 != null) {
-        out.printf("%s didn't exist, copying %s to %s\n", name1, name2, output);
-        FileUtils.writeTextToFile(output, new Yaml().dump(resolved2.cdepManifestYml));
+        out.printf("Manifest for '%s' didn't exist, copying %s to %s\n", args[1], resolved2.remote,
+            output);
+        String body = CreateCDepManifestYmlString.create(resolved2.cdepManifestYml);
+        FileUtils.writeTextToFile(output, body);
         return true;
       }
       if (resolved2 == null && resolved1 != null) {
-        out.printf("%s didn't exist, copying %s to %s\n", name2, name1, output);
-        FileUtils.writeTextToFile(output, new Yaml().dump(resolved1.cdepManifestYml));
+        out.printf("Manifest for '%s' didn't exist, copying %s to %s\n", args[2], resolved1.remote,
+            output);
+        String body = CreateCDepManifestYmlString.create(resolved1.cdepManifestYml);
+        FileUtils.writeTextToFile(output, body);
         return true;
       }
     }

@@ -16,16 +16,20 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.yml.cdepmanifest.*;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-
+import io.cdep.cdep.yml.cdepmanifest.Android;
+import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.iOS;
+import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 public class CDepManifestYmlUtils {
 
@@ -34,14 +38,6 @@ public class CDepManifestYmlUtils {
     CDepManifestYml dependencyConfig =
         (CDepManifestYml) yaml.load(new ByteArrayInputStream(content.getBytes(
             StandardCharsets.UTF_8)));
-
-    String x = CreateCDepManifestYmlString.create(dependencyConfig);
-    try {
-      yaml.load(new ByteArrayInputStream(x.getBytes(StandardCharsets.UTF_8)));
-    } catch (Exception e) {
-      throw e;
-    }
-
     if (dependencyConfig == null) {
       throw new RuntimeException("Manifest was empty");
     }

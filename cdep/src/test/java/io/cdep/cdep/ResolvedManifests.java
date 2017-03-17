@@ -3,12 +3,70 @@ package io.cdep.cdep;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
 
 public class ResolvedManifests {
+
+  public static ResolvedManifest admob() throws MalformedURLException {
+    String manifest = "coordinate:\n"
+        + "  groupId: com.github.jomof\n"
+        + "  artifactId: firebase/admob\n"
+        + "  version: 2.1.3-rev8\n"
+        + "dependencies:\n"
+        + "  - compile: com.github.jomof:firebase/app:2.1.3-rev8\n"
+        + "    sha256: 41ce110b24d2cfa26144b9df1241a4941c57e892f07eb91600103e53650ef0a8\n"
+        + "archive:\n"
+        + "  file: firebase-include.zip\n"
+        + "  sha256: 26e3889c07ad841c5c9ff8b1ad86a575833bec1bb6f15719a527d52ced07a57f\n"
+        + "  size: 93293\n"
+        + "android:\n"
+        + "  archives:\n"
+        + "    - file: firebase-android-admob-cpp.zip\n"
+        + "      sha256: 34c3cd109199cbccf7ebb1652a5dd66080c27d1448cfa3e6dd5c811aa30e283a\n"
+        + "      size: 4990064\n"
+        + "      ndk: r10d\n"
+        + "      runtime: c++\n"
+        + "      platform: 12\n"
+        + "      abis: [arm64-v8a, armeabi, armeabi-v7a, mips, mips64, x86, x86_64]\n"
+        + "      include: include\n"
+        + "      lib: libadmob.a\n"
+        + "    - file: firebase-android-admob-gnustl.zip\n"
+        + "      sha256: 44cd6682f5f82735d4bf6103139e4179ed6c2b4ceec297fd04b129766e2a2a02\n"
+        + "      size: 5294900\n"
+        + "      ndk: r10d\n"
+        + "      runtime: gnustl\n"
+        + "      platform: 12\n"
+        + "      abis: [arm64-v8a, armeabi, armeabi-v7a, mips, mips64, x86, x86_64]\n"
+        + "      include: include\n"
+        + "      lib: libadmob.a\n"
+        + "    - file: firebase-android-admob-stlport.zip\n"
+        + "      sha256: 0606618e53a06e00cd4c6775f49bd5474bccec68370691b35b12be2f1c89d755\n"
+        + "      size: 5154330\n"
+        + "      ndk: r10d\n"
+        + "      runtime: stlport\n"
+        + "      platform: 12\n"
+        + "      abis: [arm64-v8a, armeabi, armeabi-v7a, mips, mips64, x86, x86_64]\n"
+        + "      include: include\n"
+        + "      lib: libadmob.a\n"
+        + "example: |\n"
+        + "  #include \"firebase/admob.h\"\n"
+        + "  #include \"firebase/admob/types.h\"\n"
+        + "  #include \"firebase/app.h\"\n"
+        + "  #include \"firebase/future.h\"\n"
+        + "  \n"
+        + "  void test() {\n"
+        + "    const char* kAdMobAppID = \"ca-app-pub-XXXXXXXXXXXXXXXX~NNNNNNNNNN\";\n"
+        + "    firebase::admob::Initialize(\n"
+        + "      *::firebase::App::Create(::firebase::AppOptions(), NULL /* jni_env */ , NULL /* activity */ ), \n"
+        + "      kAdMobAppID);\n"
+        + "  }\n";
+
+    CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
+    CDepManifestYmlUtils.checkManifestSanity(yml);
+    return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+  }
 
   public static ResolvedManifest sqlite() throws MalformedURLException {
     String manifest = "coordinate:\n" +

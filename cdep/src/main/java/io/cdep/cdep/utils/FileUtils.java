@@ -15,7 +15,12 @@
 */
 package io.cdep.cdep.utils;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -54,7 +59,7 @@ public class FileUtils {
 
         BufferedWriter writer = null;
         //noinspection ResultOfMethodCallIgnored
-        file.getParentFile().mkdirs();
+      file.getAbsoluteFile().getParentFile().mkdirs();
         //noinspection ResultOfMethodCallIgnored
         file.delete();
         try {
