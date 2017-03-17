@@ -35,6 +35,7 @@ public class TestFindModuleFunctionTableBuilder {
       System.out,
       new File("./test-files/TestFindModuleFunctionTableBuilder/working"),
       null,
+      false,
       false);
   final private Resolver resolver = new Resolver(environment);
 

@@ -80,6 +80,17 @@ public class TestCDep {
   }
 
   @Test
+  public void mergeTwo() throws Exception {
+    File output = new File(".test-files/mergeFirstMissing/merged-manifest.yml");
+    output.delete();
+    assertThat(main("merge",
+        "com.github.jomof:sqlite/iOS:3.16.2-rev26",
+        "com.github.jomof:sqlite/android:3.16.2-rev26",
+        output.toString()))
+        .contains("Merged 2 manifests into .test-files/mergeFirstMissing/merged-manifest.yml.");
+  }
+
+  @Test
   public void lintSomeKnownLibraries() throws Exception {
     main(main("lint",
         "com.github.jomof:firebase/admob:2.1.3-rev11",

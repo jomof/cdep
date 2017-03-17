@@ -12,6 +12,7 @@ public class TestGithubReleasesCoordinateResolver {
       System.out,
       new File("./test-files/TestGithubReleasesCoordinateResolver/working"),
       null,
+      false,
       false);
 
   @Test
