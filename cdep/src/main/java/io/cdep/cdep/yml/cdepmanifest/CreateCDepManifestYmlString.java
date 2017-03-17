@@ -61,14 +61,12 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitStringArray(String name, String[] array) {
-    if (array == null) {
-      return;
-    }
     appendIndented("%s: [%s]\n", name, StringUtils.joinOn(", ", array));
   }
 
   @Override
-  public void visitArray(Object[] array, Class<?> elementType) {
+  public void visitArray(String name, Object[] array, Class<?> elementType) {
+    appendIndented("%s:\n", name);
     ++indent;
     for (int i = 0; i < array.length; ++i) {
       appendIndented("- ");
@@ -79,29 +77,6 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
     --indent;
   }
 
-  @Override
-  public void visitHardNameDependencyArray(String name, HardNameDependency[] array) {
-    if (array == null) {
-      return;
-    }
-    appendIndented("%s:\n", name);
-    super.visitHardNameDependencyArray(name, array);
-  }
-
-  @Override
-  public void visitAndroidArchiveArray(String name, AndroidArchive[] array) {
-    appendIndented("%s:\n", name);
-    super.visitAndroidArchiveArray(name, array);
-  }
-
-  @Override
-  public void visitiOSArchiveArray(String name, iOSArchive[] array) {
-    if (array == null) {
-      return;
-    }
-    appendIndented("%s:\n", name);
-    super.visitiOSArchiveArray(name, array);
-  }
 
   private void append(String format, Object... parms) {
     sb.append(String.format(format, parms));

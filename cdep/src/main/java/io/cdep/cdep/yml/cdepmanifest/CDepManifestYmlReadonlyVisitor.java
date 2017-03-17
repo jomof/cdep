@@ -13,20 +13,16 @@ public class CDepManifestYmlReadonlyVisitor extends PlainOldDataReadonlyVisitor 
     visitPlainOldDataObject(name, value);
   }
 
-  public void visitCDepManifestYml(String name, CDepManifestYml node) {
-    visitPlainOldDataObject(null, node);
-  }
-
   public void visitHardNameDependencyArray(String name, HardNameDependency array[]) {
-    visitArray(array, HardNameDependency.class);
+    visitArray(name, array, HardNameDependency.class);
   }
 
   public void visitAndroidArchiveArray(String name, AndroidArchive array[]) {
-    visitArray(array, AndroidArchive.class);
+    visitArray(name, array, AndroidArchive.class);
   }
 
   public void visitiOSArchiveArray(String name, iOSArchive array[]) {
-    visitArray(array, iOSArchive.class);
+    visitArray(name, array, iOSArchive.class);
   }
 
   public void visitiOSPlatform(String name, iOSPlatform value) {

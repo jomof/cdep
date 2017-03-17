@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
  * Read-only visitor over a plain object. Uses reflection to find public fields to walk over.
  */
 public class PlainOldDataReadonlyVisitor {
+
   public void visitPlainOldDataObject(String name, Object value) {
     visit(value);
   }
@@ -16,7 +17,7 @@ public class PlainOldDataReadonlyVisitor {
   }
 
   public void visitStringArray(String name, String array[]) {
-    visitArray(array, String.class);
+    visitArray(name, array, String.class);
   }
 
   public void visitLong(String name, Long value) {
@@ -27,7 +28,7 @@ public class PlainOldDataReadonlyVisitor {
     visit(value);
   }
 
-  public void visitArray(Object[] array, Class<?> elementType) {
+  public void visitArray(String name, Object[] array, Class<?> elementType) {
     if (array == null) {
       return;
     }
