@@ -65,11 +65,7 @@ public class TestCDep {
         "com.github.jomof:firebase/admob:2.1.3-rev8",
         "non:existing:1.2.3",
         output.toString()))
-        .isEqualTo(
-            "Manifest for 'non:existing:1.2.3' didn't exist, "
-                + "copying https://github.com/jomof/firebase/releases/download/2.1.3-rev8/"
-                + "cdep-manifest-admob.yml to .test-files/mergeSecondMissing/"
-                + "merged-manifest.yml\n");
+        .contains("Manifest for 'non:existing:1.2.3' didn't exist");
   }
 
   @Test
@@ -80,11 +76,7 @@ public class TestCDep {
         "non:existing:1.2.3",
         "com.github.jomof:firebase/admob:2.1.3-rev8",
         output.toString()))
-        .isEqualTo(
-            "Manifest for 'non:existing:1.2.3' didn't exist, "
-                + "copying https://github.com/jomof/firebase/releases/download/2.1.3-rev8/"
-                + "cdep-manifest-admob.yml to .test-files/mergeFirstMissing/"
-                + "merged-manifest.yml\n");
+        .contains("Manifest for 'non:existing:1.2.3' didn't exist");
   }
 
   @Test
