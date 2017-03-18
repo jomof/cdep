@@ -5,6 +5,10 @@ import io.cdep.cdep.pod.PlainOldDataReadonlyVisitor;
 
 public class CDepManifestYmlReadonlyVisitor extends PlainOldDataReadonlyVisitor {
 
+  public void visitCDepManifestYml(String name, CDepManifestYml value) {
+    visitPlainOldDataObject(name, value);
+  }
+
   public void visitHardNameDependency(String name, HardNameDependency value) {
     visitPlainOldDataObject(name, value);
   }

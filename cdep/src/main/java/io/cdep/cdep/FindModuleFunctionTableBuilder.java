@@ -131,7 +131,7 @@ public class FindModuleFunctionTableBuilder {
     }
     if (manifest.iOS != null && manifest.iOS.archives != null) {
       headerOnly = false;
-      supported.add("Android");
+      supported.add("Darwin");
       cases.put(string("Darwin"),
           buildDarwinPlatformCase(resolved, explodedArchiveFolder, dependencies));
     }
@@ -179,6 +179,9 @@ public class FindModuleFunctionTableBuilder {
       Archive archive,
       AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+    if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
+      return abort(String.format("Archive in %s was malformed", resolved.remote));
+    }
     return module(new ModuleArchiveExpression[]{archive(
         resolved.remote.toURI()
             .resolve(".")
@@ -303,19 +306,6 @@ public class FindModuleFunctionTableBuilder {
     return ifSwitch(conditionList, expressionList, notFound);
   }
 
-  private Map<iOSPlatform, List<iOSArchive>> groupByPlatform(List<iOSArchive> archives) {
-    Map<iOSPlatform, List<iOSArchive>> result = new HashMap<>();
-    for (iOSArchive archive : archives) {
-      List<iOSArchive> list = result.get(archive.architecture);
-      if (list == null) {
-        list = new ArrayList<>();
-        result.put(archive.platform, list);
-      }
-      list.add(archive);
-    }
-    return result;
-  }
-
   private Map<iOSArchitecture, List<iOSArchive>> groupByArchitecture(iOSArchive archives[]) {
     Map<iOSArchitecture, List<iOSArchive>> result = new HashMap<>();
     for (iOSArchive archive : archives) {
@@ -399,7 +389,7 @@ public class FindModuleFunctionTableBuilder {
             dependencies);
       }
       // There are some android sub modules with runtime and some without
-      return abort(
+      throw new RuntimeException(
           String.format("Runtime is on some android submodules but not other in module '%s'",
               resolved.cdepManifestYml.coordinate));
     }

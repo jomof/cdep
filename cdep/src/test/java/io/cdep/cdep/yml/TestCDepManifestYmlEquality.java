@@ -1,11 +1,11 @@
 package io.cdep.cdep.yml;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
 import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
 
 public class TestCDepManifestYmlEquality {
 
@@ -40,4 +40,17 @@ public class TestCDepManifestYmlEquality {
     checkNotEquals(ResolvedManifests.admob().cdepManifestYml,
         ResolvedManifests.sqlite().cdepManifestYml);
   }
+
+  @Test
+  public void testEqualityPairs() throws Exception {
+    for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {
+      for (ResolvedManifests.NamedManifest manifest2 : ResolvedManifests.all()) {
+        boolean expected = manifest1.name.equals(manifest2.name);
+        assertThat(CDepManifestYmlEquality.areDeeplyIdentical(
+            manifest1.resolved.cdepManifestYml,
+            manifest2.resolved.cdepManifestYml)).isEqualTo(expected);
+      }
+    }
+  }
 }
+

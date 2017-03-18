@@ -26,6 +26,8 @@ import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
@@ -341,5 +343,27 @@ public class TestFindModuleFunctionTableBuilder {
     assertThat(found[0].fullLibraryName).isNull();
     assertThat(found[0].remote.toString()).isEqualTo(
         "https://github.com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
+  }
+
+  @Test
+  public void testAllResolvedManifests() throws Exception {
+    Map<String, String> expected = new HashMap<>();
+    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found");
+    for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
+      FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+      builder.addManifest(manifest.resolved);
+      String expectedFailure = expected.get(manifest.name);
+      try {
+        FunctionTableExpression table = builder.build();
+        if (expectedFailure != null) {
+          fail("Expected failure");
+        }
+      } catch (RuntimeException e) {
+        if (expectedFailure == null) {
+          throw e;
+        }
+        assertThat(e.getMessage()).contains(expectedFailure);
+      }
+    }
   }
 }

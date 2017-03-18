@@ -4,6 +4,7 @@ import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
+import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -51,5 +52,12 @@ public class TestCreateCDepManifestYmlString {
   @Test
   public void testAdmob() throws Exception {
     check(ResolvedManifests.admob().cdepManifestYml);
+  }
+
+  @Test
+  public void testAllResolvedManifests() throws Exception {
+    for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
+      CreateCDepManifestYmlString.create(manifest.resolved.cdepManifestYml);
+    }
   }
 }

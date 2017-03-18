@@ -23,6 +23,12 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   }
 
   @Override
+  public void covisit(String name, Object left, Object right, Class<?> type) {
+    returnValue = null;
+    super.covisit(name, left, right, type);
+  }
+
+  @Override
   public void covisitCDepManifestYml(String name, CDepManifestYml left, CDepManifestYml right) {
     if (left == null && right == null) {
       returnValue = null;
@@ -43,7 +49,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
     covisit("linux", left.linux, right.linux, Object.class);
     covisit("iOS", left.iOS, right.iOS, iOS.class);
     iOS ios = (iOS) returnValue;
-    covisit("iOS", left.android, right.android, Android.class);
+    covisit("android", left.android, right.android, Android.class);
     Android android = (Android) returnValue;
 
     returnValue = new CDepManifestYml(left.coordinate, left.dependencies, left.archive, android,

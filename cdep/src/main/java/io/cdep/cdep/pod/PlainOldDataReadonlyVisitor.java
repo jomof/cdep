@@ -49,6 +49,9 @@ public class PlainOldDataReadonlyVisitor {
     } catch (IllegalAccessException e) {
       throw new RuntimeException(e);
     } catch (InvocationTargetException e) {
+      if (e.getTargetException() instanceof RuntimeException) {
+        throw (RuntimeException) e.getTargetException();
+      }
       throw new RuntimeException(e);
     }
   }
@@ -80,6 +83,9 @@ public class PlainOldDataReadonlyVisitor {
     } catch (NoSuchMethodException e) {
       throw new RuntimeException(e);
     } catch (InvocationTargetException e) {
+      if (e.getTargetException() instanceof RuntimeException) {
+        throw (RuntimeException) e.getTargetException();
+      }
       throw new RuntimeException(e);
     }
   }

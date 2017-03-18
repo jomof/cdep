@@ -4,14 +4,96 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ResolvedManifests {
 
+  public static ResolvedManifest archiveMissingSize() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: vectorial\n" +
+        "  version: 0.0.0\n" +
+        "archive:\n" +
+        "  file: vectorial.zip\n" +
+        "  sha256: 47e72f9898a78024a96e7adc5b29d6ec02313a02087646d69d7797f13840121c\n" +
+        "  size: \n" +
+        "  include: vectorial-master/include\n" +
+        "example: |\n" +
+        "  #include <vectorial/simd4f.h>\n" +
+        "  void test() {\n" +
+        "    float z = simd4f_get_z(simd4f_add(simd4f_create(1,2,3,4), \n" +
+        "      simd4f_create(1,2,3,4)));\n" +
+        "  }");
+  }
+
+  public static ResolvedManifest archiveMissingFile() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: vectorial\n" +
+        "  version: 0.0.0\n" +
+        "archive:\n" +
+        "  file:\n" +
+        "  sha256: 47e72f9898a78024a96e7adc5b29d6ec02313a02087646d69d7797f13840121c\n" +
+        "  size: 92\n" +
+        "  include: vectorial-master/include\n" +
+        "example: |\n" +
+        "  #include <vectorial/simd4f.h>\n" +
+        "  void test() {\n" +
+        "    float z = simd4f_get_z(simd4f_add(simd4f_create(1,2,3,4), \n" +
+        "      simd4f_create(1,2,3,4)));\n" +
+        "  }");
+  }
+
+  public static ResolvedManifest archiveMissingSha256() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: vectorial\n" +
+        "  version: 0.0.0\n" +
+        "archive:\n" +
+        "  file: bob.zip\n" +
+        "  sha256: \n" +
+        "  size: 92\n" +
+        "example: |\n" +
+        "  #include <vectorial/simd4f.h>\n" +
+        "  void test() {\n" +
+        "    float z = simd4f_get_z(simd4f_add(simd4f_create(1,2,3,4), \n" +
+        "      simd4f_create(1,2,3,4)));\n" +
+        "  }");
+  }
+
+  public static ResolvedManifest archiveMissingInclude() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: vectorial\n" +
+        "  version: 0.0.0\n" +
+        "archive:\n" +
+        "  file: bob.zip\n" +
+        "  sha256: 47e72f9898a78024a96e7adc5b29d6ec02313a02087646d69d7797f13840121c\n" +
+        "  size: 92\n" +
+        "  include: vectorial-master/include\n" +
+        "example: |\n" +
+        "  #include <vectorial/simd4f.h>\n" +
+        "  void test() {\n" +
+        "    float z = simd4f_get_z(simd4f_add(simd4f_create(1,2,3,4), \n" +
+        "      simd4f_create(1,2,3,4)));\n" +
+        "  }");
+  }
+
+  static ResolvedManifest getResolvedManifest(String manifest) throws MalformedURLException {
+    CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
+    return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+  }
+
   public static ResolvedManifest archiveOnly() throws MalformedURLException {
-    String manifest = "coordinate:\n" +
+
+    return getResolvedManifest("coordinate:\n" +
         "  groupId: com.github.jomof\n" +
         "  artifactId: vectorial\n" +
         "  version: 0.0.0\n" +
@@ -25,15 +107,12 @@ public class ResolvedManifests {
         "  void test() {\n" +
         "    float z = simd4f_get_z(simd4f_add(simd4f_create(1,2,3,4), \n" +
         "      simd4f_create(1,2,3,4)));\n" +
-        "  }";
-
-    CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
-    CDepManifestYmlUtils.checkManifestSanity(yml);
-    return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+        "  }");
   }
 
   public static ResolvedManifest admob() throws MalformedURLException {
-    String manifest = "coordinate:\n"
+
+    return getResolvedManifest("coordinate:\n"
         + "  groupId: com.github.jomof\n"
         + "  artifactId: firebase/admob\n"
         + "  version: 2.1.3-rev8\n"
@@ -84,15 +163,11 @@ public class ResolvedManifests {
         + "    firebase::admob::Initialize(\n"
         + "      *::firebase::App::Create(::firebase::AppOptions(), NULL /* jni_env */ , NULL /* activity */ ), \n"
         + "      kAdMobAppID);\n"
-        + "  }\n";
-
-    CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
-    CDepManifestYmlUtils.checkManifestSanity(yml);
-    return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+        + "  }\n");
   }
 
   public static ResolvedManifest sqlite() throws MalformedURLException {
-    String manifest = "coordinate:\n" +
+    return getResolvedManifest("coordinate:\n" +
         "  groupId: com.github.jomof\n" +
         "  artifactId: sqlite\n" +
         "  version: 0.0.0\n" +
@@ -166,14 +241,11 @@ public class ResolvedManifests {
         "  #include <sqlite3.h>\n" +
         "  void test() {\n" +
         "    sqlite3_initialize();\n" +
-        "  }";
-    CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
-    CDepManifestYmlUtils.checkManifestSanity(yml);
-    return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+        "  }");
   }
 
   public static ResolvedManifest sqliteiOS() throws MalformedURLException {
-    String manifest = "coordinate:\n" +
+    return getResolvedManifest("coordinate:\n" +
         "  groupId: com.github.jomof\n" +
         "  artifactId: sqlite\n" +
         "  version: 0.0.0\n" +
@@ -197,14 +269,11 @@ public class ResolvedManifests {
         "  #include <sqlite3.h>\n" +
         "  void test() {\n" +
         "    sqlite3_initialize();\n" +
-        "  }";
-    CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
-    CDepManifestYmlUtils.checkManifestSanity(yml);
-    return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+        "  }");
   }
 
   public static ResolvedManifest sqliteAndroid() throws MalformedURLException {
-    String manifest = "coordinate:\n" +
+    return getResolvedManifest("coordinate:\n" +
         "  groupId: com.github.jomof\n" +
         "  artifactId: sqlite\n" +
         "  version: 0.0.0\n" +
@@ -262,14 +331,11 @@ public class ResolvedManifests {
         "  #include <sqlite3.h>\n" +
         "  void test() {\n" +
         "    sqlite3_initialize();\n" +
-        "  }";
-    CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
-    CDepManifestYmlUtils.checkManifestSanity(yml);
-    return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+        "  }");
   }
 
   static ResolvedManifest emptyiOSArchive() throws MalformedURLException {
-    String manifest = "coordinate:\n" +
+    return getResolvedManifest("coordinate:\n" +
         "  groupId: com.github.jomof\n" +
         "  artifactId: sqlite\n" +
         "  version: 0.0.0\n" +
@@ -289,14 +355,11 @@ public class ResolvedManifests {
         "  #include <sqlite3.h>\n" +
         "  void test() {\n" +
         "    sqlite3_initialize();\n" +
-        "  }";
-    CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
-    CDepManifestYmlUtils.checkManifestSanity(yml);
-    return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+        "  }");
   }
 
   static ResolvedManifest emptyAndroidArchive() throws MalformedURLException {
-    String manifest = "coordinate:\n" +
+    return getResolvedManifest("coordinate:\n" +
         "  groupId: com.github.jomof\n" +
         "  artifactId: sqlite\n" +
         "  version: 0.0.0\n" +
@@ -315,9 +378,34 @@ public class ResolvedManifests {
         "  #include <sqlite3.h>\n" +
         "  void test() {\n" +
         "    sqlite3_initialize();\n" +
-        "  }";
-    CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
-    CDepManifestYmlUtils.checkManifestSanity(yml);
-    return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+        "  }");
+  }
+
+  static public List<NamedManifest> all() throws InvocationTargetException, IllegalAccessException {
+    List<NamedManifest> result = new ArrayList<>();
+    for (Method method : ResolvedManifests.class.getMethods()) {
+      if (!Modifier.isStatic(method.getModifiers())) {
+        continue;
+      }
+      if (method.getReturnType() != ResolvedManifest.class) {
+        continue;
+      }
+      if (method.getParameterCount() != 0) {
+        continue;
+      }
+      ResolvedManifest resolved = (ResolvedManifest) method.invoke(null);
+      result.add(new NamedManifest(method.getName(), resolved));
+    }
+    return result;
+  }
+
+  public static class NamedManifest {
+    final public String name;
+    final public ResolvedManifest resolved;
+
+    NamedManifest(String name, ResolvedManifest resolved) {
+      this.name = name;
+      this.resolved = resolved;
+    }
   }
 }

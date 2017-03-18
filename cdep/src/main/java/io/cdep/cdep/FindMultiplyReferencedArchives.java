@@ -11,9 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This checker looks at the SHA256 of files along each dependency chain.
+ * This checker looks at the SHA256 of files along each dependency chain and ensures that each file
+ * is only present at a single level.
+ * <p>
+ * Also check whether references were unresolved.
  */
-public class FindMultiplyReferencedArchives extends ReadonlyVisitor{
+public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
 
   // Map of dependency edges. Key is dependant and value is dependees.
   final public Map<Coordinate, List<Coordinate>> forwardEdges = new HashMap<>();
@@ -32,7 +35,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor{
       Coordinate to) {
     List<Coordinate> tos = edges.get(from);
     if (tos == null) {
-        edges.put(from, new ArrayList<Coordinate>());
+      edges.put(from, new ArrayList<Coordinate>());
       addEdge(edges, from, to);
       return;
     }
@@ -46,7 +49,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor{
     assert currentFindModule != null;
     List<ModuleArchiveExpression> tos = moduleArchives.get(currentFindModule);
     if (tos == null) {
-        moduleArchives.put(currentFindModule, new ArrayList<ModuleArchiveExpression>());
+      moduleArchives.put(currentFindModule, new ArrayList<ModuleArchiveExpression>());
       addModuleArchive(archive);
       return;
     }
@@ -63,19 +66,20 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor{
     }
   }
 
-  private void validateForward(
-      Coordinate dependant,
-      Map<String, Coordinate> shaToPrior) {
-    for (Coordinate dependee: forwardEdges.get(dependant)) {
-
+  private void validateForward(Coordinate dependant, Map<String, Coordinate> shaToPrior) {
+    for (Coordinate dependee : forwardEdges.get(dependant)) {
+      List<ModuleArchiveExpression> dependeeArchives = moduleArchives.get(dependee);
+      if (dependeeArchives == null) {
+        throw new RuntimeException(String.format("Reference %s was not found, needed by %s", dependee, dependant));
+      }
       // Have any of the dependee archives been seen before?
       for (ModuleArchiveExpression dependeeArchive : moduleArchives.get(dependee)) {
         Coordinate prior = shaToPrior.get(dependeeArchive.sha256);
         if (prior != null) {
           throw new RuntimeException(
               String.format("Package '%s' depends on '%s' but both packages "
-                  + "contain a file:\n  %s\nwith the same SHA256. The file should only be in "
-                  + "the lowest level package '%s' (sha256:%s)",
+                      + "contain a file:\n  %s\nwith the same SHA256. The file should only be in "
+                      + "the lowest level package '%s' (sha256:%s)",
                   dependant,
                   dependee,
                   dependeeArchive.file,
