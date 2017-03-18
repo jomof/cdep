@@ -12,7 +12,7 @@ public class CreateStringVisitor extends ReadonlyVisitor {
 
     public static String convert(Expression expr) {
         String result = new CreateStringVisitor(expr).sb.toString();
-        while (result.startsWith("\n")) {
+        while (result.startsWith("\r\n")) {
             result = result.substring(1);
         }
         return result;
@@ -24,14 +24,14 @@ public class CreateStringVisitor extends ReadonlyVisitor {
         ++indent;
         visit(expr.expression);
         --indent;
-        append("\n");
+        append("\r\n");
         appendIndented("end_find");
-        append("\n");
+        append("\r\n");
     }
 
     @Override
     protected void visitIfSwitchExpression(IfSwitchExpression expr) {
-        append("\n");
+        append("\r\n");
         appendIndented("");
         for (int i = 0; i < expr.conditions.length; ++i) {
             append("if(");
@@ -40,13 +40,13 @@ public class CreateStringVisitor extends ReadonlyVisitor {
             ++indent;
             visit(expr.expressions[i]);
             --indent;
-            append("\n");
+            append("\r\n");
             appendIndented("else ");
         }
         ++indent;
         visit(expr.elseExpression);
         --indent;
-        append("\n");
+        append("\r\n");
         appendIndented("end_if");
     }
 
@@ -66,14 +66,14 @@ public class CreateStringVisitor extends ReadonlyVisitor {
             sb = old;
         }
 
-        append("\n");
+        append("\r\n");
         appendIndented("abort " + expr.message, parms);
     }
 
 
     @Override
     protected void visitAssignmentExpression(AssignmentExpression expr) {
-        append("\n");
+        append("\r\n");
         appendIndented("var %s = ", expr.name);
         visit(expr.expression);
     }
