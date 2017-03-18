@@ -390,7 +390,7 @@ public class ResolvedManifests {
       if (method.getReturnType() != ResolvedManifest.class) {
         continue;
       }
-      if (method.getParameterCount() != 0) {
+      if (method.getParameterTypes().length != 0) {
         continue;
       }
       ResolvedManifest resolved = (ResolvedManifest) method.invoke(null);
