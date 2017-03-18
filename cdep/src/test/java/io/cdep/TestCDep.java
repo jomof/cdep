@@ -81,12 +81,23 @@ public class TestCDep {
   }
 
   @Test
-  public void mergeTwo() throws Exception {
-    File output = new File(".test-files/mergeFirstMissing/merged-manifest.yml");
+  public void mergeTwo1() throws Exception {
+    File output = new File(".test-files/mergeTwo1/merged-manifest.yml");
     output.delete();
     assertThat(main("merge",
         "com.github.jomof:sqlite/iOS:3.16.2-rev26",
         "com.github.jomof:sqlite/android:3.16.2-rev26",
+        output.toString()))
+        .contains("Merged 2 manifests into");
+  }
+
+  @Test
+  public void mergeTwo2() throws Exception {
+    File output = new File(".test-files/mergeTwo2/merged-manifest.yml");
+    output.delete();
+    assertThat(main("merge",
+        "com.github.jomof:cmakeify/iOS:0.0.219",
+        "com.github.jomof:cmakeify/android:0.0.219",
         output.toString()))
         .contains("Merged 2 manifests into");
   }

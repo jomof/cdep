@@ -1,15 +1,15 @@
 package io.cdep.cdep.yml;
 
-import static com.google.common.truth.Truth.assertThat;
-import static io.cdep.cdep.yml.CDepManifestBuilder.archive;
-import static io.cdep.cdep.yml.CDepManifestBuilder.hardname;
-import static io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString.create;
-
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
 import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
+import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
+import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.hardname;
+import static io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString.create;
 
 public class TestCreateCDepManifestYmlString {
 

@@ -20,31 +20,42 @@ import io.cdep.cdep.Coordinate;
 @SuppressWarnings("unused")
 public class CDepManifestYml {
 
-    final public Coordinate coordinate;
-    final public HardNameDependency dependencies[];
-    final public Archive archive;
-    final public Android android;
-    final public Object linux;
-    final public iOS iOS;
-    final public String example;
+  final public Coordinate coordinate;
+  final public HardNameDependency dependencies[];
+  final public Archive archive;
+  final public Android android;
+  final public Object linux;
+  final public iOS iOS;
+  final public String example;
 
-    public CDepManifestYml() {
-        this.coordinate = null;
-        this.dependencies = null;
-        this.archive = null;
-        this.android = null;
-        this.linux = null;
-        this.iOS = null;
-        this.example = null;
-    }
+  public CDepManifestYml() {
+    this.coordinate = null;
+    this.dependencies = null;
+    this.archive = null;
+    this.android = null;
+    this.linux = null;
+    this.iOS = null;
+    this.example = null;
+  }
 
-    public CDepManifestYml(Coordinate coordinate) {
-        this.coordinate = coordinate;
-        this.dependencies = null;
-        this.archive = null;
-        this.android = null;
-        this.linux = null;
-        this.iOS = null;
-        this.example = null;
-    }
+  public CDepManifestYml(Coordinate coordinate) {
+    this.coordinate = coordinate;
+    this.dependencies = null;
+    this.archive = null;
+    this.android = null;
+    this.linux = null;
+    this.iOS = null;
+    this.example = null;
+  }
+
+  public CDepManifestYml(Coordinate coordinate, HardNameDependency[] dependencies, Archive archive,
+                         Android android, iOS ios, Object linux, String example) {
+    this.coordinate = coordinate;
+    this.dependencies = dependencies;
+    this.archive = archive;
+    this.android = android;
+    this.iOS = ios;
+    this.linux = linux;
+    this.example = example;
+  }
 }
