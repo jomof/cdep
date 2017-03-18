@@ -7,8 +7,8 @@ public class CDepManifestBuilder {
     return new HardNameDependency(compile, sha256);
   }
 
-  public static Archive archive(String file, String sha256, long size) {
-    return new Archive(file, sha256, size);
+  public static Archive archive(String file, String sha256, long size, String include) {
+    return new Archive(file, sha256, size, include);
   }
 
   public static Android android(HardNameDependency[] dependencies, AndroidArchive archives[]) {
