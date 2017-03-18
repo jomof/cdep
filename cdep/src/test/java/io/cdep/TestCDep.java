@@ -15,19 +15,18 @@
 */
 package io.cdep;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+
 import com.google.common.io.Files;
 import io.cdep.cdep.yml.cdep.CDepYml;
-import org.junit.Test;
-import org.yaml.snakeyaml.Yaml;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
+import org.yaml.snakeyaml.Yaml;
 
 public class TestCDep {
 
@@ -60,7 +59,35 @@ public class TestCDep {
 
   @Test
   public void mergeSecondMissing() throws Exception {
-    main(main("merge", "com.github.jomof:firebase/admob:2.1.3-rev8", "bon", "merged.yml"));
+    File output = new File(".test-files/mergeSecondMissing/merged-manifest.yml");
+    output.delete();
+    assertThat(main("merge",
+        "com.github.jomof:firebase/admob:2.1.3-rev8",
+        "non:existing:1.2.3",
+        output.toString()))
+        .contains("Manifest for 'non:existing:1.2.3' didn't exist");
+  }
+
+  @Test
+  public void mergeFirstMissing() throws Exception {
+    File output = new File(".test-files/mergeFirstMissing/merged-manifest.yml");
+    output.delete();
+    assertThat(main("merge",
+        "non:existing:1.2.3",
+        "com.github.jomof:firebase/admob:2.1.3-rev8",
+        output.toString()))
+        .contains("Manifest for 'non:existing:1.2.3' didn't exist");
+  }
+
+  @Test
+  public void mergeTwo() throws Exception {
+    File output = new File(".test-files/mergeFirstMissing/merged-manifest.yml");
+    output.delete();
+    assertThat(main("merge",
+        "com.github.jomof:sqlite/iOS:3.16.2-rev26",
+        "com.github.jomof:sqlite/android:3.16.2-rev26",
+        output.toString()))
+        .contains("Merged 2 manifests into .test-files/mergeFirstMissing/merged-manifest.yml.");
   }
 
   @Test

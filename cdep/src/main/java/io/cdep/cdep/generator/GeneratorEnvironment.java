@@ -52,6 +52,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   final public File examplesFolder;
   final public File workingFolder;
   final public Map<String, String> cdepSha256Hashes = new HashMap<>();
+  final public boolean ignoreManifestHashes;
   final public boolean forceRedownload;
   final public Set<File> alreadyDownloaded = new HashSet<>();
 
@@ -59,7 +60,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
       PrintStream out,
       File workingFolder,
       File userFolder,
-      boolean forceRedownload) {
+      boolean forceRedownload,
+      boolean ignoreManifestHashes) {
     if (userFolder == null) {
       userFolder = new File(System.getProperty("user.home"));
     }
@@ -69,6 +71,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     this.unzippedArchivesFolder = new File(userFolder, ".cdep/exploded").getAbsoluteFile();
     this.modulesFolder = new File(workingFolder, ".cdep/modules").getAbsoluteFile();
     this.examplesFolder = new File(workingFolder, ".cdep/examples").getAbsoluteFile();
+    this.ignoreManifestHashes = ignoreManifestHashes;
     this.forceRedownload = forceRedownload;
   }
 
@@ -168,15 +171,17 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     } catch (YAMLException e) {
       throw new RuntimeException(String.format("Parsing '%s'", coordinate), e);
     }
-    String sha256 = HashUtils.getSHA256OfFile(file);
-    String priorSha256 = this.cdepSha256Hashes.get(cdepManifestYml.coordinate.toString());
-    if (priorSha256 != null && !priorSha256.equals(sha256)) {
-      throw new RuntimeException(String.format(
-          "SHA256 of cdep-manifest.yml for package '%s' does not agree with value in " +
-              "cdep.sha256. Something changed.",
-          cdepManifestYml.coordinate));
+    if (!ignoreManifestHashes) {
+      String sha256 = HashUtils.getSHA256OfFile(file);
+      String priorSha256 = this.cdepSha256Hashes.get(cdepManifestYml.coordinate.toString());
+      if (priorSha256 != null && !priorSha256.equals(sha256)) {
+        throw new RuntimeException(String.format(
+            "SHA256 of cdep-manifest.yml for package '%s' does not agree with value in " +
+                "cdep.sha256. Something changed.",
+            cdepManifestYml.coordinate));
+      }
+      this.cdepSha256Hashes.put(cdepManifestYml.coordinate.toString(), sha256);
     }
-    this.cdepSha256Hashes.put(cdepManifestYml.coordinate.toString(), sha256);
     return cdepManifestYml;
   }
 
@@ -194,11 +199,6 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     local = new File(local, coordinate.groupId);
     local = new File(local, coordinate.artifactId);
     local = new File(local, coordinate.version);
-    return local;
-  }
-
-  public File getRelativeUnzipFolder(URL remoteArchive) {
-    File local = new File(getUrlBaseName(remoteArchive));
     return local;
   }
 

@@ -28,6 +28,7 @@ public class TestGithubStyleUrlCoordinateResolver {
       System.out,
       new File("./test-files/TestFindModuleFunctionTableBuilder/working"),
       null,
+      false,
       false);
 
   @Test

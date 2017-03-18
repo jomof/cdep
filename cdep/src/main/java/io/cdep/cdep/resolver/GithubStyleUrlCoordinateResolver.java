@@ -72,9 +72,11 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
                 cdepManifestYml.coordinate.groupId,
                 coordinate));
       }
-      if (!artifactId.equals(cdepManifestYml.coordinate.artifactId)) {
+      if (!artifactId.startsWith(cdepManifestYml.coordinate.artifactId)) {
         throw new RuntimeException(
-            String.format("artifactId '%s' from manifest did not agree with github url '%s",
+            String
+                .format("artifactId '%s' from manifest did not agree with '%s' from github url '%s",
+                    artifactId,
                 cdepManifestYml.coordinate.artifactId,
                 coordinate));
       }

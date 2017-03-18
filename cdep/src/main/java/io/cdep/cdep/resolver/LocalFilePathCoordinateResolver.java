@@ -37,48 +37,6 @@ public class LocalFilePathCoordinateResolver extends CoordinateResolver {
         String content = new String(Files.readAllBytes(Paths.get(local.getCanonicalPath())));
         CDepManifestYml cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(content);
         CDepManifestYmlUtils.checkManifestSanity(cdepManifestYml);
-
-        if (dependency.enforceSourceUrlMatchesManifest == null
-            || dependency.enforceSourceUrlMatchesManifest) {
-            // Ensure that the manifest coordinate agrees with the url provided
-            assert cdepManifestYml.coordinate != null;
-            assert cdepManifestYml.coordinate.groupId != null;
-            if (!coordinate.contains(cdepManifestYml.coordinate.groupId)) {
-                throw new RuntimeException(
-                    String.format("local file name '%s' did not contain groupId '%s'"
-                            + "", coordinate,
-                        cdepManifestYml.coordinate.groupId));
-            }
-            assert cdepManifestYml.coordinate.artifactId != null;
-            String artifactId = cdepManifestYml.coordinate.artifactId;
-            if (artifactId.contains("/")) {
-                // This is partitioned manifest
-                String parts[] = artifactId.split("/");
-                for (String part : parts) {
-                    if (!coordinate.contains(part)) {
-                        throw new RuntimeException(
-                            String.format("local file name '%s' did not contain artifactId partition '%s'"
-                                    + "", coordinate,
-                                cdepManifestYml.coordinate.artifactId));
-                    }
-                }
-            } else {
-                if (!coordinate.contains(cdepManifestYml.coordinate.artifactId)) {
-                    throw new RuntimeException(
-                        String.format("local file name '%s' did not contain artifactId '%s'"
-                                + "", coordinate,
-                            cdepManifestYml.coordinate.artifactId));
-                }
-            }
-            assert cdepManifestYml.coordinate.version != null;
-            if (!coordinate.contains(cdepManifestYml.coordinate.version)) {
-                throw new RuntimeException(
-                    String.format("local file name '%s' did not contain version '%s'"
-                            + "", coordinate,
-                        cdepManifestYml.coordinate.version));
-            }
-        }
-
         return new ResolvedManifest(local.getCanonicalFile().toURI().toURL(), cdepManifestYml);
     }
 }

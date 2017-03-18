@@ -1,8 +1,13 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
+import static java.util.regex.Pattern.compile;
+
 import io.cdep.cdep.utils.StringUtils;
+import java.util.regex.Pattern;
 
 public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor {
+
+  final private Pattern pattern = compile(".*\\n");
   private int indent = 0;
   private int eatIndent = 0;
   private StringBuilder sb = new StringBuilder();
@@ -26,36 +31,33 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitString(String name, String node) {
-    if (node == null) {
-      return;
-    }
-    if (name == null) {
-      // Likely array element
-      appendIndented("%s\n", node);
+  public void visitString(String name, String value) {
+    assert value != null;
+    assert name != null;
+    if (!value.contains("\n")) {
+      appendIndented("%s: %s\n", name, value);
       return;
     }
 
-    if (node.contains("\n")) {
-      String lines[] = node.split("\\r?\\n");
-      appendIndented("%s: |\n", name);
-      ++indent;
-      for (String line : lines) {
-        appendIndented("%s\r\n", line);
+    String lines[] = value.split("\\n"); // May contain \r as well, but that's okay
+    appendIndented("%s: |\n", name);
+    ++indent;
+    for (int i = 0; i < lines.length; ++i) {
+      appendIndented("%s", lines[i]);
+      if (i != lines.length - 1) {
+        append("\n");
+      } else if (value.endsWith("\n")) {
+        // Only want the trailing \n if the source had a trailing \n
+        append("\n");
       }
-      --indent;
-      return;
     }
-    appendIndented("%s: %s\n", name, node);
+    --indent;
+    return;
   }
 
   @Override
   public void visitLong(String name, Long node) {
-    if (name == null) {
-      // Likely array element
-      appendIndented("%s\n", node);
-      return;
-    }
+    assert name != null;
     appendIndented("%s: %s\n", name, node);
   }
 
@@ -71,12 +73,11 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
     for (int i = 0; i < array.length; ++i) {
       appendIndented("- ");
       ++eatIndent;
-      visitElement(array[i], elementType);
+      visit(array[i], elementType);
       --indent;
     }
     --indent;
   }
-
 
   private void append(String format, Object... parms) {
     sb.append(String.format(format, parms));

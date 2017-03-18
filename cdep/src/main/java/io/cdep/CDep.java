@@ -26,21 +26,24 @@ import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
 import io.cdep.cdep.resolver.ResolutionScope;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
+import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.CDepYmlUtils;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
+import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 public class CDep {
 
@@ -120,7 +123,7 @@ public class CDep {
   private boolean handleRedownload(String[] args)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.length > 0 && "redownload".equals(args[0])) {
-      GeneratorEnvironment environment = getGeneratorEnvironment(true);
+      GeneratorEnvironment environment = getGeneratorEnvironment(true, false);
       FunctionTableExpression table = getFunctionTableExpression(environment);
 
       // Download and unzip archives.
@@ -143,7 +146,7 @@ public class CDep {
       throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.length > 0 && "lint".equals(args[0])) {
       if (args.length > 1) {
-        GeneratorEnvironment environment = getGeneratorEnvironment(false);
+        GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
 
         SoftNameDependency dependencies[] = new SoftNameDependency[args.length - 1];
         for (int i = 1; i < args.length; ++i) {
@@ -178,7 +181,7 @@ public class CDep {
       throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.length > 0 && "create".equals(args[0])) {
       if (args.length > 1 && "hashes".equals(args[1])) {
-        GeneratorEnvironment environment = getGeneratorEnvironment(false);
+        GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
         getFunctionTableExpression(environment);
         environment.writeCDepSHA256File();
         out.printf("Created cdep.sha256\n");
@@ -192,29 +195,41 @@ public class CDep {
 
   private boolean handleMerge(String args[]) throws IOException, NoSuchAlgorithmException {
     if (args.length > 0 && "merge".equals(args[0])) {
-      if (args.length != 4) {
-        out.printf("Usage: cdep merge manifest1 manifest2 outputmanifest");
+      if (args.length < 4) {
+        out.printf("Usage: cdep merge coordinate1 coordinate2 ... outputmanifest.yml");
         return true;
       }
-      File output = new File(args[3]);
+
+      File output = new File(args[args.length - 1]);
       if (output.exists()) {
-        throw new RuntimeException(String.format("File %s already exists", output.getAbsolutePath()));
+        throw new RuntimeException(
+            String.format("File %s already exists", output.getAbsolutePath()));
       }
-      GeneratorEnvironment environment = getGeneratorEnvironment(false);
-      SoftNameDependency name1 = new SoftNameDependency(args[1]);
-      SoftNameDependency name2 = new SoftNameDependency(args[2]);
-      ResolvedManifest resolved1 = new Resolver(environment).resolveAny(name1);
-      ResolvedManifest resolved2 = new Resolver(environment).resolveAny(name2);
-      if (resolved1 == null && resolved2 != null) {
-        out.printf("%s didn't exist, copying %s to %s\n", name1, name2, output);
-        FileUtils.writeTextToFile(output, new Yaml().dump(resolved2.cdepManifestYml));
-        return true;
+
+      GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
+
+      CDepManifestYml merged = null;
+      for (int i = 1; i < args.length - 1; ++i) {
+        SoftNameDependency name = new SoftNameDependency(args[i]);
+        ResolvedManifest resolved = new Resolver(environment).resolveAny(name);
+        if (resolved == null) {
+          out.printf("Manifest for '%s' didn't exist. Aborting merge.\n", args[i]);
+          return true;
+        } else if (merged == null) {
+          merged = resolved.cdepManifestYml;
+        } else {
+          merged = MergeCDepManifestYmls.merge(merged, resolved.cdepManifestYml);
+        }
       }
-      if (resolved2 == null && resolved1 != null) {
-        out.printf("%s didn't exist, copying %s to %s\n", name2, name1, output);
-        FileUtils.writeTextToFile(output, new Yaml().dump(resolved1.cdepManifestYml));
-        return true;
-      }
+
+      // Check the merge for sanity
+      CDepManifestYmlUtils.checkManifestSanity(merged);
+
+      // Write the merged manifest out
+      String body = CreateCDepManifestYmlString.create(merged);
+      FileUtils.writeTextToFile(output, body);
+      out.printf("Merged %s manifests into %s.\n", args.length - 2, output);
+      return true;
     }
     return false;
   }
@@ -222,14 +237,14 @@ public class CDep {
   private boolean handleShow(String args[]) throws IOException, NoSuchAlgorithmException {
     if (args.length > 0 && "show".equals(args[0])) {
       if (args.length > 1 && "folders".equals(args[1])) {
-        GeneratorEnvironment environment = getGeneratorEnvironment(false);
+        GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
         out.printf("Downloads: %s\n", environment.downloadFolder.getAbsolutePath());
         out.printf("Exploded: %s\n", environment.unzippedArchivesFolder.getAbsolutePath());
         out.printf("Modules: %s\n", environment.modulesFolder.getAbsolutePath());
         return true;
       }
       if (args.length > 1 && "local".equals(args[1])) {
-        GeneratorEnvironment environment = getGeneratorEnvironment(false);
+        GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
         if (args.length == 2) {
           out.printf("Usage: cdep show local %s\n", EXAMPLE_COORDINATE);
           return true;
@@ -309,7 +324,7 @@ public class CDep {
       out.printf("Nothing to do. Add dependencies to %s\n", configFile);
       return;
     }
-    GeneratorEnvironment environment = getGeneratorEnvironment(false);
+    GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
     environment.readCDepSHA256File();
     FunctionTableExpression table = getFunctionTableExpression(environment);
 
@@ -342,8 +357,10 @@ public class CDep {
     return builder.build();
   }
 
-  private GeneratorEnvironment getGeneratorEnvironment(boolean forceRedownload) {
-    return new GeneratorEnvironment(out, workingFolder, downloadFolder, forceRedownload);
+  private GeneratorEnvironment getGeneratorEnvironment(boolean forceRedownload,
+      boolean ignoreManifestHashes) {
+    return new GeneratorEnvironment(out, workingFolder, downloadFolder, forceRedownload,
+        ignoreManifestHashes);
   }
 
   private boolean handleReadCDepYml() throws IOException {
@@ -372,6 +389,7 @@ public class CDep {
     out.printf(" cdep show manifest: show cdep interpretation of cdep.yml\n");
     out.printf(" cdep redownload: redownload dependencies for current cdep.yml\n");
     out.printf(" cdep create hashes: create or recreate cdep.sha256 file\n");
+    out.printf(" cdep merge coordinate1 coordinate2 ... outputmanifest.yml\n");
     out.printf(" cdep --version: show version information\n");
     return false;
   }

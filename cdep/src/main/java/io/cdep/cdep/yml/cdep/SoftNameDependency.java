@@ -18,16 +18,13 @@ package io.cdep.cdep.yml.cdep;
 @SuppressWarnings("unused")
 public class SoftNameDependency {
   final public String compile;
-  final public Boolean enforceSourceUrlMatchesManifest; // null means yes
 
   public SoftNameDependency() {
     compile = null;
-    enforceSourceUrlMatchesManifest = null;
   }
 
   public SoftNameDependency(String compile) {
     this.compile = compile;
-    this.enforceSourceUrlMatchesManifest = null;
   }
 
   public String toYaml(int indent) {
@@ -37,11 +34,6 @@ public class SoftNameDependency {
     String prefix = firstPrefix;
     if (compile != null && compile.length() > 0) {
       sb.append(String.format("%scompile: %s\n", prefix, compile));
-      prefix = nextPrefix;
-    }
-    if (enforceSourceUrlMatchesManifest != null) {
-      sb.append(String.format("%senforceSourceUrlMatchesManifest: %s\n", prefix,
-          enforceSourceUrlMatchesManifest));
     }
     return sb.toString();
   }

@@ -1,5 +1,7 @@
 package io.cdep.cdep.utils;
 
+import java.util.Collection;
+
 public class StringUtils {
 
     public static boolean isNumeric(String str) {
@@ -21,4 +23,17 @@ public class StringUtils {
         }
         return sb.toString();
     }
+
+  public static String joinOn(String delimiter, Collection<String> strings) {
+    StringBuilder sb = new StringBuilder();
+    int i = 0;
+    for (String string : strings) {
+      if (i != 0) {
+        sb.append(delimiter);
+      }
+      sb.append(string);
+      ++i;
+    }
+    return sb.toString();
+  }
 }

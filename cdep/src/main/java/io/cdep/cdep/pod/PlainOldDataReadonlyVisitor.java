@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 public class PlainOldDataReadonlyVisitor {
 
   public void visitPlainOldDataObject(String name, Object value) {
-    visit(value);
+    visitFields(value);
   }
 
   public void visitString(String name, String node) {
@@ -24,7 +24,7 @@ public class PlainOldDataReadonlyVisitor {
   }
 
   public void visitObject(String name, Object value) {
-    visit(value);
+    visitFields(value);
   }
 
   public void visitArray(String name, Object[] array, Class<?> elementType) {
@@ -32,11 +32,11 @@ public class PlainOldDataReadonlyVisitor {
       return;
     }
     for (Object value : array) {
-      visitElement(value, elementType);
+      visit(value, elementType);
     }
   }
 
-  public void visitElement(Object element, Class<?> elementClass) {
+  public void visit(Object element, Class<?> elementClass) {
     if (element == null) {
       return;
     }
@@ -53,7 +53,7 @@ public class PlainOldDataReadonlyVisitor {
     }
   }
 
-  public void visit(Object node) {
+  public void visitFields(Object node) {
     if (node == null) {
       return;
     }
