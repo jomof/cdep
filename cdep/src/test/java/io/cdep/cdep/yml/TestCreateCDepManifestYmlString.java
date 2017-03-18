@@ -28,17 +28,17 @@ public class TestCreateCDepManifestYmlString {
   public void testSimple() {
 
     assertThat(create(hardname("nameval", "shaval"))).isEqualTo(
-        "compile: nameval\n" +
-            "sha256: shaval\n"
+        "compile: nameval\r\n" +
+            "sha256: shaval\r\n"
     );
   }
 
   @Test
   public void testArchive() {
     assertThat(create(archive("fileval", "shaval", 100))).isEqualTo(
-        "file: fileval\n" +
-            "sha256: shaval\n" +
-            "size: 100\n"
+        "file: fileval\r\n" +
+            "sha256: shaval\r\n" +
+            "size: 100\r\n"
     );
   }
 

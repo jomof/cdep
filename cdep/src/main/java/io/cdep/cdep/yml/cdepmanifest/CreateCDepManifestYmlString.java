@@ -1,13 +1,9 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
-import static java.util.regex.Pattern.compile;
-
 import io.cdep.cdep.utils.StringUtils;
-import java.util.regex.Pattern;
 
 public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor {
 
-  final private Pattern pattern = compile(".*\\n");
   private int indent = 0;
   private int eatIndent = 0;
   private StringBuilder sb = new StringBuilder();
@@ -24,7 +20,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
       super.visitPlainOldDataObject(name, value);
       return;
     }
-    appendIndented("%s:\n", name);
+    appendIndented("%s:\r\n", name);
     ++indent;
     super.visitPlainOldDataObject(name, value);
     --indent;
@@ -35,7 +31,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
     assert value != null;
     assert name != null;
     if (!value.contains("\n")) {
-      appendIndented("%s: %s\n", name, value);
+      appendIndented("%s: %s\r\n", name, value);
       return;
     }
 
@@ -58,17 +54,17 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   @Override
   public void visitLong(String name, Long node) {
     assert name != null;
-    appendIndented("%s: %s\n", name, node);
+    appendIndented("%s: %s\r\n", name, node);
   }
 
   @Override
   public void visitStringArray(String name, String[] array) {
-    appendIndented("%s: [%s]\n", name, StringUtils.joinOn(", ", array));
+    appendIndented("%s: [%s]\r\n", name, StringUtils.joinOn(", ", array));
   }
 
   @Override
   public void visitArray(String name, Object[] array, Class<?> elementType) {
-    appendIndented("%s:\n", name);
+    appendIndented("%s:\r\n", name);
     ++indent;
     for (int i = 0; i < array.length; ++i) {
       appendIndented("- ");
