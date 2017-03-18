@@ -15,9 +15,6 @@
 */
 package io.cdep.cdep;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.generator.CMakeGenerator;
@@ -26,8 +23,12 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import java.io.File;
 import org.junit.Test;
+
+import java.io.File;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 public class TestFindModuleFunctionTableBuilder {
 
@@ -65,6 +66,32 @@ public class TestFindModuleFunctionTableBuilder {
         "c++_shared",
         "x86")[0].remote.getPath();
     assertThat(zip).endsWith("cmakeify-android-platform-21.zip");
+    new CMakeGenerator(environment).generate(table);
+  }
+
+  @Test
+  public void testArchiveOnly() throws Exception {
+    ResolvedManifest resolved = ResolvedManifests.archiveOnly();
+    FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+    builder.addManifest(resolved);
+    FunctionTableExpression table = builder.build();
+    System.out.printf(CreateStringVisitor.convert(table));
+    String zip = FindModuleInterpreter.findiOS(table,
+        resolved.cdepManifestYml.coordinate,
+        environment.unzippedArchivesFolder.getAbsolutePath(),
+        "Darwin",
+        new String[]{"armv7"},
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk")
+        [0].remote.getPath();
+    assertThat(zip).endsWith("vectorial.zip");
+    zip = FindModuleInterpreter.findAndroid(table,
+        resolved.cdepManifestYml.coordinate,
+        environment.unzippedArchivesFolder.getAbsolutePath(),
+        "Android",
+        "21",
+        "c++_shared",
+        "x86")[0].remote.getPath();
+    assertThat(zip).endsWith("vectorial.zip");
     new CMakeGenerator(environment).generate(table);
   }
 

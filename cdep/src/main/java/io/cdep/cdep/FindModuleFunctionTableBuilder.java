@@ -15,48 +15,18 @@
 */
 package io.cdep.cdep;
 
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.abort;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.arrayHasOnlyElement;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.assign;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.eq;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.getFileName;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.gte;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.ifSwitch;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.integer;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.joinFileSegments;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.lastIndexOfString;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.module;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.parameter;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.stringStartsWith;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.substring;
-
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.ExampleExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.generator.AndroidAbi;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CoordinateUtils;
-import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
-import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
-import io.cdep.cdep.yml.cdepmanifest.iOSArchitecture;
-import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
-import io.cdep.cdep.yml.cdepmanifest.iOSPlatform;
+import io.cdep.cdep.utils.StringUtils;
+import io.cdep.cdep.yml.cdepmanifest.*;
+
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
 
 
 public class FindModuleFunctionTableBuilder {
@@ -115,10 +85,10 @@ public class FindModuleFunctionTableBuilder {
       throws MalformedURLException, URISyntaxException {
 
     Map<Expression, Expression> cases = new HashMap<>();
-    String supported = "";
     Set<Coordinate> dependencies = new HashSet<>();
-    if (resolved.cdepManifestYml.dependencies != null) {
-      for (HardNameDependency dependency : resolved.cdepManifestYml.dependencies) {
+    CDepManifestYml manifest = resolved.cdepManifestYml;
+    if (manifest.dependencies != null) {
+      for (HardNameDependency dependency : manifest.dependencies) {
         Coordinate coordinate = CoordinateUtils.tryParse(dependency.compile);
         dependencies.add(coordinate);
       }
@@ -126,17 +96,17 @@ public class FindModuleFunctionTableBuilder {
 
     AssignmentExpression coordinateGroupId = assign(
         "coordinate_group_id",
-        string(resolved.cdepManifestYml.coordinate.groupId)
+        string(manifest.coordinate.groupId)
     );
 
     AssignmentExpression coordinateArtifactId = assign(
         "coordinate_artifact_id",
-        string(resolved.cdepManifestYml.coordinate.artifactId)
+        string(manifest.coordinate.artifactId)
     );
 
     AssignmentExpression coordinateVersion = assign(
         "coordinate_version",
-        string(resolved.cdepManifestYml.coordinate.version)
+        string(manifest.coordinate.version)
     );
 
     AssignmentExpression explodedArchiveTail = assign(
@@ -150,17 +120,35 @@ public class FindModuleFunctionTableBuilder {
         joinFileSegments(cdepExplodedRoot, explodedArchiveTail)
     );
 
-    if (resolved.cdepManifestYml.android != null
-        && resolved.cdepManifestYml.android.archives != null) {
-      supported += "'Android' ";
+    Set<String> supported = new HashSet<>();
+    boolean headerOnly = true;
+    if (manifest.android != null
+        && manifest.android.archives != null) {
+      headerOnly = false;
+      supported.add("Android");
       cases.put(string("Android"),
           buildAndroidStlTypeCase(resolved, explodedArchiveFolder, dependencies));
     }
-    if (resolved.cdepManifestYml.iOS != null && resolved.cdepManifestYml.iOS.archives != null) {
-      supported += "'Darwin' ";
+    if (manifest.iOS != null && manifest.iOS.archives != null) {
+      headerOnly = false;
+      supported.add("Android");
       cases.put(string("Darwin"),
           buildDarwinPlatformCase(resolved, explodedArchiveFolder, dependencies));
     }
+    if (headerOnly && manifest.archive != null) {
+      Expression module = buildSingleArchiveResolution(
+          resolved,
+          manifest.archive,
+          explodedArchiveFolder,
+          dependencies);
+      supported.add("Android");
+      supported.add("Darwin");
+      supported.add("Linux");
+      cases.put(string("Android"), module);
+      cases.put(string("Darwin"), module);
+      cases.put(string("Linux"), module);
+    }
+
     Expression bool[] = new Expression[cases.size()];
     Expression expressions[] = new Expression[cases.size()];
     int i = 0;
@@ -178,12 +166,30 @@ public class FindModuleFunctionTableBuilder {
         abort(
             String.format("Target platform '%%s' is not supported by module '%s'. "
                     + "Supported: %s",
-                resolved.cdepManifestYml.coordinate, supported), targetPlatform));
+                manifest.coordinate, StringUtils.joinOn(" ", supported)), targetPlatform));
 
-    return new FindModuleExpression(resolved.cdepManifestYml.coordinate, cdepExplodedRoot,
+    return new FindModuleExpression(manifest.coordinate, cdepExplodedRoot,
         targetPlatform,
         systemVersion, androidArchAbi, androidStlType, osxSysroot, osxArchitectures,
         expression);
+  }
+
+  private Expression buildSingleArchiveResolution(
+      ResolvedManifest resolved,
+      Archive archive,
+      AssignmentExpression explodedArchiveFolder,
+      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+    return module(new ModuleArchiveExpression[]{archive(
+        resolved.remote.toURI()
+            .resolve(".")
+            .resolve(archive.file)
+            .toURL(),
+        archive.sha256,
+        archive.size,
+        archive.include,
+        joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
+        null,
+        null)}, dependencies);
   }
 
   private Expression buildDarwinPlatformCase(
@@ -329,7 +335,8 @@ public class FindModuleFunctionTableBuilder {
       AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     int archiveCount = 1;
-    if (resolved.cdepManifestYml.archive != null) {
+    CDepManifestYml manifest = resolved.cdepManifestYml;
+    if (manifest.archive != null) {
       ++archiveCount;
     }
 
@@ -348,18 +355,18 @@ public class FindModuleFunctionTableBuilder {
         archive.lib == null ? null
             : joinFileSegments(explodedArchiveFolder, archive.file, "lib", archive.lib));
 
-    if (resolved.cdepManifestYml.archive != null) {
+    if (manifest.archive != null) {
       // This is the global zip file from the top level of the manifest.
       archives[1] = archive(
           resolved.remote.toURI()
               .resolve(".")
-              .resolve(resolved.cdepManifestYml.archive.file)
+              .resolve(manifest.archive.file)
               .toURL(),
-          resolved.cdepManifestYml.archive.sha256,
-          resolved.cdepManifestYml.archive.size,
-          "include",
+          manifest.archive.sha256,
+          manifest.archive.size,
+          manifest.archive.include,
           joinFileSegments(explodedArchiveFolder,
-              resolved.cdepManifestYml.archive.file, "include"),
+              manifest.archive.file, manifest.archive.include),
           null,
           null);
     }
@@ -486,7 +493,8 @@ public class FindModuleFunctionTableBuilder {
     }
     AndroidArchive archive = androids.get(0);
     int archiveCount = 1;
-    if (resolved.cdepManifestYml.archive != null) {
+    CDepManifestYml manifest = resolved.cdepManifestYml;
+    if (manifest.archive != null) {
       ++archiveCount;
     }
 
@@ -513,18 +521,18 @@ public class FindModuleFunctionTableBuilder {
           archive.lib == null ? null
               : joinFileSegments(explodedArchiveFolder, archive.file, "lib", abi, archive.lib));
 
-      if (resolved.cdepManifestYml.archive != null) {
+      if (manifest.archive != null) {
         // This is the global zip file from the top level of the manifest.
         archives[1] = archive(
             resolved.remote.toURI()
                 .resolve(".")
-                .resolve(resolved.cdepManifestYml.archive.file)
+                .resolve(manifest.archive.file)
                 .toURL(),
-            resolved.cdepManifestYml.archive.sha256,
-            resolved.cdepManifestYml.archive.size,
-            "include",
+            manifest.archive.sha256,
+            manifest.archive.size,
+            manifest.archive.include,
             joinFileSegments(explodedArchiveFolder,
-                resolved.cdepManifestYml.archive.file, "include"),
+                manifest.archive.file, manifest.archive.include),
             null,
             null);
       }
@@ -533,7 +541,7 @@ public class FindModuleFunctionTableBuilder {
 
     Expression prior = abort(
         String.format("Android ABI '%%s' is not supported by module '%s'. Supported: %s",
-            resolved.cdepManifestYml.coordinate, supported), androidArchAbi);
+            manifest.coordinate, supported), androidArchAbi);
 
     Expression bool[] = new Expression[cases.size()];
     Expression expressions[] = new Expression[cases.size()];

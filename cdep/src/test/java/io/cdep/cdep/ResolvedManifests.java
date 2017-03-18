@@ -3,11 +3,34 @@ package io.cdep.cdep;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
 
 public class ResolvedManifests {
+
+  public static ResolvedManifest archiveOnly() throws MalformedURLException {
+    String manifest = "coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: vectorial\n" +
+        "  version: 0.0.0\n" +
+        "archive:\n" +
+        "  file: vectorial.zip\n" +
+        "  sha256: 47e72f9898a78024a96e7adc5b29d6ec02313a02087646d69d7797f13840121c\n" +
+        "  size: 52863\n" +
+        "  include: vectorial-master/include\n" +
+        "example: |\n" +
+        "  #include <vectorial/simd4f.h>\n" +
+        "  void test() {\n" +
+        "    float z = simd4f_get_z(simd4f_add(simd4f_create(1,2,3,4), \n" +
+        "      simd4f_create(1,2,3,4)));\n" +
+        "  }";
+
+    CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
+    CDepManifestYmlUtils.checkManifestSanity(yml);
+    return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+  }
 
   public static ResolvedManifest admob() throws MalformedURLException {
     String manifest = "coordinate:\n"
