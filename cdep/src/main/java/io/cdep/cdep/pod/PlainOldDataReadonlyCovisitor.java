@@ -100,6 +100,9 @@ public class PlainOldDataReadonlyCovisitor {
     } catch (IllegalAccessException e) {
       throw new RuntimeException(e);
     } catch (InvocationTargetException e) {
+      if (e.getTargetException() instanceof RuntimeException) {
+        throw (RuntimeException) e.getTargetException();
+      }
       throw new RuntimeException(e);
     } finally {
       pop();
@@ -115,7 +118,7 @@ public class PlainOldDataReadonlyCovisitor {
       representative = left;
     }
     if (representative.getClass().isEnum()) {
-      return;
+      throw new RuntimeException("Don't visit enum field");
     }
     try {
       for (Field field : representative.getClass().getFields()) {

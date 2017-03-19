@@ -2,10 +2,14 @@ package io.cdep.cdep.utils;
 
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
+import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
@@ -375,6 +379,55 @@ public class TestCDepManifestYmlUtils {
     }
     if (unexpectedFailure) {
       throw new RuntimeException("Unexpected failures. See console.");
+    }
+  }
+
+  @Test
+  public void testTwoWayMergeSanity() throws Exception {
+    Set<String> commonDifferences = new HashSet<>();
+    Map<String, String> expected = new HashMap<>();
+    expected.put("archiveMissingSha256-archiveMissingSha256", "Archive is missing sha256");
+    expected.put("archiveMissingFile-archiveMissingFile", "Archive is missing file");
+    expected.put("archiveMissingSize-archiveMissingSize", "Archive is missing size or it is zero");
+    expected.put("admob-admob", "Package 'com.github.jomof:firebase/admob:2.1.3-rev8' contains multiple references to the same archive file 'firebase-android-admob-cpp.zip'");
+    expected.put("sqliteiOS-sqliteiOS", "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to the same archive file 'sqlite-ios-platform-iPhoneOS-architecture-armv7-sdk-9.3.zip'");
+    expected.put("sqlite-sqlite", "Package 'com.github.jomof:sqlite:0.0.0' contains multiple references to the same archive file 'sqlite-android-cxx-platform-12.zip'");
+    expected.put("sqliteAndroid-sqliteAndroid", "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to the same archive file 'sqlite-android-cxx-platform-12.zip'");
+
+    boolean somethingUnexpected = false;
+    for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {
+      for (ResolvedManifests.NamedManifest manifest2 : ResolvedManifests.all()) {
+        String key = manifest1.name + "-" + manifest2.name;
+        String expectedFailure = expected.get(key);
+        CDepManifestYml manifest;
+
+        try {
+          manifest = MergeCDepManifestYmls.merge(manifest1.resolved.cdepManifestYml,
+              manifest2.resolved.cdepManifestYml);
+        } catch (RuntimeException e) {
+          continue;
+        }
+
+        try {
+          CDepManifestYmlUtils.checkManifestSanity(manifest);
+          if (expectedFailure != null) {
+            TestCase.fail("Expected a failure.");
+          }
+        } catch (RuntimeException e) {
+          String actual = e.getMessage();
+          if (!actual.equals(expectedFailure)) {
+            if (!commonDifferences.contains(actual)) {
+              // e.printStackTrace();
+              System.out.printf("expected.put(\"%s\", \"%s\");\n", key, actual);
+              somethingUnexpected = true;
+            }
+          }
+        }
+      }
+    }
+
+    if (somethingUnexpected) {
+      throw new RuntimeException("Saw unexpected results. See console.");
     }
   }
 

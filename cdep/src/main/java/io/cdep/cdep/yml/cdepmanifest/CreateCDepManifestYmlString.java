@@ -27,6 +27,18 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
+  public void visitiOSPlatform(String name, iOSPlatform value) {
+    assert name != null;
+    appendIndented("%s: %s\r\n", name, value);
+  }
+
+  @Override
+  public void visitiOSArchitecture(String name, iOSArchitecture value) {
+    assert name != null;
+    appendIndented("%s: %s\r\n", name, value);
+  }
+
+  @Override
   public void visitString(String name, String value) {
     assert value != null;
     assert name != null;

@@ -1,7 +1,10 @@
 package io.cdep.cdep.yml;
 
 import io.cdep.cdep.ResolvedManifests;
+import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
+import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
 import org.junit.Test;
 
@@ -43,6 +46,7 @@ public class TestMergeCDepManifestYmls {
     commonDifferences.add("Manifests were different at size.archive.[value]");
     commonDifferences.add("Manifests were different at file.archive.[value]");
     commonDifferences.add("Manifests were different at sha256.archive.[value]");
+    commonDifferences.add("Manifests were different at version.coordinate.[value]");
     Map<String, String> expected = new HashMap<>();
     boolean somethingUnexpected = false;
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {
@@ -50,8 +54,18 @@ public class TestMergeCDepManifestYmls {
         String key = manifest1.name + "-" + manifest2.name;
         String expectedFailure = expected.get(key);
         try {
-          MergeCDepManifestYmls.merge(manifest1.resolved.cdepManifestYml,
+          if (key.equals("sqliteiOS-sqliteAndroid")) {
+            System.out.printf("Here");
+          }
+          CDepManifestYml merged1 = MergeCDepManifestYmls.merge(manifest1.resolved.cdepManifestYml,
               manifest2.resolved.cdepManifestYml);
+          String string = CreateCDepManifestYmlString.create(merged1);
+          CDepManifestYml merged2 = CDepManifestYmlUtils.convertStringToManifest(string);
+          if (!CDepManifestYmlEquality.areDeeplyIdentical(merged1, merged2)) {
+            assertThat(string).isEqualTo(CreateCDepManifestYmlString.create(merged2));
+            CDepManifestYmlEquality.areDeeplyIdentical(merged1, merged2);
+            fail("Converted string wasn't the same as original");
+          }
           if (expectedFailure != null) {
             fail("Expected a failure.");
           }

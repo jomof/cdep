@@ -41,8 +41,6 @@ public class CDepManifestYmlUtils {
   }
 
   public static void checkManifestSanity(CDepManifestYml cdepManifestYml) {
-
-
     new Checker().visit(cdepManifestYml, CDepManifestYml.class);
   }
 

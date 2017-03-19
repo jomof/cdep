@@ -59,6 +59,17 @@ public class TestCDep {
   }
 
   @Test
+  public void mergeTwo() throws Exception {
+    File output = new File(".test-files/mergeTwo/merged-manifest.yml");
+    output.delete();
+    String text = main("merge",
+        "com.github.jomof:sqlite/iOS:3.16.2-rev33",
+        "com.github.jomof:sqlite/android:3.16.2-rev33",
+        output.toString());
+    System.out.printf(text);
+  }
+
+  @Test
   public void mergeSecondMissing() throws Exception {
     File output = new File(".test-files/mergeSecondMissing/merged-manifest.yml");
     output.delete();

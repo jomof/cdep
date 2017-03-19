@@ -52,11 +52,11 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
   }
 
   public void covisitiOSPlatform(String name, iOSPlatform left, iOSPlatform right) {
-    covisitFields(left, right);
+    checkEquals(left, right);
   }
 
   public void covisitiOSArchitecture(String name, iOSArchitecture left, iOSArchitecture right) {
-    covisitFields(left, right);
+    checkEquals(left, right);
   }
 
   public void covisitHardNameDependency(String name, HardNameDependency left, HardNameDependency right) {
