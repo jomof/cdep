@@ -40,8 +40,7 @@ public class GeneratorEnvironmentUtils {
    */
   public static void downloadReferencedModules(
       GeneratorEnvironment environment,
-      Map<Coordinate, List<Expression>> foundModules,
-      boolean forceRedownload) throws IOException, NoSuchAlgorithmException {
+      Map<Coordinate, List<Expression>> foundModules) throws IOException, NoSuchAlgorithmException {
 
     Set<File> alreadyExploded = new HashSet<>();
 
@@ -62,10 +61,10 @@ public class GeneratorEnvironmentUtils {
                 String.format("Resolved archive '%s' didn't exist", archive.file));
           }
 
-          boolean forceUnzip = forceRedownload && !alreadyExploded.contains(local);
+          boolean forceUnzip = environment.forceRedownload && !alreadyExploded.contains(local);
           if (archive.size != local.length()) {
             // It may have been an interrupted download. Try again.
-            if (!forceRedownload) {
+            if (!environment.forceRedownload) {
               forceUnzip = true;
               local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
               if (local == null) {

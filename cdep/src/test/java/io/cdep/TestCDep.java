@@ -308,6 +308,33 @@ public class TestCDep {
   }
 
   @Test
+  public void fetch() throws Exception {
+    File folder = new File(".test-files/fetch");
+    folder.mkdirs();
+    String result = main("fetch",
+        "com.github.jomof:low-level-statistics:0.0.16",
+        "com.github.jomof:low-level-statistics:0.0.16",
+        "-wf", folder.toString());
+    System.out.printf(result);
+    assertThat(result).contains("Fetch complete");
+  }
+
+  @Test
+  public void fetchNotFound() throws Exception {
+    File folder = new File(".test-files/fetch");
+    folder.mkdirs();
+    try {
+      main("fetch",
+          "com.github.jomof:low-level-statistics-x:0.0.16",
+          "-wf", folder.toString());
+      fail("Expected failure");
+    } catch (RuntimeException e) {
+      assertThat(e).hasMessage(
+          "Could not resolve 'com.github.jomof:low-level-statistics-x:0.0.16'. It doesn't exist.");
+    }
+  }
+
+  @Test
   public void createHashes() throws Exception {
     File yaml = new File(".test-files/simpleDependency/cdep.yml");
     yaml.getParentFile().mkdirs();

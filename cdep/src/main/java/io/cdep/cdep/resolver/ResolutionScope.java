@@ -141,8 +141,8 @@ public class ResolutionScope {
   /**
    * Return the set of resolved names (coordinates or soft names).
    */
-  public Collection<Resolution> getResolutions() {
-    return resolved.values();
+  public Collection<String> getResolutions() {
+    return resolved.keySet();
   }
 
   public static class Resolution {
