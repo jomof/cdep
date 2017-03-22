@@ -68,7 +68,7 @@ public class CDep {
       new CDep(System.out).go(args);
     } catch (Throwable e) {
       e.printStackTrace();
-      System.exit(1);
+      return 1;
     }
     return 0;
   }
