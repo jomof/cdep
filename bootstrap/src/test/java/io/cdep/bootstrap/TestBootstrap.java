@@ -49,7 +49,7 @@ public class TestBootstrap {
 
     @Test
     public void testCDep() throws Exception {
-        main("https://raw.githubusercontent.com/jomof/cdep/master/bootstrap.yml", "--version");
+        main("https://raw.githubusercontent.com/jomof/cdep/master/boot.yml", "--version");
     }
 
     @Test
