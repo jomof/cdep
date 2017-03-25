@@ -120,7 +120,7 @@ public class FindModuleFunctionTableBuilder {
         joinFileSegments(cdepExplodedRoot, explodedArchiveTail)
     );
 
-    Set<String> supported = new HashSet<>();
+    List<String> supported = new ArrayList<>();
     boolean headerOnly = true;
     if (manifest.android != null
         && manifest.android.archives != null) {

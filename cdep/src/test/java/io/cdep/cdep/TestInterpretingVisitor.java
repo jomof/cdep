@@ -34,7 +34,7 @@ public class TestInterpretingVisitor {
     expected.put("sqliteAndroid", "Target platform 'Linux' is not supported by module 'com.github.jomof:sqlite:3.16.2-rev33'. Supported: Android");
     expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github.jomof:firebase/admob:2.1.3-rev8");
     expected.put("sqliteiOS", "Target platform 'Linux' is not supported by module 'com.github.jomof:sqlite:3.16.2-rev33'. Supported: Darwin");
-    expected.put("sqlite", "Target platform 'Linux' is not supported by module 'com.github.jomof:sqlite:0.0.0'. Supported: Darwin Android");
+    expected.put("sqlite", "Target platform 'Linux' is not supported by module 'com.github.jomof:sqlite:0.0.0'. Supported: Android Darwin");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
