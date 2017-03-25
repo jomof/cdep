@@ -369,7 +369,7 @@ public class CDep {
         return true;
       }
 
-      GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
+      GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
       SoftNameDependency dependencies[] = new SoftNameDependency[args.size() - 1];
       for (int i = 1; i < args.size(); ++i) {
         dependencies[i - 1] = new SoftNameDependency(args.get(i));
