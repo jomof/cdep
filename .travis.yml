@@ -3,8 +3,14 @@ matrix:
   include:
   - jdk: oraclejdk7
     os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - gcc-4.8
+        - g++-4.8
     script:
-    - set -e
     - ./gradlew assemble check packageArtifacts --info
     - ./travis_cdep
     - cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
