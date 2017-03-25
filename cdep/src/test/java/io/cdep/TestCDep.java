@@ -426,6 +426,21 @@ public class TestCDep {
   }
 
   @Test
+  public void showInclude() throws Exception {
+    String result = main("show", "include", "com.github.jomof:boost:1.0.63-rev21");
+    assertThat(result).doesNotContain(".yml");
+    assertThat(result).contains(".zip");
+    System.out.printf(result);
+  }
+
+  @Test
+  public void showIncludeNoCoordinate() throws Exception {
+    String result = main("show", "include");
+    assertThat(result).contains("Usage: show include {coordinate}");
+    System.out.printf(result);
+  }
+
+  @Test
   public void help() throws Exception {
     String result = main("--help");
     System.out.printf(result);

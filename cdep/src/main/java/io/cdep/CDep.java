@@ -26,10 +26,7 @@ import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
 import io.cdep.cdep.resolver.ResolutionScope;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
-import io.cdep.cdep.utils.CDepManifestYmlUtils;
-import io.cdep.cdep.utils.CDepYmlUtils;
-import io.cdep.cdep.utils.ExpressionUtils;
-import io.cdep.cdep.utils.FileUtils;
+import io.cdep.cdep.utils.*;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
@@ -39,10 +36,7 @@ import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -51,7 +45,7 @@ import java.util.List;
 
 public class CDep {
 
-  final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev18";
+  final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev21";
   private PrintStream out = System.out;
   private File workingFolder = new File(".");
   private File downloadFolder = null;
@@ -278,7 +272,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleShow(List<String> args) throws IOException, NoSuchAlgorithmException {
+  private boolean handleShow(List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.size() > 0 && "show".equals(args.get(0))) {
       if (args.size() > 1 && "folders".equals(args.get(1))) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
@@ -312,7 +306,23 @@ public class CDep {
         out.print(config.toString());
         return true;
       }
-      out.print("Usage: cdep show [folders|local|manifest]'\n");
+      if (args.size() > 1 && "include".equals(args.get(1))) {
+        if (args.size() == 2) {
+          out.print("Usage: show include {coordinate}/n");
+          return true;
+        }
+        // Redirect output so that only the include folder is printed (so that it can be redirected in shells)
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream alternOut = new PrintStream(baos);
+        for (int i = 2; i < args.size(); ++i) {
+          GeneratorEnvironment environment = getGeneratorEnvironment(
+              alternOut, false, true);
+          File include = EnvironmentUtils.getPackageLevelIncludeFolder(environment, args.get(i));
+          out.printf("%s\n", include);
+        }
+        return true;
+      }
+      out.print("Usage: cdep show [folders|local|manifest|include]'\n");
       return true;
     }
     return false;
@@ -365,7 +375,7 @@ public class CDep {
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fetch".equals(args.get(0))) {
       if (args.size() < 2) {
-        out.printf("Usage: cdep fetch coordinate1 coordinate2 ...\n");
+        out.printf("Usage: cdep fetch {coordinate1} {coordinate2} ...\n");
         return true;
       }
 
@@ -383,7 +393,7 @@ public class CDep {
             .visit(table);
       }
 
-      out.printf("Fetch complete");
+      out.printf("Fetch complete\n");
       return true;
     }
     return false;
@@ -419,7 +429,18 @@ public class CDep {
   }
 
   private GeneratorEnvironment getGeneratorEnvironment(boolean forceRedownload, boolean ignoreManifestHashes) {
-    return new GeneratorEnvironment(out, workingFolder, downloadFolder, forceRedownload,
+    return getGeneratorEnvironment(
+        out,
+        forceRedownload,
+        ignoreManifestHashes);
+  }
+
+  private GeneratorEnvironment getGeneratorEnvironment(
+      PrintStream out, boolean forceRedownload, boolean ignoreManifestHashes) {
+    return new GeneratorEnvironment(
+        out,
+        workingFolder,
+        downloadFolder, forceRedownload,
         ignoreManifestHashes);
   }
 
@@ -447,10 +468,12 @@ public class CDep {
     out.printf(" cdep: download dependencies and generate build modules for current cdep.yml\n");
     out.printf(" cdep show folders: show local download and file folders\n");
     out.printf(" cdep show manifest: show cdep interpretation of cdep.yml\n");
+    out.printf(" cdep show include {coordinate}: show local include path for the given coordinate\n");
     out.printf(" cdep redownload: redownload dependencies for current cdep.yml\n");
     out.printf(" cdep create hashes: create or recreate cdep.sha256 file\n");
-    out.printf(" cdep merge coordinate1 coordinate2 ... outputmanifest.yml: merge manifests into outputmanifest.yml\n");
-    out.printf(" cdep fetch coordinate1 coordinate2 ... : download multiple packages\n");
+    out.printf(" cdep merge {coordinate} {coordinate2} ... outputmanifest.yml: " +
+        "merge manifests into outputmanifest.yml\n");
+    out.printf(" cdep fetch {coordinate} {coordinate2} ... : download multiple packages\n");
     out.printf(" cdep wrapper: copy cdep to the current folder\n");
     out.printf(" cdep --version: show version information\n");
     return false;
