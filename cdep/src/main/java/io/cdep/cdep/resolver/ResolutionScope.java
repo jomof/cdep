@@ -94,7 +94,9 @@ public class ResolutionScope {
    */
   public void recordResolved(SoftNameDependency softname, ResolvedManifest resolved,
       List<HardNameDependency> transitiveDependencies) {
-    assert !isResolved(resolved.cdepManifestYml.coordinate.toString());
+    if (isResolved(resolved.cdepManifestYml.coordinate.toString())) {
+      throw new RuntimeException(String.format("%s was already resolved", resolved.cdepManifestYml.coordinate));
+    }
 
     this.resolved.put(resolved.cdepManifestYml.coordinate.toString(),
         new FoundManifestResolution(resolved));

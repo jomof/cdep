@@ -369,22 +369,19 @@ public class CDep {
         return true;
       }
 
-      GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
-      SoftNameDependency dependencies[] = new SoftNameDependency[args.size() - 1];
       for (int i = 1; i < args.size(); ++i) {
-        dependencies[i - 1] = new SoftNameDependency(args.get(i));
-
+        GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
+        SoftNameDependency dependencies[] = new SoftNameDependency[]{
+            new SoftNameDependency(args.get(i))};
+        FunctionTableExpression table = getFunctionTableExpression(environment, dependencies);
+        // Download and unzip archives.
+        GeneratorEnvironmentUtils.downloadReferencedModules(
+            environment,
+            ExpressionUtils.getAllFoundModuleExpressions(table));
+        // Check that the expected files were downloaded
+        new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder)
+            .visit(table);
       }
-      FunctionTableExpression table = getFunctionTableExpression(environment, dependencies);
-
-      // Download and unzip archives.
-      GeneratorEnvironmentUtils.downloadReferencedModules(
-          environment,
-          ExpressionUtils.getAllFoundModuleExpressions(table));
-
-      // Check that the expected files were downloaded
-      new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder)
-          .visit(table);
 
       out.printf("Fetch complete");
       return true;

@@ -319,6 +319,19 @@ public class TestCDep {
     assertThat(result).contains("Fetch complete");
   }
 
+//  @Test
+//  public void fetchThree() throws Exception {
+//    File folder = new File(".test-files/fetch");
+//    folder.mkdirs();
+//    String result = main("fetch",
+//        "com.github.jomof:sqlite/iOS:3.16.2-rev43",
+//        "com.github.jomof:sqlite/linux:3.16.2-rev43",
+//        "com.github.jomof:sqlite/android:3.16.2-rev43",
+//        "-wf", folder.toString());
+//    System.out.printf(result);
+//    assertThat(result).contains("Fetch complete");
+//  }
+
   @Test
   public void fetchNotFound() throws Exception {
     File folder = new File(".test-files/fetch");
