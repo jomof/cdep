@@ -73,7 +73,6 @@ public class Bootstrap {
             download.mkdirs();
             download = new File(download, name);
             if (!download.exists()) {
-                out.print(String.format("Downloading %s\n", dependency));
                 WebUtils.copyUrlToLocalFile(new URL(dependency), download);
             }
             localJars.add(download);
@@ -82,7 +81,6 @@ public class Bootstrap {
     }
 
     private boolean handleMonkeyParse(String manifestUrl) throws IOException {
-        out.printf("Manifest %s\n", manifestUrl);
         manifest = WebUtils.getUrlAsString(manifestUrl);
         String lines[] = manifest.split("\\r?\\n");
         String section = null;
