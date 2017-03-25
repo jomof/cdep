@@ -9,7 +9,6 @@
 MANIFEST=https://raw.githubusercontent.com/jomof/cdep/master/bootstrap.yml
 
 if [ -f "$1" ]; then
-    echo Using $1 instead of $MANIFEST
     MANIFEST=$1
     shift 1
 fi
