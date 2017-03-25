@@ -388,16 +388,19 @@ public class TestCDepManifestYmlUtils {
   public void testTwoWayMergeSanity() throws Exception {
     Set<String> commonDifferences = new HashSet<>();
     Map<String, String> expected = new HashMap<>();
+    expected.put("sqliteLinuxMultiple-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
+    expected.put("sqliteLinuxMultiple-sqlite", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
+    expected.put("sqliteLinuxMultiple-sqliteLinux", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
     expected.put("archiveMissingSha256-archiveMissingSha256", "Archive is missing sha256");
-    expected.put("archiveMissingFile-archiveMissingFile", "Archive is missing file");
     expected.put("archiveMissingSize-archiveMissingSize", "Archive is missing size or it is zero");
-    expected.put("admob-admob", "Package 'com.github.jomof:firebase/admob:2.1.3-rev8' contains multiple references to the same archive file 'firebase-android-admob-cpp.zip'");
-    expected.put("sqliteiOS-sqliteiOS", "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to the same archive file 'sqlite-ios-platform-iPhoneOS-architecture-armv7-sdk-9.3.zip'");
+    expected.put("archiveMissingFile-archiveMissingFile", "Archive is missing file");
+    expected.put("sqlite-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
     expected.put("sqlite-sqlite", "Package 'com.github.jomof:sqlite:0.0.0' contains multiple references to the same archive file 'sqlite-android-cxx-platform-12.zip'");
     expected.put("sqliteAndroid-sqliteAndroid", "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to the same archive file 'sqlite-android-cxx-platform-12.zip'");
-    expected.put("sqliteLinuxMultiple-sqliteLinux", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
-    expected.put("sqliteLinuxMultiple-sqlite", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
-    expected.put("sqliteLinuxMultiple-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
+    expected.put("sqliteiOS-sqliteiOS", "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to the same archive file 'sqlite-ios-platform-iPhoneOS-architecture-armv7-sdk-9.3.zip'");
+    expected.put("admob-admob", "Package 'com.github.jomof:firebase/admob:2.1.3-rev8' contains multiple references to the same archive file 'firebase-android-admob-cpp.zip'");
+    expected.put("sqliteLinux-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
+    expected.put("sqliteLinux-sqliteLinux", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
 
     boolean somethingUnexpected = false;
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {

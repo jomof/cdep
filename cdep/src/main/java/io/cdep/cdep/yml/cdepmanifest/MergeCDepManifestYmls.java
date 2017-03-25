@@ -51,9 +51,11 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
     iOS ios = (iOS) returnValue;
     covisit("android", left.android, right.android, Android.class);
     Android android = (Android) returnValue;
+    covisit("linux", left.linux, right.linux, Linux.class);
+    Linux linux = (Linux) returnValue;
 
     returnValue = new CDepManifestYml(left.coordinate, left.dependencies, left.archive, android,
-        ios, left.linux, left.example);
+        ios, linux, left.example);
   }
 
   @Override

@@ -89,8 +89,11 @@ public class TestMergeCDepManifestYmls {
 
   @Test
   public void mergeAndroidiOSLinux() throws Exception {
-    MergeCDepManifestYmls.merge(
+    CDepManifestYml result = MergeCDepManifestYmls.merge(
         ResolvedManifests.sqlite().cdepManifestYml,
         ResolvedManifests.sqliteLinux().cdepManifestYml);
+    assertThat(result.linux).isNotNull();
+    assertThat(result.linux.archives).isNotEmpty();
+    assertThat(result.linux.archives).hasLength(1);
   }
 }
