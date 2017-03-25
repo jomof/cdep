@@ -148,6 +148,18 @@ public class CDepManifestYmlUtils {
     }
 
     @Override
+    public void visitLinux(String name, Linux value) {
+      if (value.archives != null) {
+        if (value.archives.length > 1) {
+          throw new RuntimeException(
+              String.format("Package '%s' has multiple linux archives. Only one is allowed.",
+                  coordinate));
+        }
+      }
+      super.visitLinux(name, value);
+    }
+
+    @Override
     public void visitAndroid(String name, Android value) {
       if (value.archives != null) {
         Set<String> zips = new HashSet<>();

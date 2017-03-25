@@ -24,7 +24,7 @@ public class CDepManifestYml {
   final public HardNameDependency dependencies[];
   final public Archive archive;
   final public Android android;
-  final public Object linux;
+  final public Linux linux;
   final public iOS iOS;
   final public String example;
 
@@ -49,7 +49,7 @@ public class CDepManifestYml {
   }
 
   public CDepManifestYml(Coordinate coordinate, HardNameDependency[] dependencies, Archive archive,
-                         Android android, iOS ios, Object linux, String example) {
+                         Android android, iOS ios, Linux linux, String example) {
     this.coordinate = coordinate;
     this.dependencies = dependencies;
     this.archive = archive;

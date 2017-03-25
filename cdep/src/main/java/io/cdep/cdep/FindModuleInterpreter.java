@@ -19,6 +19,7 @@ import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
 import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -88,6 +89,28 @@ class FindModuleInterpreter {
         }
         if (expr == function.osxArchitectures) {
           return osxArchitectures;
+        }
+        return super.visitParameterExpression(expr);
+      }
+    }.visit(function.expression);
+  }
+
+  static ModuleArchive[] findLinux(
+      FunctionTableExpression table,
+      Coordinate functionName,
+      final String cdepExplodedRoot,
+      final String targetPlatform) throws InvocationTargetException, IllegalAccessException {
+    final FindModuleExpression function = table.findFunctions.get(functionName);
+    Map<ParameterExpression, Object> parameters = new HashMap<>();
+    parameters.put(function.targetPlatform, targetPlatform);
+    return (ModuleArchive[]) new InterpretingVisitor() {
+      @Override
+      protected Object visitParameterExpression(ParameterExpression expr) {
+        if (expr == function.targetPlatform) {
+          return targetPlatform;
+        }
+        if (expr == function.cdepExplodedRoot) {
+          return cdepExplodedRoot;
         }
         return super.visitParameterExpression(expr);
       }

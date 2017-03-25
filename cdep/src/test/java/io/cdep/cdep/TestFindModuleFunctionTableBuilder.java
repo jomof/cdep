@@ -164,6 +164,25 @@ public class TestFindModuleFunctionTableBuilder {
   }
 
   @Test
+  public void testLinux() throws Exception {
+    ResolvedManifest resolved = ResolvedManifests.sqliteLinux();
+    FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+    builder.addManifest(resolved);
+    FunctionTableExpression table = builder.build();
+    CreateStringVisitor.convert(table);
+    System.out.printf(table.toString());
+    String zip = FindModuleInterpreter.findLinux(table,
+        resolved.cdepManifestYml.coordinate,
+        environment.unzippedArchivesFolder.getAbsolutePath(),
+        "Linux")
+        [0].remote.getPath();
+    assertThat(zip).endsWith("sqlite-linux.zip");
+
+    new CMakeGenerator(environment).generate(table);
+    ExpressionUtils.getAllFoundModuleExpressions(table);
+  }
+
+  @Test
   public void testiOSNonSpecificSDK() throws Exception {
     ResolvedManifest resolved = ResolvedManifests.sqlite();
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();

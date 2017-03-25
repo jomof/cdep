@@ -2,11 +2,13 @@ package io.cdep.cdep.yml.cdepmanifest;
 
 @SuppressWarnings("unused")
 public class Linux {
-  final public Archive archives[] = null;
-  final public String include;
+  final public LinuxArchive archives[];
 
   Linux() {
-      this.include = "include";
+    archives = null;
+  }
 
+  Linux(LinuxArchive archives[]) {
+    this.archives = archives;
   }
 }

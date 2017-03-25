@@ -86,4 +86,11 @@ public class TestMergeCDepManifestYmls {
       throw new RuntimeException("Saw unexpected results. See console.");
     }
   }
+
+  @Test
+  public void mergeAndroidiOSLinux() throws Exception {
+    MergeCDepManifestYmls.merge(
+        ResolvedManifests.sqlite().cdepManifestYml,
+        ResolvedManifests.sqliteLinux().cdepManifestYml);
+  }
 }

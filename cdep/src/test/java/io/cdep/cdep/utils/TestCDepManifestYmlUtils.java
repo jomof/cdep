@@ -360,6 +360,8 @@ public class TestCDepManifestYmlUtils {
     expected.put("archiveMissingSize", "Archive is missing size or it is zero");
     expected.put("archiveMissingFile", "Archive is missing file");
     expected.put("archiveMissingSha256", "Archive is missing sha256");
+    expected.put("sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. " +
+        "Only one is allowed.");
     boolean unexpectedFailure = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       String key = manifest.name;
@@ -393,6 +395,9 @@ public class TestCDepManifestYmlUtils {
     expected.put("sqliteiOS-sqliteiOS", "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to the same archive file 'sqlite-ios-platform-iPhoneOS-architecture-armv7-sdk-9.3.zip'");
     expected.put("sqlite-sqlite", "Package 'com.github.jomof:sqlite:0.0.0' contains multiple references to the same archive file 'sqlite-android-cxx-platform-12.zip'");
     expected.put("sqliteAndroid-sqliteAndroid", "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to the same archive file 'sqlite-android-cxx-platform-12.zip'");
+    expected.put("sqliteLinuxMultiple-sqliteLinux", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
+    expected.put("sqliteLinuxMultiple-sqlite", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
+    expected.put("sqliteLinuxMultiple-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
 
     boolean somethingUnexpected = false;
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {

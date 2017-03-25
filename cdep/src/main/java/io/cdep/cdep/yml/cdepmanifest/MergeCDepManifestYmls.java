@@ -2,7 +2,7 @@ package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.cdep.Coordinate;
 
-import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.android;
+import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.*;
 import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.iOS;
 
 /**
@@ -97,6 +97,25 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   }
 
   @Override
+  public void covisitLinux(String name, Linux left, Linux right) {
+    if (left == null && right == null) {
+      returnValue = null;
+      return;
+    }
+    if (left == null) {
+      returnValue = right;
+      return;
+    }
+    if (right == null) {
+      returnValue = left;
+      return;
+    }
+    covisitLinuxArchiveArray("archive", left.archives, right.archives);
+    LinuxArchive archives[] = (LinuxArchive[]) returnValue;
+    returnValue = linux(archives);
+  }
+
+  @Override
   public void covisitAndroidArchiveArray(String name, AndroidArchive[] left,
                                          AndroidArchive[] right) {
     if (left == null) {
@@ -129,6 +148,27 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
       return;
     }
     iOSArchive result[] = new iOSArchive[left.length + right.length];
+    int j = 0;
+    for (int i = 0; i < left.length; ++i, ++j) {
+      result[j] = left[i];
+    }
+    for (int i = 0; i < right.length; ++i, ++j) {
+      result[j] = right[i];
+    }
+    returnValue = result;
+  }
+
+  @Override
+  public void covisitLinuxArchiveArray(String name, LinuxArchive[] left, LinuxArchive[] right) {
+    if (left == null) {
+      returnValue = right;
+      return;
+    }
+    if (right == null) {
+      returnValue = left;
+      return;
+    }
+    LinuxArchive result[] = new LinuxArchive[left.length + right.length];
     int j = 0;
     for (int i = 0; i < left.length; ++i, ++j) {
       result[j] = left[i];

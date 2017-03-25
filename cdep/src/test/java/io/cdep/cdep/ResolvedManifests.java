@@ -15,6 +15,46 @@ import java.util.List;
 
 public class ResolvedManifests {
 
+  public static ResolvedManifest sqliteLinux() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: sqlite\n" +
+        "  version: 0.0.0\n" +
+        "linux:\n" +
+        "  archives:\n" +
+        "  - lib: libsqlite.a\n" +
+        "    file: sqlite-linux.zip\n" +
+        "    sha256: a4fcb715b3b22a29ee774f30795516e46ccc4712351d13030f0f58b36c5b3d9b\n" +
+        "    size: 480895\n" +
+        "example: |\n" +
+        "  #include <sqlite3.h>\n" +
+        "  void test() {\n" +
+        "    sqlite3_initialize();\n" +
+        "  }");
+  }
+
+  public static ResolvedManifest sqliteLinuxMultiple() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: sqlite\n" +
+        "  version: 0.0.0\n" +
+        "linux:\n" +
+        "  archives:\n" +
+        "  - lib: libsqlite.a\n" +
+        "    file: sqlite-linux-1.zip\n" +
+        "    sha256: a4fcb715b3b22a29ee774f30795516e46ccc4712351d13030f0f58b36c5b3d9b\n" +
+        "    size: 480895\n" +
+        "  - lib: libsqlite.a\n" +
+        "    file: sqlite-linux-2.zip\n" +
+        "    sha256: a4fcb715b3b22a29ee774f30795516e46ccc4712351d13030f0f58b36c5b3d9b\n" +
+        "    size: 480895\n" +
+        "example: |\n" +
+        "  #include <sqlite3.h>\n" +
+        "  void test() {\n" +
+        "    sqlite3_initialize();\n" +
+        "  }");
+  }
+
   public static ResolvedManifest archiveMissingSize() throws MalformedURLException {
     return getResolvedManifest("coordinate:\n" +
         "  groupId: com.github.jomof\n" +

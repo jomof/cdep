@@ -135,6 +135,16 @@ public class FindModuleFunctionTableBuilder {
       cases.put(string("Darwin"),
           buildDarwinPlatformCase(resolved, explodedArchiveFolder, dependencies));
     }
+    if (manifest.linux != null && manifest.linux.archives != null && manifest.linux.archives.length > 0) {
+      headerOnly = false;
+      supported.add("Linux");
+      cases.put(string("Linux"),
+          buildSingleLinuxArchiveResolution(
+              resolved,
+              manifest.linux.archives[0],
+              explodedArchiveFolder,
+              dependencies));
+    }
     if (headerOnly && manifest.archive != null) {
       Expression module = buildSingleArchiveResolution(
           resolved,
@@ -160,18 +170,44 @@ public class FindModuleFunctionTableBuilder {
       ++i;
     }
 
-    IfSwitchExpression expression = ifSwitch(
-        bool,
-        expressions,
-        abort(
-            String.format("Target platform '%%s' is not supported by module '%s'. "
-                    + "Supported: %s",
-                manifest.coordinate, StringUtils.joinOn(" ", supported)), targetPlatform));
+    AbortExpression abort;
+    if (supported.size() > 0) {
+      abort = abort(
+          String.format("Target platform '%%s' is not supported by module '%s'. "
+                  + "Supported: %s",
+              manifest.coordinate, StringUtils.joinOn(" ", supported)), targetPlatform);
+    } else {
+      throw new RuntimeException(String.format("Module '%s' doesn't support any platforms.",
+          manifest.coordinate));
+    }
+
+    IfSwitchExpression expression = ifSwitch(bool, expressions, abort);
 
     return new FindModuleExpression(manifest.coordinate, cdepExplodedRoot,
         targetPlatform,
         systemVersion, androidArchAbi, androidStlType, osxSysroot, osxArchitectures,
         expression);
+  }
+
+  private Expression buildSingleLinuxArchiveResolution(
+      ResolvedManifest resolved,
+      LinuxArchive archive,
+      AssignmentExpression explodedArchiveFolder,
+      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+    if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
+      return abort(String.format("Archive in %s was malformed", resolved.remote));
+    }
+    return module(new ModuleArchiveExpression[]{archive(
+        resolved.remote.toURI()
+            .resolve(".")
+            .resolve(archive.file)
+            .toURL(),
+        archive.sha256,
+        archive.size,
+        archive.include,
+        joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
+        null,
+        null)}, dependencies);
   }
 
   private Expression buildSingleArchiveResolution(

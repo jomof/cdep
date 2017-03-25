@@ -39,6 +39,18 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
     covisitFields(left, right);
   }
 
+  public void covisitLinux(String name, Linux left, Linux right) {
+    covisitFields(left, right);
+  }
+
+  public void covisitLinuxArchiveArray(String name, LinuxArchive left[], LinuxArchive right[]) {
+    covisitArray(name, left, right, LinuxArchive.class);
+  }
+
+  public void covisitLinuxArchive(String name, LinuxArchive left, LinuxArchive right) {
+    covisitFields(left, right);
+  }
+
   public void covisitiOS(String name, iOS left, iOS right) {
     covisitFields(left, right);
   }

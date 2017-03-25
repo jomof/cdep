@@ -56,4 +56,16 @@ public class CDepManifestYmlReadonlyVisitor extends PlainOldDataReadonlyVisitor 
   public void visitiOSArchive(String name, iOSArchive value) {
     visitPlainOldDataObject(name, value);
   }
+
+  public void visitLinux(String name, Linux value) {
+    visitPlainOldDataObject(name, value);
+  }
+
+  public void visitLinuxArchiveArray(String name, LinuxArchive array[]) {
+    visitArray(name, array, LinuxArchive.class);
+  }
+
+  public void visitLinuxArchive(String name, LinuxArchive value) {
+    visitPlainOldDataObject(name, value);
+  }
 }

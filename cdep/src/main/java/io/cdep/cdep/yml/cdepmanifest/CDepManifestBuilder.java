@@ -18,4 +18,8 @@ public class CDepManifestBuilder {
   public static iOS iOS(HardNameDependency[] dependencies, iOSArchive archives[]) {
     return new iOS(dependencies, archives);
   }
+
+  public static Linux linux(LinuxArchive archives[]) {
+    return new Linux(archives);
+  }
 }
