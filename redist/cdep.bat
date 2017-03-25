@@ -5,7 +5,7 @@
 @rem
 @rem ##########################################################################
 
-set MANIFEST=https://raw.githubusercontent.com/jomof/cdep/master/bootstrap.yml
+set MANIFEST=https://raw.githubusercontent.com/jomof/cdep/master/boot.yml
 
 @rem Set local scope for the variables with windows NT shell
 if "%OS%"=="Windows_NT" setlocal
