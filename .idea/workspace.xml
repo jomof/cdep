@@ -2,27 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="Linux">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/MultiStatementExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/NopExpression.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CreateStringVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CreateStringVisitor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/LiftToCommonAncestor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/LiftToCommonAncestor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/RewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/RewritingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/AbortExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/AbortExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/AssignmentReferenceExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/AssignmentReferenceExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ExpressionBuilder.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ExpressionBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/FindModuleExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/FindModuleExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ModuleExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ModuleExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestReadonlyVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestReadonlyVisitor.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -114,11 +95,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="FindModuleFunctionTableBuilder.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FindModuleFunctionTableBuilder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="148" column="49" lean-forward="false" selection-start-line="148" selection-start-column="49" selection-end-line="148" selection-end-column="49" />
+            <state relative-caret-position="283">
+              <caret line="221" column="78" lean-forward="false" selection-start-line="221" selection-start-column="78" selection-end-line="221" selection-end-column="78" />
               <folding />
             </state>
           </provider>
@@ -175,7 +156,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cdep-dependencies-config.cmake" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cdep-dependencies-config.cmake" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/.test-files/runVectorial/.cdep/modules/cdep-dependencies-config.cmake">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="298">
@@ -224,8 +205,8 @@
             <state relative-caret-position="742">
               <caret line="228" column="15" lean-forward="false" selection-start-line="228" selection-start-column="15" selection-end-line="228" selection-end-column="15" />
               <folding>
-                <element signature="e#7911#7912#0" expanded="true" />
-                <element signature="e#7933#7934#0" expanded="true" />
+                <element signature="e#7907#7908#0" expanded="true" />
+                <element signature="e#7929#7930#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -244,7 +225,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Supported:</find>
       <find>support</find>
       <find>getGeneratorEnvironment</find>
       <find>fetch</find>
@@ -274,6 +254,7 @@
       <find>module(</find>
       <find>[] = new</find>
       <find>cdep_exploded_root</find>
+      <find>was malformed</find>
     </findStrings>
     <replaceStrings>
       <replace>io.cdep.cdep.ast.</replace>
@@ -1165,7 +1146,6 @@
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/NopExpression.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ExpressionBuilder.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/RewritingVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java" />
@@ -1173,6 +1153,7 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
         <option value="$PROJECT_DIR$/cdep/.test-files/runVectorial/.cdep/modules/cdep-dependencies-config.cmake" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" />
       </list>
     </option>
   </component>
@@ -1675,32 +1656,6 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="TestInterpretingVisitor.testAllResolvedManifestsLinux" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="io.cdep.cdep.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="cdep-cdep" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="io.cdep.cdep" />
-      <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.TestInterpretingVisitor" />
-      <option name="METHOD_NAME" value="testAllResolvedManifestsLinux" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/cdep" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
     <configuration default="false" name="TestFindModuleFunctionTableBuilder.testArchiveOnly" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1766,6 +1721,32 @@
       <option name="PACKAGE_NAME" value="io.cdep" />
       <option name="MAIN_CLASS_NAME" value="io.cdep.TestCDep" />
       <option name="METHOD_NAME" value="runVectorial" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/cdep" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestCDep.redownload" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="io.cdep.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="cdep-cdep" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="io.cdep" />
+      <option name="MAIN_CLASS_NAME" value="io.cdep.TestCDep" />
+      <option name="METHOD_NAME" value="redownload" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -1946,18 +1927,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="JUnit.All in cdep-cdep" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.TestInterpretingVisitor.testAllResolvedManifestsLinux" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.TestFindModuleFunctionTableBuilder.testArchiveOnly" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.TestCDep.lintSomeKnownLibraries" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.TestCDep.runVectorial" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.TestFindModuleFunctionTableBuilder.testArchiveOnly" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.TestCDep.lintSomeKnownLibraries" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.TestCDep.runVectorial" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TestCDep.redownload" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="JUnit.All in cdep-cdep" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.TestCDep.runVectorial" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.TestCDep.redownload" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.TestCDep.lintSomeKnownLibraries" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.TestFindModuleFunctionTableBuilder.testArchiveOnly" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.TestInterpretingVisitor.testAllResolvedManifestsLinux" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.TestCDep.runVectorial" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.TestFindModuleFunctionTableBuilder.testArchiveOnly" />
       </list>
     </recent_temporary>
   </component>
@@ -1974,13 +1955,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
-    </task>
-    <task id="LOCAL-00096" summary="Improved coverage">
-      <created>1488592432279</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1488592432279</updated>
     </task>
     <task id="LOCAL-00097" summary="iOS">
       <created>1488934834836</created>
@@ -2318,39 +2292,46 @@
       <option name="project" value="LOCAL" />
       <updated>1490486237658</updated>
     </task>
-    <option name="localTasksCounter" value="145" />
+    <task id="LOCAL-00145" summary="Linux">
+      <created>1490564365457</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1490564365457</updated>
+    </task>
+    <option name="localTasksCounter" value="146" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_cdep-cdep - 2017.03.26 at 14h 26m 33s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_cdep-cdep - 2017.03.26 at 14h 28m 56s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_cdep-cdep - 2017.03.26 at 14h 38m 57s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestCDep_lintSomeKnownLibraries - 2017.03.26 at 14h 28m 18s.xml">
+    <history-entry file="All_in_cdep-cdep - 2017.03.26 at 14h 58m 09s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep-cdep - 2017.03.26 at 15h 00m 08s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep-cdep - 2017.03.26 at 15h 00m 48s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestCDep_lintSomeKnownLibraries - 2017.03.26 at 14h 58m 25s.xml">
       <configuration name="TestCDep.lintSomeKnownLibraries" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestCDep_lintSomeKnownLibraries - 2017.03.26 at 14h 28m 46s.xml">
+    <history-entry file="TestCDep_lintSomeKnownLibraries - 2017.03.26 at 14h 58m 31s.xml">
       <configuration name="TestCDep.lintSomeKnownLibraries" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestCDep_runVectorial - 2017.03.26 at 14h 36m 36s.xml">
-      <configuration name="TestCDep.runVectorial" configurationId="JUnit" />
+    <history-entry file="TestCDep_lintSomeKnownLibraries - 2017.03.26 at 14h 58m 47s.xml">
+      <configuration name="TestCDep.lintSomeKnownLibraries" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestCDep_runVectorial - 2017.03.26 at 14h 36m 42s.xml">
-      <configuration name="TestCDep.runVectorial" configurationId="JUnit" />
+    <history-entry file="TestCDep_lintSomeKnownLibraries - 2017.03.26 at 14h 59m 43s.xml">
+      <configuration name="TestCDep.lintSomeKnownLibraries" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestCDep_redownload - 2017.03.26 at 15h 00m 18s.xml">
+      <configuration name="TestCDep.redownload" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestCDep_runVectorial - 2017.03.26 at 14h 38m 03s.xml">
       <configuration name="TestCDep.runVectorial" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestFindModuleFunctionTableBuilder_testArchiveOnly - 2017.03.26 at 14h 24m 48s.xml">
-      <configuration name="TestFindModuleFunctionTableBuilder.testArchiveOnly" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestFindModuleFunctionTableBuilder_testArchiveOnly - 2017.03.26 at 14h 25m 56s.xml">
-      <configuration name="TestFindModuleFunctionTableBuilder.testArchiveOnly" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -2555,8 +2536,20 @@
           <properties />
           <option name="timeStamp" value="190" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java</url>
+          <line>266</line>
+          <properties />
+          <option name="timeStamp" value="194" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java</url>
+          <line>265</line>
+          <properties />
+          <option name="timeStamp" value="195" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="194" />
+      <option name="time" value="196" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2899,17 +2892,9 @@
         <state relative-caret-position="626">
           <caret line="210" column="31" lean-forward="false" selection-start-line="210" selection-start-column="31" selection-end-line="210" selection-end-column="31" />
           <folding>
-            <element signature="e#6292#6293#0" expanded="true" />
-            <element signature="e#6328#6329#0" expanded="true" />
+            <element signature="e#6293#6294#0" expanded="true" />
+            <element signature="e#6329#6330#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="148" column="49" lean-forward="false" selection-start-line="148" selection-start-column="49" selection-end-line="148" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2918,8 +2903,8 @@
         <state relative-caret-position="742">
           <caret line="228" column="15" lean-forward="false" selection-start-line="228" selection-start-column="15" selection-end-line="228" selection-end-column="15" />
           <folding>
-            <element signature="e#7911#7912#0" expanded="true" />
-            <element signature="e#7933#7934#0" expanded="true" />
+            <element signature="e#7907#7908#0" expanded="true" />
+            <element signature="e#7929#7930#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2998,6 +2983,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
           <caret line="23" column="38" lean-forward="false" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="221" column="78" lean-forward="false" selection-start-line="221" selection-start-column="78" selection-end-line="221" selection-end-column="78" />
           <folding />
         </state>
       </provider>
