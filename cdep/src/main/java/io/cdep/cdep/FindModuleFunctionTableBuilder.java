@@ -199,7 +199,6 @@ public class FindModuleFunctionTableBuilder {
       AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
-      assert false;
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     return module(
