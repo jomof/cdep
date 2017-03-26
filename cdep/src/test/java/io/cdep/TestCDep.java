@@ -160,7 +160,7 @@ public class TestCDep {
     yaml.getParentFile().mkdirs();
     Files.write("builders: [cmake, cmakeExamples]\n"
             + "dependencies:\n"
-            + "- compile: com.github.jomof:vectorial:0.0.0-rev11\n",
+            + "- compile: com.github.jomof:vectorial:0.0.0-rev13\n",
         yaml, StandardCharsets.UTF_8);
     String result = main("-wf", yaml.getParent());
     System.out.printf(result);

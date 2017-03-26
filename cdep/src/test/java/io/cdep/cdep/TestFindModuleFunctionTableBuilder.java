@@ -66,7 +66,7 @@ public class TestFindModuleFunctionTableBuilder {
         "Android",
         "21",
         "c++_shared",
-        "x86")[0].remote.getPath();
+        "x86").remote.getPath();
     assertThat(zip).endsWith("cmakeify-android-platform-21.zip");
     new CMakeGenerator(environment).generate(table);
   }
@@ -84,7 +84,7 @@ public class TestFindModuleFunctionTableBuilder {
         "Darwin",
         new String[]{"armv7"},
         "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk")
-        [0].remote.getPath();
+        .remote.getPath();
     assertThat(zip).endsWith("vectorial.zip");
     zip = FindModuleInterpreter.findAndroid(table,
         resolved.cdepManifestYml.coordinate,
@@ -92,7 +92,7 @@ public class TestFindModuleFunctionTableBuilder {
         "Android",
         "21",
         "c++_shared",
-        "x86")[0].remote.getPath();
+        "x86").remote.getPath();
     assertThat(zip).endsWith("vectorial.zip");
     new CMakeGenerator(environment).generate(table);
   }
@@ -110,7 +110,7 @@ public class TestFindModuleFunctionTableBuilder {
         "Darwin",
         new String[]{"armv7"},
         "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk")
-        [0].remote.getPath();
+        .remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
     new CMakeGenerator(environment).generate(table);
   }
@@ -122,14 +122,14 @@ public class TestFindModuleFunctionTableBuilder {
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
     System.out.printf(CreateStringVisitor.convert(table));
-    ModuleArchive[] found = FindModuleInterpreter.findAndroid(table,
+    ModuleArchive found = FindModuleInterpreter.findAndroid(table,
         resolved.cdepManifestYml.coordinate,
         environment.unzippedArchivesFolder.getAbsolutePath(),
         "Android",
         "21",
         "c++_shared",
         "x86");
-    assertThat(found[0].remote.toString()).contains("sqlite-android-cxx-platform-12.zip");
+    assertThat(found.remote.toString()).contains("sqlite-android-cxx-platform-12.zip");
     new CMakeGenerator(environment).generate(table);
   }
 
@@ -147,7 +147,7 @@ public class TestFindModuleFunctionTableBuilder {
         "Darwin",
         new String[]{"armv7s"},
         "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk")
-        [0].remote.getPath();
+        .remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
 
     zip = FindModuleInterpreter.findiOS(table,
@@ -156,7 +156,7 @@ public class TestFindModuleFunctionTableBuilder {
         "Darwin",
         new String[]{"i386"},
         "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator10.2.sdk")
-        [0].remote.getPath();
+        .remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
 
     new CMakeGenerator(environment).generate(table);
@@ -174,8 +174,7 @@ public class TestFindModuleFunctionTableBuilder {
     String zip = FindModuleInterpreter.findLinux(table,
         resolved.cdepManifestYml.coordinate,
         environment.unzippedArchivesFolder.getAbsolutePath(),
-        "Linux")
-        [0].remote.getPath();
+        "Linux").remote.getPath();
     assertThat(zip).endsWith("sqlite-linux.zip");
 
     new CMakeGenerator(environment).generate(table);
@@ -194,7 +193,7 @@ public class TestFindModuleFunctionTableBuilder {
         "Darwin",
         new String[]{"armv7s"},
         "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
-        [0].remote.getPath();
+        .remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
 
     zip = FindModuleInterpreter.findiOS(table,
@@ -204,7 +203,7 @@ public class TestFindModuleFunctionTableBuilder {
         new String[]{"i386"},
         "/Applications/Xcode.app/Contents/Developer/Platforms/"
             + "iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk")
-        [0].remote.getPath();
+        .remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
 
     new CMakeGenerator(environment).generate(table);
@@ -225,7 +224,7 @@ public class TestFindModuleFunctionTableBuilder {
           new String[]{"armv7s"},
           "/Applications/Xcode.app/Contents/Developer/Platforms/"
               + "iPhoneSimulator.platform/Developer/SDKs/iPad10.2.sdk")
-          [0].remote.getPath();
+          .remote.getPath();
       fail("Expected exception");
     } catch (RuntimeException e) {
       assertThat(e).hasMessage(
@@ -268,7 +267,7 @@ public class TestFindModuleFunctionTableBuilder {
         "Android",
         "21",
         "c++_shared",
-        "x86")[0].remote.getPath())
+        "x86").remote.getPath())
         .contains("platform-21");
     assertThat(FindModuleInterpreter.findAndroid(table,
         resolved.cdepManifestYml.coordinate,
@@ -276,14 +275,14 @@ public class TestFindModuleFunctionTableBuilder {
         "Android",
         "22",
         "c++_shared",
-        "x86")[0].remote.getPath()).contains("platform-21");
+        "x86").remote.getPath()).contains("platform-21");
     assertThat(FindModuleInterpreter.findAndroid(table,
         resolved.cdepManifestYml.coordinate,
         environment.unzippedArchivesFolder.getAbsolutePath(),
         "Android",
         "20",
         "c++_shared",
-        "x86")[0].remote.getPath()).contains("platform-9");
+        "x86").remote.getPath()).contains("platform-9");
   }
 
   @Test
@@ -294,14 +293,14 @@ public class TestFindModuleFunctionTableBuilder {
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
-    ModuleArchive found[] = FindModuleInterpreter.findAndroid(table,
+    ModuleArchive found = FindModuleInterpreter.findAndroid(table,
         resolved.cdepManifestYml.coordinate,
         environment.unzippedArchivesFolder.getAbsolutePath(),
         "Android",
         "21",
         "c++_shared",
         "x86");
-    assertThat(found[0].remote.toString()).isEqualTo(
+    assertThat(found.remote.toString()).isEqualTo(
         "https://github.com/jomof/cmakeify/releases/download/0.0.81/"
             + "cmakeify-android-platform-21.zip");
   }
@@ -314,14 +313,14 @@ public class TestFindModuleFunctionTableBuilder {
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
-    ModuleArchive[] found = FindModuleInterpreter.findAndroid(table,
+    ModuleArchive found = FindModuleInterpreter.findAndroid(table,
         resolved.cdepManifestYml.coordinate,
         environment.unzippedArchivesFolder.getAbsolutePath(),
         "Android",
         "21",
         "c++_shared",
         "x86");
-    assertThat(found[0].fullLibraryName.getName()).isEqualTo("libsqlite.a");
+    assertThat(found.fullLibraryName.getName()).isEqualTo("libsqlite.a");
   }
 
   @Test
@@ -332,15 +331,15 @@ public class TestFindModuleFunctionTableBuilder {
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
-    ModuleArchive[] found = FindModuleInterpreter.findAndroid(table,
+    ModuleArchive found = FindModuleInterpreter.findAndroid(table,
         resolved.cdepManifestYml.coordinate,
         environment.unzippedArchivesFolder.getAbsolutePath(),
         "Android",
         "21",
         "c++_shared",
         "x86");
-    assertThat(found[0].fullLibraryName).isNull();
-    assertThat(found[0].remote.toString()).isEqualTo(
+    assertThat(found.fullLibraryName).isNull();
+    assertThat(found.remote.toString()).isEqualTo(
         "https://github.com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
   }
 
@@ -352,15 +351,15 @@ public class TestFindModuleFunctionTableBuilder {
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
-    ModuleArchive[] found = FindModuleInterpreter.findAndroid(table,
+    ModuleArchive found = FindModuleInterpreter.findAndroid(table,
         resolved.cdepManifestYml.coordinate,
         environment.unzippedArchivesFolder.getAbsolutePath(),
         "Android",
         "21",
         "c++_shared",
         "x86");
-    assertThat(found[0].fullLibraryName).isNull();
-    assertThat(found[0].remote.toString()).isEqualTo(
+    assertThat(found.fullLibraryName).isNull();
+    assertThat(found.remote.toString()).isEqualTo(
         "https://github.com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
   }
 

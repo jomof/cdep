@@ -115,7 +115,7 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     appendIndented("module");
     append("\r\n");
     ++indent;
-    visitIndentedArray(expr.archives);
+    visit(expr.archive);
     --indent;
     appendIndented("end_module");
   }

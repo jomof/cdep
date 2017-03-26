@@ -16,22 +16,9 @@
 package io.cdep.cdep.generator;
 
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.IntegerExpression;
-import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ModuleExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.utils.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -101,13 +88,12 @@ public class CMakeGenerator {
       sb.append(String.format("%sendif(%s)\n", prefix, coordinateVar));
       sb.append(String.format("%sset(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate));
       String appenderFunctionName = getAddDependencyFunctionName(signature.coordinate);
+
       sb.append("function({appenderFunctionName} target)\n"
           .replace("{appenderFunctionName}", appenderFunctionName));
 
-      sb.append(String.format("  set(CDEP_EXPLODED_ARCHIVE_FOLDER \"%s\")\n",
-          getCMakePath(environment.getPackageUnzipFolder(specific.coordinate))));
-      sb.append("  # Choose between Anroid NDK Toolchain and CMake Android Toolchain\n" +
-          "  if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
+      sb.append("  # Choose between Android NDK Toolchain and CMake Android Toolchain\n" +
+          "  if(DEFINED CMAKE_ANDROID_ARCH_ABI)\n" +
           "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" +
           "    set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n" +
           "  else()\n" +
@@ -187,30 +173,32 @@ public class CMakeGenerator {
             String.format("\n%s%s(${target})", prefix, getAddDependencyFunctionName(dependency)));
       }
       sb.append("\n");
-      for (ModuleArchiveExpression archive : specific.archives) {
-        if (archive.includePath != null) {
-          sb.append(String.format(
-              "%starget_include_directories(${target} PRIVATE ",
-              prefix));
-          generateFindAppender(indent, signature, archive.includePath, sb);
-          sb.append(String.format(")\n"));
+      if (specific.archive.includePath != null) {
+        sb.append(String.format("%sset(%s_ROOT ", prefix, upperArtifactID));
+        generateFindAppender(indent, signature, specific.archive.includePath, sb);
+        sb.append(String.format(" PARENT_SCOPE)\n"));
 
-          sb.append(String
-              .format("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix,
-                  archive.include));
-        }
+        sb.append(String.format(
+            "%starget_include_directories(${target} PRIVATE ",
+            prefix));
+        generateFindAppender(indent, signature, specific.archive.includePath, sb);
+        sb.append(String.format(")\n"));
 
-        if (archive.libraryPath != null) {
-          sb.append(String.format(
-              "%starget_link_libraries(${target} ",
-              prefix));
-          generateFindAppender(indent, signature, archive.libraryPath, sb);
-          sb.append(String.format(")\n"));
+        sb.append(String
+            .format("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix,
+                specific.archive.include));
+      }
 
-          sb.append(String
-              .format("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n",
-                  prefix, archive.library));
-        }
+      if (specific.archive.libraryPath != null) {
+        sb.append(String.format(
+            "%starget_link_libraries(${target} ",
+            prefix));
+        generateFindAppender(indent, signature, specific.archive.libraryPath, sb);
+        sb.append(String.format(")\n"));
+
+        sb.append(String
+            .format("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n",
+                prefix, specific.archive.library));
       }
       return;
     } else if (expression instanceof AbortExpression) {
@@ -235,6 +223,15 @@ public class CMakeGenerator {
     } else if (expression instanceof AssignmentReferenceExpression) {
       AssignmentReferenceExpression specific = (AssignmentReferenceExpression) expression;
       sb.append(String.format("%s", specific.assignment.name));
+      return;
+    } else if (expression instanceof MultiStatementExpression) {
+      MultiStatementExpression specific = (MultiStatementExpression) expression;
+      for (StatementExpression expr : specific.statements) {
+        generateFindAppender(indent, signature, expr, sb);
+      }
+      return;
+    } else if (expression instanceof NopExpression) {
+      sb.append("\n");
       return;
     }
 
@@ -272,7 +269,7 @@ public class CMakeGenerator {
   }
 
   private Object generateAssignments(String prefix, FindModuleExpression signature, Expression expr,
-      StringBuilder sb, String assignResult) {
+                                     StringBuilder sb, String assignResult) {
     if (expr instanceof AssignmentExpression) {
       AssignmentExpression specific = (AssignmentExpression) expr;
       String identifier = specific.name;

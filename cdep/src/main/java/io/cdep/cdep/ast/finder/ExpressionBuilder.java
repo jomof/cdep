@@ -1,8 +1,10 @@
 package io.cdep.cdep.ast.finder;
 
 import io.cdep.cdep.Coordinate;
+
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -36,9 +38,12 @@ public class ExpressionBuilder {
   }
 
   public static ModuleExpression module(
-      ModuleArchiveExpression archives[],
+      ModuleArchiveExpression archive,
       Set<Coordinate> dependencies) {
-    return new ModuleExpression(archives, dependencies);
+    if (dependencies == null) {
+      dependencies = new HashSet<>();
+    }
+    return new ModuleExpression(archive, dependencies);
   }
 
   public static AssignmentReferenceExpression reference(AssignmentExpression assignment) {
@@ -197,5 +202,13 @@ public class ExpressionBuilder {
             ExternalFunctionExpression.FILE_JOIN_SEGMENTS,
             root,
             array(segments));
+  }
+
+  public static MultiStatementExpression multi(StatementExpression... statements) {
+    return new MultiStatementExpression(statements);
+  }
+
+  public static NopExpression nop() {
+    return new NopExpression();
   }
 }

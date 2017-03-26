@@ -18,6 +18,7 @@ package io.cdep.cdep;
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
 import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.NopExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,7 +28,7 @@ import java.util.Map;
 class FindModuleInterpreter {
 
   @SuppressWarnings("SameParameterValue")
-  static ModuleArchive[] findAndroid(
+  static ModuleArchive findAndroid(
       FunctionTableExpression table,
       Coordinate functionName,
       final String cdepExplodedRoot,
@@ -41,7 +42,7 @@ class FindModuleInterpreter {
     parameters.put(function.systemVersion, systemVersion);
     parameters.put(function.androidStlType, androidStlType);
     parameters.put(function.androidTargetAbi, androidTargetAbi);
-    return (ModuleArchive[]) new InterpretingVisitor() {
+    return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(ParameterExpression expr) {
         if (expr == function.targetPlatform) {
@@ -61,10 +62,10 @@ class FindModuleInterpreter {
         }
         return super.visitParameterExpression(expr);
       }
-    }.visit(function.expression);
+    }.visit(function.expression));
   }
 
-  static ModuleArchive[] findiOS(
+  static ModuleArchive findiOS(
       FunctionTableExpression table,
       Coordinate functionName,
       final String cdepExplodedRoot,
@@ -75,7 +76,7 @@ class FindModuleInterpreter {
     Map<ParameterExpression, Object> parameters = new HashMap<>();
     parameters.put(function.targetPlatform, targetPlatform);
     parameters.put(function.osxSysroot, osxSysroot);
-    return (ModuleArchive[]) new InterpretingVisitor() {
+    return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(ParameterExpression expr) {
         if (expr == function.targetPlatform) {
@@ -92,10 +93,30 @@ class FindModuleInterpreter {
         }
         return super.visitParameterExpression(expr);
       }
-    }.visit(function.expression);
+    }.visit(function.expression));
   }
 
-  static ModuleArchive[] findLinux(
+  private static ModuleArchive toModuleArchive(Object value) {
+    if (value instanceof ModuleArchive) {
+      return (ModuleArchive) value;
+    }
+    if (value instanceof Object[]) {
+      ModuleArchive found = null;
+      for (Object object : (Object[]) value) {
+        if (object instanceof ModuleArchive) {
+          assert found == null;
+          found = (ModuleArchive) object;
+          continue;
+        }
+        assert object instanceof NopExpression;
+      }
+      assert found != null;
+      return found;
+    }
+    throw new RuntimeException(value.getClass().toString());
+  }
+
+  static ModuleArchive findLinux(
       FunctionTableExpression table,
       Coordinate functionName,
       final String cdepExplodedRoot,
@@ -103,7 +124,7 @@ class FindModuleInterpreter {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     Map<ParameterExpression, Object> parameters = new HashMap<>();
     parameters.put(function.targetPlatform, targetPlatform);
-    return (ModuleArchive[]) new InterpretingVisitor() {
+    return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(ParameterExpression expr) {
         if (expr == function.targetPlatform) {
@@ -114,6 +135,6 @@ class FindModuleInterpreter {
         }
         return super.visitParameterExpression(expr);
       }
-    }.visit(function.expression);
+    }.visit(function.expression));
   }
 }

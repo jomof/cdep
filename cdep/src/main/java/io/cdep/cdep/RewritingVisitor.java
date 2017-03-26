@@ -1,38 +1,13 @@
 package io.cdep.cdep;
 
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.abort;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.array;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.assign;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.assignmentBlock;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.ifSwitch;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.integer;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.invoke;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.module;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
+import io.cdep.cdep.ast.finder.*;
 
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.ArrayExpression;
-import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
-import io.cdep.cdep.ast.finder.ExampleExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.IntegerExpression;
-import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ModuleExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.StatementExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
 
 
 public class RewritingVisitor {
@@ -100,7 +75,13 @@ public class RewritingVisitor {
     if (expr.getClass().equals(AssignmentReferenceExpression.class)) {
       return visitAssignmentReferenceExpression((AssignmentReferenceExpression) expr);
     }
-    throw new RuntimeException(expr.getClass().toString());
+    if (expr.getClass().equals(MultiStatementExpression.class)) {
+      return visitMultiStatementExpression((MultiStatementExpression) expr);
+    }
+    if (expr.getClass().equals(NopExpression.class)) {
+      return visitNopExpression((NopExpression) expr);
+    }
+    throw new RuntimeException("rw" + expr.getClass().toString());
   }
 
   private Expression visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
@@ -145,7 +126,7 @@ public class RewritingVisitor {
 
   protected Expression visitModuleExpression(ModuleExpression expr) {
     return module(
-        visitArchiveArray(expr.archives),
+        (ModuleArchiveExpression) visit(expr.archive),
         expr.dependencies
     );
   }
@@ -217,7 +198,7 @@ public class RewritingVisitor {
         (ParameterExpression) visit(expr.androidStlType),
         (ParameterExpression) visit(expr.osxSysroot),
         (ParameterExpression) visit(expr.osxArchitectures),
-        visit(expr.expression)
+        (StatementExpression) visit(expr.expression)
     );
   }
 
@@ -230,5 +211,21 @@ public class RewritingVisitor {
       newExpr.examples.put(coordinate, (ExampleExpression) visit(expr.examples.get(coordinate)));
     }
     return newExpr;
+  }
+
+  protected StatementExpression[] visitStatementExpressionArray(StatementExpression[] array) {
+    StatementExpression result[] = new StatementExpression[array.length];
+    for (int i = 0; i < array.length; ++i) {
+      result[i] = (StatementExpression) visit(array[i]);
+    }
+    return result;
+  }
+
+  protected Expression visitMultiStatementExpression(MultiStatementExpression expr) {
+    return multi(visitStatementExpressionArray(expr.statements));
+  }
+
+  protected Expression visitNopExpression(NopExpression expr) {
+    return nop();
   }
 }

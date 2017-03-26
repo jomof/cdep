@@ -49,52 +49,50 @@ public class GeneratorEnvironmentUtils {
       assert coordinate != null;
       List<Expression> foundModuleExpressions = foundModules.get(coordinate);
       for (Expression foundModule : foundModuleExpressions) {
-        ModuleArchiveExpression archives[] = null;
+        ModuleArchiveExpression archive = null;
         if (foundModule instanceof ModuleExpression) {
           ModuleExpression specific = (ModuleExpression) foundModule;
-          archives = specific.archives;
+          archive = specific.archive;
         }
-        for (ModuleArchiveExpression archive : archives) {
-          File local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
-          if (local == null) {
-            throw new RuntimeException(
-                String.format("Resolved archive '%s' didn't exist", archive.file));
-          }
+        File local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
+        if (local == null) {
+          throw new RuntimeException(
+              String.format("Resolved archive '%s' didn't exist", archive.file));
+        }
 
-          boolean forceUnzip = environment.forceRedownload && !alreadyExploded.contains(local);
+        boolean forceUnzip = environment.forceRedownload && !alreadyExploded.contains(local);
+        if (archive.size != local.length()) {
+          // It may have been an interrupted download. Try again.
+          if (!environment.forceRedownload) {
+            forceUnzip = true;
+            local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
+            if (local == null) {
+              throw new RuntimeException(
+                  String.format("Resolved archive '%s' didn't exist", archive.file));
+            }
+          }
           if (archive.size != local.length()) {
-            // It may have been an interrupted download. Try again.
-            if (!environment.forceRedownload) {
-              forceUnzip = true;
-              local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
-              if (local == null) {
-                throw new RuntimeException(
-                    String.format("Resolved archive '%s' didn't exist", archive.file));
-              }
-            }
-            if (archive.size != local.length()) {
-              throw new RuntimeException(String.format(
-                  "File size for %s was %s which did not match value %s from the manifest",
-                  archive.file,
-                  local.length(),
-                  archive.size));
-            }
-          }
-
-          String localSha256String = HashUtils.getSHA256OfFile(local);
-          if (!localSha256String.equals(archive.sha256)) {
             throw new RuntimeException(String.format(
-                "SHA256 for %s did not match value from manifest", archive.file));
+                "File size for %s was %s which did not match value %s from the manifest",
+                archive.file,
+                local.length(),
+                archive.size));
           }
+        }
 
-          File unzipFolder = environment.getLocalUnzipFolder(coordinate, archive.file);
-          if (!unzipFolder.exists() || forceUnzip) {
-            //noinspection ResultOfMethodCallIgnored
-            unzipFolder.mkdirs();
-            //environment.out.printf("Exploding %s\n", archive.file);
-            ArchiveUtils.unzip(local, unzipFolder);
-            alreadyExploded.add(local);
-          }
+        String localSha256String = HashUtils.getSHA256OfFile(local);
+        if (!localSha256String.equals(archive.sha256)) {
+          throw new RuntimeException(String.format(
+              "SHA256 for %s did not match value from manifest", archive.file));
+        }
+
+        File unzipFolder = environment.getLocalUnzipFolder(coordinate, archive.file);
+        if (!unzipFolder.exists() || forceUnzip) {
+          //noinspection ResultOfMethodCallIgnored
+          unzipFolder.mkdirs();
+          //environment.out.printf("Exploding %s\n", archive.file);
+          ArchiveUtils.unzip(local, unzipFolder);
+          alreadyExploded.add(local);
         }
       }
     }

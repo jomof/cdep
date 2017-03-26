@@ -38,7 +38,7 @@ public class TestReadonlyVisitor {
           fail("Expected failure");
         }
       } catch (RuntimeException e) {
-        if (expectedFailure == null) {
+        if (expectedFailure == null || !e.getClass().equals(RuntimeException.class)) {
           throw e;
         }
         assertThat(e.getMessage()).contains(expectedFailure);

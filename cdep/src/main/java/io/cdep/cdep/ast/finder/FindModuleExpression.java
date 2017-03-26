@@ -19,34 +19,34 @@ import io.cdep.cdep.Coordinate;
 
 public class FindModuleExpression extends Expression {
 
-    final public Coordinate coordinate;
-    final public ParameterExpression cdepExplodedRoot;
-    final public ParameterExpression targetPlatform;
-    final public ParameterExpression systemVersion;
-    final public ParameterExpression androidTargetAbi;
-    final public ParameterExpression androidStlType;
-    final public ParameterExpression osxSysroot;
+  final public Coordinate coordinate;
+  final public ParameterExpression cdepExplodedRoot;
+  final public ParameterExpression targetPlatform;
+  final public ParameterExpression systemVersion;
+  final public ParameterExpression androidTargetAbi;
+  final public ParameterExpression androidStlType;
+  final public ParameterExpression osxSysroot;
   final public ParameterExpression osxArchitectures;
-    final public Expression expression;
+  final public StatementExpression expression;
 
-    public FindModuleExpression(
-            Coordinate coordinate,
-            ParameterExpression cdepExplodedRoot,
-            ParameterExpression targetPlatform,
-            ParameterExpression systemVersion,
-            ParameterExpression androidTargetAbi,
-            ParameterExpression androidStlType,
-            ParameterExpression osxSysroot,
-        ParameterExpression osxArchitectures,
-            Expression expression) {
-        this.coordinate = coordinate;
-        this.cdepExplodedRoot = cdepExplodedRoot;
-        this.targetPlatform = targetPlatform;
-        this.systemVersion = systemVersion;
-        this.androidTargetAbi = androidTargetAbi;
-        this.androidStlType = androidStlType;
-        this.osxSysroot = osxSysroot;
-      this.osxArchitectures = osxArchitectures;
-        this.expression = expression;
-    }
+  public FindModuleExpression(
+      Coordinate coordinate,
+      ParameterExpression cdepExplodedRoot,
+      ParameterExpression targetPlatform,
+      ParameterExpression systemVersion,
+      ParameterExpression androidTargetAbi,
+      ParameterExpression androidStlType,
+      ParameterExpression osxSysroot,
+      ParameterExpression osxArchitectures,
+      StatementExpression expression) {
+    this.coordinate = coordinate;
+    this.cdepExplodedRoot = cdepExplodedRoot;
+    this.targetPlatform = targetPlatform;
+    this.systemVersion = systemVersion;
+    this.androidTargetAbi = androidTargetAbi;
+    this.androidStlType = androidStlType;
+    this.osxSysroot = osxSysroot;
+    this.osxArchitectures = osxArchitectures;
+    this.expression = expression;
+  }
 }

@@ -24,6 +24,7 @@ import io.cdep.cdep.yml.cdepmanifest.*;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
@@ -139,24 +140,19 @@ public class FindModuleFunctionTableBuilder {
       headerOnly = false;
       supported.add("Linux");
       cases.put(string("Linux"),
-          buildSingleLinuxArchiveResolution(
+          buildSingleArchiveResolution(
               resolved,
               manifest.linux.archives[0],
               explodedArchiveFolder,
               dependencies));
     }
     if (headerOnly && manifest.archive != null) {
-      Expression module = buildSingleArchiveResolution(
-          resolved,
-          manifest.archive,
-          explodedArchiveFolder,
-          dependencies);
       supported.add("Android");
       supported.add("Darwin");
       supported.add("Linux");
-      cases.put(string("Android"), module);
-      cases.put(string("Darwin"), module);
-      cases.put(string("Linux"), module);
+      cases.put(string("Android"), nop());
+      cases.put(string("Darwin"), nop());
+      cases.put(string("Linux"), nop());
     }
 
     Expression bool[] = new Expression[cases.size()];
@@ -181,36 +177,23 @@ public class FindModuleFunctionTableBuilder {
           manifest.coordinate));
     }
 
-    IfSwitchExpression expression = ifSwitch(bool, expressions, abort);
+    StatementExpression expression = ifSwitch(bool, expressions, abort);
 
-    return new FindModuleExpression(manifest.coordinate, cdepExplodedRoot,
-        targetPlatform,
+    Archive archive = manifest.archive;
+    if (archive != null) {
+      expression = multi(buildSingleArchiveResolution(
+          resolved,
+          archive,
+          explodedArchiveFolder,
+          dependencies),
+          expression);
+    }
+    return new FindModuleExpression(manifest.coordinate, cdepExplodedRoot, targetPlatform,
         systemVersion, androidArchAbi, androidStlType, osxSysroot, osxArchitectures,
         expression);
   }
 
-  private Expression buildSingleLinuxArchiveResolution(
-      ResolvedManifest resolved,
-      LinuxArchive archive,
-      AssignmentExpression explodedArchiveFolder,
-      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
-    if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
-      return abort(String.format("Archive in %s was malformed", resolved.remote));
-    }
-    return module(new ModuleArchiveExpression[]{archive(
-        resolved.remote.toURI()
-            .resolve(".")
-            .resolve(archive.file)
-            .toURL(),
-        archive.sha256,
-        archive.size,
-        archive.include,
-        joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
-        null,
-        null)}, dependencies);
-  }
-
-  private Expression buildSingleArchiveResolution(
+  private StatementExpression buildSingleArchiveResolution(
       ResolvedManifest resolved,
       Archive archive,
       AssignmentExpression explodedArchiveFolder,
@@ -218,18 +201,109 @@ public class FindModuleFunctionTableBuilder {
     if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
-    return module(new ModuleArchiveExpression[]{archive(
-        resolved.remote.toURI()
-            .resolve(".")
-            .resolve(archive.file)
-            .toURL(),
-        archive.sha256,
-        archive.size,
-        archive.include,
-        joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
-        null,
-        null)}, dependencies);
+    return module(
+        buildArchive(
+            resolved.remote,
+            archive.file,
+            archive.sha256,
+            archive.size,
+            archive.include,
+            null,
+            explodedArchiveFolder),
+        dependencies);
   }
+
+  private Expression buildSingleArchiveResolution(
+      ResolvedManifest resolved,
+      LinuxArchive archive,
+      AssignmentExpression explodedArchiveFolder,
+      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+    if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
+      return abort(String.format("Archive in %s was malformed", resolved.remote));
+    }
+    return module(
+        buildArchive(
+            resolved.remote,
+            archive.file,
+            archive.sha256,
+            archive.size,
+            archive.include,
+            archive.lib,
+            explodedArchiveFolder),
+        dependencies);
+  }
+
+  private Expression buildSingleArchiveResolution(
+      ResolvedManifest resolved,
+      iOSArchive archive,
+      AssignmentExpression explodedArchiveFolder,
+      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+    if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
+      return abort(String.format("Archive in %s was malformed", resolved.remote));
+    }
+    return module(
+        buildArchive(
+            resolved.remote,
+            archive.file,
+            archive.sha256,
+            archive.size,
+            archive.include,
+            archive.lib,
+            explodedArchiveFolder),
+        dependencies);
+  }
+
+  private Expression buildSingleArchiveResolution(
+      ResolvedManifest resolved,
+      AndroidArchive archive,
+      String abi,
+      AssignmentExpression explodedArchiveFolder,
+      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+    if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
+      return abort(String.format("Archive in %s was malformed", resolved.remote));
+    }
+    assert abi != null;
+    assert abi.length() > 0;
+    String lib = archive.lib;
+    if (lib != null) {
+      lib = abi + "/" + lib;
+    }
+    return module(
+        buildArchive(
+            resolved.remote,
+            archive.file,
+            archive.sha256,
+            archive.size,
+            archive.include,
+            lib,
+            explodedArchiveFolder),
+        dependencies);
+  }
+
+  private ModuleArchiveExpression buildArchive(
+      URL remote,
+      String file,
+      String sha256,
+      Long size,
+      String include,
+      String lib,
+      AssignmentExpression explodedArchiveFolder
+  ) throws URISyntaxException, MalformedURLException {
+    return archive(
+        remote.toURI()
+            .resolve(".")
+            .resolve(file)
+            .toURL(),
+        sha256,
+        size,
+        include,
+        include == null ? null
+            : joinFileSegments(explodedArchiveFolder, file, include),
+        lib == null ? null : "lib/" + lib,
+        lib == null ? null
+            : joinFileSegments(explodedArchiveFolder, file, "lib", lib));
+  }
+
 
   private Expression buildDarwinPlatformCase(
       ResolvedManifest resolved,
@@ -311,7 +385,7 @@ public class FindModuleFunctionTableBuilder {
           combinedPlatformAndSDK,
           string(platformSDK)
       ));
-      expressionList.add(buildiosArchiveExpression(
+      expressionList.add(buildSingleArchiveResolution(
           resolved,
           archive,
           explodedArchiveFolder,
@@ -327,7 +401,7 @@ public class FindModuleFunctionTableBuilder {
           combinedPlatformAndSDK,
           string(archive.platform.toString())
       ));
-      expressionList.add(buildiosArchiveExpression(
+      expressionList.add(buildSingleArchiveResolution(
           resolved,
           archive,
           explodedArchiveFolder,
@@ -353,50 +427,6 @@ public class FindModuleFunctionTableBuilder {
       list.add(archive);
     }
     return result;
-  }
-
-  private Expression buildiosArchiveExpression(
-      ResolvedManifest resolved,
-      iOSArchive archive,
-      AssignmentExpression explodedArchiveFolder,
-      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
-    int archiveCount = 1;
-    CDepManifestYml manifest = resolved.cdepManifestYml;
-    if (manifest.archive != null) {
-      ++archiveCount;
-    }
-
-    ModuleArchiveExpression archives[] = new ModuleArchiveExpression[archiveCount];
-    archives[0] = archive(
-        resolved.remote.toURI()
-            .resolve(".")
-            .resolve(archive.file)
-            .toURL(),
-        archive.sha256,
-        archive.size,
-        archive.include,
-        archive.include == null ? null
-            : joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
-        archive.lib == null ? null : "lib/" + archive.lib,
-        archive.lib == null ? null
-            : joinFileSegments(explodedArchiveFolder, archive.file, "lib", archive.lib));
-
-    if (manifest.archive != null) {
-      // This is the global zip file from the top level of the manifest.
-      archives[1] = archive(
-          resolved.remote.toURI()
-              .resolve(".")
-              .resolve(manifest.archive.file)
-              .toURL(),
-          manifest.archive.sha256,
-          manifest.archive.size,
-          manifest.archive.include,
-          joinFileSegments(explodedArchiveFolder,
-              manifest.archive.file, manifest.archive.include),
-          null,
-          null);
-    }
-    return module(archives, dependencies);
   }
 
   private Expression buildAndroidStlTypeCase(
@@ -532,37 +562,7 @@ public class FindModuleFunctionTableBuilder {
     }
     for (String abi : abis) {
       supported += abi + " ";
-      ModuleArchiveExpression archives[] = new ModuleArchiveExpression[archiveCount];
-      archives[0] = archive(
-          resolved.remote.toURI()
-              .resolve(".")
-              .resolve(archive.file)
-              .toURL(),
-          archive.sha256,
-          archive.size,
-          archive.include,
-          archive.include == null ? null
-              : joinFileSegments(explodedArchiveFolder, archive.file, archive.include),
-          archive.lib == null ? null : "lib/" + archive.lib,
-          archive.lib == null ? null
-              : joinFileSegments(explodedArchiveFolder, archive.file, "lib", abi, archive.lib));
-
-      if (manifest.archive != null) {
-        // This is the global zip file from the top level of the manifest.
-        archives[1] = archive(
-            resolved.remote.toURI()
-                .resolve(".")
-                .resolve(manifest.archive.file)
-                .toURL(),
-            manifest.archive.sha256,
-            manifest.archive.size,
-            manifest.archive.include,
-            joinFileSegments(explodedArchiveFolder,
-                manifest.archive.file, manifest.archive.include),
-            null,
-            null);
-      }
-      cases.put(string(abi), module(archives, dependencies));
+      cases.put(string(abi), buildSingleArchiveResolution(resolved, archive, abi, explodedArchiveFolder, dependencies));
     }
 
     Expression prior = abort(

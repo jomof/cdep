@@ -120,6 +120,12 @@ public class InterpretingVisitor {
     if (expr.getClass().equals(ModuleArchiveExpression.class)) {
       return visitModuleArchiveExpression((ModuleArchiveExpression) expr);
     }
+    if (expr.getClass().equals(MultiStatementExpression.class)) {
+      return visitMultiStatementExpression((MultiStatementExpression) expr);
+    }
+    if (expr.getClass().equals(NopExpression.class)) {
+      return visitNopExpression((NopExpression) expr);
+    }
     throw new RuntimeException(expr.getClass().toString());
   }
 
@@ -130,6 +136,7 @@ public class InterpretingVisitor {
   }
 
   protected Object visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
+    assert stack != null;
     AssignmentFuture future = stack.lookup(expr.assignment);
     if (future.value == null) {
       Frame oldStack = stack;
@@ -150,6 +157,10 @@ public class InterpretingVisitor {
     Object result = visit(expr.statement);
     stack = stack.prior;
     return result;
+  }
+
+  protected Object visitMultiStatementExpression(MultiStatementExpression expr) {
+    return visitArray(expr.statements);
   }
 
   protected Object visitArrayExpression(ArrayExpression expr) {
@@ -173,8 +184,12 @@ public class InterpretingVisitor {
     throw new RuntimeException(String.format(expr.message, parameters));
   }
 
-  protected ModuleArchive[] visitModuleExpression(ModuleExpression expr) {
-    return visitArray(expr.archives);
+  protected ModuleArchive visitModuleExpression(ModuleExpression expr) {
+    return (ModuleArchive) visit(expr.archive);
+  }
+
+  protected Object visitNopExpression(NopExpression expr) {
+    return expr;
   }
 
   protected Object visitInvokeFunctionExpression(InvokeFunctionExpression expr) {
@@ -205,18 +220,6 @@ public class InterpretingVisitor {
     Object result[] = new Object[array.length];
     for (int i = 0; i < array.length; ++i) {
       result[i] = visit(array[i]);
-      if (result[i] == null) {
-        throw new RuntimeException(String.format("Did not expect %s to return null",
-            array[i].getClass()));
-      }
-    }
-    return result;
-  }
-
-  protected ModuleArchive[] visitArray(ModuleArchiveExpression[] array) {
-    ModuleArchive result[] = new ModuleArchive[array.length];
-    for (int i = 0; i < array.length; ++i) {
-      result[i] = visitModuleArchiveExpression(array[i]);
     }
     return result;
   }

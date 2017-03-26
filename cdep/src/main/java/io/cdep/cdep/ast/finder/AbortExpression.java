@@ -15,13 +15,13 @@
 */
 package io.cdep.cdep.ast.finder;
 
-public class AbortExpression extends Expression {
+public class AbortExpression extends StatementExpression {
 
-    final public String message;
-    final public Expression parameters[];
+  final public String message;
+  final public Expression parameters[];
 
   AbortExpression(String message, Expression... parameters) {
-        this.message = message;
-        this.parameters = parameters;
-    }
+    this.message = message;
+    this.parameters = parameters;
+  }
 }

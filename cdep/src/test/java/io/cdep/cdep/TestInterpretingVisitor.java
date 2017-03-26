@@ -73,8 +73,12 @@ public class TestInterpretingVisitor {
           fail("Expected failure for " + manifest.name);
         }
       } catch (RuntimeException e) {
+        if (!RuntimeException.class.equals(e.getClass())) {
+          throw e;
+        }
         if (expectedFailure == null || !expectedFailure.equals(e.getMessage())) {
           unexpectedFailures = true;
+          e.printStackTrace();
           System.out.printf("expected.put(\"%s\", \"%s\");\n", manifest.name, e.getMessage());
         }
       }

@@ -72,7 +72,15 @@ public class ReadonlyVisitor {
       visitModuleArchiveExpression((ModuleArchiveExpression) expr);
       return;
     }
-    throw new RuntimeException(expr.getClass().toString());
+    if (expr.getClass().equals(MultiStatementExpression.class)) {
+      visitMultiStatementExpression((MultiStatementExpression) expr);
+      return;
+    }
+    if (expr.getClass().equals(NopExpression.class)) {
+      visitNopExpression((NopExpression) expr);
+      return;
+    }
+    throw new RuntimeException("ro" + expr.getClass().toString());
   }
 
   protected void visitModuleArchiveExpression(ModuleArchiveExpression expr) {
@@ -108,7 +116,7 @@ public class ReadonlyVisitor {
   }
 
   protected void visitModuleExpression(ModuleExpression expr) {
-    visitArray(expr.archives);
+    visit(expr.archive);
   }
 
   protected void visitInvokeFunctionExpression(InvokeFunctionExpression expr) {
@@ -147,6 +155,13 @@ public class ReadonlyVisitor {
     visit(expr.osxSysroot);
     visit(expr.osxArchitectures);
     visit(expr.expression);
+  }
+
+  protected void visitMultiStatementExpression(MultiStatementExpression expr) {
+    visitArray(expr.statements);
+  }
+
+  protected void visitNopExpression(NopExpression expr) {
   }
 
   void visitFunctionTableExpression(FunctionTableExpression expr) {
