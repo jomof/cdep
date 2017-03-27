@@ -27,15 +27,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class CDepManifestYmlUtils {
 
   public static CDepManifestYml convertStringToManifest(String content) {
     Yaml yaml = new Yaml(new Constructor(CDepManifestYml.class));
-    CDepManifestYml dependencyConfig =
-        (CDepManifestYml) yaml.load(new ByteArrayInputStream(content.getBytes(
-            StandardCharsets.UTF_8)));
+    CDepManifestYml dependencyConfig = (CDepManifestYml) yaml.load(new ByteArrayInputStream(content.getBytes
+        (StandardCharsets.UTF_8)));
     require(dependencyConfig != null, "Manifest was empty");
     return dependencyConfig;
   }
@@ -44,8 +44,7 @@ public class CDepManifestYmlUtils {
     new Checker().visit(cdepManifestYml, CDepManifestYml.class);
   }
 
-  public static List<HardNameDependency> getTransitiveDependencies(
-      CDepManifestYml cdepManifestYml) {
+  public static List<HardNameDependency> getTransitiveDependencies(CDepManifestYml cdepManifestYml) {
     List<HardNameDependency> dependencies = new ArrayList<>();
     if (cdepManifestYml.dependencies != null) {
       for (HardNameDependency dependency : cdepManifestYml.dependencies) {
@@ -63,9 +62,8 @@ public class CDepManifestYmlUtils {
     public void visitString(String name, String node) {
       if (name != null && name.equals("file")) {
         if (filesSeen.contains(node.toLowerCase())) {
-          throw new RuntimeException(
-              String.format("Package '%s' contains multiple references to the same" +
-                  " archive file '%s'", coordinate, node));
+          throw new RuntimeException(String.format("Package '%s' contains multiple references to the same" + " " +
+              "archive file '%s'", coordinate, node));
         }
         filesSeen.add(node.toLowerCase());
       }
@@ -79,9 +77,7 @@ public class CDepManifestYmlUtils {
       }
       super.visitCDepManifestYml(name, value);
       if (filesSeen.isEmpty()) {
-        throw new RuntimeException(
-            String.format(
-                "Package '%s' does not contain any files", coordinate));
+        throw new RuntimeException(String.format("Package '%s' does not contain any files", coordinate));
       }
     }
 
@@ -108,38 +104,31 @@ public class CDepManifestYmlUtils {
         Set<String> zips = new HashSet<>();
         for (iOSArchive archive : value.archives) {
           if (archive.lib != null && !archive.lib.endsWith(".a")) {
-            throw new RuntimeException(
-                String.format("Package '%s' has non-static iOS libraryName '%s'",
-                    coordinate, archive.lib));
+            throw new RuntimeException(String.format("Package '%s' has non-static iOS libraryName '%s'", coordinate,
+                archive.lib));
           }
 
           if (archive.file == null) {
-            throw new RuntimeException(
-                String.format("Package '%s' has missing ios.archive.file",
-                    coordinate));
+            throw new RuntimeException(String.format("Package '%s' has missing ios.archive.file", coordinate));
           }
 
           zips.add(archive.file);
 
           if (archive.sha256 == null) {
-            throw new RuntimeException(
-                String.format("Package '%s' has missing ios.archive.sha256 for '%s'",
-                    coordinate, archive.file));
+            throw new RuntimeException(String.format("Package '%s' has missing ios.archive.sha256 for '%s'",
+                coordinate, archive.file));
           }
           if (archive.size == null) {
-            throw new RuntimeException(
-                String.format("Package '%s' has missing ios.archive.size for '%s'",
-                    coordinate, archive.file));
+            throw new RuntimeException(String.format("Package '%s' has missing ios.archive.size for '%s'",
+                coordinate, archive.file));
           }
           if (archive.sdk == null) {
-            throw new RuntimeException(
-                String.format("Package '%s' has missing ios.archive.sdk for '%s'",
-                    coordinate, archive.file));
+            throw new RuntimeException(String.format("Package '%s' has missing ios.archive.sdk for '%s'", coordinate,
+                archive.file));
           }
           if (archive.platform == null) {
-            throw new RuntimeException(
-                String.format("Package '%s' has missing ios.archive.platform for '%s'",
-                    coordinate, archive.file));
+            throw new RuntimeException(String.format("Package '%s' has missing ios.archive.platform for '%s'",
+                coordinate, archive.file));
           }
         }
       }
@@ -151,9 +140,8 @@ public class CDepManifestYmlUtils {
     public void visitLinux(String name, Linux value) {
       if (value.archives != null) {
         if (value.archives.length > 1) {
-          throw new RuntimeException(
-              String.format("Package '%s' has multiple linux archives. Only one is allowed.",
-                  coordinate));
+          throw new RuntimeException(String.format("Package '%s' has multiple linux archives. Only one is allowed.",
+              coordinate));
         }
       }
       super.visitLinux(name, value);
@@ -164,12 +152,8 @@ public class CDepManifestYmlUtils {
       if (value.archives != null) {
         Set<String> zips = new HashSet<>();
         for (AndroidArchive archive : value.archives) {
-          if (archive.lib != null && !archive.lib.endsWith(".a")) {
-            // Android NDK team best practice recommendation is to use only static libraries.
-            throw new RuntimeException(
-                String.format("Package '%s' has non-static android libraryName '%s'",
-                    coordinate, archive.lib));
-          }
+          require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static android " +
+              "libraryName '%s'", coordinate, archive.lib);
           if (archive.runtime != null) {
             switch (archive.runtime) {
               case "c++":
@@ -177,30 +161,18 @@ public class CDepManifestYmlUtils {
               case "gnustl":
                 break;
               default:
-                throw new RuntimeException(String.format("" +
-                        "Package '%s' has unexpected android runtime '%s'. Allowed: c++, stlport, gnustl",
-                    coordinate, archive.runtime));
+                fail("Package '%s' has unexpected android runtime '%s'. Allowed: c++, stlport, gnustl", coordinate,
+                    archive.runtime);
             }
           }
 
-          if (archive.file == null) {
-            throw new RuntimeException(
-                String.format("Package '%s' has missing android.archive.file",
-                    coordinate));
-          }
-
+          require(archive.file != null, "Package '%s' has missing android.archive.file", coordinate);
           zips.add(archive.file);
 
-          if (archive.sha256 == null) {
-            throw new RuntimeException(
-                String.format("Package '%s' has missing android.archive.sha256 for '%s'",
-                    coordinate, archive.file));
-          }
-          if (archive.size == null) {
-            throw new RuntimeException(
-                String.format("Package '%s' has missing android.archive.size for '%s'",
-                    coordinate, archive.file));
-          }
+          require(archive.sha256 != null, "Package '%s' has missing android.archive.sha256 for '%s'", coordinate,
+              archive.file);
+          require(archive.size != null, "Package '%s' has missing android.archive.size for '%s'", coordinate, archive
+              .file);
         }
       }
 
@@ -209,23 +181,16 @@ public class CDepManifestYmlUtils {
 
     @Override
     public void visitCoordinate(String name, Coordinate value) {
-      if (coordinate.groupId == null) {
-        throw new RuntimeException("Manifest was missing coordinate.groupId");
-      }
-      if (coordinate.artifactId == null) {
-        throw new RuntimeException("Manifest was missing coordinate.artifactId");
-      }
-      if (coordinate.version == null) {
-        throw new RuntimeException("Manifest was missing coordinate.version");
-      }
+      require(coordinate.groupId != null, "Manifest was missing coordinate.groupId");
+      require(coordinate.artifactId != null, "Manifest was missing coordinate.artifactId");
+      require(coordinate.version != null, "Manifest was missing coordinate.version");
 
       String versionDiagnosis = VersionUtils.checkVersion(coordinate.version);
       if (versionDiagnosis == null) {
         super.visitCoordinate(name, value);
         return;
       }
-      throw new RuntimeException(String.format("Package '%s' has malformed version, %s",
-          coordinate, versionDiagnosis));
+      fail("Package '%s' has malformed version, %s", coordinate, versionDiagnosis);
     }
   }
 }

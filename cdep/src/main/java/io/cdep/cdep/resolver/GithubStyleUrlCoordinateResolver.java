@@ -29,12 +29,12 @@ import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
-  final private Pattern pattern = Pattern.compile("^https://(.*)/(.*)/(.*)/releases/download/(.*)" + "/cdep-manifest(" +
-      ".*).yml$");
+  final private Pattern pattern = Pattern.compile("^https://(.*)/(.*)/(.*)/releases/download/(.*)" + "/cdep-manifest"
+      + "(" + ".*).yml$");
 
   @Override
-  public ResolvedManifest resolve(ManifestProvider environment, SoftNameDependency dependency)
-      throws IOException, NoSuchAlgorithmException {
+  public ResolvedManifest resolve(ManifestProvider environment, SoftNameDependency dependency) throws IOException,
+      NoSuchAlgorithmException {
     String coordinate = notNull(dependency.compile);
     Matcher match = pattern.matcher(coordinate);
     if (match.find()) {
@@ -65,19 +65,13 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
 
       // Ensure that the manifest coordinate agrees with the url provided
       notNull(cdepManifestYml.coordinate);
-      if (!groupId.equals(cdepManifestYml.coordinate.groupId)) {
-        throw new RuntimeException(String.format("groupId '%s' from manifest did not agree with " + "github url '%s",
-            cdepManifestYml.coordinate.groupId, coordinate));
-      }
-      if (!artifactId.startsWith(cdepManifestYml.coordinate.artifactId)) {
-        throw new RuntimeException(String.format("artifactId '%s' from manifest did not agree " + "with '%s' from " +
-            "github url '%s", artifactId, cdepManifestYml.coordinate.artifactId, coordinate));
-      }
-      if (!version.equals(cdepManifestYml.coordinate.version)) {
-        throw new RuntimeException(String.format("version '%s' from manifest did not agree with " + "github url '%s",
-            cdepManifestYml.coordinate.version, coordinate));
-      }
-
+      notNull(cdepManifestYml.coordinate.artifactId);
+      require(groupId.equals(cdepManifestYml.coordinate.groupId), "groupId '%s' from manifest did not agree with " +
+          "github url '%s", cdepManifestYml.coordinate.groupId, coordinate);
+      require(artifactId.startsWith(cdepManifestYml.coordinate.artifactId), "artifactId '%s' from manifest did not "
+          + "agree with '%s' from github url '%s", artifactId, cdepManifestYml.coordinate.artifactId, coordinate);
+      require(version.equals(cdepManifestYml.coordinate.version), "version '%s' from manifest did not agree with " +
+          "github url '%s", cdepManifestYml.coordinate.version, coordinate);
       return new ResolvedManifest(new URL(coordinate), cdepManifestYml);
     }
 
