@@ -53,7 +53,7 @@ public class CDep {
 
   final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev21";
   private PrintStream out = System.out;
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   private File workingFolder = new File(".");
   @Nullable
@@ -67,7 +67,7 @@ public class CDep {
     this.out = out;
   }
 
-  public static int main(@org.jetbrains.annotations.NotNull @NotNull String[] args)
+  public static int main(@NotNull String[] args)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     try {
       new CDep(System.out).go(args);
@@ -79,7 +79,7 @@ public class CDep {
   }
 
   @Nullable
-  private static FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment, @org.jetbrains.annotations.NotNull SoftNameDependency
+  private static FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment, SoftNameDependency
       dependencies[]) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     Resolver resolver = new Resolver(environment);
@@ -97,11 +97,10 @@ public class CDep {
    * Return the first string after matching one of the arguments. Argument and strign are removed
    * from the list.
    */
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   static private List<String> eatStringArgument(
-      String shortArgument,
-      String longArgument, @org.jetbrains.annotations.NotNull @NotNull List<String> args) {
+      String shortArgument, String longArgument, @NotNull List<String> args) {
 
     boolean takeNext = false;
     List<String> result = new ArrayList<>();
@@ -119,7 +118,7 @@ public class CDep {
     return result;
   }
 
-  void go(@org.jetbrains.annotations.NotNull @NotNull String[] argArray) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  void go(@NotNull String[] argArray) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     List<String> args = new ArrayList<>();
     for (int i = 0; i < argArray.length; ++i) {
       args.add(argArray[i]);
@@ -161,7 +160,7 @@ public class CDep {
     handleGenerateScript();
   }
 
-  private void runBuilders(GeneratorEnvironment environment, @org.jetbrains.annotations.NotNull @NotNull FunctionTableExpression table)
+  private void runBuilders(GeneratorEnvironment environment, @NotNull FunctionTableExpression table)
       throws IOException {
     for (BuildSystem buildSystem : config.builders) {
       switch (buildSystem) {
@@ -177,7 +176,7 @@ public class CDep {
     }
   }
 
-  private boolean handleRedownload(@org.jetbrains.annotations.NotNull @NotNull List<String> args)
+  private boolean handleRedownload(@NotNull List<String> args)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "redownload".equals(args.get(0))) {
       GeneratorEnvironment environment = getGeneratorEnvironment(true, false);
@@ -198,7 +197,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleLint(@org.jetbrains.annotations.NotNull @NotNull List<String> args)
+  private boolean handleLint(@NotNull List<String> args)
       throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.size() > 0 && "lint".equals(args.get(0))) {
       if (args.size() > 1) {
@@ -223,7 +222,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleCreate(@org.jetbrains.annotations.NotNull @NotNull List<String> args)
+  private boolean handleCreate(@NotNull List<String> args)
       throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.size() > 0 && "create".equals(args.get(0))) {
       if (args.size() > 1 && "hashes".equals(args.get(1))) {
@@ -239,7 +238,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleMerge(@org.jetbrains.annotations.NotNull @NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
+  private boolean handleMerge(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "merge".equals(args.get(0))) {
       if (args.size() < 4) {
         out.printf("Usage: cdep merge coordinate1 coordinate2 ... outputmanifest.yml");
@@ -280,7 +279,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleShow(@org.jetbrains.annotations.NotNull @NotNull List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
+  private boolean handleShow(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.size() > 0 && "show".equals(args.get(0))) {
       if (args.size() > 1 && "folders".equals(args.get(1))) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
@@ -336,7 +335,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleWrapper(@org.jetbrains.annotations.NotNull @NotNull List<String> args) throws IOException {
+  private boolean handleWrapper(@NotNull List<String> args) throws IOException {
     if (args.size() > 0 && "wrapper".equals(args.get(0))) {
       String appname = System.getProperty("io.cdep.appname");
       if (appname == null) {
@@ -378,7 +377,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleFetch(@org.jetbrains.annotations.NotNull @NotNull List<String> args)
+  private boolean handleFetch(@NotNull List<String> args)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fetch".equals(args.get(0))) {
       if (args.size() < 2) {
@@ -457,7 +456,7 @@ public class CDep {
     return true;
   }
 
-  private boolean handleHelp(@org.jetbrains.annotations.NotNull @NotNull List<String> args) throws IOException {
+  private boolean handleHelp(@NotNull List<String> args) throws IOException {
     if (args.size() != 1 || !args.get(0).equals("--help")) {
       return true;
     }
@@ -476,19 +475,19 @@ public class CDep {
     return false;
   }
 
-  private void handleWorkingFolder(@org.jetbrains.annotations.NotNull @NotNull List<String> args) throws IOException {
+  private void handleWorkingFolder(@NotNull List<String> args) throws IOException {
     for (String workingFolder : eatStringArgument("-wf", "--working-folder", args)) {
       this.workingFolder = new File(workingFolder);
     }
   }
 
-  private void handleDownloadFolder(@org.jetbrains.annotations.NotNull @NotNull List<String> args) throws IOException {
+  private void handleDownloadFolder(@NotNull List<String> args) throws IOException {
     for (String workingFolder : eatStringArgument("-df", "--download-folder", args)) {
       this.workingFolder = new File(workingFolder);
     }
   }
 
-  private boolean handleVersion(@org.jetbrains.annotations.NotNull @NotNull List<String> args) {
+  private boolean handleVersion(@NotNull List<String> args) {
     if (args.size() != 1 || !args.get(0).equals("--version")) {
       return true;
     }

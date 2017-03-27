@@ -17,7 +17,7 @@ public class iOSArchive {
   final public iOSArchitecture architecture = null;
   @Nullable
   final public String sdk = null;
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   final public String include;
   @Nullable

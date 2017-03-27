@@ -36,7 +36,7 @@ abstract public class ExpressionUtils {
      * These expressions contain the local module location as well as the resolved coordinate
      * and other information
      */
-    @org.jetbrains.annotations.NotNull
+
     @NotNull
     public static Map<Coordinate, List<Expression>> getAllFoundModuleExpressions(Expression expression) {
         return new Finder(expression).foundModules;
@@ -56,7 +56,7 @@ abstract public class ExpressionUtils {
         }
 
         @Override
-        protected void visitFindModuleExpression(@org.jetbrains.annotations.NotNull @NotNull FindModuleExpression expr) {
+        protected void visitFindModuleExpression(@NotNull FindModuleExpression expr) {
             coordinate = expr.coordinate;
             super.visitFindModuleExpression(expr);
         }

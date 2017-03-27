@@ -14,10 +14,10 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.reference;
  */
 public class ReplaceAssignmentWithReference extends RewritingVisitor {
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   @Override
-  protected Expression visitAssignmentExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentExpression expr) {
+  protected Expression visitAssignmentExpression(@NotNull AssignmentExpression expr) {
     Expression expression = visit(expr.expression);
     AssignmentExpression assignment = assign(expr.name, expression);
     return reference(assignment);

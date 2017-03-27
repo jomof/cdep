@@ -34,12 +34,12 @@ public class ExternalFunctionExpression extends Expression {
 
   final public Method method;
 
-  private ExternalFunctionExpression(@org.jetbrains.annotations.NotNull Class clazz, @org.jetbrains.annotations.NotNull String functionName, Class<?>...
+  private ExternalFunctionExpression(Class clazz, String functionName, Class<?>...
       parameterTypes) {
     this.method = getMethod(clazz, functionName, parameterTypes);
   }
 
-  static public File fileJoinSegments(File base, @org.jetbrains.annotations.NotNull @NotNull String... segments) {
+  static public File fileJoinSegments(File base, @NotNull String... segments) {
     for (int i = 0; i < segments.length; ++i) {
       base = new File(base, segments[i]);
     }
@@ -50,11 +50,11 @@ public class ExternalFunctionExpression extends Expression {
     return left >= right;
   }
 
-  static public boolean eq(@org.jetbrains.annotations.NotNull @NotNull String left, String right) {
+  static public boolean eq(@NotNull String left, String right) {
     return left.equals(right);
   }
 
-  static public boolean hasOnlyElement(@org.jetbrains.annotations.NotNull @NotNull String array[], @org.jetbrains.annotations.NotNull @NotNull String value) {
+  static public boolean hasOnlyElement(@NotNull String array[], @NotNull String value) {
     if (array.length != 1) {
       return false;
     }

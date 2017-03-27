@@ -85,7 +85,7 @@ public class ReadonlyVisitor {
     throw new RuntimeException("ro" + expr.getClass().toString());
   }
 
-  protected void visitModuleArchiveExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleArchiveExpression expr) {
+  protected void visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     visit(expr.includePath);
     visit(expr.libraryPath);
   }
@@ -93,14 +93,14 @@ public class ReadonlyVisitor {
   protected void visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
   }
 
-  protected void visitAssignmentBlockExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentBlockExpression expr) {
+  protected void visitAssignmentBlockExpression(@NotNull AssignmentBlockExpression expr) {
     for (AssignmentExpression assignment : expr.assignments) {
       visit(assignment);
     }
     visit(expr.statement);
   }
 
-  protected void visitArrayExpression(@org.jetbrains.annotations.NotNull @NotNull ArrayExpression expr) {
+  protected void visitArrayExpression(@NotNull ArrayExpression expr) {
     visitArray(expr.elements);
   }
 
@@ -113,33 +113,33 @@ public class ReadonlyVisitor {
   protected void visitExampleExpression(ExampleExpression expr) {
   }
 
-  protected void visitAbortExpression(@org.jetbrains.annotations.NotNull @NotNull AbortExpression expr) {
+  protected void visitAbortExpression(@NotNull AbortExpression expr) {
     visitArray(expr.parameters);
   }
 
-  protected void visitModuleExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleExpression expr) {
+  protected void visitModuleExpression(@NotNull ModuleExpression expr) {
     visit(expr.archive);
   }
 
-  protected void visitInvokeFunctionExpression(@org.jetbrains.annotations.NotNull @NotNull InvokeFunctionExpression expr) {
+  protected void visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
     visit(expr.function);
     visitArray(expr.parameters);
   }
 
-  protected void visitArray(@org.jetbrains.annotations.NotNull @NotNull Expression[] array) {
+  protected void visitArray(@NotNull Expression[] array) {
     for (int i = 0; i < array.length; ++i) {
       visit(array[i]);
     }
   }
 
-  protected void visitAssignmentExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentExpression expr) {
+  protected void visitAssignmentExpression(@NotNull AssignmentExpression expr) {
     visit(expr.expression);
   }
 
   protected void visitStringExpression(StringExpression expr) {
   }
 
-  protected void visitIfSwitchExpression(@org.jetbrains.annotations.NotNull @NotNull IfSwitchExpression expr) {
+  protected void visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
     visitArray(expr.conditions);
     visitArray(expr.expressions);
     visit(expr.elseExpression);
@@ -148,7 +148,7 @@ public class ReadonlyVisitor {
   protected void visitParameterExpression(ParameterExpression expr) {
   }
 
-  protected void visitFindModuleExpression(@org.jetbrains.annotations.NotNull @NotNull FindModuleExpression expr) {
+  protected void visitFindModuleExpression(@NotNull FindModuleExpression expr) {
     visit(expr.cdepExplodedRoot);
     visit(expr.targetPlatform);
     visit(expr.systemVersion);
@@ -159,14 +159,14 @@ public class ReadonlyVisitor {
     visit(expr.expression);
   }
 
-  protected void visitMultiStatementExpression(@org.jetbrains.annotations.NotNull @NotNull MultiStatementExpression expr) {
+  protected void visitMultiStatementExpression(@NotNull MultiStatementExpression expr) {
     visitArray(expr.statements);
   }
 
   protected void visitNopExpression(NopExpression expr) {
   }
 
-  void visitFunctionTableExpression(@org.jetbrains.annotations.NotNull @NotNull FunctionTableExpression expr) {
+  void visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
       visit(expr.findFunctions.get(coordinate));
     }

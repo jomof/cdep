@@ -10,7 +10,7 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.assignmentBlock;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class LiftToCommonAncestor extends RewritingVisitor {
-  @org.jetbrains.annotations.NotNull @NotNull Set<AssignmentExpression> captured = new HashSet<>();
+  @NotNull Set<AssignmentExpression> captured = new HashSet<>();
   @Nullable List<AssignmentExpression> functionOrder = new ArrayList<>();
   @Nullable Map<AssignmentExpression, Integer> functionCounts = new HashMap<>();
   @Nullable FindModuleExpression latest = null;
@@ -20,7 +20,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
 
   @Nullable
   @Override
-  protected Expression visitFindModuleExpression(@org.jetbrains.annotations.NotNull @NotNull FindModuleExpression expr) {
+  protected Expression visitFindModuleExpression(@NotNull FindModuleExpression expr) {
     List<AssignmentExpression> order = new ArrayList<>();
     Map<AssignmentExpression, Integer> counts = new HashMap<>();
     assignments(expr, order, counts);
@@ -39,7 +39,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
 
 
   @Override
-  protected Expression visitIfSwitchExpression(@org.jetbrains.annotations.NotNull @NotNull IfSwitchExpression expr) {
+  protected Expression visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
     Expression result = super.visitIfSwitchExpression(expr);
     List<AssignmentExpression> block = extractBlocks(result);
 
@@ -49,9 +49,9 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     return result;
   }
 
-  @org.jetbrains.annotations.Nullable
+
   @Override
-  protected Expression visitModuleExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleExpression expr) {
+  protected Expression visitModuleExpression(@NotNull ModuleExpression expr) {
     Expression result = super.visitModuleExpression(expr);
     List<AssignmentExpression> block = extractBlocks(result);
 
@@ -61,7 +61,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     return result;
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   private List<AssignmentExpression> extractBlocks(Expression result) {
     List<AssignmentExpression> order = new ArrayList<>();
@@ -86,7 +86,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     return block;
   }
 
-  void assignments(Expression expr, @org.jetbrains.annotations.NotNull @NotNull List<AssignmentExpression> order, @org.jetbrains.annotations.NotNull @NotNull
+  void assignments(Expression expr, @NotNull List<AssignmentExpression> order, @NotNull
       Map<AssignmentExpression, Integer> counts) {
     require(order.size() == 0);
     require(counts.size() == 0);

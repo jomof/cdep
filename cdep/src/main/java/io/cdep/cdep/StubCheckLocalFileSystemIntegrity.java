@@ -13,7 +13,7 @@ public class StubCheckLocalFileSystemIntegrity extends CheckLocalFileSystemInteg
 
   @Nullable
   @Override
-  protected ModuleArchive visitModuleArchiveExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleArchiveExpression expr) {
+  protected ModuleArchive visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     return super.superVisitModuleArchiveExpression(expr);
   }
 }

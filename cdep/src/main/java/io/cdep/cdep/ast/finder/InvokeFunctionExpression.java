@@ -11,10 +11,10 @@ import static io.cdep.cdep.utils.Invariant.*;
 public class InvokeFunctionExpression extends Expression {
   @Nullable
   final public ExternalFunctionExpression function;
-  @org.jetbrains.annotations.NotNull
+
   final public Expression parameters[];
 
-  InvokeFunctionExpression(@org.jetbrains.annotations.NotNull @NotNull ExternalFunctionExpression function, @org.jetbrains.annotations.NotNull @NotNull
+  InvokeFunctionExpression(@NotNull ExternalFunctionExpression function, @NotNull
       Expression parameters[]) {
     this.function = notNull(function);
     this.parameters = elementsNotNull(parameters);

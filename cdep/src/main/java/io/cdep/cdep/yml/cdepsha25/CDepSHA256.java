@@ -8,7 +8,7 @@ public class CDepSHA256 {
         this.hashes = hashes;
     }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   @Override
   public String toString() {

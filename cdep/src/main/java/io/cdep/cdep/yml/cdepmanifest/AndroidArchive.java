@@ -22,7 +22,7 @@ public class AndroidArchive {
   final public String builder = null;
   @Nullable
   final public String abis[] = null;
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   final public String include;
   @Nullable

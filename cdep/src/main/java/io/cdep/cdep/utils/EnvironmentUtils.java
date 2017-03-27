@@ -24,9 +24,9 @@ public class EnvironmentUtils {
    * Returns the package level archive's include folder. Will throw an exception if there was no package level
    * archive.
    */
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  public static File getPackageLevelIncludeFolder(@org.jetbrains.annotations.NotNull @NotNull GeneratorEnvironment environment, String coordinate)
+  public static File getPackageLevelIncludeFolder(@NotNull GeneratorEnvironment environment, String coordinate)
       throws IOException, NoSuchAlgorithmException, URISyntaxException {
     ResolvedManifest resolved = resolveManifest(environment, coordinate);
     return getPackageLevelIncludeFolder(environment, coordinate, resolved);
@@ -36,10 +36,10 @@ public class EnvironmentUtils {
    * Returns the package level archive's include folder. Will throw an exception if there was no package level
    * archive.
    */
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  static File getPackageLevelIncludeFolder(@org.jetbrains.annotations.NotNull @NotNull GeneratorEnvironment environment,
-      String coordinate, @org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved) throws URISyntaxException, MalformedURLException {
+  static File getPackageLevelIncludeFolder(@NotNull GeneratorEnvironment environment, String coordinate, @NotNull ResolvedManifest resolved) throws
+      URISyntaxException, MalformedURLException {
     CDepManifestYml manifest = resolved.cdepManifestYml;
     Archive archive = manifest.archive;
     require(archive != null, "'%s' does not have archive", coordinate);

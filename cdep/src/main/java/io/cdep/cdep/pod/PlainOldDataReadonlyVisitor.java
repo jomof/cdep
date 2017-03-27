@@ -13,20 +13,20 @@ import static io.cdep.cdep.utils.ReflectionUtils.*;
  */
 abstract public class PlainOldDataReadonlyVisitor {
 
-  public void visitPlainOldDataObject(String name, @org.jetbrains.annotations.NotNull @NotNull Object value) {
+  public void visitPlainOldDataObject(String name, @NotNull Object value) {
     visitFields(value);
   }
 
   abstract public void visitString(String name, String node);
 
-  public void visitStringArray(String name, @org.jetbrains.annotations.NotNull @NotNull String array[]) {
+  public void visitStringArray(String name, @NotNull String array[]) {
     visitArray(name, array, String.class);
   }
 
   public void visitLong(String name, Long value) {
   }
 
-  public void visitArray(String name, @org.jetbrains.annotations.NotNull @NotNull Object[] array, @org.jetbrains.annotations.NotNull @NotNull Class<?>
+  public void visitArray(String name, @NotNull Object[] array, @NotNull Class<?>
       elementType) {
     elementsNotNull(array);
     for (Object value : array) {
@@ -34,14 +34,14 @@ abstract public class PlainOldDataReadonlyVisitor {
     }
   }
 
-  public void visit(Object element, @org.jetbrains.annotations.NotNull @NotNull Class<?> elementClass) {
+  public void visit(Object element, @NotNull Class<?> elementClass) {
     notNull(element);
     String methodName = getVisitorName(elementClass);
     Method method = getMethod(getClass(), methodName, String.class, elementClass);
     invoke(method, this, null, element);
   }
 
-  public void visitFields(@org.jetbrains.annotations.NotNull @NotNull Object node) {
+  public void visitFields(@NotNull Object node) {
     notNull(node);
     if (node.getClass().isEnum()) {
       return;
@@ -58,7 +58,7 @@ abstract public class PlainOldDataReadonlyVisitor {
     }
   }
 
-  private String getVisitorName(@org.jetbrains.annotations.NotNull @NotNull Class<?> type) {
+  private String getVisitorName(@NotNull Class<?> type) {
     String name = type.getName();
     name = name.substring(name.lastIndexOf(".") + 1);
     name = "visit" + name;

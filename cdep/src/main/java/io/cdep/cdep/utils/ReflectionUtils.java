@@ -13,7 +13,7 @@ public class ReflectionUtils {
   /**
    * Invoke but convert atypical exceptions to RuntimeException. If the invoked method threw a RuntimeException then unwrap and throw.
    */
-  public static Object invoke(@org.jetbrains.annotations.NotNull @NotNull Method method, Object thiz, Object... args) {
+  public static Object invoke(@NotNull Method method, Object thiz, Object... args) {
     notNull(method);
     try {
       return method.invoke(thiz, args);
@@ -32,7 +32,7 @@ public class ReflectionUtils {
    * Get method but convert atypical exceptions into RuntimeException. Should be used
    * when it is a bug if the method doesn't exist.
    */
-  public static Method getMethod(@org.jetbrains.annotations.NotNull @NotNull Class<?> clazz, @org.jetbrains.annotations.NotNull @NotNull String name,
+  public static Method getMethod(@NotNull Class<?> clazz, @NotNull String name,
       Class<?>... parameterTypes) {
     notNull(clazz);
     notNull(name);
@@ -47,7 +47,7 @@ public class ReflectionUtils {
    * Get field value but convert atypical exceptions into RuntimeException. Should be used
    * when it is a bug if the method doesn't exist.
    */
-  public static Object getFieldValue(@org.jetbrains.annotations.NotNull @NotNull Field field, Object instance) {
+  public static Object getFieldValue(@NotNull Field field, Object instance) {
     notNull(field);
     notNull(instance);
     try {

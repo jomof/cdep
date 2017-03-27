@@ -23,7 +23,7 @@ public enum AndroidAbi {
   /**
    * The names of all ABIs.
    */
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   public static String[] getNames() {
     String result[] = new String[AndroidAbi.values().length];

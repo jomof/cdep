@@ -29,7 +29,7 @@ public class RewritingVisitor {
   }
 
   @Nullable
-  protected Expression visitNoIdentity(@org.jetbrains.annotations.NotNull @NotNull Expression expr) {
+  protected Expression visitNoIdentity(@NotNull Expression expr) {
 
     if (expr.getClass().equals(FunctionTableExpression.class)) {
       return visitFunctionTableExpression((FunctionTableExpression) expr);
@@ -92,18 +92,18 @@ public class RewritingVisitor {
     return expr;
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private Expression visitAssignmentBlockExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentBlockExpression expr) {
+  private Expression visitAssignmentBlockExpression(@NotNull AssignmentBlockExpression expr) {
     return assignmentBlock(
         visitList(expr.assignments),
         (StatementExpression) visit(expr.statement)
     );
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private List<AssignmentExpression> visitList(@org.jetbrains.annotations.NotNull @NotNull List<AssignmentExpression> assignments) {
+  private List<AssignmentExpression> visitList(@NotNull List<AssignmentExpression> assignments) {
     List<AssignmentExpression> result = new ArrayList<>();
     for (AssignmentExpression assignment : assignments) {
       result.add((AssignmentExpression) visit(assignment));
@@ -111,15 +111,15 @@ public class RewritingVisitor {
     return result;
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  protected Expression visitArrayExpression(@org.jetbrains.annotations.NotNull @NotNull ArrayExpression expr) {
+  protected Expression visitArrayExpression(@NotNull ArrayExpression expr) {
     return array(visitArray(expr.elements));
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  protected Expression visitIntegerExpression(@org.jetbrains.annotations.NotNull @NotNull IntegerExpression expr) {
+  protected Expression visitIntegerExpression(@NotNull IntegerExpression expr) {
     return integer(expr.value);
   }
 
@@ -128,29 +128,29 @@ public class RewritingVisitor {
     return expr;
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  protected Expression visitExampleExpression(@org.jetbrains.annotations.NotNull @NotNull ExampleExpression expr) {
+  protected Expression visitExampleExpression(@NotNull ExampleExpression expr) {
     return new ExampleExpression(expr.sourceCode);
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  protected Expression visitAbortExpression(@org.jetbrains.annotations.NotNull @NotNull AbortExpression expr) {
+  protected Expression visitAbortExpression(@NotNull AbortExpression expr) {
     return abort(expr.message, visitArray(expr.parameters));
   }
 
-  @org.jetbrains.annotations.Nullable
-  protected Expression visitModuleExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleExpression expr) {
+
+  protected Expression visitModuleExpression(@NotNull ModuleExpression expr) {
     return module(
         (ModuleArchiveExpression) visit(expr.archive),
         expr.dependencies
     );
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private ModuleArchiveExpression[] visitArchiveArray(@org.jetbrains.annotations.NotNull @NotNull ModuleArchiveExpression[] archives) {
+  private ModuleArchiveExpression[] visitArchiveArray(@NotNull ModuleArchiveExpression[] archives) {
     ModuleArchiveExpression result[] = new ModuleArchiveExpression[archives.length];
     for (int i = 0; i < result.length; ++i) {
       result[i] = (ModuleArchiveExpression) visit(archives[i]);
@@ -158,9 +158,9 @@ public class RewritingVisitor {
     return result;
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private Expression visitModuleArchiveExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleArchiveExpression expr) {
+  private Expression visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     return archive(
         expr.file,
         expr.sha256,
@@ -171,16 +171,16 @@ public class RewritingVisitor {
         visit(expr.libraryPath));
   }
 
-  protected Expression visitInvokeFunctionExpression(@org.jetbrains.annotations.NotNull @NotNull InvokeFunctionExpression expr) {
+  protected Expression visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
     return invoke(
         (ExternalFunctionExpression) visit(expr.function),
         visitArray(expr.parameters)
     );
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  protected Expression[] visitArray(@org.jetbrains.annotations.NotNull @NotNull Expression[] array) {
+  protected Expression[] visitArray(@NotNull Expression[] array) {
     Expression result[] = new Expression[array.length];
     for (int i = 0; i < array.length; ++i) {
       result[i] = visit(array[i]);
@@ -188,21 +188,21 @@ public class RewritingVisitor {
     return result;
   }
 
-  @org.jetbrains.annotations.NotNull
-  protected Expression visitAssignmentExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentExpression expr) {
+
+  protected Expression visitAssignmentExpression(@NotNull AssignmentExpression expr) {
     return assign(
         expr.name,
         visit(expr.expression)
     );
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  protected Expression visitStringExpression(@org.jetbrains.annotations.NotNull @NotNull StringExpression expr) {
+  protected Expression visitStringExpression(@NotNull StringExpression expr) {
     return string(expr.value);
   }
 
-  protected Expression visitIfSwitchExpression(@org.jetbrains.annotations.NotNull @NotNull IfSwitchExpression expr) {
+  protected Expression visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
     return ifSwitch(
         visitArray(expr.conditions),
         visitArray(expr.expressions),
@@ -214,9 +214,9 @@ public class RewritingVisitor {
     return expr;
   }
 
-  @org.jetbrains.annotations.Nullable
+
   @Nullable
-  protected Expression visitFindModuleExpression(@org.jetbrains.annotations.NotNull @NotNull FindModuleExpression expr) {
+  protected Expression visitFindModuleExpression(@NotNull FindModuleExpression expr) {
     return new FindModuleExpression(
         expr.coordinate,
         (ParameterExpression) visit(expr.cdepExplodedRoot),
@@ -230,7 +230,7 @@ public class RewritingVisitor {
     );
   }
 
-  @org.jetbrains.annotations.NotNull @NotNull Expression visitFunctionTableExpression(@org.jetbrains.annotations.NotNull @NotNull FunctionTableExpression
+  @NotNull Expression visitFunctionTableExpression(@NotNull FunctionTableExpression
       expr) {
     FunctionTableExpression newExpr = new FunctionTableExpression();
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
@@ -242,9 +242,9 @@ public class RewritingVisitor {
     return newExpr;
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  protected StatementExpression[] visitStatementExpressionArray(@org.jetbrains.annotations.NotNull @NotNull StatementExpression[] array) {
+  protected StatementExpression[] visitStatementExpressionArray(@NotNull StatementExpression[] array) {
     StatementExpression result[] = new StatementExpression[array.length];
     for (int i = 0; i < array.length; ++i) {
       result[i] = (StatementExpression) visit(array[i]);
@@ -252,13 +252,13 @@ public class RewritingVisitor {
     return result;
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  protected Expression visitMultiStatementExpression(@org.jetbrains.annotations.NotNull @NotNull MultiStatementExpression expr) {
+  protected Expression visitMultiStatementExpression(@NotNull MultiStatementExpression expr) {
     return multi(visitStatementExpressionArray(expr.statements));
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   protected Expression visitNopExpression(NopExpression expr) {
     return nop();

@@ -10,18 +10,18 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   private int indent = 0;
   private int eatIndent = 0;
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   private StringBuilder sb = new StringBuilder();
 
-  public static String create(@org.jetbrains.annotations.NotNull @NotNull Object node) {
+  public static String create(@NotNull Object node) {
     CreateCDepManifestYmlString thiz = new CreateCDepManifestYmlString();
     thiz.visitPlainOldDataObject(null, node);
     return thiz.sb.toString();
   }
 
   @Override
-  public void visitPlainOldDataObject(@Nullable String name, @org.jetbrains.annotations.NotNull @NotNull Object value) {
+  public void visitPlainOldDataObject(@Nullable String name, @NotNull Object value) {
     if (name == null) {
       super.visitPlainOldDataObject(null, value);
       return;
@@ -43,7 +43,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitString(String name, @org.jetbrains.annotations.NotNull @NotNull String value) {
+  public void visitString(String name, @NotNull String value) {
     notNull(value);
     notNull(name);
     if (!value.contains("\n")) {
@@ -77,7 +77,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitArray(String name, @org.jetbrains.annotations.NotNull @NotNull Object[] array, @org.jetbrains.annotations.NotNull @NotNull Class<?>
+  public void visitArray(String name, @NotNull Object[] array, @NotNull Class<?>
       elementType) {
     appendIndented("%s:\r\n", name);
     ++indent;
@@ -90,7 +90,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
     --indent;
   }
 
-  private void append(@org.jetbrains.annotations.NotNull @NotNull String format, Object... parms) {
+  private void append(@NotNull String format, Object... parms) {
     sb.append(String.format(format, parms));
   }
 

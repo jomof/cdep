@@ -5,7 +5,7 @@ import io.cdep.annotations.Nullable;
 import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class StringExpression extends Expression {
-  @org.jetbrains.annotations.Nullable
+
   final public String value;
 
   StringExpression(String value) {

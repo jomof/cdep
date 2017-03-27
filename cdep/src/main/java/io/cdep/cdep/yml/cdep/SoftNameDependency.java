@@ -31,7 +31,7 @@ public class SoftNameDependency {
     this.compile = compile;
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   public String toYaml(int indent) {
     String firstPrefix = new String(new char[(indent - 1) * 2]).replace('\0', ' ');
@@ -43,7 +43,7 @@ public class SoftNameDependency {
     return sb.toString();
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   @Override
   public String toString() {

@@ -20,7 +20,7 @@ public class CMakeExamplesGenerator {
         this.environment = environment;
     }
 
-  public void generate(@org.jetbrains.annotations.NotNull @NotNull FunctionTableExpression table) throws IOException {
+  public void generate(@NotNull FunctionTableExpression table) throws IOException {
         StringBuilder root = new StringBuilder();
         CMakeGenerator cmake = new CMakeGenerator(environment, table);
         root.append("cmake_minimum_required(VERSION 3.0.2)\n");
@@ -57,7 +57,7 @@ public class CMakeExamplesGenerator {
 
     }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   private File getExampleRootFolder() {
     File file = environment.examplesFolder;
@@ -66,7 +66,7 @@ public class CMakeExamplesGenerator {
   }
 
   @Nullable
-  private File getExampleFolder(@org.jetbrains.annotations.NotNull @NotNull Coordinate coordinate) {
+  private File getExampleFolder(@NotNull Coordinate coordinate) {
         File file = getExampleRootFolder();
         file = new File(file, notNull(coordinate.groupId));
         file = new File(file, notNull(coordinate.artifactId));

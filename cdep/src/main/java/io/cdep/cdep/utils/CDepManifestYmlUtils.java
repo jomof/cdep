@@ -34,9 +34,9 @@ import static io.cdep.cdep.utils.Invariant.require;
 
 public class CDepManifestYmlUtils {
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  public static CDepManifestYml convertStringToManifest(@org.jetbrains.annotations.NotNull @NotNull String content) {
+  public static CDepManifestYml convertStringToManifest(@NotNull String content) {
     Yaml yaml = new Yaml(new Constructor(CDepManifestYml.class));
     CDepManifestYml dependencyConfig = (CDepManifestYml) yaml.load(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
     require(dependencyConfig != null, "Manifest was empty");
@@ -47,9 +47,9 @@ public class CDepManifestYmlUtils {
     new Checker().visit(cdepManifestYml, CDepManifestYml.class);
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  public static List<HardNameDependency> getTransitiveDependencies(@org.jetbrains.annotations.NotNull @NotNull CDepManifestYml cdepManifestYml) {
+  public static List<HardNameDependency> getTransitiveDependencies(@NotNull CDepManifestYml cdepManifestYml) {
     List<HardNameDependency> dependencies = new ArrayList<>();
     if (cdepManifestYml.dependencies != null) {
       for (HardNameDependency dependency : cdepManifestYml.dependencies) {
@@ -62,12 +62,12 @@ public class CDepManifestYmlUtils {
   public static class Checker extends CDepManifestYmlReadonlyVisitor {
     @Nullable
     private Coordinate coordinate = null;
-    @org.jetbrains.annotations.NotNull
+
     @NotNull
     private Set<String> filesSeen = new HashSet<>();
 
     @Override
-    public void visitString(@Nullable String name, @org.jetbrains.annotations.NotNull @NotNull String node) {
+    public void visitString(@Nullable String name, @NotNull String node) {
       if (name != null && name.equals("file")) {
         require(!filesSeen.contains(node.toLowerCase()), "Package '%s' contains multiple references to the same" + " " + "archive file '%s'", coordinate, node);
         filesSeen.add(node.toLowerCase());
@@ -75,7 +75,7 @@ public class CDepManifestYmlUtils {
     }
 
     @Override
-    public void visitCDepManifestYml(String name, @org.jetbrains.annotations.NotNull @NotNull CDepManifestYml value) {
+    public void visitCDepManifestYml(String name, @NotNull CDepManifestYml value) {
       coordinate = value.coordinate;
       require(coordinate != null, "Manifest was missing coordinate");
       super.visitCDepManifestYml(name, value);
@@ -95,7 +95,7 @@ public class CDepManifestYmlUtils {
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void visitiOS(String name, @org.jetbrains.annotations.NotNull @NotNull iOS value) {
+    public void visitiOS(String name, @NotNull iOS value) {
       if (value.archives != null) {
         for (iOSArchive archive : value.archives) {
           require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static iOS libraryName " + "'%s'", coordinate, archive.lib);
@@ -111,7 +111,7 @@ public class CDepManifestYmlUtils {
     }
 
     @Override
-    public void visitLinux(String name, @org.jetbrains.annotations.NotNull @NotNull Linux value) {
+    public void visitLinux(String name, @NotNull Linux value) {
       if (value.archives != null) {
         require(value.archives.length <= 1, "Package '%s' has multiple linux archives. Only one is allowed.", coordinate);
       }
@@ -120,7 +120,7 @@ public class CDepManifestYmlUtils {
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void visitAndroid(String name, @org.jetbrains.annotations.NotNull @NotNull Android value) {
+    public void visitAndroid(String name, @NotNull Android value) {
       if (value.archives != null) {
         for (AndroidArchive archive : value.archives) {
           require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static android " + "libraryName '%s'", coordinate, archive.lib);
@@ -145,7 +145,7 @@ public class CDepManifestYmlUtils {
     }
 
     @Override
-    public void visitCoordinate(String name, @org.jetbrains.annotations.NotNull @NotNull Coordinate value) {
+    public void visitCoordinate(String name, @NotNull Coordinate value) {
       require(coordinate.groupId != null, "Manifest was missing coordinate.groupId");
       require(coordinate.artifactId != null, "Manifest was missing coordinate.artifactId");
       require(coordinate.version != null, "Manifest was missing coordinate.version");

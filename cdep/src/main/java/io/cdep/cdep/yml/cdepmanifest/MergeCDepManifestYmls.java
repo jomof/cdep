@@ -26,7 +26,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   }
 
   @Override
-  public void covisit(String name, Object left, Object right, @org.jetbrains.annotations.NotNull @NotNull Class<?> type) {
+  public void covisit(String name, Object left, Object right, @NotNull Class<?> type) {
     returnValue = null;
     super.covisit(name, left, right, type);
   }

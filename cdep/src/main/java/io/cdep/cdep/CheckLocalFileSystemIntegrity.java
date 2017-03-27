@@ -19,14 +19,14 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
   }
 
   @Nullable
-  protected ModuleArchive superVisitModuleArchiveExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleArchiveExpression expr) {
+  protected ModuleArchive superVisitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     return super.visitModuleArchiveExpression(expr);
   }
 
-  @org.jetbrains.annotations.Nullable
+
   @Nullable
   @Override
-  protected ModuleArchive visitModuleArchiveExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleArchiveExpression expr) {
+  protected ModuleArchive visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     ModuleArchive archive = superVisitModuleArchiveExpression(expr);
     if (archive.fullIncludePath != null) {
       if (!archive.fullIncludePath.getParentFile().isDirectory()) {
@@ -48,7 +48,7 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
   }
 
   @Override
-  protected Object visitParameterExpression(@org.jetbrains.annotations.NotNull @NotNull ParameterExpression expr) {
+  protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
     if (expr.name.equals("cdep_exploded_root")) {
       return explodedRoot;
     }
@@ -57,13 +57,13 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
 
   @Nullable
   @Override
-  protected Object visitFindModuleExpression(@org.jetbrains.annotations.NotNull @NotNull FindModuleExpression expr) {
+  protected Object visitFindModuleExpression(@NotNull FindModuleExpression expr) {
     // Don't visit parameters because we don't need them and don't want to have to bind them
     return visit(expr.expression);
   }
 
   @Nullable
-  protected Object visitIfSwitchExpression(@org.jetbrains.annotations.NotNull @NotNull IfSwitchExpression expr) {
+  protected Object visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
     for (int i = 0; i < expr.conditions.length; ++i) {
       // Don't visit the condition. Instead, travel down all paths.
       visit(expr.expressions[i]);

@@ -31,7 +31,7 @@ public class ResolutionScope {
    *
    * @param roots are the top level dependencies from cdep.yml.
    */
-  public ResolutionScope(@org.jetbrains.annotations.NotNull @NotNull SoftNameDependency[] roots) {
+  public ResolutionScope(@NotNull SoftNameDependency[] roots) {
     for (int i = 0; i < roots.length; ++i) {
       addUnresolved(roots[i]);
     }
@@ -40,7 +40,7 @@ public class ResolutionScope {
   /**
    * Utility function to add a new edge to an edge map.
    */
-  private static void addEdge(@org.jetbrains.annotations.NotNull @NotNull Map<Coordinate, List<Coordinate>> edges,
+  private static void addEdge(@NotNull Map<Coordinate, List<Coordinate>> edges,
       Coordinate from,
       Coordinate to) {
     List<Coordinate> tos = edges.get(from);
@@ -57,7 +57,7 @@ public class ResolutionScope {
    *
    * @param softname the name of the unresolved dependency.
    */
-  private void addUnresolved(@org.jetbrains.annotations.NotNull @NotNull SoftNameDependency softname) {
+  private void addUnresolved(@NotNull SoftNameDependency softname) {
     if (!resolved.containsKey(softname.compile)) {
       unresolved.put(softname.compile, softname);
     }
@@ -73,7 +73,7 @@ public class ResolutionScope {
   /**
    * Return all remaining unresolved references.
    */
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   public Collection<SoftNameDependency> getUnresolvedReferences() {
     return new ArrayList<>(unresolved.values());
@@ -96,8 +96,8 @@ public class ResolutionScope {
    * @param resolved the resolved manifest and hard name.
    * @param transitiveDependencies any new dependencies that were discovered during resolution
    */
-  public void recordResolved(@org.jetbrains.annotations.NotNull @NotNull SoftNameDependency softname, @org.jetbrains.annotations.NotNull @NotNull
-      ResolvedManifest resolved, @org.jetbrains.annotations.NotNull @NotNull List<HardNameDependency> transitiveDependencies) {
+  public void recordResolved(@NotNull SoftNameDependency softname, @NotNull ResolvedManifest resolved, @NotNull List<HardNameDependency>
+      transitiveDependencies) {
     require(!isResolved(resolved.cdepManifestYml.coordinate.toString()), "%s was already resolved", resolved
         .cdepManifestYml.coordinate);
 
@@ -124,7 +124,7 @@ public class ResolutionScope {
    *
    * @param softname the name of the unresolvable dependency.
    */
-  public void recordUnresolvable(@org.jetbrains.annotations.NotNull @NotNull SoftNameDependency softname) {
+  public void recordUnresolvable(@NotNull SoftNameDependency softname) {
     this.unresolved.remove(softname.compile);
     this.resolved.put(softname.compile, UNRESOLVEABLE_RESOLUTION);
   }
@@ -132,7 +132,7 @@ public class ResolutionScope {
   /**
    * Return the set of resolved names (coordinates or soft names).
    */
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   public Collection<String> getResolvedNames() {
     return resolved.keySet();
@@ -148,7 +148,7 @@ public class ResolutionScope {
   /**
    * Return the set of resolved names (coordinates or soft names).
    */
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   public Collection<String> getResolutions() {
     return resolved.keySet();

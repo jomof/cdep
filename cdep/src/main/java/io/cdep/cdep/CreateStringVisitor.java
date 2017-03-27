@@ -11,7 +11,7 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     visit(expr);
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   public static String convert(Expression expr) {
     String result = new CreateStringVisitor(expr).sb.toString();
@@ -25,7 +25,7 @@ public class CreateStringVisitor extends ReadonlyVisitor {
   }
 
   @Override
-  protected void visitFindModuleExpression(@org.jetbrains.annotations.NotNull @NotNull FindModuleExpression expr) {
+  protected void visitFindModuleExpression(@NotNull FindModuleExpression expr) {
     appendIndented("find(%s)", expr.coordinate);
     ++indent;
     visit(expr.expression);
@@ -36,7 +36,7 @@ public class CreateStringVisitor extends ReadonlyVisitor {
   }
 
   @Override
-  protected void visitIfSwitchExpression(@org.jetbrains.annotations.NotNull @NotNull IfSwitchExpression expr) {
+  protected void visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
     append("\r\n");
     appendIndented("");
     for (int i = 0; i < expr.conditions.length; ++i) {
@@ -59,12 +59,12 @@ public class CreateStringVisitor extends ReadonlyVisitor {
   }
 
   @Override
-  protected void visitIntegerExpression(@org.jetbrains.annotations.NotNull @NotNull IntegerExpression expr) {
+  protected void visitIntegerExpression(@NotNull IntegerExpression expr) {
     append("%s", expr.value);
   }
 
   @Override
-  protected void visitAbortExpression(@org.jetbrains.annotations.NotNull @NotNull AbortExpression expr) {
+  protected void visitAbortExpression(@NotNull AbortExpression expr) {
     Object parms[] = new String[expr.parameters.length];
     for (int i = 0; i < parms.length; ++i) {
       StringBuilder old = sb;
@@ -80,14 +80,14 @@ public class CreateStringVisitor extends ReadonlyVisitor {
 
 
   @Override
-  protected void visitAssignmentExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentExpression expr) {
+  protected void visitAssignmentExpression(@NotNull AssignmentExpression expr) {
     append("\r\n");
     appendIndented("var %s = ", expr.name);
     visit(expr.expression);
   }
 
   @Override
-  protected void visitInvokeFunctionExpression(@org.jetbrains.annotations.NotNull @NotNull InvokeFunctionExpression expr) {
+  protected void visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
     append("%s(", expr.function.method.getName());
     for (int i = 0; i < expr.parameters.length; ++i) {
       if (i > 0) {
@@ -99,7 +99,7 @@ public class CreateStringVisitor extends ReadonlyVisitor {
   }
 
   @Override
-  protected void visitArray(@org.jetbrains.annotations.NotNull @NotNull Expression[] array) {
+  protected void visitArray(@NotNull Expression[] array) {
     append("[");
     for (int i = 0; i < array.length; ++i) {
       if (i > 0) {
@@ -111,12 +111,12 @@ public class CreateStringVisitor extends ReadonlyVisitor {
   }
 
   @Override
-  protected void visitParameterExpression(@org.jetbrains.annotations.NotNull @NotNull ParameterExpression expr) {
+  protected void visitParameterExpression(@NotNull ParameterExpression expr) {
     append(expr.name);
   }
 
   @Override
-  protected void visitModuleExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleExpression expr) {
+  protected void visitModuleExpression(@NotNull ModuleExpression expr) {
     append("\r\n");
     appendIndented("module");
     append("\r\n");
@@ -126,13 +126,13 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     appendIndented("end_module");
   }
 
-  protected void visitIndentedArray(@org.jetbrains.annotations.NotNull @NotNull Expression[] array) {
+  protected void visitIndentedArray(@NotNull Expression[] array) {
     for (int i = 0; i < array.length; ++i) {
       visit(array[i]);
     }
   }
 
-  protected void visitModuleArchiveExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleArchiveExpression expr) {
+  protected void visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     if (expr.includePath != null) {
       appendIndent();
       append("include: ");
@@ -148,16 +148,16 @@ public class CreateStringVisitor extends ReadonlyVisitor {
   }
 
   @Override
-  public void visitAssignmentReferenceExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentReferenceExpression expr) {
+  public void visitAssignmentReferenceExpression(@NotNull AssignmentReferenceExpression expr) {
     append("*" + expr.assignment.name);
   }
 
   @Override
-  protected void visitStringExpression(@org.jetbrains.annotations.NotNull @NotNull StringExpression expr) {
+  protected void visitStringExpression(@NotNull StringExpression expr) {
     append("'%s'", expr.value);
   }
 
-  private void append(@org.jetbrains.annotations.NotNull @NotNull String format, Object... parms) {
+  private void append(@NotNull String format, Object... parms) {
     sb.append(String.format(format, parms));
   }
 
@@ -167,7 +167,7 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     sb.append(prefix);
   }
 
-  private void appendIndented(@org.jetbrains.annotations.NotNull @NotNull String format, Object... parms) {
+  private void appendIndented(@NotNull String format, Object... parms) {
     appendIndent();
     sb.append(String.format(format, parms));
   }

@@ -22,7 +22,7 @@ public class Expression {
   @Nullable
   private String string = null;
 
-  @org.jetbrains.annotations.Nullable
+
   @Nullable
   @Override
   public String toString() {

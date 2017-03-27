@@ -45,7 +45,7 @@ public class FindModuleFunctionTableBuilder {
   private final ParameterExpression androidStlType = parameter("androidStlType");
   private final ParameterExpression systemVersion = parameter("systemVersion");
 
-  public void addManifest(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved) {
+  public void addManifest(@NotNull ResolvedManifest resolved) {
     manifests.put(resolved.cdepManifestYml.coordinate, resolved);
   }
 
@@ -77,9 +77,9 @@ public class FindModuleFunctionTableBuilder {
     return functionTable;
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private FindModuleExpression buildFindModule(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved) throws MalformedURLException,
+  private FindModuleExpression buildFindModule(@NotNull ResolvedManifest resolved) throws MalformedURLException,
       URISyntaxException {
 
     Map<Expression, Expression> cases = new HashMap<>();
@@ -150,9 +150,9 @@ public class FindModuleFunctionTableBuilder {
         osxArchitectures, expression);
   }
 
-  @org.jetbrains.annotations.Nullable
+
   @NotNull
-  private StatementExpression buildSingleArchiveResolution(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved, @org.jetbrains.annotations
+  private StatementExpression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved, @org.jetbrains.annotations
       .NotNull @NotNull Archive archive, AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
@@ -161,9 +161,9 @@ public class FindModuleFunctionTableBuilder {
     return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, null, explodedArchiveFolder), dependencies);
   }
 
-  @org.jetbrains.annotations.Nullable
+
   @NotNull
-  private Expression buildSingleArchiveResolution(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved, @org.jetbrains.annotations.NotNull
+  private Expression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
   @NotNull LinuxArchive archive, AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
@@ -172,9 +172,9 @@ public class FindModuleFunctionTableBuilder {
     return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, archive.lib, explodedArchiveFolder), dependencies);
   }
 
-  @org.jetbrains.annotations.Nullable
+
   @NotNull
-  private Expression buildSingleArchiveResolution(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved, @org.jetbrains.annotations.NotNull
+  private Expression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
   @NotNull iOSArchive archive, AssignmentExpression explodedArchiveFolder, Set<Coordinate>
       dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
@@ -183,9 +183,9 @@ public class FindModuleFunctionTableBuilder {
     return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, archive.lib, explodedArchiveFolder), dependencies);
   }
 
-  @org.jetbrains.annotations.Nullable
+
   @NotNull
-  private Expression buildSingleArchiveResolution(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved, @org.jetbrains.annotations.NotNull
+  private Expression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
   @NotNull AndroidArchive archive, @Nullable String abi, AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
@@ -200,9 +200,9 @@ public class FindModuleFunctionTableBuilder {
     return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, lib, explodedArchiveFolder), dependencies);
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private ModuleArchiveExpression buildArchive(@org.jetbrains.annotations.NotNull @NotNull URL remote, @org.jetbrains.annotations.NotNull @NotNull String
+  private ModuleArchiveExpression buildArchive(@NotNull URL remote, @NotNull String
       file, String sha256, Long size, @Nullable String include, @Nullable String lib, AssignmentExpression
       explodedArchiveFolder) throws URISyntaxException, MalformedURLException {
     return archive(remote.toURI().resolve(".").resolve(file).toURL(), sha256, size, include, include == null ? null : joinFileSegments(explodedArchiveFolder,
@@ -210,9 +210,9 @@ public class FindModuleFunctionTableBuilder {
   }
 
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private Expression buildDarwinPlatformCase(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved, AssignmentExpression
+  private Expression buildDarwinPlatformCase(@NotNull ResolvedManifest resolved, AssignmentExpression
       explodedArchiveFolder, Set<Coordinate> dependencies) throws
       MalformedURLException, URISyntaxException {
 
@@ -228,9 +228,9 @@ public class FindModuleFunctionTableBuilder {
     return buildiosArchitectureSwitch(resolved, resolved.cdepManifestYml.iOS.archives, explodedArchiveFolder, combinedPlatformAndSDK, dependencies);
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private Expression buildiosArchitectureSwitch(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved, @org.jetbrains.annotations.NotNull
+  private Expression buildiosArchitectureSwitch(@NotNull ResolvedManifest resolved,
   @NotNull iOSArchive archive[], AssignmentExpression explodedArchiveFolder,
       AssignmentExpression combinedPlatformAndSDK, Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
     Map<iOSArchitecture, List<iOSArchive>> grouped = groupByArchitecture(archive);
@@ -248,9 +248,9 @@ public class FindModuleFunctionTableBuilder {
         .cdepManifestYml.coordinate, supported), osxArchitectures));
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private Expression buildiOSPlatformSdkSwitch(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved, @org.jetbrains.annotations.NotNull
+  private Expression buildiOSPlatformSdkSwitch(@NotNull ResolvedManifest resolved,
   @NotNull List<iOSArchive> archives, AssignmentExpression explodedArchiveFolder,
       AssignmentExpression combinedPlatformAndSDK, iOSArchitecture architecture, Set<Coordinate> dependencies) throws MalformedURLException,
       URISyntaxException {
@@ -283,9 +283,9 @@ public class FindModuleFunctionTableBuilder {
     return ifSwitch(conditionList, expressionList, notFound);
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private Map<iOSArchitecture, List<iOSArchive>> groupByArchitecture(@org.jetbrains.annotations.NotNull @NotNull iOSArchive archives[]) {
+  private Map<iOSArchitecture, List<iOSArchive>> groupByArchitecture(@NotNull iOSArchive archives[]) {
     Map<iOSArchitecture, List<iOSArchive>> result = new HashMap<>();
     for (iOSArchive archive : archives) {
       List<iOSArchive> list = result.get(archive.architecture);
@@ -298,9 +298,10 @@ public class FindModuleFunctionTableBuilder {
     return result;
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private Expression buildAndroidStlTypeCase(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved, AssignmentExpression explodedArchiveFolder, Set<Coordinate> dependencies) throws
+  private Expression buildAndroidStlTypeCase(@NotNull ResolvedManifest resolved, AssignmentExpression explodedArchiveFolder, Set<Coordinate> dependencies)
+      throws
       MalformedURLException, URISyntaxException {
 
     // Gather up the runtime names
@@ -344,9 +345,9 @@ public class FindModuleFunctionTableBuilder {
         .coordinate, runtimes), androidStlType));
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private Expression buildAndroidPlatformExpression(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved, @org.jetbrains.annotations.NotNull
+  private Expression buildAndroidPlatformExpression(@NotNull ResolvedManifest resolved,
   @NotNull List<AndroidArchive> androids, AssignmentExpression explodedArchiveFolder, //
       // Parent of all .zip folders for this coordinate
       Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
@@ -384,9 +385,9 @@ public class FindModuleFunctionTableBuilder {
         .coordinate), systemVersion));
   }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  private Expression buildAndroidAbiExpression(@org.jetbrains.annotations.NotNull @NotNull ResolvedManifest resolved, @org.jetbrains.annotations.NotNull
+  private Expression buildAndroidAbiExpression(@NotNull ResolvedManifest resolved,
   @NotNull List<AndroidArchive> androids, AssignmentExpression explodedArchiveFolder, //
       // Parent of all .zip folders for this coordinate
       Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {

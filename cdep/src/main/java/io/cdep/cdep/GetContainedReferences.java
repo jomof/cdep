@@ -17,13 +17,13 @@ public class GetContainedReferences extends ReadonlyVisitor {
     }
 
     @Override
-    public void visitAssignmentReferenceExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentReferenceExpression expr) {
+    public void visitAssignmentReferenceExpression(@NotNull AssignmentReferenceExpression expr) {
         super.visit(expr.assignment);
         list.add(expr.assignment);
     }
 
     @Override
-    protected void visitAssignmentBlockExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentBlockExpression expr) {
+    protected void visitAssignmentBlockExpression(@NotNull AssignmentBlockExpression expr) {
         // Don't count assign block
         visit(expr.statement);
     }

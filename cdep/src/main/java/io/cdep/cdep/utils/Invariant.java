@@ -10,11 +10,11 @@ import java.util.Collection;
  */
 abstract public class Invariant {
 
-  public static void fail(@org.jetbrains.annotations.NotNull @NotNull String format, Object... parameters) {
+  public static void fail(@NotNull String format, Object... parameters) {
     throw new RuntimeException(String.format(format, parameters));
   }
 
-  public static void require(boolean check, @org.jetbrains.annotations.NotNull @NotNull String format, Object... parameters) {
+  public static void require(boolean check, @NotNull String format, Object... parameters) {
     if (check) {
       return;
     }
@@ -36,7 +36,7 @@ abstract public class Invariant {
   }
 
   @NotNull
-  public static <T> T[] elementsNotNull(@org.jetbrains.annotations.NotNull @NotNull T[] array) {
+  public static <T> T[] elementsNotNull(@NotNull T[] array) {
     notNull(array);
     for (T t : array) {
       notNull(t);
@@ -45,7 +45,7 @@ abstract public class Invariant {
   }
 
   @NotNull
-  public static <T extends Collection> T elementsNotNull(@org.jetbrains.annotations.NotNull @NotNull T collection) {
+  public static <T extends Collection> T elementsNotNull(@NotNull T collection) {
     notNull(collection);
     for (Object t : collection) {
       notNull(t);

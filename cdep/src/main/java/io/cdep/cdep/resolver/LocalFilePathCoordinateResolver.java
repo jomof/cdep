@@ -32,7 +32,7 @@ public class LocalFilePathCoordinateResolver extends CoordinateResolver {
 
   @Nullable
   @Override
-  public ResolvedManifest resolve(ManifestProvider environment, @org.jetbrains.annotations.NotNull @NotNull SoftNameDependency dependency) throws IOException {
+  public ResolvedManifest resolve(ManifestProvider environment, @NotNull SoftNameDependency dependency) throws IOException {
     String coordinate = dependency.compile;
     File local = new File(notNull(coordinate));
     if (!local.isFile()) {

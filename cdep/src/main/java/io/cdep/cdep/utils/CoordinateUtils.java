@@ -26,7 +26,7 @@ import static java.util.regex.Pattern.compile;
 public class CoordinateUtils {
     final private static Pattern pattern = compile("^(.*):(.*):(.*)$");
 
-  public static Coordinate tryParse(@org.jetbrains.annotations.NotNull @NotNull String value) {
+  public static Coordinate tryParse(@NotNull String value) {
         Matcher match = pattern.matcher(value);
         if (!match.find()) {
             return null;

@@ -10,9 +10,9 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 
 public class CDepSHA256Utils {
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  public static CDepSHA256 convertStringToCDepSHA256(@org.jetbrains.annotations.NotNull @NotNull String content) {
+  public static CDepSHA256 convertStringToCDepSHA256(@NotNull String content) {
         Yaml yaml = new Yaml(new Constructor(HashEntry[].class));
         HashEntry[] result =
                 (HashEntry[]) yaml.load(new ByteArrayInputStream(content.getBytes(

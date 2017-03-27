@@ -41,9 +41,9 @@ public class Resolver {
    *
    * @param roots the root References
    */
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  public ResolutionScope resolveAll(@org.jetbrains.annotations.NotNull SoftNameDependency[] roots) throws IOException, NoSuchAlgorithmException {
+  public ResolutionScope resolveAll(SoftNameDependency[] roots) throws IOException, NoSuchAlgorithmException {
     ResolutionScope scope = new ResolutionScope(roots);
     // Progressively resolve dependencies
     while (!scope.isResolutionComplete()) {
@@ -81,7 +81,7 @@ public class Resolver {
    * @throws NoSuchAlgorithmException
    */
   @Nullable
-  public ResolvedManifest resolveAny(@org.jetbrains.annotations.NotNull @NotNull SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException {
+  public ResolvedManifest resolveAny(@NotNull SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException {
     ResolvedManifest resolved = null;
     for (CoordinateResolver resolver : resolvers) {
       ResolvedManifest attempt = resolver.resolve(manifestProvider, dependency);

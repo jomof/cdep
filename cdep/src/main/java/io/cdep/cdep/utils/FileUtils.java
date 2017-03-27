@@ -23,7 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class FileUtils {
-  public static void copyFile(@org.jetbrains.annotations.NotNull @NotNull File sourceFile, @org.jetbrains.annotations.NotNull @NotNull File destFile) throws
+  public static void copyFile(@NotNull File sourceFile, @NotNull File destFile) throws
       IOException {
         if(!destFile.exists()) {
             //noinspection ResultOfMethodCallIgnored
@@ -48,14 +48,14 @@ public class FileUtils {
         }
     }
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
-  public static String readAllText(@org.jetbrains.annotations.NotNull @NotNull File file) throws IOException {
+  public static String readAllText(@NotNull File file) throws IOException {
         return new String(Files.readAllBytes(
                 Paths.get(file.getCanonicalPath())));
     }
 
-  public static void writeTextToFile(@org.jetbrains.annotations.NotNull @NotNull File file, @org.jetbrains.annotations.NotNull @NotNull String body) throws
+  public static void writeTextToFile(@NotNull File file, @NotNull String body) throws
       IOException {
 
         BufferedWriter writer = null;

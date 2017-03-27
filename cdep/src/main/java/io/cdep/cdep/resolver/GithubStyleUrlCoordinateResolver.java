@@ -36,7 +36,7 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
 
   @Nullable
   @Override
-  public ResolvedManifest resolve(@org.jetbrains.annotations.NotNull @NotNull ManifestProvider environment, @org.jetbrains.annotations.NotNull @NotNull
+  public ResolvedManifest resolve(@NotNull ManifestProvider environment, @NotNull
       SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException {
     String coordinate = notNull(dependency.compile);
     Matcher match = pattern.matcher(coordinate);

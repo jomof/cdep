@@ -16,7 +16,7 @@ import static io.cdep.cdep.utils.ReflectionUtils.*;
  */
 public class PlainOldDataReadonlyCovisitor {
 
-  @org.jetbrains.annotations.NotNull
+
   @NotNull
   public List<String> namestack = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class PlainOldDataReadonlyCovisitor {
     covisitFields(left, right);
   }
 
-  public <T> void covisitArray(String name, @Nullable T[] left, @Nullable T[] right, @org.jetbrains.annotations.NotNull @NotNull Class<T> elementType) {
+  public <T> void covisitArray(String name, @Nullable T[] left, @Nullable T[] right, @NotNull Class<T> elementType) {
     if (left == null && right == null) {
       return;
     }
@@ -84,7 +84,7 @@ public class PlainOldDataReadonlyCovisitor {
     covisit(null, left, right, left.getClass());
   }
 
-  public void covisit(String name, @Nullable Object left, @Nullable Object right, @org.jetbrains.annotations.NotNull @NotNull Class<?> type) {
+  public void covisit(String name, @Nullable Object left, @Nullable Object right, @NotNull Class<?> type) {
     if (left == null && right == null) {
       return;
     }
@@ -112,7 +112,7 @@ public class PlainOldDataReadonlyCovisitor {
     }
   }
 
-  private String getVisitorName(@org.jetbrains.annotations.NotNull @NotNull Class<?> type) {
+  private String getVisitorName(@NotNull Class<?> type) {
     String name;
     if (type.isArray()) {
       name = type.getComponentType().getName();

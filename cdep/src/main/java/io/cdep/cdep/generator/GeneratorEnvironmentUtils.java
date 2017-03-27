@@ -42,7 +42,7 @@ public class GeneratorEnvironmentUtils {
   /**
    * Given a function table and generator environment, download all of the files referenced.
    */
-  public static void downloadReferencedModules(@org.jetbrains.annotations.NotNull @NotNull GeneratorEnvironment environment, @org.jetbrains.annotations
+  public static void downloadReferencedModules(@NotNull GeneratorEnvironment environment, @org.jetbrains.annotations
       .NotNull @NotNull Map<Coordinate, List<Expression>> foundModules) throws IOException, NoSuchAlgorithmException {
 
     Set<File> alreadyExploded = new HashSet<>();
