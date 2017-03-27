@@ -84,6 +84,7 @@ public class CDepManifestYmlUtils {
       super.visitArchive(name, value);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void visitiOS(String name, iOS value) {
       if (value.archives != null) {
@@ -108,6 +109,7 @@ public class CDepManifestYmlUtils {
       super.visitLinux(name, value);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void visitAndroid(String name, Android value) {
       if (value.archives != null) {

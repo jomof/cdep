@@ -2,10 +2,7 @@ package io.cdep.cdep.yml;
 
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
-import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
-import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
+import io.cdep.cdep.yml.cdepmanifest.*;
 import org.junit.Test;
 
 import java.net.MalformedURLException;
@@ -13,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.google.common.truth.Truth.assertThat;
+import static io.cdep.cdep.utils.Invariant.notNull;
 import static junit.framework.TestCase.fail;
 
 public class TestMergeCDepManifestYmls {
@@ -30,11 +28,13 @@ public class TestMergeCDepManifestYmls {
 
   @Test
   public void testMergeAndroidiOS() throws MalformedURLException {
-    CDepManifestYml ios = ResolvedManifests.sqliteiOS().cdepManifestYml;
-    CDepManifestYml android = ResolvedManifests.sqliteAndroid().cdepManifestYml;
-    CDepManifestYml result = MergeCDepManifestYmls.merge(android, ios);
-    assertThat(result.iOS.archives).hasLength(ios.iOS.archives.length);
-    assertThat(result.android.archives).hasLength(android.android.archives.length);
+    CDepManifestYml iOSManifest = ResolvedManifests.sqliteiOS().cdepManifestYml;
+    CDepManifestYml androidManifest = ResolvedManifests.sqliteAndroid().cdepManifestYml;
+    CDepManifestYml result = MergeCDepManifestYmls.merge(androidManifest, iOSManifest);
+    iOS iOS = notNull(result.iOS);
+    assertThat(iOS.archives).hasLength(iOSManifest.iOS.archives.length);
+    Android android = notNull(result.android);
+    assertThat(android.archives).hasLength(androidManifest.android.archives.length);
   }
 
   @Test

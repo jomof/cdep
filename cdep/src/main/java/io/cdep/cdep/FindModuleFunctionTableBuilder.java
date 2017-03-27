@@ -28,6 +28,7 @@ import java.net.URL;
 import java.util.*;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
+import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
 
@@ -60,8 +61,7 @@ public class FindModuleFunctionTableBuilder {
       if (resolved.cdepManifestYml.example == null) {
         continue;
       }
-      functionTable.examples.put(resolved.cdepManifestYml.coordinate, new ExampleExpression(resolved.cdepManifestYml
-          .example));
+      functionTable.examples.put(resolved.cdepManifestYml.coordinate, new ExampleExpression(resolved.cdepManifestYml.example));
     }
 
     // Lift assignments up to the highest correct scope
@@ -86,14 +86,11 @@ public class FindModuleFunctionTableBuilder {
       }
     }
 
-    AssignmentExpression coordinateGroupId = assign("coordinate_group_id", string(manifest.coordinate.groupId));
-
-    AssignmentExpression coordinateArtifactId = assign("coordinate_artifact_id", string(manifest.coordinate.artifactId));
-
-    AssignmentExpression coordinateVersion = assign("coordinate_version", string(manifest.coordinate.version));
-
-    AssignmentExpression explodedArchiveTail = assign("exploded_archive_tail", joinFileSegments(coordinateGroupId,
-        coordinateArtifactId, coordinateVersion));
+    Coordinate coordinate = notNull(manifest.coordinate);
+    AssignmentExpression coordinateGroupId = assign("coordinate_group_id", string(coordinate.groupId));
+    AssignmentExpression coordinateArtifactId = assign("coordinate_artifact_id", string(coordinate.artifactId));
+    AssignmentExpression coordinateVersion = assign("coordinate_version", string(coordinate.version));
+    AssignmentExpression explodedArchiveTail = assign("exploded_archive_tail", joinFileSegments(coordinateGroupId, coordinateArtifactId, coordinateVersion));
 
     // Like, {root}/com.github.jomof/vectorial/1.0.0
     AssignmentExpression explodedArchiveFolder = assign("exploded_archive_folder", joinFileSegments(cdepExplodedRoot, explodedArchiveTail));
@@ -134,46 +131,45 @@ public class FindModuleFunctionTableBuilder {
     }
 
     AbortExpression abort;
-    require(supported.size() > 0, "Module '%s' doesn't support any platforms.", manifest.coordinate);
-    abort = abort(String.format("Target platform '%%s' is not supported by module '%s'. " + "Supported: %s", manifest
-        .coordinate, StringUtils.joinOn(" ", supported)), targetPlatform);
+    require(supported.size() > 0, "Module '%s' doesn't support any platforms.", coordinate);
+    abort = abort(String.format("Target platform '%%s' is not supported by module '%s'. " + "Supported: %s", coordinate, StringUtils.joinOn(" ", supported)),
+        targetPlatform);
     StatementExpression expression = ifSwitch(bool, expressions, abort);
 
     Archive archive = manifest.archive;
     if (archive != null) {
-      expression = multi(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies),
-          expression);
+      expression = multi(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies), expression);
     }
-    return new FindModuleExpression(manifest.coordinate, cdepExplodedRoot, targetPlatform, systemVersion,
-        androidArchAbi, androidStlType, osxSysroot, osxArchitectures, expression);
+    return new FindModuleExpression(coordinate, cdepExplodedRoot, targetPlatform, systemVersion, androidArchAbi, androidStlType, osxSysroot,
+        osxArchitectures, expression);
   }
 
-  private StatementExpression buildSingleArchiveResolution(ResolvedManifest resolved, Archive archive,
-      AssignmentExpression explodedArchiveFolder, Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+  private StatementExpression buildSingleArchiveResolution(ResolvedManifest resolved, Archive archive, AssignmentExpression explodedArchiveFolder,
+      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, null, explodedArchiveFolder), dependencies);
   }
 
-  private Expression buildSingleArchiveResolution(ResolvedManifest resolved, LinuxArchive archive,
-      AssignmentExpression explodedArchiveFolder, Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+  private Expression buildSingleArchiveResolution(ResolvedManifest resolved, LinuxArchive archive, AssignmentExpression explodedArchiveFolder,
+      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, archive.lib, explodedArchiveFolder), dependencies);
   }
 
-  private Expression buildSingleArchiveResolution(ResolvedManifest resolved, iOSArchive archive, AssignmentExpression
-      explodedArchiveFolder, Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+  private Expression buildSingleArchiveResolution(ResolvedManifest resolved, iOSArchive archive, AssignmentExpression explodedArchiveFolder, Set<Coordinate>
+      dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, archive.lib, explodedArchiveFolder), dependencies);
   }
 
-  private Expression buildSingleArchiveResolution(ResolvedManifest resolved, AndroidArchive archive, String abi,
-      AssignmentExpression explodedArchiveFolder, Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+  private Expression buildSingleArchiveResolution(ResolvedManifest resolved, AndroidArchive archive, String abi, AssignmentExpression explodedArchiveFolder,
+      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
@@ -186,16 +182,15 @@ public class FindModuleFunctionTableBuilder {
     return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, lib, explodedArchiveFolder), dependencies);
   }
 
-  private ModuleArchiveExpression buildArchive(URL remote, String file, String sha256, Long size, String include,
-      String lib, AssignmentExpression explodedArchiveFolder) throws URISyntaxException, MalformedURLException {
-    return archive(remote.toURI().resolve(".").resolve(file).toURL(), sha256, size, include, include == null ? null :
-        joinFileSegments(explodedArchiveFolder, file, include), lib == null ? null : "lib/" + lib, lib == null ? null
-        : joinFileSegments(explodedArchiveFolder, file, "lib", lib));
+  private ModuleArchiveExpression buildArchive(URL remote, String file, String sha256, Long size, String include, String lib, AssignmentExpression
+      explodedArchiveFolder) throws URISyntaxException, MalformedURLException {
+    return archive(remote.toURI().resolve(".").resolve(file).toURL(), sha256, size, include, include == null ? null : joinFileSegments(explodedArchiveFolder,
+        file, include), lib == null ? null : "lib/" + lib, lib == null ? null : joinFileSegments(explodedArchiveFolder, file, "lib", lib));
   }
 
 
-  private Expression buildDarwinPlatformCase(ResolvedManifest resolved, AssignmentExpression explodedArchiveFolder,
-      Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+  private Expression buildDarwinPlatformCase(ResolvedManifest resolved, AssignmentExpression explodedArchiveFolder, Set<Coordinate> dependencies) throws
+      MalformedURLException, URISyntaxException {
 
     // Something like iPhone10.2.sdk or iPhone.sdk
     AssignmentExpression osxSysrootSDKName = assign("osx_sysroot_sdk_name", getFileName(osxSysroot));
@@ -204,30 +199,31 @@ public class FindModuleFunctionTableBuilder {
     AssignmentExpression lastDotPosition = assign("last_dot_position", lastIndexOfString(osxSysrootSDKName, "."));
 
     // Something like iPhone10.2 or iPhone
-    AssignmentExpression combinedPlatformAndSDK = assign("combined_platform_and_sdk", substring(osxSysrootSDKName,
-        integer(0), lastDotPosition));
+    AssignmentExpression combinedPlatformAndSDK = assign("combined_platform_and_sdk", substring(osxSysrootSDKName, integer(0), lastDotPosition));
+    notNull(resolved.cdepManifestYml.iOS);
     return buildiosArchitectureSwitch(resolved, resolved.cdepManifestYml.iOS.archives, explodedArchiveFolder, combinedPlatformAndSDK, dependencies);
   }
 
-  private Expression buildiosArchitectureSwitch(ResolvedManifest resolved, iOSArchive archive[], AssignmentExpression
-      explodedArchiveFolder, AssignmentExpression combinedPlatformAndSDK, Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+  private Expression buildiosArchitectureSwitch(ResolvedManifest resolved, iOSArchive archive[], AssignmentExpression explodedArchiveFolder,
+      AssignmentExpression combinedPlatformAndSDK, Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
     Map<iOSArchitecture, List<iOSArchive>> grouped = groupByArchitecture(archive);
     List<Expression> conditions = new ArrayList<>();
     List<Expression> expressions = new ArrayList<>();
     String supported = "";
     for (iOSArchitecture architecture : grouped.keySet()) {
       conditions.add(arrayHasOnlyElement(osxArchitectures, string(architecture.toString())));
-      expressions.add(buildiOSPlatformSdkSwitch(resolved, grouped.get(architecture), explodedArchiveFolder, combinedPlatformAndSDK, architecture, dependencies));
+      expressions.add(buildiOSPlatformSdkSwitch(resolved, grouped.get(architecture), explodedArchiveFolder, combinedPlatformAndSDK, architecture,
+          dependencies));
 
       supported += " " + architecture.toString();
     }
-    return ifSwitch(conditions, expressions, abort(String.format("OSX architecture '%%s' is not supported by module " +
-        "'%s'. Supported: %s", resolved.cdepManifestYml.coordinate, supported), osxArchitectures));
+    return ifSwitch(conditions, expressions, abort(String.format("OSX architecture '%%s' is not supported by module " + "'%s'. Supported: %s", resolved
+        .cdepManifestYml.coordinate, supported), osxArchitectures));
   }
 
-  private Expression buildiOSPlatformSdkSwitch(ResolvedManifest resolved, List<iOSArchive> archives,
-      AssignmentExpression explodedArchiveFolder, AssignmentExpression combinedPlatformAndSDK, iOSArchitecture
-      architecture, Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+  private Expression buildiOSPlatformSdkSwitch(ResolvedManifest resolved, List<iOSArchive> archives, AssignmentExpression explodedArchiveFolder,
+      AssignmentExpression combinedPlatformAndSDK, iOSArchitecture architecture, Set<Coordinate> dependencies) throws MalformedURLException,
+      URISyntaxException {
     List<Expression> conditionList = new ArrayList<>();
     List<Expression> expressionList = new ArrayList<>();
     String supported = "";
@@ -244,13 +240,15 @@ public class FindModuleFunctionTableBuilder {
 
     // If there was no exact match then do a startsWith match like, starts  with iPhone*
     // TODO: Need to match on the highest SDK version. This matches the first seen.
+    notNull(resolved.cdepManifestYml.iOS);
     for (iOSArchive archive : resolved.cdepManifestYml.iOS.archives) {
+      notNull(archive.platform);
       conditionList.add(stringStartsWith(combinedPlatformAndSDK, string(archive.platform.toString())));
       expressionList.add(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies));
     }
 
-    Expression notFound = abort(String.format("OSX SDK '%%s' is not supported by module '%s' and architecture '%s'. " +
-        "Supported: %s", resolved.cdepManifestYml.coordinate, architecture, supported), combinedPlatformAndSDK);
+    Expression notFound = abort(String.format("OSX SDK '%%s' is not supported by module '%s' and architecture '%s'. " + "Supported: %s", resolved
+        .cdepManifestYml.coordinate, architecture, supported), combinedPlatformAndSDK);
 
     return ifSwitch(conditionList, expressionList, notFound);
   }
@@ -268,11 +266,13 @@ public class FindModuleFunctionTableBuilder {
     return result;
   }
 
-  private Expression buildAndroidStlTypeCase(ResolvedManifest resolved, AssignmentExpression explodedArchiveFolder, Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+  private Expression buildAndroidStlTypeCase(ResolvedManifest resolved, AssignmentExpression explodedArchiveFolder, Set<Coordinate> dependencies) throws
+      MalformedURLException, URISyntaxException {
 
     // Gather up the runtime names
     Map<String, List<AndroidArchive>> stlTypes = new HashMap<>();
-    require(resolved.cdepManifestYml.android != null);
+    notNull(resolved.cdepManifestYml.android);
+    notNull(resolved.cdepManifestYml.android.archives);
     for (AndroidArchive android : resolved.cdepManifestYml.android.archives) {
       List<AndroidArchive> androids = stlTypes.get(android.runtime);
       if (androids == null) {
@@ -284,8 +284,7 @@ public class FindModuleFunctionTableBuilder {
 
     List<AndroidArchive> noRuntimeAndroids = stlTypes.get(null);
     if (noRuntimeAndroids != null) {
-      require(stlTypes.size() == 1, "Runtime is on some android submodules but not other in module '%s'", resolved
-          .cdepManifestYml.coordinate);
+      require(stlTypes.size() == 1, "Runtime is on some android submodules but not other in module '%s'", resolved.cdepManifestYml.coordinate);
       // If there are no runtimes, then skip the runtime check. This is likely a
       // header-only module.
       return buildAndroidPlatformExpression(resolved, noRuntimeAndroids, explodedArchiveFolder, dependencies);
@@ -295,8 +294,7 @@ public class FindModuleFunctionTableBuilder {
     String runtimes = "";
     for (String stlType : stlTypes.keySet()) {
       runtimes += stlType + " ";
-      cases.put(string(stlType + "_shared"), buildAndroidPlatformExpression(resolved, stlTypes.get(stlType),
-          explodedArchiveFolder, dependencies));
+      cases.put(string(stlType + "_shared"), buildAndroidPlatformExpression(resolved, stlTypes.get(stlType), explodedArchiveFolder, dependencies));
       cases.put(string(stlType + "_static"), buildAndroidPlatformExpression(resolved, stlTypes.get(stlType), explodedArchiveFolder, dependencies));
     }
 
@@ -308,10 +306,12 @@ public class FindModuleFunctionTableBuilder {
       expressions[i] = entry.getValue();
       ++i;
     }
-    return ifSwitch(bool, expressions, abort(String.format("Android runtime '%%s' is not supported by module '%s'. Supported: %s", resolved.cdepManifestYml.coordinate, runtimes), androidStlType));
+    return ifSwitch(bool, expressions, abort(String.format("Android runtime '%%s' is not supported by module '%s'. Supported: %s", resolved.cdepManifestYml
+        .coordinate, runtimes), androidStlType));
   }
 
-  private Expression buildAndroidPlatformExpression(ResolvedManifest resolved, List<AndroidArchive> androids, AssignmentExpression explodedArchiveFolder, // Parent of all .zip folders for this coordinate
+  private Expression buildAndroidPlatformExpression(ResolvedManifest resolved, List<AndroidArchive> androids, AssignmentExpression explodedArchiveFolder, //
+      // Parent of all .zip folders for this coordinate
       Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
 
     // If there's only one android left and it doesn't have a platform then this is
@@ -322,6 +322,7 @@ public class FindModuleFunctionTableBuilder {
 
     Map<Integer, List<AndroidArchive>> grouped = new HashMap<>();
     for (AndroidArchive android : androids) {
+      notNull(android.platform);
       Integer platform = Integer.parseInt(android.platform);
       List<AndroidArchive> group = grouped.get(platform);
       if (group == null) {
@@ -340,14 +341,14 @@ public class FindModuleFunctionTableBuilder {
 
     for (int platform : platforms) {
       conditions.add(0, gte(systemVersion, platform));
-      expressions.add(0, buildAndroidAbiExpression(resolved, grouped.get(platform), explodedArchiveFolder,
-          dependencies));
+      expressions.add(0, buildAndroidAbiExpression(resolved, grouped.get(platform), explodedArchiveFolder, dependencies));
     }
-    return ifSwitch(conditions, expressions, abort(String.format("Android API level '%%s' is not supported by module " +
-        "'%s'", resolved.cdepManifestYml.coordinate), systemVersion));
+    return ifSwitch(conditions, expressions, abort(String.format("Android API level '%%s' is not supported by module " + "'%s'", resolved.cdepManifestYml
+        .coordinate), systemVersion));
   }
 
-  private Expression buildAndroidAbiExpression(ResolvedManifest resolved, List<AndroidArchive> androids, AssignmentExpression explodedArchiveFolder, // Parent of all .zip folders for this coordinate
+  private Expression buildAndroidAbiExpression(ResolvedManifest resolved, List<AndroidArchive> androids, AssignmentExpression explodedArchiveFolder, //
+      // Parent of all .zip folders for this coordinate
       Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
     require(androids.size() == 1, "Expected only one android archive upon reaching ABI level. There were %s.", androids.size());
     AndroidArchive archive = androids.get(0);
