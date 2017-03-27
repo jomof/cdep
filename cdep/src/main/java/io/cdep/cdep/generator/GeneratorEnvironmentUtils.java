@@ -21,6 +21,7 @@ import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
 import io.cdep.cdep.ast.finder.ModuleExpression;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.utils.HashUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,8 +42,8 @@ public class GeneratorEnvironmentUtils {
   /**
    * Given a function table and generator environment, download all of the files referenced.
    */
-  public static void downloadReferencedModules(
-      GeneratorEnvironment environment, Map<Coordinate, List<Expression>> foundModules) throws IOException, NoSuchAlgorithmException {
+  public static void downloadReferencedModules(@NotNull GeneratorEnvironment environment, @NotNull Map<Coordinate, List<Expression>> foundModules) throws
+      IOException, NoSuchAlgorithmException {
 
     Set<File> alreadyExploded = new HashSet<>();
 

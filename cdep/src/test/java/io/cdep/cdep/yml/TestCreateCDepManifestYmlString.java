@@ -5,6 +5,7 @@ import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
 import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -14,7 +15,7 @@ import static io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString.create;
 
 public class TestCreateCDepManifestYmlString {
 
-  private static void check(CDepManifestYml manifest) {
+  private static void check(@NotNull CDepManifestYml manifest) {
     // Convert to string
     String result = create(manifest);
 

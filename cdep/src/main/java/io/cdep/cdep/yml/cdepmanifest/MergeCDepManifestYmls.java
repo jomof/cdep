@@ -1,6 +1,8 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.cdep.Coordinate;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.*;
 import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.iOS;
@@ -10,26 +12,27 @@ import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.iOS;
  */
 public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
 
+  @Nullable
   private Object returnValue = null;
 
+  @Nullable
   public static CDepManifestYml merge(CDepManifestYml left, CDepManifestYml right) {
     MergeCDepManifestYmls thiz = new MergeCDepManifestYmls();
     thiz.covisit(left, right);
     if (!thiz.areEqual) {
-      throw new RuntimeException(
-          String.format("Manifests were different at %s", thiz.firstDifference));
+      throw new RuntimeException(String.format("Manifests were different at %s", thiz.firstDifference));
     }
     return (CDepManifestYml) thiz.returnValue;
   }
 
   @Override
-  public void covisit(String name, Object left, Object right, Class<?> type) {
+  public void covisit(String name, Object left, Object right, @NotNull Class<?> type) {
     returnValue = null;
     super.covisit(name, left, right, type);
   }
 
   @Override
-  public void covisitCDepManifestYml(String name, CDepManifestYml left, CDepManifestYml right) {
+  public void covisitCDepManifestYml(String name, @Nullable CDepManifestYml left, @Nullable CDepManifestYml right) {
     if (left == null && right == null) {
       returnValue = null;
       return;
@@ -59,7 +62,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   }
 
   @Override
-  public void covisitAndroid(String name, Android left, Android right) {
+  public void covisitAndroid(String name, @Nullable Android left, @Nullable Android right) {
     if (left == null && right == null) {
       returnValue = null;
       return;
@@ -79,7 +82,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   }
 
   @Override
-  public void covisitiOS(String name, iOS left, iOS right) {
+  public void covisitiOS(String name, @Nullable iOS left, @Nullable iOS right) {
     if (left == null && right == null) {
       returnValue = null;
       return;
@@ -99,7 +102,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   }
 
   @Override
-  public void covisitLinux(String name, Linux left, Linux right) {
+  public void covisitLinux(String name, @Nullable Linux left, @Nullable Linux right) {
     if (left == null && right == null) {
       returnValue = null;
       return;
@@ -118,8 +121,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   }
 
   @Override
-  public void covisitAndroidArchiveArray(String name, AndroidArchive[] left,
-                                         AndroidArchive[] right) {
+  public void covisitAndroidArchiveArray(String name, @Nullable AndroidArchive[] left, @Nullable AndroidArchive[] right) {
     if (left == null) {
       returnValue = right;
       return;
@@ -140,7 +142,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   }
 
   @Override
-  public void covisitiOSArchiveArray(String name, iOSArchive[] left, iOSArchive[] right) {
+  public void covisitiOSArchiveArray(String name, @Nullable iOSArchive[] left, @Nullable iOSArchive[] right) {
     if (left == null) {
       returnValue = right;
       return;
@@ -161,7 +163,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   }
 
   @Override
-  public void covisitLinuxArchiveArray(String name, LinuxArchive[] left, LinuxArchive[] right) {
+  public void covisitLinuxArchiveArray(String name, @Nullable LinuxArchive[] left, @Nullable LinuxArchive[] right) {
     if (left == null) {
       returnValue = right;
       return;

@@ -16,14 +16,17 @@
 package io.cdep.cdep.ast.finder;
 
 import io.cdep.cdep.CreateStringVisitor;
+import org.jetbrains.annotations.Nullable;
 
 public class Expression {
+    @Nullable
     private String string = null;
 
+    @Nullable
     @Override
     public String toString() {
         if (string == null) {
-          string = getClass() + ": " + CreateStringVisitor.convert(this);
+            string = getClass() + ": " + CreateStringVisitor.convert(this);
         }
         return string;
     }

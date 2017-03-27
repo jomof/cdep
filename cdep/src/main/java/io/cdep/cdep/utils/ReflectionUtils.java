@@ -1,5 +1,7 @@
 package io.cdep.cdep.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -11,7 +13,7 @@ public class ReflectionUtils {
   /**
    * Invoke but convert atypical exceptions to RuntimeException. If the invoked method threw a RuntimeException then unwrap and throw.
    */
-  public static Object invoke(Method method, Object thiz, Object... args) {
+  public static Object invoke(@NotNull Method method, Object thiz, Object... args) {
     notNull(method);
     try {
       return method.invoke(thiz, args);
@@ -30,7 +32,7 @@ public class ReflectionUtils {
    * Get method but convert atypical exceptions into RuntimeException. Should be used
    * when it is a bug if the method doesn't exist.
    */
-  public static Method getMethod(Class<?> clazz, String name, Class<?>... parameterTypes) {
+  public static Method getMethod(@NotNull Class<?> clazz, @NotNull String name, Class<?>... parameterTypes) {
     notNull(clazz);
     notNull(name);
     try {
@@ -44,7 +46,7 @@ public class ReflectionUtils {
    * Get field value but convert atypical exceptions into RuntimeException. Should be used
    * when it is a bug if the method doesn't exist.
    */
-  public static Object getFieldValue(Field field, Object instance) {
+  public static Object getFieldValue(@NotNull Field field, Object instance) {
     notNull(field);
     notNull(instance);
     try {

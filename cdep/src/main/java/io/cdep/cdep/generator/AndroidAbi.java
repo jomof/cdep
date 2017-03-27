@@ -1,5 +1,7 @@
 package io.cdep.cdep.generator;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Enum of valid ABI you can specify for NDK.
  */
@@ -21,6 +23,7 @@ public enum AndroidAbi {
   /**
    * The names of all ABIs.
    */
+  @NotNull
   public static String[] getNames() {
     String result[] = new String[AndroidAbi.values().length];
     int i = 0;

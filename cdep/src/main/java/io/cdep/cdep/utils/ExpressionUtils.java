@@ -20,6 +20,7 @@ import io.cdep.cdep.ReadonlyVisitor;
 import io.cdep.cdep.ast.finder.Expression;
 import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.ModuleExpression;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ abstract public class ExpressionUtils {
      * These expressions contain the local module location as well as the resolved coordinate
      * and other information
      */
+    @NotNull
     public static Map<Coordinate, List<Expression>> getAllFoundModuleExpressions(Expression expression) {
         return new Finder(expression).foundModules;
     }
@@ -53,7 +55,7 @@ abstract public class ExpressionUtils {
         }
 
         @Override
-        protected void visitFindModuleExpression(FindModuleExpression expr) {
+        protected void visitFindModuleExpression(@NotNull FindModuleExpression expr) {
             coordinate = expr.coordinate;
             super.visitFindModuleExpression(expr);
         }
