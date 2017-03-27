@@ -46,8 +46,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static io.cdep.cdep.utils.Invariant.fail;
-import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.utils.Invariant.*;
 
 public class CDep {
 
@@ -78,7 +77,7 @@ public class CDep {
     return 0;
   }
 
-  @Nullable
+  @NotNull
   private static FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment, @NotNull SoftNameDependency
       dependencies[]) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -162,7 +161,7 @@ public class CDep {
 
   private void runBuilders(GeneratorEnvironment environment, @NotNull FunctionTableExpression table)
       throws IOException {
-    for (BuildSystem buildSystem : config.builders) {
+    for (BuildSystem buildSystem : notNull(config).builders) {
       switch (buildSystem) {
         case cmake:
           new CMakeGenerator(environment, table).generate();
@@ -266,6 +265,7 @@ public class CDep {
           merged = MergeCDepManifestYmls.merge(merged, resolved.cdepManifestYml);
         }
       }
+      notNull(merged);
 
       // Check the merge for sanity
       CDepManifestYmlUtils.checkManifestSanity(merged);
@@ -310,6 +310,7 @@ public class CDep {
       }
       if (args.size() > 1 && "manifest".equals(args.get(1))) {
         handleReadCDepYml();
+        assert config != null;
         out.print(config.toString());
         return true;
       }
@@ -429,17 +430,19 @@ public class CDep {
     environment.writeCDepSHA256File();
   }
 
-  @Nullable
+  @NotNull
   private FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+
+    assert config != null;
     return getFunctionTableExpression(environment, config.dependencies);
   }
 
-  @Nullable
+  @NotNull
   private GeneratorEnvironment getGeneratorEnvironment(boolean forceRedownload, boolean ignoreManifestHashes) {
     return getGeneratorEnvironment(out, forceRedownload, ignoreManifestHashes);
   }
 
-  @Nullable
+  @NotNull
   private GeneratorEnvironment getGeneratorEnvironment(PrintStream out, boolean forceRedownload, boolean ignoreManifestHashes) {
     return new GeneratorEnvironment(out, workingFolder, downloadFolder, forceRedownload, ignoreManifestHashes);
   }

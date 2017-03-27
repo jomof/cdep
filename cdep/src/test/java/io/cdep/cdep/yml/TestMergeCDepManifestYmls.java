@@ -18,8 +18,7 @@ public class TestMergeCDepManifestYmls {
   @Test
   public void testJustCoordinate() throws MalformedURLException {
     try {
-      MergeCDepManifestYmls.merge(ResolvedManifests.sqlite().cdepManifestYml,
-          ResolvedManifests.admob().cdepManifestYml);
+      MergeCDepManifestYmls.merge(ResolvedManifests.sqlite().cdepManifestYml, ResolvedManifests.admob().cdepManifestYml);
       fail("Expected exception");
     } catch (RuntimeException e) {
       assertThat(e).hasMessage("Manifests were different at artifactId.coordinate.[value]");
@@ -50,8 +49,8 @@ public class TestMergeCDepManifestYmls {
       for (ResolvedManifests.NamedManifest manifest2 : ResolvedManifests.all()) {
         String key = manifest1.name + "-" + manifest2.name;
         try {
-          CDepManifestYml merged1 = MergeCDepManifestYmls.merge(manifest1.resolved.cdepManifestYml,
-              manifest2.resolved.cdepManifestYml);
+          CDepManifestYml merged1 = MergeCDepManifestYmls.merge(manifest1.resolved.cdepManifestYml, manifest2.resolved
+              .cdepManifestYml);
           String string = CreateCDepManifestYmlString.create(merged1);
           CDepManifestYml merged2 = CDepManifestYmlUtils.convertStringToManifest(string);
           if (!CDepManifestYmlEquality.areDeeplyIdentical(merged1, merged2)) {
@@ -80,9 +79,8 @@ public class TestMergeCDepManifestYmls {
 
   @Test
   public void mergeAndroidiOSLinux() throws Exception {
-    CDepManifestYml result = MergeCDepManifestYmls.merge(
-        ResolvedManifests.sqlite().cdepManifestYml,
-        ResolvedManifests.sqliteLinux().cdepManifestYml);
+    CDepManifestYml result = MergeCDepManifestYmls.merge(ResolvedManifests.sqlite().cdepManifestYml, ResolvedManifests
+        .sqliteLinux().cdepManifestYml);
     assertThat(result.linux).isNotNull();
     assertThat(result.linux.archives).isNotEmpty();
     assertThat(result.linux.archives).hasLength(1);

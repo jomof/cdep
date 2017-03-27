@@ -15,27 +15,23 @@
 */
 package io.cdep.cdep.resolver;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import java.io.File;
 import org.junit.Test;
+
+import java.io.File;
+
+import static com.google.common.truth.Truth.assertThat;
 
 public class TestGithubStyleUrlCoordinateResolver {
 
-  final private GeneratorEnvironment environment = new GeneratorEnvironment(
-      System.out,
-      new File("./test-files/TestFindModuleFunctionTableBuilder/working"),
-      null,
-      false,
-      false);
+  final private GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File("" +
+      "./test-files/TestFindModuleFunctionTableBuilder/working"), null, false, false);
 
   @Test
   public void testSimple() throws Exception {
-    ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver()
-        .resolve(environment, new SoftNameDependency(
-            "https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
+    ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver().resolve(environment, new SoftNameDependency
+        ("https://github" + ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
     assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.81");
@@ -44,9 +40,8 @@ public class TestGithubStyleUrlCoordinateResolver {
 
   @Test
   public void testCompound() throws Exception {
-    ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver()
-        .resolve(environment, new SoftNameDependency(
-            "https://github.com/jomof/firebase/releases/download/2.1.3-rev5/cdep-manifest-database.yml"));
+    ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver().resolve(environment, new SoftNameDependency
+        ("https://github" + ".com/jomof/firebase/releases/download/2.1.3-rev5/cdep-manifest-database.yml"));
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("firebase/database");
     assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("2.1.3-rev5");
@@ -56,9 +51,8 @@ public class TestGithubStyleUrlCoordinateResolver {
   @Test
   public void testMissing() throws Exception {
     // Missing URL should return null because the coordinate may be resolvable in other ways.
-    ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver()
-        .resolve(environment, new SoftNameDependency(
-            "https://github.com/jomof/firebase/releases/download/0.0.0/cdep-manifest-appx.yml"));
+    ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver().resolve(environment, new SoftNameDependency
+        ("https://github" + ".com/jomof/firebase/releases/download/0.0.0/cdep-manifest-appx.yml"));
     assertThat(resolved).isNull();
   }
 }

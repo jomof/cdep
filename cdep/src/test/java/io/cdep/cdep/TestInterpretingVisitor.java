@@ -15,15 +15,7 @@ import static org.junit.Assert.fail;
 public class TestInterpretingVisitor {
   @Test
   public void testNullInclude() throws Exception {
-    new InterpretingVisitor().visit(
-        archive(
-            new URL("https://google.com"),
-            "sha256",
-            192L,
-            null,
-            null,
-            null,
-            null));
+    new InterpretingVisitor().visit(archive(new URL("https://google.com"), "sha256", 192L, null, null, null, null));
   }
 
   @Test

@@ -49,7 +49,7 @@ public class FindModuleFunctionTableBuilder {
     manifests.put(resolved.cdepManifestYml.coordinate, resolved);
   }
 
-  @Nullable
+  @NotNull
   public FunctionTableExpression build() throws MalformedURLException, URISyntaxException {
     FunctionTableExpression functionTable = new FunctionTableExpression();
 

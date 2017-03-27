@@ -146,6 +146,7 @@ public class CDepManifestYmlUtils {
 
     @Override
     public void visitCoordinate(String name, @NotNull Coordinate value) {
+      assert coordinate != null;
       require(coordinate.groupId != null, "Manifest was missing coordinate.groupId");
       require(coordinate.artifactId != null, "Manifest was missing coordinate.artifactId");
       require(coordinate.version != null, "Manifest was missing coordinate.version");

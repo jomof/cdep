@@ -30,7 +30,7 @@ public class Android {
     this.archives = new AndroidArchive[0];
   }
 
-  Android(@NotNull HardNameDependency dependencies[], @NotNull AndroidArchive archives[]) {
+  Android(@Nullable HardNameDependency dependencies[], @NotNull AndroidArchive archives[]) {
     this.dependencies = dependencies;
     this.archives = archives;
   }

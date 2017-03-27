@@ -72,33 +72,42 @@ public class TestCDep {
   public void mergeSecondMissing() throws Exception {
     File output = new File(".test-files/mergeSecondMissing/merged-manifest.yml");
     output.delete();
-    assertThat(main("merge", "com.github.jomof:firebase/admob:2.1.3-rev8", "non:existing:1.2.3", output.toString())).contains("Manifest for 'non:existing:1.2.3' didn't exist");
+    assertThat(main("merge", "com.github.jomof:firebase/admob:2.1.3-rev8", "non:existing:1.2.3", output.toString())).contains
+        ("Manifest for " + "'non:existing:1.2.3' didn't exist");
   }
 
   @Test
   public void mergeFirstMissing() throws Exception {
     File output = new File(".test-files/mergeFirstMissing/merged-manifest.yml");
     output.delete();
-    assertThat(main("merge", "non:existing:1.2.3", "com.github.jomof:firebase/admob:2.1.3-rev8", output.toString())).contains("Manifest for 'non:existing:1.2.3' didn't exist");
+    assertThat(main("merge", "non:existing:1.2.3", "com.github.jomof:firebase/admob:2.1.3-rev8", output.toString())).contains
+        ("Manifest for " + "'non:existing:1.2.3' didn't exist");
   }
 
   @Test
   public void mergeTwo1() throws Exception {
     File output = new File(".test-files/mergeTwo1/merged-manifest.yml");
     output.delete();
-    assertThat(main("merge", "com.github.jomof:sqlite/iOS:3.16.2-rev26", "com.github.jomof:sqlite/android:3.16.2-rev26", output.toString())).contains("Merged 2 manifests into");
+    assertThat(main("merge", "com.github.jomof:sqlite/iOS:3.16.2-rev26", "com.github.jomof:sqlite/android:3.16.2-rev26", output
+        .toString())).contains("Merged" + " 2 manifests into");
   }
 
   @Test
   public void mergeTwo2() throws Exception {
     File output = new File(".test-files/mergeTwo2/merged-manifest.yml");
     output.delete();
-    assertThat(main("merge", "com.github.jomof:cmakeify/iOS:0.0.219", "com.github.jomof:cmakeify/android:0.0.219", output.toString())).contains("Merged 2 manifests into");
+    assertThat(main("merge", "com.github.jomof:cmakeify/iOS:0.0.219", "com.github.jomof:cmakeify/android:0.0.219", output
+        .toString())).contains("Merged 2 " + "manifests into");
   }
 
   @Test
   public void lintSomeKnownLibraries() throws Exception {
-    main(main("lint", "com.github.jomof:firebase/admob:2.1.3-rev11", "com.github.jomof:firebase/analytics:2.1.3-rev11", "com.github.jomof:firebase/auth:2.1.3-rev11", "com.github.jomof:firebase/database:2.1.3-rev11", "com.github.jomof:firebase/invites:2.1.3-rev11", "com.github.jomof:firebase/messaging:2.1.3-rev11", "com.github.jomof:firebase/remote_config:2.1.3-rev11", "com.github.jomof:firebase/storage:2.1.3-rev11", "com.github.jomof:sqlite:3.16.2-rev25", "com.github.jomof:boost:1.0.63-rev18", "com.github.jomof:vectorial:0.0.0-rev11", "com.github.jomof:mathfu:1.0.2-rev7", "com.github.jomof:sdl2:2.0.5-rev11"));
+    main(main("lint", "com.github.jomof:firebase/admob:2.1.3-rev11", "com.github.jomof:firebase/analytics:2.1.3-rev11", "com" +
+        ".github" + ".jomof:firebase/auth:2.1.3-rev11", "com.github.jomof:firebase/database:2.1.3-rev11", "com.github" +
+        ".jomof:firebase/invites:2.1.3-rev11", "com.github" + ".jomof:firebase/messaging:2.1.3-rev11", "com.github" +
+        ".jomof:firebase/remote_config:2.1.3-rev11", "com.github.jomof:firebase/storage:2.1.3-rev11", "com" + ".github" +
+        ".jomof:sqlite:3.16.2-rev25", "com.github.jomof:boost:1.0.63-rev18", "com.github.jomof:vectorial:0.0.0-rev11", "com" +
+        ".github" + ".jomof:mathfu:1.0.2-rev7", "com.github.jomof:sdl2:2.0.5-rev11"));
   }
 
   @Test
@@ -167,8 +176,13 @@ public class TestCDep {
     File yaml = new File(".test-files/emptyCdepSha256/cdep.yml");
     File yamlSha256 = new File(".test-files/emptyCdepSha256/cdep.sha256");
     yaml.getParentFile().mkdirs();
-    Files.write("builders: [cmake, cmakeExamples]\n" + "dependencies:\n" + "- compile: com.github.jomof:mathfu:1.0.2-rev7\n", yaml, StandardCharsets.UTF_8);
-    Files.write("# This file is automatically maintained by CDep.\n" + "#\n" + "#     MANUAL EDITS WILL BE LOST ON THE NEXT CDEP RUN\n" + "#\n" + "# This file contains a list of CDep coordinates along with the SHA256 hash of their\n" + "# manifest file. This is to ensure that a manifest hasn't changed since the last\n" + "# time CDep ran.\n" + "# The recommended best practice is to check this file into source control so that\n" + "# anyone else who builds this project is guaranteed to get the same dependencies.\n" + "\n" + "\n", yamlSha256, StandardCharsets.UTF_8);
+    Files.write("builders: [cmake, cmakeExamples]\n" + "dependencies:\n" + "- compile: com.github.jomof:mathfu:1.0.2-rev7\n",
+        yaml, StandardCharsets.UTF_8);
+    Files.write("# This file is automatically maintained by CDep.\n" + "#\n" + "#     MANUAL EDITS WILL BE LOST ON THE NEXT " +
+        "CDEP RUN\n" + "#\n" + "# This " + "file contains a list of CDep coordinates along with the SHA256 hash of their\n" +
+        "# manifest file. This is to ensure that a manifest hasn't changed" + " since the last\n" + "# time CDep ran.\n" + "# " +
+        "The recommended best practice is to check this file into source control so that\n" + "# anyone else " + "who builds " +
+        "this project is guaranteed to get the same dependencies.\n" + "\n" + "\n", yamlSha256, StandardCharsets.UTF_8);
     String result = main("-wf", yaml.getParent());
     System.out.printf(result);
   }
@@ -196,9 +210,10 @@ public class TestCDep {
     File yaml = new File(".test-files/someKnownUrls/cdep.yml");
     yaml.getParentFile().mkdirs();
     Files.write("builders: [cmake, cmakeExamples]\n" + "dependencies:\n"
-//                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
-//                + "- compile: com.github.jomof:cmakeify:0.0.70\n"
-        + "- compile: com.github.jomof:mathfu:1.0.2-rev7\n" + "- compile: https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml\n" + "- compile: com.github.jomof:low-level-statistics:0.0.16\n", yaml, StandardCharsets.UTF_8);
+        //                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
+        //                + "- compile: com.github.jomof:cmakeify:0.0.70\n"
+        + "- compile: com.github.jomof:mathfu:1.0.2-rev7\n" + "- compile: https://github" +
+        ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml\n" + "- compile: com.github.jomof:low-level-statistics:0.0.16\n", yaml, StandardCharsets.UTF_8);
     String result1 = main("show", "manifest", "-wf", yaml.getParent());
     yaml.delete();
     Files.write(result1, yaml, StandardCharsets.UTF_8);
@@ -210,23 +225,23 @@ public class TestCDep {
   }
 
   //    @Test
-//    public void firebase() throws Exception {
-//        CDepYml config = new CDepYml();
-//        System.out.printf(new Yaml().dump(config));
-//        File yaml = new File(".test-files/firebase/cdep.yml");
-//        yaml.getParentFile().mkdirs();
-//        Files.write("builders: [cmake, cmakeExamples]\n"
-//                + "dependencies:\n"
-//                + "- compile: /usr/local/google/home/jomof/projects/firebase/.deploy/"
-//                + "com.jomofisher/firebase/2.1.3-rev1/cdep-manifest-storage.yml\n",
-//            yaml, StandardCharsets.UTF_8);
-//        String result1 = main("show", "manifest", "-wf", yaml.getParent());
-//        yaml.delete();
-//        Files.write(result1, yaml, StandardCharsets.UTF_8);
-//        System.out.print(result1);
-//        String result = main("-wf", yaml.getParent());
-//        System.out.printf(result);
-//    }
+  //    public void firebase() throws Exception {
+  //        CDepYml config = new CDepYml();
+  //        System.out.printf(new Yaml().dump(config));
+  //        File yaml = new File(".test-files/firebase/cdep.yml");
+  //        yaml.getParentFile().mkdirs();
+  //        Files.write("builders: [cmake, cmakeExamples]\n"
+  //                + "dependencies:\n"
+  //                + "- compile: /usr/local/google/home/jomof/projects/firebase/.deploy/"
+  //                + "com.jomofisher/firebase/2.1.3-rev1/cdep-manifest-storage.yml\n",
+  //            yaml, StandardCharsets.UTF_8);
+  //        String result1 = main("show", "manifest", "-wf", yaml.getParent());
+  //        yaml.delete();
+  //        Files.write(result1, yaml, StandardCharsets.UTF_8);
+  //        System.out.print(result1);
+  //        String result = main("-wf", yaml.getParent());
+  //        System.out.printf(result);
+  //    }
 
   @Test
   public void redownload() throws Exception {
@@ -252,17 +267,17 @@ public class TestCDep {
   }
 
   //  @Test
-//  public void fetchThree() throws Exception {
-//    File folder = new File(".test-files/fetch");
-//    folder.mkdirs();
-//    String result = main("fetch",
-//        "com.github.jomof:sqlite/iOS:3.16.2-rev43",
-//        "com.github.jomof:sqlite/linux:3.16.2-rev43",
-//        "com.github.jomof:sqlite/android:3.16.2-rev43",
-//        "-wf", folder.toString());
-//    System.out.printf(result);
-//    assertThat(result).contains("Fetch complete");
-//  }
+  //  public void fetchThree() throws Exception {
+  //    File folder = new File(".test-files/fetch");
+  //    folder.mkdirs();
+  //    String result = main("fetch",
+  //        "com.github.jomof:sqlite/iOS:3.16.2-rev43",
+  //        "com.github.jomof:sqlite/linux:3.16.2-rev43",
+  //        "com.github.jomof:sqlite/android:3.16.2-rev43",
+  //        "-wf", folder.toString());
+  //    System.out.printf(result);
+  //    assertThat(result).contains("Fetch complete");
+  //  }
 
   @Test
   public void fetchNotFound() throws Exception {
@@ -298,7 +313,8 @@ public class TestCDep {
       main("-wf", yaml.getParent());
       fail("Expected failure");
     } catch (RuntimeException e) {
-      assertThat(e).hasMessage("SHA256 of cdep-manifest.yml for package " + "'com.github.jomof:low-level-statistics:0.0.16' does not agree with value in cdep.sha256. " + "Something changed.");
+      assertThat(e).hasMessage("SHA256 of cdep-manifest.yml for package " + "'com.github.jomof:low-level-statistics:0.0.16' " +
+          "does not agree with value in cdep" + ".sha256. " + "Something changed.");
     }
   }
 

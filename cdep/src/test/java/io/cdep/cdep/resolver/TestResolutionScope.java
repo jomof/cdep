@@ -24,9 +24,8 @@ public class TestResolutionScope {
 
   @Test
   public void testSimpleResolution() throws IOException {
-    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
-        new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7")
-    });
+    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{new SoftNameDependency("com.github" +
+        ".jomof:firebase/admob:2.1.3-rev7")});
     assertThat(scope.isResolutionComplete()).isFalse();
     assertThat(scope.getUnresolvedReferences()).hasSize(1);
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
@@ -41,9 +40,8 @@ public class TestResolutionScope {
 
   @Test
   public void testSimpleUnresolvable() throws IOException {
-    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
-        new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7")
-    });
+    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{new SoftNameDependency("com.github" +
+        ".jomof:firebase/admob:2.1.3-rev7")});
     assertThat(scope.isResolutionComplete()).isFalse();
     assertThat(scope.getUnresolvedReferences()).hasSize(1);
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
@@ -51,15 +49,12 @@ public class TestResolutionScope {
     scope.recordUnresolvable(new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7"));
     assertThat(scope.isResolutionComplete()).isTrue();
     assertThat(scope.getResolvedNames()).hasSize(1);
-    assertThat(scope.getResolution(scope.getResolvedNames().iterator().next()))
-        .isSameAs(ResolutionScope.UNRESOLVEABLE_RESOLUTION);
+    assertThat(scope.getResolution(scope.getResolvedNames().iterator().next())).isSameAs(ResolutionScope.UNRESOLVEABLE_RESOLUTION);
   }
 
   @Test
   public void testTransitiveResolution() throws IOException {
-    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
-        new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7")
-    });
+    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7")});
     assertThat(scope.isResolutionComplete()).isFalse();
     assertThat(scope.getUnresolvedReferences()).hasSize(1);
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
@@ -68,8 +63,7 @@ public class TestResolutionScope {
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();
-    transitiveDependencies.add(new HardNameDependency(
-        "com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
+    transitiveDependencies.add(new HardNameDependency("com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
     scope.recordResolved(unresolved, resolved, transitiveDependencies);
     assertThat(scope.isResolutionComplete()).isFalse();
     assertThat(scope.getResolutions()).hasSize(1);
@@ -77,9 +71,7 @@ public class TestResolutionScope {
 
   @Test
   public void testLocalPathResolution() throws IOException {
-    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
-        new SoftNameDependency("/tmp/cdep-manifest.yml")
-    });
+    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{new SoftNameDependency("/tmp/cdep-manifest.yml")});
     assertThat(scope.isResolutionComplete()).isFalse();
     assertThat(scope.getUnresolvedReferences()).hasSize(1);
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
@@ -95,10 +87,8 @@ public class TestResolutionScope {
 
   @Test
   public void testTransitiveResolutionWithDependencyAlsoRoot() throws IOException {
-    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
-        new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7"),
-        new SoftNameDependency("com.github.jomof:firebase/app:2.1.3-rev7"),
-    });
+    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{new SoftNameDependency("com.github" +
+        ".jomof:firebase/admob:2.1.3-rev7"), new SoftNameDependency("com.github.jomof:firebase/app:2.1.3-rev7"),});
     assertThat(scope.isResolutionComplete()).isFalse();
     assertThat(scope.getUnresolvedReferences()).hasSize(2);
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
@@ -107,8 +97,7 @@ public class TestResolutionScope {
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();
-    transitiveDependencies.add(new HardNameDependency(
-        "com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
+    transitiveDependencies.add(new HardNameDependency("com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
     scope.recordResolved(unresolved, resolved, transitiveDependencies);
     assertThat(scope.isResolutionComplete()).isFalse();
     assertThat(scope.getResolutions()).hasSize(1);
@@ -116,16 +105,13 @@ public class TestResolutionScope {
 
   @Test
   public void testTransitiveDependenciesLeadingToSameRoot() throws IOException {
-    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
-        new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7"),
-        new SoftNameDependency("com.github.jomof:firebase/database:2.1.3-rev7"),
-    });
+    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{new SoftNameDependency("com.github" +
+        ".jomof:firebase/admob:2.1.3-rev7"), new SoftNameDependency("com.github.jomof:firebase/database:2.1.3-rev7"),});
     assertThat(scope.isResolutionComplete()).isFalse();
     assertThat(scope.getUnresolvedReferences()).hasSize(2);
 
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();
-    transitiveDependencies.add(new HardNameDependency(
-        "com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
+    transitiveDependencies.add(new HardNameDependency("com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
 
     // Resolve the first level dependencies: admob and database respectively
     for (SoftNameDependency unresolved : scope.getUnresolvedReferences()) {
@@ -140,7 +126,7 @@ public class TestResolutionScope {
     Coordinate coordinate = CoordinateUtils.tryParse(unresolved.compile);
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
-      scope.recordResolved(unresolved, resolved, new ArrayList<HardNameDependency>());
+    scope.recordResolved(unresolved, resolved, new ArrayList<HardNameDependency>());
 
     // Make sure resolution complete
     assertThat(scope.isResolutionComplete()).isTrue();
@@ -149,20 +135,16 @@ public class TestResolutionScope {
     // Check edges
     assertThat(scope.forwardEdges).hasSize(2);
     assertThat(scope.backwardEdges).hasSize(1);
-    assertThat(scope.forwardEdges.get(
-        CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7")))
-        .containsExactly(CoordinateUtils.tryParse("com.github.jomof:firebase/app:2.1.3-rev7"));
-    assertThat(scope.forwardEdges.get(
-        CoordinateUtils.tryParse("com.github.jomof:firebase/database:2.1.3-rev7")))
+    assertThat(scope.forwardEdges.get(CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7"))).containsExactly
+        (CoordinateUtils.tryParse("com" + ".github.jomof:firebase/app:2.1.3-rev7"));
+    assertThat(scope.forwardEdges.get(CoordinateUtils.tryParse("com.github.jomof:firebase/database:2.1.3-rev7")))
         .containsExactly(CoordinateUtils.tryParse("com.github.jomof:firebase/app:2.1.3-rev7"));
   }
 
   @Test
   public void testTwoTransitiveReferencesToSameDependency() throws IOException {
-    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
-        new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7"),
-        new SoftNameDependency("com.github.jomof:firebase/database:2.1.3-rev7"),
-    });
+    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{new SoftNameDependency("com.github" +
+        ".jomof:firebase/admob:2.1.3-rev7"), new SoftNameDependency("com.github.jomof:firebase/database:2.1.3-rev7"),});
     assertThat(scope.isResolutionComplete()).isFalse();
     assertThat(scope.getUnresolvedReferences()).hasSize(2);
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
@@ -171,8 +153,7 @@ public class TestResolutionScope {
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();
-    transitiveDependencies.add(new HardNameDependency(
-        "com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
+    transitiveDependencies.add(new HardNameDependency("com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
     scope.recordResolved(unresolved, resolved, transitiveDependencies);
 
     coordinate = CoordinateUtils.tryParse("com.github.jomof:firebase/app:2.1.3-rev7");
@@ -185,8 +166,7 @@ public class TestResolutionScope {
     manifest = new CDepManifestYml(coordinate);
     resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     transitiveDependencies = new ArrayList<>();
-    transitiveDependencies.add(new HardNameDependency(
-        "com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
+    transitiveDependencies.add(new HardNameDependency("com.github.jomof:firebase/app:2.1.3-rev7", "shavalue"));
     scope.recordResolved(unresolved, resolved, transitiveDependencies);
 
     assertThat(scope.isResolutionComplete()).isTrue();
@@ -195,9 +175,7 @@ public class TestResolutionScope {
 
   @Test
   public void testUnparsable() throws IOException {
-    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
-        new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7")
-    });
+    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{new SoftNameDependency("com.github.jomof:firebase/admob:2.1.3-rev7")});
     assertThat(scope.isResolutionComplete()).isFalse();
     assertThat(scope.getUnresolvedReferences()).hasSize(1);
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
@@ -206,12 +184,10 @@ public class TestResolutionScope {
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();
-    transitiveDependencies.add(new HardNameDependency(
-        "com.github.jomof:firebase/app", "shavalue"));
+    transitiveDependencies.add(new HardNameDependency("com.github.jomof:firebase/app", "shavalue"));
     scope.recordResolved(unresolved, resolved, transitiveDependencies);
     assertThat(scope.isResolutionComplete()).isTrue();
     assertThat(scope.getResolvedNames()).hasSize(2);
-    assertThat(scope.getResolution("com.github.jomof:firebase/app"))
-        .isSameAs(ResolutionScope.UNPARSEABLE_RESOLUTION);
+    assertThat(scope.getResolution("com.github.jomof:firebase/app")).isSameAs(ResolutionScope.UNPARSEABLE_RESOLUTION);
   }
 }

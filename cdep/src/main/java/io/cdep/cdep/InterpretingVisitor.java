@@ -139,7 +139,7 @@ public class InterpretingVisitor {
   }
 
 
-  @Nullable
+  @NotNull
   protected ModuleArchive visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     Object fullIncludePath = visit(expr.includePath);
     Object fullLibraryName = visit(expr.libraryPath);

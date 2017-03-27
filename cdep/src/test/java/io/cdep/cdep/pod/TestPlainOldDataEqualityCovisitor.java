@@ -1,9 +1,9 @@
 package io.cdep.cdep.pod;
 
 
-import static com.google.common.truth.Truth.assertThat;
-
 import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
 
 public class TestPlainOldDataEqualityCovisitor {
   @Test
@@ -33,22 +33,22 @@ public class TestPlainOldDataEqualityCovisitor {
 
   @Test
   public void testLongArray() {
-    checkIdentical(new Long[] {1L, 2L});
+    checkIdentical(new Long[]{1L, 2L});
   }
 
   @Test
   public void testStringArray() {
-    checkIdentical(new String[] {"x", "y"});
+    checkIdentical(new String[]{"x", "y"});
   }
 
   @Test
   public void testStringArrayStringArray() {
-    checkNotIdentical(new String[] {"x", "y"}, new String[] {"x", "z"});
+    checkNotIdentical(new String[]{"x", "y"}, new String[]{"x", "z"});
   }
 
   @Test
   public void testStringArrayStringArrayIdentical() {
-    checkIdentical(new String[] {"x", "y"}, new String[] {"x", "y"});
+    checkIdentical(new String[]{"x", "y"}, new String[]{"x", "y"});
   }
 
   private void checkIdentical(Object value) {

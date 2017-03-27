@@ -31,7 +31,8 @@ class FindModuleInterpreter {
 
   @Nullable
   @SuppressWarnings("SameParameterValue")
-  static ModuleArchive findAndroid(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot, final String targetPlatform, final String systemVersion, // On android, platform like 21
+  static ModuleArchive findAndroid(@NotNull FunctionTableExpression table, Coordinate functionName, final String
+      cdepExplodedRoot, final String targetPlatform, final String systemVersion, // On android, platform like 21
       final String androidStlType, final String androidTargetAbi) throws InvocationTargetException, IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
@@ -58,7 +59,9 @@ class FindModuleInterpreter {
   }
 
   @Nullable
-  static ModuleArchive findiOS(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot, final String targetPlatform, final String osxArchitectures[], final String osxSysroot) throws InvocationTargetException, IllegalAccessException {
+  static ModuleArchive findiOS(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot,
+      final String targetPlatform, final String osxArchitectures[], final String osxSysroot) throws InvocationTargetException,
+      IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
@@ -102,7 +105,8 @@ class FindModuleInterpreter {
   }
 
   @Nullable
-  static ModuleArchive findLinux(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot, final String targetPlatform) throws InvocationTargetException, IllegalAccessException {
+  static ModuleArchive findLinux(@NotNull FunctionTableExpression table, Coordinate functionName, final String
+      cdepExplodedRoot, final String targetPlatform) throws InvocationTargetException, IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
       @Override

@@ -19,26 +19,22 @@ public class TestCDepManifestYmlEquality {
 
   @Test
   public void testSqlite() throws Exception {
-    checkEquals(ResolvedManifests.sqlite().cdepManifestYml,
-        ResolvedManifests.sqlite().cdepManifestYml);
+    checkEquals(ResolvedManifests.sqlite().cdepManifestYml, ResolvedManifests.sqlite().cdepManifestYml);
   }
 
   @Test
   public void testAdmob() throws Exception {
-    checkEquals(ResolvedManifests.admob().cdepManifestYml,
-        ResolvedManifests.admob().cdepManifestYml);
+    checkEquals(ResolvedManifests.admob().cdepManifestYml, ResolvedManifests.admob().cdepManifestYml);
   }
 
   @Test
   public void testSqliteAdmob() throws Exception {
-    checkNotEquals(ResolvedManifests.sqlite().cdepManifestYml,
-        ResolvedManifests.admob().cdepManifestYml);
+    checkNotEquals(ResolvedManifests.sqlite().cdepManifestYml, ResolvedManifests.admob().cdepManifestYml);
   }
 
   @Test
   public void testAdmobSqlite() throws Exception {
-    checkNotEquals(ResolvedManifests.admob().cdepManifestYml,
-        ResolvedManifests.sqlite().cdepManifestYml);
+    checkNotEquals(ResolvedManifests.admob().cdepManifestYml, ResolvedManifests.sqlite().cdepManifestYml);
   }
 
   @Test
@@ -46,9 +42,8 @@ public class TestCDepManifestYmlEquality {
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {
       for (ResolvedManifests.NamedManifest manifest2 : ResolvedManifests.all()) {
         boolean expected = manifest1.name.equals(manifest2.name);
-        assertThat(CDepManifestYmlEquality.areDeeplyIdentical(
-            manifest1.resolved.cdepManifestYml,
-            manifest2.resolved.cdepManifestYml)).isEqualTo(expected);
+        assertThat(CDepManifestYmlEquality.areDeeplyIdentical(manifest1.resolved.cdepManifestYml, manifest2.resolved
+            .cdepManifestYml)).isEqualTo(expected);
       }
     }
   }
