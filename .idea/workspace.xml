@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="Linux">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindMultiplyReferencedArchives.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindMultiplyReferencedArchives.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -106,18 +104,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="GeneratorEnvironmentUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1341">
-              <caret line="72" column="28" lean-forward="false" selection-start-line="72" selection-start-column="28" selection-end-line="72" selection-end-column="28" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TestCDepYmlUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepYmlUtils.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -162,18 +148,30 @@
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="265">
-              <caret line="136" column="0" lean-forward="false" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
+              <caret line="139" column="0" lean-forward="false" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FindMultiplyReferencedArchives.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FindMultiplyReferencedArchives.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindMultiplyReferencedArchives.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="566">
-              <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+              <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InterpretingVisitor.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="627">
+              <caret line="187" column="16" lean-forward="false" selection-start-line="187" selection-start-column="16" selection-end-line="187" selection-end-column="16" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1147,7 +1145,6 @@
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/LiftToCommonAncestor.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleInterpreter.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/AssignmentReferenceExpression.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ExpressionBuilder.java" />
@@ -1172,6 +1169,7 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindMultiplyReferencedArchives.java" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
       </list>
     </option>
   </component>
@@ -1273,108 +1271,6 @@
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="io/cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="io/cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="io/cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="utils">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -2087,13 +1983,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00105" summary="iOS">
-      <created>1489518378397</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1489518378397</updated>
-    </task>
     <task id="LOCAL-00106" summary="iOS">
       <created>1489520302645</created>
       <option name="number" value="00106" />
@@ -2430,7 +2319,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490632936678</updated>
     </task>
-    <option name="localTasksCounter" value="154" />
+    <task id="LOCAL-00154" summary="Linux">
+      <created>1490635827424</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1490635827424</updated>
+    </task>
+    <option name="localTasksCounter" value="155" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2461,13 +2357,13 @@
     <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 29m 51s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestInvariant - 2017.03.27 at 09h 39m 19s.xml">
-      <configuration name="TestInvariant" configurationId="JUnit" />
+    <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 33m 49s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="3226" height="1746" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2480,7 +2376,7 @@
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16966581" sideWeight="0.523269" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32899022" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17416452" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17416452" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3384822" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16966581" sideWeight="0.476731" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Dynamic Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2579,7 +2475,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java</url>
-          <line>258</line>
+          <line>255</line>
           <properties />
           <option name="timeStamp" value="84" />
         </line-breakpoint>
@@ -2597,7 +2493,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java</url>
-          <line>216</line>
+          <line>215</line>
           <properties />
           <option name="timeStamp" value="126" />
         </line-breakpoint>
@@ -2669,7 +2565,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java</url>
-          <line>172</line>
+          <line>177</line>
           <properties />
           <option name="timeStamp" value="194" />
         </line-breakpoint>
@@ -2891,16 +2787,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="343">
           <caret line="87" column="7" lean-forward="false" selection-start-line="87" selection-start-column="7" selection-end-line="87" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="141" column="19" lean-forward="false" selection-start-line="141" selection-start-column="19" selection-end-line="141" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
@@ -3157,7 +3043,7 @@
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
-          <caret line="136" column="0" lean-forward="false" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
+          <caret line="139" column="0" lean-forward="false" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -3165,8 +3051,18 @@
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindMultiplyReferencedArchives.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="566">
-          <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="627">
+          <caret line="187" column="16" lean-forward="false" selection-start-line="187" selection-start-column="16" selection-end-line="187" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

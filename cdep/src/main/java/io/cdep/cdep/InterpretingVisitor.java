@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
+import static io.cdep.cdep.utils.Invariant.*;
 
 /**
  * Walks the expression tree and interprets the value for the supplied state.
@@ -66,7 +66,8 @@ public class InterpretingVisitor {
         return result;
       }
     }
-    throw new RuntimeException(String.format("Did not coerce %s to %s", o.getClass(), clazz));
+    fail("Did not coerce %s to %s", o.getClass(), clazz);
+    return null;
   }
 
   public Object visit(Expression expr) {
@@ -183,7 +184,8 @@ public class InterpretingVisitor {
 
   protected Object visitAbortExpression(AbortExpression expr) {
     Object parameters[] = (Object[]) coerce(visitArray(expr.parameters), String[].class);
-    throw new RuntimeException(String.format(expr.message, parameters));
+    fail(expr.message, parameters);
+    return null;
   }
 
   protected ModuleArchive visitModuleExpression(ModuleExpression expr) {
@@ -201,15 +203,12 @@ public class InterpretingVisitor {
     Object thiz = null;
     int firstParameter = 0;
     if (!Modifier.isStatic(method.getModifiers())) {
-      thiz = coerce(parameters[0],
-          method.getDeclaringClass());
+      thiz = coerce(parameters[0], method.getDeclaringClass());
       ++firstParameter;
     }
     Object parms[] = new Object[expr.parameters.length - firstParameter];
     for (int i = firstParameter; i < expr.parameters.length; ++i) {
-      parms[i - firstParameter] = coerce(
-          parameters[i],
-          method.getParameterTypes()[i - firstParameter]);
+      parms[i - firstParameter] = coerce(parameters[i], method.getParameterTypes()[i - firstParameter]);
     }
     try {
       return method.invoke(thiz, parms);
@@ -241,16 +240,14 @@ public class InterpretingVisitor {
       if (condition) {
         Object result = visit(expr.expressions[i]);
         if (result == null) {
-          throw new RuntimeException(
-              String.format("Expected %s to not return null", expr.expressions[i]));
+          throw new RuntimeException(String.format("Expected %s to not return null", expr.expressions[i]));
         }
         return result;
       }
     }
     Object result = visit(expr.elseExpression);
     if (result == null) {
-      throw new RuntimeException(
-          String.format("Expected %s to not return null", expr.elseExpression));
+      throw new RuntimeException(String.format("Expected %s to not return null", expr.elseExpression));
     }
     return result;
   }
@@ -310,9 +307,7 @@ public class InterpretingVisitor {
     AssignmentFuture lookup(AssignmentExpression assignment) {
       AssignmentFuture value = assignments.get(assignment);
       if (value == null) {
-        if (prior == null) {
-          throw new RuntimeException(String.format("Could not resolve '%s", assignment.name));
-        }
+        require(prior != null, "Could not resolve '%s", assignment.name);
         return prior.lookup(assignment);
       }
       return value;
