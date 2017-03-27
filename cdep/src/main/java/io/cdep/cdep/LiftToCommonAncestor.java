@@ -17,12 +17,6 @@ public class LiftToCommonAncestor extends RewritingVisitor {
   }
 
   @Override
-  protected Expression visitAssignmentExpression(AssignmentExpression expr) {
-    // Don't duplicate any assignments
-    return expr;
-  }
-
-  @Override
   protected Expression visitFindModuleExpression(FindModuleExpression expr) {
     List<AssignmentExpression> order = new ArrayList<>();
     Map<AssignmentExpression, Integer> counts = new HashMap<>();

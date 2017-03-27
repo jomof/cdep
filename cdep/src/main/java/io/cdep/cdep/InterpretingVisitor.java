@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.utils.ReflectionUtils.invoke;
 
 /**
  * Walks the expression tree and interprets the value for the supplied state.
@@ -210,11 +211,7 @@ public class InterpretingVisitor {
     for (int i = firstParameter; i < expr.parameters.length; ++i) {
       parms[i - firstParameter] = coerce(parameters[i], method.getParameterTypes()[i - firstParameter]);
     }
-    try {
-      return method.invoke(thiz, parms);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+    return invoke(method, thiz, parms);
   }
 
   protected Object[] visitArray(Expression[] array) {

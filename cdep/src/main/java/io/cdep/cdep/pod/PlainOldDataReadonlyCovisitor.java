@@ -1,10 +1,12 @@
 package io.cdep.cdep.pod;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.utils.ReflectionUtils.invoke;
 
 /**
  * Visit two instances at the same time. Allows comparison and merging.
@@ -23,10 +25,6 @@ public class PlainOldDataReadonlyCovisitor {
 
   protected void pop() {
     namestack.remove(0);
-  }
-
-  public void covisitPlainOldDataObject(String name, Object left, Object right) {
-    covisitFields(left, right);
   }
 
   public void covisitString(String name, String left, String right) {
@@ -76,14 +74,9 @@ public class PlainOldDataReadonlyCovisitor {
   }
 
   public void covisit(Object left, Object right) {
-    if (left == null && right == null) {
-      return;
-    }
-    Object representative = left;
-    if (representative == null) {
-      representative = right;
-    }
-    covisit(null, left, right, representative.getClass());
+    require(left != null && right != null);
+    require(left.getClass().equals(right.getClass()));
+    covisit(null, left, right, left.getClass());
   }
 
   public void covisit(String name, Object left, Object right, Class<?> type) {
@@ -94,15 +87,8 @@ public class PlainOldDataReadonlyCovisitor {
     push(name);
     try {
       Method method = getClass().getMethod(methodName, String.class, type, type);
-      method.invoke(this, null, left, right);
+      invoke(method, this, null, left, right);
     } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (InvocationTargetException e) {
-      if (e.getTargetException() instanceof RuntimeException) {
-        throw (RuntimeException) e.getTargetException();
-      }
       throw new RuntimeException(e);
     } finally {
       pop();
@@ -110,9 +96,7 @@ public class PlainOldDataReadonlyCovisitor {
   }
 
   public void covisitFields(Object left, Object right) {
-    if (left == null && right == null) {
-      return;
-    }
+    require(left != null || right != null);
     Object representative = right;
     if (representative == null) {
       representative = left;

@@ -2,6 +2,7 @@ package io.cdep.cdep;
 
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
+import io.cdep.cdep.utils.ReflectionUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 
 import java.lang.reflect.InvocationTargetException;
@@ -478,7 +479,7 @@ public class ResolvedManifests {
       if (method.getParameterTypes().length != 0) {
         continue;
       }
-      ResolvedManifest resolved = (ResolvedManifest) method.invoke(null);
+      ResolvedManifest resolved = (ResolvedManifest) ReflectionUtils.invoke(method, null);
       result.add(new NamedManifest(method.getName(), resolved));
     }
     return result;

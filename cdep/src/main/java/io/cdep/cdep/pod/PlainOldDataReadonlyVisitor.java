@@ -1,20 +1,21 @@
 package io.cdep.cdep.pod;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.utils.ReflectionUtils.invoke;
 
 /**
  * Read-only visitor over a plain object. Uses reflection to find public fields to walk over.
  */
-public class PlainOldDataReadonlyVisitor {
+abstract public class PlainOldDataReadonlyVisitor {
 
   public void visitPlainOldDataObject(String name, Object value) {
     visitFields(value);
   }
 
-  public void visitString(String name, String node) {
-  }
+  abstract public void visitString(String name, String node);
 
   public void visitStringArray(String name, String array[]) {
     visitArray(name, array, String.class);
@@ -23,69 +24,43 @@ public class PlainOldDataReadonlyVisitor {
   public void visitLong(String name, Long value) {
   }
 
-  public void visitObject(String name, Object value) {
-    visitFields(value);
-  }
-
   public void visitArray(String name, Object[] array, Class<?> elementType) {
-    if (array == null) {
-      return;
-    }
+    elementsNotNull(array);
     for (Object value : array) {
       visit(value, elementType);
     }
   }
 
   public void visit(Object element, Class<?> elementClass) {
-    if (element == null) {
-      return;
-    }
+    notNull(element);
     try {
       String methodName = getVisitorName(elementClass);
       Method method = getClass().getMethod(methodName, String.class, elementClass);
-      method.invoke(this, null, element);
+      invoke(method, this, null, element);
     } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (InvocationTargetException e) {
-      if (e.getTargetException() instanceof RuntimeException) {
-        throw (RuntimeException) e.getTargetException();
-      }
       throw new RuntimeException(e);
     }
   }
 
   public void visitFields(Object node) {
-    if (node == null) {
-      return;
-    }
+    notNull(node);
     if (node.getClass().isEnum()) {
       return;
     }
     try {
       for (Field field : node.getClass().getFields()) {
-        if (field.getDeclaringClass() == Object.class) {
-          continue;
-        }
-        if (field.getDeclaringClass() == String.class) {
-          continue;
-        }
+        require(field.getDeclaringClass() != Object.class);
+        require(field.getDeclaringClass() != String.class);
         String methodName = getVisitorName(field.getType());
         Method method = getClass().getMethod(methodName, String.class, field.getType());
         Object fieldValue = field.get(node);
         if (fieldValue != null) {
-          method.invoke(this, field.getName(), fieldValue);
+          invoke(method, this, field.getName(), fieldValue);
         }
       }
     } catch (IllegalAccessException e) {
       throw new RuntimeException(e);
     } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    } catch (InvocationTargetException e) {
-      if (e.getTargetException() instanceof RuntimeException) {
-        throw (RuntimeException) e.getTargetException();
-      }
       throw new RuntimeException(e);
     }
   }
