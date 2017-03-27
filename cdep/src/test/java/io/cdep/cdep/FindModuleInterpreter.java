@@ -22,8 +22,6 @@ import io.cdep.cdep.ast.finder.NopExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
 
 import static io.cdep.cdep.utils.Invariant.require;
 
@@ -39,11 +37,6 @@ class FindModuleInterpreter {
       final String androidStlType,
       final String androidTargetAbi) throws InvocationTargetException, IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
-    Map<ParameterExpression, Object> parameters = new HashMap<>();
-    parameters.put(function.targetPlatform, targetPlatform);
-    parameters.put(function.systemVersion, systemVersion);
-    parameters.put(function.androidStlType, androidStlType);
-    parameters.put(function.androidTargetAbi, androidTargetAbi);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(ParameterExpression expr) {
@@ -75,9 +68,6 @@ class FindModuleInterpreter {
       final String osxArchitectures[],
       final String osxSysroot) throws InvocationTargetException, IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
-    Map<ParameterExpression, Object> parameters = new HashMap<>();
-    parameters.put(function.targetPlatform, targetPlatform);
-    parameters.put(function.osxSysroot, osxSysroot);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(ParameterExpression expr) {
@@ -124,8 +114,6 @@ class FindModuleInterpreter {
       final String cdepExplodedRoot,
       final String targetPlatform) throws InvocationTargetException, IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
-    Map<ParameterExpression, Object> parameters = new HashMap<>();
-    parameters.put(function.targetPlatform, targetPlatform);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(ParameterExpression expr) {

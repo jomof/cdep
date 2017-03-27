@@ -25,6 +25,7 @@ public class CMakeExamplesGenerator {
         for (Coordinate coordinate : table.examples.keySet()) {
             File exampleFolder = getExampleFolder(coordinate);
             ExampleExpression example = table.examples.get(coordinate);
+            //noinspection ResultOfMethodCallIgnored
             exampleFolder.mkdirs();
             String artifact = notNull(coordinate.artifactId).replace("/", "_");
             String sourceName = artifact + ".cpp";

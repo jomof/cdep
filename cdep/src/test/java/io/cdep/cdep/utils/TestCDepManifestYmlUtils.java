@@ -7,9 +7,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
@@ -386,7 +384,6 @@ public class TestCDepManifestYmlUtils {
 
   @Test
   public void testTwoWayMergeSanity() throws Exception {
-    Set<String> commonDifferences = new HashSet<>();
     Map<String, String> expected = new HashMap<>();
     expected.put("sqliteLinuxMultiple-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
     expected.put("sqliteLinuxMultiple-sqlite", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
@@ -424,11 +421,9 @@ public class TestCDepManifestYmlUtils {
         } catch (RuntimeException e) {
           String actual = e.getMessage();
           if (!actual.equals(expectedFailure)) {
-            if (!commonDifferences.contains(actual)) {
-              // e.printStackTrace();
-              System.out.printf("expected.put(\"%s\", \"%s\");\n", key, actual);
-              somethingUnexpected = true;
-            }
+            // e.printStackTrace();
+            System.out.printf("expected.put(\"%s\", \"%s\");\n", key, actual);
+            somethingUnexpected = true;
           }
         }
       }

@@ -107,7 +107,7 @@ public class CDep {
         args.set(i, null);
       }
     }
-    args.removeAll(Collections.singleton(null));
+    args.removeAll(Collections.<String>singleton(null));
     return result;
   }
 
