@@ -7,6 +7,8 @@ import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 
 import java.util.*;
 
+import static io.cdep.cdep.utils.Invariant.require;
+
 /**
  * Records the current state of resolving top-level and transitive dependencies.
  */
@@ -94,9 +96,8 @@ public class ResolutionScope {
    */
   public void recordResolved(SoftNameDependency softname, ResolvedManifest resolved,
       List<HardNameDependency> transitiveDependencies) {
-    if (isResolved(resolved.cdepManifestYml.coordinate.toString())) {
-      throw new RuntimeException(String.format("%s was already resolved", resolved.cdepManifestYml.coordinate));
-    }
+    require(!isResolved(resolved.cdepManifestYml.coordinate.toString()), "%s was already resolved", resolved
+        .cdepManifestYml.coordinate);
 
     this.resolved.put(resolved.cdepManifestYml.coordinate.toString(),
         new FoundManifestResolution(resolved));

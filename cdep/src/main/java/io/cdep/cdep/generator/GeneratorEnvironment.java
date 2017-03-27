@@ -52,8 +52,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   final public boolean forceRedownload;
   final public Set<File> alreadyDownloaded = new HashSet<>();
 
-  public GeneratorEnvironment(
-      PrintStream out, File workingFolder, File userFolder, boolean forceRedownload, boolean ignoreManifestHashes) {
+  public GeneratorEnvironment(PrintStream out, File workingFolder, File userFolder, boolean forceRedownload, boolean
+      ignoreManifestHashes) {
     if (userFolder == null) {
       userFolder = new File(System.getProperty("user.home"));
     }
@@ -141,8 +141,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     return local;
   }
 
-  public CDepManifestYml tryGetManifest(
-      Coordinate coordinate, URL remoteArchive) throws IOException, NoSuchAlgorithmException {
+  public CDepManifestYml tryGetManifest(Coordinate coordinate, URL remoteArchive) throws IOException,
+      NoSuchAlgorithmException {
     File file = tryGetLocalDownloadedFile(coordinate, remoteArchive);
     if (file == null) {
       // The remote didn't exist. Return null;
@@ -158,9 +158,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     if (!ignoreManifestHashes) {
       String sha256 = HashUtils.getSHA256OfFile(file);
       String priorSha256 = this.cdepSha256Hashes.get(cdepManifestYml.coordinate.toString());
-      if (priorSha256 != null && !priorSha256.equals(sha256)) {
-        throw new RuntimeException(String.format("SHA256 of cdep-manifest.yml for package '%s' does not agree with value in " + "cdep.sha256. Something changed.", cdepManifestYml.coordinate));
-      }
+      require(priorSha256 == null || priorSha256.equals(sha256), "SHA256 of cdep-manifest.yml for package '%s' does "
+          + "not agree with value in cdep.sha256. Something changed.", cdepManifestYml.coordinate);
       this.cdepSha256Hashes.put(cdepManifestYml.coordinate.toString(), sha256);
     }
     return cdepManifestYml;
@@ -196,7 +195,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
       ++i;
     }
     StringBuilder sb = new StringBuilder();
-    sb.append("# This file is automatically maintained by CDep.\n#\n" + "#     MANUAL EDITS WILL BE LOST ON THE NEXT CDEP RUN\n#\n");
+    sb.append("# This file is automatically maintained by CDep.\n#\n" + "#     MANUAL EDITS WILL BE LOST ON THE NEXT " +
+        "" + "" + "" + "CDEP RUN\n#\n");
     sb.append("# This file contains a list of CDep coordinates along with the SHA256 hash of their\n");
     sb.append("# manifest file. This is to ensure that a manifest hasn't changed since the last\n");
     sb.append("# time CDep ran.\n");

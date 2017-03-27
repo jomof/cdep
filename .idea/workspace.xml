@@ -4,6 +4,11 @@
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="Linux">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/InvokeFunctionExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/InvokeFunctionExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlCoordinateResolver.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlCoordinateResolver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/Resolver.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/Resolver.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -104,41 +109,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="TestCDepYmlUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepYmlUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="511">
-              <caret line="36" column="7" lean-forward="false" selection-start-line="36" selection-start-column="7" selection-end-line="36" selection-end-column="7" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1183#1184#0" expanded="true" />
-                <element signature="e#1219#1220#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestInvariant.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestInvariant.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="775">
-              <caret line="42" column="6" lean-forward="false" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#518#519#0" expanded="true" />
-                <element signature="e#541#542#0" expanded="true" />
-                <element signature="e#839#840#0" expanded="true" />
-                <element signature="e#870#871#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Invariant.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/Invariant.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="11" column="3" lean-forward="false" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+            <state relative-caret-position="529">
+              <caret line="33" column="39" lean-forward="false" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -164,11 +139,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InterpretingVisitor.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="InterpretingVisitor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="627">
-              <caret line="187" column="16" lean-forward="false" selection-start-line="187" selection-start-column="16" selection-end-line="187" selection-end-column="16" />
+            <state relative-caret-position="595">
+              <caret line="251" column="19" lean-forward="false" selection-start-line="251" selection-start-column="19" selection-end-line="251" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -176,12 +151,60 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Bootstrap.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bootstrap/src/main/java/io/cdep/bootstrap/Bootstrap.java">
+      <file leaf-file-name="InvokeFunctionExpression.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/InvokeFunctionExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="102" column="9" lean-forward="false" selection-start-line="102" selection-start-column="9" selection-end-line="102" selection-end-column="9" />
+            <state relative-caret-position="528">
+              <caret line="16" column="18" lean-forward="false" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GeneratorEnvironment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="496">
+              <caret line="161" column="37" lean-forward="false" selection-start-line="161" selection-start-column="37" selection-end-line="161" selection-end-column="37" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GithubStyleUrlCoordinateResolver.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlCoordinateResolver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="313">
+              <caret line="56" column="9" lean-forward="false" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResolutionScope.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="346">
+              <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Resolver.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/Resolver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="937">
+              <caret line="87" column="7" lean-forward="false" selection-start-line="87" selection-start-column="7" selection-end-line="87" selection-end-column="7" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -192,30 +215,6 @@
             <state relative-caret-position="313">
               <caret line="378" column="13" lean-forward="false" selection-start-line="378" selection-start-column="13" selection-end-line="378" selection-end-column="13" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CDepManifestYmlUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="40" selection-end-column="3" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CDep.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="84" column="5" lean-forward="false" selection-start-line="84" selection-start-column="5" selection-end-line="84" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -1119,9 +1118,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/yml/TestMergeCDepManifestYmls.java" />
-        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/EnvironmentUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestEnvironmentUtils.java" />
         <option value="$PROJECT_DIR$/bootstrap/src/test/java/io/cdep/bootstrap/TestBootstrap.java" />
@@ -1153,11 +1149,9 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ModuleExpression.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/StringExpression.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlCoordinateResolver.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/LocalFilePathCoordinateResolver.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CreateCDepManifestYmlString.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepsha25/HashEntry.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/StringUtils.java" />
@@ -1170,6 +1164,11 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindMultiplyReferencedArchives.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/InvokeFunctionExpression.java" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlCoordinateResolver.java" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/Resolver.java" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java" />
       </list>
     </option>
   </component>
@@ -1271,6 +1270,32 @@
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="test">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="test">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="java">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1983,13 +2008,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00106" summary="iOS">
-      <created>1489520302645</created>
-      <option name="number" value="00106" />
-      <option name="presentableId" value="LOCAL-00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1489520302645</updated>
-    </task>
     <task id="LOCAL-00107" summary="iOS">
       <created>1489520512876</created>
       <option name="number" value="00107" />
@@ -2326,25 +2344,17 @@
       <option name="project" value="LOCAL" />
       <updated>1490635827424</updated>
     </task>
-    <option name="localTasksCounter" value="155" />
+    <task id="LOCAL-00155" summary="Linux">
+      <created>1490636049091</created>
+      <option name="number" value="00155" />
+      <option name="presentableId" value="LOCAL-00155" />
+      <option name="project" value="LOCAL" />
+      <updated>1490636049091</updated>
+    </task>
+    <option name="localTasksCounter" value="156" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_cdep-cdep - 2017.03.27 at 09h 39m 52s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_cdep-cdep - 2017.03.27 at 09h 41m 25s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 04m 23s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 05m 32s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 07m 56s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 10m 10s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
@@ -2360,6 +2370,21 @@
     <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 33m 49s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 35m 43s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 44m 10s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 48m 17s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 49m 59s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep-cdep - 2017.03.27 at 10h 51m 49s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="3226" height="1746" extended-state="6" />
@@ -2372,11 +2397,11 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32840833" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33042312" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16966581" sideWeight="0.523269" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33042312" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16966581" sideWeight="0.523269" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32899022" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17416452" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17416452" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3384822" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16966581" sideWeight="0.476731" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Dynamic Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2475,7 +2500,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java</url>
-          <line>255</line>
+          <line>251</line>
           <properties />
           <option name="timeStamp" value="84" />
         </line-breakpoint>
@@ -2591,32 +2616,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReplaceAssignmentWithReference.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="13" column="59" lean-forward="false" selection-start-line="13" selection-start-column="59" selection-end-line="13" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/Coordinate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding>
-            <element signature="e#1412#1413#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CheckLocalFileSystemIntegrity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/EnvironmentUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="279">
@@ -2894,28 +2893,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlCoordinateResolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
-          <caret line="74" column="0" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubReleasesCoordinateResolver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
           <caret line="36" column="34" lean-forward="false" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="139" column="12" lean-forward="false" selection-start-line="139" selection-start-column="12" selection-end-line="139" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -2997,11 +2978,11 @@
         <state relative-caret-position="775">
           <caret line="42" column="6" lean-forward="false" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#518#519#0" expanded="true" />
-            <element signature="e#541#542#0" expanded="true" />
-            <element signature="e#839#840#0" expanded="true" />
-            <element signature="e#870#871#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#518#519#0" expanded="false" />
+            <element signature="e#541#542#0" expanded="false" />
+            <element signature="e#839#840#0" expanded="false" />
+            <element signature="e#870#871#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3032,14 +3013,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/Invariant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="11" column="3" lean-forward="false" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/FindModuleFunctionTableBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
@@ -3058,11 +3031,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="187" column="16" lean-forward="false" selection-start-line="187" selection-start-column="16" selection-end-line="187" selection-end-column="16" />
+        <state relative-caret-position="595">
+          <caret line="251" column="19" lean-forward="false" selection-start-line="251" selection-start-column="19" selection-end-line="251" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/Invariant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="33" column="39" lean-forward="false" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/InvokeFunctionExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="16" column="18" lean-forward="false" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/GithubStyleUrlCoordinateResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="56" column="9" lean-forward="false" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/Resolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="937">
+          <caret line="87" column="7" lean-forward="false" selection-start-line="87" selection-start-column="7" selection-end-line="87" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="496">
+          <caret line="161" column="37" lean-forward="false" selection-start-line="161" selection-start-column="37" selection-end-line="161" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>

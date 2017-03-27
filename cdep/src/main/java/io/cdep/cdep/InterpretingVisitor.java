@@ -239,16 +239,12 @@ public class InterpretingVisitor {
       boolean condition = (boolean) visit(expr.conditions[i]);
       if (condition) {
         Object result = visit(expr.expressions[i]);
-        if (result == null) {
-          throw new RuntimeException(String.format("Expected %s to not return null", expr.expressions[i]));
-        }
+        require(result != null, "Expected %s to not return null", expr.expressions[i]);
         return result;
       }
     }
     Object result = visit(expr.elseExpression);
-    if (result == null) {
-      throw new RuntimeException(String.format("Expected %s to not return null", expr.elseExpression));
-    }
+    require(result != null, "Expected %s to not return null", expr.elseExpression);
     return result;
   }
 

@@ -12,17 +12,15 @@ import java.util.List;
 
 import static io.cdep.cdep.resolver.ResolutionScope.UNPARSEABLE_RESOLUTION;
 import static io.cdep.cdep.resolver.ResolutionScope.UNRESOLVEABLE_RESOLUTION;
+import static io.cdep.cdep.utils.Invariant.require;
 
 /**
  * Resolve references and groups of references (ResolutionScope)
  */
 public class Resolver {
 
-  final private static CoordinateResolver RESOLVERS[] = new CoordinateResolver[]{
-      new GithubStyleUrlCoordinateResolver(),
-      new GithubReleasesCoordinateResolver(),
-      new LocalFilePathCoordinateResolver()
-  };
+  final private static CoordinateResolver RESOLVERS[] = new CoordinateResolver[]{new GithubStyleUrlCoordinateResolver
+      (), new GithubReleasesCoordinateResolver(), new LocalFilePathCoordinateResolver()};
 
   final private ManifestProvider manifestProvider;
   final private CoordinateResolver resolvers[];
@@ -41,8 +39,7 @@ public class Resolver {
    *
    * @param roots the root References
    */
-  public ResolutionScope resolveAll(SoftNameDependency[] roots)
-      throws IOException, NoSuchAlgorithmException {
+  public ResolutionScope resolveAll(SoftNameDependency[] roots) throws IOException, NoSuchAlgorithmException {
     ResolutionScope scope = new ResolutionScope(roots);
     // Progressively resolve dependencies
     while (!scope.isResolutionComplete()) {
@@ -51,8 +48,8 @@ public class Resolver {
         if (resolved == null) {
           scope.recordUnresolvable(softname);
         } else {
-          List<HardNameDependency> transitive =
-              CDepManifestYmlUtils.getTransitiveDependencies(resolved.cdepManifestYml);
+          List<HardNameDependency> transitive = CDepManifestYmlUtils.getTransitiveDependencies(resolved
+              .cdepManifestYml);
           scope.recordResolved(softname, resolved, transitive);
         }
       }
@@ -63,35 +60,29 @@ public class Resolver {
       Resolution resolution = scope.getResolution(softname);
 
       // The resolution was something besides success.
-      if (resolution == UNRESOLVEABLE_RESOLUTION) {
-        throw new RuntimeException(String.format(
-            "Could not resolve '%s'. It doesn't exist.", softname));
-      }
+      require(resolution != UNRESOLVEABLE_RESOLUTION, "Could not resolve '%s'. It doesn't exist" + ".", softname);
 
-      if (resolution == UNPARSEABLE_RESOLUTION) {
-        throw new RuntimeException(String.format(
-            "Could not resolve '%s'. It didn't look like a coordinate.", softname));
-      }
+      require(resolution != UNPARSEABLE_RESOLUTION, "Could not resolve '%s'. It didn't look like " + "a coordinate.",
+          softname);
     }
     return scope;
   }
 
   /**
    * Resolve a single reference. Don't look at transitive references.
+   *
    * @param dependency is the reference to resolve.
    * @return the resolved manifest or null if not resolved.
    * @throws IOException
    * @throws NoSuchAlgorithmException
    */
-  public ResolvedManifest resolveAny(SoftNameDependency dependency)
-      throws IOException, NoSuchAlgorithmException {
+  public ResolvedManifest resolveAny(SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException {
     ResolvedManifest resolved = null;
     for (CoordinateResolver resolver : resolvers) {
       ResolvedManifest attempt = resolver.resolve(manifestProvider, dependency);
       if (attempt != null) {
         if (resolved != null) {
-          throw new RuntimeException("Multiple resolvers matched coordinate: "
-              + dependency.compile);
+          throw new RuntimeException("Multiple resolvers matched coordinate: " + dependency.compile);
         }
         resolved = attempt;
       }

@@ -26,13 +26,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static io.cdep.cdep.utils.Invariant.notNull;
+import static io.cdep.cdep.utils.Invariant.require;
 
 public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
-  final private Pattern pattern = Pattern.compile("^https://(.*)/(.*)/(.*)/releases/download/(.*)/cdep-manifest(.*).yml$");
+  final private Pattern pattern = Pattern.compile("^https://(.*)/(.*)/(.*)/releases/download/(.*)" + "/cdep-manifest(" +
+      ".*).yml$");
 
   @Override
-  public ResolvedManifest resolve(ManifestProvider environment,
-      SoftNameDependency dependency)
+  public ResolvedManifest resolve(ManifestProvider environment, SoftNameDependency dependency)
       throws IOException, NoSuchAlgorithmException {
     String coordinate = notNull(dependency.compile);
     Matcher match = pattern.matcher(coordinate);
@@ -51,16 +52,12 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
       String version = match.group(4);
       String subArtifact = match.group(5);
       if (subArtifact.length() > 0) {
-        if (!subArtifact.startsWith("-")) {
-          throw new RuntimeException(String.format("Url is incorrectly formed at '%s': %s", subArtifact, coordinate));
-        }
+        require(subArtifact.startsWith("-"), "Url is incorrectly formed at '%s': %s", subArtifact, coordinate);
         artifactId += "/" + subArtifact.substring(1);
       }
 
       Coordinate provisionalCoordinate = new Coordinate(groupId, artifactId, version);
-      CDepManifestYml cdepManifestYml = environment.tryGetManifest(
-          provisionalCoordinate,
-          new URL(coordinate));
+      CDepManifestYml cdepManifestYml = environment.tryGetManifest(provisionalCoordinate, new URL(coordinate));
       if (cdepManifestYml == null) {
         // The URL didn't exist.
         return null;
@@ -69,24 +66,16 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
       // Ensure that the manifest coordinate agrees with the url provided
       notNull(cdepManifestYml.coordinate);
       if (!groupId.equals(cdepManifestYml.coordinate.groupId)) {
-        throw new RuntimeException(
-            String.format("groupId '%s' from manifest did not agree with github url '%s",
-                cdepManifestYml.coordinate.groupId,
-                coordinate));
+        throw new RuntimeException(String.format("groupId '%s' from manifest did not agree with " + "github url '%s",
+            cdepManifestYml.coordinate.groupId, coordinate));
       }
       if (!artifactId.startsWith(cdepManifestYml.coordinate.artifactId)) {
-        throw new RuntimeException(
-            String
-                .format("artifactId '%s' from manifest did not agree with '%s' from github url '%s",
-                    artifactId,
-                cdepManifestYml.coordinate.artifactId,
-                coordinate));
+        throw new RuntimeException(String.format("artifactId '%s' from manifest did not agree " + "with '%s' from " +
+            "github url '%s", artifactId, cdepManifestYml.coordinate.artifactId, coordinate));
       }
       if (!version.equals(cdepManifestYml.coordinate.version)) {
-        throw new RuntimeException(
-            String.format("version '%s' from manifest did not agree with github url '%s",
-                cdepManifestYml.coordinate.version,
-                coordinate));
+        throw new RuntimeException(String.format("version '%s' from manifest did not agree with " + "github url '%s",
+            cdepManifestYml.coordinate.version, coordinate));
       }
 
       return new ResolvedManifest(new URL(coordinate), cdepManifestYml);
