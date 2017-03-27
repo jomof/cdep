@@ -14,6 +14,8 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 
+import static io.cdep.cdep.utils.Invariant.require;
+
 public class EnvironmentUtils {
 
   /**
@@ -36,15 +38,9 @@ public class EnvironmentUtils {
       ResolvedManifest resolved) throws URISyntaxException, MalformedURLException {
     CDepManifestYml manifest = resolved.cdepManifestYml;
     Archive archive = manifest.archive;
-    if (archive == null) {
-      throw new RuntimeException(String.format("'%s' does not have archive", coordinate));
-    }
-    if (archive.include == null) {
-      throw new RuntimeException(String.format("'%s' does not have archive.include", coordinate));
-    }
-    if (archive.file == null) {
-      throw new RuntimeException(String.format("'%s' does not have archive.include.file", coordinate));
-    }
+    require(archive != null, "'%s' does not have archive", coordinate);
+    require(archive.include != null, "'%s' does not have archive.include", coordinate);
+    require(archive.file != null, "'%s' does not have archive.include.file", coordinate);
     return new File(
         environment.getLocalUnzipFolder(
             manifest.coordinate,
@@ -62,9 +58,7 @@ public class EnvironmentUtils {
       throws IOException, NoSuchAlgorithmException {
     SoftNameDependency name = new SoftNameDependency(coordinate);
     ResolvedManifest resolved = new Resolver(environment).resolveAny(name);
-    if (resolved == null) {
-      throw new RuntimeException(String.format("Could not resolve '%s'", coordinate));
-    }
+    require(resolved != null, "Could not resolve '%s'", coordinate);
     return resolved;
   }
 }
