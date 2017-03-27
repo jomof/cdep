@@ -29,6 +29,7 @@ public class CMakeGenerator {
   final private GeneratorEnvironment environment;
   final private FunctionTableExpression table;
   private StringBuilder sb;
+  private int indent = 0;
   private FindModuleExpression signature = null;
 
   public CMakeGenerator(GeneratorEnvironment environment, FunctionTableExpression table) {
@@ -49,7 +50,9 @@ public class CMakeGenerator {
 
     for (FindModuleExpression findFunction : table.findFunctions.values()) {
       signature = findFunction;
-      generateFindAppender(0, findFunction);
+      indent = 0;
+      generateFindAppender(findFunction);
+      assert indent == 0;
       signature = null;
     }
 
@@ -63,17 +66,14 @@ public class CMakeGenerator {
   }
 
   private String getCMakePath(File file) {
-    return file.toString()
-        .replace("\\", "/");
+    return file.toString().replace("\\", "/");
   }
 
   File getCMakeConfigurationFile() {
     return new File(environment.modulesFolder, CONFIG_FILE_NAME);
   }
 
-  private void generateFindAppender(
-      int indent,
-      Expression expression) {
+  private void generateFindAppender(Expression expression) {
 
     String prefix = new String(new char[indent * 2]).replace('\0', ' ');
 
@@ -107,7 +107,9 @@ public class CMakeGenerator {
           "  endif()\n\n");
       append("  set(cdep_exploded_root \"%s\")\n",
           getCMakePath(environment.unzippedArchivesFolder));
-      generateFindAppender(indent + 1, specific.expression);
+      ++indent;
+      generateFindAppender(specific.expression);
+      --indent;
       append("endfunction({appenderFunctionName})\n"
           .replace("{appenderFunctionName}", appenderFunctionName));
       return;
@@ -117,13 +119,19 @@ public class CMakeGenerator {
       append(prefix);
       for (int i = 0; i < specific.conditions.length; ++i) {
         append("if(");
-        generateFindAppender(indent + 1, specific.conditions[i]);
+        ++indent;
+        generateFindAppender(specific.conditions[i]);
+        --indent;
         append(")");
-        generateFindAppender(indent + 1, specific.expressions[i]);
+        ++indent;
+        generateFindAppender(specific.expressions[i]);
+        --indent;
         append("%selse", prefix);
       }
       append("()");
-      generateFindAppender(indent + 1, specific.elseExpression);
+      ++indent;
+      generateFindAppender(specific.elseExpression);
+      --indent;
       append("%sendif()\n", prefix);
       return;
     } else if (expression instanceof AssignmentExpression) {
@@ -137,7 +145,9 @@ public class CMakeGenerator {
         StringBuilder parmBuilder = new StringBuilder();
         StringBuilder old = sb;
         sb = parmBuilder;
-        generateFindAppender(indent + 1, parm);
+        ++indent;
+        generateFindAppender(parm);
+        --indent;
         sb = old;
         parms[i] = parmBuilder.toString();
       }
@@ -182,26 +192,19 @@ public class CMakeGenerator {
       append("\n");
       if (specific.archive.includePath != null) {
         append("%sset(%s_ROOT ", prefix, upperArtifactID);
-        generateFindAppender(indent, specific.archive.includePath);
+        generateFindAppender(specific.archive.includePath);
         append(" PARENT_SCOPE)\n");
-
-        append(
-            "%starget_include_directories(${target} PRIVATE ",
-            prefix);
-        generateFindAppender(indent, specific.archive.includePath);
+        append("%starget_include_directories(${target} PRIVATE ", prefix);
+        generateFindAppender(specific.archive.includePath);
         append(")\n");
-
         append("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix,
             specific.archive.include);
       }
 
       if (specific.archive.libraryPath != null) {
-        append(
-            "%starget_link_libraries(${target} ",
-            prefix);
-        generateFindAppender(indent, specific.archive.libraryPath);
+        append("%starget_link_libraries(${target} ", prefix);
+        generateFindAppender(specific.archive.libraryPath);
         append(")\n");
-
         append("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n",
             prefix, specific.archive.library);
       }
@@ -213,7 +216,10 @@ public class CMakeGenerator {
         StringBuilder argBuilder = new StringBuilder();
         StringBuilder old = sb;
         sb = argBuilder;
-        generateFindAppender(0, specific.parameters[i]);
+        int oldIndent = indent;
+        indent = 0;
+        generateFindAppender(specific.parameters[i]);
+        indent = oldIndent;
         sb = old;
         parms[i] = "${" + argBuilder.toString() + "}";
       }
@@ -224,9 +230,9 @@ public class CMakeGenerator {
       append("\n");
       AssignmentBlockExpression specific = (AssignmentBlockExpression) expression;
       for (int i = 0; i < specific.assignments.size(); i++) {
-        generateFindAppender(indent, specific.assignments.get(i));
+        generateFindAppender(specific.assignments.get(i));
       }
-      generateFindAppender(indent, specific.statement);
+      generateFindAppender(specific.statement);
       return;
     } else if (expression instanceof AssignmentReferenceExpression) {
       AssignmentReferenceExpression specific = (AssignmentReferenceExpression) expression;
@@ -235,7 +241,7 @@ public class CMakeGenerator {
     } else if (expression instanceof MultiStatementExpression) {
       MultiStatementExpression specific = (MultiStatementExpression) expression;
       for (StatementExpression expr : specific.statements) {
-        generateFindAppender(indent, expr);
+        generateFindAppender(expr);
       }
       return;
     } else if (expression instanceof NopExpression) {

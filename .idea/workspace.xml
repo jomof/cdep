@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="Linux">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeExamplesGenerator.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeExamplesGenerator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -128,13 +124,15 @@
       <file leaf-file-name="CMakeGenerator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="256" column="10" lean-forward="false" selection-start-line="256" selection-start-column="4" selection-end-line="256" selection-end-column="10" />
+            <state relative-caret-position="4281">
+              <caret line="243" column="29" lean-forward="false" selection-start-line="243" selection-start-column="29" selection-end-line="243" selection-end-column="29" />
               <folding>
-                <element signature="e#2325#2326#0" expanded="true" />
-                <element signature="e#2395#2396#0" expanded="true" />
-                <element signature="e#10166#10167#0" expanded="true" />
-                <element signature="e#10214#10215#0" expanded="true" />
+                <element signature="e#2294#2295#0" expanded="true" />
+                <element signature="e#2345#2346#0" expanded="true" />
+                <element signature="e#2383#2384#0" expanded="true" />
+                <element signature="e#2453#2454#0" expanded="true" />
+                <element signature="e#10287#10288#0" expanded="true" />
+                <element signature="e#10335#10336#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1714,7 +1712,7 @@
       </FILE-GROUP>
     </UpdatedFiles>
   </component>
-  <component name="RunManager" selected="JUnit.All in cdep-cdep">
+  <component name="RunManager" selected="JUnit.TestCMakeGenerator.testBoost">
     <configuration default="false" name="All in cdep-cdep" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="cdep-cdep" />
@@ -2014,8 +2012,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.All in cdep-cdep" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.TestCMakeGenerator.testBoost" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.TestCMakeGenerator.testBoost" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.All in cdep-cdep" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.TestCMakeGenerator" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.TestReadonlyVisitor.testAllResolvedManifests" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.TestCDep.redownload" />
@@ -2035,13 +2033,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
-    </task>
-    <task id="LOCAL-00100" summary="iOS">
-      <created>1489181558421</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1489181558421</updated>
     </task>
     <task id="LOCAL-00101" summary="iOS">
       <created>1489184223356</created>
@@ -2379,16 +2370,17 @@
       <option name="project" value="LOCAL" />
       <updated>1490577704169</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="Linux">
+      <created>1490579626627</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1490579626627</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_cdep-cdep - 2017.03.26 at 15h 57m 42s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_cdep-cdep - 2017.03.26 at 18h 09m 54s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_cdep-cdep - 2017.03.26 at 18h 35m 34s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
@@ -2401,9 +2393,6 @@
     <history-entry file="TestCMakeGenerator - 2017.03.26 at 18h 48m 51s.xml">
       <configuration name="TestCMakeGenerator" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestCMakeGenerator_testBoost - 2017.03.26 at 18h 13m 42s.xml">
-      <configuration name="TestCMakeGenerator.testBoost" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="TestCMakeGenerator_testBoost - 2017.03.26 at 18h 44m 32s.xml">
       <configuration name="TestCMakeGenerator.testBoost" configurationId="JUnit" />
     </history-entry>
@@ -2411,6 +2400,15 @@
       <configuration name="TestCMakeGenerator.testBoost" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestCMakeGenerator_testBoost - 2017.03.26 at 18h 53m 14s.xml">
+      <configuration name="TestCMakeGenerator.testBoost" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestCMakeGenerator_testBoost - 2017.03.26 at 18h 55m 22s.xml">
+      <configuration name="TestCMakeGenerator.testBoost" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestCMakeGenerator_testBoost - 2017.03.26 at 18h 59m 16s.xml">
+      <configuration name="TestCMakeGenerator.testBoost" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestCMakeGenerator_testBoost - 2017.03.26 at 19h 00m 05s.xml">
       <configuration name="TestCMakeGenerator.testBoost" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -3072,13 +3070,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="256" column="10" lean-forward="false" selection-start-line="256" selection-start-column="4" selection-end-line="256" selection-end-column="10" />
+        <state relative-caret-position="4281">
+          <caret line="243" column="29" lean-forward="false" selection-start-line="243" selection-start-column="29" selection-end-line="243" selection-end-column="29" />
           <folding>
-            <element signature="e#2325#2326#0" expanded="true" />
-            <element signature="e#2395#2396#0" expanded="true" />
-            <element signature="e#10166#10167#0" expanded="true" />
-            <element signature="e#10214#10215#0" expanded="true" />
+            <element signature="e#2294#2295#0" expanded="true" />
+            <element signature="e#2345#2346#0" expanded="true" />
+            <element signature="e#2383#2384#0" expanded="true" />
+            <element signature="e#2453#2454#0" expanded="true" />
+            <element signature="e#10287#10288#0" expanded="true" />
+            <element signature="e#10335#10336#0" expanded="true" />
           </folding>
         </state>
       </provider>
