@@ -87,7 +87,6 @@ public class CDepManifestYmlUtils {
     @Override
     public void visitiOS(String name, iOS value) {
       if (value.archives != null) {
-        Set<String> zips = new HashSet<>();
         for (iOSArchive archive : value.archives) {
           require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static iOS libraryName " + "'%s'", coordinate, archive.lib);
           require(archive.file != null, "Package '%s' has missing ios.archive.file", coordinate);
@@ -95,7 +94,6 @@ public class CDepManifestYmlUtils {
           require(archive.size != null, "Package '%s' has missing ios.archive.size for '%s'", coordinate, archive.file);
           require(archive.sdk != null, "Package '%s' has missing ios.archive.sdk for '%s'", coordinate, archive.file);
           require(archive.platform != null, "Package '%s' has missing ios.archive.platform for '%s'", coordinate, archive.file);
-          zips.add(archive.file);
         }
       }
 
@@ -113,7 +111,6 @@ public class CDepManifestYmlUtils {
     @Override
     public void visitAndroid(String name, Android value) {
       if (value.archives != null) {
-        Set<String> zips = new HashSet<>();
         for (AndroidArchive archive : value.archives) {
           require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static android " + "libraryName '%s'", coordinate, archive.lib);
           if (archive.runtime != null) {
@@ -130,7 +127,6 @@ public class CDepManifestYmlUtils {
           require(archive.file != null, "Package '%s' has missing android.archive.file", coordinate);
           require(archive.sha256 != null, "Package '%s' has missing android.archive.sha256 for '%s'", coordinate, archive.file);
           require(archive.size != null, "Package '%s' has missing android.archive.size for '%s'", coordinate, archive.file);
-          zips.add(archive.file);
         }
       }
 

@@ -1,17 +1,18 @@
 package io.cdep.cdep.resolver;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import java.net.URL;
 import org.junit.Test;
+
+import java.net.URL;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class TestResolver {
@@ -35,8 +36,6 @@ public class TestResolver {
 
   private static Coordinate APP_COORDINATE =
       CoordinateUtils.tryParse("com.github.jomof:firebase/app:2.1.3-rev7");
-  private static String APP_URL =
-      "https://github.com/jomof/firebase/releases/download/2.1.3-rev7/cdep-manifest-app.yml";
   private static CDepManifestYml APP_MANIFEST = CDepManifestYmlUtils.convertStringToManifest(
       "coordinate:\n"
           + "  groupId: com.github.jomof\n"
@@ -109,6 +108,7 @@ public class TestResolver {
   public void testScopeResolve() throws Exception {
     ManifestProvider provider = mock(ManifestProvider.class);
     when(provider.tryGetManifest(ADMOB_COORDINATE, new URL(ADMOB_URL))).thenReturn(ADMOB_MANIFEST);
+    String APP_URL = "https://github.com/jomof/firebase/releases/download/2.1.3-rev7/cdep-manifest-app.yml";
     when(provider.tryGetManifest(APP_COORDINATE, new URL(APP_URL))).thenReturn(APP_MANIFEST);
     Resolver resolver = new Resolver(provider);
     ResolutionScope scope = resolver.resolveAll(new SoftNameDependency[]{

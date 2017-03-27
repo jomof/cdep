@@ -1,9 +1,9 @@
 package io.cdep.cdep.utils;
 
 public class VersionUtils {
-    private static String EXPECTED = "major.minor.point[-tweak]";
     static String checkVersion(String version) {
         String[] pointSections = version.split("\\.");
+        String EXPECTED = "major.minor.point[-tweak]";
         if (pointSections.length == 1) {
             return String.format("expected %s but there were no dots", EXPECTED);
         }

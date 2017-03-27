@@ -14,15 +14,8 @@ public enum AndroidAbi {
 
   private final String name;
 
-  private AndroidAbi(String name) {
+  AndroidAbi(String name) {
     this.name = name;
-  }
-
-  /**
-   * Returns name of the ABI like "armeabi-v7a".
-   */
-  public String getName() {
-    return name;
   }
 
   /**
@@ -35,5 +28,12 @@ public enum AndroidAbi {
       result[i++] = abi.getName();
     }
     return result;
+  }
+
+  /**
+   * Returns name of the ABI like "armeabi-v7a".
+   */
+  public String getName() {
+    return name;
   }
 }

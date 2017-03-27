@@ -21,7 +21,7 @@ class GenerateBuildInfo extends DefaultTask {
     public File buildInfoFile = new File("cdep/src/main/java/io/cdep/BuildInfo.java")
 
     @TaskAction
-    def generate() {
+    generate() {
         buildInfoFile.parentFile.mkdirs()
         buildInfoFile.write(
                 """package io.cdep;
@@ -32,6 +32,7 @@ public class BuildInfo {
 }
 
 task generateBuildInfo(type : GenerateBuildInfo)
+//noinspection GroovyAssignabilityCheck
 compileJava.dependsOn generateBuildInfo
 //compileJava.source generateBuildInfo.buildInfoFile
 

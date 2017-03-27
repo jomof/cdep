@@ -19,7 +19,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   @Override
   public void visitPlainOldDataObject(String name, Object value) {
     if (name == null) {
-      super.visitPlainOldDataObject(name, value);
+      super.visitPlainOldDataObject(null, value);
       return;
     }
     appendIndented("%s:\r\n", name);
@@ -60,7 +60,6 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
       }
     }
     --indent;
-    return;
   }
 
   @Override

@@ -30,7 +30,7 @@ public class ReflectionUtils {
    * Get method but convert atypical exceptions into RuntimeException. Should be used
    * when it is a bug if the method doesn't exist.
    */
-  public static Method getMethod(Class clazz, String name, Class<?>... parameterTypes) {
+  public static Method getMethod(Class<?> clazz, String name, Class<?>... parameterTypes) {
     notNull(clazz);
     notNull(name);
     try {

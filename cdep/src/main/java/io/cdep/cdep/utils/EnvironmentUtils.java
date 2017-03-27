@@ -45,8 +45,7 @@ public class EnvironmentUtils {
         environment.getLocalUnzipFolder(
             manifest.coordinate,
             resolved.remote.toURI()
-                .resolve(".")
-                .resolve(manifest.archive.file)
+                .resolve(".").resolve(archive.file)
                 .toURL()),
         archive.include);
   }

@@ -31,9 +31,8 @@ public class SoftNameDependency {
     String firstPrefix = new String(new char[(indent - 1) * 2]).replace('\0', ' ');
     String nextPrefix = new String(new char[indent * 2]).replace('\0', ' ');
     StringBuilder sb = new StringBuilder();
-    String prefix = firstPrefix;
     if (compile != null && compile.length() > 0) {
-      sb.append(String.format("%scompile: %s\n", prefix, compile));
+      sb.append(String.format("%scompile: %s\n", firstPrefix, compile));
     }
     return sb.toString();
   }

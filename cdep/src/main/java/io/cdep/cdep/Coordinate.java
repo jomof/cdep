@@ -42,8 +42,7 @@ public class Coordinate {
     if (!(obj instanceof Coordinate)) {
       return false;
     }
-    boolean result = toString().equals(obj.toString());
-    return result;
+    return toString().equals(obj.toString());
   }
 
   @Override

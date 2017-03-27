@@ -34,8 +34,7 @@ public class TestCDepSHA256Utils {
 
     private CDepSHA256 create(String content) {
         CDepSHA256 hashes = CDepSHA256Utils.convertStringToCDepSHA256(content);
-        CDepSHA256 selfHostest = CDepSHA256Utils.convertStringToCDepSHA256(hashes.toString());
-        return selfHostest;
+        return CDepSHA256Utils.convertStringToCDepSHA256(hashes.toString());
 
     }
 

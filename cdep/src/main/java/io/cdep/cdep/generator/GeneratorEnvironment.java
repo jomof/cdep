@@ -128,7 +128,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     // Try to get the content at the remote. If it doesn't exist return null.
     InputStream input = tryGetUrlInputStream(remoteArchive);
     if (input == null) {
-      out.printf("  didn't exist, skipping.\n", remoteArchive);
+      out.printf("  didn't exist, skipping.\n");
       return null;
     }
 

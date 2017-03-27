@@ -8,6 +8,8 @@ import io.cdep.cdep.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
+
 public class CMakeExamplesGenerator {
 
     final private GeneratorEnvironment environment;
@@ -24,7 +26,7 @@ public class CMakeExamplesGenerator {
             File exampleFolder = getExampleFolder(coordinate);
             ExampleExpression example = table.examples.get(coordinate);
             exampleFolder.mkdirs();
-            String artifact = coordinate.artifactId.replace("/", "_");
+            String artifact = notNull(coordinate.artifactId).replace("/", "_");
             String sourceName = artifact + ".cpp";
             File exampleSourceFile = new File(exampleFolder, sourceName);
             environment.out.printf("Generating %s\n", exampleSourceFile);
@@ -60,9 +62,9 @@ public class CMakeExamplesGenerator {
 
     private File getExampleFolder(Coordinate coordinate) {
         File file = getExampleRootFolder();
-        file = new File(file, coordinate.groupId);
-        file = new File(file, coordinate.artifactId);
-        file = new File(file, coordinate.version);
+        file = new File(file, notNull(coordinate.groupId));
+        file = new File(file, notNull(coordinate.artifactId));
+        file = new File(file, notNull(coordinate.version));
         return file;
     }
 }
