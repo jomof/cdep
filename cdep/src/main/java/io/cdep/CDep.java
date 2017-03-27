@@ -158,7 +158,7 @@ public class CDep {
     for (BuildSystem buildSystem : config.builders) {
       switch (buildSystem) {
         case cmake:
-          new CMakeGenerator(environment).generate(table);
+          new CMakeGenerator(environment, table).generate();
           break;
         case cmakeExamples:
           new CMakeExamplesGenerator(environment).generate(table);

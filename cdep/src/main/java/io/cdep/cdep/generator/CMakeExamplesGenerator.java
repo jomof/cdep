@@ -11,15 +11,14 @@ import java.io.IOException;
 public class CMakeExamplesGenerator {
 
     final private GeneratorEnvironment environment;
-    final private CMakeGenerator cmake;
 
     public CMakeExamplesGenerator(GeneratorEnvironment environment) {
         this.environment = environment;
-        this.cmake = new CMakeGenerator(environment);
     }
 
     public void generate(FunctionTableExpression table) throws IOException {
         StringBuilder root = new StringBuilder();
+        CMakeGenerator cmake = new CMakeGenerator(environment, table);
         root.append("cmake_minimum_required(VERSION 3.0.2)\n");
         for (Coordinate coordinate : table.examples.keySet()) {
             File exampleFolder = getExampleFolder(coordinate);

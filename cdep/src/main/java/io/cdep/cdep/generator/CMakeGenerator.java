@@ -27,34 +27,38 @@ public class CMakeGenerator {
   final static private String CONFIG_FILE_NAME = "cdep-dependencies-config.cmake";
 
   final private GeneratorEnvironment environment;
+  final private FunctionTableExpression table;
+  private StringBuilder sb;
+  private FindModuleExpression signature = null;
 
-  public CMakeGenerator(GeneratorEnvironment environment) {
+  public CMakeGenerator(GeneratorEnvironment environment, FunctionTableExpression table) {
     this.environment = environment;
+    this.table = (FunctionTableExpression) new CMakeConvertJoinedFileToString().visit(table);
+    this.sb = new StringBuilder();
   }
 
-  public void generate(FunctionTableExpression table) throws IOException {
-    String text = create(table);
+  public void generate() throws IOException {
+    String text = create();
     File file = getCMakeConfigurationFile();
     environment.out.printf("Generating %s\n", file);
     FileUtils.writeTextToFile(file, text);
   }
 
-  public String create(FunctionTableExpression table) throws IOException {
-    table = (FunctionTableExpression) new CMakeConvertJoinedFileToString().visit(table);
-
-    StringBuilder sb = new StringBuilder();
-    sb.append("# GENERATED FILE. DO NOT EDIT.\n");
+  public String create() throws IOException {
+    append("# GENERATED FILE. DO NOT EDIT.\n");
 
     for (FindModuleExpression findFunction : table.findFunctions.values()) {
-      generateFindAppender(0, findFunction, findFunction, sb);
+      signature = findFunction;
+      generateFindAppender(0, findFunction);
+      signature = null;
     }
 
-    sb.append("\nfunction(add_all_cdep_dependencies target)\n");
+    append("\nfunction(add_all_cdep_dependencies target)\n");
     for (FindModuleExpression findFunction : table.findFunctions.values()) {
       String function = getAddDependencyFunctionName(findFunction.coordinate);
-      sb.append(String.format("  %s(${target})\n", function));
+      append("  %s(${target})\n", function);
     }
-    sb.append("endfunction(add_all_cdep_dependencies)\n");
+    append("endfunction(add_all_cdep_dependencies)\n");
     return sb.toString();
   }
 
@@ -69,9 +73,7 @@ public class CMakeGenerator {
 
   private void generateFindAppender(
       int indent,
-      FindModuleExpression signature,
-      Expression expression,
-      StringBuilder sb) {
+      Expression expression) {
 
     String prefix = new String(new char[indent * 2]).replace('\0', ' ');
 
@@ -81,23 +83,21 @@ public class CMakeGenerator {
 
     if (expression instanceof FindModuleExpression) {
       FindModuleExpression specific = (FindModuleExpression) expression;
-      sb.append("\n###\n");
-      sb.append(String.format("### Add dependency for CDep module: %s\n",
-          specific.coordinate.toString()));
-      sb.append("###\n");
+      append("\n###\n");
+      append("### Add dependency for CDep module: %s\n",
+          specific.coordinate.toString());
+      append("###\n");
       String coordinateVar = String.format("%s_CDEP_COORDINATE", upperArtifactID);
-      sb.append(String.format("%sif(%s)\n", prefix, coordinateVar));
-      sb.append(String
-          .format("%s  message(FATAL_ERROR \"CDep module '$(%s}' was already defined\")\n", prefix,
-              coordinateVar));
-      sb.append(String.format("%sendif(%s)\n", prefix, coordinateVar));
-      sb.append(String.format("%sset(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate));
+      append("%sif(%s)\n", prefix, coordinateVar);
+      append("%s  message(FATAL_ERROR \"CDep module '$(%s}' was already defined\")\n", prefix, coordinateVar);
+      append("%sendif(%s)\n", prefix, coordinateVar);
+      append("%sset(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate);
       String appenderFunctionName = getAddDependencyFunctionName(signature.coordinate);
 
-      sb.append("function({appenderFunctionName} target)\n"
+      append("function({appenderFunctionName} target)\n"
           .replace("{appenderFunctionName}", appenderFunctionName));
 
-      sb.append("  # Choose between Android NDK Toolchain and CMake Android Toolchain\n" +
+      append("  # Choose between Android NDK Toolchain and CMake Android Toolchain\n" +
           "  if(DEFINED CMAKE_ANDROID_ARCH_ABI)\n" +
           "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" +
           "    set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n" +
@@ -105,26 +105,26 @@ public class CMakeGenerator {
           "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" +
           "    set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
           "  endif()\n\n");
-      sb.append(String.format("  set(cdep_exploded_root \"%s\")\n",
-          getCMakePath(environment.unzippedArchivesFolder)));
-      generateFindAppender(indent + 1, signature, specific.expression, sb);
-      sb.append("endfunction({appenderFunctionName})\n"
+      append("  set(cdep_exploded_root \"%s\")\n",
+          getCMakePath(environment.unzippedArchivesFolder));
+      generateFindAppender(indent + 1, specific.expression);
+      append("endfunction({appenderFunctionName})\n"
           .replace("{appenderFunctionName}", appenderFunctionName));
       return;
     } else if (expression instanceof IfSwitchExpression) {
       IfSwitchExpression specific = (IfSwitchExpression) expression;
-      sb.append("\n");
-      sb.append(prefix);
+      append("\n");
+      append(prefix);
       for (int i = 0; i < specific.conditions.length; ++i) {
-        sb.append("if(");
-        generateFindAppender(indent + 1, signature, specific.conditions[i], sb);
-        sb.append(")");
-        generateFindAppender(indent + 1, signature, specific.expressions[i], sb);
-        sb.append(String.format("%selse", prefix));
+        append("if(");
+        generateFindAppender(indent + 1, specific.conditions[i]);
+        append(")");
+        generateFindAppender(indent + 1, specific.expressions[i]);
+        append("%selse", prefix);
       }
-      sb.append("()");
-      generateFindAppender(indent + 1, signature, specific.elseExpression, sb);
-      sb.append(String.format("%sendif()\n", prefix));
+      append("()");
+      generateFindAppender(indent + 1, specific.elseExpression);
+      append("%sendif()\n", prefix);
       return;
     } else if (expression instanceof AssignmentExpression) {
       generateAssignments(prefix, signature, expression, sb, null);
@@ -135,75 +135,75 @@ public class CMakeGenerator {
       for (int i = 0; i < specific.parameters.length; ++i) {
         Expression parm = specific.parameters[i];
         StringBuilder parmBuilder = new StringBuilder();
-        generateFindAppender(indent + 1, signature, parm, parmBuilder);
+        StringBuilder old = sb;
+        sb = parmBuilder;
+        generateFindAppender(indent + 1, parm);
+        sb = old;
         parms[i] = parmBuilder.toString();
       }
       // These are non-assignment function calls.
       if (specific.function == ExternalFunctionExpression.STRING_STARTSWITH) {
-        sb.append(String.format("%s MATCHES \"$%s.*\"",
+        append("%s MATCHES \"$%s.*\"",
             parms[0],
-            unquote(parms[1])));
+            unquote(parms[1]));
       } else if (specific.function == ExternalFunctionExpression.INTEGER_GTE) {
-        sb.append(String.format("%s GREATER %s",
+        append("%s GREATER %s",
             parms[0],
-            Integer.parseInt(parms[1]) - 1));
+            Integer.parseInt(parms[1]) - 1);
       } else if (specific.function == ExternalFunctionExpression.STRING_EQUALS) {
-        sb.append(String.format("%s STREQUAL %s",
+        append("%s STREQUAL %s",
             parms[0],
-            parms[1]));
+            parms[1]);
       } else if (specific.function == ExternalFunctionExpression.ARRAY_HAS_ONLY_ELEMENT) {
-        sb.append(String.format("%s STREQUAL %s",
+        append("%s STREQUAL %s",
             parms[0],
-            parms[1]));
+            parms[1]);
       } else {
         throw new RuntimeException(specific.function.method.getName());
       }
       return;
     } else if (expression instanceof ParameterExpression) {
       ParameterExpression specific = (ParameterExpression) expression;
-      sb.append(parameterName(signature, specific));
+      append(parameterName(signature, specific));
       return;
     } else if (expression instanceof IntegerExpression) {
       IntegerExpression specific = (IntegerExpression) expression;
-      sb.append(specific.value);
+      append("%s", specific.value);
       return;
     } else if (expression instanceof StringExpression) {
       StringExpression specific = (StringExpression) expression;
-      sb.append("\"" + specific.value + "\"");
+      append("\"" + specific.value + "\"");
       return;
     } else if (expression instanceof ModuleExpression) {
       ModuleExpression specific = (ModuleExpression) expression;
       for (Coordinate dependency : specific.dependencies) {
-        sb.append(
-            String.format("\n%s%s(${target})", prefix, getAddDependencyFunctionName(dependency)));
+        append("\n%s%s(${target})", prefix, getAddDependencyFunctionName(dependency));
       }
-      sb.append("\n");
+      append("\n");
       if (specific.archive.includePath != null) {
-        sb.append(String.format("%sset(%s_ROOT ", prefix, upperArtifactID));
-        generateFindAppender(indent, signature, specific.archive.includePath, sb);
-        sb.append(String.format(" PARENT_SCOPE)\n"));
+        append("%sset(%s_ROOT ", prefix, upperArtifactID);
+        generateFindAppender(indent, specific.archive.includePath);
+        append(" PARENT_SCOPE)\n");
 
-        sb.append(String.format(
+        append(
             "%starget_include_directories(${target} PRIVATE ",
-            prefix));
-        generateFindAppender(indent, signature, specific.archive.includePath, sb);
-        sb.append(String.format(")\n"));
+            prefix);
+        generateFindAppender(indent, specific.archive.includePath);
+        append(")\n");
 
-        sb.append(String
-            .format("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix,
-                specific.archive.include));
+        append("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix,
+            specific.archive.include);
       }
 
       if (specific.archive.libraryPath != null) {
-        sb.append(String.format(
+        append(
             "%starget_link_libraries(${target} ",
-            prefix));
-        generateFindAppender(indent, signature, specific.archive.libraryPath, sb);
-        sb.append(String.format(")\n"));
+            prefix);
+        generateFindAppender(indent, specific.archive.libraryPath);
+        append(")\n");
 
-        sb.append(String
-            .format("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n",
-                prefix, specific.archive.library));
+        append("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n",
+            prefix, specific.archive.library);
       }
       return;
     } else if (expression instanceof AbortExpression) {
@@ -211,32 +211,35 @@ public class CMakeGenerator {
       Object parms[] = new String[specific.parameters.length];
       for (int i = 0; i < parms.length; ++i) {
         StringBuilder argBuilder = new StringBuilder();
-        generateFindAppender(0, signature, specific.parameters[i], argBuilder);
+        StringBuilder old = sb;
+        sb = argBuilder;
+        generateFindAppender(0, specific.parameters[i]);
+        sb = old;
         parms[i] = "${" + argBuilder.toString() + "}";
       }
       String message = String.format(specific.message, parms);
-      sb.append(String.format("\n%smessage(FATAL_ERROR \"%s\")\n", prefix, message));
+      append("\n%smessage(FATAL_ERROR \"%s\")\n", prefix, message);
       return;
     } else if (expression instanceof AssignmentBlockExpression) {
-      sb.append("\n");
+      append("\n");
       AssignmentBlockExpression specific = (AssignmentBlockExpression) expression;
       for (int i = 0; i < specific.assignments.size(); i++) {
-        generateFindAppender(indent, signature, specific.assignments.get(i), sb);
+        generateFindAppender(indent, specific.assignments.get(i));
       }
-      generateFindAppender(indent, signature, specific.statement, sb);
+      generateFindAppender(indent, specific.statement);
       return;
     } else if (expression instanceof AssignmentReferenceExpression) {
       AssignmentReferenceExpression specific = (AssignmentReferenceExpression) expression;
-      sb.append(String.format("%s", specific.assignment.name));
+      append("%s", specific.assignment.name);
       return;
     } else if (expression instanceof MultiStatementExpression) {
       MultiStatementExpression specific = (MultiStatementExpression) expression;
       for (StatementExpression expr : specific.statements) {
-        generateFindAppender(indent, signature, expr, sb);
+        generateFindAppender(indent, expr);
       }
       return;
     } else if (expression instanceof NopExpression) {
-      sb.append("\n");
+      append("\n");
       return;
     }
 
@@ -248,6 +251,10 @@ public class CMakeGenerator {
       return string.substring(1, string.length() - 1);
     }
     return string;
+  }
+
+  private void append(String format, Object... args) {
+    sb.append(String.format(format, args));
   }
 
   private String parameterName(FindModuleExpression signature, ParameterExpression expr) {
@@ -295,32 +302,32 @@ public class CMakeGenerator {
         if (assignResult == null) {
           throw new RuntimeException();
         }
-        sb.append(String.format("%sget_filename_component(%s ${%s} NAME)\n",
+        append("%sget_filename_component(%s ${%s} NAME)\n",
             prefix,
             assignResult,
-            values[0]));
+            values[0]);
         return null;
 
       } else if (specific.function == ExternalFunctionExpression.STRING_LASTINDEXOF) {
         if (assignResult == null) {
           throw new RuntimeException();
         }
-        sb.append(String.format("%sstring(FIND %s %s %s REVERSE)\n",
+        append("%sstring(FIND %s %s %s REVERSE)\n",
             prefix,
             values[0],
             values[1],
-            assignResult));
+            assignResult);
         return null;
       } else if (specific.function == ExternalFunctionExpression.STRING_SUBSTRING_BEGIN_END) {
         if (assignResult == null) {
           throw new RuntimeException();
         }
-        sb.append(String.format("%sstring(SUBSTRING %s %s %s %s)\n",
+        append("%sstring(SUBSTRING %s %s %s %s)\n",
             prefix,
             values[0],
             values[1],
             values[2],
-            assignResult));
+            assignResult);
         return null;
       } else if (specific.function == ExternalFunctionExpression.STRING_STARTSWITH) {
         if (assignResult != null) {
@@ -333,10 +340,10 @@ public class CMakeGenerator {
       StringExpression specific = (StringExpression) expr;
       String result = "\"" + specific.value + "\"";
       if (assignResult != null) {
-        sb.append(String.format("%sset(%s %s)\n",
+        append("%sset(%s %s)\n",
             prefix,
             assignResult,
-            result));
+            result);
         return null;
       }
       return result;

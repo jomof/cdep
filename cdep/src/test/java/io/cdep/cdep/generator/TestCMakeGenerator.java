@@ -24,7 +24,7 @@ public class TestCMakeGenerator {
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     builder.addManifest(ResolvedManifests.boost());
     FunctionTableExpression table = builder.build();
-    String result = new CMakeGenerator(environment).create(table);
+    String result = new CMakeGenerator(environment, table).create();
     System.out.printf(result);
   }
 
@@ -39,7 +39,7 @@ public class TestCMakeGenerator {
       String expectedFailure = expected.get(manifest.name);
       try {
         FunctionTableExpression table = builder.build();
-        new CMakeGenerator(environment).generate(table);
+        new CMakeGenerator(environment, table).generate();
         if (expectedFailure != null) {
           fail("Expected failure");
         }

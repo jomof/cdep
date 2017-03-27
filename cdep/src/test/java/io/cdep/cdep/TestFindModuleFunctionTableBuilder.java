@@ -68,7 +68,7 @@ public class TestFindModuleFunctionTableBuilder {
         "c++_shared",
         "x86").remote.getPath();
     assertThat(zip).endsWith("cmakeify-android-platform-21.zip");
-    new CMakeGenerator(environment).generate(table);
+    new CMakeGenerator(environment, table).generate();
   }
 
   @Test
@@ -94,7 +94,7 @@ public class TestFindModuleFunctionTableBuilder {
         "c++_shared",
         "x86").remote.getPath();
     assertThat(zip).endsWith("vectorial.zip");
-    new CMakeGenerator(environment).generate(table);
+    new CMakeGenerator(environment, table).generate();
   }
 
   @Test
@@ -112,7 +112,7 @@ public class TestFindModuleFunctionTableBuilder {
         "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk")
         .remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
-    new CMakeGenerator(environment).generate(table);
+    new CMakeGenerator(environment, table).generate();
   }
 
   @Test
@@ -130,7 +130,7 @@ public class TestFindModuleFunctionTableBuilder {
         "c++_shared",
         "x86");
     assertThat(found.remote.toString()).contains("sqlite-android-cxx-platform-12.zip");
-    new CMakeGenerator(environment).generate(table);
+    new CMakeGenerator(environment, table).generate();
   }
 
   @Test
@@ -159,7 +159,7 @@ public class TestFindModuleFunctionTableBuilder {
         .remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
 
-    new CMakeGenerator(environment).generate(table);
+    new CMakeGenerator(environment, table).generate();
     ExpressionUtils.getAllFoundModuleExpressions(table);
   }
 
@@ -177,7 +177,7 @@ public class TestFindModuleFunctionTableBuilder {
         "Linux").remote.getPath();
     assertThat(zip).endsWith("sqlite-linux.zip");
 
-    new CMakeGenerator(environment).generate(table);
+    new CMakeGenerator(environment, table).generate();
     ExpressionUtils.getAllFoundModuleExpressions(table);
   }
 
@@ -206,7 +206,7 @@ public class TestFindModuleFunctionTableBuilder {
         .remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
 
-    new CMakeGenerator(environment).generate(table);
+    new CMakeGenerator(environment, table).generate();
     ExpressionUtils.getAllFoundModuleExpressions(table);
   }
 
