@@ -15,8 +15,6 @@
 */
 package io.cdep.cdep.yml.cdep;
 
-import org.jetbrains.annotations.NotNull;
-
 public class CDepYml {
 
     final public BuildSystem builders[] = new BuildSystem[0];
@@ -47,9 +45,8 @@ public class CDepYml {
         return sb.toString();
     }
 
-  @NotNull
-  @Override
-  public String toString() {
-    return toYaml(0);
-  }
+    @Override
+    public String toString() {
+        return toYaml(0);
+    }
 }

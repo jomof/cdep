@@ -15,16 +15,11 @@
 */
 package io.cdep.cdep;
 
-import org.jetbrains.annotations.Nullable;
-
 @SuppressWarnings("unused")
 public class Coordinate {
 
-  @Nullable
   final public String groupId; // like com.github.jomof
-  @Nullable
   final public String artifactId; // like cmakeify
-  @Nullable
   final public String version; // like alpha-0.0.27
 
   private Coordinate() {
@@ -40,7 +35,7 @@ public class Coordinate {
   }
 
   @Override
-  public boolean equals(@Nullable Object obj) {
+  public boolean equals(Object obj) {
     if (obj == null) {
       return false;
     }
@@ -55,7 +50,6 @@ public class Coordinate {
     return toString().hashCode();
   }
 
-  @Nullable
   @Override
   public String toString() {
     return groupId + ":" + artifactId + ":" + version;

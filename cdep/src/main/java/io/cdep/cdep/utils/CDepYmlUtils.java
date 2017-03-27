@@ -2,7 +2,6 @@ package io.cdep.cdep.utils;
 
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
-import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -16,7 +15,7 @@ import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.require;
 
 abstract public class CDepYmlUtils {
-  public static void checkSanity(@NotNull CDepYml cdepYml, File configFile) {
+  public static void checkSanity(CDepYml cdepYml, File configFile) {
     Set<BuildSystem> builders = new HashSet<>();
     for (BuildSystem builder : cdepYml.builders) {
       require(!builders.contains(builder), "%s 'builders' contains '%s' more than once", configFile, builder);
@@ -29,8 +28,7 @@ abstract public class CDepYmlUtils {
     }
   }
 
-  @NotNull
-  public static CDepYml fromString(@NotNull String content) {
+  public static CDepYml fromString(String content) {
     Yaml yaml = new Yaml(new Constructor(CDepYml.class));
     CDepYml cdepYml = (CDepYml) yaml.load(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
     require(cdepYml != null, "cdep.yml was empty");

@@ -1,9 +1,7 @@
 package io.cdep.cdep.utils;
 
-import org.jetbrains.annotations.NotNull;
-
 public class VersionUtils {
-  static String checkVersion(@NotNull String version) {
+    static String checkVersion(String version) {
         String[] pointSections = version.split("\\.");
         String EXPECTED = "major.minor.point[-tweak]";
         if (pointSections.length == 1) {

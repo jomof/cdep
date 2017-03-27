@@ -26,8 +26,6 @@ import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.*;
@@ -44,13 +42,9 @@ import static io.cdep.cdep.utils.Invariant.*;
 public class GeneratorEnvironment implements ManifestProvider, DownloadProvider {
 
   final public PrintStream out;
-  @NotNull
   final public File downloadFolder;
-  @NotNull
   final public File unzippedArchivesFolder;
-  @NotNull
   final public File modulesFolder;
-  @NotNull
   final public File examplesFolder;
   final public File workingFolder;
   final public Map<String, String> cdepSha256Hashes = new HashMap<>();
@@ -58,7 +52,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   final public boolean forceRedownload;
   final public Set<File> alreadyDownloaded = new HashSet<>();
 
-  public GeneratorEnvironment(PrintStream out, File workingFolder, @Nullable File userFolder, boolean forceRedownload, boolean
+  public GeneratorEnvironment(PrintStream out, File workingFolder, File userFolder, boolean forceRedownload, boolean
       ignoreManifestHashes) {
     if (userFolder == null) {
       userFolder = new File(System.getProperty("user.home"));
@@ -73,7 +67,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     this.forceRedownload = forceRedownload;
   }
 
-  private static InputStream tryGetUrlInputStream(@NotNull URL url) throws IOException {
+  private static InputStream tryGetUrlInputStream(URL url) throws IOException {
     URLConnection con = url.openConnection();
     con.connect();
     try {
@@ -85,7 +79,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     }
   }
 
-  private static void copyInputStreamToLocalFile(@NotNull InputStream input, @NotNull File localFile) throws IOException {
+  private static void copyInputStreamToLocalFile(InputStream input, File localFile) throws IOException {
     byte[] buffer = new byte[4096];
     int n;
 
@@ -96,7 +90,6 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     output.close();
   }
 
-  @NotNull
   public File getLocalDownloadFilename(Coordinate coordinate, URL remoteArchive) {
     coordinate = notNull(coordinate);
     remoteArchive = notNull(remoteArchive);
@@ -108,8 +101,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     return local;
   }
 
-  @Nullable
-  public File tryGetLocalDownloadedFile(Coordinate coordinate, @NotNull URL remoteArchive) throws IOException {
+  public File tryGetLocalDownloadedFile(Coordinate coordinate, URL remoteArchive) throws IOException {
     File local = getLocalDownloadFilename(notNull(coordinate), notNull(remoteArchive));
 
     if (local.isFile() && !forceRedownload) {
@@ -149,8 +141,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     return local;
   }
 
-  @Nullable
-  public CDepManifestYml tryGetManifest(Coordinate coordinate, @NotNull URL remoteArchive) throws IOException,
+  public CDepManifestYml tryGetManifest(Coordinate coordinate, URL remoteArchive) throws IOException,
       NoSuchAlgorithmException {
     File file = tryGetLocalDownloadedFile(coordinate, remoteArchive);
     if (file == null) {
@@ -174,8 +165,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     return cdepManifestYml;
   }
 
-  @NotNull
-  public File getLocalUnzipFolder(@NotNull Coordinate coordinate, @NotNull URL remoteArchive) {
+  public File getLocalUnzipFolder(Coordinate coordinate, URL remoteArchive) {
     File local = unzippedArchivesFolder;
     local = new File(local, coordinate.groupId);
     local = new File(local, coordinate.artifactId);
@@ -218,7 +208,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     }
   }
 
-  private String getUrlBaseName(@NotNull URL url) {
+  private String getUrlBaseName(URL url) {
     String urlString = url.getFile();
     return urlString.substring(urlString.lastIndexOf('/') + 1, urlString.length());
   }

@@ -4,7 +4,6 @@ import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
 import junit.framework.TestCase;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -348,7 +347,7 @@ public class TestCDepManifestYmlUtils {
         "      size: 192\n");
   }
 
-  private void check(@NotNull String content) {
+  private void check(String content) {
     CDepManifestYml manifest = CDepManifestYmlUtils.convertStringToManifest(content);
     CDepManifestYmlUtils.checkManifestSanity(manifest);
   }

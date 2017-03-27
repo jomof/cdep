@@ -1,8 +1,6 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.cdep.utils.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import static io.cdep.cdep.utils.Invariant.notNull;
 
@@ -10,17 +8,16 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   private int indent = 0;
   private int eatIndent = 0;
-  @NotNull
   private StringBuilder sb = new StringBuilder();
 
-  public static String create(@NotNull Object node) {
+  public static String create(Object node) {
     CreateCDepManifestYmlString thiz = new CreateCDepManifestYmlString();
     thiz.visitPlainOldDataObject(null, node);
     return thiz.sb.toString();
   }
 
   @Override
-  public void visitPlainOldDataObject(@Nullable String name, @NotNull Object value) {
+  public void visitPlainOldDataObject(String name, Object value) {
     if (name == null) {
       super.visitPlainOldDataObject(null, value);
       return;
@@ -42,7 +39,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitString(String name, @NotNull String value) {
+  public void visitString(String name, String value) {
     notNull(value);
     notNull(name);
     if (!value.contains("\n")) {
@@ -76,7 +73,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitArray(String name, @NotNull Object[] array, @NotNull Class<?> elementType) {
+  public void visitArray(String name, Object[] array, Class<?> elementType) {
     appendIndented("%s:\r\n", name);
     ++indent;
     for (int i = 0; i < array.length; ++i) {
@@ -88,7 +85,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
     --indent;
   }
 
-  private void append(@NotNull String format, Object... parms) {
+  private void append(String format, Object... parms) {
     sb.append(String.format(format, parms));
   }
 

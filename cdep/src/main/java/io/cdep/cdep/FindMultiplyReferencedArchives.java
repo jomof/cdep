@@ -4,8 +4,6 @@ import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
 import io.cdep.cdep.ast.finder.ModuleExpression;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,13 +26,12 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
   final public Map<Coordinate, List<Coordinate>> backwardEdges = new HashMap<>();
   // Map from module coordinate to the archives that it references
   final public Map<Coordinate, List<ModuleArchiveExpression>> moduleArchives = new HashMap<>();
-  @Nullable
   private Coordinate currentFindModule = null;
 
   /**
    * Utility function to add a new edge to an edge map.
    */
-  private static void addEdge(@NotNull Map<Coordinate, List<Coordinate>> edges, Coordinate from, Coordinate to) {
+  private static void addEdge(Map<Coordinate, List<Coordinate>> edges, Coordinate from, Coordinate to) {
     List<Coordinate> tos = edges.get(from);
     if (tos == null) {
       edges.put(from, new ArrayList<Coordinate>());
@@ -59,7 +56,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
   }
 
   @Override
-  void visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
+  void visitFunctionTableExpression(FunctionTableExpression expr) {
     super.visitFunctionTableExpression(expr);
     for (Coordinate coordinate : forwardEdges.keySet()) {
       Map<String, Coordinate> shaToPrior = copyArchivesInto(coordinate, null);
@@ -67,7 +64,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
     }
   }
 
-  private void validateForward(Coordinate dependant, @NotNull Map<String, Coordinate> shaToPrior) {
+  private void validateForward(Coordinate dependant, Map<String, Coordinate> shaToPrior) {
     for (Coordinate dependee : forwardEdges.get(dependant)) {
       List<ModuleArchiveExpression> dependeeArchives = moduleArchives.get(dependee);
       require(dependeeArchives != null, "Reference %s was not found, needed by %s", dependee, dependant);
@@ -85,7 +82,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
    * Produce a map from SHA256 of each archive to the coordinate that references that archive
    * as a dependency.
    */
-  @NotNull Map<String, Coordinate> copyArchivesInto(Coordinate coordinate, @Nullable Map<String, Coordinate> original) {
+  Map<String, Coordinate> copyArchivesInto(Coordinate coordinate, Map<String, Coordinate> original) {
     Map<String, Coordinate> copy = new HashMap<>();
     if (original != null) {
       copy.putAll(original);
@@ -97,14 +94,14 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
   }
 
   @Override
-  protected void visitFindModuleExpression(@NotNull FindModuleExpression expr) {
+  protected void visitFindModuleExpression(FindModuleExpression expr) {
     this.currentFindModule = expr.coordinate;
     super.visitFindModuleExpression(expr);
     this.currentFindModule = null;
   }
 
   @Override
-  protected void visitModuleExpression(@NotNull ModuleExpression expr) {
+  protected void visitModuleExpression(ModuleExpression expr) {
     require(currentFindModule != null);
     for (Coordinate coordinate : expr.dependencies) {
       addEdge(forwardEdges, currentFindModule, coordinate);
@@ -114,7 +111,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
   }
 
   @Override
-  protected void visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
+  protected void visitModuleArchiveExpression(ModuleArchiveExpression expr) {
     addModuleArchive(expr);
     super.visitModuleArchiveExpression(expr);
   }

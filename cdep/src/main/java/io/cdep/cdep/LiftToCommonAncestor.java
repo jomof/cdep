@@ -1,8 +1,6 @@
 package io.cdep.cdep;
 
 import io.cdep.cdep.ast.finder.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -10,17 +8,16 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.assignmentBlock;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class LiftToCommonAncestor extends RewritingVisitor {
-  @NotNull Set<AssignmentExpression> captured = new HashSet<>();
-  @Nullable List<AssignmentExpression> functionOrder = new ArrayList<>();
-  @Nullable Map<AssignmentExpression, Integer> functionCounts = new HashMap<>();
-  @Nullable FindModuleExpression latest = null;
+  Set<AssignmentExpression> captured = new HashSet<>();
+  List<AssignmentExpression> functionOrder = new ArrayList<>();
+  Map<AssignmentExpression, Integer> functionCounts = new HashMap<>();
+  FindModuleExpression latest = null;
 
   public LiftToCommonAncestor() {
   }
 
-  @Nullable
   @Override
-  protected Expression visitFindModuleExpression(@NotNull FindModuleExpression expr) {
+  protected Expression visitFindModuleExpression(FindModuleExpression expr) {
     List<AssignmentExpression> order = new ArrayList<>();
     Map<AssignmentExpression, Integer> counts = new HashMap<>();
     assignments(expr, order, counts);
@@ -30,7 +27,16 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     FindModuleExpression result = (FindModuleExpression) super.visitFindModuleExpression(expr);
     List<AssignmentExpression> block = extractBlocks(result);
     if (block.size() > 0) {
-      result = new FindModuleExpression(result.coordinate, result.cdepExplodedRoot, result.targetPlatform, result.systemVersion, result.androidTargetAbi, result.androidStlType, result.osxSysroot, result.osxArchitectures, assignmentBlock(block, result.expression));
+      result = new FindModuleExpression(
+          result.coordinate,
+          result.cdepExplodedRoot,
+          result.targetPlatform,
+          result.systemVersion,
+          result.androidTargetAbi,
+          result.androidStlType,
+          result.osxSysroot,
+          result.osxArchitectures,
+          assignmentBlock(block, result.expression));
     }
     this.functionOrder = null;
     this.functionCounts = null;
@@ -39,7 +45,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
 
 
   @Override
-  protected Expression visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
+  protected Expression visitIfSwitchExpression(IfSwitchExpression expr) {
     Expression result = super.visitIfSwitchExpression(expr);
     List<AssignmentExpression> block = extractBlocks(result);
 
@@ -50,7 +56,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
   }
 
   @Override
-  protected Expression visitModuleExpression(@NotNull ModuleExpression expr) {
+  protected Expression visitModuleExpression(ModuleExpression expr) {
     Expression result = super.visitModuleExpression(expr);
     List<AssignmentExpression> block = extractBlocks(result);
 
@@ -60,7 +66,6 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     return result;
   }
 
-  @NotNull
   private List<AssignmentExpression> extractBlocks(Expression result) {
     List<AssignmentExpression> order = new ArrayList<>();
     Map<AssignmentExpression, Integer> count = new HashMap<>();
@@ -84,7 +89,9 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     return block;
   }
 
-  void assignments(Expression expr, @NotNull List<AssignmentExpression> order, @NotNull Map<AssignmentExpression, Integer> counts) {
+  void assignments(Expression expr,
+                   List<AssignmentExpression> order,
+                   Map<AssignmentExpression, Integer> counts) {
     require(order.size() == 0);
     require(counts.size() == 0);
     List<AssignmentExpression> assignments = new GetContainedReferences(expr).list;

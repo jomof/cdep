@@ -1,8 +1,6 @@
 package io.cdep.cdep;
 
 import io.cdep.cdep.ast.finder.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -19,11 +17,9 @@ import static io.cdep.cdep.utils.ReflectionUtils.invoke;
  */
 public class InterpretingVisitor {
 
-  @Nullable
   private Frame stack = null;
 
-  @Nullable
-  private static Object coerce(@Nullable Object o, @NotNull Class<?> clazz) {
+  private static Object coerce(Object o, Class<?> clazz) {
     if (o == null) {
       return null;
     }
@@ -75,8 +71,7 @@ public class InterpretingVisitor {
     return null;
   }
 
-  @Nullable
-  public Object visit(@Nullable Expression expr) {
+  public Object visit(Expression expr) {
     if (expr == null) {
       return null;
     }
@@ -138,15 +133,13 @@ public class InterpretingVisitor {
     throw new RuntimeException(expr.getClass().toString());
   }
 
-  @Nullable
-  protected ModuleArchive visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
+  protected ModuleArchive visitModuleArchiveExpression(ModuleArchiveExpression expr) {
     Object fullIncludePath = visit(expr.includePath);
     Object fullLibraryName = visit(expr.libraryPath);
     return new ModuleArchive(expr.file, (File) fullIncludePath, (File) fullLibraryName);
   }
 
-  @Nullable
-  protected Object visitAssignmentReferenceExpression(@NotNull AssignmentReferenceExpression expr) {
+  protected Object visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
     notNull(stack);
     AssignmentFuture future = stack.lookup(expr.assignment);
     if (future.value == null) {
@@ -159,8 +152,7 @@ public class InterpretingVisitor {
     return future.value;
   }
 
-  @Nullable
-  protected Object visitAssignmentBlockExpression(@NotNull AssignmentBlockExpression expr) {
+  protected Object visitAssignmentBlockExpression(AssignmentBlockExpression expr) {
     stack = new Frame(stack);
     for (AssignmentExpression assignment : expr.assignments) {
       visitAssignmentExpression(assignment);
@@ -171,38 +163,33 @@ public class InterpretingVisitor {
     return result;
   }
 
-  @NotNull
-  protected Object visitMultiStatementExpression(@NotNull MultiStatementExpression expr) {
+  protected Object visitMultiStatementExpression(MultiStatementExpression expr) {
     return visitArray(expr.statements);
   }
 
-  @NotNull
-  protected Object visitArrayExpression(@NotNull ArrayExpression expr) {
+  protected Object visitArrayExpression(ArrayExpression expr) {
     return visitArray(expr.elements);
   }
 
-  protected Object visitIntegerExpression(@NotNull IntegerExpression expr) {
+  protected Object visitIntegerExpression(IntegerExpression expr) {
     return expr.value;
   }
 
-  protected Method visitExternalFunctionExpression(@NotNull ExternalFunctionExpression expr) {
+  protected Method visitExternalFunctionExpression(ExternalFunctionExpression expr) {
     return expr.method;
   }
 
-  @Nullable
   protected Object visitExampleExpression(ExampleExpression expr) {
     return null;
   }
 
-  @Nullable
-  protected Object visitAbortExpression(@NotNull AbortExpression expr) {
+  protected Object visitAbortExpression(AbortExpression expr) {
     Object parameters[] = (Object[]) coerce(visitArray(expr.parameters), String[].class);
     fail(expr.message, parameters);
     return null;
   }
 
-  @Nullable
-  protected ModuleArchive visitModuleExpression(@NotNull ModuleExpression expr) {
+  protected ModuleArchive visitModuleExpression(ModuleExpression expr) {
     return (ModuleArchive) visit(expr.archive);
   }
 
@@ -210,7 +197,7 @@ public class InterpretingVisitor {
     return expr;
   }
 
-  protected Object visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
+  protected Object visitInvokeFunctionExpression(InvokeFunctionExpression expr) {
     Method method = visitExternalFunctionExpression(expr.function);
     Object parameters[] = visitArray(expr.parameters);
 
@@ -227,8 +214,7 @@ public class InterpretingVisitor {
     return invoke(method, thiz, parms);
   }
 
-  @NotNull
-  protected Object[] visitArray(@NotNull Expression[] array) {
+  protected Object[] visitArray(Expression[] array) {
     Object result[] = new Object[array.length];
     for (int i = 0; i < array.length; ++i) {
       result[i] = visit(array[i]);
@@ -236,19 +222,16 @@ public class InterpretingVisitor {
     return result;
   }
 
-  @Nullable
-  protected Object visitAssignmentExpression(@NotNull AssignmentExpression expr) {
+  protected Object visitAssignmentExpression(AssignmentExpression expr) {
     stack.assignments.put(expr, new AssignmentFuture(stack, expr.expression));
     return null;
   }
 
-  @NotNull
-  protected String visitStringExpression(@NotNull StringExpression expr) {
+  protected String visitStringExpression(StringExpression expr) {
     return expr.value;
   }
 
-  @Nullable
-  protected Object visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
+  protected Object visitIfSwitchExpression(IfSwitchExpression expr) {
     for (int i = 0; i < expr.conditions.length; ++i) {
       boolean condition = (boolean) visit(expr.conditions[i]);
       if (condition) {
@@ -262,12 +245,11 @@ public class InterpretingVisitor {
     return result;
   }
 
-  protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
+  protected Object visitParameterExpression(ParameterExpression expr) {
     throw new RuntimeException("Need to bind " + expr.name);
   }
 
-  @Nullable
-  protected Object visitFindModuleExpression(@NotNull FindModuleExpression expr) {
+  protected Object visitFindModuleExpression(FindModuleExpression expr) {
     visit(expr.cdepExplodedRoot);
     visit(expr.targetPlatform);
     visit(expr.systemVersion);
@@ -279,7 +261,7 @@ public class InterpretingVisitor {
     return null;
   }
 
-  @Nullable Object visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
+  Object visitFunctionTableExpression(FunctionTableExpression expr) {
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
       visit(expr.findFunctions.get(coordinate));
     }
@@ -292,7 +274,6 @@ public class InterpretingVisitor {
   private static class AssignmentFuture {
 
     public Expression expr;
-    @Nullable
     public Object value;
     public Frame stack;
 
@@ -309,7 +290,6 @@ public class InterpretingVisitor {
   private static class Frame {
 
     final public Frame prior;
-    @NotNull
     final public Map<AssignmentExpression, AssignmentFuture> assignments;
 
     Frame(Frame prior) {
@@ -317,7 +297,7 @@ public class InterpretingVisitor {
       this.assignments = new HashMap<>();
     }
 
-    AssignmentFuture lookup(@NotNull AssignmentExpression assignment) {
+    AssignmentFuture lookup(AssignmentExpression assignment) {
       AssignmentFuture value = assignments.get(assignment);
       if (value == null) {
         require(prior != null, "Could not resolve '%s", assignment.name);

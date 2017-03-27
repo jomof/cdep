@@ -33,8 +33,6 @@ import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -53,20 +51,16 @@ public class CDep {
 
   final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev21";
   private PrintStream out = System.out;
-  @NotNull
   private File workingFolder = new File(".");
-  @Nullable
   private File downloadFolder = null;
-  @Nullable
   private CDepYml config = null;
-  @Nullable
   private File configFile = null;
 
   CDep(PrintStream out) {
     this.out = out;
   }
 
-  public static int main(@NotNull String[] args)
+  public static int main(String[] args)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     try {
       new CDep(System.out).go(args);
@@ -77,8 +71,9 @@ public class CDep {
     return 0;
   }
 
-  @Nullable
-  private static FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment, @NotNull SoftNameDependency dependencies[]) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private static FunctionTableExpression getFunctionTableExpression(
+      GeneratorEnvironment environment, SoftNameDependency dependencies[])
+      throws IOException, URISyntaxException, NoSuchAlgorithmException {
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     Resolver resolver = new Resolver(environment);
     ResolutionScope scope = resolver.resolveAll(dependencies);
@@ -95,10 +90,10 @@ public class CDep {
    * Return the first string after matching one of the arguments. Argument and strign are removed
    * from the list.
    */
-  @NotNull
   static private List<String> eatStringArgument(
       String shortArgument,
-      String longArgument, @NotNull List<String> args) {
+      String longArgument,
+      List<String> args) {
 
     boolean takeNext = false;
     List<String> result = new ArrayList<>();
@@ -116,7 +111,7 @@ public class CDep {
     return result;
   }
 
-  void go(@NotNull String[] argArray) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  void go(String[] argArray) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     List<String> args = new ArrayList<>();
     for (int i = 0; i < argArray.length; ++i) {
       args.add(argArray[i]);
@@ -158,7 +153,7 @@ public class CDep {
     handleGenerateScript();
   }
 
-  private void runBuilders(GeneratorEnvironment environment, @NotNull FunctionTableExpression table)
+  private void runBuilders(GeneratorEnvironment environment, FunctionTableExpression table)
       throws IOException {
     for (BuildSystem buildSystem : config.builders) {
       switch (buildSystem) {
@@ -174,7 +169,7 @@ public class CDep {
     }
   }
 
-  private boolean handleRedownload(@NotNull List<String> args)
+  private boolean handleRedownload(List<String> args)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "redownload".equals(args.get(0))) {
       GeneratorEnvironment environment = getGeneratorEnvironment(true, false);
@@ -195,7 +190,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleLint(@NotNull List<String> args)
+  private boolean handleLint(List<String> args)
       throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.size() > 0 && "lint".equals(args.get(0))) {
       if (args.size() > 1) {
@@ -220,7 +215,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleCreate(@NotNull List<String> args)
+  private boolean handleCreate(List<String> args)
       throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.size() > 0 && "create".equals(args.get(0))) {
       if (args.size() > 1 && "hashes".equals(args.get(1))) {
@@ -236,7 +231,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleMerge(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
+  private boolean handleMerge(List<String> args) throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "merge".equals(args.get(0))) {
       if (args.size() < 4) {
         out.printf("Usage: cdep merge coordinate1 coordinate2 ... outputmanifest.yml");
@@ -277,7 +272,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleShow(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
+  private boolean handleShow(List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.size() > 0 && "show".equals(args.get(0))) {
       if (args.size() > 1 && "folders".equals(args.get(1))) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
@@ -333,7 +328,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleWrapper(@NotNull List<String> args) throws IOException {
+  private boolean handleWrapper(List<String> args) throws IOException {
     if (args.size() > 0 && "wrapper".equals(args.get(0))) {
       String appname = System.getProperty("io.cdep.appname");
       if (appname == null) {
@@ -375,7 +370,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleFetch(@NotNull List<String> args)
+  private boolean handleFetch(List<String> args)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fetch".equals(args.get(0))) {
       if (args.size() < 2) {
@@ -427,19 +422,25 @@ public class CDep {
     environment.writeCDepSHA256File();
   }
 
-  @Nullable
-  private FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment)
+      throws IOException, URISyntaxException, NoSuchAlgorithmException {
     return getFunctionTableExpression(environment, config.dependencies);
   }
 
-  @Nullable
   private GeneratorEnvironment getGeneratorEnvironment(boolean forceRedownload, boolean ignoreManifestHashes) {
-    return getGeneratorEnvironment(out, forceRedownload, ignoreManifestHashes);
+    return getGeneratorEnvironment(
+        out,
+        forceRedownload,
+        ignoreManifestHashes);
   }
 
-  @Nullable
-  private GeneratorEnvironment getGeneratorEnvironment(PrintStream out, boolean forceRedownload, boolean ignoreManifestHashes) {
-    return new GeneratorEnvironment(out, workingFolder, downloadFolder, forceRedownload, ignoreManifestHashes);
+  private GeneratorEnvironment getGeneratorEnvironment(
+      PrintStream out, boolean forceRedownload, boolean ignoreManifestHashes) {
+    return new GeneratorEnvironment(
+        out,
+        workingFolder,
+        downloadFolder, forceRedownload,
+        ignoreManifestHashes);
   }
 
   private boolean handleReadCDepYml() throws IOException {
@@ -454,7 +455,7 @@ public class CDep {
     return true;
   }
 
-  private boolean handleHelp(@NotNull List<String> args) throws IOException {
+  private boolean handleHelp(List<String> args) throws IOException {
     if (args.size() != 1 || !args.get(0).equals("--help")) {
       return true;
     }
@@ -473,19 +474,19 @@ public class CDep {
     return false;
   }
 
-  private void handleWorkingFolder(@NotNull List<String> args) throws IOException {
+  private void handleWorkingFolder(List<String> args) throws IOException {
     for (String workingFolder : eatStringArgument("-wf", "--working-folder", args)) {
       this.workingFolder = new File(workingFolder);
     }
   }
 
-  private void handleDownloadFolder(@NotNull List<String> args) throws IOException {
+  private void handleDownloadFolder(List<String> args) throws IOException {
     for (String workingFolder : eatStringArgument("-df", "--download-folder", args)) {
       this.workingFolder = new File(workingFolder);
     }
   }
 
-  private boolean handleVersion(@NotNull List<String> args) {
+  private boolean handleVersion(List<String> args) {
     if (args.size() != 1 || !args.get(0).equals("--version")) {
       return true;
     }

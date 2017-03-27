@@ -1,7 +1,5 @@
 package io.cdep.cdep.ast.finder;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.lang.reflect.Method;
 
@@ -34,11 +32,11 @@ public class ExternalFunctionExpression extends Expression {
 
   final public Method method;
 
-  private ExternalFunctionExpression(@NotNull Class clazz, @NotNull String functionName, Class<?>... parameterTypes) {
+  private ExternalFunctionExpression(Class clazz, String functionName, Class<?>... parameterTypes) {
     this.method = getMethod(clazz, functionName, parameterTypes);
   }
 
-  static public File fileJoinSegments(File base, @NotNull String... segments) {
+  static public File fileJoinSegments(File base, String... segments) {
     for (int i = 0; i < segments.length; ++i) {
       base = new File(base, segments[i]);
     }
@@ -49,11 +47,11 @@ public class ExternalFunctionExpression extends Expression {
     return left >= right;
   }
 
-  static public boolean eq(@NotNull String left, String right) {
+  static public boolean eq(String left, String right) {
     return left.equals(right);
   }
 
-  static public boolean hasOnlyElement(@NotNull String array[], @NotNull String value) {
+  static public boolean hasOnlyElement(String array[], String value) {
     if (array.length != 1) {
       return false;
     }

@@ -1,11 +1,9 @@
 package io.cdep.cdep;
 
 import io.cdep.cdep.ast.finder.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class ReadonlyVisitor {
-  protected void visit(@Nullable Expression expr) {
+  protected void visit(Expression expr) {
     if (expr == null) {
       return;
     }
@@ -85,7 +83,7 @@ public class ReadonlyVisitor {
     throw new RuntimeException("ro" + expr.getClass().toString());
   }
 
-  protected void visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
+  protected void visitModuleArchiveExpression(ModuleArchiveExpression expr) {
     visit(expr.includePath);
     visit(expr.libraryPath);
   }
@@ -93,14 +91,14 @@ public class ReadonlyVisitor {
   protected void visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
   }
 
-  protected void visitAssignmentBlockExpression(@NotNull AssignmentBlockExpression expr) {
+  protected void visitAssignmentBlockExpression(AssignmentBlockExpression expr) {
     for (AssignmentExpression assignment : expr.assignments) {
       visit(assignment);
     }
     visit(expr.statement);
   }
 
-  protected void visitArrayExpression(@NotNull ArrayExpression expr) {
+  protected void visitArrayExpression(ArrayExpression expr) {
     visitArray(expr.elements);
   }
 
@@ -113,33 +111,33 @@ public class ReadonlyVisitor {
   protected void visitExampleExpression(ExampleExpression expr) {
   }
 
-  protected void visitAbortExpression(@NotNull AbortExpression expr) {
+  protected void visitAbortExpression(AbortExpression expr) {
     visitArray(expr.parameters);
   }
 
-  protected void visitModuleExpression(@NotNull ModuleExpression expr) {
+  protected void visitModuleExpression(ModuleExpression expr) {
     visit(expr.archive);
   }
 
-  protected void visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
+  protected void visitInvokeFunctionExpression(InvokeFunctionExpression expr) {
     visit(expr.function);
     visitArray(expr.parameters);
   }
 
-  protected void visitArray(@NotNull Expression[] array) {
+  protected void visitArray(Expression[] array) {
     for (int i = 0; i < array.length; ++i) {
       visit(array[i]);
     }
   }
 
-  protected void visitAssignmentExpression(@NotNull AssignmentExpression expr) {
+  protected void visitAssignmentExpression(AssignmentExpression expr) {
     visit(expr.expression);
   }
 
   protected void visitStringExpression(StringExpression expr) {
   }
 
-  protected void visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
+  protected void visitIfSwitchExpression(IfSwitchExpression expr) {
     visitArray(expr.conditions);
     visitArray(expr.expressions);
     visit(expr.elseExpression);
@@ -148,7 +146,7 @@ public class ReadonlyVisitor {
   protected void visitParameterExpression(ParameterExpression expr) {
   }
 
-  protected void visitFindModuleExpression(@NotNull FindModuleExpression expr) {
+  protected void visitFindModuleExpression(FindModuleExpression expr) {
     visit(expr.cdepExplodedRoot);
     visit(expr.targetPlatform);
     visit(expr.systemVersion);
@@ -159,14 +157,14 @@ public class ReadonlyVisitor {
     visit(expr.expression);
   }
 
-  protected void visitMultiStatementExpression(@NotNull MultiStatementExpression expr) {
+  protected void visitMultiStatementExpression(MultiStatementExpression expr) {
     visitArray(expr.statements);
   }
 
   protected void visitNopExpression(NopExpression expr) {
   }
 
-  void visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
+  void visitFunctionTableExpression(FunctionTableExpression expr) {
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
       visit(expr.findFunctions.get(coordinate));
     }
