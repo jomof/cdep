@@ -18,8 +18,6 @@ package io.cdep.cdep.resolver;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,19 +28,19 @@ import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class LocalFilePathCoordinateResolver extends CoordinateResolver {
 
-  @Nullable
-  @Override
-  public ResolvedManifest resolve(ManifestProvider environment, @NotNull SoftNameDependency dependency) throws IOException {
-    String coordinate = dependency.compile;
-    File local = new File(notNull(coordinate));
-    if (!local.isFile()) {
-      return null;
+    @Override
+    public ResolvedManifest resolve(ManifestProvider environment, SoftNameDependency dependency)
+        throws IOException {
+        String coordinate = dependency.compile;
+      File local = new File(notNull(coordinate));
+        if (!local.isFile()) {
+            return null;
+        }
+        String content = new String(Files.readAllBytes(Paths.get(local.getCanonicalPath())));
+        CDepManifestYml cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(content);
+        CDepManifestYmlUtils.checkManifestSanity(cdepManifestYml);
+        return new ResolvedManifest(local.getCanonicalFile().toURI().toURL(), cdepManifestYml);
     }
-    String content = new String(Files.readAllBytes(Paths.get(local.getCanonicalPath())));
-    CDepManifestYml cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(content);
-    CDepManifestYmlUtils.checkManifestSanity(cdepManifestYml);
-    return new ResolvedManifest(local.getCanonicalFile().toURI().toURL(), cdepManifestYml);
-  }
 
 
 }

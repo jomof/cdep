@@ -1,13 +1,8 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
-import org.jetbrains.annotations.Nullable;
-
 public class Archive {
-  @Nullable
   final public String file;
-  @Nullable
   final public String sha256;
-  @Nullable
   final public Long size;
   final public String include;
 

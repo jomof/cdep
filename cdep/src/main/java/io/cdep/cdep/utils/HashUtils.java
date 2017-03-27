@@ -15,8 +15,6 @@
 */
 package io.cdep.cdep.utils;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,7 +27,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class HashUtils {
 
-  private static String encodeHex(@NotNull byte[] digest) {
+    private static String encodeHex(byte[] digest) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < digest.length; i++) {
             sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
@@ -44,7 +42,7 @@ public class HashUtils {
      *
      * command run from bash.
      */
-    public static String getSHA256OfFile(@NotNull File local) throws NoSuchAlgorithmException, IOException {
+    public static String getSHA256OfFile(File local) throws NoSuchAlgorithmException, IOException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         InputStream in = new FileInputStream(local);
         byte[] block = new byte[4096];

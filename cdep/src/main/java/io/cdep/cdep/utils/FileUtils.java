@@ -15,15 +15,18 @@
 */
 package io.cdep.cdep.utils;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class FileUtils {
-  public static void copyFile(@NotNull File sourceFile, @NotNull File destFile) throws IOException {
+    public static void copyFile(File sourceFile, File destFile) throws IOException {
         if(!destFile.exists()) {
             //noinspection ResultOfMethodCallIgnored
             destFile.createNewFile();
@@ -47,13 +50,12 @@ public class FileUtils {
         }
     }
 
-  @NotNull
-  public static String readAllText(@NotNull File file) throws IOException {
+    public static String readAllText(File file) throws IOException {
         return new String(Files.readAllBytes(
                 Paths.get(file.getCanonicalPath())));
     }
 
-  public static void writeTextToFile(@NotNull File file, @NotNull String body) throws IOException {
+    public static void writeTextToFile(File file, String body) throws IOException {
 
         BufferedWriter writer = null;
         //noinspection ResultOfMethodCallIgnored

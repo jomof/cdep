@@ -7,8 +7,6 @@ import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,8 +22,7 @@ public class EnvironmentUtils {
    * Returns the package level archive's include folder. Will throw an exception if there was no package level
    * archive.
    */
-  @NotNull
-  public static File getPackageLevelIncludeFolder(@NotNull GeneratorEnvironment environment, String coordinate)
+  public static File getPackageLevelIncludeFolder(GeneratorEnvironment environment, String coordinate)
       throws IOException, NoSuchAlgorithmException, URISyntaxException {
     ResolvedManifest resolved = resolveManifest(environment, coordinate);
     return getPackageLevelIncludeFolder(environment, coordinate, resolved);
@@ -35,9 +32,10 @@ public class EnvironmentUtils {
    * Returns the package level archive's include folder. Will throw an exception if there was no package level
    * archive.
    */
-  @NotNull
-  static File getPackageLevelIncludeFolder(@NotNull GeneratorEnvironment environment,
-      String coordinate, @NotNull ResolvedManifest resolved) throws URISyntaxException, MalformedURLException {
+  static File getPackageLevelIncludeFolder(
+      GeneratorEnvironment environment,
+      String coordinate,
+      ResolvedManifest resolved) throws URISyntaxException, MalformedURLException {
     CDepManifestYml manifest = resolved.cdepManifestYml;
     Archive archive = manifest.archive;
     require(archive != null, "'%s' does not have archive", coordinate);
@@ -55,7 +53,6 @@ public class EnvironmentUtils {
   /**
    * Return the resolved manifest or throw an exception.
    */
-  @Nullable
   public static ResolvedManifest resolveManifest(GeneratorEnvironment environment, String coordinate)
       throws IOException, NoSuchAlgorithmException {
     SoftNameDependency name = new SoftNameDependency(coordinate);

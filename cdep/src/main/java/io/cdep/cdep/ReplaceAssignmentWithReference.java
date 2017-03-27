@@ -3,7 +3,6 @@ package io.cdep.cdep;
 
 import io.cdep.cdep.ast.finder.AssignmentExpression;
 import io.cdep.cdep.ast.finder.Expression;
-import org.jetbrains.annotations.NotNull;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.assign;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.reference;
@@ -14,9 +13,8 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.reference;
  */
 public class ReplaceAssignmentWithReference extends RewritingVisitor {
 
-  @NotNull
   @Override
-  protected Expression visitAssignmentExpression(@NotNull AssignmentExpression expr) {
+  protected Expression visitAssignmentExpression(AssignmentExpression expr) {
     Expression expression = visit(expr.expression);
     AssignmentExpression assignment = assign(expr.name, expression);
     return reference(assignment);

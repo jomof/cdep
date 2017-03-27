@@ -16,7 +16,6 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.cdep.Coordinate;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,7 +25,7 @@ import static java.util.regex.Pattern.compile;
 public class CoordinateUtils {
     final private static Pattern pattern = compile("^(.*):(.*):(.*)$");
 
-  public static Coordinate tryParse(@NotNull String value) {
+    public static Coordinate tryParse(String value) {
         Matcher match = pattern.matcher(value);
         if (!match.find()) {
             return null;

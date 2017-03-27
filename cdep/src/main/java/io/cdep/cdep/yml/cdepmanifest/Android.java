@@ -16,13 +16,9 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
 
-import org.jetbrains.annotations.Nullable;
-
 @SuppressWarnings("unused")
 public class Android {
-  @Nullable
   final public HardNameDependency dependencies[];
-  @Nullable
   final public AndroidArchive archives[];
 
   Android() {
