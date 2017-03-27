@@ -98,7 +98,7 @@ public class CMakeGenerator {
           .replace("{appenderFunctionName}", appenderFunctionName));
 
       append("  # Choose between Android NDK Toolchain and CMake Android Toolchain\n" +
-          "  if(DEFINED CMAKE_ANDROID_ARCH_ABI)\n" +
+          "  if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" +
           "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" +
           "    set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n" +
           "  else()\n" +
@@ -135,7 +135,7 @@ public class CMakeGenerator {
       append("%sendif()\n", prefix);
       return;
     } else if (expression instanceof AssignmentExpression) {
-      generateAssignments(prefix, signature, expression, sb, null);
+      generateAssignments(prefix, signature, expression, null);
       return;
     } else if (expression instanceof InvokeFunctionExpression) {
       InvokeFunctionExpression specific = (InvokeFunctionExpression) expression;
@@ -197,16 +197,14 @@ public class CMakeGenerator {
         append("%starget_include_directories(${target} PRIVATE ", prefix);
         generateFindAppender(specific.archive.includePath);
         append(")\n");
-        append("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix,
-            specific.archive.include);
+        append("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix, specific.archive.include);
       }
 
       if (specific.archive.libraryPath != null) {
         append("%starget_link_libraries(${target} ", prefix);
         generateFindAppender(specific.archive.libraryPath);
         append(")\n");
-        append("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n",
-            prefix, specific.archive.library);
+        append("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n", prefix, specific.archive.library);
       }
       return;
     } else if (expression instanceof AbortExpression) {
@@ -286,18 +284,17 @@ public class CMakeGenerator {
     throw new RuntimeException(expr.name);
   }
 
-  private Object generateAssignments(String prefix, FindModuleExpression signature, Expression expr,
-                                     StringBuilder sb, String assignResult) {
+  private Object generateAssignments(String prefix, FindModuleExpression signature, Expression expr, String assignResult) {
     if (expr instanceof AssignmentExpression) {
       AssignmentExpression specific = (AssignmentExpression) expr;
       String identifier = specific.name;
-      generateAssignments(prefix, signature, specific.expression, sb, identifier);
+      generateAssignments(prefix, signature, specific.expression, identifier);
       return null;
     } else if (expr instanceof InvokeFunctionExpression) {
       InvokeFunctionExpression specific = (InvokeFunctionExpression) expr;
       Object values[] = new Object[specific.parameters.length];
       for (int i = 0; i < specific.parameters.length; ++i) {
-        Object value = generateAssignments(prefix, signature, specific.parameters[i], sb, null);
+        Object value = generateAssignments(prefix, signature, specific.parameters[i], null);
         if (values == null) {
           throw new RuntimeException(specific.parameters[i].getClass().toString());
         }
