@@ -15,6 +15,7 @@
 */
 package io.cdep.cdep.generator;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.Expression;
 import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
@@ -41,8 +42,8 @@ public class GeneratorEnvironmentUtils {
   /**
    * Given a function table and generator environment, download all of the files referenced.
    */
-  public static void downloadReferencedModules(
-      GeneratorEnvironment environment, Map<Coordinate, List<Expression>> foundModules) throws IOException, NoSuchAlgorithmException {
+  public static void downloadReferencedModules(@org.jetbrains.annotations.NotNull @NotNull GeneratorEnvironment environment, @org.jetbrains.annotations
+      .NotNull @NotNull Map<Coordinate, List<Expression>> foundModules) throws IOException, NoSuchAlgorithmException {
 
     Set<File> alreadyExploded = new HashSet<>();
 

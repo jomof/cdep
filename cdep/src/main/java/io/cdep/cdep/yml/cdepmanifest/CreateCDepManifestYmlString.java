@@ -1,5 +1,7 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.utils.StringUtils;
 
 import static io.cdep.cdep.utils.Invariant.notNull;
@@ -8,16 +10,18 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   private int indent = 0;
   private int eatIndent = 0;
+  @org.jetbrains.annotations.NotNull
+  @NotNull
   private StringBuilder sb = new StringBuilder();
 
-  public static String create(Object node) {
+  public static String create(@org.jetbrains.annotations.NotNull @NotNull Object node) {
     CreateCDepManifestYmlString thiz = new CreateCDepManifestYmlString();
     thiz.visitPlainOldDataObject(null, node);
     return thiz.sb.toString();
   }
 
   @Override
-  public void visitPlainOldDataObject(String name, Object value) {
+  public void visitPlainOldDataObject(@Nullable String name, @org.jetbrains.annotations.NotNull @NotNull Object value) {
     if (name == null) {
       super.visitPlainOldDataObject(null, value);
       return;
@@ -39,7 +43,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitString(String name, String value) {
+  public void visitString(String name, @org.jetbrains.annotations.NotNull @NotNull String value) {
     notNull(value);
     notNull(name);
     if (!value.contains("\n")) {
@@ -73,7 +77,8 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitArray(String name, Object[] array, Class<?> elementType) {
+  public void visitArray(String name, @org.jetbrains.annotations.NotNull @NotNull Object[] array, @org.jetbrains.annotations.NotNull @NotNull Class<?>
+      elementType) {
     appendIndented("%s:\r\n", name);
     ++indent;
     for (int i = 0; i < array.length; ++i) {
@@ -85,7 +90,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
     --indent;
   }
 
-  private void append(String format, Object... parms) {
+  private void append(@org.jetbrains.annotations.NotNull @NotNull String format, Object... parms) {
     sb.append(String.format(format, parms));
   }
 

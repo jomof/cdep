@@ -1,11 +1,15 @@
 package io.cdep.cdep.ast.finder;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.net.URL;
 
 import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class ModuleArchiveExpression extends Expression {
+  @Nullable
   final public URL file; // The zip file.
+  @Nullable
   final public String sha256;
   final public Long size;
   final public String include;

@@ -1,5 +1,6 @@
 package io.cdep.cdep;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class TestInterpretingVisitor {
         FunctionTableExpression function = builder.build();
         new InterpretingVisitor() {
           @Override
-          protected Object visitParameterExpression(ParameterExpression expr) {
+          protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
             if ("cdep_exploded_root".equals(expr.name)) {
               return "exploded/root";
             }
@@ -110,7 +111,7 @@ public class TestInterpretingVisitor {
         FunctionTableExpression function = builder.build();
         new InterpretingVisitor() {
           @Override
-          protected Object visitParameterExpression(ParameterExpression expr) {
+          protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
             if ("cdep_exploded_root".equals(expr.name)) {
               return "exploded/root";
             }
@@ -172,7 +173,7 @@ public class TestInterpretingVisitor {
         FunctionTableExpression function = builder.build();
         new InterpretingVisitor() {
           @Override
-          protected Object visitParameterExpression(ParameterExpression expr) {
+          protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
             if ("cdep_exploded_root".equals(expr.name)) {
               return "exploded/root";
             }

@@ -15,6 +15,8 @@
 */
 package io.cdep.cdep;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
 import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
@@ -27,19 +29,14 @@ import static io.cdep.cdep.utils.Invariant.require;
 
 class FindModuleInterpreter {
 
+  @Nullable
   @SuppressWarnings("SameParameterValue")
-  static ModuleArchive findAndroid(
-      FunctionTableExpression table,
-      Coordinate functionName,
-      final String cdepExplodedRoot,
-      final String targetPlatform,
-      final String systemVersion, // On android, platform like 21
-      final String androidStlType,
-      final String androidTargetAbi) throws InvocationTargetException, IllegalAccessException {
+  static ModuleArchive findAndroid(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot, final String targetPlatform, final String systemVersion, // On android, platform like 21
+      final String androidStlType, final String androidTargetAbi) throws InvocationTargetException, IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
-      protected Object visitParameterExpression(ParameterExpression expr) {
+      protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
         if (expr == function.targetPlatform) {
           return targetPlatform;
         }
@@ -60,17 +57,12 @@ class FindModuleInterpreter {
     }.visit(function.expression));
   }
 
-  static ModuleArchive findiOS(
-      FunctionTableExpression table,
-      Coordinate functionName,
-      final String cdepExplodedRoot,
-      final String targetPlatform,
-      final String osxArchitectures[],
-      final String osxSysroot) throws InvocationTargetException, IllegalAccessException {
+  @Nullable
+  static ModuleArchive findiOS(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot, final String targetPlatform, final String osxArchitectures[], final String osxSysroot) throws InvocationTargetException, IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
-      protected Object visitParameterExpression(ParameterExpression expr) {
+      protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
         if (expr == function.targetPlatform) {
           return targetPlatform;
         }
@@ -88,6 +80,7 @@ class FindModuleInterpreter {
     }.visit(function.expression));
   }
 
+  @Nullable
   private static ModuleArchive toModuleArchive(Object value) {
     if (value instanceof ModuleArchive) {
       return (ModuleArchive) value;
@@ -108,15 +101,12 @@ class FindModuleInterpreter {
     throw new RuntimeException(value.getClass().toString());
   }
 
-  static ModuleArchive findLinux(
-      FunctionTableExpression table,
-      Coordinate functionName,
-      final String cdepExplodedRoot,
-      final String targetPlatform) throws InvocationTargetException, IllegalAccessException {
+  @Nullable
+  static ModuleArchive findLinux(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot, final String targetPlatform) throws InvocationTargetException, IllegalAccessException {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
-      protected Object visitParameterExpression(ParameterExpression expr) {
+      protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
         if (expr == function.targetPlatform) {
           return targetPlatform;
         }

@@ -15,6 +15,8 @@
 */
 package io.cdep.cdep.resolver;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 
 import java.io.IOException;
@@ -30,30 +32,25 @@ public class GithubReleasesCoordinateResolver extends CoordinateResolver {
     final private Pattern pattern = compile("^com\\.github\\.(.*):(.*):(.*)$");
     final private GithubStyleUrlCoordinateResolver urlResolver = new GithubStyleUrlCoordinateResolver();
 
-    @Override
-    public ResolvedManifest resolve(ManifestProvider environment,
-        SoftNameDependency dependency)
-        throws IOException, NoSuchAlgorithmException {
-        String coordinate = dependency.compile;
-      Matcher match = pattern.matcher(notNull(coordinate));
-        if (match.find()) {
-            String user = match.group(1);
-            String artifactId = match.group(2);
-            String version = match.group(3);
-            String subArtifact = "";
-            if (artifactId.contains("/")) {
-                int pos = artifactId.indexOf("/");
-                subArtifact = "-" + artifactId.substring(pos + 1);
-                artifactId = artifactId.substring(0, pos);
-            }
-            String manifest = String.format(
-                "https://github.com/%s/%s/releases/download/%s/cdep-manifest%s.yml",
-                user,
-                artifactId,
-                version,
-                subArtifact);
-            return urlResolver.resolve(environment, new SoftNameDependency(manifest));
-        }
-        return null;
+  @Nullable
+  @Override
+  public ResolvedManifest resolve(@org.jetbrains.annotations.NotNull ManifestProvider environment, @org.jetbrains.annotations.NotNull @NotNull
+      SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException {
+    String coordinate = dependency.compile;
+    Matcher match = pattern.matcher(notNull(coordinate));
+    if (match.find()) {
+      String user = match.group(1);
+      String artifactId = match.group(2);
+      String version = match.group(3);
+      String subArtifact = "";
+      if (artifactId.contains("/")) {
+        int pos = artifactId.indexOf("/");
+        subArtifact = "-" + artifactId.substring(pos + 1);
+        artifactId = artifactId.substring(0, pos);
+      }
+      String manifest = String.format("https://github.com/%s/%s/releases/download/%s/cdep-manifest%s.yml", user, artifactId, version, subArtifact);
+      return urlResolver.resolve(environment, new SoftNameDependency(manifest));
     }
+    return null;
+  }
 }

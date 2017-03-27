@@ -1,5 +1,7 @@
 package io.cdep.cdep;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.ast.finder.*;
 
 import java.io.File;
@@ -17,9 +19,11 @@ import static io.cdep.cdep.utils.ReflectionUtils.invoke;
  */
 public class InterpretingVisitor {
 
+  @Nullable
   private Frame stack = null;
 
-  private static Object coerce(Object o, Class<?> clazz) {
+  @Nullable
+  private static Object coerce(@Nullable Object o, @org.jetbrains.annotations.NotNull @NotNull Class<?> clazz) {
     if (o == null) {
       return null;
     }
@@ -71,7 +75,8 @@ public class InterpretingVisitor {
     return null;
   }
 
-  public Object visit(Expression expr) {
+  @Nullable
+  public Object visit(@Nullable Expression expr) {
     if (expr == null) {
       return null;
     }
@@ -133,13 +138,16 @@ public class InterpretingVisitor {
     throw new RuntimeException(expr.getClass().toString());
   }
 
-  protected ModuleArchive visitModuleArchiveExpression(ModuleArchiveExpression expr) {
+  @org.jetbrains.annotations.Nullable
+  @Nullable
+  protected ModuleArchive visitModuleArchiveExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleArchiveExpression expr) {
     Object fullIncludePath = visit(expr.includePath);
     Object fullLibraryName = visit(expr.libraryPath);
     return new ModuleArchive(expr.file, (File) fullIncludePath, (File) fullLibraryName);
   }
 
-  protected Object visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
+  @Nullable
+  protected Object visitAssignmentReferenceExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentReferenceExpression expr) {
     notNull(stack);
     AssignmentFuture future = stack.lookup(expr.assignment);
     if (future.value == null) {
@@ -152,7 +160,8 @@ public class InterpretingVisitor {
     return future.value;
   }
 
-  protected Object visitAssignmentBlockExpression(AssignmentBlockExpression expr) {
+  @Nullable
+  protected Object visitAssignmentBlockExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentBlockExpression expr) {
     stack = new Frame(stack);
     for (AssignmentExpression assignment : expr.assignments) {
       visitAssignmentExpression(assignment);
@@ -163,33 +172,41 @@ public class InterpretingVisitor {
     return result;
   }
 
-  protected Object visitMultiStatementExpression(MultiStatementExpression expr) {
+  @org.jetbrains.annotations.NotNull
+  @NotNull
+  protected Object visitMultiStatementExpression(@org.jetbrains.annotations.NotNull @NotNull MultiStatementExpression expr) {
     return visitArray(expr.statements);
   }
 
-  protected Object visitArrayExpression(ArrayExpression expr) {
+  @org.jetbrains.annotations.NotNull
+  @NotNull
+  protected Object visitArrayExpression(@org.jetbrains.annotations.NotNull @NotNull ArrayExpression expr) {
     return visitArray(expr.elements);
   }
 
-  protected Object visitIntegerExpression(IntegerExpression expr) {
+  protected Object visitIntegerExpression(@org.jetbrains.annotations.NotNull @NotNull IntegerExpression expr) {
     return expr.value;
   }
 
-  protected Method visitExternalFunctionExpression(ExternalFunctionExpression expr) {
+  protected Method visitExternalFunctionExpression(@org.jetbrains.annotations.NotNull @NotNull ExternalFunctionExpression expr) {
     return expr.method;
   }
 
+  @Nullable
   protected Object visitExampleExpression(ExampleExpression expr) {
     return null;
   }
 
-  protected Object visitAbortExpression(AbortExpression expr) {
+  @org.jetbrains.annotations.Nullable
+  @Nullable
+  protected Object visitAbortExpression(@org.jetbrains.annotations.NotNull @NotNull AbortExpression expr) {
     Object parameters[] = (Object[]) coerce(visitArray(expr.parameters), String[].class);
     fail(expr.message, parameters);
     return null;
   }
 
-  protected ModuleArchive visitModuleExpression(ModuleExpression expr) {
+  @Nullable
+  protected ModuleArchive visitModuleExpression(@org.jetbrains.annotations.NotNull @NotNull ModuleExpression expr) {
     return (ModuleArchive) visit(expr.archive);
   }
 
@@ -197,7 +214,7 @@ public class InterpretingVisitor {
     return expr;
   }
 
-  protected Object visitInvokeFunctionExpression(InvokeFunctionExpression expr) {
+  protected Object visitInvokeFunctionExpression(@org.jetbrains.annotations.NotNull @NotNull InvokeFunctionExpression expr) {
     Method method = visitExternalFunctionExpression(expr.function);
     Object parameters[] = visitArray(expr.parameters);
 
@@ -214,7 +231,9 @@ public class InterpretingVisitor {
     return invoke(method, thiz, parms);
   }
 
-  protected Object[] visitArray(Expression[] array) {
+  @org.jetbrains.annotations.NotNull
+  @NotNull
+  protected Object[] visitArray(@org.jetbrains.annotations.NotNull @NotNull Expression[] array) {
     Object result[] = new Object[array.length];
     for (int i = 0; i < array.length; ++i) {
       result[i] = visit(array[i]);
@@ -222,16 +241,20 @@ public class InterpretingVisitor {
     return result;
   }
 
-  protected Object visitAssignmentExpression(AssignmentExpression expr) {
+  @Nullable
+  protected Object visitAssignmentExpression(@org.jetbrains.annotations.NotNull @NotNull AssignmentExpression expr) {
     stack.assignments.put(expr, new AssignmentFuture(stack, expr.expression));
     return null;
   }
 
-  protected String visitStringExpression(StringExpression expr) {
+  @org.jetbrains.annotations.Nullable
+  protected String visitStringExpression(@org.jetbrains.annotations.NotNull @NotNull StringExpression expr) {
     return expr.value;
   }
 
-  protected Object visitIfSwitchExpression(IfSwitchExpression expr) {
+  @org.jetbrains.annotations.Nullable
+  @Nullable
+  protected Object visitIfSwitchExpression(@org.jetbrains.annotations.NotNull @NotNull IfSwitchExpression expr) {
     for (int i = 0; i < expr.conditions.length; ++i) {
       boolean condition = (boolean) visit(expr.conditions[i]);
       if (condition) {
@@ -245,11 +268,13 @@ public class InterpretingVisitor {
     return result;
   }
 
-  protected Object visitParameterExpression(ParameterExpression expr) {
+  protected Object visitParameterExpression(@org.jetbrains.annotations.NotNull @NotNull ParameterExpression expr) {
     throw new RuntimeException("Need to bind " + expr.name);
   }
 
-  protected Object visitFindModuleExpression(FindModuleExpression expr) {
+  @org.jetbrains.annotations.Nullable
+  @Nullable
+  protected Object visitFindModuleExpression(@org.jetbrains.annotations.NotNull @NotNull FindModuleExpression expr) {
     visit(expr.cdepExplodedRoot);
     visit(expr.targetPlatform);
     visit(expr.systemVersion);
@@ -261,7 +286,7 @@ public class InterpretingVisitor {
     return null;
   }
 
-  Object visitFunctionTableExpression(FunctionTableExpression expr) {
+  @Nullable Object visitFunctionTableExpression(@org.jetbrains.annotations.NotNull @NotNull FunctionTableExpression expr) {
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
       visit(expr.findFunctions.get(coordinate));
     }
@@ -274,6 +299,7 @@ public class InterpretingVisitor {
   private static class AssignmentFuture {
 
     public Expression expr;
+    @Nullable
     public Object value;
     public Frame stack;
 
@@ -290,6 +316,8 @@ public class InterpretingVisitor {
   private static class Frame {
 
     final public Frame prior;
+    @org.jetbrains.annotations.NotNull
+    @NotNull
     final public Map<AssignmentExpression, AssignmentFuture> assignments;
 
     Frame(Frame prior) {
@@ -297,7 +325,7 @@ public class InterpretingVisitor {
       this.assignments = new HashMap<>();
     }
 
-    AssignmentFuture lookup(AssignmentExpression assignment) {
+    AssignmentFuture lookup(@org.jetbrains.annotations.NotNull @NotNull AssignmentExpression assignment) {
       AssignmentFuture value = assignments.get(assignment);
       if (value == null) {
         require(prior != null, "Could not resolve '%s", assignment.name);

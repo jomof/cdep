@@ -15,16 +15,20 @@
 */
 package io.cdep.cdep.ast.finder;
 
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.CreateStringVisitor;
 
 public class Expression {
-    private String string = null;
+  @Nullable
+  private String string = null;
 
-    @Override
-    public String toString() {
-        if (string == null) {
-          string = getClass() + ": " + CreateStringVisitor.convert(this);
-        }
-        return string;
+  @org.jetbrains.annotations.Nullable
+  @Nullable
+  @Override
+  public String toString() {
+    if (string == null) {
+      string = getClass() + ": " + CreateStringVisitor.convert(this);
     }
+    return string;
+  }
 }

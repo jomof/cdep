@@ -15,6 +15,8 @@
 */
 package io.cdep.cdep.utils;
 
+import io.cdep.annotations.NotNull;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,7 +30,7 @@ public class ArchiveUtils {
     /*
      * Unzip the given file.
      */
-    public static void unzip(File localArchive, File localUnzipFolder) throws IOException {
+    public static void unzip(@org.jetbrains.annotations.NotNull @NotNull File localArchive, File localUnzipFolder) throws IOException {
         ZipFile zipFile = new ZipFile(localArchive.getPath());
         Enumeration<?> enu = zipFile.entries();
         while (enu.hasMoreElements()) {

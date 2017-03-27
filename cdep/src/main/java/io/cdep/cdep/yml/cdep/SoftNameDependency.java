@@ -15,8 +15,12 @@
 */
 package io.cdep.cdep.yml.cdep;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
+
 @SuppressWarnings("unused")
 public class SoftNameDependency {
+  @Nullable
   final public String compile;
 
   public SoftNameDependency() {
@@ -27,6 +31,8 @@ public class SoftNameDependency {
     this.compile = compile;
   }
 
+  @org.jetbrains.annotations.NotNull
+  @NotNull
   public String toYaml(int indent) {
     String firstPrefix = new String(new char[(indent - 1) * 2]).replace('\0', ' ');
     String nextPrefix = new String(new char[indent * 2]).replace('\0', ' ');
@@ -37,6 +43,8 @@ public class SoftNameDependency {
     return sb.toString();
   }
 
+  @org.jetbrains.annotations.NotNull
+  @NotNull
   @Override
   public String toString() {
     return toYaml(1);

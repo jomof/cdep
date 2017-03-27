@@ -16,6 +16,8 @@
 package io.cdep.cdep.generator;
 
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.resolver.DownloadProvider;
 import io.cdep.cdep.resolver.ManifestProvider;
@@ -42,9 +44,17 @@ import static io.cdep.cdep.utils.Invariant.*;
 public class GeneratorEnvironment implements ManifestProvider, DownloadProvider {
 
   final public PrintStream out;
+  @org.jetbrains.annotations.NotNull
+  @NotNull
   final public File downloadFolder;
+  @org.jetbrains.annotations.NotNull
+  @NotNull
   final public File unzippedArchivesFolder;
+  @org.jetbrains.annotations.NotNull
+  @NotNull
   final public File modulesFolder;
+  @org.jetbrains.annotations.NotNull
+  @NotNull
   final public File examplesFolder;
   final public File workingFolder;
   final public Map<String, String> cdepSha256Hashes = new HashMap<>();
@@ -52,7 +62,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   final public boolean forceRedownload;
   final public Set<File> alreadyDownloaded = new HashSet<>();
 
-  public GeneratorEnvironment(PrintStream out, File workingFolder, File userFolder, boolean forceRedownload, boolean
+  public GeneratorEnvironment(PrintStream out, File workingFolder, @Nullable File userFolder, boolean forceRedownload, boolean
       ignoreManifestHashes) {
     if (userFolder == null) {
       userFolder = new File(System.getProperty("user.home"));
@@ -67,7 +77,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     this.forceRedownload = forceRedownload;
   }
 
-  private static InputStream tryGetUrlInputStream(URL url) throws IOException {
+  private static InputStream tryGetUrlInputStream(@org.jetbrains.annotations.NotNull @NotNull URL url) throws IOException {
     URLConnection con = url.openConnection();
     con.connect();
     try {
@@ -79,7 +89,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     }
   }
 
-  private static void copyInputStreamToLocalFile(InputStream input, File localFile) throws IOException {
+  private static void copyInputStreamToLocalFile(@org.jetbrains.annotations.NotNull @NotNull InputStream input, @org.jetbrains.annotations.NotNull @NotNull
+      File localFile) throws IOException {
     byte[] buffer = new byte[4096];
     int n;
 
@@ -90,6 +101,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     output.close();
   }
 
+  @org.jetbrains.annotations.Nullable
+  @NotNull
   public File getLocalDownloadFilename(Coordinate coordinate, URL remoteArchive) {
     coordinate = notNull(coordinate);
     remoteArchive = notNull(remoteArchive);
@@ -101,7 +114,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     return local;
   }
 
-  public File tryGetLocalDownloadedFile(Coordinate coordinate, URL remoteArchive) throws IOException {
+  @Nullable
+  public File tryGetLocalDownloadedFile(Coordinate coordinate, @org.jetbrains.annotations.NotNull @NotNull URL remoteArchive) throws IOException {
     File local = getLocalDownloadFilename(notNull(coordinate), notNull(remoteArchive));
 
     if (local.isFile() && !forceRedownload) {
@@ -141,7 +155,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     return local;
   }
 
-  public CDepManifestYml tryGetManifest(Coordinate coordinate, URL remoteArchive) throws IOException,
+  @Nullable
+  public CDepManifestYml tryGetManifest(Coordinate coordinate, @org.jetbrains.annotations.NotNull @NotNull URL remoteArchive) throws IOException,
       NoSuchAlgorithmException {
     File file = tryGetLocalDownloadedFile(coordinate, remoteArchive);
     if (file == null) {
@@ -165,7 +180,9 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     return cdepManifestYml;
   }
 
-  public File getLocalUnzipFolder(Coordinate coordinate, URL remoteArchive) {
+  @org.jetbrains.annotations.Nullable
+  @NotNull
+  public File getLocalUnzipFolder(@org.jetbrains.annotations.NotNull @NotNull Coordinate coordinate, @org.jetbrains.annotations.NotNull @NotNull URL remoteArchive) {
     File local = unzippedArchivesFolder;
     local = new File(local, coordinate.groupId);
     local = new File(local, coordinate.artifactId);
@@ -208,7 +225,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     }
   }
 
-  private String getUrlBaseName(URL url) {
+  private String getUrlBaseName(@org.jetbrains.annotations.NotNull @NotNull URL url) {
     String urlString = url.getFile();
     return urlString.substring(urlString.lastIndexOf('/') + 1, urlString.length());
   }

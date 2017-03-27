@@ -1,5 +1,8 @@
 package io.cdep.cdep.utils;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
+
 import java.util.Collection;
 
 /**
@@ -7,11 +10,11 @@ import java.util.Collection;
  */
 abstract public class Invariant {
 
-  public static void fail(String format, Object... parameters) {
+  public static void fail(@org.jetbrains.annotations.NotNull @NotNull String format, Object... parameters) {
     throw new RuntimeException(String.format(format, parameters));
   }
 
-  public static void require(boolean check, String format, Object... parameters) {
+  public static void require(boolean check, @org.jetbrains.annotations.NotNull @NotNull String format, Object... parameters) {
     if (check) {
       return;
     }
@@ -24,14 +27,16 @@ abstract public class Invariant {
     }
   }
 
-  public static <T> T notNull(T obj) {
+  @NotNull
+  public static <T> T notNull(@Nullable T obj) {
     if (obj == null) {
       throw new RuntimeException("Invariant violation. Value was null.");
     }
     return obj;
   }
 
-  public static <T> T[] elementsNotNull(T[] array) {
+  @NotNull
+  public static <T> T[] elementsNotNull(@org.jetbrains.annotations.NotNull @NotNull T[] array) {
     notNull(array);
     for (T t : array) {
       notNull(t);
@@ -39,7 +44,8 @@ abstract public class Invariant {
     return array;
   }
 
-  public static <T extends Collection> T elementsNotNull(T collection) {
+  @NotNull
+  public static <T extends Collection> T elementsNotNull(@org.jetbrains.annotations.NotNull @NotNull T collection) {
     notNull(collection);
     for (Object t : collection) {
       notNull(t);

@@ -1,5 +1,6 @@
 package io.cdep.cdep.utils;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
@@ -347,7 +348,7 @@ public class TestCDepManifestYmlUtils {
         "      size: 192\n");
   }
 
-  private void check(String content) {
+  private void check(@NotNull String content) {
     CDepManifestYml manifest = CDepManifestYmlUtils.convertStringToManifest(content);
     CDepManifestYmlUtils.checkManifestSanity(manifest);
   }

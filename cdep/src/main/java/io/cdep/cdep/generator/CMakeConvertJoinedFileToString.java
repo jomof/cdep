@@ -1,7 +1,9 @@
 package io.cdep.cdep.generator;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.cdep.RewritingVisitor;
 import io.cdep.cdep.ast.finder.*;
+import org.jetbrains.annotations.Nullable;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
 
@@ -10,7 +12,7 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
  */
 public class CMakeConvertJoinedFileToString extends RewritingVisitor {
     @Override
-    protected Expression visitInvokeFunctionExpression(InvokeFunctionExpression expr) {
+    protected Expression visitInvokeFunctionExpression(@org.jetbrains.annotations.NotNull @NotNull InvokeFunctionExpression expr) {
         if (expr.function == ExternalFunctionExpression.FILE_JOIN_SEGMENTS) {
             String value = getUnquotedConcatenation(expr.parameters[0], "/");
             value += "/";
@@ -30,6 +32,7 @@ public class CMakeConvertJoinedFileToString extends RewritingVisitor {
      * If a string the return xyz without quotes.
      * If an assignment reference then return ${xyz}.
      */
+    @Nullable
     private String getUnquotedConcatenation(Expression expr, String joinOn) {
         if (expr instanceof StringExpression) {
             return ((StringExpression) expr).value;

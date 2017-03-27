@@ -1,6 +1,8 @@
 package io.cdep.cdep.resolver;
 
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.resolver.ResolutionScope.Resolution;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
@@ -39,7 +41,9 @@ public class Resolver {
    *
    * @param roots the root References
    */
-  public ResolutionScope resolveAll(SoftNameDependency[] roots) throws IOException, NoSuchAlgorithmException {
+  @org.jetbrains.annotations.NotNull
+  @NotNull
+  public ResolutionScope resolveAll(@org.jetbrains.annotations.NotNull SoftNameDependency[] roots) throws IOException, NoSuchAlgorithmException {
     ResolutionScope scope = new ResolutionScope(roots);
     // Progressively resolve dependencies
     while (!scope.isResolutionComplete()) {
@@ -76,7 +80,8 @@ public class Resolver {
    * @throws IOException
    * @throws NoSuchAlgorithmException
    */
-  public ResolvedManifest resolveAny(SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException {
+  @Nullable
+  public ResolvedManifest resolveAny(@org.jetbrains.annotations.NotNull @NotNull SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException {
     ResolvedManifest resolved = null;
     for (CoordinateResolver resolver : resolvers) {
       ResolvedManifest attempt = resolver.resolve(manifestProvider, dependency);

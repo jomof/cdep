@@ -15,6 +15,8 @@
 */
 package io.cdep.cdep.utils;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.*;
 import org.yaml.snakeyaml.Yaml;
@@ -32,7 +34,9 @@ import static io.cdep.cdep.utils.Invariant.require;
 
 public class CDepManifestYmlUtils {
 
-  public static CDepManifestYml convertStringToManifest(String content) {
+  @org.jetbrains.annotations.NotNull
+  @NotNull
+  public static CDepManifestYml convertStringToManifest(@org.jetbrains.annotations.NotNull @NotNull String content) {
     Yaml yaml = new Yaml(new Constructor(CDepManifestYml.class));
     CDepManifestYml dependencyConfig = (CDepManifestYml) yaml.load(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
     require(dependencyConfig != null, "Manifest was empty");
@@ -43,7 +47,9 @@ public class CDepManifestYmlUtils {
     new Checker().visit(cdepManifestYml, CDepManifestYml.class);
   }
 
-  public static List<HardNameDependency> getTransitiveDependencies(CDepManifestYml cdepManifestYml) {
+  @org.jetbrains.annotations.NotNull
+  @NotNull
+  public static List<HardNameDependency> getTransitiveDependencies(@org.jetbrains.annotations.NotNull @NotNull CDepManifestYml cdepManifestYml) {
     List<HardNameDependency> dependencies = new ArrayList<>();
     if (cdepManifestYml.dependencies != null) {
       for (HardNameDependency dependency : cdepManifestYml.dependencies) {
@@ -54,11 +60,14 @@ public class CDepManifestYmlUtils {
   }
 
   public static class Checker extends CDepManifestYmlReadonlyVisitor {
+    @Nullable
     private Coordinate coordinate = null;
+    @org.jetbrains.annotations.NotNull
+    @NotNull
     private Set<String> filesSeen = new HashSet<>();
 
     @Override
-    public void visitString(String name, String node) {
+    public void visitString(@Nullable String name, @org.jetbrains.annotations.NotNull @NotNull String node) {
       if (name != null && name.equals("file")) {
         require(!filesSeen.contains(node.toLowerCase()), "Package '%s' contains multiple references to the same" + " " + "archive file '%s'", coordinate, node);
         filesSeen.add(node.toLowerCase());
@@ -66,7 +75,7 @@ public class CDepManifestYmlUtils {
     }
 
     @Override
-    public void visitCDepManifestYml(String name, CDepManifestYml value) {
+    public void visitCDepManifestYml(String name, @org.jetbrains.annotations.NotNull @NotNull CDepManifestYml value) {
       coordinate = value.coordinate;
       require(coordinate != null, "Manifest was missing coordinate");
       super.visitCDepManifestYml(name, value);
@@ -74,7 +83,7 @@ public class CDepManifestYmlUtils {
     }
 
     @Override
-    public void visitArchive(String name, Archive value) {
+    public void visitArchive(String name, @Nullable Archive value) {
       if (value == null) {
         return;
       }
@@ -86,7 +95,7 @@ public class CDepManifestYmlUtils {
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void visitiOS(String name, iOS value) {
+    public void visitiOS(String name, @org.jetbrains.annotations.NotNull @NotNull iOS value) {
       if (value.archives != null) {
         for (iOSArchive archive : value.archives) {
           require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static iOS libraryName " + "'%s'", coordinate, archive.lib);
@@ -102,7 +111,7 @@ public class CDepManifestYmlUtils {
     }
 
     @Override
-    public void visitLinux(String name, Linux value) {
+    public void visitLinux(String name, @org.jetbrains.annotations.NotNull @NotNull Linux value) {
       if (value.archives != null) {
         require(value.archives.length <= 1, "Package '%s' has multiple linux archives. Only one is allowed.", coordinate);
       }
@@ -111,7 +120,7 @@ public class CDepManifestYmlUtils {
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void visitAndroid(String name, Android value) {
+    public void visitAndroid(String name, @org.jetbrains.annotations.NotNull @NotNull Android value) {
       if (value.archives != null) {
         for (AndroidArchive archive : value.archives) {
           require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static android " + "libraryName '%s'", coordinate, archive.lib);
@@ -136,7 +145,7 @@ public class CDepManifestYmlUtils {
     }
 
     @Override
-    public void visitCoordinate(String name, Coordinate value) {
+    public void visitCoordinate(String name, @org.jetbrains.annotations.NotNull @NotNull Coordinate value) {
       require(coordinate.groupId != null, "Manifest was missing coordinate.groupId");
       require(coordinate.artifactId != null, "Manifest was missing coordinate.artifactId");
       require(coordinate.version != null, "Manifest was missing coordinate.version");

@@ -15,17 +15,25 @@
 */
 package io.cdep.cdep.yml.cdepmanifest;
 
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 
 @SuppressWarnings("unused")
 public class CDepManifestYml {
 
+  @Nullable
   final public Coordinate coordinate;
+  @Nullable
   final public HardNameDependency dependencies[];
+  @Nullable
   final public Archive archive;
+  @Nullable
   final public Android android;
+  @Nullable
   final public Linux linux;
+  @Nullable
   final public iOS iOS;
+  @Nullable
   final public String example;
 
   public CDepManifestYml() {

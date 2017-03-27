@@ -1,5 +1,7 @@
 package io.cdep.cdep.resolver;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.CoordinateUtils;
@@ -17,62 +19,28 @@ import static org.mockito.Mockito.when;
 
 public class TestResolver {
 
-  private static Coordinate ADMOB_COORDINATE =
-      CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7");
-  private static String ADMOB_URL =
-      "https://github.com/jomof/firebase/releases/download/2.1.3-rev7/cdep-manifest-admob.yml";
-  private static CDepManifestYml ADMOB_MANIFEST = CDepManifestYmlUtils.convertStringToManifest(
-      "coordinate:\n"
-          + "  groupId: com.github.jomof\n"
-          + "  artifactId: firebase/admob\n"
-          + "  version: 2.1.3-rev7\n"
-          + "archive:\n"
-          + "  file: firebase-include.zip\n"
-          + "  sha256: 51827bab4c5b4f335058ab3c0a93f9fa39ba284d21bd686f27368829ee088815\n"
-          + "  size: 93293\n"
-          + "dependencies:\n"
-          + "  - compile: com.github.jomof:firebase/app:2.1.3-rev7\n"
-          + "    sha256: 8292d143db85ec40ddf4d51133571607f4df3796e0477e8678993dcae4acfd03");
+  @Nullable
+  private static Coordinate ADMOB_COORDINATE = CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7");
 
-  private static Coordinate APP_COORDINATE =
-      CoordinateUtils.tryParse("com.github.jomof:firebase/app:2.1.3-rev7");
-  private static CDepManifestYml APP_MANIFEST = CDepManifestYmlUtils.convertStringToManifest(
-      "coordinate:\n"
-          + "  groupId: com.github.jomof\n"
-          + "  artifactId: firebase/app\n"
-          + "  version: 2.1.3-rev7\n"
-          + "archive:\n"
-          + "  file: firebase-include.zip\n"
-          + "  sha256: 51827bab4c5b4f335058ab3c0a93f9fa39ba284d21bd686f27368829ee088815\n"
-          + "  size: 93293\n");
+  @NotNull
+  private static String ADMOB_URL = "https://github.com/jomof/firebase/releases/download/2.1.3-rev7/cdep-manifest-admob.yml";
 
-  private static CDepManifestYml ADMOB_MISSING_DEPENDENCY_MANIFEST = CDepManifestYmlUtils
-      .convertStringToManifest(
-          "coordinate:\n"
-              + "  groupId: com.github.jomof\n"
-              + "  artifactId: firebase/admob\n"
-              + "  version: 2.1.3-rev7\n"
-              + "archive:\n"
-              + "  file: firebase-include.zip\n"
-              + "  sha256: 51827bab4c5b4f335058ab3c0a93f9fa39ba284d21bd686f27368829ee088815\n"
-              + "  size: 93293\n"
-              + "dependencies:\n"
-              + "  - compile: com.github.jomof:firebase/app:2.1.3-rev8\n"
-              + "    sha256: 8292d143db85ec40ddf4d51133571607f4df3796e0477e8678993dcae4acfd03");
+  @NotNull
+  private static CDepManifestYml ADMOB_MANIFEST = CDepManifestYmlUtils.convertStringToManifest("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: firebase/admob\n" + "  version: 2.1.3-rev7\n" + "archive:\n" + "  file: firebase-include.zip\n" + "  sha256: 51827bab4c5b4f335058ab3c0a93f9fa39ba284d21bd686f27368829ee088815\n" + "  size: 93293\n" + "dependencies:\n" + "  - compile: com.github.jomof:firebase/app:2.1.3-rev7\n" + "    sha256: 8292d143db85ec40ddf4d51133571607f4df3796e0477e8678993dcae4acfd03");
 
-  private static CDepManifestYml ADMOB_BROKEN_DEPENDENCY_MANIFEST = CDepManifestYmlUtils
-      .convertStringToManifest(
-          "coordinate:\n"
-              + "  groupId: com.github.jomof\n"
-              + "  artifactId: firebase/admob\n"
-              + "  version: 2.1.3-rev7\n"
-              + "archive:\n"
-              + "  file: firebase-include.zip\n"
-              + "  sha256: 51827bab4c5b4f335058ab3c0a93f9fa39ba284d21bd686f27368829ee088815\n"
-              + "  size: 93293\n"
-              + "dependencies:\n"
-              + "  - compile: xxx\n"
-              + "    sha256: 8292d143db85ec40ddf4d51133571607f4df3796e0477e8678993dcae4acfd03");
+  @Nullable
+  private static Coordinate APP_COORDINATE = CoordinateUtils.tryParse("com.github.jomof:firebase/app:2.1.3-rev7");
+
+  @NotNull
+  private static CDepManifestYml APP_MANIFEST = CDepManifestYmlUtils.convertStringToManifest("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: firebase/app\n" + "  version: 2.1.3-rev7\n" + "archive:\n" + "  file: firebase-include.zip\n" + "  sha256: 51827bab4c5b4f335058ab3c0a93f9fa39ba284d21bd686f27368829ee088815\n" + "  size: 93293\n");
+
+
+  @NotNull
+  private static CDepManifestYml ADMOB_MISSING_DEPENDENCY_MANIFEST = CDepManifestYmlUtils.convertStringToManifest("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: firebase/admob\n" + "  version: 2.1.3-rev7\n" + "archive:\n" + "  file: firebase-include.zip\n" + "  sha256: 51827bab4c5b4f335058ab3c0a93f9fa39ba284d21bd686f27368829ee088815\n" + "  size: 93293\n" + "dependencies:\n" + "  - compile: com.github.jomof:firebase/app:2.1.3-rev8\n" + "    sha256: 8292d143db85ec40ddf4d51133571607f4df3796e0477e8678993dcae4acfd03");
+
+
+  @NotNull
+  private static CDepManifestYml ADMOB_BROKEN_DEPENDENCY_MANIFEST = CDepManifestYmlUtils.convertStringToManifest("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: firebase/admob\n" + "  version: 2.1.3-rev7\n" + "archive:\n" + "  file: firebase-include.zip\n" + "  sha256: 51827bab4c5b4f335058ab3c0a93f9fa39ba284d21bd686f27368829ee088815\n" + "  size: 93293\n" + "dependencies:\n" + "  - compile: xxx\n" + "    sha256: 8292d143db85ec40ddf4d51133571607f4df3796e0477e8678993dcae4acfd03");
 
 
   @Test

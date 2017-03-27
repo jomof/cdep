@@ -1,9 +1,12 @@
 package io.cdep.cdep.ast.finder;
 
+import io.cdep.annotations.Nullable;
+
 import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class StringExpression extends Expression {
-    final public String value;
+  @org.jetbrains.annotations.Nullable
+  final public String value;
 
   StringExpression(String value) {
     this.value = notNull(value);
@@ -15,7 +18,7 @@ public class StringExpression extends Expression {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(@Nullable Object obj) {
         if (obj == null || !(obj instanceof StringExpression)) {
             return false;
         }

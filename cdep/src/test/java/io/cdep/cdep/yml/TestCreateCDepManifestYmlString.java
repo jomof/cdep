@@ -1,5 +1,6 @@
 package io.cdep.cdep.yml;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
@@ -14,7 +15,7 @@ import static io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString.create;
 
 public class TestCreateCDepManifestYmlString {
 
-  private static void check(CDepManifestYml manifest) {
+  private static void check(@NotNull CDepManifestYml manifest) {
     // Convert to string
     String result = create(manifest);
 

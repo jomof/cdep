@@ -15,6 +15,7 @@
 */
 package io.cdep.cdep;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.generator.CMakeGenerator;
@@ -42,6 +43,8 @@ public class TestFindModuleFunctionTableBuilder {
       false);
   final private Resolver resolver = new Resolver(environment);
 
+
+  @NotNull
   private static SoftNameDependency createReference(String compile) {
     return new SoftNameDependency(compile);
 

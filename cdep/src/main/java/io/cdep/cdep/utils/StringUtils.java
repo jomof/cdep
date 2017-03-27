@@ -1,10 +1,12 @@
 package io.cdep.cdep.utils;
 
+import io.cdep.annotations.NotNull;
+
 import java.util.Collection;
 
 public class StringUtils {
 
-    public static boolean isNumeric(String str) {
+  public static boolean isNumeric(@org.jetbrains.annotations.NotNull @NotNull String str) {
         for (char c : str.toCharArray()) {
             if (!Character.isDigit(c)) {
                 return false;
@@ -13,7 +15,7 @@ public class StringUtils {
         return true;
     }
 
-  public static String joinOn(String delimiter, Object array[]) {
+  public static String joinOn(String delimiter, @org.jetbrains.annotations.NotNull @NotNull Object array[]) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < array.length; ++i) {
             if (i != 0) {
@@ -24,7 +26,7 @@ public class StringUtils {
         return sb.toString();
     }
 
-  public static String joinOn(String delimiter, Collection<String> strings) {
+  public static String joinOn(String delimiter, @org.jetbrains.annotations.NotNull @NotNull Collection<String> strings) {
     StringBuilder sb = new StringBuilder();
     int i = 0;
     for (String string : strings) {

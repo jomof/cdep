@@ -15,6 +15,7 @@
 */
 package io.cdep.cdep.utils;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ReadonlyVisitor;
 import io.cdep.cdep.ast.finder.Expression;
@@ -35,6 +36,8 @@ abstract public class ExpressionUtils {
      * These expressions contain the local module location as well as the resolved coordinate
      * and other information
      */
+    @org.jetbrains.annotations.NotNull
+    @NotNull
     public static Map<Coordinate, List<Expression>> getAllFoundModuleExpressions(Expression expression) {
         return new Finder(expression).foundModules;
     }
@@ -53,7 +56,7 @@ abstract public class ExpressionUtils {
         }
 
         @Override
-        protected void visitFindModuleExpression(FindModuleExpression expr) {
+        protected void visitFindModuleExpression(@org.jetbrains.annotations.NotNull @NotNull FindModuleExpression expr) {
             coordinate = expr.coordinate;
             super.visitFindModuleExpression(expr);
         }
