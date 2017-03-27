@@ -15,8 +15,8 @@
 */
 package io.cdep.cdep.resolver;
 
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;

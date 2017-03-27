@@ -1,7 +1,7 @@
 package io.cdep.cdep.ast.finder;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 
 import static io.cdep.cdep.utils.Invariant.elementsNotNull;
 import static io.cdep.cdep.utils.Invariant.notNull;

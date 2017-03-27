@@ -1,6 +1,6 @@
 package io.cdep.cdep.ast.finder;
 
-import org.jetbrains.annotations.Nullable;
+import io.cdep.annotations.Nullable;
 
 import java.net.URL;
 

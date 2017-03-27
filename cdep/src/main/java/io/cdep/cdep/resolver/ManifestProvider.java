@@ -1,8 +1,8 @@
 package io.cdep.cdep.resolver;
 
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.net.URL;

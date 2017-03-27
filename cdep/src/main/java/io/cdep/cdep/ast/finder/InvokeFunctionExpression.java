@@ -2,7 +2,7 @@ package io.cdep.cdep.ast.finder;
 
 
 import io.cdep.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import io.cdep.annotations.Nullable;
 
 import java.lang.reflect.Modifier;
 

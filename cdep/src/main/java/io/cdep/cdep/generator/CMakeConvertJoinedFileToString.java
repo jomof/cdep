@@ -1,9 +1,9 @@
 package io.cdep.cdep.generator;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.RewritingVisitor;
 import io.cdep.cdep.ast.finder.*;
-import org.jetbrains.annotations.Nullable;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
 

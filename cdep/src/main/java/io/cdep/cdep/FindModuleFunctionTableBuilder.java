@@ -152,8 +152,8 @@ public class FindModuleFunctionTableBuilder {
 
 
   @NotNull
-  private StatementExpression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved, @org.jetbrains.annotations
-      .NotNull @NotNull Archive archive, AssignmentExpression explodedArchiveFolder,
+  private StatementExpression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved, @NotNull Archive archive, AssignmentExpression
+      explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));

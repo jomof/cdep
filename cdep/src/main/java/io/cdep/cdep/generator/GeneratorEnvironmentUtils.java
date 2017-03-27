@@ -42,8 +42,8 @@ public class GeneratorEnvironmentUtils {
   /**
    * Given a function table and generator environment, download all of the files referenced.
    */
-  public static void downloadReferencedModules(@NotNull GeneratorEnvironment environment, @org.jetbrains.annotations
-      .NotNull @NotNull Map<Coordinate, List<Expression>> foundModules) throws IOException, NoSuchAlgorithmException {
+  public static void downloadReferencedModules(@NotNull GeneratorEnvironment environment, @NotNull Map<Coordinate, List<Expression>> foundModules) throws
+      IOException, NoSuchAlgorithmException {
 
     Set<File> alreadyExploded = new HashSet<>();
 
@@ -68,7 +68,8 @@ public class GeneratorEnvironmentUtils {
             local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
             require(local != null, "Resolved archive '%s' didn't exist", archive.file);
           }
-          require(archive.size == local.length(), "File size for %s was %s which did not match value %s from the manifest", archive.file, local.length(), archive.size);
+          require(archive.size == local.length(), "File size for %s was %s which did not match value %s from the manifest", archive.file, local.length(),
+              archive.size);
         }
 
         String localSha256String = HashUtils.getSHA256OfFile(local);
