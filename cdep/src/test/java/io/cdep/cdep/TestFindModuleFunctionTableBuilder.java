@@ -45,7 +45,7 @@ public class TestFindModuleFunctionTableBuilder {
 
 
   @NotNull
-  private static SoftNameDependency createReference(String compile) {
+  private static SoftNameDependency createReference(@NotNull String compile) {
     return new SoftNameDependency(compile);
 
   }

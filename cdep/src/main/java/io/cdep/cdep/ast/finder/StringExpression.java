@@ -1,11 +1,13 @@
 package io.cdep.cdep.ast.finder;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
 import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class StringExpression extends Expression {
 
+  @NotNull
   final public String value;
 
   StringExpression(String value) {

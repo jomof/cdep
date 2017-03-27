@@ -73,7 +73,7 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
 
   @Nullable
   @Override
-  protected Object visitAbortExpression(AbortExpression expr) {
+  protected Object visitAbortExpression(@NotNull AbortExpression expr) {
     return null;
   }
 }

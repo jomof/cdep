@@ -1,6 +1,5 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
-import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
 public class AndroidArchive {
@@ -22,17 +21,17 @@ public class AndroidArchive {
   final public String builder = null;
   @Nullable
   final public String abis[] = null;
-
-  @NotNull
+  @Nullable
   final public String include;
   @Nullable
   final public String lib = null;
   @Nullable
   final public String flavor = null;
-    private AndroidArchive() {
-        this.file = null;
-        this.sha256 = null;
-        this.size = null;
-        this.include = "include";
-    }
+
+  private AndroidArchive() {
+    this.file = null;
+    this.sha256 = null;
+    this.size = null;
+    this.include = "include";
+  }
 }

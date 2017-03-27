@@ -189,11 +189,9 @@ public class RewritingVisitor {
   }
 
 
+  @NotNull
   protected Expression visitAssignmentExpression(@NotNull AssignmentExpression expr) {
-    return assign(
-        expr.name,
-        visit(expr.expression)
-    );
+    return assign(expr.name, visit(expr.expression));
   }
 
 

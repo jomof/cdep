@@ -60,6 +60,9 @@ public class TestMergeCDepManifestYmls {
             fail("Converted string wasn't the same as original");
           }
         } catch (RuntimeException e) {
+          if (!e.getClass().equals(RuntimeException.class)) {
+            throw e;
+          }
           String actual = e.getMessage();
           if (!commonDifferences.contains(actual)) {
             // e.printStackTrace();

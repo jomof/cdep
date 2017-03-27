@@ -43,7 +43,7 @@ public class Resolver {
    */
 
   @NotNull
-  public ResolutionScope resolveAll(SoftNameDependency[] roots) throws IOException, NoSuchAlgorithmException {
+  public ResolutionScope resolveAll(@NotNull SoftNameDependency[] roots) throws IOException, NoSuchAlgorithmException {
     ResolutionScope scope = new ResolutionScope(roots);
     // Progressively resolve dependencies
     while (!scope.isResolutionComplete()) {

@@ -1,5 +1,6 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
 /**
@@ -17,7 +18,7 @@ public class HardNameDependency {
     this.sha256 = null;
   }
 
-  public HardNameDependency(String compile, String sha256) {
+  public HardNameDependency(@NotNull String compile, @NotNull String sha256) {
     this.compile = compile;
     this.sha256 = sha256;
   }

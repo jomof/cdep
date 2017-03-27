@@ -84,14 +84,13 @@ public class ExpressionBuilder {
 
 
   @NotNull
-  public static IfSwitchExpression ifSwitch(Expression conditions[], Expression expressions[], Expression elseExpression) {
+  public static IfSwitchExpression ifSwitch(@NotNull Expression conditions[], @NotNull Expression expressions[], Expression elseExpression) {
     return new IfSwitchExpression(conditions, expressions, elseExpression);
   }
 
 
   @NotNull
-  public static InvokeFunctionExpression invoke(ExternalFunctionExpression function,
-      Expression... parameters) {
+  public static InvokeFunctionExpression invoke(@NotNull ExternalFunctionExpression function, @NotNull Expression... parameters) {
     return new InvokeFunctionExpression(function, parameters);
 
   }

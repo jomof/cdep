@@ -1,8 +1,8 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
-@SuppressWarnings("unused")
 public class Linux {
   @Nullable
   final public LinuxArchive archives[];
@@ -11,7 +11,7 @@ public class Linux {
     archives = null;
   }
 
-  Linux(LinuxArchive archives[]) {
+  Linux(@NotNull LinuxArchive archives[]) {
     this.archives = archives;
   }
 }

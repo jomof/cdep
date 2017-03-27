@@ -26,7 +26,7 @@ public class EnvironmentUtils {
    */
 
   @NotNull
-  public static File getPackageLevelIncludeFolder(@NotNull GeneratorEnvironment environment, String coordinate)
+  public static File getPackageLevelIncludeFolder(@NotNull GeneratorEnvironment environment, @NotNull String coordinate)
       throws IOException, NoSuchAlgorithmException, URISyntaxException {
     ResolvedManifest resolved = resolveManifest(environment, coordinate);
     return getPackageLevelIncludeFolder(environment, coordinate, resolved);
@@ -58,7 +58,7 @@ public class EnvironmentUtils {
    * Return the resolved manifest or throw an exception.
    */
   @Nullable
-  public static ResolvedManifest resolveManifest(GeneratorEnvironment environment, String coordinate)
+  public static ResolvedManifest resolveManifest(GeneratorEnvironment environment, @NotNull String coordinate)
       throws IOException, NoSuchAlgorithmException {
     SoftNameDependency name = new SoftNameDependency(coordinate);
     ResolvedManifest resolved = new Resolver(environment).resolveAny(name);

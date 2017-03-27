@@ -24,7 +24,7 @@ public class CMakeConvertJoinedFileToString extends RewritingVisitor {
     }
 
     @Override
-    protected Expression visitModuleExpression(ModuleExpression expr) {
+    protected Expression visitModuleExpression(@NotNull ModuleExpression expr) {
         return super.visitModuleExpression(expr);
     }
 

@@ -15,6 +15,7 @@
 */
 package io.cdep.cdep;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
 @SuppressWarnings("unused")
@@ -33,7 +34,7 @@ public class Coordinate {
     version = null;
   }
 
-    public Coordinate(String groupId, String artifactId, String version) {
+  public Coordinate(@NotNull String groupId, @NotNull String artifactId, @NotNull String version) {
     this.groupId = groupId;
     this.artifactId = artifactId;
     this.version = version;

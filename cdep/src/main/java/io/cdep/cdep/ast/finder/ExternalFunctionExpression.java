@@ -34,7 +34,7 @@ public class ExternalFunctionExpression extends Expression {
 
   final public Method method;
 
-  private ExternalFunctionExpression(Class clazz, String functionName, Class<?>...
+  private ExternalFunctionExpression(@NotNull Class clazz, @NotNull String functionName, Class<?>...
       parameterTypes) {
     this.method = getMethod(clazz, functionName, parameterTypes);
   }

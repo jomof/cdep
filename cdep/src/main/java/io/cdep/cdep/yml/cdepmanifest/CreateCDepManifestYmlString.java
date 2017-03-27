@@ -33,12 +33,12 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitiOSPlatform(String name, iOSPlatform value) {
+  public void visitiOSPlatform(String name, @NotNull iOSPlatform value) {
     appendIndented("%s: %s\r\n", notNull(name), value);
   }
 
   @Override
-  public void visitiOSArchitecture(String name, iOSArchitecture value) {
+  public void visitiOSArchitecture(String name, @NotNull iOSArchitecture value) {
     appendIndented("%s: %s\r\n", notNull(name), value);
   }
 
@@ -72,7 +72,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitStringArray(String name, String[] array) {
+  public void visitStringArray(String name, @NotNull String[] array) {
     appendIndented("%s: [%s]\r\n", name, StringUtils.joinOn(", ", array));
   }
 

@@ -15,12 +15,11 @@
 */
 package io.cdep.cdep.yml.cdepmanifest;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 
-@SuppressWarnings("unused")
 public class CDepManifestYml {
-
   @Nullable
   final public Coordinate coordinate;
   @Nullable
@@ -46,7 +45,7 @@ public class CDepManifestYml {
     this.example = null;
   }
 
-  public CDepManifestYml(Coordinate coordinate) {
+  public CDepManifestYml(@NotNull Coordinate coordinate) {
     this.coordinate = coordinate;
     this.dependencies = null;
     this.archive = null;
@@ -56,8 +55,8 @@ public class CDepManifestYml {
     this.example = null;
   }
 
-  public CDepManifestYml(Coordinate coordinate, HardNameDependency[] dependencies, Archive archive,
-                         Android android, iOS ios, Linux linux, String example) {
+  public CDepManifestYml(@NotNull Coordinate coordinate, @Nullable HardNameDependency[] dependencies, @Nullable Archive archive, @Nullable Android android,
+      @Nullable iOS ios, @Nullable Linux linux, @NotNull String example) {
     this.coordinate = coordinate;
     this.dependencies = dependencies;
     this.archive = archive;

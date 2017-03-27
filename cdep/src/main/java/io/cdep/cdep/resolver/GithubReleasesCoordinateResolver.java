@@ -34,7 +34,7 @@ public class GithubReleasesCoordinateResolver extends CoordinateResolver {
 
   @Nullable
   @Override
-  public ResolvedManifest resolve(ManifestProvider environment, @NotNull
+  public ResolvedManifest resolve(@NotNull ManifestProvider environment, @NotNull
       SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException {
     String coordinate = dependency.compile;
     Matcher match = pattern.matcher(notNull(coordinate));

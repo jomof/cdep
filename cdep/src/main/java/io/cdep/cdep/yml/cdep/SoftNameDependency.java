@@ -27,10 +27,9 @@ public class SoftNameDependency {
     compile = null;
   }
 
-  public SoftNameDependency(String compile) {
+  public SoftNameDependency(@NotNull String compile) {
     this.compile = compile;
   }
-
 
   @NotNull
   public String toYaml(int indent) {
@@ -42,7 +41,6 @@ public class SoftNameDependency {
     }
     return sb.toString();
   }
-
 
   @NotNull
   @Override

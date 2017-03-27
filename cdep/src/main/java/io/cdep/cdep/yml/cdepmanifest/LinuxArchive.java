@@ -1,5 +1,6 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
 public class LinuxArchive {
@@ -11,6 +12,7 @@ public class LinuxArchive {
   final public Long size;
   @Nullable
   final public String lib;
+  @Nullable
   final public String include;
 
   LinuxArchive() {
@@ -21,7 +23,7 @@ public class LinuxArchive {
     this.include = "include";
   }
 
-  public LinuxArchive(String file, String sha256, Long size, String lib, String include) {
+  public LinuxArchive(@NotNull String file, @NotNull String sha256, @NotNull Long size, @NotNull String lib, @NotNull String include) {
     this.file = file;
     this.sha256 = sha256;
     this.size = size;

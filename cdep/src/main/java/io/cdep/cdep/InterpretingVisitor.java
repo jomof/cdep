@@ -248,6 +248,7 @@ public class InterpretingVisitor {
   }
 
 
+  @NotNull
   protected String visitStringExpression(@NotNull StringExpression expr) {
     return expr.value;
   }

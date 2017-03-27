@@ -51,7 +51,7 @@ abstract public class ExpressionUtils {
         }
 
         @Override
-        protected void visitModuleExpression(ModuleExpression expr) {
+        protected void visitModuleExpression(@NotNull ModuleExpression expr) {
             addModule(expr);
         }
 

@@ -16,9 +16,9 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
 
+import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
-@SuppressWarnings("unused")
 public class Android {
   @Nullable
   final public HardNameDependency dependencies[];
@@ -30,7 +30,7 @@ public class Android {
     this.archives = new AndroidArchive[0];
   }
 
-  Android(HardNameDependency dependencies[], AndroidArchive archives[]) {
+  Android(@NotNull HardNameDependency dependencies[], @NotNull AndroidArchive archives[]) {
     this.dependencies = dependencies;
     this.archives = archives;
   }

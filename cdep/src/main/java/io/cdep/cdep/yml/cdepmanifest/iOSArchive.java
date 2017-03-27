@@ -1,6 +1,5 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
-import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
 public class iOSArchive {
@@ -17,8 +16,7 @@ public class iOSArchive {
   final public iOSArchitecture architecture = null;
   @Nullable
   final public String sdk = null;
-
-  @NotNull
+  @Nullable
   final public String include;
   @Nullable
   final public String lib = null;

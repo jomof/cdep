@@ -12,6 +12,7 @@ public class InvokeFunctionExpression extends Expression {
   @Nullable
   final public ExternalFunctionExpression function;
 
+  @NotNull
   final public Expression parameters[];
 
   InvokeFunctionExpression(@NotNull ExternalFunctionExpression function, @NotNull

@@ -79,7 +79,7 @@ public class CDep {
   }
 
   @Nullable
-  private static FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment, SoftNameDependency
+  private static FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment, @NotNull SoftNameDependency
       dependencies[]) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     Resolver resolver = new Resolver(environment);
