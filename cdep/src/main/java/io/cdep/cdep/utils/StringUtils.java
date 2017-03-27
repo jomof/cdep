@@ -13,7 +13,7 @@ public class StringUtils {
         return true;
     }
 
-    public static String joinOn(String delimiter, String array[]) {
+  public static String joinOn(String delimiter, Object array[]) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < array.length; ++i) {
             if (i != 0) {

@@ -33,10 +33,11 @@ import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -451,11 +452,7 @@ public class CDep {
       return false;
     }
 
-    Yaml yaml = new Yaml(new Constructor(CDepYml.class));
-    this.config = (CDepYml) yaml.load(new FileInputStream(configFile));
-    if (this.config == null) {
-      this.config = new CDepYml();
-    }
+    this.config = CDepYmlUtils.fromString(FileUtils.readAllText(configFile));
     CDepYmlUtils.checkSanity(config, configFile);
     return true;
   }

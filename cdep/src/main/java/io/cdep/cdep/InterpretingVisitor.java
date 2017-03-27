@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
+
 /**
  * Walks the expression tree and interprets the value for the supplied state.
  */
@@ -136,7 +138,7 @@ public class InterpretingVisitor {
   }
 
   protected Object visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
-    assert stack != null;
+    notNull(stack);
     AssignmentFuture future = stack.lookup(expr.assignment);
     if (future.value == null) {
       Frame oldStack = stack;

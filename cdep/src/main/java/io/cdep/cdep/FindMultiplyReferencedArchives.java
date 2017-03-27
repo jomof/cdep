@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static io.cdep.cdep.utils.Invariant.require;
+
 /**
  * This checker looks at the SHA256 of files along each dependency chain and ensures that each file
  * is only present at a single level.
@@ -46,7 +48,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
    * Utility function to add a new edge to an edge map.
    */
   private void addModuleArchive(ModuleArchiveExpression archive) {
-    assert currentFindModule != null;
+    require(currentFindModule != null);
     List<ModuleArchiveExpression> tos = moduleArchives.get(currentFindModule);
     if (tos == null) {
       moduleArchives.put(currentFindModule, new ArrayList<ModuleArchiveExpression>());
@@ -117,7 +119,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
 
   @Override
   protected void visitModuleExpression(ModuleExpression expr) {
-    assert currentFindModule != null;
+    require(currentFindModule != null);
     for (Coordinate coordinate : expr.dependencies) {
       addEdge(forwardEdges, currentFindModule, coordinate);
       addEdge(backwardEdges, coordinate, currentFindModule);

@@ -1,5 +1,7 @@
 package io.cdep.cdep.yml.cdepsha25;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
+
 public class HashEntry {
     final public String coordinate;
     final public String sha256;
@@ -9,9 +11,7 @@ public class HashEntry {
     }
 
     public HashEntry(String coordinate, String sha256) {
-        assert coordinate != null;
-        assert sha256 != null;
-        this.coordinate = coordinate;
-        this.sha256 = sha256;
+      this.coordinate = notNull(coordinate);
+      this.sha256 = notNull(sha256);
     }
 }

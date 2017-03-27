@@ -5,6 +5,7 @@ import io.cdep.cdep.ast.finder.*;
 import java.util.*;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.assignmentBlock;
+import static io.cdep.cdep.utils.Invariant.require;
 
 public class LiftToCommonAncestor extends RewritingVisitor {
   Set<AssignmentExpression> captured = new HashSet<>();
@@ -83,9 +84,7 @@ public class LiftToCommonAncestor extends RewritingVisitor {
       }
       long functionCount = functionCounts.get(assignment);
       long currentCount = count.get(assignment);
-      if (currentCount > functionCount) {
-        assert currentCount <= functionCount;
-      }
+      require(currentCount <= functionCount);
       if (currentCount == functionCount) {
         // Current scope covers all references in the function so
         // we can lift the assignments to this level.
@@ -99,8 +98,8 @@ public class LiftToCommonAncestor extends RewritingVisitor {
   void assignments(Expression expr,
                    List<AssignmentExpression> order,
                    Map<AssignmentExpression, Integer> counts) {
-    assert order.size() == 0;
-    assert counts.size() == 0;
+    require(order.size() == 0);
+    require(counts.size() == 0);
     List<AssignmentExpression> assignments = new GetContainedReferences(expr).list;
     for (AssignmentExpression assignment : assignments) {
       Integer n = counts.get(assignment);

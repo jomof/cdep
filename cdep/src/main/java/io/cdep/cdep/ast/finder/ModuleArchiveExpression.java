@@ -2,6 +2,8 @@ package io.cdep.cdep.ast.finder;
 
 import java.net.URL;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
+
 public class ModuleArchiveExpression extends Expression {
   final public URL file; // The zip file.
   final public String sha256;
@@ -19,10 +21,8 @@ public class ModuleArchiveExpression extends Expression {
       Expression fullIncludePath,
       String library, // Like "lib/libsqlite.a"
       Expression fullLibraryName) {
-    assert file != null;
-    assert sha256 != null;
-    this.file = file;
-    this.sha256 = sha256;
+    this.file = notNull(file);
+    this.sha256 = notNull(sha256);
     this.size = size;
     this.include = include;
     this.includePath = fullIncludePath;

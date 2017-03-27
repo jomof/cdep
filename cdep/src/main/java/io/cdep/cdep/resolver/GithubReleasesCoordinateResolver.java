@@ -15,13 +15,15 @@
 */
 package io.cdep.cdep.resolver;
 
-import static java.util.regex.Pattern.compile;
-
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static io.cdep.cdep.utils.Invariant.notNull;
+import static java.util.regex.Pattern.compile;
 
 public class GithubReleasesCoordinateResolver extends CoordinateResolver {
 
@@ -33,8 +35,7 @@ public class GithubReleasesCoordinateResolver extends CoordinateResolver {
         SoftNameDependency dependency)
         throws IOException, NoSuchAlgorithmException {
         String coordinate = dependency.compile;
-        assert coordinate != null;
-        Matcher match = pattern.matcher(coordinate);
+      Matcher match = pattern.matcher(notNull(coordinate));
         if (match.find()) {
             String user = match.group(1);
             String artifactId = match.group(2);

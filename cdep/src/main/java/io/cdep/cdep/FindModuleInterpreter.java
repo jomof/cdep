@@ -25,6 +25,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.cdep.cdep.utils.Invariant.require;
+
 class FindModuleInterpreter {
 
   @SuppressWarnings("SameParameterValue")
@@ -104,13 +106,13 @@ class FindModuleInterpreter {
       ModuleArchive found = null;
       for (Object object : (Object[]) value) {
         if (object instanceof ModuleArchive) {
-          assert found == null;
+          require(found == null);
           found = (ModuleArchive) object;
           continue;
         }
-        assert object instanceof NopExpression;
+        require(object instanceof NopExpression);
       }
-      assert found != null;
+      require(found != null);
       return found;
     }
     throw new RuntimeException(value.getClass().toString());

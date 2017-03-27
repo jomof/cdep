@@ -1,11 +1,12 @@
 package io.cdep.cdep.ast.finder;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
+
 public class StringExpression extends Expression {
     final public String value;
 
   StringExpression(String value) {
-        assert value != null;
-        this.value = value;
+    this.value = notNull(value);
     }
 
     @Override

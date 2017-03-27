@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
+import static io.cdep.cdep.utils.Invariant.require;
+
 /**
  * Methods for dealing with GeneratorEnvironment.
  */
@@ -39,15 +42,13 @@ public class GeneratorEnvironmentUtils {
    * Given a function table and generator environment, download all of the files referenced.
    */
   public static void downloadReferencedModules(
-      GeneratorEnvironment environment,
-      Map<Coordinate, List<Expression>> foundModules) throws IOException, NoSuchAlgorithmException {
+      GeneratorEnvironment environment, Map<Coordinate, List<Expression>> foundModules) throws IOException, NoSuchAlgorithmException {
 
     Set<File> alreadyExploded = new HashSet<>();
 
     // Download and unzip any modules.
     for (Coordinate coordinate : foundModules.keySet()) {
-      assert coordinate != null;
-      List<Expression> foundModuleExpressions = foundModules.get(coordinate);
+      List<Expression> foundModuleExpressions = foundModules.get(notNull(coordinate));
       for (Expression foundModule : foundModuleExpressions) {
         ModuleArchiveExpression archive = null;
         if (foundModule instanceof ModuleExpression) {
@@ -55,10 +56,7 @@ public class GeneratorEnvironmentUtils {
           archive = specific.archive;
         }
         File local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
-        if (local == null) {
-          throw new RuntimeException(
-              String.format("Resolved archive '%s' didn't exist", archive.file));
-        }
+        require(local != null, "Resolved archive '%s' didn't exist", archive.file);
 
         boolean forceUnzip = environment.forceRedownload && !alreadyExploded.contains(local);
         if (archive.size != local.length()) {
@@ -66,31 +64,18 @@ public class GeneratorEnvironmentUtils {
           if (!environment.forceRedownload) {
             forceUnzip = true;
             local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
-            if (local == null) {
-              throw new RuntimeException(
-                  String.format("Resolved archive '%s' didn't exist", archive.file));
-            }
+            require(local != null, "Resolved archive '%s' didn't exist", archive.file);
           }
-          if (archive.size != local.length()) {
-            throw new RuntimeException(String.format(
-                "File size for %s was %s which did not match value %s from the manifest",
-                archive.file,
-                local.length(),
-                archive.size));
-          }
+          require(archive.size == local.length(), "File size for %s was %s which did not match value %s from the manifest", archive.file, local.length(), archive.size);
         }
 
         String localSha256String = HashUtils.getSHA256OfFile(local);
-        if (!localSha256String.equals(archive.sha256)) {
-          throw new RuntimeException(String.format(
-              "SHA256 for %s did not match value from manifest", archive.file));
-        }
+        require(localSha256String.equals(archive.sha256), "SHA256 for %s did not match value from manifest", archive.file);
 
         File unzipFolder = environment.getLocalUnzipFolder(coordinate, archive.file);
         if (!unzipFolder.exists() || forceUnzip) {
           //noinspection ResultOfMethodCallIgnored
           unzipFolder.mkdirs();
-          //environment.out.printf("Exploding %s\n", archive.file);
           ArchiveUtils.unzip(local, unzipFolder);
           alreadyExploded.add(local);
         }

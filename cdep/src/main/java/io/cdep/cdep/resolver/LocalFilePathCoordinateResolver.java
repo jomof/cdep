@@ -18,10 +18,13 @@ package io.cdep.cdep.resolver;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class LocalFilePathCoordinateResolver extends CoordinateResolver {
 
@@ -29,8 +32,7 @@ public class LocalFilePathCoordinateResolver extends CoordinateResolver {
     public ResolvedManifest resolve(ManifestProvider environment, SoftNameDependency dependency)
         throws IOException {
         String coordinate = dependency.compile;
-        assert coordinate != null;
-        File local = new File(coordinate);
+      File local = new File(notNull(coordinate));
         if (!local.isFile()) {
             return null;
         }
@@ -39,4 +41,6 @@ public class LocalFilePathCoordinateResolver extends CoordinateResolver {
         CDepManifestYmlUtils.checkManifestSanity(cdepManifestYml);
         return new ResolvedManifest(local.getCanonicalFile().toURI().toURL(), cdepManifestYml);
     }
+
+
 }

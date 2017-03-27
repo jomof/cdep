@@ -28,6 +28,7 @@ import java.net.URL;
 import java.util.*;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
+import static io.cdep.cdep.utils.Invariant.require;
 
 
 public class FindModuleFunctionTableBuilder {
@@ -57,7 +58,7 @@ public class FindModuleFunctionTableBuilder {
 
     // Build module lookup findFunctions
     for (ResolvedManifest resolved : manifests.values()) {
-      assert resolved.cdepManifestYml.coordinate != null;
+      require(resolved.cdepManifestYml.coordinate != null);
       functionTable.findFunctions.put(resolved.cdepManifestYml.coordinate,
           buildFindModule(resolved));
     }
@@ -219,7 +220,6 @@ public class FindModuleFunctionTableBuilder {
       AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
-      assert false;
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     return module(
@@ -240,7 +240,6 @@ public class FindModuleFunctionTableBuilder {
       AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
-      assert false;
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     return module(
@@ -262,11 +261,10 @@ public class FindModuleFunctionTableBuilder {
       AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
-      assert false;
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
-    assert abi != null;
-    assert abi.length() > 0;
+    require(abi != null);
+    require(abi.length() > 0);
     String lib = archive.lib;
     if (lib != null) {
       lib = abi + "/" + lib;
@@ -439,7 +437,7 @@ public class FindModuleFunctionTableBuilder {
 
     // Gather up the runtime names
     Map<String, List<AndroidArchive>> stlTypes = new HashMap<>();
-    assert resolved.cdepManifestYml.android != null;
+    require(resolved.cdepManifestYml.android != null);
     for (AndroidArchive android : resolved.cdepManifestYml.android.archives) {
       List<AndroidArchive> androids = stlTypes.get(android.runtime);
       if (androids == null) {

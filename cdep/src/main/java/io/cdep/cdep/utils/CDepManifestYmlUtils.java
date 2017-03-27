@@ -27,6 +27,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static io.cdep.cdep.utils.Invariant.require;
+
 public class CDepManifestYmlUtils {
 
   public static CDepManifestYml convertStringToManifest(String content) {
@@ -34,9 +36,7 @@ public class CDepManifestYmlUtils {
     CDepManifestYml dependencyConfig =
         (CDepManifestYml) yaml.load(new ByteArrayInputStream(content.getBytes(
             StandardCharsets.UTF_8)));
-    if (dependencyConfig == null) {
-      throw new RuntimeException("Manifest was empty");
-    }
+    require(dependencyConfig != null, "Manifest was empty");
     return dependencyConfig;
   }
 

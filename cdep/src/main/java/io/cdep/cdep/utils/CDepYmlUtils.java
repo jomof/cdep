@@ -2,28 +2,36 @@ package io.cdep.cdep.utils;
 
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CDepYmlUtils {
-    public static void checkSanity(CDepYml cdepYml, File configFile) {
-        Set<BuildSystem> builders = new HashSet<>();
-        for (BuildSystem builder : cdepYml.builders) {
-            if (builders.contains(builder)) {
-                throw new RuntimeException(String.format("cdep.yml builders contains '%s' more than once", builder));
-            }
-        }
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.require;
 
-        if (cdepYml.builders.length == 0) {
-            StringBuilder sb = new StringBuilder();
-            for (BuildSystem builder : BuildSystem.values()) {
-                sb.append(builder.toString());
-                sb.append(" ");
-            }
-            throw new RuntimeException(String.format("Error in '%s'. The 'builders' section is "
-                + "missing or empty. Valid values are: %s.", configFile, sb));
-        }
+abstract public class CDepYmlUtils {
+  public static void checkSanity(CDepYml cdepYml, File configFile) {
+    Set<BuildSystem> builders = new HashSet<>();
+    for (BuildSystem builder : cdepYml.builders) {
+      require(!builders.contains(builder), "%s 'builders' contains '%s' more than once", configFile, builder);
+      builders.add(builder);
     }
+
+    if (cdepYml.builders.length == 0) {
+      String allowed = StringUtils.joinOn(" ", BuildSystem.values());
+      fail("%s 'builders' section is " + "missing or empty. Valid values are: %s.", configFile, allowed);
+    }
+  }
+
+  public static CDepYml fromString(String content) {
+    Yaml yaml = new Yaml(new Constructor(CDepYml.class));
+    CDepYml cdepYml = (CDepYml) yaml.load(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
+    require(cdepYml != null, "cdep.yml was empty");
+    return cdepYml;
+  }
 }

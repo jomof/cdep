@@ -18,11 +18,14 @@ package io.cdep.cdep.resolver;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
   final private Pattern pattern = Pattern.compile("^https://(.*)/(.*)/(.*)/releases/download/(.*)/cdep-manifest(.*).yml$");
@@ -31,8 +34,7 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
   public ResolvedManifest resolve(ManifestProvider environment,
       SoftNameDependency dependency)
       throws IOException, NoSuchAlgorithmException {
-    String coordinate = dependency.compile;
-    assert coordinate != null;
+    String coordinate = notNull(dependency.compile);
     Matcher match = pattern.matcher(coordinate);
     if (match.find()) {
 
@@ -65,7 +67,7 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
       }
 
       // Ensure that the manifest coordinate agrees with the url provided
-      assert cdepManifestYml.coordinate != null;
+      notNull(cdepManifestYml.coordinate);
       if (!groupId.equals(cdepManifestYml.coordinate.groupId)) {
         throw new RuntimeException(
             String.format("groupId '%s' from manifest did not agree with github url '%s",

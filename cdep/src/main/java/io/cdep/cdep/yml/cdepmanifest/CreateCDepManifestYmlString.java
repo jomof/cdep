@@ -2,6 +2,8 @@ package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.cdep.utils.StringUtils;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
+
 public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor {
 
   private int indent = 0;
@@ -28,20 +30,18 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitiOSPlatform(String name, iOSPlatform value) {
-    assert name != null;
-    appendIndented("%s: %s\r\n", name, value);
+    appendIndented("%s: %s\r\n", notNull(name), value);
   }
 
   @Override
   public void visitiOSArchitecture(String name, iOSArchitecture value) {
-    assert name != null;
-    appendIndented("%s: %s\r\n", name, value);
+    appendIndented("%s: %s\r\n", notNull(name), value);
   }
 
   @Override
   public void visitString(String name, String value) {
-    assert value != null;
-    assert name != null;
+    notNull(value);
+    notNull(name);
     if (!value.contains("\n")) {
       appendIndented("%s: %s\r\n", name, value);
       return;
@@ -65,8 +65,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitLong(String name, Long node) {
-    assert name != null;
-    appendIndented("%s: %s\r\n", name, node);
+    appendIndented("%s: %s\r\n", notNull(name), node);
   }
 
   @Override

@@ -26,14 +26,9 @@ import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
+import org.yaml.snakeyaml.error.YAMLException;
+
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.NoSuchAlgorithmException;
@@ -41,7 +36,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import org.yaml.snakeyaml.error.YAMLException;
+
+import static io.cdep.cdep.utils.Invariant.*;
 
 public class GeneratorEnvironment implements ManifestProvider, DownloadProvider {
 
@@ -57,11 +53,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   final public Set<File> alreadyDownloaded = new HashSet<>();
 
   public GeneratorEnvironment(
-      PrintStream out,
-      File workingFolder,
-      File userFolder,
-      boolean forceRedownload,
-      boolean ignoreManifestHashes) {
+      PrintStream out, File workingFolder, File userFolder, boolean forceRedownload, boolean ignoreManifestHashes) {
     if (userFolder == null) {
       userFolder = new File(System.getProperty("user.home"));
     }
@@ -87,8 +79,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     }
   }
 
-  private static void copyInputStreamToLocalFile(InputStream input, File localFile)
-      throws IOException {
+  private static void copyInputStreamToLocalFile(InputStream input, File localFile) throws IOException {
     byte[] buffer = new byte[4096];
     int n;
 
@@ -100,8 +91,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   }
 
   public File getLocalDownloadFilename(Coordinate coordinate, URL remoteArchive) {
-    assert coordinate != null;
-    assert remoteArchive != null;
+    coordinate = notNull(coordinate);
+    remoteArchive = notNull(remoteArchive);
     File local = downloadFolder;
     local = new File(local, coordinate.groupId);
     local = new File(local, coordinate.artifactId);
@@ -110,11 +101,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     return local;
   }
 
-  public File tryGetLocalDownloadedFile(Coordinate coordinate, URL remoteArchive)
-      throws IOException {
-    assert coordinate != null;
-    assert remoteArchive != null;
-    File local = getLocalDownloadFilename(coordinate, remoteArchive);
+  public File tryGetLocalDownloadedFile(Coordinate coordinate, URL remoteArchive) throws IOException {
+    File local = getLocalDownloadFilename(notNull(coordinate), notNull(remoteArchive));
 
     if (local.isFile() && !forceRedownload) {
       return local;
@@ -127,8 +115,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
         // Multiples can happen, for example, when two packages depend on the same sub-package.
         return local;
       }
-      throw new RuntimeException(String.format(
-          "Tried to download %s twice in the same session", local));
+      fail("Tried to download %s twice in the same session", local);
     }
 
     // Indicate whether download or force redownload
@@ -150,15 +137,12 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     copyInputStreamToLocalFile(input, local);
     alreadyDownloaded.add(local);
 
-    if (!local.exists()) {
-      throw new RuntimeException(String.format("Did not write to %s", local));
-    }
+    require(local.exists(), "Did not write to %s", local);
     return local;
   }
 
   public CDepManifestYml tryGetManifest(
-      Coordinate coordinate,
-      URL remoteArchive) throws IOException, NoSuchAlgorithmException {
+      Coordinate coordinate, URL remoteArchive) throws IOException, NoSuchAlgorithmException {
     File file = tryGetLocalDownloadedFile(coordinate, remoteArchive);
     if (file == null) {
       // The remote didn't exist. Return null;
@@ -175,10 +159,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
       String sha256 = HashUtils.getSHA256OfFile(file);
       String priorSha256 = this.cdepSha256Hashes.get(cdepManifestYml.coordinate.toString());
       if (priorSha256 != null && !priorSha256.equals(sha256)) {
-        throw new RuntimeException(String.format(
-            "SHA256 of cdep-manifest.yml for package '%s' does not agree with value in " +
-                "cdep.sha256. Something changed.",
-            cdepManifestYml.coordinate));
+        throw new RuntimeException(String.format("SHA256 of cdep-manifest.yml for package '%s' does not agree with value in " + "cdep.sha256. Something changed.", cdepManifestYml.coordinate));
       }
       this.cdepSha256Hashes.put(cdepManifestYml.coordinate.toString(), sha256);
     }
@@ -191,14 +172,6 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     local = new File(local, coordinate.artifactId);
     local = new File(local, coordinate.version);
     local = new File(local, getUrlBaseName(remoteArchive));
-    return local;
-  }
-
-  public File getPackageUnzipFolder(Coordinate coordinate) {
-    File local = unzippedArchivesFolder;
-    local = new File(local, coordinate.groupId);
-    local = new File(local, coordinate.artifactId);
-    local = new File(local, coordinate.version);
     return local;
   }
 
@@ -223,17 +196,12 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
       ++i;
     }
     StringBuilder sb = new StringBuilder();
-    sb.append(
-        "# This file is automatically maintained by CDep.\n#\n" +
-            "#     MANUAL EDITS WILL BE LOST ON THE NEXT CDEP RUN\n#\n");
-    sb.append(
-        "# This file contains a list of CDep coordinates along with the SHA256 hash of their\n");
+    sb.append("# This file is automatically maintained by CDep.\n#\n" + "#     MANUAL EDITS WILL BE LOST ON THE NEXT CDEP RUN\n#\n");
+    sb.append("# This file contains a list of CDep coordinates along with the SHA256 hash of their\n");
     sb.append("# manifest file. This is to ensure that a manifest hasn't changed since the last\n");
     sb.append("# time CDep ran.\n");
-    sb.append(
-        "# The recommended best practice is to check this file into source control so that\n");
-    sb.append(
-        "# anyone else who builds this project is guaranteed to get the same dependencies.\n\n");
+    sb.append("# The recommended best practice is to check this file into source control so that\n");
+    sb.append("# anyone else who builds this project is guaranteed to get the same dependencies.\n\n");
     sb.append(new CDepSHA256(entries).toString());
     try (PrintWriter out = new PrintWriter(file)) {
       out.println(sb);

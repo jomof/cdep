@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
+import static io.cdep.cdep.utils.Invariant.require;
+
 /**
  * Methods for creating expression trees
  */
@@ -53,18 +56,18 @@ public class ExpressionBuilder {
   public static IfSwitchExpression ifSwitch(List<Expression> conditionList,
       List<Expression> expressionList,
       Expression elseExpression) {
-    assert conditionList != null;
-    assert expressionList != null;
-    assert elseExpression != null;
-    assert conditionList.size() == expressionList.size();
+    notNull(conditionList);
+    notNull(expressionList);
+    notNull(elseExpression);
+    require(conditionList.size() == expressionList.size());
     int size = conditionList.size();
     Expression conditions[] = new Expression[size];
     Expression expressions[] = new Expression[size];
     for (int i = 0; i < size; ++i) {
       conditions[i] = conditionList.get(i);
       expressions[i] = expressionList.get(i);
-      assert conditions[i] != null;
-      assert expressions[i] != null;
+      notNull(conditions[i]);
+      notNull(expressions[i]);
     }
     return ifSwitch(conditions, expressions, elseExpression);
   }
