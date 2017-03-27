@@ -44,6 +44,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.require;
+
 public class CDep {
 
   final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev21";
@@ -76,14 +79,10 @@ public class CDep {
     ResolutionScope scope = resolver.resolveAll(dependencies);
     for (String name : scope.getResolutions()) {
       ResolutionScope.Resolution resolved = scope.getResolution(name);
-      if (resolved instanceof ResolutionScope.FoundManifestResolution) {
-        ResolutionScope.FoundManifestResolution found = (ResolutionScope.FoundManifestResolution) resolved;
-        builder.addManifest(found.resolved);
-      } else {
-        throw new RuntimeException(String.format("Could not resolve %s", name));
-      }
+      require(resolved instanceof ResolutionScope.FoundManifestResolution, "Could not resolve %s", name);
+      ResolutionScope.FoundManifestResolution found = (ResolutionScope.FoundManifestResolution) resolved;
+      builder.addManifest(found.resolved);
     }
-
     return builder.build();
   }
 
@@ -338,8 +337,7 @@ public class CDep {
       }
       File applicationBase = new File(appname).getParentFile();
       if (applicationBase == null || !applicationBase.isDirectory()) {
-        throw new RuntimeException(String.format("Could not find folder for io.cdep.appname='%s'",
-            appname));
+        fail("Could not find folder for io.cdep.appname='%s'", appname);
       }
       out.printf("Installing cdep wrapper from %s\n", applicationBase);
       File cdepBatFrom = new File(applicationBase, "cdep.bat");

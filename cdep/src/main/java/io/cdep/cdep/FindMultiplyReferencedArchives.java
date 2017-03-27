@@ -31,10 +31,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
   /**
    * Utility function to add a new edge to an edge map.
    */
-  private static void addEdge(
-      Map<Coordinate, List<Coordinate>> edges,
-      Coordinate from,
-      Coordinate to) {
+  private static void addEdge(Map<Coordinate, List<Coordinate>> edges, Coordinate from, Coordinate to) {
     List<Coordinate> tos = edges.get(from);
     if (tos == null) {
       edges.put(from, new ArrayList<Coordinate>());
@@ -62,8 +59,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
   void visitFunctionTableExpression(FunctionTableExpression expr) {
     super.visitFunctionTableExpression(expr);
     for (Coordinate coordinate : forwardEdges.keySet()) {
-      Map<String, Coordinate> shaToPrior =
-          copyArchivesInto(coordinate, null);
+      Map<String, Coordinate> shaToPrior = copyArchivesInto(coordinate, null);
       validateForward(coordinate, shaToPrior);
     }
   }
@@ -71,24 +67,13 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
   private void validateForward(Coordinate dependant, Map<String, Coordinate> shaToPrior) {
     for (Coordinate dependee : forwardEdges.get(dependant)) {
       List<ModuleArchiveExpression> dependeeArchives = moduleArchives.get(dependee);
-      if (dependeeArchives == null) {
-        throw new RuntimeException(String.format("Reference %s was not found, needed by %s", dependee, dependant));
-      }
+      require(dependeeArchives != null, "Reference %s was not found, needed by %s", dependee, dependant);
       // Have any of the dependee archives been seen before?
       for (ModuleArchiveExpression dependeeArchive : moduleArchives.get(dependee)) {
         Coordinate prior = shaToPrior.get(dependeeArchive.sha256);
-        if (prior != null) {
-          throw new RuntimeException(
-              String.format("Package '%s' depends on '%s' but both packages "
-                      + "contain a file:\n  %s\nwith the same SHA256. The file should only be in "
-                      + "the lowest level package '%s' (sha256:%s)",
-                  dependant,
-                  dependee,
-                  dependeeArchive.file,
-                  dependee,
-                  dependeeArchive.sha256.substring(0, 8)
-              ));
-        }
+        require(prior == null, "Package '%s' depends on '%s' but both packages contain a file:\n  %s\nwith the " +
+            "same SHA256. The file should only be in " + "the lowest level package '%s' (sha256:%s)", dependant,
+            dependee, dependeeArchive.file, dependee, dependeeArchive.sha256.substring(0, 8));
       }
     }
   }
@@ -97,9 +82,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
    * Produce a map from SHA256 of each archive to the coordinate that references that archive
    * as a dependency.
    */
-  Map<String, Coordinate> copyArchivesInto(
-      Coordinate coordinate,
-      Map<String, Coordinate> original) {
+  Map<String, Coordinate> copyArchivesInto(Coordinate coordinate, Map<String, Coordinate> original) {
     Map<String, Coordinate> copy = new HashMap<>();
     if (original != null) {
       copy.putAll(original);
