@@ -12,8 +12,11 @@ public class CreateStringVisitor extends ReadonlyVisitor {
 
   public static String convert(Expression expr) {
     String result = new CreateStringVisitor(expr).sb.toString();
-    while (result.startsWith("\r\n")) {
+    while (result.startsWith("\n") || result.startsWith("\r")) {
       result = result.substring(1);
+    }
+    while (result.endsWith("\n") || result.endsWith("\r")) {
+      result = result.substring(0, result.length() - 1);
     }
     return result;
   }

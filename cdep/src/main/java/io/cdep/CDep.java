@@ -66,7 +66,7 @@ public class CDep {
       new CDep(System.out).go(args);
     } catch (Throwable e) {
       e.printStackTrace();
-      return 1;
+      return Integer.MIN_VALUE;
     }
     return 0;
   }
