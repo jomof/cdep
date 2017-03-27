@@ -4,6 +4,8 @@ import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.ExampleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.utils.FileUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +20,7 @@ public class CMakeExamplesGenerator {
         this.environment = environment;
     }
 
-    public void generate(FunctionTableExpression table) throws IOException {
+  public void generate(@NotNull FunctionTableExpression table) throws IOException {
         StringBuilder root = new StringBuilder();
         CMakeGenerator cmake = new CMakeGenerator(environment, table);
         root.append("cmake_minimum_required(VERSION 3.0.2)\n");
@@ -55,13 +57,15 @@ public class CMakeExamplesGenerator {
 
     }
 
-    private File getExampleRootFolder() {
-        File file = environment.examplesFolder;
-        file = new File(file, "cmake");
-        return file;
-    }
+  @NotNull
+  private File getExampleRootFolder() {
+    File file = environment.examplesFolder;
+    file = new File(file, "cmake");
+    return file;
+  }
 
-    private File getExampleFolder(Coordinate coordinate) {
+  @Nullable
+  private File getExampleFolder(@NotNull Coordinate coordinate) {
         File file = getExampleRootFolder();
         file = new File(file, notNull(coordinate.groupId));
         file = new File(file, notNull(coordinate.artifactId));

@@ -1,9 +1,15 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
+import org.jetbrains.annotations.Nullable;
+
 public class LinuxArchive {
+  @Nullable
   final public String file;
+  @Nullable
   final public String sha256;
+  @Nullable
   final public Long size;
+  @Nullable
   final public String lib;
   final public String include;
 

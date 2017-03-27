@@ -1,10 +1,14 @@
 package io.cdep.cdep.yml.cdepsha25;
 
+import org.jetbrains.annotations.Nullable;
+
 import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class HashEntry {
-    final public String coordinate;
-    final public String sha256;
+  @Nullable
+  final public String coordinate;
+  @Nullable
+  final public String sha256;
     private HashEntry() {
         this.coordinate = null;
         this.sha256 = null;

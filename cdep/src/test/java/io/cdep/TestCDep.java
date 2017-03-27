@@ -17,6 +17,7 @@ package io.cdep;
 
 import com.google.common.io.Files;
 import io.cdep.cdep.yml.cdep.CDepYml;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
 
@@ -32,7 +33,8 @@ import static org.junit.Assert.fail;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class TestCDep {
 
-  private static String main(String... args) throws Exception {
+  @NotNull
+  private static String main(@NotNull String... args) throws Exception {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     PrintStream ps = new PrintStream(baos);
     if (System.getProperty("io.cdep.appname") == null) {

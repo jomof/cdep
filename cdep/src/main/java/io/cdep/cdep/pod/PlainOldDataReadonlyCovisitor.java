@@ -1,5 +1,8 @@
 package io.cdep.cdep.pod;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -13,9 +16,10 @@ import static io.cdep.cdep.utils.ReflectionUtils.*;
  */
 public class PlainOldDataReadonlyCovisitor {
 
+  @NotNull
   public List<String> namestack = new ArrayList<>();
 
-  protected void push(String name) {
+  protected void push(@Nullable String name) {
     if (name == null) {
       push("[value]");
       return;
@@ -49,7 +53,7 @@ public class PlainOldDataReadonlyCovisitor {
     covisitFields(left, right);
   }
 
-  public <T> void covisitArray(String name, T[] left, T[] right, Class<T> elementType) {
+  public <T> void covisitArray(String name, @Nullable T[] left, @Nullable T[] right, @NotNull Class<T> elementType) {
     if (left == null && right == null) {
       return;
     }
@@ -73,13 +77,13 @@ public class PlainOldDataReadonlyCovisitor {
     }
   }
 
-  public void covisit(Object left, Object right) {
+  public void covisit(@Nullable Object left, @Nullable Object right) {
     require(left != null && right != null);
     require(left.getClass().equals(right.getClass()));
     covisit(null, left, right, left.getClass());
   }
 
-  public void covisit(String name, Object left, Object right, Class<?> type) {
+  public void covisit(String name, @Nullable Object left, @Nullable Object right, @NotNull Class<?> type) {
     if (left == null && right == null) {
       return;
     }
@@ -93,7 +97,7 @@ public class PlainOldDataReadonlyCovisitor {
     }
   }
 
-  public void covisitFields(Object left, Object right) {
+  public void covisitFields(@Nullable Object left, @Nullable Object right) {
     require(left != null || right != null);
     Object representative = right;
     if (representative == null) {
@@ -107,7 +111,7 @@ public class PlainOldDataReadonlyCovisitor {
     }
   }
 
-  private String getVisitorName(Class<?> type) {
+  private String getVisitorName(@NotNull Class<?> type) {
     String name;
     if (type.isArray()) {
       name = type.getComponentType().getName();

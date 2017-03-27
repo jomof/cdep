@@ -1,6 +1,7 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -32,7 +33,8 @@ public class TestCDepSHA256Utils {
         assertThat(hashes.hashes).hasLength(2);
     }
 
-    private CDepSHA256 create(String content) {
+    @NotNull
+    private CDepSHA256 create(@NotNull String content) {
         CDepSHA256 hashes = CDepSHA256Utils.convertStringToCDepSHA256(content);
         return CDepSHA256Utils.convertStringToCDepSHA256(hashes.toString());
 

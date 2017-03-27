@@ -16,6 +16,7 @@
 package io.cdep.cdep.ast.finder;
 
 import io.cdep.cdep.Coordinate;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
@@ -23,12 +24,13 @@ import static io.cdep.cdep.utils.Invariant.elementsNotNull;
 import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class ModuleExpression extends StatementExpression {
+  @NotNull
   final public ModuleArchiveExpression archive;
+  @NotNull
   final public Set<Coordinate> dependencies;
 
   ModuleExpression(
-      ModuleArchiveExpression archive,
-      Set<Coordinate> dependencies) {
+      ModuleArchiveExpression archive, @NotNull Set<Coordinate> dependencies) {
 
     this.archive = notNull(archive);
     this.dependencies = elementsNotNull(dependencies);

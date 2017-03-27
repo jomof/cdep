@@ -23,6 +23,7 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.io.File;
@@ -42,6 +43,7 @@ public class TestFindModuleFunctionTableBuilder {
       false);
   final private Resolver resolver = new Resolver(environment);
 
+  @NotNull
   private static SoftNameDependency createReference(String compile) {
     return new SoftNameDependency(compile);
 
