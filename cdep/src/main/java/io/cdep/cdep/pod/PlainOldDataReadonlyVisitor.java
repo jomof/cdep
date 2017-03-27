@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import static io.cdep.cdep.utils.Invariant.*;
-import static io.cdep.cdep.utils.ReflectionUtils.invoke;
+import static io.cdep.cdep.utils.ReflectionUtils.*;
 
 /**
  * Read-only visitor over a plain object. Uses reflection to find public fields to walk over.
@@ -33,13 +33,9 @@ abstract public class PlainOldDataReadonlyVisitor {
 
   public void visit(Object element, Class<?> elementClass) {
     notNull(element);
-    try {
-      String methodName = getVisitorName(elementClass);
-      Method method = getClass().getMethod(methodName, String.class, elementClass);
-      invoke(method, this, null, element);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    String methodName = getVisitorName(elementClass);
+    Method method = getMethod(getClass(), methodName, String.class, elementClass);
+    invoke(method, this, null, element);
   }
 
   public void visitFields(Object node) {
@@ -47,21 +43,15 @@ abstract public class PlainOldDataReadonlyVisitor {
     if (node.getClass().isEnum()) {
       return;
     }
-    try {
-      for (Field field : node.getClass().getFields()) {
-        require(field.getDeclaringClass() != Object.class);
-        require(field.getDeclaringClass() != String.class);
-        String methodName = getVisitorName(field.getType());
-        Method method = getClass().getMethod(methodName, String.class, field.getType());
-        Object fieldValue = field.get(node);
-        if (fieldValue != null) {
-          invoke(method, this, field.getName(), fieldValue);
-        }
+    for (Field field : node.getClass().getFields()) {
+      require(field.getDeclaringClass() != Object.class);
+      require(field.getDeclaringClass() != String.class);
+      String methodName = getVisitorName(field.getType());
+      Method method = getMethod(getClass(), methodName, String.class, field.getType());
+      Object fieldValue = getFieldValue(field, node);
+      if (fieldValue != null) {
+        invoke(method, this, field.getName(), fieldValue);
       }
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
     }
   }
 

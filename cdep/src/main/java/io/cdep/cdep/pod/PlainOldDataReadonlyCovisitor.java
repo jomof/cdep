@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static io.cdep.cdep.utils.Invariant.require;
-import static io.cdep.cdep.utils.ReflectionUtils.invoke;
+import static io.cdep.cdep.utils.ReflectionUtils.*;
 
 /**
  * Visit two instances at the same time. Allows comparison and merging.
@@ -86,10 +86,8 @@ public class PlainOldDataReadonlyCovisitor {
     String methodName = getVisitorName(type);
     push(name);
     try {
-      Method method = getClass().getMethod(methodName, String.class, type, type);
+      Method method = getMethod(getClass(), methodName, String.class, type, type);
       invoke(method, this, null, left, right);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
     } finally {
       pop();
     }
@@ -101,17 +99,11 @@ public class PlainOldDataReadonlyCovisitor {
     if (representative == null) {
       representative = left;
     }
-    if (representative.getClass().isEnum()) {
-      throw new RuntimeException("Don't visit enum field");
-    }
-    try {
-      for (Field field : representative.getClass().getFields()) {
-        Object leftValue = left == null ? null : field.get(left);
-        Object rightValue = right == null ? null : field.get(right);
-        covisit(field.getName(), leftValue, rightValue, field.getType());
-      }
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
+    require(!representative.getClass().isEnum(), "Don't visit enum field");
+    for (Field field : representative.getClass().getFields()) {
+      Object leftValue = left == null ? null : getFieldValue(field, left);
+      Object rightValue = right == null ? null : getFieldValue(field, right);
+      covisit(field.getName(), leftValue, rightValue, field.getType());
     }
   }
 
