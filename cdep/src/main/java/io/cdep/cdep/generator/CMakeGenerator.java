@@ -33,6 +33,13 @@ public class CMakeGenerator {
   }
 
   public void generate(FunctionTableExpression table) throws IOException {
+    String text = create(table);
+    File file = getCMakeConfigurationFile();
+    environment.out.printf("Generating %s\n", file);
+    FileUtils.writeTextToFile(file, text);
+  }
+
+  public String create(FunctionTableExpression table) throws IOException {
     table = (FunctionTableExpression) new CMakeConvertJoinedFileToString().visit(table);
 
     StringBuilder sb = new StringBuilder();
@@ -48,9 +55,7 @@ public class CMakeGenerator {
       sb.append(String.format("  %s(${target})\n", function));
     }
     sb.append("endfunction(add_all_cdep_dependencies)\n");
-    File file = getCMakeConfigurationFile();
-    environment.out.printf("Generating %s\n", file);
-    FileUtils.writeTextToFile(file, sb.toString());
+    return sb.toString();
   }
 
   private String getCMakePath(File file) {

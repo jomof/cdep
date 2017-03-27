@@ -14,6 +14,30 @@ import java.util.List;
 
 
 public class ResolvedManifests {
+  public static ResolvedManifest boost() throws MalformedURLException {
+    return getResolvedManifest(
+        "coordinate:\n" +
+            "  groupId: com.github.jomof\n" +
+            "  artifactId: boost\n" +
+            "  version: 1.0.63-rev21\n" +
+            "archive:\n" +
+            "  file: boost_1_63_0.zip\n" +
+            "  sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" +
+            "  size: 142660118\n" +
+            "  include: boost_1_63_0\n" +
+            "\n" +
+            "example: |\n" +
+            "  #include <boost/numeric/ublas/matrix.hpp>\n" +
+            "  void test() {\n" +
+            "     using namespace boost::numeric::ublas;\n" +
+            "     matrix<double> m (3, 3);\n" +
+            "     for (unsigned i = 0; i < m.size1 (); ++ i) {\n" +
+            "       for (unsigned j = 0; j < m.size2 (); ++ j) {\n" +
+            "         m (i, j) = 3 * i + j;\n" +
+            "       }\n" +
+            "     }\n" +
+            "  }\n");
+  }
 
   public static ResolvedManifest sqliteLinux() throws MalformedURLException {
     return getResolvedManifest("coordinate:\n" +

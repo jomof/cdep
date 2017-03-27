@@ -20,6 +20,15 @@ public class TestCMakeGenerator {
       false);
 
   @Test
+  public void testBoost() throws Exception {
+    FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+    builder.addManifest(ResolvedManifests.boost());
+    FunctionTableExpression table = builder.build();
+    String result = new CMakeGenerator(environment).create(table);
+    System.out.printf(result);
+  }
+
+  @Test
   public void testAllResolvedManifests() throws Exception {
     Map<String, String> expected = new HashMap<>();
     expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found");
