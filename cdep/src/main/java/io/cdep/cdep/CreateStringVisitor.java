@@ -126,12 +126,6 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     appendIndented("end_module");
   }
 
-  protected void visitIndentedArray(@NotNull Expression[] array) {
-    for (int i = 0; i < array.length; ++i) {
-      visit(array[i]);
-    }
-  }
-
   protected void visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     if (expr.includePath != null) {
       appendIndent();

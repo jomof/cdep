@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <pattern value="io.cdep.CDep" method="main" />
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="io.cdep.annotations.Nullable" />
     <option name="myDefaultNotNull" value="io.cdep.annotations.NotNull" />

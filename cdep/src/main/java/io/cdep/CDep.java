@@ -48,7 +48,7 @@ import java.util.List;
 
 import static io.cdep.cdep.utils.Invariant.*;
 
-class CDep {
+public class CDep {
 
   final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev21";
   private PrintStream out = System.out;
@@ -66,8 +66,7 @@ class CDep {
     this.out = out;
   }
 
-  public static int main(@NotNull String[] args)
-      throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  public static int main(@NotNull String[] args) {
     try {
       new CDep(System.out).go(args);
     } catch (Throwable e) {
@@ -459,7 +458,7 @@ class CDep {
     return true;
   }
 
-  private boolean handleHelp(@NotNull List<String> args) throws IOException {
+  private boolean handleHelp(@NotNull List<String> args) {
     if (args.size() != 1 || !args.get(0).equals("--help")) {
       return true;
     }
@@ -478,13 +477,13 @@ class CDep {
     return false;
   }
 
-  private void handleWorkingFolder(@NotNull List<String> args) throws IOException {
+  private void handleWorkingFolder(@NotNull List<String> args) {
     for (String workingFolder : eatStringArgument("-wf", "--working-folder", args)) {
       this.workingFolder = new File(workingFolder);
     }
   }
 
-  private void handleDownloadFolder(@NotNull List<String> args) throws IOException {
+  private void handleDownloadFolder(@NotNull List<String> args) {
     for (String workingFolder : eatStringArgument("-df", "--download-folder", args)) {
       this.workingFolder = new File(workingFolder);
     }

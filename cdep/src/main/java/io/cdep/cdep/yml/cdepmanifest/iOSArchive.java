@@ -2,6 +2,7 @@ package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.annotations.Nullable;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class iOSArchive {
 
   @Nullable

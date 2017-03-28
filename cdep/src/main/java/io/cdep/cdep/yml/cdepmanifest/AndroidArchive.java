@@ -2,6 +2,7 @@ package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.annotations.Nullable;
 
+@SuppressWarnings("unused")
 public class AndroidArchive {
   @Nullable
   final public String file;

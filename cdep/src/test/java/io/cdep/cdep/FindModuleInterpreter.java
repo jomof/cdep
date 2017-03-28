@@ -23,8 +23,6 @@ import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.NopExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
 
-import java.lang.reflect.InvocationTargetException;
-
 import static io.cdep.cdep.utils.Invariant.require;
 
 class FindModuleInterpreter {
@@ -33,7 +31,7 @@ class FindModuleInterpreter {
   @SuppressWarnings("SameParameterValue")
   static ModuleArchive findAndroid(@NotNull FunctionTableExpression table, Coordinate functionName, final String
       cdepExplodedRoot, final String targetPlatform, final String systemVersion, // On android, platform like 21
-      final String androidStlType, final String androidTargetAbi) throws InvocationTargetException, IllegalAccessException {
+      final String androidStlType, final String androidTargetAbi) {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
@@ -59,9 +57,7 @@ class FindModuleInterpreter {
   }
 
   @Nullable
-  static ModuleArchive findiOS(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot,
-      final String targetPlatform, final String osxArchitectures[], final String osxSysroot) throws InvocationTargetException,
-      IllegalAccessException {
+  static ModuleArchive findiOS(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot, final String targetPlatform, final String osxArchitectures[], final String osxSysroot) {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
@@ -105,8 +101,7 @@ class FindModuleInterpreter {
   }
 
   @Nullable
-  static ModuleArchive findLinux(@NotNull FunctionTableExpression table, Coordinate functionName, final String
-      cdepExplodedRoot, final String targetPlatform) throws InvocationTargetException, IllegalAccessException {
+  static ModuleArchive findLinux(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot, final String targetPlatform) {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
       @Override

@@ -55,7 +55,7 @@ public class CMakeGenerator {
 
 
   @NotNull
-  public String create() throws IOException {
+  public String create() {
     append("# GENERATED FILE. DO NOT EDIT.\n");
 
     for (FindModuleExpression findFunction : table.findFunctions.values()) {

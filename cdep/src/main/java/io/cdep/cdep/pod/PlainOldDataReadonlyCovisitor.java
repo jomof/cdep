@@ -14,13 +14,14 @@ import static io.cdep.cdep.utils.ReflectionUtils.*;
 /**
  * Visit two instances at the same time. Allows comparison and merging.
  */
+@SuppressWarnings("unused")
 public class PlainOldDataReadonlyCovisitor {
 
 
   @NotNull
-  public List<String> namestack = new ArrayList<>();
+  List<String> namestack = new ArrayList<>();
 
-  protected void push(@Nullable String name) {
+  private void push(@Nullable String name) {
     if (name == null) {
       push("[value]");
       return;
@@ -28,13 +29,14 @@ public class PlainOldDataReadonlyCovisitor {
     namestack.add(0, name);
   }
 
-  protected void pop() {
+  private void pop() {
     namestack.remove(0);
   }
 
   public void covisitString(String name, String left, String right) {
   }
 
+  @SuppressWarnings("EmptyMethod")
   public void covisitInteger(String name, Integer left, Integer right) {
   }
 

@@ -12,6 +12,7 @@ import java.util.Map;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
 
 
+@SuppressWarnings("unused")
 public class RewritingVisitor {
   final protected Map<Expression, Expression> identity = new HashMap<>();
 
@@ -100,10 +101,7 @@ public class RewritingVisitor {
 
   @NotNull
   private Expression visitAssignmentBlockExpression(@NotNull AssignmentBlockExpression expr) {
-    return assignmentBlock(
-        visitList(expr.assignments),
-        (StatementExpression) visit(expr.statement)
-    );
+    return assignmentBlock(visitList(expr.assignments), (StatementExpression) visit(expr.statement));
   }
 
 
@@ -147,10 +145,7 @@ public class RewritingVisitor {
 
 
   protected Expression visitModuleExpression(@NotNull ModuleExpression expr) {
-    return module(
-        (ModuleArchiveExpression) visit(expr.archive),
-        expr.dependencies
-    );
+    return module((ModuleArchiveExpression) visit(expr.archive), expr.dependencies);
   }
 
 
@@ -166,19 +161,11 @@ public class RewritingVisitor {
 
   @NotNull
   private Expression visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
-    return archive(
-        expr.file,
-        expr.sha256,
-        expr.size,
-        expr.include, visitMaybeNull(expr.includePath),
-        expr.library, visitMaybeNull(expr.libraryPath));
+    return archive(expr.file, expr.sha256, expr.size, expr.include, visitMaybeNull(expr.includePath), expr.library, visitMaybeNull(expr.libraryPath));
   }
 
   protected Expression visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
-    return invoke(
-        (ExternalFunctionExpression) visit(expr.function),
-        visitArray(expr.parameters)
-    );
+    return invoke((ExternalFunctionExpression) visit(expr.function), visitArray(expr.parameters));
   }
 
 
@@ -204,11 +191,7 @@ public class RewritingVisitor {
   }
 
   protected Expression visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
-    return ifSwitch(
-        visitArray(expr.conditions),
-        visitArray(expr.expressions),
-        visit(expr.elseExpression)
-    );
+    return ifSwitch(visitArray(expr.conditions), visitArray(expr.expressions), visit(expr.elseExpression));
   }
 
   protected Expression visitParameterExpression(ParameterExpression expr) {
@@ -217,21 +200,10 @@ public class RewritingVisitor {
 
   @NotNull
   protected Expression visitFindModuleExpression(@NotNull FindModuleExpression expr) {
-    return new FindModuleExpression(
-        expr.coordinate,
-        (ParameterExpression) visit(expr.cdepExplodedRoot),
-        (ParameterExpression) visit(expr.targetPlatform),
-        (ParameterExpression) visit(expr.systemVersion),
-        (ParameterExpression) visit(expr.androidTargetAbi),
-        (ParameterExpression) visit(expr.androidStlType),
-        (ParameterExpression) visit(expr.osxSysroot),
-        (ParameterExpression) visit(expr.osxArchitectures),
-        (StatementExpression) visit(expr.expression)
-    );
+    return new FindModuleExpression(expr.coordinate, (ParameterExpression) visit(expr.cdepExplodedRoot), (ParameterExpression) visit(expr.targetPlatform), (ParameterExpression) visit(expr.systemVersion), (ParameterExpression) visit(expr.androidTargetAbi), (ParameterExpression) visit(expr.androidStlType), (ParameterExpression) visit(expr.osxSysroot), (ParameterExpression) visit(expr.osxArchitectures), (StatementExpression) visit(expr.expression));
   }
 
-  @NotNull Expression visitFunctionTableExpression(@NotNull FunctionTableExpression
-      expr) {
+  @NotNull Expression visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
     FunctionTableExpression newExpr = new FunctionTableExpression();
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
       newExpr.findFunctions.put(coordinate, (FindModuleExpression) visit(expr.findFunctions.get(coordinate)));

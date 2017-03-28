@@ -3,6 +3,7 @@ package io.cdep.cdep.yml.cdepmanifest;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.pod.PlainOldDataEqualityCovisitor;
 
+@SuppressWarnings("unused")
 public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
 
   public static boolean areDeeplyIdentical(Object left, Object right) {

@@ -191,12 +191,14 @@ public class InterpretingVisitor {
     return expr.method;
   }
 
+  @SuppressWarnings({"SameReturnValue", "unused"})
   @Nullable
   private Object visitExampleExpression(ExampleExpression expr) {
     return null;
   }
 
 
+  @SuppressWarnings("SameReturnValue")
   @Nullable
   Object visitAbortExpression(@NotNull AbortExpression expr) {
     Object parameters[] = (Object[]) coerce(visitArray(expr.parameters), String[].class);
@@ -240,6 +242,7 @@ public class InterpretingVisitor {
     return result;
   }
 
+  @SuppressWarnings("SameReturnValue")
   @Nullable
   private Object visitAssignmentExpression(@NotNull AssignmentExpression expr) {
     assert stack != null;
@@ -287,6 +290,7 @@ public class InterpretingVisitor {
     return null;
   }
 
+  @SuppressWarnings("SameReturnValue")
   @Nullable
   private Object visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
     for (Coordinate coordinate : expr.findFunctions.keySet()) {

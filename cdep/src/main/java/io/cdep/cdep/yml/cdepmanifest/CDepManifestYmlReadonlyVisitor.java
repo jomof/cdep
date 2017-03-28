@@ -4,6 +4,7 @@ import io.cdep.annotations.NotNull;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.pod.PlainOldDataReadonlyVisitor;
 
+@SuppressWarnings("unused")
 abstract public class CDepManifestYmlReadonlyVisitor extends PlainOldDataReadonlyVisitor {
 
   public void visitCDepManifestYml(String name, @NotNull CDepManifestYml value) {

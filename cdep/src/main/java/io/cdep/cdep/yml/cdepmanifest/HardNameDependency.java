@@ -7,7 +7,7 @@ import io.cdep.annotations.Nullable;
  * This is a name like com.github.jomof:firebase/admob:2.1.3-rev7
  * It is expected to be a parseable coordinate.
  */
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class HardNameDependency {
   @Nullable
   final public String compile;

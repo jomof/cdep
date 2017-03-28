@@ -108,9 +108,11 @@ public class ReadonlyVisitor {
   protected void visitIntegerExpression(IntegerExpression expr) {
   }
 
+  @SuppressWarnings("EmptyMethod")
   protected void visitExternalFunctionExpression(ExternalFunctionExpression expr) {
   }
 
+  @SuppressWarnings("EmptyMethod")
   protected void visitExampleExpression(ExampleExpression expr) {
   }
 
@@ -164,6 +166,7 @@ public class ReadonlyVisitor {
     visitArray(expr.statements);
   }
 
+  @SuppressWarnings("EmptyMethod")
   protected void visitNopExpression(NopExpression expr) {
   }
 

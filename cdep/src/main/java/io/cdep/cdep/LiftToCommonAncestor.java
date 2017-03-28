@@ -1,7 +1,6 @@
 package io.cdep.cdep;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
 import io.cdep.cdep.ast.finder.*;
 
 import java.util.*;
@@ -11,13 +10,9 @@ import static io.cdep.cdep.utils.Invariant.require;
 
 public class LiftToCommonAncestor extends RewritingVisitor {
   @NotNull
-  Set<AssignmentExpression> captured = new HashSet<>();
+  private Set<AssignmentExpression> captured = new HashSet<>();
   @NotNull
-  List<AssignmentExpression> functionOrder = new ArrayList<>();
-  @NotNull
-  Map<AssignmentExpression, Integer> functionCounts = new HashMap<>();
-  @Nullable
-  FindModuleExpression latest = null;
+  private Map<AssignmentExpression, Integer> functionCounts = new HashMap<>();
 
   public LiftToCommonAncestor() {
   }
@@ -29,8 +24,6 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     Map<AssignmentExpression, Integer> counts = new HashMap<>();
     assignments(expr, order, counts);
     this.functionCounts = counts;
-    this.functionOrder = order;
-    latest = expr;
     FindModuleExpression result = (FindModuleExpression) super.visitFindModuleExpression(expr);
     List<AssignmentExpression> block = extractBlocks(result);
     if (block.size() > 0) {
@@ -89,8 +82,8 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     return block;
   }
 
-  void assignments(Expression expr, @NotNull List<AssignmentExpression> order, @NotNull Map<AssignmentExpression, Integer>
-      counts) {
+  private void assignments(Expression expr, @NotNull List<AssignmentExpression> order, @NotNull Map<AssignmentExpression,
+      Integer> counts) {
     require(order.size() == 0);
     require(counts.size() == 0);
     List<AssignmentExpression> assignments = new GetContainedReferences(expr).list;
