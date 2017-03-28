@@ -29,7 +29,6 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.lastIndexOfString;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.module;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.multi;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.nop;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.parameter;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.stringStartsWith;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.substring;
@@ -44,8 +43,8 @@ import io.cdep.cdep.ast.finder.ExampleExpression;
 import io.cdep.cdep.ast.finder.Expression;
 import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
 import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
 import io.cdep.cdep.ast.finder.StatementExpression;
 import io.cdep.cdep.generator.AndroidAbi;
 import io.cdep.cdep.resolver.ResolvedManifest;
@@ -72,14 +71,8 @@ import java.util.Set;
 @SuppressWarnings("Java8ReplaceMapGet")
 public class FindModuleFunctionTableBuilder {
 
+  @NotNull
   private final Map<Coordinate, ResolvedManifest> manifests = new HashMap<>();
-  private final ParameterExpression cdepExplodedRoot = parameter("cdep_exploded_root");
-  private final ParameterExpression osxSysroot = parameter("osxSysroot");
-  private final ParameterExpression osxArchitectures = parameter("osxArchitectures");
-  private final ParameterExpression targetPlatform = parameter("targetPlatform");
-  private final ParameterExpression androidArchAbi = parameter("androidArchAbi");
-  private final ParameterExpression androidStlType = parameter("androidStlType");
-  private final ParameterExpression systemVersion = parameter("systemVersion");
 
   public void addManifest(@NotNull ResolvedManifest resolved) {
     manifests.put(resolved.cdepManifestYml.coordinate, resolved);
@@ -92,7 +85,8 @@ public class FindModuleFunctionTableBuilder {
     // Build module lookup findFunctions
     for (ResolvedManifest resolved : manifests.values()) {
       require(resolved.cdepManifestYml.coordinate != null);
-      functionTable.findFunctions.put(resolved.cdepManifestYml.coordinate, buildFindModule(resolved));
+      functionTable.findFunctions.put(resolved.cdepManifestYml.coordinate, buildFindModule(
+          functionTable.globals, resolved));
     }
 
     // Build examples
@@ -114,7 +108,9 @@ public class FindModuleFunctionTableBuilder {
   }
 
   @NotNull
-  private FindModuleExpression buildFindModule(@NotNull ResolvedManifest resolved)
+  private FindModuleExpression buildFindModule(
+      @NotNull GlobalBuildEnvironmentExpression globals,
+      @NotNull ResolvedManifest resolved)
       throws MalformedURLException, URISyntaxException {
 
     Map<Expression, Expression> cases = new HashMap<>();
@@ -140,19 +136,19 @@ public class FindModuleFunctionTableBuilder {
 
     // Like, {root}/com.github.jomof/vectorial/1.0.0
     AssignmentExpression explodedArchiveFolder = assign("exploded_archive_folder",
-        joinFileSegments(cdepExplodedRoot, explodedArchiveTail));
+        joinFileSegments(globals.cdepExplodedRoot, explodedArchiveTail));
 
     List<String> supported = new ArrayList<>();
     boolean headerOnly = true;
     if (manifest.android != null && manifest.android.archives != null) {
       headerOnly = false;
       supported.add("Android");
-      cases.put(string("Android"), buildAndroidStlTypeCase(resolved, explodedArchiveFolder, dependencies));
+      cases.put(string("Android"), buildAndroidStlTypeCase(globals, resolved, explodedArchiveFolder, dependencies));
     }
     if (manifest.iOS != null && manifest.iOS.archives != null) {
       headerOnly = false;
       supported.add("Darwin");
-      cases.put(string("Darwin"), buildDarwinPlatformCase(resolved, explodedArchiveFolder, dependencies));
+      cases.put(string("Darwin"), buildDarwinPlatformCase(globals, resolved, explodedArchiveFolder, dependencies));
     }
     if (manifest.linux != null && manifest.linux.archives != null && manifest.linux.archives.length > 0) {
       headerOnly = false;
@@ -173,7 +169,7 @@ public class FindModuleFunctionTableBuilder {
     Expression expressions[] = new Expression[cases.size()];
     int i = 0;
     for (Map.Entry<Expression, Expression> entry : cases.entrySet()) {
-      bool[i] = eq(targetPlatform, entry.getKey());
+      bool[i] = eq(globals.targetPlatform, entry.getKey());
       expressions[i] = entry.getValue();
       ++i;
     }
@@ -181,22 +177,14 @@ public class FindModuleFunctionTableBuilder {
     AbortExpression abort;
     require(supported.size() > 0, "Module '%s' doesn't support any platforms.", coordinate);
     abort = abort(String.format("Target platform '%%s' is not supported by module '%s'. " + "Supported: %s", coordinate,
-        StringUtils.joinOn(" ", supported)), targetPlatform);
+        StringUtils.joinOn(" ", supported)), globals.targetPlatform);
     StatementExpression expression = ifSwitch(bool, expressions, abort);
 
     Archive archive = manifest.archive;
     if (archive != null) {
       expression = multi(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies), expression);
     }
-    return new FindModuleExpression(coordinate,
-        cdepExplodedRoot,
-        targetPlatform,
-        systemVersion,
-        androidArchAbi,
-        androidStlType,
-        osxSysroot,
-        osxArchitectures,
-        expression);
+    return new FindModuleExpression(coordinate, expression);
   }
 
   @NotNull
@@ -266,12 +254,14 @@ public class FindModuleFunctionTableBuilder {
   }
 
   @NotNull
-  private Expression buildDarwinPlatformCase(@NotNull ResolvedManifest resolved,
+  private Expression buildDarwinPlatformCase(
+      @NotNull GlobalBuildEnvironmentExpression globals,
+      @NotNull ResolvedManifest resolved,
       @NotNull AssignmentExpression explodedArchiveFolder,
       @NotNull Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
 
     // Something like iPhone10.2.sdk or iPhone.sdk
-    AssignmentExpression osxSysrootSDKName = assign("osx_sysroot_sdk_name", getFileName(osxSysroot));
+    AssignmentExpression osxSysrootSDKName = assign("osx_sysroot_sdk_name", getFileName(globals.osxSysroot));
 
     // The position of the right-most dot
     AssignmentExpression lastDotPosition = assign("last_dot_position", lastIndexOfString(osxSysrootSDKName, "."));
@@ -285,11 +275,13 @@ public class FindModuleFunctionTableBuilder {
     if (archives == null) {
       archives = new iOSArchive[0];
     }
-    return buildiosArchitectureSwitch(resolved, archives, explodedArchiveFolder, combinedPlatformAndSDK, dependencies);
+    return buildiosArchitectureSwitch(globals, resolved, archives, explodedArchiveFolder, combinedPlatformAndSDK, dependencies);
   }
 
   @NotNull
-  private Expression buildiosArchitectureSwitch(@NotNull ResolvedManifest resolved,
+  private Expression buildiosArchitectureSwitch(
+      @NotNull GlobalBuildEnvironmentExpression globals,
+      @NotNull ResolvedManifest resolved,
       @NotNull iOSArchive archive[],
       @NotNull AssignmentExpression explodedArchiveFolder,
       @NotNull AssignmentExpression combinedPlatformAndSDK,
@@ -299,7 +291,7 @@ public class FindModuleFunctionTableBuilder {
     List<Expression> expressions = new ArrayList<>();
     String supported = "";
     for (iOSArchitecture architecture : grouped.keySet()) {
-      conditions.add(arrayHasOnlyElement(osxArchitectures, string(architecture.toString())));
+      conditions.add(arrayHasOnlyElement(globals.osxArchitectures, string(architecture.toString())));
       expressions.add(buildiOSPlatformSdkSwitch(resolved,
           grouped.get(architecture),
           explodedArchiveFolder,
@@ -314,11 +306,12 @@ public class FindModuleFunctionTableBuilder {
         abort(String.format("OSX architecture '%%s' is not supported by module " + "'%s'. "      +
                 "Supported: %s",
             resolved.cdepManifestYml.coordinate,
-            supported), osxArchitectures));
+            supported), globals.osxArchitectures));
   }
 
   @NotNull
-  private Expression buildiOSPlatformSdkSwitch(@NotNull ResolvedManifest resolved,
+  private Expression buildiOSPlatformSdkSwitch(
+      @NotNull ResolvedManifest resolved,
       @NotNull List<iOSArchive> archives,
       @NotNull AssignmentExpression explodedArchiveFolder,
       @NotNull AssignmentExpression combinedPlatformAndSDK,
@@ -371,7 +364,9 @@ public class FindModuleFunctionTableBuilder {
   }
 
   @NotNull
-  private Expression buildAndroidStlTypeCase(@NotNull ResolvedManifest resolved,
+  private Expression buildAndroidStlTypeCase(
+      @NotNull GlobalBuildEnvironmentExpression globals,
+      @NotNull ResolvedManifest resolved,
       @NotNull AssignmentExpression explodedArchiveFolder,
       @NotNull Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
 
@@ -395,7 +390,7 @@ public class FindModuleFunctionTableBuilder {
           resolved.cdepManifestYml.coordinate);
       // If there are no runtimes, then skip the runtime check. This is likely a
       // header-only module.
-      return buildAndroidPlatformExpression(resolved, noRuntimeAndroids, explodedArchiveFolder, dependencies);
+      return buildAndroidPlatformExpression(globals, resolved, noRuntimeAndroids, explodedArchiveFolder, dependencies);
     }
 
     Map<Expression, Expression> cases = new HashMap<>();
@@ -403,16 +398,16 @@ public class FindModuleFunctionTableBuilder {
     for (String stlType : stlTypes.keySet()) {
       runtimes += stlType + " ";
       cases.put(string(stlType + "_shared"),
-          buildAndroidPlatformExpression(resolved, stlTypes.get(stlType), explodedArchiveFolder, dependencies));
+          buildAndroidPlatformExpression(globals, resolved, stlTypes.get(stlType), explodedArchiveFolder, dependencies));
       cases.put(string(stlType + "_static"),
-          buildAndroidPlatformExpression(resolved, stlTypes.get(stlType), explodedArchiveFolder, dependencies));
+          buildAndroidPlatformExpression(globals, resolved, stlTypes.get(stlType), explodedArchiveFolder, dependencies));
     }
 
     Expression bool[] = new Expression[cases.size()];
     Expression expressions[] = new Expression[cases.size()];
     int i = 0;
     for (Map.Entry<Expression, Expression> entry : cases.entrySet()) {
-      bool[i] = eq(androidStlType, entry.getKey());
+      bool[i] = eq(globals.androidStlType, entry.getKey());
       expressions[i] = entry.getValue();
       ++i;
     }
@@ -420,11 +415,13 @@ public class FindModuleFunctionTableBuilder {
         expressions,
         abort(String.format("Android runtime '%%s' is not supported by module '%s'. Supported: " + "%s",
             resolved.cdepManifestYml.coordinate,
-            runtimes), androidStlType));
+            runtimes), globals.androidStlType));
   }
 
   @NotNull
-  private Expression buildAndroidPlatformExpression(@NotNull ResolvedManifest resolved,
+  private Expression buildAndroidPlatformExpression(
+      @NotNull GlobalBuildEnvironmentExpression globals,
+      @NotNull ResolvedManifest resolved,
       @NotNull List<AndroidArchive> androids,
       @NotNull AssignmentExpression explodedArchiveFolder,
       //
@@ -434,7 +431,7 @@ public class FindModuleFunctionTableBuilder {
     // If there's only one android left and it doesn't have a platform then this is
     // a header-only module.
     if (androids.size() == 1 && androids.get(0).platform == null) {
-      return buildAndroidAbiExpression(resolved, androids, explodedArchiveFolder, dependencies);
+      return buildAndroidAbiExpression(globals, resolved, androids, explodedArchiveFolder, dependencies);
     }
 
     Map<Integer, List<AndroidArchive>> grouped = new HashMap<>();
@@ -457,21 +454,21 @@ public class FindModuleFunctionTableBuilder {
     List<Expression> expressions = new ArrayList<>();
 
     for (int platform : platforms) {
-      conditions.add(0, gte(systemVersion, platform));
-      expressions.add(0, buildAndroidAbiExpression(resolved, grouped.get(platform), explodedArchiveFolder, dependencies));
+      conditions.add(0, gte(globals.systemVersion, platform));
+      expressions.add(0, buildAndroidAbiExpression(globals, resolved, grouped.get(platform), explodedArchiveFolder, dependencies));
     }
     return ifSwitch(conditions,
         expressions,
         abort(String.format("Android API level '%%s' is not supported by module " + "'%s'", resolved.cdepManifestYml.coordinate),
-            systemVersion));
+            globals.systemVersion));
   }
 
   @NotNull
-  private Expression buildAndroidAbiExpression(@NotNull ResolvedManifest resolved,
+  private Expression buildAndroidAbiExpression(
+      @NotNull GlobalBuildEnvironmentExpression globals,
+      @NotNull ResolvedManifest resolved,
       @NotNull List<AndroidArchive> androids,
       @NotNull AssignmentExpression explodedArchiveFolder,
-      //
-      // Parent of all .zip folders for this coordinate
       @NotNull Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
     require(androids.size() == 1, "Expected only one android archive upon reaching ABI level. There were %s.", androids.size());
     AndroidArchive archive = androids.iterator().next();
@@ -489,13 +486,13 @@ public class FindModuleFunctionTableBuilder {
 
     Expression prior = abort(String.format("Android ABI '%%s' is not supported by module '%s'. Supported: %s",
         manifest.coordinate,
-        supported), androidArchAbi);
+        supported), globals.androidTargetAbi);
 
     Expression bool[] = new Expression[cases.size()];
     Expression expressions[] = new Expression[cases.size()];
     int i = 0;
     for (Map.Entry<Expression, Expression> entry : cases.entrySet()) {
-      bool[i] = eq(androidArchAbi, entry.getKey());
+      bool[i] = eq(globals.androidTargetAbi, entry.getKey());
       expressions[i] = entry.getValue();
       ++i;
     }

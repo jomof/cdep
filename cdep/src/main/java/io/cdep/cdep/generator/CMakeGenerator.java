@@ -15,17 +15,33 @@
 */
 package io.cdep.cdep.generator;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.IntegerExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.ast.finder.MultiStatementExpression;
+import io.cdep.cdep.ast.finder.NopExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StatementExpression;
+import io.cdep.cdep.ast.finder.StringExpression;
 import io.cdep.cdep.utils.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
-
-import static io.cdep.cdep.utils.Invariant.notNull;
-import static io.cdep.cdep.utils.Invariant.require;
 
 public class CMakeGenerator {
 
@@ -40,7 +56,9 @@ public class CMakeGenerator {
   private StringBuilder sb;
   private int indent = 0;
   @Nullable
-  private FindModuleExpression signature = null;
+  private GlobalBuildEnvironmentExpression globals = null;
+  @Nullable
+  private Coordinate coordinate = null;
 
   public CMakeGenerator(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) {
     this.environment = environment;
@@ -59,12 +77,11 @@ public class CMakeGenerator {
   public String create() {
     append("# GENERATED FILE. DO NOT EDIT.\n");
 
+    globals = table.globals;
     for (FindModuleExpression findFunction : table.findFunctions.values()) {
-      signature = findFunction;
       indent = 0;
       visit(findFunction);
       require(indent == 0);
-      signature = null;
     }
 
     append("\nfunction(add_all_cdep_dependencies target)\n");
@@ -90,21 +107,18 @@ public class CMakeGenerator {
 
     String prefix = new String(new char[indent * 2]).replace('\0', ' ');
 
-    assert signature != null;
-    assert signature.coordinate.artifactId != null;
-    String upperArtifactID = signature.coordinate.artifactId.toUpperCase().replace("-", "_").replace("/", "_");
-
     if (expression instanceof FindModuleExpression) {
       FindModuleExpression specific = (FindModuleExpression) expression;
+      this.coordinate = specific.coordinate;
       append("\n###\n");
       append("### Add dependency for CDep module: %s\n", specific.coordinate.toString());
       append("###\n");
-      String coordinateVar = String.format("%s_CDEP_COORDINATE", upperArtifactID);
+      String coordinateVar = String.format("%s_CDEP_COORDINATE", getUpperArtifactId());
       append("%sif(%s)\n", prefix, coordinateVar);
       append("%s  message(FATAL_ERROR \"CDep module '$(%s}' was already defined\")\n", prefix, coordinateVar);
       append("%sendif(%s)\n", prefix, coordinateVar);
       append("%sset(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate);
-      String appenderFunctionName = getAddDependencyFunctionName(signature.coordinate);
+      String appenderFunctionName = getAddDependencyFunctionName(coordinate);
 
       append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
 
@@ -143,7 +157,7 @@ public class CMakeGenerator {
       append("%sendif()\n", prefix);
       return;
     } else if (expression instanceof AssignmentExpression) {
-      appendAssignments(prefix, signature, expression, null);
+      appendAssignments(prefix, expression, null);
       return;
     } else if (expression instanceof InvokeFunctionExpression) {
       InvokeFunctionExpression specific = (InvokeFunctionExpression) expression;
@@ -174,7 +188,7 @@ public class CMakeGenerator {
       return;
     } else if (expression instanceof ParameterExpression) {
       ParameterExpression specific = (ParameterExpression) expression;
-      append(parameterName(signature, specific));
+      append(parameterName(specific));
       return;
     } else if (expression instanceof IntegerExpression) {
       IntegerExpression specific = (IntegerExpression) expression;
@@ -191,7 +205,7 @@ public class CMakeGenerator {
       }
       append("\n");
       if (specific.archive.includePath != null) {
-        append("%sset(%s_ROOT ", prefix, upperArtifactID);
+        append("%sset(%s_ROOT ", prefix, getUpperArtifactId());
         visit(specific.archive.includePath);
         append(" PARENT_SCOPE)\n");
         append("%starget_include_directories(${target} PRIVATE ", prefix);
@@ -250,6 +264,10 @@ public class CMakeGenerator {
     throw new RuntimeException(expression.getClass().toString());
   }
 
+  private String getUpperArtifactId() {
+    return coordinate.artifactId.toUpperCase().replace("-", "_").replace("/", "_");
+  }
+
   @NotNull
   private String unquote(@NotNull String string) {
     require(string.startsWith("\"") && string.endsWith("\""));
@@ -261,23 +279,23 @@ public class CMakeGenerator {
   }
 
   @NotNull
-  private String parameterName(@NotNull FindModuleExpression signature, @NotNull ParameterExpression expr) {
-    if (expr == signature.targetPlatform) {
+  private String parameterName(@NotNull ParameterExpression expr) {
+    if (expr == globals.targetPlatform) {
       return "CMAKE_SYSTEM_NAME";
     }
-    if (expr == signature.androidStlType) {
+    if (expr == globals.androidStlType) {
       return "CDEP_DETERMINED_ANDROID_RUNTIME";
     }
-    if (expr == signature.systemVersion) {
+    if (expr == globals.systemVersion) {
       return "CMAKE_SYSTEM_VERSION";
     }
-    if (expr == signature.androidTargetAbi) {
+    if (expr == globals.androidTargetAbi) {
       return "CDEP_DETERMINED_ANDROID_ABI";
     }
-    if (expr == signature.osxSysroot) {
+    if (expr == globals.osxSysroot) {
       return "CMAKE_OSX_SYSROOT";
     }
-    if (expr == signature.osxArchitectures) {
+    if (expr == globals.osxArchitectures) {
       return "CMAKE_OSX_ARCHITECTURES";
     }
 
@@ -285,19 +303,18 @@ public class CMakeGenerator {
   }
 
   private Object appendAssignments(@NotNull String prefix,
-      @NotNull FindModuleExpression signature,
       @NotNull Expression expr,
       @Nullable String assignResult) {
     if (expr instanceof AssignmentExpression) {
       AssignmentExpression specific = (AssignmentExpression) expr;
       String identifier = specific.name;
-      appendAssignments(prefix, signature, specific.expression, identifier);
+      appendAssignments(prefix, specific.expression, identifier);
       return null;
     } else if (expr instanceof InvokeFunctionExpression) {
       InvokeFunctionExpression specific = (InvokeFunctionExpression) expr;
       Object values[] = new Object[specific.parameters.length];
       for (int i = 0; i < specific.parameters.length; ++i) {
-        Object value = appendAssignments(prefix, signature, specific.parameters[i], null);
+        Object value = appendAssignments(prefix, specific.parameters[i], null);
         require(value != null);
         values[i] = value;
       }
@@ -326,7 +343,7 @@ public class CMakeGenerator {
     } else if (expr instanceof ParameterExpression) {
       ParameterExpression specific = (ParameterExpression) expr;
       require(assignResult == null);
-      return parameterName(signature, specific);
+      return parameterName(specific);
     } else if (expr instanceof IntegerExpression) {
       require(assignResult == null);
       IntegerExpression specific = (IntegerExpression) expr;

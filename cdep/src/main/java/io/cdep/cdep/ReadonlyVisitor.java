@@ -2,7 +2,26 @@ package io.cdep.cdep;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.ArrayExpression;
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.IntegerExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.ast.finder.MultiStatementExpression;
+import io.cdep.cdep.ast.finder.NopExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StringExpression;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class ReadonlyVisitor {
@@ -84,7 +103,22 @@ public class ReadonlyVisitor {
       visitNopExpression((NopExpression) expr);
       return;
     }
+    if (expr.getClass().equals(GlobalBuildEnvironmentExpression.class)) {
+      visitGlobalBuildEnvironmentExpression((GlobalBuildEnvironmentExpression) expr);
+      return;
+    }
+
     throw new RuntimeException("ro" + expr.getClass().toString());
+  }
+
+  protected void visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
+    visit(expr.androidStlType);
+    visit(expr.androidTargetAbi);
+    visit(expr.cdepExplodedRoot);
+    visit(expr.osxArchitectures);
+    visit(expr.osxSysroot);
+    visit(expr.systemVersion);
+    visit(expr.targetPlatform);
   }
 
   protected void visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
@@ -153,13 +187,6 @@ public class ReadonlyVisitor {
   }
 
   protected void visitFindModuleExpression(@NotNull FindModuleExpression expr) {
-    visit(expr.cdepExplodedRoot);
-    visit(expr.targetPlatform);
-    visit(expr.systemVersion);
-    visit(expr.androidTargetAbi);
-    visit(expr.androidStlType);
-    visit(expr.osxSysroot);
-    visit(expr.osxArchitectures);
     visit(expr.expression);
   }
 
@@ -172,6 +199,7 @@ public class ReadonlyVisitor {
   }
 
   void visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
+    visit(expr.globals);
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
       visit(expr.findFunctions.get(coordinate));
     }

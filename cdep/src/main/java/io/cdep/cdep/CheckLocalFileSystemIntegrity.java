@@ -60,7 +60,7 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
 
   @Override
   protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-    if (expr.name.equals("cdep_exploded_root")) {
+    if (expr.name.equals("cdepExplodedRoot")) {
       return explodedRoot;
     }
     return super.visitParameterExpression(expr);

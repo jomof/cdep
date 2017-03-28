@@ -15,6 +15,8 @@
 */
 package io.cdep.cdep;
 
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
@@ -22,8 +24,6 @@ import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.NopExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
-
-import static io.cdep.cdep.utils.Invariant.require;
 
 class FindModuleInterpreter {
 
@@ -36,19 +36,19 @@ class FindModuleInterpreter {
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-        if (expr == function.targetPlatform) {
+        if (expr == table.globals.targetPlatform) {
           return targetPlatform;
         }
-        if (expr == function.systemVersion) {
+        if (expr == table.globals.systemVersion) {
           return systemVersion;
         }
-        if (expr == function.androidStlType) {
+        if (expr == table.globals.androidStlType) {
           return androidStlType;
         }
-        if (expr == function.androidTargetAbi) {
+        if (expr == table.globals.androidTargetAbi) {
           return androidTargetAbi;
         }
-        if (expr == function.cdepExplodedRoot) {
+        if (expr == table.globals.cdepExplodedRoot) {
           return cdepExplodedRoot;
         }
         return super.visitParameterExpression(expr);
@@ -63,16 +63,16 @@ class FindModuleInterpreter {
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-        if (expr == function.targetPlatform) {
+        if (expr == table.globals.targetPlatform) {
           return "Darwin";
         }
-        if (expr == function.osxSysroot) {
+        if (expr == table.globals.osxSysroot) {
           return osxSysroot;
         }
-        if (expr == function.cdepExplodedRoot) {
+        if (expr == table.globals.cdepExplodedRoot) {
           return cdepExplodedRoot;
         }
-        if (expr == function.osxArchitectures) {
+        if (expr == table.globals.osxArchitectures) {
           return osxArchitectures;
         }
         return super.visitParameterExpression(expr);
@@ -107,10 +107,10 @@ class FindModuleInterpreter {
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-        if (expr == function.targetPlatform) {
+        if (expr == table.globals.targetPlatform) {
           return "Linux";
         }
-        if (expr == function.cdepExplodedRoot) {
+        if (expr == table.globals.cdepExplodedRoot) {
           return cdepExplodedRoot;
         }
         return super.visitParameterExpression(expr);

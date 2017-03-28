@@ -15,13 +15,21 @@
 */
 package io.cdep.cdep.ast.finder;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.cdep.Coordinate;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class FunctionTableExpression extends Expression {
-  final public Map<Coordinate, FindModuleExpression> findFunctions = new HashMap<>();
-  final public Map<Coordinate, ExampleExpression> examples = new HashMap<>();
+  @NotNull final public GlobalBuildEnvironmentExpression globals;
+  @NotNull final public Map<Coordinate, FindModuleExpression> findFunctions = new HashMap<>();
+  @NotNull final public Map<Coordinate, ExampleExpression> examples = new HashMap<>();
 
+  public FunctionTableExpression() {
+    this.globals = new GlobalBuildEnvironmentExpression();
+  }
+
+  public FunctionTableExpression(@NotNull GlobalBuildEnvironmentExpression globals) {
+    this.globals = globals;
+  }
 }

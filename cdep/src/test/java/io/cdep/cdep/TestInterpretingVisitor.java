@@ -41,7 +41,7 @@ public class TestInterpretingVisitor {
         new InterpretingVisitor() {
           @Override
           protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-            if ("cdep_exploded_root".equals(expr.name)) {
+            if ("cdepExplodedRoot".equals(expr.name)) {
               return "exploded/root";
             }
             if ("targetPlatform".equals(expr.name)) {
@@ -112,7 +112,7 @@ public class TestInterpretingVisitor {
         new InterpretingVisitor() {
           @Override
           protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-            if ("cdep_exploded_root".equals(expr.name)) {
+            if ("cdepExplodedRoot".equals(expr.name)) {
               return "exploded/root";
             }
             if ("targetPlatform".equals(expr.name)) {
@@ -121,7 +121,7 @@ public class TestInterpretingVisitor {
             if ("systemVersion".equals(expr.name)) {
               return 21;
             }
-            if ("androidArchAbi".equals(expr.name)) {
+            if ("androidTargetAbi".equals(expr.name)) {
               return "x86";
             }
             if ("androidStlType".equals(expr.name)) {
@@ -179,7 +179,7 @@ public class TestInterpretingVisitor {
         new InterpretingVisitor() {
           @Override
           protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-            if ("cdep_exploded_root".equals(expr.name)) {
+            if ("cdepExplodedRoot".equals(expr.name)) {
               return "exploded/root";
             }
             if ("targetPlatform".equals(expr.name)) {

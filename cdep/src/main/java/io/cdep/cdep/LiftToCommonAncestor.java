@@ -1,12 +1,21 @@
 package io.cdep.cdep;
 
-import io.cdep.annotations.NotNull;
-import io.cdep.cdep.ast.finder.*;
-
-import java.util.*;
-
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.assignmentBlock;
 import static io.cdep.cdep.utils.Invariant.require;
+
+import io.cdep.annotations.NotNull;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.ast.finder.StatementExpression;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class LiftToCommonAncestor extends RewritingVisitor {
   @NotNull
@@ -28,13 +37,6 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     List<AssignmentExpression> block = extractBlocks(result);
     if (block.size() > 0) {
       result = new FindModuleExpression(result.coordinate,
-          result.cdepExplodedRoot,
-          result.targetPlatform,
-          result.systemVersion,
-          result.androidTargetAbi,
-          result.androidStlType,
-          result.osxSysroot,
-          result.osxArchitectures,
           assignmentBlock(block, result.expression));
     }
     return result;
