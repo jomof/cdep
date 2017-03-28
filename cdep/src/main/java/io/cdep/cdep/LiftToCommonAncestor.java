@@ -10,7 +10,7 @@ import static io.cdep.cdep.utils.Invariant.require;
 
 public class LiftToCommonAncestor extends RewritingVisitor {
   @NotNull
-  private Set<AssignmentExpression> captured = new HashSet<>();
+  private final Set<AssignmentExpression> captured = new HashSet<>();
   @NotNull
   private Map<AssignmentExpression, Integer> functionCounts = new HashMap<>();
 

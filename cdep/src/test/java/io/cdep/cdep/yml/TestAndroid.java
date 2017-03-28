@@ -16,7 +16,7 @@ import static com.google.common.truth.Truth.assertThat;
 public class TestAndroid {
 
   @Nullable
-  public static Android convertString(@NotNull String content) {
+  private static Android convertString(@NotNull String content) {
     Yaml yaml = new Yaml(new Constructor(Android.class));
     return (Android) yaml.load(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
   }

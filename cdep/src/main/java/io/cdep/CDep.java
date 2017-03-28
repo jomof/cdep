@@ -51,12 +51,11 @@ import static io.cdep.cdep.utils.Invariant.*;
 public class CDep {
 
   final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev21";
+  @Nullable
+  private final File downloadFolder = null;
   private PrintStream out = System.out;
-
   @NotNull
   private File workingFolder = new File(".");
-  @Nullable
-  private File downloadFolder = null;
   @Nullable
   private CDepYml config = null;
   @Nullable

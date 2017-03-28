@@ -55,11 +55,10 @@ public class CDepManifestYmlUtils {
   }
 
   public static class Checker extends CDepManifestYmlReadonlyVisitor {
+    @NotNull
+    private final Set<String> filesSeen = new HashSet<>();
     @Nullable
     private Coordinate coordinate = null;
-
-    @NotNull
-    private Set<String> filesSeen = new HashSet<>();
 
     @Override
     public void visitString(@Nullable String name, @NotNull String node) {

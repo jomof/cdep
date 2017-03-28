@@ -2,7 +2,7 @@ package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
 
-public class VersionUtils {
+class VersionUtils {
   static String checkVersion(@NotNull String version) {
         String[] pointSections = version.split("\\.");
         String EXPECTED = "major.minor.point[-tweak]";

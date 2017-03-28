@@ -8,11 +8,10 @@ import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor {
 
+  @NotNull
+  private final StringBuilder sb = new StringBuilder();
   private int indent = 0;
   private int eatIndent = 0;
-
-  @NotNull
-  private StringBuilder sb = new StringBuilder();
 
   public static String create(@NotNull Object node) {
     CreateCDepManifestYmlString thiz = new CreateCDepManifestYmlString();
