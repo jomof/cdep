@@ -1,17 +1,16 @@
 package io.cdep.cdep.utils;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
-import junit.framework.TestCase;
-import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import junit.framework.TestCase;
+import org.junit.Test;
 
 public class TestCDepManifestYmlUtils {
 
@@ -87,7 +86,7 @@ public class TestCDepManifestYmlUtils {
       check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0");
       fail("Expected an exception");
     } catch (Exception e) {
-      assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0' has malformed version, " + "expected major.minor" + "" +
+      assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0' has malformed version, " + "expected major.minor"  +
           ".point[-tweak] but there was only one " + "dot");
     }
   }
@@ -97,7 +96,7 @@ public class TestCDepManifestYmlUtils {
     try {
       check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
           "android:\n" + "  archives:\n" + "  -" + " file: bob.zip\n" + "    size: 99\n" + "    sha256: " +
-          "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "  - file: bob.zip\n" + "    size: 99\n" + "  " + "" + "  sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+          "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "  - file: bob.zip\n" + "    size: 99\n" + "  "  + "  sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
       fail("Expected an exception");
     } catch (Exception e) {
       assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' contains multiple references " + "to the same " +
@@ -109,8 +108,8 @@ public class TestCDepManifestYmlUtils {
   public void duplicateiOSZips() {
     try {
       check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
-          "iOS:\n" + "  archives:\n" + "  - " + "file: bob.zip\n" + "    size: 99\n" + "    platform: iPhoneSimulator\n" + "   " + "" + " sdk: 10.2\n" + "    architecture: i386\n" + "    sha256: " +
-          "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "  - file: bob.zip\n" + "    size: 99\n" + "  " + "" + "  platform: iPhoneSimulator\n" + "    sdk: 10.2\n" + "    architecture: i386\n" + "    sha256: " +
+          "iOS:\n" + "  archives:\n" + "  - " + "file: bob.zip\n" + "    size: 99\n" + "    platform: iPhoneSimulator\n" + "   "  + " sdk: 10.2\n" + "    architecture: i386\n" + "    sha256: " +
+          "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "  - file: bob.zip\n" + "    size: 99\n" + "  "  + "  platform: iPhoneSimulator\n" + "    sdk: 10.2\n" + "    architecture: i386\n" + "    sha256: " +
           "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
       fail("Expected an exception");
     } catch (Exception e) {

@@ -15,6 +15,11 @@
 */
 package io.cdep.cdep.generator;
 
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.notNull;
+import static io.cdep.cdep.utils.Invariant.require;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
@@ -27,9 +32,15 @@ import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
-import org.yaml.snakeyaml.error.YAMLException;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.NoSuchAlgorithmException;
@@ -37,8 +48,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import static io.cdep.cdep.utils.Invariant.*;
+import org.yaml.snakeyaml.error.YAMLException;
 
 public class GeneratorEnvironment implements ManifestProvider, DownloadProvider {
 
@@ -159,6 +169,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   }
 
   @Nullable
+  @Override
   public CDepManifestYml tryGetManifest(Coordinate coordinate, @NotNull URL remoteArchive)
       throws IOException, NoSuchAlgorithmException {
     File file = tryGetLocalDownloadedFile(coordinate, remoteArchive);
@@ -219,16 +230,18 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
       ++i;
     }
     StringBuilder sb = new StringBuilder();
-    sb.append("# This file is automatically maintained by CDep.\n#\n" + "#     MANUAL EDITS WILL BE LOST ON THE NEXT " + "" +
-        "" + "" + "CDEP RUN\n#\n");
+    sb.append("# This file is automatically maintained by CDep.\n#\n" + "#     MANUAL EDITS WILL BE LOST ON THE NEXT "  +
+        ""  + "CDEP RUN\n#\n");
     sb.append("# This file contains a list of CDep coordinates along with the SHA256 hash of their\n");
     sb.append("# manifest file. This is to ensure that a manifest hasn't changed since the last\n");
     sb.append("# time CDep ran.\n");
     sb.append("# The recommended best practice is to check this file into source control so that\n");
     sb.append("# anyone else who builds this project is guaranteed to get the same dependencies.\n\n");
     sb.append(new CDepSHA256(entries).toString());
-    try (PrintWriter out = new PrintWriter(file)) {
+    try (PrintWriter out = new PrintWriter(file, UTF_8.name())) {
       out.println(sb);
+    } catch (UnsupportedEncodingException e) {
+      throw new RuntimeException(e);
     }
   }
 

@@ -1,16 +1,15 @@
 package io.cdep.cdep;
 
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
+import static org.junit.Assert.fail;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
-import org.junit.Test;
-
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 
 public class TestInterpretingVisitor {
   @Test
@@ -26,7 +25,7 @@ public class TestInterpretingVisitor {
     expected.put("archiveMissingSize", "Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("sqliteAndroid", "Target platform 'Linux' is not supported by module 'com.github.jomof:sqlite:3.16.2-rev33'. "
         + "Supported: Android");
-    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github" + "" +
+    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github"  +
         ".jomof:firebase/admob:2.1.3-rev8");
     expected.put("sqliteiOS", "Target platform 'Linux' is not supported by module 'com.github.jomof:sqlite:3.16.2-rev33'. " +
         "Supported: Darwin");
@@ -92,7 +91,7 @@ public class TestInterpretingVisitor {
     expected.put("archiveMissingFile", "Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("archiveMissingSize", "Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("archiveMissingSha256", "Archive in http://google.com/cdep-manifest.yml was malformed");
-    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github" + "" +
+    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github"  +
         ".jomof:firebase/admob:2.1.3-rev8");
     expected.put("sqliteiOS", "Target platform 'Android' is not supported by module 'com.github.jomof:sqlite:3.16.2-rev33'. " +
         "Supported: Darwin");
@@ -156,7 +155,7 @@ public class TestInterpretingVisitor {
   @Test
   public void testAllResolvedManifestsiOS() throws Exception {
     Map<String, String> expected = new HashMap<>();
-    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github" + "" +
+    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github"  +
         ".jomof:firebase/admob:2.1.3-rev8");
     expected.put("sqliteAndroid", "Target platform 'Darwin' is not supported by module 'com.github.jomof:sqlite:3.16.2-rev33'. " +
         "" + "Supported: Android");

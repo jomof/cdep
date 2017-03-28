@@ -1,5 +1,10 @@
 package io.cdep.cdep.resolver;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
@@ -7,14 +12,8 @@ import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import org.junit.Test;
-
 import java.net.URL;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 
 
 public class TestResolver {
@@ -31,7 +30,7 @@ public class TestResolver {
       + "com.github.jomof\n" + "  " + "artifactId: firebase/admob\n" + "  version: 2.1.3-rev7\n" + "archive:\n" + "  file: " +
       "firebase-include.zip\n" + "  sha256: " + "51827bab4c5b4f335058ab3c0a93f9fa39ba284d21bd686f27368829ee088815\n" + "  " +
       "size:" + " 93293\n" + "dependencies:\n" + "  - compile: com.github" + ".jomof:firebase/app:2.1.3-rev7\n" + "    sha256: " +
-      "" + "" + "8292d143db85ec40ddf4d51133571607f4df3796e0477e8678993dcae4acfd03");
+      ""  + "8292d143db85ec40ddf4d51133571607f4df3796e0477e8678993dcae4acfd03");
 
   @Nullable
   private static final Coordinate APP_COORDINATE = CoordinateUtils.tryParse("com.github.jomof:firebase/app:2.1.3-rev7");

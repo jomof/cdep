@@ -15,9 +15,14 @@
 */
 package io.cdep.cdep.utils;
 
-import io.cdep.annotations.NotNull;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.io.*;
+import io.cdep.annotations.NotNull;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -49,7 +54,7 @@ public class FileUtils {
 
   @NotNull
   public static String readAllText(@NotNull File file) throws IOException {
-    return new String(Files.readAllBytes(Paths.get(file.getCanonicalPath())));
+    return new String(Files.readAllBytes(Paths.get(file.getCanonicalPath())), UTF_8);
   }
 
   public static void writeTextToFile(@NotNull File file, @NotNull String body) throws IOException {
@@ -59,7 +64,7 @@ public class FileUtils {
     //noinspection ResultOfMethodCallIgnored
     file.delete();
     try {
-      writer = new BufferedWriter(new FileWriter(file));
+      writer = Files.newBufferedWriter(file.toPath(), UTF_8);
       writer.write(body);
     } finally {
       if (writer != null) {

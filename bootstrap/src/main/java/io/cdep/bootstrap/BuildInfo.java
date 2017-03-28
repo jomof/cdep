@@ -1,4 +1,4 @@
 package io.cdep.bootstrap;
-public class BuildInfo {
+class BuildInfo {
   static final String PROJECT_VERSION = "dev";
 }

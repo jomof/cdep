@@ -15,6 +15,9 @@
 */
 package io.cdep.cdep;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
@@ -24,19 +27,15 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import org.junit.Test;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 
 @SuppressWarnings("ConstantConditions")
 public class TestFindModuleFunctionTableBuilder {
 
-  private final GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File("" + "" + "./test-files/TestFindModuleFunctionTableBuilder/working"), null, false, false);
+  private final GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File(""  + "./test-files/TestFindModuleFunctionTableBuilder/working"), null, false, false);
   final private Resolver resolver = new Resolver(environment);
 
 
@@ -48,7 +47,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testSimple() throws Exception {
-    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" + "" + ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
+    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github"  + ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
     assert resolved != null;
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
@@ -73,7 +72,7 @@ public class TestFindModuleFunctionTableBuilder {
     FunctionTableExpression table = builder.build();
     System.out.printf(CreateStringVisitor.convert(table));
     String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder
-        .getAbsolutePath(), new String[]{"armv7"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + "" +
+        .getAbsolutePath(), new String[]{"armv7"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS"  +
         ".platform/Developer/SDKs/iPhoneOS10.2.sdk").remote.getPath();
     assertThat(zip).endsWith("vectorial.zip");
     zip = FindModuleInterpreter.findAndroid(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath(), "Android", "21", "c++_shared", "x86").remote.getPath();
@@ -89,7 +88,7 @@ public class TestFindModuleFunctionTableBuilder {
     FunctionTableExpression table = builder.build();
     System.out.printf(CreateStringVisitor.convert(table));
     String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder
-        .getAbsolutePath(), new String[]{"armv7"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + "" +
+        .getAbsolutePath(), new String[]{"armv7"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS"  +
         ".platform/Developer/SDKs/iPhoneOS10.2.sdk").remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
     new CMakeGenerator(environment, table).generate();
@@ -116,12 +115,12 @@ public class TestFindModuleFunctionTableBuilder {
 
     System.out.printf(table.toString());
     String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder
-        .getAbsolutePath(), new String[]{"armv7s"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + "" +
+        .getAbsolutePath(), new String[]{"armv7s"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS"  +
         ".platform/Developer/SDKs/iPhoneOS10.2.sdk").remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
 
     zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder
-        .getAbsolutePath(), new String[]{"i386"}, "/Applications/Xcode" + "" + "" +
+        .getAbsolutePath(), new String[]{"i386"}, "/Applications/Xcode"   +
         ".app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator10.2.sdk").remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
 
@@ -195,7 +194,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testCheckPlatformSwitch() throws Exception {
-    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" + "" + ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
+    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github"  + ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
     assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.81");
@@ -211,7 +210,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testArchivePathIsFull() throws Exception {
-    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" + "" + ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
+    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github"  + ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
 
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     builder.addManifest(resolved);
@@ -222,7 +221,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testFoundIncludeAndLib() throws Exception {
-    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" + "" + ".com/jomof/sqlite/releases/download/3.16.2-rev25/cdep-manifest.yml"));
+    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github"  + ".com/jomof/sqlite/releases/download/3.16.2-rev25/cdep-manifest.yml"));
 
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     builder.addManifest(resolved);
@@ -233,14 +232,14 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testHeaderOnly() throws Exception {
-    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" + "" + ".com/jomof/boost/releases/download/1.0.63-rev18/cdep-manifest.yml"));
+    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github"  + ".com/jomof/boost/releases/download/1.0.63-rev18/cdep-manifest.yml"));
 
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
     ModuleArchive found = FindModuleInterpreter.findAndroid(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath(), "Android", "21", "c++_shared", "x86");
     assertThat(found.fullLibraryName).isNull();
-    assertThat(found.remote.toString()).isEqualTo("https://github" + "" + ".com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
+    assertThat(found.remote.toString()).isEqualTo("https://github"  + ".com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
   }
 
   @Test
@@ -252,7 +251,7 @@ public class TestFindModuleFunctionTableBuilder {
     FunctionTableExpression table = builder.build();
     ModuleArchive found = FindModuleInterpreter.findAndroid(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath(), "Android", "21", "c++_shared", "x86");
     assertThat(found.fullLibraryName).isNull();
-    assertThat(found.remote.toString()).isEqualTo("https://github" + "" + ".com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
+    assertThat(found.remote.toString()).isEqualTo("https://github"  + ".com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
   }
 
   @Test

@@ -1,18 +1,17 @@
 package io.cdep.cdep.generator;
 
+import static org.junit.Assert.fail;
+
 import io.cdep.cdep.FindModuleFunctionTableBuilder;
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import org.junit.Test;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.Assert.fail;
+import org.junit.Test;
 
 public class TestCMakeGenerator {
-  final private GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File("" + "" + "" +
+  final private GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File(""   +
       "./test-files/TestCMakeGenerator/working"), null, false, false);
 
   @Test

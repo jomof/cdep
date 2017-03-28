@@ -1,17 +1,16 @@
 package io.cdep.cdep.utils;
 
+import static org.junit.Assert.fail;
+
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.generator.GeneratorEnvironment;
-import org.junit.Test;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.Assert.fail;
+import org.junit.Test;
 
 public class TestEnvironmentUtils {
-  private final GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File("" + "" + "" +
+  private final GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File(""   +
       "./test-files/TestEnvironmentUtils/working"), null, false, false);
 
   @Test

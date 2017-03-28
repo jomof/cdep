@@ -15,18 +15,18 @@
 */
 package io.cdep.cdep.resolver;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class LocalFilePathCoordinateResolver extends CoordinateResolver {
 
@@ -38,7 +38,7 @@ public class LocalFilePathCoordinateResolver extends CoordinateResolver {
     if (!local.isFile()) {
       return null;
     }
-    String content = new String(Files.readAllBytes(Paths.get(local.getCanonicalPath())));
+    String content = new String(Files.readAllBytes(Paths.get(local.getCanonicalPath())), UTF_8);
     CDepManifestYml cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(content);
     CDepManifestYmlUtils.checkManifestSanity(cdepManifestYml);
     return new ResolvedManifest(local.getCanonicalFile().toURI().toURL(), cdepManifestYml);

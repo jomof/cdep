@@ -2,8 +2,11 @@ package io.cdep.cdep;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.ast.finder.*;
-
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
 import java.io.File;
 
 /**
@@ -33,7 +36,7 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
             archive.fullIncludePath.getParentFile()));
       }
       if (!archive.fullIncludePath.isDirectory()) {
-        throw new RuntimeException(String.format("Downloaded '%s' did not contain include folder '%s' at it's root.\nLocal " + "path: %s\n" + "If you own this package you can add \"include:\" to the archive entry in cdep-manifest.yml" + "" + " to " + "" + "" + "indicate that there is no include folder.",
+        throw new RuntimeException(String.format("Downloaded '%s' did not contain include folder '%s' at it's root.\nLocal path: %s\n If you own this package you can add \"include:\" to the archive entry in cdep-manifest.yml to indicate that there is no include folder.",
             archive.remote,
             archive.fullIncludePath.getName(),
             archive.fullIncludePath));
@@ -45,7 +48,7 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
             archive.fullLibraryName.getParentFile()));
       }
       if (!archive.fullLibraryName.isFile()) {
-        throw new RuntimeException(String.format("Downloaded '%s' did not contain library '%s/%s' at it's root.\nLocal path: " + "%s",
+        throw new RuntimeException(String.format("Downloaded '%s' did not contain library '%s/%s' at it's root.\nLocal path: %s",
             archive.remote,
             archive.fullLibraryName.getParentFile().getName(),
             archive.fullLibraryName.getName(),
@@ -71,6 +74,7 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
   }
 
   @Nullable
+  @Override
   protected Object visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
     for (int i = 0; i < expr.conditions.length; ++i) {
       // Don't visit the condition. Instead, travel down all paths.

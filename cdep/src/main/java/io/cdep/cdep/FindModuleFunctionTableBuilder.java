@@ -15,23 +15,59 @@
 */
 package io.cdep.cdep;
 
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.abort;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.arrayHasOnlyElement;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.assign;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.eq;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.getFileName;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.gte;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.ifSwitch;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.integer;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.joinFileSegments;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.lastIndexOfString;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.module;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.multi;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.nop;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.parameter;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.stringStartsWith;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.substring;
+import static io.cdep.cdep.utils.Invariant.notNull;
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StatementExpression;
 import io.cdep.cdep.generator.AndroidAbi;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.utils.StringUtils;
-import io.cdep.cdep.yml.cdepmanifest.*;
-
+import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
+import io.cdep.cdep.yml.cdepmanifest.Archive;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.LinuxArchive;
+import io.cdep.cdep.yml.cdepmanifest.iOSArchitecture;
+import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.*;
-
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
-import static io.cdep.cdep.utils.Invariant.notNull;
-import static io.cdep.cdep.utils.Invariant.require;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @SuppressWarnings("Java8ReplaceMapGet")
 public class FindModuleFunctionTableBuilder {
@@ -275,7 +311,7 @@ public class FindModuleFunctionTableBuilder {
     }
     return ifSwitch(conditions,
         expressions,
-        abort(String.format("OSX architecture '%%s' is not supported by module " + "'%s'. " + "" + "" + "" + "" + "" +
+        abort(String.format("OSX architecture '%%s' is not supported by module " + "'%s'. "      +
                 "Supported: %s",
             resolved.cdepManifestYml.coordinate,
             supported), osxArchitectures));
