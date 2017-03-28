@@ -158,7 +158,7 @@ public class TestInterpretingVisitor {
       builder.addManifest(manifest.resolved);
       String expectedFailure = expected.get(manifest.name);
       try {
-        FunctionTableExpression function = builder.build();
+        final FunctionTableExpression function = builder.build();
         new InterpretingVisitor() {
           @Override
           protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
