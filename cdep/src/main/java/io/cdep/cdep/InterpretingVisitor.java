@@ -162,13 +162,13 @@ public class InterpretingVisitor {
   }
 
   private Object visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
-//    visit(expr.androidStlType);
-//    visit(expr.androidTargetAbi);
+//    visit(expr.cdepDeterminedAndroidRuntime);
+//    visit(expr.cdepDeterminedAndroidAbi);
 //    visit(expr.cdepExplodedRoot);
-//    visit(expr.osxArchitectures);
-//    visit(expr.osxSysroot);
-//    visit(expr.systemVersion);
-//    visit(expr.targetPlatform);
+//    visit(expr.cmakeOsxArchitectures);
+//    visit(expr.cmakeOsxSysroot);
+//    visit(expr.cmakeSystemVersion);
+//    visit(expr.cmakeSystemName);
     return null;
   }
 

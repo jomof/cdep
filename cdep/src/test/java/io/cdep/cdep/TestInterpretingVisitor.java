@@ -21,45 +21,41 @@ public class TestInterpretingVisitor {
   public void testAllResolvedManifestsLinux() throws Exception {
     Map<String, String> expected = new HashMap<>();
     expected.put("archiveMissingFile", "Archive in http://google.com/cdep-manifest.yml was malformed");
-    expected.put("archiveMissingSha256", "Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("archiveMissingSize", "Archive in http://google.com/cdep-manifest.yml was malformed");
-    expected.put("sqliteAndroid", "Target platform 'Linux' is not supported by module 'com.github.jomof:sqlite:3.16.2-rev33'. "
-        + "Supported: Android");
-    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github"  +
-        ".jomof:firebase/admob:2.1.3-rev8");
-    expected.put("sqliteiOS", "Target platform 'Linux' is not supported by module 'com.github.jomof:sqlite:3.16.2-rev33'. " +
-        "Supported: Darwin");
-    expected.put("sqlite", "Target platform 'Linux' is not supported by module 'com.github.jomof:sqlite:0.0.0'. Supported: " +
-        "Android Darwin");
+    expected.put("archiveMissingSha256", "Archive in http://google.com/cdep-manifest.yml was malformed");
+    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github.jomof:firebase/admob:2.1.3-rev8");
+    expected.put("sqliteiOS", "Target platform Linux is not supported by com.github.jomof:sqlite:3.16.2-rev33. Supported: Darwin");
+    expected.put("sqliteAndroid", "Target platform Linux is not supported by com.github.jomof:sqlite:3.16.2-rev33. Supported: Android");
+    expected.put("sqlite", "Target platform Linux is not supported by com.github.jomof:sqlite:0.0.0. Supported: Android Darwin");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
       builder.addManifest(manifest.resolved);
       String expectedFailure = expected.get(manifest.name);
       try {
-        FunctionTableExpression function = builder.build();
+        final FunctionTableExpression function = builder.build();
         new InterpretingVisitor() {
           @Override
           protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-            if ("cdepExplodedRoot".equals(expr.name)) {
+            if (function.globals.cdepExplodedRoot == expr) {
               return "exploded/root";
             }
-            if ("targetPlatform".equals(expr.name)) {
+            if (function.globals.cmakeSystemName == expr) {
               return "Linux";
             }
-            if ("systemVersion".equals(expr.name)) {
+            if (function.globals.cmakeSystemVersion == expr) {
               return 21;
             }
-            if ("androidArchAbi".equals(expr.name)) {
+            if (function.globals.cdepDeterminedAndroidAbi == expr) {
               return "x86";
             }
-            if ("androidStlType".equals(expr.name)) {
+            if (function.globals.cdepDeterminedAndroidRuntime == expr) {
               return "c++_static";
             }
-            if ("osxSysroot".equals(expr.name)) {
+            if (function.globals.cmakeOsxSysroot == expr) {
               return "/iPhoneOS10.2.sdk";
             }
-            if ("osxArchitectures".equals(expr.name)) {
+            if (function.globals.cmakeOsxArchitectures == expr) {
               return "i386";
             }
             return super.visitParameterExpression(expr);
@@ -74,7 +70,7 @@ public class TestInterpretingVisitor {
         }
         if (expectedFailure == null || !expectedFailure.equals(e.getMessage())) {
           unexpectedFailures = true;
-          e.printStackTrace();
+          //e.printStackTrace();
           System.out.printf("expected.put(\"%s\", \"%s\");\n", manifest.name, e.getMessage());
         }
       }
@@ -88,19 +84,13 @@ public class TestInterpretingVisitor {
   @Test
   public void testAllResolvedManifestsAndroid() throws Exception {
     Map<String, String> expected = new HashMap<>();
+    expected.put("sqliteLinux", "Target platform Android is not supported by com.github.jomof:sqlite:0.0.0. Supported: Linux");
+    expected.put("sqliteLinuxMultiple", "Target platform Android is not supported by com.github.jomof:sqlite:0.0.0. Supported: Linux");
     expected.put("archiveMissingFile", "Archive in http://google.com/cdep-manifest.yml was malformed");
+    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github.jomof:firebase/admob:2.1.3-rev8");
     expected.put("archiveMissingSize", "Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("archiveMissingSha256", "Archive in http://google.com/cdep-manifest.yml was malformed");
-    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github"  +
-        ".jomof:firebase/admob:2.1.3-rev8");
-    expected.put("sqliteiOS", "Target platform 'Android' is not supported by module 'com.github.jomof:sqlite:3.16.2-rev33'. " +
-        "Supported: Darwin");
-    expected.put("sqliteLinux", "Target platform 'Android' is not supported by module 'com.github.jomof:sqlite:0.0.0'. " +
-        "Supported: ");
-    expected.put("sqliteLinux", "Target platform 'Android' is not supported by module 'com.github.jomof:sqlite:0.0.0'. " +
-        "Supported: Linux");
-    expected.put("sqliteLinuxMultiple", "Target platform 'Android' is not supported by module 'com.github.jomof:sqlite:0.0.0'. " +
-        "" + "Supported: Linux");
+    expected.put("sqliteiOS", "Target platform Android is not supported by com.github.jomof:sqlite:3.16.2-rev33. Supported: Darwin");
 
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
@@ -112,25 +102,25 @@ public class TestInterpretingVisitor {
         new InterpretingVisitor() {
           @Override
           protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-            if ("cdepExplodedRoot".equals(expr.name)) {
+            if (function.globals.cdepExplodedRoot == expr) {
               return "exploded/root";
             }
-            if ("targetPlatform".equals(expr.name)) {
+            if (function.globals.cmakeSystemName == expr) {
               return "Android";
             }
-            if ("systemVersion".equals(expr.name)) {
+            if (function.globals.cmakeSystemVersion == expr) {
               return 21;
             }
-            if ("androidTargetAbi".equals(expr.name)) {
+            if (function.globals.cdepDeterminedAndroidAbi == expr) {
               return "x86";
             }
-            if ("androidStlType".equals(expr.name)) {
+            if (function.globals.cdepDeterminedAndroidRuntime == expr) {
               return "c++_static";
             }
-            if ("osxSysroot".equals(expr.name)) {
+            if (function.globals.cmakeOsxSysroot == expr) {
               return "/iPhoneOS10.2.sdk";
             }
-            if ("osxArchitectures".equals(expr.name)) {
+            if (function.globals.cmakeOsxArchitectures == expr) {
               return "i386";
             }
             return super.visitParameterExpression(expr);
@@ -155,20 +145,13 @@ public class TestInterpretingVisitor {
   @Test
   public void testAllResolvedManifestsiOS() throws Exception {
     Map<String, String> expected = new HashMap<>();
-    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github"  +
-        ".jomof:firebase/admob:2.1.3-rev8");
-    expected.put("sqliteAndroid", "Target platform 'Darwin' is not supported by module 'com.github.jomof:sqlite:3.16.2-rev33'. " +
-        "" + "Supported: Android");
     expected.put("archiveMissingFile", "Archive in http://google.com/cdep-manifest.yml was malformed");
+    expected.put("sqliteAndroid", "Target platform Darwin is not supported by com.github.jomof:sqlite:3.16.2-rev33. Supported: Android");
+    expected.put("sqliteLinux", "Target platform Darwin is not supported by com.github.jomof:sqlite:0.0.0. Supported: Linux");
+    expected.put("sqliteLinuxMultiple", "Target platform Darwin is not supported by com.github.jomof:sqlite:0.0.0. Supported: Linux");
+    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github.jomof:firebase/admob:2.1.3-rev8");
     expected.put("archiveMissingSize", "Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("archiveMissingSha256", "Archive in http://google.com/cdep-manifest.yml was malformed");
-    expected.put("sqliteLinux", "Target platform 'Darwin' is not supported by module 'com.github.jomof:sqlite:0.0.0'. " +
-        "Supported: ");
-    expected.put("sqliteLinux", "Target platform 'Darwin' is not supported by module 'com.github.jomof:sqlite:0.0.0'. " +
-        "Supported: Linux");
-    expected.put("sqliteLinuxMultiple", "Target platform 'Darwin' is not supported by module 'com.github.jomof:sqlite:0.0.0'. "
-        + "Supported: Linux");
-
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -179,25 +162,25 @@ public class TestInterpretingVisitor {
         new InterpretingVisitor() {
           @Override
           protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-            if ("cdepExplodedRoot".equals(expr.name)) {
+            if (function.globals.cdepExplodedRoot == expr) {
               return "exploded/root";
             }
-            if ("targetPlatform".equals(expr.name)) {
+            if (function.globals.cmakeSystemName == expr) {
               return "Darwin";
             }
-            if ("systemVersion".equals(expr.name)) {
+            if (function.globals.cmakeSystemVersion == expr) {
               return 21;
             }
-            if ("androidArchAbi".equals(expr.name)) {
+            if (function.globals.cdepDeterminedAndroidAbi == expr) {
               return "x86";
             }
-            if ("androidStlType".equals(expr.name)) {
+            if (function.globals.cdepDeterminedAndroidRuntime == expr) {
               return "c++_static";
             }
-            if ("osxSysroot".equals(expr.name)) {
+            if (function.globals.cmakeOsxSysroot == expr) {
               return "/iPhoneOS10.2.sdk";
             }
-            if ("osxArchitectures".equals(expr.name)) {
+            if (function.globals.cmakeOsxArchitectures == expr) {
               return new String[]{"i386"};
             }
             return super.visitParameterExpression(expr);

@@ -169,15 +169,15 @@ public class FindModuleFunctionTableBuilder {
     Expression expressions[] = new Expression[cases.size()];
     int i = 0;
     for (Map.Entry<Expression, Expression> entry : cases.entrySet()) {
-      bool[i] = eq(globals.targetPlatform, entry.getKey());
+      bool[i] = eq(globals.cmakeSystemName, entry.getKey());
       expressions[i] = entry.getValue();
       ++i;
     }
 
     AbortExpression abort;
     require(supported.size() > 0, "Module '%s' doesn't support any platforms.", coordinate);
-    abort = abort(String.format("Target platform '%%s' is not supported by module '%s'. " + "Supported: %s", coordinate,
-        StringUtils.joinOn(" ", supported)), globals.targetPlatform);
+    abort = abort(String.format("Target platform %%s is not supported by %s. " + "Supported: %s", coordinate,
+        StringUtils.joinOn(" ", supported)), globals.cmakeSystemName);
     StatementExpression expression = ifSwitch(bool, expressions, abort);
 
     Archive archive = manifest.archive;
@@ -261,7 +261,7 @@ public class FindModuleFunctionTableBuilder {
       @NotNull Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
 
     // Something like iPhone10.2.sdk or iPhone.sdk
-    AssignmentExpression osxSysrootSDKName = assign("osx_sysroot_sdk_name", getFileName(globals.osxSysroot));
+    AssignmentExpression osxSysrootSDKName = assign("osx_sysroot_sdk_name", getFileName(globals.cmakeOsxSysroot));
 
     // The position of the right-most dot
     AssignmentExpression lastDotPosition = assign("last_dot_position", lastIndexOfString(osxSysrootSDKName, "."));
@@ -291,7 +291,7 @@ public class FindModuleFunctionTableBuilder {
     List<Expression> expressions = new ArrayList<>();
     String supported = "";
     for (iOSArchitecture architecture : grouped.keySet()) {
-      conditions.add(arrayHasOnlyElement(globals.osxArchitectures, string(architecture.toString())));
+      conditions.add(arrayHasOnlyElement(globals.cmakeOsxArchitectures, string(architecture.toString())));
       expressions.add(buildiOSPlatformSdkSwitch(resolved,
           grouped.get(architecture),
           explodedArchiveFolder,
@@ -303,10 +303,9 @@ public class FindModuleFunctionTableBuilder {
     }
     return ifSwitch(conditions,
         expressions,
-        abort(String.format("OSX architecture '%%s' is not supported by module " + "'%s'. "      +
-                "Supported: %s",
+        abort(String.format("OSX architecture %%s is not supported by %s. Supported: %s",
             resolved.cdepManifestYml.coordinate,
-            supported), globals.osxArchitectures));
+            supported), globals.cmakeOsxArchitectures));
   }
 
   @NotNull
@@ -341,7 +340,7 @@ public class FindModuleFunctionTableBuilder {
       expressionList.add(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies));
     }
 
-    Expression notFound = abort(String.format("OSX SDK '%%s' is not supported by module '%s' and architecture '%s'. " + "Supported: %s",
+    Expression notFound = abort(String.format("OSX SDK %%s is not supported by %s and architecture %s. " + "Supported: %s",
         resolved.cdepManifestYml.coordinate,
         architecture,
         supported), combinedPlatformAndSDK);
@@ -407,15 +406,15 @@ public class FindModuleFunctionTableBuilder {
     Expression expressions[] = new Expression[cases.size()];
     int i = 0;
     for (Map.Entry<Expression, Expression> entry : cases.entrySet()) {
-      bool[i] = eq(globals.androidStlType, entry.getKey());
+      bool[i] = eq(globals.cdepDeterminedAndroidRuntime, entry.getKey());
       expressions[i] = entry.getValue();
       ++i;
     }
     return ifSwitch(bool,
         expressions,
-        abort(String.format("Android runtime '%%s' is not supported by module '%s'. Supported: " + "%s",
+        abort(String.format("Android runtime %%s is not supported by %s. Supported: %s",
             resolved.cdepManifestYml.coordinate,
-            runtimes), globals.androidStlType));
+            runtimes), globals.cdepDeterminedAndroidRuntime));
   }
 
   @NotNull
@@ -454,13 +453,13 @@ public class FindModuleFunctionTableBuilder {
     List<Expression> expressions = new ArrayList<>();
 
     for (int platform : platforms) {
-      conditions.add(0, gte(globals.systemVersion, platform));
+      conditions.add(0, gte(globals.cmakeSystemVersion, platform));
       expressions.add(0, buildAndroidAbiExpression(globals, resolved, grouped.get(platform), explodedArchiveFolder, dependencies));
     }
     return ifSwitch(conditions,
         expressions,
-        abort(String.format("Android API level '%%s' is not supported by module " + "'%s'", resolved.cdepManifestYml.coordinate),
-            globals.systemVersion));
+        abort(String.format("Android API level %%s is not supported by %s", resolved.cdepManifestYml.coordinate),
+            globals.cmakeSystemVersion));
   }
 
   @NotNull
@@ -484,15 +483,15 @@ public class FindModuleFunctionTableBuilder {
       cases.put(string(abi), buildSingleArchiveResolution(resolved, archive, abi, explodedArchiveFolder, dependencies));
     }
 
-    Expression prior = abort(String.format("Android ABI '%%s' is not supported by module '%s'. Supported: %s",
+    Expression prior = abort(String.format("Android ABI %%s is not supported by %s. Supported: %s",
         manifest.coordinate,
-        supported), globals.androidTargetAbi);
+        supported), globals.cdepDeterminedAndroidAbi);
 
     Expression bool[] = new Expression[cases.size()];
     Expression expressions[] = new Expression[cases.size()];
     int i = 0;
     for (Map.Entry<Expression, Expression> entry : cases.entrySet()) {
-      bool[i] = eq(globals.androidTargetAbi, entry.getKey());
+      bool[i] = eq(globals.cdepDeterminedAndroidAbi, entry.getKey());
       expressions[i] = entry.getValue();
       ++i;
     }

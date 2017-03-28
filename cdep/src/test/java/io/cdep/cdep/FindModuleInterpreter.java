@@ -36,16 +36,16 @@ class FindModuleInterpreter {
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-        if (expr == table.globals.targetPlatform) {
+        if (expr == table.globals.cmakeSystemName) {
           return targetPlatform;
         }
-        if (expr == table.globals.systemVersion) {
+        if (expr == table.globals.cmakeSystemVersion) {
           return systemVersion;
         }
-        if (expr == table.globals.androidStlType) {
+        if (expr == table.globals.cdepDeterminedAndroidRuntime) {
           return androidStlType;
         }
-        if (expr == table.globals.androidTargetAbi) {
+        if (expr == table.globals.cdepDeterminedAndroidAbi) {
           return androidTargetAbi;
         }
         if (expr == table.globals.cdepExplodedRoot) {
@@ -63,16 +63,16 @@ class FindModuleInterpreter {
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-        if (expr == table.globals.targetPlatform) {
+        if (expr == table.globals.cmakeSystemName) {
           return "Darwin";
         }
-        if (expr == table.globals.osxSysroot) {
+        if (expr == table.globals.cmakeOsxSysroot) {
           return osxSysroot;
         }
         if (expr == table.globals.cdepExplodedRoot) {
           return cdepExplodedRoot;
         }
-        if (expr == table.globals.osxArchitectures) {
+        if (expr == table.globals.cmakeOsxArchitectures) {
           return osxArchitectures;
         }
         return super.visitParameterExpression(expr);
@@ -107,7 +107,7 @@ class FindModuleInterpreter {
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-        if (expr == table.globals.targetPlatform) {
+        if (expr == table.globals.cmakeSystemName) {
           return "Linux";
         }
         if (expr == table.globals.cdepExplodedRoot) {

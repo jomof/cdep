@@ -172,7 +172,7 @@ public class TestFindModuleFunctionTableBuilder {
           .getAbsolutePath(), new String[]{"armv7s"}, "/Applications/Xcode.app/Contents/Developer/Platforms/" + "iPhoneSimulator.platform/Developer/SDKs/iPad10.2.sdk").remote.getPath();
       fail("Expected exception");
     } catch (RuntimeException e) {
-      assertThat(e).hasMessage("OSX SDK 'iPad10.2' is not supported by module 'com.github.jomof:sqlite:0.0.0' " + "and " + "architecture 'armv7s'. Supported: " + "iPhoneOS10.2 ");
+      assertThat(e).hasMessage("OSX SDK iPad10.2 is not supported by com.github.jomof:sqlite:0.0.0 and architecture armv7s. Supported: iPhoneOS10.2 ");
     }
   }
 

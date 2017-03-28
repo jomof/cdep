@@ -280,26 +280,7 @@ public class CMakeGenerator {
 
   @NotNull
   private String parameterName(@NotNull ParameterExpression expr) {
-    if (expr == globals.targetPlatform) {
-      return "CMAKE_SYSTEM_NAME";
-    }
-    if (expr == globals.androidStlType) {
-      return "CDEP_DETERMINED_ANDROID_RUNTIME";
-    }
-    if (expr == globals.systemVersion) {
-      return "CMAKE_SYSTEM_VERSION";
-    }
-    if (expr == globals.androidTargetAbi) {
-      return "CDEP_DETERMINED_ANDROID_ABI";
-    }
-    if (expr == globals.osxSysroot) {
-      return "CMAKE_OSX_SYSROOT";
-    }
-    if (expr == globals.osxArchitectures) {
-      return "CMAKE_OSX_ARCHITECTURES";
-    }
-
-    throw new RuntimeException(expr.name);
+    return expr.name.toUpperCase();
   }
 
   private Object appendAssignments(@NotNull String prefix,
