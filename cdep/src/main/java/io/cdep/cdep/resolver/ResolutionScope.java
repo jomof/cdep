@@ -13,6 +13,7 @@ import static io.cdep.cdep.utils.Invariant.require;
 /**
  * Records the current state of resolving top-level and transitive dependencies.
  */
+@SuppressWarnings("Convert2Diamond")
 public class ResolutionScope {
 
   final static public Resolution UNPARSEABLE_RESOLUTION = new Resolution();

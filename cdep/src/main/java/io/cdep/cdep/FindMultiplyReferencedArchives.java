@@ -20,6 +20,7 @@ import static io.cdep.cdep.utils.Invariant.require;
  * <p>
  * Also check whether references were unresolved.
  */
+@SuppressWarnings("Convert2Diamond")
 public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
 
   // Map of dependency edges. Key is dependant and value is dependees.

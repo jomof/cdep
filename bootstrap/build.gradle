@@ -21,11 +21,11 @@ class GenerateBuildInfo extends DefaultTask {
     public File buildInfoFile = new File("bootstrap/src/main/java/io/cdep/bootstrap/BuildInfo.java")
 
     @TaskAction
-    def generate() {
+    generate() {
         buildInfoFile.parentFile.mkdirs()
         buildInfoFile.write(
                 """package io.cdep.bootstrap;
-public class BuildInfo {
+class BuildInfo {
   static final String PROJECT_VERSION = "$project.version";
 }""")
     }

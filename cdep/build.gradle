@@ -25,7 +25,7 @@ class GenerateBuildInfo extends DefaultTask {
         buildInfoFile.parentFile.mkdirs()
         buildInfoFile.write(
                 """package io.cdep;
-public class BuildInfo {
+class BuildInfo {
   static final String PROJECT_VERSION = "$project.version";
 }""")
     }
@@ -39,6 +39,7 @@ compileJava.dependsOn generateBuildInfo
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
+    //noinspection GroovyAssignabilityCheck
     from sourceSets.main.allSource
 }
 
