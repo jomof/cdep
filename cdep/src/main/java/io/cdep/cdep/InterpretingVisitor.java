@@ -162,13 +162,6 @@ public class InterpretingVisitor {
   }
 
   private Object visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
-//    visit(expr.cdepDeterminedAndroidRuntime);
-//    visit(expr.cdepDeterminedAndroidAbi);
-//    visit(expr.cdepExplodedRoot);
-//    visit(expr.cmakeOsxArchitectures);
-//    visit(expr.cmakeOsxSysroot);
-//    visit(expr.cmakeSystemVersion);
-//    visit(expr.cmakeSystemName);
     return null;
   }
 
@@ -306,8 +299,10 @@ public class InterpretingVisitor {
 
   @Nullable
   Object visitFindModuleExpression(@NotNull FindModuleExpression expr) {
-    visit(expr.expression);
-    return null;
+    stack = new Frame(stack);
+    Object result = visit(expr.body);
+    stack = stack.prior;
+    return result;
   }
 
   @SuppressWarnings("SameReturnValue")
@@ -315,7 +310,9 @@ public class InterpretingVisitor {
   private Object visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
     visit(expr.globals);
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
+      stack = new Frame(stack);
       visit(expr.findFunctions.get(coordinate));
+      stack = stack.prior;
     }
     for (Coordinate coordinate : expr.examples.keySet()) {
       visit(expr.examples.get(coordinate));

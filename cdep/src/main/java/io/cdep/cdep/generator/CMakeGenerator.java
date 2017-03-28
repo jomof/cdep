@@ -29,7 +29,6 @@ import io.cdep.cdep.ast.finder.Expression;
 import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
 import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
 import io.cdep.cdep.ast.finder.IfSwitchExpression;
 import io.cdep.cdep.ast.finder.IntegerExpression;
 import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
@@ -56,8 +55,6 @@ public class CMakeGenerator {
   private StringBuilder sb;
   private int indent = 0;
   @Nullable
-  private GlobalBuildEnvironmentExpression globals = null;
-  @Nullable
   private Coordinate coordinate = null;
 
   public CMakeGenerator(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) {
@@ -76,21 +73,30 @@ public class CMakeGenerator {
   @NotNull
   public String create() {
     append("# GENERATED FILE. DO NOT EDIT.\n");
-
-    globals = table.globals;
-    for (FindModuleExpression findFunction : table.findFunctions.values()) {
+    for (StatementExpression findFunction : table.findFunctions.values()) {
       indent = 0;
       visit(findFunction);
       require(indent == 0);
     }
 
     append("\nfunction(add_all_cdep_dependencies target)\n");
-    for (FindModuleExpression findFunction : table.findFunctions.values()) {
-      String function = getAddDependencyFunctionName(findFunction.coordinate);
+    for (StatementExpression findFunction : table.findFunctions.values()) {
+      FindModuleExpression finder = getFindFunction(findFunction);
+      String function = getAddDependencyFunctionName(finder.coordinate);
       append("  %s(${target})\n", function);
     }
     append("endfunction(add_all_cdep_dependencies)\n");
     return sb.toString();
+  }
+
+  private FindModuleExpression getFindFunction(StatementExpression statement) {
+    if (statement instanceof FindModuleExpression) {
+      return (FindModuleExpression) statement;
+    }
+    if (statement instanceof AssignmentBlockExpression) {
+      return getFindFunction(((AssignmentBlockExpression) statement).statement);
+    }
+    throw new RuntimeException(statement.getClass().toString());
   }
 
   @NotNull
@@ -118,20 +124,31 @@ public class CMakeGenerator {
       append("%s  message(FATAL_ERROR \"CDep module '$(%s}' was already defined\")\n", prefix, coordinateVar);
       append("%sendif(%s)\n", prefix, coordinateVar);
       append("%sset(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate);
+      if (specific.headerArchive != null && specific.include != null) {
+        append("%sset(%s_ROOT \"%s/%s/%s/%s/%s/%s\")\n",
+            prefix,
+            getUpperArtifactId(),
+            getCMakePath(environment.unzippedArchivesFolder),
+            coordinate.groupId,
+            coordinate.artifactId,
+            coordinate.version,
+            specific.headerArchive,
+            specific.include);
+      }
       String appenderFunctionName = getAddDependencyFunctionName(coordinate);
-
       append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
 
       append("  # Choose between Android NDK Toolchain and CMake Android Toolchain\n"
           + "  if(DEFINED CMAKE_ANDROID_STL_TYPE)\n"
-          + "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n"
-          + "    set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n"
-          + "  else()\n" + "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n"
-          + "    set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
+          + "    set(cdep_determined_android_runtime ${CMAKE_ANDROID_STL_TYPE})\n"
+          + "    set(cdep_determined_android_abi ${CMAKE_ANDROID_ARCH_ABI})\n"
+          + "  else()\n"
+          + "    set(cdep_determined_android_runtime ${ANDROID_STL})\n"
+          + "    set(cdep_determined_android_abi ${ANDROID_ABI})\n" +
           "  endif()\n\n");
-      append("  set(cdep_exploded_root \"%s\")\n", getCMakePath(environment.unzippedArchivesFolder));
+      append("  set(cdep_exploded_root \"%s\")", getCMakePath(environment.unzippedArchivesFolder));
       ++indent;
-      visit(specific.expression);
+      visit(specific.body);
       --indent;
       append("endfunction({appenderFunctionName})\n".replace("{appenderFunctionName}", appenderFunctionName));
       return;
@@ -205,9 +222,6 @@ public class CMakeGenerator {
       }
       append("\n");
       if (specific.archive.includePath != null) {
-        append("%sset(%s_ROOT ", prefix, getUpperArtifactId());
-        visit(specific.archive.includePath);
-        append(" PARENT_SCOPE)\n");
         append("%starget_include_directories(${target} PRIVATE ", prefix);
         visit(specific.archive.includePath);
         append(")\n");
@@ -260,7 +274,6 @@ public class CMakeGenerator {
       append("\n");
       return;
     }
-
     throw new RuntimeException(expression.getClass().toString());
   }
 
@@ -280,7 +293,7 @@ public class CMakeGenerator {
 
   @NotNull
   private String parameterName(@NotNull ParameterExpression expr) {
-    return expr.name.toUpperCase();
+    return expr.name;
   }
 
   private Object appendAssignments(@NotNull String prefix,

@@ -187,7 +187,7 @@ public class ReadonlyVisitor {
   }
 
   protected void visitFindModuleExpression(@NotNull FindModuleExpression expr) {
-    visit(expr.expression);
+    visit(expr.body);
   }
 
   protected void visitMultiStatementExpression(@NotNull MultiStatementExpression expr) {

@@ -20,19 +20,29 @@ import static io.cdep.cdep.utils.Invariant.require;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
 import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.NopExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StatementExpression;
 
 class FindModuleInterpreter {
-
+  private static FindModuleExpression getFindFunction(StatementExpression statement) {
+    if (statement instanceof FindModuleExpression) {
+      return (FindModuleExpression) statement;
+    }
+    if (statement instanceof AssignmentBlockExpression) {
+      return getFindFunction(((AssignmentBlockExpression) statement).statement);
+    }
+    throw new RuntimeException(statement.getClass().toString());
+  }
   @Nullable
   @SuppressWarnings("SameParameterValue")
   static ModuleArchive findAndroid(@NotNull final FunctionTableExpression table, Coordinate functionName, final String
       cdepExplodedRoot, final String targetPlatform, final String systemVersion, // On android, platform like 21
       final String androidStlType, final String androidTargetAbi) {
-    final FindModuleExpression function = table.findFunctions.get(functionName);
+    final FindModuleExpression function = getFindFunction(table.findFunctions.get(functionName));
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
@@ -53,13 +63,13 @@ class FindModuleInterpreter {
         }
         return super.visitParameterExpression(expr);
       }
-    }.visit(function.expression));
+    }.visit(function));
   }
 
   @Nullable
   static ModuleArchive findiOS(@NotNull final FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot,
       final String osxArchitectures[], final String osxSysroot) {
-    final FindModuleExpression function = table.findFunctions.get(functionName);
+    final FindModuleExpression function = getFindFunction(table.findFunctions.get(functionName));
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
@@ -77,7 +87,7 @@ class FindModuleInterpreter {
         }
         return super.visitParameterExpression(expr);
       }
-    }.visit(function.expression));
+    }.visit(function));
   }
 
   @Nullable
@@ -103,7 +113,7 @@ class FindModuleInterpreter {
 
   @Nullable
   static ModuleArchive findLinux(@NotNull final FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot) {
-    final FindModuleExpression function = table.findFunctions.get(functionName);
+    final FindModuleExpression function = getFindFunction(table.findFunctions.get(functionName));
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
@@ -115,6 +125,6 @@ class FindModuleInterpreter {
         }
         return super.visitParameterExpression(expr);
       }
-    }.visit(function.expression));
+    }.visit(function));
   }
 }

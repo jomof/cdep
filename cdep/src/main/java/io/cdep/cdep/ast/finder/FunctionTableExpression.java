@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class FunctionTableExpression extends Expression {
   @NotNull final public GlobalBuildEnvironmentExpression globals;
-  @NotNull final public Map<Coordinate, FindModuleExpression> findFunctions = new HashMap<>();
+  @NotNull final public Map<Coordinate, StatementExpression> findFunctions = new HashMap<>();
   @NotNull final public Map<Coordinate, ExampleExpression> examples = new HashMap<>();
 
   public FunctionTableExpression() {

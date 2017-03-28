@@ -122,7 +122,7 @@ public class RewritingVisitor {
     throw new RuntimeException("rw" + expr.getClass().toString());
   }
 
-  private Expression visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
+  protected Expression visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
     return expr;
   }
 
@@ -223,7 +223,9 @@ public class RewritingVisitor {
   @NotNull
   protected Expression visitFindModuleExpression(@NotNull FindModuleExpression expr) {
     return new FindModuleExpression(expr.coordinate,
-         (StatementExpression) visit(expr.expression));
+        expr.headerArchive,
+        expr.include,
+       (StatementExpression) visit(expr.body));
   }
 
   @NotNull
@@ -231,7 +233,7 @@ public class RewritingVisitor {
     FunctionTableExpression newExpr = new FunctionTableExpression(expr.globals);
 
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
-      newExpr.findFunctions.put(coordinate, (FindModuleExpression) visit(expr.findFunctions.get(coordinate)));
+      newExpr.findFunctions.put(coordinate, (StatementExpression) visit(expr.findFunctions.get(coordinate)));
     }
     for (Coordinate coordinate : expr.examples.keySet()) {
       newExpr.examples.put(coordinate, (ExampleExpression) visit(expr.examples.get(coordinate)));

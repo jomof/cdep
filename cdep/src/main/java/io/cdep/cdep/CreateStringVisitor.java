@@ -6,6 +6,7 @@ import io.cdep.cdep.ast.finder.AssignmentExpression;
 import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
 import io.cdep.cdep.ast.finder.Expression;
 import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
 import io.cdep.cdep.ast.finder.IfSwitchExpression;
 import io.cdep.cdep.ast.finder.IntegerExpression;
 import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
@@ -36,9 +37,10 @@ public class CreateStringVisitor extends ReadonlyVisitor {
 
   @Override
   protected void visitFindModuleExpression(@NotNull FindModuleExpression expr) {
+    append("\r\n");
     appendIndented("find(%s)", expr.coordinate);
     ++indent;
-    visit(expr.expression);
+    visit(expr.body);
     --indent;
     append("\r\n");
     appendIndented("end_find");
@@ -149,6 +151,17 @@ public class CreateStringVisitor extends ReadonlyVisitor {
       visit(expr.libraryPath);
       append("\r\n");
     }
+  }
+
+  @Override
+  protected void visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
+    append("import %s\r\n", expr.cdepExplodedRoot.name);
+    append("import %s\r\n", expr.cmakeSystemName.name);
+    append("import %s\r\n", expr.cmakeSystemVersion.name);
+    append("import %s\r\n", expr.cdepDeterminedAndroidAbi.name);
+    append("import %s\r\n", expr.cdepDeterminedAndroidRuntime.name);
+    append("import %s\r\n", expr.cmakeOsxSysroot.name);
+    append("import %s\r\n", expr.cmakeOsxArchitectures.name);
   }
 
   @Override

@@ -69,8 +69,7 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
   @Nullable
   @Override
   protected Object visitFindModuleExpression(@NotNull FindModuleExpression expr) {
-    // Don't visit parameters because we don't need them and don't want to have to bind them
-    return visit(expr.expression);
+    return visit(expr.body);
   }
 
   @Nullable

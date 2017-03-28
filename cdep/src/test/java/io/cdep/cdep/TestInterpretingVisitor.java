@@ -70,7 +70,7 @@ public class TestInterpretingVisitor {
         }
         if (expectedFailure == null || !expectedFailure.equals(e.getMessage())) {
           unexpectedFailures = true;
-          //e.printStackTrace();
+          e.printStackTrace();
           System.out.printf("expected.put(\"%s\", \"%s\");\n", manifest.name, e.getMessage());
         }
       }

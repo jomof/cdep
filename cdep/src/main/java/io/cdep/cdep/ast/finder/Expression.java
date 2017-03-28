@@ -26,7 +26,10 @@ public class Expression {
   @Override
   public String toString() {
     if (string == null) {
-      string = getClass() + ": " + CreateStringVisitor.convert(this);
+      string = getClass().toString();
+      string = string.substring(string.lastIndexOf(".") + 1);
+
+      string = string + ": " + CreateStringVisitor.convert(this);
     }
     return string;
   }

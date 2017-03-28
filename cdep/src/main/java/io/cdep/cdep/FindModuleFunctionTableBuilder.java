@@ -184,7 +184,17 @@ public class FindModuleFunctionTableBuilder {
     if (archive != null) {
       expression = multi(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies), expression);
     }
-    return new FindModuleExpression(coordinate, expression);
+
+    if (manifest.archive != null && manifest.archive.file != null) {
+      return new FindModuleExpression(coordinate,
+          manifest.archive.file,
+          manifest.archive.include,
+          expression);
+    }
+    return new FindModuleExpression(coordinate,
+        null,
+        null,
+        expression);
   }
 
   @NotNull

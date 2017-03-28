@@ -33,11 +33,17 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     Map<AssignmentExpression, Integer> counts = new HashMap<>();
     assignments(expr, order, counts);
     this.functionCounts = counts;
-    FindModuleExpression result = (FindModuleExpression) super.visitFindModuleExpression(expr);
-    List<AssignmentExpression> block = extractBlocks(result);
+    StatementExpression body = (StatementExpression) visit(expr.body);
+    List<AssignmentExpression> block = extractBlocks(body);
     if (block.size() > 0) {
-      result = new FindModuleExpression(result.coordinate,
-          assignmentBlock(block, result.expression));
+      body = assignmentBlock(block, body);
+    }
+
+    StatementExpression result = new FindModuleExpression(expr.coordinate, expr.headerArchive,
+        expr.include, body);
+    block = extractBlocks(result);
+    if (block.size() > 0) {
+      result = assignmentBlock(block, result);
     }
     return result;
   }

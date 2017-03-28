@@ -15,14 +15,24 @@
 */
 package io.cdep.cdep.ast.finder;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 
-public class FindModuleExpression extends Expression {
-  final public Coordinate coordinate;
-  final public StatementExpression expression;
+public class FindModuleExpression extends StatementExpression {
+  @NotNull final public Coordinate coordinate;
+  @Nullable final public String headerArchive;
+  @Nullable final public String include;
+  @NotNull final public StatementExpression body;
 
-  public FindModuleExpression(Coordinate coordinate, StatementExpression expression) {
+  public FindModuleExpression(
+      @NotNull Coordinate coordinate,
+      @Nullable String headerArchive,
+      @Nullable String include,
+      @NotNull StatementExpression body) {
     this.coordinate = coordinate;
-    this.expression = expression;
+    this.headerArchive = headerArchive;
+    this.include = include;
+    this.body = body;
   }
 }
