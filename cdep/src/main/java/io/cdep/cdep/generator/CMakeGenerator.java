@@ -31,16 +31,18 @@ public class CMakeGenerator {
 
   final static private String CONFIG_FILE_NAME = "cdep-dependencies-config.cmake";
 
+  @NotNull
   final private GeneratorEnvironment environment;
 
   @NotNull
   final private FunctionTableExpression table;
+  @NotNull
   private StringBuilder sb;
   private int indent = 0;
   @Nullable
   private FindModuleExpression signature = null;
 
-  public CMakeGenerator(GeneratorEnvironment environment, @NotNull FunctionTableExpression table) {
+  public CMakeGenerator(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) {
     this.environment = environment;
     this.table = (FunctionTableExpression) notNull(new CMakeConvertJoinedFileToString().visit(table));
     this.sb = new StringBuilder();
@@ -74,6 +76,7 @@ public class CMakeGenerator {
     return sb.toString();
   }
 
+  @NotNull
   private String getCMakePath(@NotNull File file) {
     return file.toString().replace("\\", "/");
   }
@@ -83,7 +86,7 @@ public class CMakeGenerator {
     return new File(environment.modulesFolder, CONFIG_FILE_NAME);
   }
 
-  private void visit(Expression expression) {
+  private void visit(@NotNull Expression expression) {
 
     String prefix = new String(new char[indent * 2]).replace('\0', ' ');
 
@@ -247,15 +250,17 @@ public class CMakeGenerator {
     throw new RuntimeException(expression.getClass().toString());
   }
 
+  @NotNull
   private String unquote(@NotNull String string) {
     require(string.startsWith("\"") && string.endsWith("\""));
     return string.substring(1, string.length() - 1);
   }
 
-  private void append(@NotNull String format, Object... args) {
+  private void append(@NotNull String format, @NotNull Object... args) {
     sb.append(String.format(format, args));
   }
 
+  @NotNull
   private String parameterName(@NotNull FindModuleExpression signature, @NotNull ParameterExpression expr) {
     if (expr == signature.targetPlatform) {
       return "CMAKE_SYSTEM_NAME";
@@ -279,9 +284,9 @@ public class CMakeGenerator {
     throw new RuntimeException(expr.name);
   }
 
-  private Object appendAssignments(String prefix,
+  private Object appendAssignments(@NotNull String prefix,
       @NotNull FindModuleExpression signature,
-      Expression expr,
+      @NotNull Expression expr,
       @Nullable String assignResult) {
     if (expr instanceof AssignmentExpression) {
       AssignmentExpression specific = (AssignmentExpression) expr;
@@ -333,6 +338,7 @@ public class CMakeGenerator {
     throw new RuntimeException(expr.getClass().toString());
   }
 
+  @NotNull
   String getAddDependencyFunctionName(@NotNull Coordinate coordinate) {
     return String.format("add_cdep_%s_dependency", coordinate.artifactId).replace("-", "_").replace("/", "_");
   }
