@@ -98,7 +98,7 @@ public class TestInterpretingVisitor {
       builder.addManifest(manifest.resolved);
       String expectedFailure = expected.get(manifest.name);
       try {
-        FunctionTableExpression function = builder.build();
+        final FunctionTableExpression function = builder.build();
         new InterpretingVisitor() {
           @Override
           protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
@@ -154,7 +154,7 @@ public class TestInterpretingVisitor {
     expected.put("archiveMissingSha256", "Archive in http://google.com/cdep-manifest.yml was malformed");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
-      FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+      final FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
       builder.addManifest(manifest.resolved);
       String expectedFailure = expected.get(manifest.name);
       try {
