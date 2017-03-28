@@ -296,16 +296,11 @@ public class FindModuleFunctionTableBuilder {
   private Map<iOSArchitecture, List<iOSArchive>> groupByArchitecture(@NotNull iOSArchive archives[]) {
     Map<iOSArchitecture, List<iOSArchive>> result = new HashMap<>();
     for (iOSArchive archive : archives) {
-      List<iOSArchive> list = result.get(archive.architecture);
-      if (list == null) {
-        list = new ArrayList<>();
-        result.put(archive.architecture, list);
-      }
+      List<iOSArchive> list = result.computeIfAbsent(archive.architecture, k -> new ArrayList<>());
       list.add(archive);
     }
     return result;
   }
-
 
   @NotNull
   private Expression buildAndroidStlTypeCase(@NotNull ResolvedManifest resolved, AssignmentExpression explodedArchiveFolder,
