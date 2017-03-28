@@ -23,31 +23,32 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
     return super.visitModuleArchiveExpression(expr);
   }
 
-
   @NotNull
   @Override
   protected ModuleArchive visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     ModuleArchive archive = superVisitModuleArchiveExpression(expr);
     if (archive.fullIncludePath != null) {
       if (!archive.fullIncludePath.getParentFile().isDirectory()) {
-        throw new RuntimeException(String.format("Expected '%s' folder to be created but it wasn't.", archive.fullIncludePath
-            .getParentFile()));
+        throw new RuntimeException(String.format("Expected '%s' folder to be created but it wasn't.",
+            archive.fullIncludePath.getParentFile()));
       }
       if (!archive.fullIncludePath.isDirectory()) {
-        throw new RuntimeException(String.format("Downloaded '%s' did not contain include folder '%s' at it's root.\nLocal " +
-            "path: %s\n" + "If you own this package you can add \"include:\" to the archive entry in cdep-manifest.yml" + " to " +
-            "" + "" + "indicate that there is no include folder.", archive.remote, archive.fullIncludePath.getName(), archive
-            .fullIncludePath));
+        throw new RuntimeException(String.format("Downloaded '%s' did not contain include folder '%s' at it's root.\nLocal " + "path: %s\n" + "If you own this package you can add \"include:\" to the archive entry in cdep-manifest.yml" + "" + " to " + "" + "" + "indicate that there is no include folder.",
+            archive.remote,
+            archive.fullIncludePath.getName(),
+            archive.fullIncludePath));
       }
     }
     if (archive.fullLibraryName != null) {
       if (!archive.fullLibraryName.getParentFile().isDirectory()) {
-        throw new RuntimeException(String.format("Expected '%s' folder to be created but it wasn't.", archive.fullLibraryName
-            .getParentFile()));
+        throw new RuntimeException(String.format("Expected '%s' folder to be created but it wasn't.",
+            archive.fullLibraryName.getParentFile()));
       }
       if (!archive.fullLibraryName.isFile()) {
-        throw new RuntimeException(String.format("Downloaded '%s' did not contain library '%s/%s' at it's root.\nLocal path: "
-            + "%s", archive.remote, archive.fullLibraryName.getParentFile().getName(), archive.fullLibraryName.getName(),
+        throw new RuntimeException(String.format("Downloaded '%s' did not contain library '%s/%s' at it's root.\nLocal path: " + "%s",
+            archive.remote,
+            archive.fullLibraryName.getParentFile().getName(),
+            archive.fullLibraryName.getName(),
             archive.fullLibraryName));
       }
     }

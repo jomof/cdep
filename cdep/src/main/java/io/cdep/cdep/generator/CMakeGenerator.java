@@ -53,7 +53,6 @@ public class CMakeGenerator {
     FileUtils.writeTextToFile(file, text);
   }
 
-
   @NotNull
   public String create() {
     append("# GENERATED FILE. DO NOT EDIT.\n");
@@ -106,9 +105,7 @@ public class CMakeGenerator {
 
       append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
 
-      append("  # Choose between Android NDK Toolchain and CMake Android Toolchain\n" + "  if(DEFINED CMAKE_ANDROID_STL_TYPE)"
-          + "\n" + "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" + "    set" + "" +
-          "(CDEP_DETERMINED_ANDROID_ABI " + "${CMAKE_ANDROID_ARCH_ABI})\n" + "  else()\n" + "    set" + "" +
+      append("  # Choose between Android NDK Toolchain and CMake Android Toolchain\n" + "  if(DEFINED CMAKE_ANDROID_STL_TYPE)" + "\n" + "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" + "    set" + "" + "" + "" + "(CDEP_DETERMINED_ANDROID_ABI " + "${CMAKE_ANDROID_ARCH_ABI})\n" + "  else()\n" + "    set" + "" + "" + "" +
           "(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" + "    " + "set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
           "  endif()\n\n");
       append("  set(cdep_exploded_root \"%s\")\n", getCMakePath(environment.unzippedArchivesFolder));

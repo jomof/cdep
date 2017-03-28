@@ -9,7 +9,6 @@ public class CDepSHA256 {
     this.hashes = hashes;
   }
 
-
   @NotNull
   @Override
   public String toString() {

@@ -44,5 +44,4 @@ public class LocalFilePathCoordinateResolver extends CoordinateResolver {
     return new ResolvedManifest(local.getCanonicalFile().toURI().toURL(), cdepManifestYml);
   }
 
-
 }

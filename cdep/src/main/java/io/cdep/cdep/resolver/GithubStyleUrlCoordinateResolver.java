@@ -69,12 +69,19 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
       // Ensure that the manifest coordinate agrees with the url provided
       notNull(cdepManifestYml.coordinate);
       notNull(cdepManifestYml.coordinate.artifactId);
-      require(groupId.equals(cdepManifestYml.coordinate.groupId), "groupId '%s' from manifest did not agree with " + "github "
-          + "url '%s", cdepManifestYml.coordinate.groupId, coordinate);
-      require(artifactId.startsWith(cdepManifestYml.coordinate.artifactId), "artifactId '%s' from manifest did not " + "agree "
-          + "with '%s' from github url '%s", artifactId, cdepManifestYml.coordinate.artifactId, coordinate);
-      require(version.equals(cdepManifestYml.coordinate.version), "version '%s' from manifest did not agree with " + "github "
-          + "url '%s", cdepManifestYml.coordinate.version, coordinate);
+      require(groupId.equals(cdepManifestYml.coordinate.groupId),
+          "groupId '%s' from manifest did not agree with " + "github " + "url '%s",
+          cdepManifestYml.coordinate.groupId,
+          coordinate);
+      require(artifactId.startsWith(cdepManifestYml.coordinate.artifactId),
+          "artifactId '%s' from manifest did not " + "agree " + "with '%s' from github url '%s",
+          artifactId,
+          cdepManifestYml.coordinate.artifactId,
+          coordinate);
+      require(version.equals(cdepManifestYml.coordinate.version),
+          "version '%s' from manifest did not agree with " + "github " + "url '%s",
+          cdepManifestYml.coordinate.version,
+          coordinate);
       return new ResolvedManifest(new URL(coordinate), cdepManifestYml);
     }
 

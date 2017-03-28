@@ -50,7 +50,6 @@ public class CMakeExamplesGenerator {
 
   }
 
-
   @NotNull
   private File getExampleRootFolder() {
     File file = environment.examplesFolder;

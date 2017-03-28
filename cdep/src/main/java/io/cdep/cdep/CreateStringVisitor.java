@@ -11,7 +11,6 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     visit(expr);
   }
 
-
   @NotNull
   public static String convert(Expression expr) {
     String result = new CreateStringVisitor(expr).sb.toString();
@@ -77,7 +76,6 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     append("\r\n");
     appendIndented("abort " + expr.message, parms);
   }
-
 
   @Override
   protected void visitAssignmentExpression(@NotNull AssignmentExpression expr) {
@@ -154,7 +152,6 @@ public class CreateStringVisitor extends ReadonlyVisitor {
   private void append(@NotNull String format, Object... parms) {
     sb.append(String.format(format, parms));
   }
-
 
   private void appendIndent() {
     String prefix = new String(new char[indent * 2]).replace('\0', ' ');

@@ -47,7 +47,6 @@ public class CDepYml {
     return sb.toString();
   }
 
-
   @NotNull
   @Override
   public String toString() {

@@ -22,7 +22,6 @@ public class Expression {
   @Nullable
   private String string = null;
 
-
   @Nullable
   @Override
   public String toString() {

@@ -175,7 +175,6 @@ public class ExpressionBuilder {
     return new ArrayExpression(expressions);
   }
 
-
   @NotNull
   public static StringExpression string(@NotNull String value) {
     return new StringExpression(value);

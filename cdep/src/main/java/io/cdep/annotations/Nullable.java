@@ -1,6 +1,5 @@
 package io.cdep.annotations;
 
-
 import java.lang.annotation.*;
 
 @SuppressWarnings("unused")

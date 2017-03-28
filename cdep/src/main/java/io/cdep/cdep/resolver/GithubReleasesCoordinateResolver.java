@@ -48,8 +48,11 @@ public class GithubReleasesCoordinateResolver extends CoordinateResolver {
         subArtifact = "-" + artifactId.substring(pos + 1);
         artifactId = artifactId.substring(0, pos);
       }
-      String manifest = String.format("https://github.com/%s/%s/releases/download/%s/cdep-manifest%s.yml", user, artifactId,
-          version, subArtifact);
+      String manifest = String.format("https://github.com/%s/%s/releases/download/%s/cdep-manifest%s.yml",
+          user,
+          artifactId,
+          version,
+          subArtifact);
       return urlResolver.resolve(environment, new SoftNameDependency(manifest));
     }
     return null;

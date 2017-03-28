@@ -76,9 +76,14 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
       for (ModuleArchiveExpression dependeeArchive : moduleArchives.get(dependee)) {
         Coordinate prior = shaToPrior.get(dependeeArchive.sha256);
         assert dependeeArchive.sha256 != null;
-        require(prior == null, "Package '%s' depends on '%s' but both packages contain a file:\n  %s\nwith the same " +
-            "SHA256. The file should only be in the lowest level package '%s' (sha256:%s)", dependant, dependee,
-            dependeeArchive.file, dependee, dependeeArchive.sha256.substring(0, 8));
+        require(prior == null,
+            "Package '%s' depends on '%s' but both packages contain a file:\n  %s\nwith the same " + "SHA256. The file should "
+                + "only be in the lowest level package '%s' (sha256:%s)",
+            dependant,
+            dependee,
+            dependeeArchive.file,
+            dependee,
+            dependeeArchive.sha256.substring(0, 8));
       }
     }
   }

@@ -1,6 +1,5 @@
 package io.cdep.cdep;
 
-
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.ast.finder.AssignmentExpression;
 import io.cdep.cdep.ast.finder.Expression;
@@ -13,7 +12,6 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.reference;
  * nearest block.
  */
 public class ReplaceAssignmentWithReference extends RewritingVisitor {
-
 
   @NotNull
   @Override

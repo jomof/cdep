@@ -11,6 +11,7 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
  * Locate File.join statements and join them into strings.
  */
 public class CMakeConvertJoinedFileToString extends RewritingVisitor {
+  @NotNull
   @Override
   protected Expression visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
     if (expr.function == ExternalFunctionExpression.FILE_JOIN_SEGMENTS) {

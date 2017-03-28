@@ -17,7 +17,6 @@ import static io.cdep.cdep.utils.ReflectionUtils.*;
 @SuppressWarnings("unused")
 public class PlainOldDataReadonlyCovisitor {
 
-
   @NotNull
   List<String> namestack = new ArrayList<>();
 

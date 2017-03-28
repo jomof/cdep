@@ -47,7 +47,6 @@ public class FileUtils {
     }
   }
 
-
   @NotNull
   public static String readAllText(@NotNull File file) throws IOException {
     return new String(Files.readAllBytes(Paths.get(file.getCanonicalPath())));

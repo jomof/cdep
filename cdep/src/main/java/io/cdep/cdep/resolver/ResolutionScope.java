@@ -99,8 +99,9 @@ public class ResolutionScope {
       @NotNull ResolvedManifest resolved,
       @NotNull List<HardNameDependency> transitiveDependencies) {
     assert resolved.cdepManifestYml.coordinate != null;
-    require(!isResolved(resolved.cdepManifestYml.coordinate.toString()), "%s was already resolved", resolved.cdepManifestYml
-        .coordinate);
+    require(!isResolved(resolved.cdepManifestYml.coordinate.toString()),
+        "%s was already resolved",
+        resolved.cdepManifestYml.coordinate);
 
     this.resolved.put(resolved.cdepManifestYml.coordinate.toString(), new FoundManifestResolution(resolved));
 

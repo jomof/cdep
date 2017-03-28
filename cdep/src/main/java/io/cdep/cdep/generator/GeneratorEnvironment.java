@@ -15,7 +15,6 @@
 */
 package io.cdep.cdep.generator;
 
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
@@ -103,7 +102,6 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     output.close();
   }
 
-
   @NotNull
   public File getLocalDownloadFilename(Coordinate coordinate, URL remoteArchive) {
     coordinate = notNull(coordinate);
@@ -179,13 +177,13 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
       String sha256 = HashUtils.getSHA256OfFile(file);
       assert cdepManifestYml.coordinate != null;
       String priorSha256 = this.cdepSha256Hashes.get(cdepManifestYml.coordinate.toString());
-      require(priorSha256 == null || priorSha256.equals(sha256), "SHA256 of cdep-manifest.yml for package '%s' does " + "not "
-          + "agree with value in cdep.sha256. Something changed.", cdepManifestYml.coordinate);
+      require(priorSha256 == null || priorSha256.equals(sha256),
+          "SHA256 of cdep-manifest.yml for package '%s' does " + "not " + "agree with value in cdep.sha256. Something changed.",
+          cdepManifestYml.coordinate);
       this.cdepSha256Hashes.put(cdepManifestYml.coordinate.toString(), sha256);
     }
     return cdepManifestYml;
   }
-
 
   @NotNull
   public File getLocalUnzipFolder(@NotNull Coordinate coordinate, @NotNull URL remoteArchive) {

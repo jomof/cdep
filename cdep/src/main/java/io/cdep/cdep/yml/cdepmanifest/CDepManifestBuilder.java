@@ -1,6 +1,5 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 

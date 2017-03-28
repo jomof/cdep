@@ -27,13 +27,20 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     FindModuleExpression result = (FindModuleExpression) super.visitFindModuleExpression(expr);
     List<AssignmentExpression> block = extractBlocks(result);
     if (block.size() > 0) {
-      result = new FindModuleExpression(result.coordinate, result.cdepExplodedRoot, result.targetPlatform, result
-          .systemVersion, result.androidTargetAbi, result.androidStlType, result.osxSysroot, result.osxArchitectures,
+      result = new FindModuleExpression(result.coordinate,
+          result.cdepExplodedRoot,
+          result.targetPlatform,
+          result.systemVersion,
+          result.androidTargetAbi,
+          result.androidStlType,
+          result.osxSysroot,
+          result.osxArchitectures,
           assignmentBlock(block, result.expression));
     }
     return result;
   }
 
+  @NotNull
   @Override
   protected Expression visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
     Expression result = super.visitIfSwitchExpression(expr);
@@ -45,7 +52,6 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     return result;
   }
 
-
   @Override
   protected Expression visitModuleExpression(@NotNull ModuleExpression expr) {
     Expression result = super.visitModuleExpression(expr);
@@ -56,7 +62,6 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     }
     return result;
   }
-
 
   @NotNull
   private List<AssignmentExpression> extractBlocks(Expression result) {

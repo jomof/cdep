@@ -44,7 +44,6 @@ public class CDepManifestYmlUtils {
     new Checker().visit(cdepManifestYml, CDepManifestYml.class);
   }
 
-
   @NotNull
   public static List<HardNameDependency> getTransitiveDependencies(@NotNull CDepManifestYml cdepManifestYml) {
     List<HardNameDependency> dependencies = new ArrayList<>();
@@ -63,8 +62,10 @@ public class CDepManifestYmlUtils {
     @Override
     public void visitString(@Nullable String name, @NotNull String node) {
       if (name != null && name.equals("file")) {
-        require(!filesSeen.contains(node.toLowerCase()), "Package '%s' contains multiple references to the same" + " " +
-            "archive file '%s'", coordinate, node);
+        require(!filesSeen.contains(node.toLowerCase()),
+            "Package '%s' contains multiple references to the same" + " " + "archive file '%s'",
+            coordinate,
+            node);
         filesSeen.add(node.toLowerCase());
       }
     }
@@ -92,8 +93,10 @@ public class CDepManifestYmlUtils {
     public void visitiOS(@Nullable String name, @NotNull iOS value) {
       if (value.archives != null) {
         for (iOSArchive archive : value.archives) {
-          require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static iOS libraryName " + "'%s'",
-              coordinate, archive.lib);
+          require(archive.lib == null || archive.lib.endsWith(".a"),
+              "Package '%s' has non-static iOS libraryName " + "'%s'",
+              coordinate,
+              archive.lib);
           require(archive.file != null, "Package '%s' has missing ios.archive.file", coordinate);
           require(archive.sha256 != null, "Package '%s' has missing ios.archive.sha256 for '%s'", coordinate, archive.file);
           require(archive.size != null, "Package '%s' has missing ios.archive.size for '%s'", coordinate, archive.file);
@@ -117,8 +120,10 @@ public class CDepManifestYmlUtils {
     public void visitAndroid(@Nullable String name, @NotNull Android value) {
       if (value.archives != null) {
         for (AndroidArchive archive : value.archives) {
-          require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static android " + "libraryName " +
-              "'%s'", coordinate, archive.lib);
+          require(archive.lib == null || archive.lib.endsWith(".a"),
+              "Package '%s' has non-static android " + "libraryName " + "'%s'",
+              coordinate,
+              archive.lib);
           if (archive.runtime != null) {
             switch (archive.runtime) {
               case "c++":
@@ -126,8 +131,9 @@ public class CDepManifestYmlUtils {
               case "gnustl":
                 break;
               default:
-                fail("Package '%s' has unexpected android runtime '%s'. Allowed: c++, stlport, gnustl", coordinate, archive
-                    .runtime);
+                fail("Package '%s' has unexpected android runtime '%s'. Allowed: c++, stlport, gnustl",
+                    coordinate,
+                    archive.runtime);
             }
           }
 

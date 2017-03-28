@@ -1,6 +1,5 @@
 package io.cdep.cdep.resolver;
 
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.resolver.ResolutionScope.Resolution;

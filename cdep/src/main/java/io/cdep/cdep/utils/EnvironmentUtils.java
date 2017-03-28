@@ -1,6 +1,5 @@
 package io.cdep.cdep.utils;
 
-
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.resolver.ResolvedManifest;
@@ -46,8 +45,8 @@ public class EnvironmentUtils {
     require(archive.include != null, "'%s' does not have archive.include", coordinate);
     require(archive.file != null, "'%s' does not have archive.include.file", coordinate);
     assert manifest.coordinate != null;
-    return new File(environment.getLocalUnzipFolder(manifest.coordinate, resolved.remote.toURI().resolve(".").resolve(archive
-        .file).toURL()), archive.include);
+    return new File(environment.getLocalUnzipFolder(manifest.coordinate,
+        resolved.remote.toURI().resolve(".").resolve(archive.file).toURL()), archive.include);
   }
 
   /**

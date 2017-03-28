@@ -69,8 +69,11 @@ public class GeneratorEnvironmentUtils {
             local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
             require(local != null, "Resolved archive '%s' didn't exist", archive.file);
           }
-          require(archive.size == local.length(), "File size for %s was %s which did not match value %s from the manifest",
-              archive.file, local.length(), archive.size);
+          require(archive.size == local.length(),
+              "File size for %s was %s which did not match value %s from the manifest",
+              archive.file,
+              local.length(),
+              archive.size);
         }
 
         String localSha256String = HashUtils.getSHA256OfFile(local);

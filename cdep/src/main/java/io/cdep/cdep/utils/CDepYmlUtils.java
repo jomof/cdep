@@ -29,7 +29,6 @@ abstract public class CDepYmlUtils {
     }
   }
 
-
   @NotNull
   public static CDepYml fromString(@NotNull String content) {
     Yaml yaml = new Yaml(new Constructor(CDepYml.class));

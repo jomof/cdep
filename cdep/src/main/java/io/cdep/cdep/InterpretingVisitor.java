@@ -171,12 +171,10 @@ public class InterpretingVisitor {
     return result;
   }
 
-
   @NotNull
   private Object visitMultiStatementExpression(@NotNull MultiStatementExpression expr) {
     return visitArray(expr.statements);
   }
-
 
   @NotNull
   private Object visitArrayExpression(@NotNull ArrayExpression expr) {
@@ -196,7 +194,6 @@ public class InterpretingVisitor {
   private Object visitExampleExpression(ExampleExpression expr) {
     return null;
   }
-
 
   @SuppressWarnings("SameReturnValue")
   @Nullable
@@ -232,7 +229,6 @@ public class InterpretingVisitor {
     return invoke(method, thiz, parms);
   }
 
-
   @NotNull
   private Object[] visitArray(@NotNull Expression[] array) {
     Object result[] = new Object[array.length];
@@ -250,12 +246,10 @@ public class InterpretingVisitor {
     return null;
   }
 
-
   @NotNull
   private String visitStringExpression(@NotNull StringExpression expr) {
     return expr.value;
   }
-
 
   @Nullable
   Object visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
@@ -275,7 +269,6 @@ public class InterpretingVisitor {
   Object visitParameterExpression(@NotNull ParameterExpression expr) {
     throw new RuntimeException("Need to bind " + expr.name);
   }
-
 
   @Nullable
   Object visitFindModuleExpression(@NotNull FindModuleExpression expr) {
