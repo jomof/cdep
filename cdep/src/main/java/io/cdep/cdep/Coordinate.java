@@ -44,10 +44,7 @@ public class Coordinate {
 
   @Override
   public boolean equals(@Nullable Object obj) {
-    if (obj == null) {
-      return false;
-    }
-    return obj instanceof Coordinate && Objects.equals(toString(), obj.toString());
+    return obj != null && obj instanceof Coordinate && Objects.equals(toString(), obj.toString());
   }
 
   @Override

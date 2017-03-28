@@ -80,10 +80,10 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
       elementType) {
     appendIndented("%s:\r\n", name);
     ++indent;
-    for (int i = 0; i < array.length; ++i) {
+    for (Object anArray : array) {
       appendIndented("- ");
       ++eatIndent;
-      visit(array[i], elementType);
+      visit(anArray, elementType);
       --indent;
     }
     --indent;

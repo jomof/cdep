@@ -32,8 +32,8 @@ public class ResolutionScope {
    * @param roots are the top level dependencies from cdep.yml.
    */
   public ResolutionScope(@NotNull SoftNameDependency[] roots) {
-    for (int i = 0; i < roots.length; ++i) {
-      addUnresolved(roots[i]);
+    for (SoftNameDependency root : roots) {
+      addUnresolved(root);
     }
   }
 

@@ -4,7 +4,7 @@ import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.ast.finder.*;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class ReadonlyVisitor {
 
   protected void visit(@Nullable Expression expr) {
@@ -131,8 +131,8 @@ public class ReadonlyVisitor {
   }
 
   protected void visitArray(@NotNull Expression[] array) {
-    for (int i = 0; i < array.length; ++i) {
-      visit(array[i]);
+    for (Expression anArray : array) {
+      visit(anArray);
     }
   }
 

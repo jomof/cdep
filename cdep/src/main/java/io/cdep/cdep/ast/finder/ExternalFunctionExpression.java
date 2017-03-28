@@ -37,8 +37,8 @@ public class ExternalFunctionExpression extends Expression {
   }
 
   static public File fileJoinSegments(File base, @NotNull String... segments) {
-    for (int i = 0; i < segments.length; ++i) {
-      base = new File(base, segments[i]);
+    for (String segment : segments) {
+      base = new File(base, segment);
     }
     return base;
   }
