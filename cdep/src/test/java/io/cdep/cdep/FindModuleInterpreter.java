@@ -29,7 +29,7 @@ class FindModuleInterpreter {
 
   @Nullable
   @SuppressWarnings("SameParameterValue")
-  static ModuleArchive findAndroid(@NotNull FunctionTableExpression table, Coordinate functionName, final String
+  static ModuleArchive findAndroid(@NotNull final FunctionTableExpression table, Coordinate functionName, final String
       cdepExplodedRoot, final String targetPlatform, final String systemVersion, // On android, platform like 21
       final String androidStlType, final String androidTargetAbi) {
     final FindModuleExpression function = table.findFunctions.get(functionName);
@@ -57,7 +57,7 @@ class FindModuleInterpreter {
   }
 
   @Nullable
-  static ModuleArchive findiOS(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot,
+  static ModuleArchive findiOS(@NotNull final FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot,
       final String osxArchitectures[], final String osxSysroot) {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
@@ -102,7 +102,7 @@ class FindModuleInterpreter {
   }
 
   @Nullable
-  static ModuleArchive findLinux(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot) {
+  static ModuleArchive findLinux(@NotNull final FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot) {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
