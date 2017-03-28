@@ -47,10 +47,7 @@ public class Coordinate {
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof Coordinate)) {
-      return false;
-    }
-    return Objects.equals(toString(), obj.toString());
+    return obj instanceof Coordinate && Objects.equals(toString(), obj.toString());
   }
 
   @Override

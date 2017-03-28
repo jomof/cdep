@@ -72,7 +72,9 @@ public class TestFindModuleFunctionTableBuilder {
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
     System.out.printf(CreateStringVisitor.convert(table));
-    String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath(), "Darwin", new String[]{"armv7"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + ".platform/Developer/SDKs/iPhoneOS10.2.sdk").remote.getPath();
+    String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder
+        .getAbsolutePath(), new String[]{"armv7"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + "" +
+        ".platform/Developer/SDKs/iPhoneOS10.2.sdk").remote.getPath();
     assertThat(zip).endsWith("vectorial.zip");
     zip = FindModuleInterpreter.findAndroid(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath(), "Android", "21", "c++_shared", "x86").remote.getPath();
     assertThat(zip).endsWith("vectorial.zip");
@@ -86,7 +88,9 @@ public class TestFindModuleFunctionTableBuilder {
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
     System.out.printf(CreateStringVisitor.convert(table));
-    String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath(), "Darwin", new String[]{"armv7"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + ".platform/Developer/SDKs/iPhoneOS10.2.sdk").remote.getPath();
+    String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder
+        .getAbsolutePath(), new String[]{"armv7"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + "" +
+        ".platform/Developer/SDKs/iPhoneOS10.2.sdk").remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
     new CMakeGenerator(environment, table).generate();
   }
@@ -111,10 +115,14 @@ public class TestFindModuleFunctionTableBuilder {
     FunctionTableExpression table = builder.build();
 
     System.out.printf(table.toString());
-    String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath(), "Darwin", new String[]{"armv7s"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + ".platform/Developer/SDKs/iPhoneOS10.2.sdk").remote.getPath();
+    String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder
+        .getAbsolutePath(), new String[]{"armv7s"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + "" +
+        ".platform/Developer/SDKs/iPhoneOS10.2.sdk").remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
 
-    zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath(), "Darwin", new String[]{"i386"}, "/Applications/Xcode" + "" + ".app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator10.2.sdk").remote.getPath();
+    zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder
+        .getAbsolutePath(), new String[]{"i386"}, "/Applications/Xcode" + "" + "" +
+        ".app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator10.2.sdk").remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
 
     new CMakeGenerator(environment, table).generate();
@@ -129,7 +137,7 @@ public class TestFindModuleFunctionTableBuilder {
     FunctionTableExpression table = builder.build();
     CreateStringVisitor.convert(table);
     System.out.printf(table.toString());
-    String zip = FindModuleInterpreter.findLinux(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath(), "Linux").remote.getPath();
+    String zip = FindModuleInterpreter.findLinux(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath()).remote.getPath();
     assertThat(zip).endsWith("sqlite-linux.zip");
 
     new CMakeGenerator(environment, table).generate();
@@ -142,10 +150,12 @@ public class TestFindModuleFunctionTableBuilder {
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
-    String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath(), "Darwin", new String[]{"armv7s"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + ".platform/Developer/SDKs/iPhoneOS.sdk").remote.getPath();
+    String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder
+        .getAbsolutePath(), new String[]{"armv7s"}, "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + ".platform/Developer/SDKs/iPhoneOS.sdk").remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
 
-    zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder.getAbsolutePath(), "Darwin", new String[]{"i386"}, "/Applications/Xcode.app/Contents/Developer/Platforms/" + "iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk").remote.getPath();
+    zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder
+        .getAbsolutePath(), new String[]{"i386"}, "/Applications/Xcode.app/Contents/Developer/Platforms/" + "iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk").remote.getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
 
     new CMakeGenerator(environment, table).generate();
@@ -160,7 +170,7 @@ public class TestFindModuleFunctionTableBuilder {
     FunctionTableExpression table = builder.build();
     try {
       String zip = FindModuleInterpreter.findiOS(table, resolved.cdepManifestYml.coordinate, environment.unzippedArchivesFolder
-          .getAbsolutePath(), "Darwin", new String[]{"armv7s"}, "/Applications/Xcode.app/Contents/Developer/Platforms/" + "iPhoneSimulator.platform/Developer/SDKs/iPad10.2.sdk").remote.getPath();
+          .getAbsolutePath(), new String[]{"armv7s"}, "/Applications/Xcode.app/Contents/Developer/Platforms/" + "iPhoneSimulator.platform/Developer/SDKs/iPad10.2.sdk").remote.getPath();
       fail("Expected exception");
     } catch (RuntimeException e) {
       assertThat(e).hasMessage("OSX SDK 'iPad10.2' is not supported by module 'com.github.jomof:sqlite:0.0.0' " + "and " + "architecture 'armv7s'. Supported: " + "iPhoneOS10.2 ");

@@ -11,6 +11,7 @@ public class CDepManifestBuilder {
     return new HardNameDependency(compile, sha256);
   }
 
+  @SuppressWarnings("SameParameterValue")
   @NotNull
   public static Archive archive(@NotNull String file, @NotNull String sha256, long size, @NotNull String include) {
     return new Archive(file, sha256, size, include);

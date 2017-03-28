@@ -57,13 +57,14 @@ class FindModuleInterpreter {
   }
 
   @Nullable
-  static ModuleArchive findiOS(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot, final String targetPlatform, final String osxArchitectures[], final String osxSysroot) {
+  static ModuleArchive findiOS(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot,
+      final String osxArchitectures[], final String osxSysroot) {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
         if (expr == function.targetPlatform) {
-          return targetPlatform;
+          return "Darwin";
         }
         if (expr == function.osxSysroot) {
           return osxSysroot;
@@ -101,13 +102,13 @@ class FindModuleInterpreter {
   }
 
   @Nullable
-  static ModuleArchive findLinux(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot, final String targetPlatform) {
+  static ModuleArchive findLinux(@NotNull FunctionTableExpression table, Coordinate functionName, final String cdepExplodedRoot) {
     final FindModuleExpression function = table.findFunctions.get(functionName);
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
         if (expr == function.targetPlatform) {
-          return targetPlatform;
+          return "Linux";
         }
         if (expr == function.cdepExplodedRoot) {
           return cdepExplodedRoot;

@@ -52,9 +52,6 @@ public class ExternalFunctionExpression extends Expression {
   }
 
   static public boolean hasOnlyElement(@NotNull String array[], @NotNull String value) {
-    if (array.length != 1) {
-      return false;
-    }
-    return value.equals(array[0]);
+    return array.length == 1 && value.equals(array[0]);
   }
 }

@@ -144,7 +144,7 @@ public class ExpressionBuilder {
   /**
    * Return the last index of value inside of string.
    */
-
+  @SuppressWarnings("SameParameterValue")
   @NotNull
   public static InvokeFunctionExpression lastIndexOfString(Expression string, String value) {
     return invoke(

@@ -62,7 +62,7 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
   void visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
     super.visitFunctionTableExpression(expr);
     for (Coordinate coordinate : forwardEdges.keySet()) {
-      Map<String, Coordinate> shaToPrior = copyArchivesInto(coordinate, null);
+      Map<String, Coordinate> shaToPrior = copyArchivesInto(coordinate);
       validateForward(coordinate, shaToPrior);
     }
   }
@@ -87,11 +87,8 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
    * as a dependency.
    */
   @NotNull
-  private Map<String, Coordinate> copyArchivesInto(Coordinate coordinate, @Nullable Map<String, Coordinate> original) {
+  private Map<String, Coordinate> copyArchivesInto(Coordinate coordinate) {
     Map<String, Coordinate> copy = new HashMap<>();
-    if (original != null) {
-      copy.putAll(original);
-    }
     for (ModuleArchiveExpression archive : moduleArchives.get(coordinate)) {
       copy.put(archive.sha256, coordinate);
     }

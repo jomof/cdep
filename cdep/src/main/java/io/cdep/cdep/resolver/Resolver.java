@@ -74,11 +74,6 @@ public class Resolver {
 
   /**
    * Resolve a single reference. Don't look at transitive references.
-   *
-   * @param dependency is the reference to resolve.
-   * @return the resolved manifest or null if not resolved.
-   * @throws IOException
-   * @throws NoSuchAlgorithmException
    */
   @Nullable
   public ResolvedManifest resolveAny(@NotNull SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException {
