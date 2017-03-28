@@ -1,11 +1,7 @@
 apply plugin: 'java'
 group 'io.cdep'
 
-if (System.getenv()["TRAVIS_TAG"] != null && System.getenv()["TRAVIS_TAG"].length() > 0) {
-    version System.getenv()["TRAVIS_TAG"]
-} else {
-    version 'dev'
-}
+
 repositories {
   jcenter()
 }
@@ -20,11 +16,20 @@ buildscript {
         classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.8'
     }
 }
-apply plugin: 'net.ltgt.errorprone'
 
-configurations.errorprone {
-    resolutionStrategy.force 'com.google.errorprone:error_prone_core:2.0.19'
+if (System.getenv()["TRAVIS_TAG"] != null && System.getenv()["TRAVIS_TAG"].length() > 0) {
+    version System.getenv()["TRAVIS_TAG"]
+} else {
+    version 'dev'
+
+    // Error prone locally since it isn't supported in java7
+    apply plugin: 'net.ltgt.errorprone'
+    configurations.errorprone {
+        resolutionStrategy.force 'com.google.errorprone:error_prone_core:2.0.19'
+    }
 }
+
+
 
 class GenerateBuildInfo extends DefaultTask {
     @OutputFile
