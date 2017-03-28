@@ -22,7 +22,6 @@ public class EnvironmentUtils {
    * Returns the package level archive's include folder. Will throw an exception if there was no package level
    * archive.
    */
-
   @NotNull
   public static File getPackageLevelIncludeFolder(@NotNull GeneratorEnvironment environment, @NotNull String coordinate)
       throws IOException, NoSuchAlgorithmException, URISyntaxException {
@@ -34,7 +33,6 @@ public class EnvironmentUtils {
    * Returns the package level archive's include folder. Will throw an exception if there was no package level
    * archive.
    */
-
   @NotNull
   static File getPackageLevelIncludeFolder(@NotNull GeneratorEnvironment environment,
       @NotNull String coordinate,

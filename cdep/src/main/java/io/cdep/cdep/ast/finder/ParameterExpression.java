@@ -15,12 +15,13 @@
 */
 package io.cdep.cdep.ast.finder;
 
-public class ParameterExpression extends Expression {
+import io.cdep.annotations.NotNull;
 
+public class ParameterExpression extends Expression {
+  @NotNull
   final public String name;
 
-  ParameterExpression(String name) {
+  ParameterExpression(@NotNull String name) {
     this.name = name;
   }
-
 }

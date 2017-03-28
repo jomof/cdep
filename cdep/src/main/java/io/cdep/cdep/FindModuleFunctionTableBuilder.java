@@ -165,8 +165,7 @@ public class FindModuleFunctionTableBuilder {
 
   @NotNull
   private StatementExpression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
-      @NotNull Archive archive,
-      AssignmentExpression explodedArchiveFolder,
+      @NotNull Archive archive, @NotNull AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
@@ -177,8 +176,7 @@ public class FindModuleFunctionTableBuilder {
 
   @NotNull
   private Expression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
-      @NotNull LinuxArchive archive,
-      AssignmentExpression explodedArchiveFolder,
+      @NotNull LinuxArchive archive, @NotNull AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
@@ -189,8 +187,7 @@ public class FindModuleFunctionTableBuilder {
 
   @NotNull
   private Expression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
-      @NotNull iOSArchive archive,
-      AssignmentExpression explodedArchiveFolder,
+      @NotNull iOSArchive archive, @NotNull AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
@@ -219,12 +216,10 @@ public class FindModuleFunctionTableBuilder {
 
   @NotNull
   private ModuleArchiveExpression buildArchive(@NotNull URL remote,
-      @NotNull String file,
-      String sha256,
-      Long size,
+      @NotNull String file, @NotNull String sha256, @NotNull Long size,
       @Nullable String include,
-      @Nullable String lib,
-      AssignmentExpression explodedArchiveFolder) throws URISyntaxException, MalformedURLException {
+      @Nullable String lib, @NotNull AssignmentExpression explodedArchiveFolder)
+      throws URISyntaxException, MalformedURLException {
     return archive(remote.toURI().resolve(".").resolve(file).toURL(),
         sha256,
         size,
@@ -260,8 +255,8 @@ public class FindModuleFunctionTableBuilder {
   @NotNull
   private Expression buildiosArchitectureSwitch(@NotNull ResolvedManifest resolved,
       @NotNull iOSArchive archive[],
-      AssignmentExpression explodedArchiveFolder,
-      AssignmentExpression combinedPlatformAndSDK,
+      @NotNull AssignmentExpression explodedArchiveFolder,
+      @NotNull AssignmentExpression combinedPlatformAndSDK,
       Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
     Map<iOSArchitecture, List<iOSArchive>> grouped = groupByArchitecture(archive);
     List<Expression> conditions = new ArrayList<>();
@@ -289,8 +284,8 @@ public class FindModuleFunctionTableBuilder {
   @NotNull
   private Expression buildiOSPlatformSdkSwitch(@NotNull ResolvedManifest resolved,
       @NotNull List<iOSArchive> archives,
-      AssignmentExpression explodedArchiveFolder,
-      AssignmentExpression combinedPlatformAndSDK,
+      @NotNull AssignmentExpression explodedArchiveFolder,
+      @NotNull AssignmentExpression combinedPlatformAndSDK,
       iOSArchitecture architecture,
       Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
     List<Expression> conditionList = new ArrayList<>();
