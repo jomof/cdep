@@ -11,22 +11,27 @@ public class iOSArchive {
   @Nullable
   final public Long size;
   @Nullable
-  final public iOSPlatform platform = null;
+  final public iOSPlatform platform;
   @Nullable
-  final public iOSArchitecture architecture = null;
+  final public iOSArchitecture architecture;
   @Nullable
-  final public String sdk = null;
+  final public String sdk;
   @Nullable
   final public String include;
   @Nullable
-  final public String lib = null;
+  final public String lib;
   @Nullable
-  final public String flavor = null;
+  final public String flavor;
 
   private iOSArchive() {
     this.file = null;
     this.sha256 = null;
     this.size = null;
+    this.platform = null;
+    this.architecture = null;
+    this.sdk = null;
+    this.lib = null;
+    this.flavor = null;
     this.include = "include";
   }
 }

@@ -24,6 +24,7 @@ import io.cdep.cdep.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class CMakeGenerator {
@@ -41,7 +42,7 @@ public class CMakeGenerator {
 
   public CMakeGenerator(GeneratorEnvironment environment, FunctionTableExpression table) {
     this.environment = environment;
-    this.table = (FunctionTableExpression) new CMakeConvertJoinedFileToString().visit(table);
+    this.table = (FunctionTableExpression) notNull(new CMakeConvertJoinedFileToString().visit(table));
     this.sb = new StringBuilder();
   }
 
@@ -86,6 +87,8 @@ public class CMakeGenerator {
 
     String prefix = new String(new char[indent * 2]).replace('\0', ' ');
 
+    assert signature != null;
+    assert signature.coordinate.artifactId != null;
     String upperArtifactID = signature.coordinate.artifactId.toUpperCase().replace("-", "_").replace("/", "_");
 
     if (expression instanceof FindModuleExpression) {

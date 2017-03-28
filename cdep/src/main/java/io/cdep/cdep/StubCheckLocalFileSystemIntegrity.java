@@ -1,7 +1,6 @@
 package io.cdep.cdep;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
 import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
 
 import java.io.File;
@@ -11,7 +10,7 @@ public class StubCheckLocalFileSystemIntegrity extends CheckLocalFileSystemInteg
     super(explodedRoot);
   }
 
-  @Nullable
+  @NotNull
   @Override
   protected ModuleArchive visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     return super.superVisitModuleArchiveExpression(expr);

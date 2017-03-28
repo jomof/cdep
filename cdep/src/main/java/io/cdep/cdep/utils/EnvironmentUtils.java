@@ -2,7 +2,6 @@ package io.cdep.cdep.utils;
 
 
 import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
@@ -45,6 +44,7 @@ public class EnvironmentUtils {
     require(archive != null, "'%s' does not have archive", coordinate);
     require(archive.include != null, "'%s' does not have archive.include", coordinate);
     require(archive.file != null, "'%s' does not have archive.include.file", coordinate);
+    assert manifest.coordinate != null;
     return new File(
         environment.getLocalUnzipFolder(
             manifest.coordinate,
@@ -57,7 +57,7 @@ public class EnvironmentUtils {
   /**
    * Return the resolved manifest or throw an exception.
    */
-  @Nullable
+  @NotNull
   public static ResolvedManifest resolveManifest(GeneratorEnvironment environment, @NotNull String coordinate)
       throws IOException, NoSuchAlgorithmException {
     SoftNameDependency name = new SoftNameDependency(coordinate);

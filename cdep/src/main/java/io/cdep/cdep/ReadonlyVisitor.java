@@ -5,6 +5,7 @@ import io.cdep.annotations.Nullable;
 import io.cdep.cdep.ast.finder.*;
 
 public class ReadonlyVisitor {
+
   protected void visit(@Nullable Expression expr) {
     if (expr == null) {
       return;

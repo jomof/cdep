@@ -138,7 +138,6 @@ public class InterpretingVisitor {
     throw new RuntimeException(expr.getClass().toString());
   }
 
-
   @NotNull
   protected ModuleArchive visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     Object fullIncludePath = visit(expr.includePath);
@@ -146,7 +145,7 @@ public class InterpretingVisitor {
     return new ModuleArchive(expr.file, (File) fullIncludePath, (File) fullLibraryName);
   }
 
-  @Nullable
+  @NotNull
   protected Object visitAssignmentReferenceExpression(@NotNull AssignmentReferenceExpression expr) {
     notNull(stack);
     AssignmentFuture future = stack.lookup(expr.assignment);

@@ -87,7 +87,7 @@ public class TestCDepManifestYmlUtils {
       check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0");
       fail("Expected an exception");
     } catch (Exception e) {
-      assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0' has malformed version, " + "expected major.minor" +
+      assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0' has malformed version, " + "expected major.minor" + "" +
           ".point[-tweak] but there was only one " + "dot");
     }
   }
@@ -97,11 +97,11 @@ public class TestCDepManifestYmlUtils {
     try {
       check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
           "android:\n" + "  archives:\n" + "  -" + " file: bob.zip\n" + "    size: 99\n" + "    sha256: " +
-          "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "  - file: bob.zip\n" + "    size: 99\n" + "  " +
-          "  sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+          "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "  - file: bob.zip\n" + "    size: 99\n" + "  " + "" + "  sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
       fail("Expected an exception");
     } catch (Exception e) {
-      assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' contains multiple references " + "to the same archive file 'bob.zip'");
+      assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' contains multiple references " + "to the same " +
+          "archive file 'bob.zip'");
     }
   }
 
@@ -109,14 +109,13 @@ public class TestCDepManifestYmlUtils {
   public void duplicateiOSZips() {
     try {
       check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
-          "iOS:\n" + "  archives:\n" + "  - " + "file: bob.zip\n" + "    size: 99\n" + "    platform: iPhoneSimulator\n" + "   " +
-          " sdk: 10.2\n" + "    architecture: i386\n" + "    sha256: " +
-          "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "  - file: bob.zip\n" + "    size: 99\n" + "  " +
-          "  platform: iPhoneSimulator\n" + "    sdk: 10.2\n" + "    architecture: i386\n" + "    sha256: " +
+          "iOS:\n" + "  archives:\n" + "  - " + "file: bob.zip\n" + "    size: 99\n" + "    platform: iPhoneSimulator\n" + "   " + "" + " sdk: 10.2\n" + "    architecture: i386\n" + "    sha256: " +
+          "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "  - file: bob.zip\n" + "    size: 99\n" + "  " + "" + "  platform: iPhoneSimulator\n" + "    sdk: 10.2\n" + "    architecture: i386\n" + "    sha256: " +
           "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
       fail("Expected an exception");
     } catch (Exception e) {
-      assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' contains multiple references " + "to the same archive file 'bob.zip'");
+      assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' contains multiple references " + "to the same " +
+          "archive file 'bob.zip'");
     }
   }
 
@@ -124,10 +123,7 @@ public class TestCDepManifestYmlUtils {
   public void duplicateZipsBetweenAndroidAndiOS() {
     try {
       check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
-          "android:\n" + "  archives:\n" + "  -" + " file: bob.zip\n" + "    size: 99\n" + "    sha256: " +
-          "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "iOS:\n" + "  " + "archives:\n" + "  - file: " +
-          "bob.zip\n" + "    size: 99\n" + "    platform: iPhoneSimulator\n" + "    sdk: 10.2\n" + "    architecture: i386\n" +
-          "  " + "  sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+          "android:\n" + "  archives:\n" + "  -" + " file: bob.zip\n" + "    size: 99\n" + "    sha256: " + "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "iOS:\n" + "  " + "archives:\n" + "  - file: " + "bob.zip\n" + "    size: 99\n" + "    platform: iPhoneSimulator\n" + "    sdk: 10.2\n" + "    architecture: i386\n" + "  " + "  sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
       fail("Expected an exception");
     } catch (Exception e) {
       assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' contains multiple references " + "to the same " +
@@ -137,21 +133,20 @@ public class TestCDepManifestYmlUtils {
 
   @Test
   public void emptyiOSArchive() {
-    check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
-        "android:\n" + "  archives:\n" + "  - " + "file: bob.zip\n" + "    size: 99\n" + "    sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "iOS:\n" + "  archives:\n");
+    check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" + "android:\n" + "  archives:\n" + "  - " + "file: bob.zip\n" + "    size: 99\n" + "    sha256: " + "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "iOS:\n" + "  archives:\n");
   }
 
   @Test
   public void emptyAndroidArchive() {
     check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" + "iOS:\n"
-        + "  archives:\n" + "  - file:" + " bob.zip\n" + "    size: 99\n" + "    sha256: " +
-        "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "    platform: " + "iPhoneSimulator\n" + "    sdk: 10.2\n" + "    architecture: i386\n" + "android:\n" + "  archives:\n");
+        + "  archives:\n" + "  - file:" + " bob.zip\n" + "    size: 99\n" + "    sha256: " + "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "    platform: " + "iPhoneSimulator\n" + "    " + "sdk: 10.2\n" + "    architecture: i386\n" + "android:\n" + "  archives:\n");
   }
 
   @Test
   public void missingAndroidSha() {
     try {
-      check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" + "android:\n" + "  archives:\n" + "   " + " - file: bob.zip\n");
+      check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
+          "android:\n" + "  archives:\n" + "   " + " - file: bob.zip\n");
       fail("Expected an exception");
     } catch (Exception e) {
       assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' has missing android.archive.sha256 for 'bob.zip'");
@@ -161,7 +156,8 @@ public class TestCDepManifestYmlUtils {
   @Test
   public void missingiOSSha() {
     try {
-      check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" + "iOS:\n" + "  archives:\n" + "    - " + "file: bob.zip\n");
+      check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
+          "iOS:\n" + "  archives:\n" + "    - " + "file: bob.zip\n");
       fail("Expected an exception");
     } catch (Exception e) {
       assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' has missing ios.archive.sha256 for 'bob.zip'");
@@ -171,9 +167,7 @@ public class TestCDepManifestYmlUtils {
   @Test
   public void missingAndroidFile() {
     try {
-      check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
-          "android:\n" + "  archives:\n" + "   " + " - sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b" +
-          "\n");
+      check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" + "android:\n" + "  archives:\n" + "   " + " - sha256: " + "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b" + "\n");
       fail("Expected an exception");
     } catch (Exception e) {
       assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' has missing android.archive.file");
@@ -194,8 +188,7 @@ public class TestCDepManifestYmlUtils {
   @Test
   public void missingAndroidSize() {
     try {
-      check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
-          "android:\n" + "  archives:\n" + "   " + " - file: bob.zip\n" + "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+      check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" + "android:\n" + "  archives:\n" + "   " + " - file: bob.zip\n" + "      sha256: " + "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
       fail("Expected an exception");
     } catch (Exception e) {
       assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' has missing android.archive.size for 'bob.zip'");
@@ -205,8 +198,7 @@ public class TestCDepManifestYmlUtils {
   @Test
   public void missingiOSSize() {
     try {
-      check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
-          "iOS:\n" + "  archives:\n" + "    - " + "file: bob.zip\n" + "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+      check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" + "iOS:\n" + "  archives:\n" + "    - " + "file: bob.zip\n" + "      sha256: " + "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
       fail("Expected an exception");
     } catch (Exception e) {
       assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' has missing ios.archive.size for 'bob.zip'");
@@ -215,14 +207,12 @@ public class TestCDepManifestYmlUtils {
 
   @Test
   public void checkAndroidSuccess() {
-    check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
-        "android:\n" + "  archives:\n" + "    -" + " file: bob.zip\n" + "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "      size: 192\n");
+    check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" + "android:\n" + "  archives:\n" + "    -" + " file: bob.zip\n" + "      sha256: " + "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "      size: 192\n");
   }
 
   @Test
   public void checkiOSSuccess() {
-    check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
-        "android:\n" + "  archives:\n" + "    -" + " file: bob.zip\n" + "      sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "      size: 192\n");
+    check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" + "android:\n" + "  archives:\n" + "    -" + " file: bob.zip\n" + "      sha256: " + "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n" + "      size: 192\n");
   }
 
   private void check(@NotNull String content) {
@@ -236,7 +226,7 @@ public class TestCDepManifestYmlUtils {
     expected.put("archiveMissingSize", "Archive is missing size or it is zero");
     expected.put("archiveMissingFile", "Archive is missing file");
     expected.put("archiveMissingSha256", "Archive is missing sha256");
-    expected.put("sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. " + "Only one is allowed.");
+    expected.put("sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. " + "Only one is " + "allowed.");
     boolean unexpectedFailure = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       String key = manifest.name;
@@ -262,23 +252,25 @@ public class TestCDepManifestYmlUtils {
   @Test
   public void testTwoWayMergeSanity() throws Exception {
     Map<String, String> expected = new HashMap<>();
-    expected.put("sqliteLinuxMultiple-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
-    expected.put("sqliteLinuxMultiple-sqlite", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
-    expected.put("sqliteLinuxMultiple-sqliteLinux", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
+    expected.put("sqliteLinuxMultiple-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux " + "archives. Only one is allowed.");
+    expected.put("sqliteLinuxMultiple-sqlite", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one "
+        + "is allowed.");
+    expected.put("sqliteLinuxMultiple-sqliteLinux", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only " +
+        "" + "one is allowed.");
     expected.put("archiveMissingSha256-archiveMissingSha256", "Archive is missing sha256");
     expected.put("archiveMissingSize-archiveMissingSize", "Archive is missing size or it is zero");
     expected.put("archiveMissingFile-archiveMissingFile", "Archive is missing file");
-    expected.put("sqlite-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one " +
-        "is allowed.");
+    expected.put("sqlite-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one " + "is allowed.");
     expected.put("sqlite-sqlite", "Package 'com.github.jomof:sqlite:0.0.0' contains multiple references to the same archive " +
         "file " + "'sqlite-android-cxx-platform-12.zip'");
-    expected.put("sqliteAndroid-sqliteAndroid", "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to" +
-        " the same archive file " + "'sqlite-android-cxx-platform-12.zip'");
+    expected.put("sqliteAndroid-sqliteAndroid", "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references " + "to" + " the same archive file " + "'sqlite-android-cxx-platform-12.zip'");
     expected.put("sqliteiOS-sqliteiOS", "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to the " +
         "same archive file " + "'sqlite-ios-platform-iPhoneOS-architecture-armv7-sdk-9.3.zip'");
-    expected.put("admob-admob", "Package 'com.github.jomof:firebase/admob:2.1.3-rev8' contains multiple references to the same archive file " + "'firebase-android-admob-cpp.zip'");
-    expected.put("sqliteLinux-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
-    expected.put("sqliteLinux-sqliteLinux", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
+    expected.put("admob-admob", "Package 'com.github.jomof:firebase/admob:2.1.3-rev8' contains multiple references to the same " + "archive file " + "'firebase-android-admob-cpp.zip'");
+    expected.put("sqliteLinux-sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only " +
+        "" + "one is allowed.");
+    expected.put("sqliteLinux-sqliteLinux", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is "
+        + "allowed.");
 
     boolean somethingUnexpected = false;
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {

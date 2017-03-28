@@ -15,8 +15,8 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
 public class RewritingVisitor {
   final protected Map<Expression, Expression> identity = new HashMap<>();
 
-  @Nullable
-  public Expression visit(@Nullable Expression expr) {
+  @NotNull
+  public Expression visit(@NotNull Expression expr) {
     if (expr == null) {
       return null;
     }
@@ -26,6 +26,14 @@ public class RewritingVisitor {
     }
     identity.put(expr, visitNoIdentity(expr));
     return visit(expr);
+  }
+
+  @Nullable
+  public Expression visitMaybeNull(@Nullable Expression expr) {
+    if (expr == null) {
+      return null;
+    }
+    return this.visit(expr);
   }
 
   @Nullable
@@ -165,10 +173,8 @@ public class RewritingVisitor {
         expr.file,
         expr.sha256,
         expr.size,
-        expr.include,
-        visit(expr.includePath),
-        expr.library,
-        visit(expr.libraryPath));
+        expr.include, visitMaybeNull(expr.includePath),
+        expr.library, visitMaybeNull(expr.libraryPath));
   }
 
   protected Expression visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {

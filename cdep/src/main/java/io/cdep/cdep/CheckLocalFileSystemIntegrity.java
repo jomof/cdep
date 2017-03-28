@@ -24,7 +24,7 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
   }
 
 
-  @Nullable
+  @NotNull
   @Override
   protected ModuleArchive visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     ModuleArchive archive = superVisitModuleArchiveExpression(expr);

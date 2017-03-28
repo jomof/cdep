@@ -18,6 +18,8 @@ package io.cdep.cdep;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
+import java.util.Objects;
+
 @SuppressWarnings("unused")
 public class Coordinate {
 
@@ -48,7 +50,7 @@ public class Coordinate {
     if (!(obj instanceof Coordinate)) {
       return false;
     }
-    return toString().equals(obj.toString());
+    return Objects.equals(toString(), obj.toString());
   }
 
   @Override
@@ -56,7 +58,7 @@ public class Coordinate {
     return toString().hashCode();
   }
 
-  @Nullable
+  @NotNull
   @Override
   public String toString() {
     return groupId + ":" + artifactId + ":" + version;
