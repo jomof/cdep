@@ -118,9 +118,7 @@ public class CDep {
 
   void go(@NotNull String[] argArray) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     List<String> args = new ArrayList<>();
-    for (int i = 0; i < argArray.length; ++i) {
-      args.add(argArray[i]);
-    }
+    Collections.addAll(args, argArray);
 
     if (!handleHelp(args)) {
       return;

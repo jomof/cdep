@@ -24,10 +24,7 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.require;
@@ -52,9 +49,7 @@ public class CDepManifestYmlUtils {
   public static List<HardNameDependency> getTransitiveDependencies(@NotNull CDepManifestYml cdepManifestYml) {
     List<HardNameDependency> dependencies = new ArrayList<>();
     if (cdepManifestYml.dependencies != null) {
-      for (HardNameDependency dependency : cdepManifestYml.dependencies) {
-        dependencies.add(dependency);
-      }
+      Collections.addAll(dependencies, cdepManifestYml.dependencies);
     }
     return dependencies;
   }
