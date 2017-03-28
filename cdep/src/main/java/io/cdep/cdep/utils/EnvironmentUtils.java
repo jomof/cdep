@@ -58,7 +58,7 @@ public class EnvironmentUtils {
    * Return the resolved manifest or throw an exception.
    */
   @NotNull
-  public static ResolvedManifest resolveManifest(GeneratorEnvironment environment, @NotNull String coordinate)
+  private static ResolvedManifest resolveManifest(GeneratorEnvironment environment, @NotNull String coordinate)
       throws IOException, NoSuchAlgorithmException {
     SoftNameDependency name = new SoftNameDependency(coordinate);
     ResolvedManifest resolved = new Resolver(environment).resolveAny(name);

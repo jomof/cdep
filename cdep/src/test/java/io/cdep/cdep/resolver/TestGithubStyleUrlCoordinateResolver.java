@@ -32,9 +32,13 @@ public class TestGithubStyleUrlCoordinateResolver {
   public void testSimple() throws Exception {
     ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver().resolve(environment, new SoftNameDependency
         ("https://github" + ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
+    assert resolved != null;
+    assert resolved.cdepManifestYml.coordinate != null;
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
     assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.81");
+    assert resolved.cdepManifestYml.android != null;
+    assert resolved.cdepManifestYml.android.archives != null;
     assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(2);
   }
 
@@ -42,9 +46,13 @@ public class TestGithubStyleUrlCoordinateResolver {
   public void testCompound() throws Exception {
     ResolvedManifest resolved = new GithubStyleUrlCoordinateResolver().resolve(environment, new SoftNameDependency
         ("https://github" + ".com/jomof/firebase/releases/download/2.1.3-rev5/cdep-manifest-database.yml"));
+    assert resolved != null;
+    assert resolved.cdepManifestYml.coordinate != null;
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("firebase/database");
     assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("2.1.3-rev5");
+    assert resolved.cdepManifestYml.android != null;
+    assert resolved.cdepManifestYml.android.archives != null;
     assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(3);
   }
 

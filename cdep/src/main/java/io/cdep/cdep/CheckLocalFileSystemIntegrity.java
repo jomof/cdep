@@ -19,7 +19,7 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
   }
 
   @NotNull
-  protected ModuleArchive superVisitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
+  ModuleArchive superVisitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     return super.visitModuleArchiveExpression(expr);
   }
 

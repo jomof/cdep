@@ -10,15 +10,19 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.assignmentBlock;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class LiftToCommonAncestor extends RewritingVisitor {
-  @NotNull Set<AssignmentExpression> captured = new HashSet<>();
-  @Nullable List<AssignmentExpression> functionOrder = new ArrayList<>();
-  @Nullable Map<AssignmentExpression, Integer> functionCounts = new HashMap<>();
-  @Nullable FindModuleExpression latest = null;
+  @NotNull
+  Set<AssignmentExpression> captured = new HashSet<>();
+  @NotNull
+  List<AssignmentExpression> functionOrder = new ArrayList<>();
+  @NotNull
+  Map<AssignmentExpression, Integer> functionCounts = new HashMap<>();
+  @Nullable
+  FindModuleExpression latest = null;
 
   public LiftToCommonAncestor() {
   }
 
-  @Nullable
+  @NotNull
   @Override
   protected Expression visitFindModuleExpression(@NotNull FindModuleExpression expr) {
     List<AssignmentExpression> order = new ArrayList<>();
@@ -30,13 +34,12 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     FindModuleExpression result = (FindModuleExpression) super.visitFindModuleExpression(expr);
     List<AssignmentExpression> block = extractBlocks(result);
     if (block.size() > 0) {
-      result = new FindModuleExpression(result.coordinate, result.cdepExplodedRoot, result.targetPlatform, result.systemVersion, result.androidTargetAbi, result.androidStlType, result.osxSysroot, result.osxArchitectures, assignmentBlock(block, result.expression));
+      result = new FindModuleExpression(result.coordinate, result.cdepExplodedRoot, result.targetPlatform, result
+          .systemVersion, result.androidTargetAbi, result.androidStlType, result.osxSysroot, result.osxArchitectures,
+          assignmentBlock(block, result.expression));
     }
-    this.functionOrder = null;
-    this.functionCounts = null;
     return result;
   }
-
 
   @Override
   protected Expression visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
@@ -86,8 +89,8 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     return block;
   }
 
-  void assignments(Expression expr, @NotNull List<AssignmentExpression> order, @NotNull
-      Map<AssignmentExpression, Integer> counts) {
+  void assignments(Expression expr, @NotNull List<AssignmentExpression> order, @NotNull Map<AssignmentExpression, Integer>
+      counts) {
     require(order.size() == 0);
     require(counts.size() == 0);
     List<AssignmentExpression> assignments = new GetContainedReferences(expr).list;

@@ -98,6 +98,7 @@ public class ResolutionScope {
    */
   public void recordResolved(@NotNull SoftNameDependency softname, @NotNull ResolvedManifest resolved, @NotNull List<HardNameDependency>
       transitiveDependencies) {
+    assert resolved.cdepManifestYml.coordinate != null;
     require(!isResolved(resolved.cdepManifestYml.coordinate.toString()), "%s was already resolved", resolved
         .cdepManifestYml.coordinate);
 
@@ -108,6 +109,7 @@ public class ResolutionScope {
     unresolved.remove(softname.compile);
 
     for (HardNameDependency hardname : transitiveDependencies) {
+      assert hardname.compile != null;
       Coordinate coordinate = CoordinateUtils.tryParse(hardname.compile);
       if (coordinate == null) {
         this.resolved.put(hardname.compile, UNPARSEABLE_RESOLUTION);

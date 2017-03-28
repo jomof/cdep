@@ -139,14 +139,14 @@ public class InterpretingVisitor {
   }
 
   @NotNull
-  protected ModuleArchive visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
+  ModuleArchive visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     Object fullIncludePath = visit(expr.includePath);
     Object fullLibraryName = visit(expr.libraryPath);
     return new ModuleArchive(expr.file, (File) fullIncludePath, (File) fullLibraryName);
   }
 
   @NotNull
-  protected Object visitAssignmentReferenceExpression(@NotNull AssignmentReferenceExpression expr) {
+  private Object visitAssignmentReferenceExpression(@NotNull AssignmentReferenceExpression expr) {
     notNull(stack);
     AssignmentFuture future = stack.lookup(expr.assignment);
     if (future.value == null) {
@@ -160,7 +160,7 @@ public class InterpretingVisitor {
   }
 
   @Nullable
-  protected Object visitAssignmentBlockExpression(@NotNull AssignmentBlockExpression expr) {
+  private Object visitAssignmentBlockExpression(@NotNull AssignmentBlockExpression expr) {
     stack = new Frame(stack);
     for (AssignmentExpression assignment : expr.assignments) {
       visitAssignmentExpression(assignment);
@@ -173,47 +173,47 @@ public class InterpretingVisitor {
 
 
   @NotNull
-  protected Object visitMultiStatementExpression(@NotNull MultiStatementExpression expr) {
+  private Object visitMultiStatementExpression(@NotNull MultiStatementExpression expr) {
     return visitArray(expr.statements);
   }
 
 
   @NotNull
-  protected Object visitArrayExpression(@NotNull ArrayExpression expr) {
+  private Object visitArrayExpression(@NotNull ArrayExpression expr) {
     return visitArray(expr.elements);
   }
 
-  protected Object visitIntegerExpression(@NotNull IntegerExpression expr) {
+  private Object visitIntegerExpression(@NotNull IntegerExpression expr) {
     return expr.value;
   }
 
-  protected Method visitExternalFunctionExpression(@NotNull ExternalFunctionExpression expr) {
+  private Method visitExternalFunctionExpression(@NotNull ExternalFunctionExpression expr) {
     return expr.method;
   }
 
   @Nullable
-  protected Object visitExampleExpression(ExampleExpression expr) {
+  private Object visitExampleExpression(ExampleExpression expr) {
     return null;
   }
 
 
   @Nullable
-  protected Object visitAbortExpression(@NotNull AbortExpression expr) {
+  Object visitAbortExpression(@NotNull AbortExpression expr) {
     Object parameters[] = (Object[]) coerce(visitArray(expr.parameters), String[].class);
     fail(expr.message, parameters);
     return null;
   }
 
   @Nullable
-  protected ModuleArchive visitModuleExpression(@NotNull ModuleExpression expr) {
+  private ModuleArchive visitModuleExpression(@NotNull ModuleExpression expr) {
     return (ModuleArchive) visit(expr.archive);
   }
 
-  protected Object visitNopExpression(NopExpression expr) {
+  private Object visitNopExpression(NopExpression expr) {
     return expr;
   }
 
-  protected Object visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
+  private Object visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
     Method method = visitExternalFunctionExpression(expr.function);
     Object parameters[] = visitArray(expr.parameters);
 
@@ -232,7 +232,7 @@ public class InterpretingVisitor {
 
 
   @NotNull
-  protected Object[] visitArray(@NotNull Expression[] array) {
+  private Object[] visitArray(@NotNull Expression[] array) {
     Object result[] = new Object[array.length];
     for (int i = 0; i < array.length; ++i) {
       result[i] = visit(array[i]);
@@ -241,20 +241,21 @@ public class InterpretingVisitor {
   }
 
   @Nullable
-  protected Object visitAssignmentExpression(@NotNull AssignmentExpression expr) {
+  private Object visitAssignmentExpression(@NotNull AssignmentExpression expr) {
+    assert stack != null;
     stack.assignments.put(expr, new AssignmentFuture(stack, expr.expression));
     return null;
   }
 
 
   @NotNull
-  protected String visitStringExpression(@NotNull StringExpression expr) {
+  private String visitStringExpression(@NotNull StringExpression expr) {
     return expr.value;
   }
 
 
   @Nullable
-  protected Object visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
+  Object visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
     for (int i = 0; i < expr.conditions.length; ++i) {
       boolean condition = (boolean) visit(expr.conditions[i]);
       if (condition) {
@@ -268,13 +269,13 @@ public class InterpretingVisitor {
     return result;
   }
 
-  protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
+  Object visitParameterExpression(@NotNull ParameterExpression expr) {
     throw new RuntimeException("Need to bind " + expr.name);
   }
 
 
   @Nullable
-  protected Object visitFindModuleExpression(@NotNull FindModuleExpression expr) {
+  Object visitFindModuleExpression(@NotNull FindModuleExpression expr) {
     visit(expr.cdepExplodedRoot);
     visit(expr.targetPlatform);
     visit(expr.systemVersion);
@@ -286,7 +287,8 @@ public class InterpretingVisitor {
     return null;
   }
 
-  @Nullable Object visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
+  @Nullable
+  private Object visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
       visit(expr.findFunctions.get(coordinate));
     }

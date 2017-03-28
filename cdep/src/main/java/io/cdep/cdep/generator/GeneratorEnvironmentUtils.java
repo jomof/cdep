@@ -57,6 +57,7 @@ public class GeneratorEnvironmentUtils {
           archive = specific.archive;
         }
         notNull(archive);
+        assert archive.file != null;
         File local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
         require(local != null, "Resolved archive '%s' didn't exist", archive.file);
 

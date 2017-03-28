@@ -17,9 +17,6 @@ public class RewritingVisitor {
 
   @NotNull
   public Expression visit(@NotNull Expression expr) {
-    if (expr == null) {
-      return null;
-    }
     Expression prior = identity.get(expr);
     if (prior != null) {
       return prior;
@@ -218,8 +215,7 @@ public class RewritingVisitor {
     return expr;
   }
 
-
-  @Nullable
+  @NotNull
   protected Expression visitFindModuleExpression(@NotNull FindModuleExpression expr) {
     return new FindModuleExpression(
         expr.coordinate,

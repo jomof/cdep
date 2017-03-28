@@ -354,7 +354,6 @@ public class FindModuleFunctionTableBuilder {
         + "%s", resolved.cdepManifestYml.coordinate, runtimes), androidStlType));
   }
 
-
   @NotNull
   private Expression buildAndroidPlatformExpression(@NotNull ResolvedManifest resolved, @NotNull List<AndroidArchive> androids,
       AssignmentExpression explodedArchiveFolder, //

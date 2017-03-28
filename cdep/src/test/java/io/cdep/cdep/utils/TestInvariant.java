@@ -10,6 +10,7 @@ public class TestInvariant {
   @Test
   public void testRequireFalse() {
     try {
+      //noinspection ConstantConditions
       require(false);
       throw new RuntimeException("Expected an exception");
     } catch (RuntimeException e) {
@@ -25,6 +26,7 @@ public class TestInvariant {
   @Test
   public void testNotNullIsNull() {
     try {
+      //noinspection ConstantConditions
       notNull(null);
       throw new RuntimeException("Expected an exception");
     } catch (RuntimeException e) {

@@ -64,6 +64,7 @@ public class TestResolver {
     ManifestProvider provider = mock(ManifestProvider.class);
     when(provider.tryGetManifest(ADMOB_COORDINATE, new URL(ADMOB_URL))).thenReturn(ADMOB_MANIFEST);
     Resolver resolver = new Resolver(provider);
+    assert ADMOB_COORDINATE != null;
     ResolvedManifest resolved = resolver.resolveAny(new SoftNameDependency(ADMOB_COORDINATE.toString()));
     assertThat(resolved).isNotNull();
   }
@@ -76,6 +77,7 @@ public class TestResolver {
         GithubReleasesCoordinateResolver()};
     Resolver resolver = new Resolver(provider, resolvers);
     try {
+      assert ADMOB_COORDINATE != null;
       resolver.resolveAny(new SoftNameDependency(ADMOB_COORDINATE.toString()));
       fail("Expected exception");
     } catch (RuntimeException e) {
@@ -90,6 +92,7 @@ public class TestResolver {
     String APP_URL = "https://github.com/jomof/firebase/releases/download/2.1.3-rev7/cdep-manifest-app.yml";
     when(provider.tryGetManifest(APP_COORDINATE, new URL(APP_URL))).thenReturn(APP_MANIFEST);
     Resolver resolver = new Resolver(provider);
+    assert ADMOB_COORDINATE != null;
     ResolutionScope scope = resolver.resolveAll(new SoftNameDependency[]{new SoftNameDependency(ADMOB_COORDINATE.toString())});
     assertThat(scope.isResolutionComplete()).isTrue();
   }
@@ -100,6 +103,7 @@ public class TestResolver {
     when(provider.tryGetManifest(ADMOB_COORDINATE, new URL(ADMOB_URL))).thenReturn(ADMOB_MISSING_DEPENDENCY_MANIFEST);
     Resolver resolver = new Resolver(provider);
     try {
+      assert ADMOB_COORDINATE != null;
       resolver.resolveAll(new SoftNameDependency[]{new SoftNameDependency(ADMOB_COORDINATE.toString())});
       fail("Expected exception");
     } catch (RuntimeException e) {
@@ -113,6 +117,7 @@ public class TestResolver {
     when(provider.tryGetManifest(ADMOB_COORDINATE, new URL(ADMOB_URL))).thenReturn(ADMOB_BROKEN_DEPENDENCY_MANIFEST);
     Resolver resolver = new Resolver(provider);
     try {
+      assert ADMOB_COORDINATE != null;
       resolver.resolveAll(new SoftNameDependency[]{new SoftNameDependency(ADMOB_COORDINATE.toString())});
       fail("Expected exception");
     } catch (RuntimeException e) {

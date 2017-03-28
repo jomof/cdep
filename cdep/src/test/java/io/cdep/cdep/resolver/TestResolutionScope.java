@@ -31,6 +31,7 @@ public class TestResolutionScope {
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
     assertThat(unresolved.compile).isEqualTo("com.github.jomof:firebase/admob:2.1.3-rev7");
     Coordinate coordinate = CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7");
+    assert coordinate != null;
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();
@@ -62,6 +63,7 @@ public class TestResolutionScope {
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
     assertThat(unresolved.compile).isEqualTo("com.github.jomof:firebase/admob:2.1.3-rev7");
     Coordinate coordinate = CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7");
+    assert coordinate != null;
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();
@@ -79,6 +81,7 @@ public class TestResolutionScope {
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
     assertThat(unresolved.compile).isEqualTo("/tmp/cdep-manifest.yml");
     Coordinate coordinate = CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7");
+    assert coordinate != null;
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();
@@ -96,6 +99,7 @@ public class TestResolutionScope {
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
     assertThat(unresolved.compile).isEqualTo("com.github.jomof:firebase/admob:2.1.3-rev7");
     Coordinate coordinate = CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7");
+    assert coordinate != null;
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();
@@ -117,7 +121,9 @@ public class TestResolutionScope {
 
     // Resolve the first level dependencies: admob and database respectively
     for (SoftNameDependency unresolved : scope.getUnresolvedReferences()) {
+      assert unresolved.compile != null;
       Coordinate coordinate = CoordinateUtils.tryParse(unresolved.compile);
+      assert coordinate != null;
       CDepManifestYml manifest = new CDepManifestYml(coordinate);
       ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
       scope.recordResolved(unresolved, resolved, transitiveDependencies);
@@ -125,7 +131,9 @@ public class TestResolutionScope {
 
     // Resolve the transitive dependency to app
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
+    assert unresolved.compile != null;
     Coordinate coordinate = CoordinateUtils.tryParse(unresolved.compile);
+    assert coordinate != null;
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     scope.recordResolved(unresolved, resolved, new ArrayList<HardNameDependency>());
@@ -152,6 +160,7 @@ public class TestResolutionScope {
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
 
     Coordinate coordinate = CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7");
+    assert coordinate != null;
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();
@@ -159,12 +168,14 @@ public class TestResolutionScope {
     scope.recordResolved(unresolved, resolved, transitiveDependencies);
 
     coordinate = CoordinateUtils.tryParse("com.github.jomof:firebase/app:2.1.3-rev7");
+    assert coordinate != null;
     manifest = new CDepManifestYml(coordinate);
     resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     transitiveDependencies = new ArrayList<>();
     scope.recordResolved(unresolved, resolved, transitiveDependencies);
 
     coordinate = CoordinateUtils.tryParse("com.github.jomof:firebase/database:2.1.3-rev7");
+    assert coordinate != null;
     manifest = new CDepManifestYml(coordinate);
     resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     transitiveDependencies = new ArrayList<>();
@@ -184,6 +195,7 @@ public class TestResolutionScope {
     SoftNameDependency unresolved = scope.getUnresolvedReferences().iterator().next();
     assertThat(unresolved.compile).isEqualTo("com.github.jomof:firebase/admob:2.1.3-rev7");
     Coordinate coordinate = CoordinateUtils.tryParse("com.github.jomof:firebase/admob:2.1.3-rev7");
+    assert coordinate != null;
     CDepManifestYml manifest = new CDepManifestYml(coordinate);
     ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
     List<HardNameDependency> transitiveDependencies = new ArrayList<>();

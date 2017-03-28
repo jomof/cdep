@@ -208,7 +208,7 @@ public class ExpressionBuilder {
 
 
   @NotNull
-  public static ArrayExpression array(@NotNull String... elements) {
+  private static ArrayExpression array(@NotNull String... elements) {
     Expression array[] = new Expression[elements.length];
     for (int i = 0; i < elements.length; ++i) {
       array[i] = string(elements[i]);

@@ -56,11 +56,11 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
 
   @NotNull
   final public File examplesFolder;
-  final public File workingFolder;
-  final public Map<String, String> cdepSha256Hashes = new HashMap<>();
-  final public boolean ignoreManifestHashes;
   final public boolean forceRedownload;
-  final public Set<File> alreadyDownloaded = new HashSet<>();
+  private final File workingFolder;
+  private final Map<String, String> cdepSha256Hashes = new HashMap<>();
+  private final boolean ignoreManifestHashes;
+  private final Set<File> alreadyDownloaded = new HashSet<>();
 
   public GeneratorEnvironment(PrintStream out, File workingFolder, @Nullable File userFolder, boolean forceRedownload, boolean
       ignoreManifestHashes) {
@@ -107,8 +107,11 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     coordinate = notNull(coordinate);
     remoteArchive = notNull(remoteArchive);
     File local = downloadFolder;
+    assert coordinate.groupId != null;
     local = new File(local, coordinate.groupId);
+    assert coordinate.artifactId != null;
     local = new File(local, coordinate.artifactId);
+    assert coordinate.version != null;
     local = new File(local, coordinate.version);
     local = new File(local, getUrlBaseName(remoteArchive));
     return local;
@@ -172,6 +175,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     }
     if (!ignoreManifestHashes) {
       String sha256 = HashUtils.getSHA256OfFile(file);
+      assert cdepManifestYml.coordinate != null;
       String priorSha256 = this.cdepSha256Hashes.get(cdepManifestYml.coordinate.toString());
       require(priorSha256 == null || priorSha256.equals(sha256), "SHA256 of cdep-manifest.yml for package '%s' does "
           + "not agree with value in cdep.sha256. Something changed.", cdepManifestYml.coordinate);
@@ -184,8 +188,11 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   @NotNull
   public File getLocalUnzipFolder(@NotNull Coordinate coordinate, @NotNull URL remoteArchive) {
     File local = unzippedArchivesFolder;
+    assert coordinate.groupId != null;
     local = new File(local, coordinate.groupId);
+    assert coordinate.artifactId != null;
     local = new File(local, coordinate.artifactId);
+    assert coordinate.version != null;
     local = new File(local, coordinate.version);
     local = new File(local, getUrlBaseName(remoteArchive));
     return local;

@@ -37,7 +37,7 @@ public enum AndroidAbi {
   /**
    * Returns name of the ABI like "armeabi-v7a".
    */
-  public String getName() {
+  private String getName() {
     return name;
   }
 }

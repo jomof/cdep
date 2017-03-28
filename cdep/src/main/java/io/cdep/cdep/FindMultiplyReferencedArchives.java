@@ -23,11 +23,11 @@ import static io.cdep.cdep.utils.Invariant.require;
 public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
 
   // Map of dependency edges. Key is dependant and value is dependees.
-  final public Map<Coordinate, List<Coordinate>> forwardEdges = new HashMap<>();
+  private final Map<Coordinate, List<Coordinate>> forwardEdges = new HashMap<>();
   // Map of dependency edges. Key is dependee and value is dependants.
-  final public Map<Coordinate, List<Coordinate>> backwardEdges = new HashMap<>();
+  private final Map<Coordinate, List<Coordinate>> backwardEdges = new HashMap<>();
   // Map from module coordinate to the archives that it references
-  final public Map<Coordinate, List<ModuleArchiveExpression>> moduleArchives = new HashMap<>();
+  private final Map<Coordinate, List<ModuleArchiveExpression>> moduleArchives = new HashMap<>();
   @Nullable
   private Coordinate currentFindModule = null;
 
@@ -74,9 +74,10 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
       // Have any of the dependee archives been seen before?
       for (ModuleArchiveExpression dependeeArchive : moduleArchives.get(dependee)) {
         Coordinate prior = shaToPrior.get(dependeeArchive.sha256);
-        require(prior == null, "Package '%s' depends on '%s' but both packages contain a file:\n  %s\nwith the " +
-            "same SHA256. The file should only be in " + "the lowest level package '%s' (sha256:%s)", dependant,
-            dependee, dependeeArchive.file, dependee, dependeeArchive.sha256.substring(0, 8));
+        assert dependeeArchive.sha256 != null;
+        require(prior == null, "Package '%s' depends on '%s' but both packages contain a file:\n  %s\nwith the same " +
+            "SHA256. The file should only be in the lowest level package '%s' (sha256:%s)", dependant, dependee,
+            dependeeArchive.file, dependee, dependeeArchive.sha256.substring(0, 8));
       }
     }
   }
@@ -85,7 +86,8 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
    * Produce a map from SHA256 of each archive to the coordinate that references that archive
    * as a dependency.
    */
-  @NotNull Map<String, Coordinate> copyArchivesInto(Coordinate coordinate, @Nullable Map<String, Coordinate> original) {
+  @NotNull
+  private Map<String, Coordinate> copyArchivesInto(Coordinate coordinate, @Nullable Map<String, Coordinate> original) {
     Map<String, Coordinate> copy = new HashMap<>();
     if (original != null) {
       copy.putAll(original);

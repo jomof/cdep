@@ -12,23 +12,21 @@ public class StringExpression extends Expression {
 
   StringExpression(String value) {
     this.value = notNull(value);
-    }
+  }
 
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
-    }
+  @Override
+  public int hashCode() {
+    return toString().hashCode();
+  }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (obj == null || !(obj instanceof StringExpression)) {
-            return false;
-        }
-        return value.equals(((StringExpression) obj).value);
-    }
+  @Override
+  public boolean equals(@Nullable Object obj) {
+    return !(obj == null || !(obj instanceof StringExpression)) && value.equals(((StringExpression) obj).value);
+  }
 
-    @Override
-    public String toString() {
-        return value;
-    }
+  @Override
+  @NotNull
+  public String toString() {
+    return value;
+  }
 }

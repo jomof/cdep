@@ -21,7 +21,7 @@ import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-public abstract class CoordinateResolver {
+abstract class CoordinateResolver {
 
   @Nullable
   public abstract ResolvedManifest resolve(ManifestProvider environment, SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException;

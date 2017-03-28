@@ -57,6 +57,8 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
     covisit("linux", left.linux, right.linux, Linux.class);
     Linux linux = (Linux) returnValue;
 
+    assert left.coordinate != null;
+    assert left.example != null;
     returnValue = new CDepManifestYml(left.coordinate, left.dependencies, left.archive, android,
         ios, linux, left.example);
   }
@@ -78,6 +80,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
     covisitHardNameDependencyArray("dependencies", left.dependencies, right.dependencies);
     covisitAndroidArchiveArray("archive", left.archives, right.archives);
     AndroidArchive archives[] = (AndroidArchive[]) returnValue;
+    assert archives != null;
     returnValue = android(left.dependencies, archives);
   }
 
@@ -98,6 +101,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
     covisitHardNameDependencyArray("dependencies", left.dependencies, right.dependencies);
     covisitiOSArchiveArray("archive", left.archives, right.archives);
     iOSArchive archives[] = (iOSArchive[]) returnValue;
+    assert archives != null;
     returnValue = iOS(left.dependencies, archives);
   }
 
@@ -117,6 +121,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
     }
     covisitLinuxArchiveArray("archive", left.archives, right.archives);
     LinuxArchive archives[] = (LinuxArchive[]) returnValue;
+    assert archives != null;
     returnValue = linux(archives);
   }
 

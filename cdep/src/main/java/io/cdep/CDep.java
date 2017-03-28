@@ -48,7 +48,7 @@ import java.util.List;
 
 import static io.cdep.cdep.utils.Invariant.*;
 
-public class CDep {
+class CDep {
 
   final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev21";
   private PrintStream out = System.out;
