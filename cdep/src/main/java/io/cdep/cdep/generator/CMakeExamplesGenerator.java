@@ -36,8 +36,8 @@ public class CMakeExamplesGenerator {
       environment.out.printf("Generating %s\n", exampleSourceFile);
       FileUtils.writeTextToFile(exampleSourceFile, example.sourceCode);
       File exampleCMakeListsFile = new File(exampleFolder, "CMakeLists.txt");
-      String cmakeLists = "cmake_minimum_required(VERSION 3.0.2)\n" + "project({ARTIFACTID}_example_project)\n" + "include" + "" +
-          "(\"{MODULE}\")\n" + "add_library({ARTIFACTID}_target SHARED {SOURCE})\n" + "{ADDFUNCTION}({ARTIFACTID}_target)\n";
+      String cmakeLists = "cmake_minimum_required(VERSION 3.0.2)\n" + "project({ARTIFACTID}_example_project)\n" + "include" +
+          "" + "(\"{MODULE}\")\n" + "add_library({ARTIFACTID}_target SHARED {SOURCE})\n" + "{ADDFUNCTION}({ARTIFACTID}_target)\n";
       cmakeLists = cmakeLists.replace("{MODULE}", cmake.getCMakeConfigurationFile().getAbsolutePath()).replace("{ARTIFACTID}",
           artifact).replace("{SOURCE}", sourceName).replace("{ADDFUNCTION}", cmake.getAddDependencyFunctionName(coordinate));
       environment.out.printf("Generating %s\n", exampleCMakeListsFile);

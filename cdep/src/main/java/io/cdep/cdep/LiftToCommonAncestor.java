@@ -82,8 +82,9 @@ public class LiftToCommonAncestor extends RewritingVisitor {
     return block;
   }
 
-  private void assignments(Expression expr, @NotNull List<AssignmentExpression> order, @NotNull Map<AssignmentExpression,
-      Integer> counts) {
+  private void assignments(Expression expr,
+      @NotNull List<AssignmentExpression> order,
+      @NotNull Map<AssignmentExpression, Integer> counts) {
     require(order.size() == 0);
     require(counts.size() == 0);
     List<AssignmentExpression> assignments = new GetContainedReferences(expr).list;

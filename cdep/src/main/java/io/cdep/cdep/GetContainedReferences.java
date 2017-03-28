@@ -10,21 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetContainedReferences extends ReadonlyVisitor {
-    final public List<AssignmentExpression> list = new ArrayList<>();
+  final public List<AssignmentExpression> list = new ArrayList<>();
 
-    public GetContainedReferences(Expression expression) {
-        visit(expression);
-    }
+  public GetContainedReferences(Expression expression) {
+    visit(expression);
+  }
 
-    @Override
-    public void visitAssignmentReferenceExpression(@NotNull AssignmentReferenceExpression expr) {
-        super.visit(expr.assignment);
-        list.add(expr.assignment);
-    }
+  @Override
+  public void visitAssignmentReferenceExpression(@NotNull AssignmentReferenceExpression expr) {
+    super.visit(expr.assignment);
+    list.add(expr.assignment);
+  }
 
-    @Override
-    protected void visitAssignmentBlockExpression(@NotNull AssignmentBlockExpression expr) {
-        // Don't count assign block
-        visit(expr.statement);
-    }
+  @Override
+  protected void visitAssignmentBlockExpression(@NotNull AssignmentBlockExpression expr) {
+    // Don't count assign block
+    visit(expr.statement);
+  }
 }

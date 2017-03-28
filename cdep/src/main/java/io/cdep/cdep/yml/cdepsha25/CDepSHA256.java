@@ -3,10 +3,11 @@ package io.cdep.cdep.yml.cdepsha25;
 import io.cdep.annotations.NotNull;
 
 public class CDepSHA256 {
-    final public HashEntry[] hashes;
-    public CDepSHA256(HashEntry[] hashes) {
-        this.hashes = hashes;
-    }
+  final public HashEntry[] hashes;
+
+  public CDepSHA256(HashEntry[] hashes) {
+    this.hashes = hashes;
+  }
 
 
   @NotNull

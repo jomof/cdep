@@ -1,8 +1,12 @@
 package io.cdep.cdep.ast.finder;
 
+import io.cdep.annotations.NotNull;
+
 public class ExampleExpression extends Expression {
-    final public String sourceCode;
-    public ExampleExpression(String sourceCode) {
-        this.sourceCode = sourceCode;
-    }
+  @NotNull
+  final public String sourceCode;
+
+  public ExampleExpression(@NotNull String sourceCode) {
+    this.sourceCode = sourceCode;
+  }
 }

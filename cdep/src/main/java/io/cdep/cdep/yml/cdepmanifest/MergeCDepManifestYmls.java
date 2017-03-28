@@ -15,13 +15,14 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   @Nullable
   private Object returnValue = null;
 
-  @Nullable
+  @NotNull
   public static CDepManifestYml merge(CDepManifestYml left, CDepManifestYml right) {
     MergeCDepManifestYmls thiz = new MergeCDepManifestYmls();
     thiz.covisit(left, right);
     if (!thiz.areEqual) {
       throw new RuntimeException(String.format("Manifests were different at %s", thiz.firstDifference));
     }
+    assert thiz.returnValue != null;
     return (CDepManifestYml) thiz.returnValue;
   }
 
@@ -59,8 +60,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
 
     assert left.coordinate != null;
     assert left.example != null;
-    returnValue = new CDepManifestYml(left.coordinate, left.dependencies, left.archive, android,
-        ios, linux, left.example);
+    returnValue = new CDepManifestYml(left.coordinate, left.dependencies, left.archive, android, ios, linux, left.example);
   }
 
   @Override

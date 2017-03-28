@@ -16,6 +16,7 @@
 package io.cdep.cdep.resolver;
 
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+
 import java.net.URL;
 
 public class ResolvedManifest {

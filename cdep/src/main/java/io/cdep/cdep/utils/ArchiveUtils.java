@@ -27,46 +27,44 @@ import java.util.zip.ZipFile;
 
 public class ArchiveUtils {
 
-    /*
-     * Unzip the given file.
-     */
-    public static void unzip(@NotNull File localArchive, File localUnzipFolder) throws IOException {
-        ZipFile zipFile = new ZipFile(localArchive.getPath());
-        Enumeration<?> enu = zipFile.entries();
-        while (enu.hasMoreElements()) {
-            ZipEntry zipEntry = (ZipEntry) enu.nextElement();
+  /**
+   * Unzip the given file.
+   */
+  public static void unzip(@NotNull File localArchive, @NotNull File localUnzipFolder) throws IOException {
+    ZipFile zipFile = new ZipFile(localArchive.getPath());
+    Enumeration<?> enu = zipFile.entries();
+    while (enu.hasMoreElements()) {
+      ZipEntry zipEntry = (ZipEntry) enu.nextElement();
 
-            String name = zipEntry.getName();
-//            long size = zipEntry.getSize();
-//            long compressedSize = zipEntry.getCompressedSize();
-//            System.out.printf("name: %-20s | size: %6d | compressed size: %6d\n",
-//                name, size, compressedSize);
+      String name = zipEntry.getName();
+      //            long size = zipEntry.getSize();
+      //            long compressedSize = zipEntry.getCompressedSize();
+      //            System.out.printf("name: %-20s | size: %6d | compressed size: %6d\n",
+      //                name, size, compressedSize);
 
-            File file = new File(localUnzipFolder, name);
-            if (name.endsWith("/")) {
-                //noinspection ResultOfMethodCallIgnored
-                file.mkdirs();
-                continue;
-            }
+      File file = new File(localUnzipFolder, name);
+      if (name.endsWith("/")) {
+        //noinspection ResultOfMethodCallIgnored
+        file.mkdirs();
+        continue;
+      }
 
-            File parent = file.getParentFile();
-            if (parent != null) {
-                //noinspection ResultOfMethodCallIgnored
-                parent.mkdirs();
-            }
+      File parent = file.getParentFile();
+      if (parent != null) {
+        //noinspection ResultOfMethodCallIgnored
+        parent.mkdirs();
+      }
 
-            InputStream is = zipFile.getInputStream(zipEntry);
-            FileOutputStream fos = new FileOutputStream(file);
-            byte[] bytes = new byte[1024];
-            int length;
-            while ((length = is.read(bytes)) >= 0) {
-                fos.write(bytes, 0, length);
-            }
-            is.close();
-            fos.close();
-
-        }
-        zipFile.close();
-
+      InputStream is = zipFile.getInputStream(zipEntry);
+      FileOutputStream fos = new FileOutputStream(file);
+      byte[] bytes = new byte[1024];
+      int length;
+      while ((length = is.read(bytes)) >= 0) {
+        fos.write(bytes, 0, length);
+      }
+      is.close();
+      fos.close();
     }
+    zipFile.close();
+  }
 }

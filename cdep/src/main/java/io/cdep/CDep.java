@@ -53,6 +53,7 @@ public class CDep {
   final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev21";
   @Nullable
   private final File downloadFolder = null;
+  @NotNull
   private PrintStream out = System.out;
   @NotNull
   private File workingFolder = new File(".");
@@ -61,7 +62,7 @@ public class CDep {
   @Nullable
   private File configFile = null;
 
-  CDep(PrintStream out) {
+  CDep(@NotNull PrintStream out) {
     this.out = out;
   }
 
@@ -76,8 +77,8 @@ public class CDep {
   }
 
   @NotNull
-  private static FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment, @NotNull SoftNameDependency
-      dependencies[]) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private static FunctionTableExpression getFunctionTableExpression(@NotNull GeneratorEnvironment environment,
+      @NotNull SoftNameDependency dependencies[]) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     Resolver resolver = new Resolver(environment);
     ResolutionScope scope = resolver.resolveAll(dependencies);
@@ -96,8 +97,9 @@ public class CDep {
    */
 
   @NotNull
-  static private List<String> eatStringArgument(
-      String shortArgument, String longArgument, @NotNull List<String> args) {
+  static private List<String> eatStringArgument(@NotNull String shortArgument,
+      @NotNull String longArgument,
+      @NotNull List<String> args) {
 
     boolean takeNext = false;
     List<String> result = new ArrayList<>();
@@ -155,8 +157,7 @@ public class CDep {
     handleGenerateScript();
   }
 
-  private void runBuilders(GeneratorEnvironment environment, @NotNull FunctionTableExpression table)
-      throws IOException {
+  private void runBuilders(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) throws IOException {
     for (BuildSystem buildSystem : notNull(config).builders) {
       switch (buildSystem) {
         case cmake:
@@ -171,20 +172,16 @@ public class CDep {
     }
   }
 
-  private boolean handleRedownload(@NotNull List<String> args)
-      throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private boolean handleRedownload(@NotNull List<String> args) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "redownload".equals(args.get(0))) {
       GeneratorEnvironment environment = getGeneratorEnvironment(true, false);
       FunctionTableExpression table = getFunctionTableExpression(environment);
 
       // Download and unzip archives.
-      GeneratorEnvironmentUtils.downloadReferencedModules(
-          environment,
-          ExpressionUtils.getAllFoundModuleExpressions(table));
+      GeneratorEnvironmentUtils.downloadReferencedModules(environment, ExpressionUtils.getAllFoundModuleExpressions(table));
 
       // Check that the expected files were downloaded
-      new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder)
-          .visit(table);
+      new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder).visit(table);
 
       runBuilders(environment, table);
       return true;
@@ -192,8 +189,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleLint(@NotNull List<String> args)
-      throws IOException, NoSuchAlgorithmException, URISyntaxException {
+  private boolean handleLint(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.size() > 0 && "lint".equals(args.get(0))) {
       if (args.size() > 1) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
@@ -206,8 +202,7 @@ public class CDep {
         FunctionTableExpression table = getFunctionTableExpression(environment, dependencies);
 
         // Check that the expected files were downloaded
-        new StubCheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder)
-            .visit(table);
+        new StubCheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder).visit(table);
         return true;
       } else {
         out.print("Usage: cdep lint (coordinate or path/to/cdep-manifest.yml)'\n");
@@ -217,8 +212,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleCreate(@NotNull List<String> args)
-      throws IOException, NoSuchAlgorithmException, URISyntaxException {
+  private boolean handleCreate(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.size() > 0 && "create".equals(args.get(0))) {
       if (args.size() > 1 && "hashes".equals(args.get(1))) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
@@ -242,8 +236,7 @@ public class CDep {
 
       File output = new File(args.get(args.size() - 1));
       if (output.exists()) {
-        throw new RuntimeException(
-            String.format("File %s already exists", output.getAbsolutePath()));
+        throw new RuntimeException(String.format("File %s already exists", output.getAbsolutePath()));
       }
 
       GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
@@ -298,9 +291,7 @@ public class CDep {
           return true;
         }
 
-        File local = environment
-            .getLocalDownloadFilename(resolved.cdepManifestYml.coordinate,
-                resolved.remote);
+        File local = environment.getLocalDownloadFilename(resolved.cdepManifestYml.coordinate, resolved.remote);
         out.println(local.getCanonicalFile());
         return true;
       }
@@ -319,8 +310,7 @@ public class CDep {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream alternOut = new PrintStream(baos);
         for (int i = 2; i < args.size(); ++i) {
-          GeneratorEnvironment environment = getGeneratorEnvironment(
-              alternOut, false, true);
+          GeneratorEnvironment environment = getGeneratorEnvironment(alternOut, false, true);
           File include = EnvironmentUtils.getPackageLevelIncludeFolder(environment, args.get(i));
           out.printf("%s\n", include);
         }
@@ -336,8 +326,7 @@ public class CDep {
     if (args.size() > 0 && "wrapper".equals(args.get(0))) {
       String appname = System.getProperty("io.cdep.appname");
       if (appname == null) {
-        throw new RuntimeException(
-            "Must set java system proeperty io.cdep.appname to the path of cdep.bat");
+        throw new RuntimeException("Must set java system proeperty io.cdep.appname to the path of cdep.bat");
       }
       File applicationBase = new File(appname).getParentFile();
       if (applicationBase == null || !applicationBase.isDirectory()) {
@@ -374,8 +363,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleFetch(@NotNull List<String> args)
-      throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private boolean handleFetch(@NotNull List<String> args) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fetch".equals(args.get(0))) {
       if (args.size() < 2) {
         out.printf("Usage: cdep fetch {coordinate1} {coordinate2} ...\n");
@@ -384,16 +372,12 @@ public class CDep {
 
       for (int i = 1; i < args.size(); ++i) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
-        SoftNameDependency dependencies[] = new SoftNameDependency[]{
-            new SoftNameDependency(args.get(i))};
+        SoftNameDependency dependencies[] = new SoftNameDependency[]{new SoftNameDependency(args.get(i))};
         FunctionTableExpression table = getFunctionTableExpression(environment, dependencies);
         // Download and unzip archives.
-        GeneratorEnvironmentUtils.downloadReferencedModules(
-            environment,
-            ExpressionUtils.getAllFoundModuleExpressions(table));
+        GeneratorEnvironmentUtils.downloadReferencedModules(environment, ExpressionUtils.getAllFoundModuleExpressions(table));
         // Check that the expected files were downloaded
-        new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder)
-            .visit(table);
+        new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder).visit(table);
       }
 
       out.printf("Fetch complete\n");
@@ -402,8 +386,7 @@ public class CDep {
     return false;
   }
 
-  private void handleGenerateScript()
-      throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private void handleGenerateScript() throws IOException, URISyntaxException, NoSuchAlgorithmException {
     //noinspection ConstantConditions
     if (config.dependencies == null || config.dependencies.length == 0) {
       out.printf("Nothing to do. Add dependencies to %s\n", configFile);
@@ -414,20 +397,18 @@ public class CDep {
     FunctionTableExpression table = getFunctionTableExpression(environment);
 
     // Download and unzip archives.
-    GeneratorEnvironmentUtils.downloadReferencedModules(
-        environment,
-        ExpressionUtils.getAllFoundModuleExpressions(table));
+    GeneratorEnvironmentUtils.downloadReferencedModules(environment, ExpressionUtils.getAllFoundModuleExpressions(table));
 
     // Check that the expected files were downloaded
-    new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder)
-        .visit(table);
+    new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder).visit(table);
 
     runBuilders(environment, table);
     environment.writeCDepSHA256File();
   }
 
   @NotNull
-  private FunctionTableExpression getFunctionTableExpression(GeneratorEnvironment environment) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private FunctionTableExpression getFunctionTableExpression(@NotNull GeneratorEnvironment environment)
+      throws IOException, URISyntaxException, NoSuchAlgorithmException {
 
     assert config != null;
     return getFunctionTableExpression(environment, config.dependencies);
@@ -466,8 +447,7 @@ public class CDep {
     out.printf(" cdep show include {coordinate}: show local include path for the given coordinate\n");
     out.printf(" cdep redownload: redownload dependencies for current cdep.yml\n");
     out.printf(" cdep create hashes: create or recreate cdep.sha256 file\n");
-    out.printf(" cdep merge {coordinate} {coordinate2} ... outputmanifest.yml: " +
-        "merge manifests into outputmanifest.yml\n");
+    out.printf(" cdep merge {coordinate} {coordinate2} ... outputmanifest.yml: " + "merge manifests into outputmanifest.yml\n");
     out.printf(" cdep fetch {coordinate} {coordinate2} ... : download multiple packages\n");
     out.printf(" cdep wrapper: copy cdep to the current folder\n");
     out.printf(" cdep --version: show version information\n");

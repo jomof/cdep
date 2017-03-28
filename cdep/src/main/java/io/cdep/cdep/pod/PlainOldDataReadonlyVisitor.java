@@ -27,8 +27,7 @@ abstract public class PlainOldDataReadonlyVisitor {
   public void visitLong(String name, Long value) {
   }
 
-  public void visitArray(String name, @NotNull Object[] array, @NotNull Class<?>
-      elementType) {
+  public void visitArray(String name, @NotNull Object[] array, @NotNull Class<?> elementType) {
     elementsNotNull(array);
     for (Object value : array) {
       visit(value, elementType);

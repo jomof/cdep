@@ -31,16 +31,16 @@ import static io.cdep.cdep.utils.Invariant.require;
 
 public class CDepManifestYmlUtils {
 
-
   @NotNull
   public static CDepManifestYml convertStringToManifest(@NotNull String content) {
     Yaml yaml = new Yaml(new Constructor(CDepManifestYml.class));
-    CDepManifestYml dependencyConfig = (CDepManifestYml) yaml.load(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
+    CDepManifestYml dependencyConfig = (CDepManifestYml) yaml.load(new ByteArrayInputStream(content.getBytes(StandardCharsets
+        .UTF_8)));
     require(dependencyConfig != null, "Manifest was empty");
     return dependencyConfig;
   }
 
-  public static void checkManifestSanity(CDepManifestYml cdepManifestYml) {
+  public static void checkManifestSanity(@NotNull CDepManifestYml cdepManifestYml) {
     new Checker().visit(cdepManifestYml, CDepManifestYml.class);
   }
 
@@ -63,13 +63,14 @@ public class CDepManifestYmlUtils {
     @Override
     public void visitString(@Nullable String name, @NotNull String node) {
       if (name != null && name.equals("file")) {
-        require(!filesSeen.contains(node.toLowerCase()), "Package '%s' contains multiple references to the same" + " " + "archive file '%s'", coordinate, node);
+        require(!filesSeen.contains(node.toLowerCase()), "Package '%s' contains multiple references to the same" + " " +
+            "archive file '%s'", coordinate, node);
         filesSeen.add(node.toLowerCase());
       }
     }
 
     @Override
-    public void visitCDepManifestYml(String name, @NotNull CDepManifestYml value) {
+    public void visitCDepManifestYml(@Nullable String name, @NotNull CDepManifestYml value) {
       coordinate = value.coordinate;
       require(coordinate != null, "Manifest was missing coordinate");
       super.visitCDepManifestYml(name, value);
@@ -77,7 +78,7 @@ public class CDepManifestYmlUtils {
     }
 
     @Override
-    public void visitArchive(String name, @Nullable Archive value) {
+    public void visitArchive(@Nullable String name, @Nullable Archive value) {
       if (value == null) {
         return;
       }
@@ -87,12 +88,12 @@ public class CDepManifestYmlUtils {
       super.visitArchive(name, value);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
-    public void visitiOS(String name, @NotNull iOS value) {
+    public void visitiOS(@Nullable String name, @NotNull iOS value) {
       if (value.archives != null) {
         for (iOSArchive archive : value.archives) {
-          require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static iOS libraryName " + "'%s'", coordinate, archive.lib);
+          require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static iOS libraryName " + "'%s'",
+              coordinate, archive.lib);
           require(archive.file != null, "Package '%s' has missing ios.archive.file", coordinate);
           require(archive.sha256 != null, "Package '%s' has missing ios.archive.sha256 for '%s'", coordinate, archive.file);
           require(archive.size != null, "Package '%s' has missing ios.archive.size for '%s'", coordinate, archive.file);
@@ -105,19 +106,19 @@ public class CDepManifestYmlUtils {
     }
 
     @Override
-    public void visitLinux(String name, @NotNull Linux value) {
+    public void visitLinux(@Nullable String name, @NotNull Linux value) {
       if (value.archives != null) {
         require(value.archives.length <= 1, "Package '%s' has multiple linux archives. Only one is allowed.", coordinate);
       }
       super.visitLinux(name, value);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
-    public void visitAndroid(String name, @NotNull Android value) {
+    public void visitAndroid(@Nullable String name, @NotNull Android value) {
       if (value.archives != null) {
         for (AndroidArchive archive : value.archives) {
-          require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static android " + "libraryName '%s'", coordinate, archive.lib);
+          require(archive.lib == null || archive.lib.endsWith(".a"), "Package '%s' has non-static android " + "libraryName " +
+              "'%s'", coordinate, archive.lib);
           if (archive.runtime != null) {
             switch (archive.runtime) {
               case "c++":
@@ -125,7 +126,8 @@ public class CDepManifestYmlUtils {
               case "gnustl":
                 break;
               default:
-                fail("Package '%s' has unexpected android runtime '%s'. Allowed: c++, stlport, gnustl", coordinate, archive.runtime);
+                fail("Package '%s' has unexpected android runtime '%s'. Allowed: c++, stlport, gnustl", coordinate, archive
+                    .runtime);
             }
           }
 
@@ -139,7 +141,7 @@ public class CDepManifestYmlUtils {
     }
 
     @Override
-    public void visitCoordinate(String name, @NotNull Coordinate value) {
+    public void visitCoordinate(@Nullable String name, @NotNull Coordinate value) {
       assert coordinate != null;
       require(coordinate.groupId != null, "Manifest was missing coordinate.groupId");
       require(coordinate.artifactId != null, "Manifest was missing coordinate.artifactId");

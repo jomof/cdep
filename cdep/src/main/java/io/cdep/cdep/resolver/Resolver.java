@@ -21,8 +21,8 @@ import static io.cdep.cdep.utils.Invariant.require;
  */
 public class Resolver {
 
-  final private static CoordinateResolver RESOLVERS[] = new CoordinateResolver[]{new GithubStyleUrlCoordinateResolver
-      (), new GithubReleasesCoordinateResolver(), new LocalFilePathCoordinateResolver()};
+  final private static CoordinateResolver RESOLVERS[] = new CoordinateResolver[]{new GithubStyleUrlCoordinateResolver(), new
+      GithubReleasesCoordinateResolver(), new LocalFilePathCoordinateResolver()};
 
   final private ManifestProvider manifestProvider;
   final private CoordinateResolver resolvers[];
@@ -52,8 +52,7 @@ public class Resolver {
         if (resolved == null) {
           scope.recordUnresolvable(softname);
         } else {
-          List<HardNameDependency> transitive = CDepManifestYmlUtils.getTransitiveDependencies(resolved
-              .cdepManifestYml);
+          List<HardNameDependency> transitive = CDepManifestYmlUtils.getTransitiveDependencies(resolved.cdepManifestYml);
           scope.recordResolved(softname, resolved, transitive);
         }
       }
@@ -66,8 +65,7 @@ public class Resolver {
       // The resolution was something besides success.
       require(resolution != UNRESOLVEABLE_RESOLUTION, "Could not resolve '%s'. It doesn't exist" + ".", softname);
 
-      require(resolution != UNPARSEABLE_RESOLUTION, "Could not resolve '%s'. It didn't look like " + "a coordinate.",
-          softname);
+      require(resolution != UNPARSEABLE_RESOLUTION, "Could not resolve '%s'. It didn't look like " + "a coordinate.", softname);
     }
     return scope;
   }

@@ -16,6 +16,7 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ReadonlyVisitor;
 import io.cdep.cdep.ast.finder.Expression;
@@ -31,46 +32,46 @@ import java.util.Map;
  * Methods for dealing with FinderExpressions.
  */
 abstract public class ExpressionUtils {
-    /*
-     * Traverse the given expression and locate all of the FoundModuleExpressions.
-     * These expressions contain the local module location as well as the resolved coordinate
-     * and other information
-     */
+  /**
+   * Traverse the given expression and locate all of the FoundModuleExpressions.
+   * These expressions contain the local module location as well as the resolved coordinate
+   * and other information
+   */
+  @NotNull
+  public static Map<Coordinate, List<Expression>> getAllFoundModuleExpressions(@NotNull Expression expression) {
+    return new Finder(expression).foundModules;
+  }
 
+  private static class Finder extends ReadonlyVisitor {
     @NotNull
-    public static Map<Coordinate, List<Expression>> getAllFoundModuleExpressions(Expression expression) {
-        return new Finder(expression).foundModules;
+    final private Map<Coordinate, List<Expression>> foundModules = new HashMap<>();
+    @Nullable
+    private Coordinate coordinate;
+
+    Finder(@NotNull Expression expression) {
+      visit(expression);
     }
 
-    private static class Finder extends ReadonlyVisitor {
-        final private Map<Coordinate, List<Expression>> foundModules = new HashMap<>();
-        private Coordinate coordinate;
-
-        Finder(Expression expression) {
-            visit(expression);
-        }
-
-        @Override
-        protected void visitModuleExpression(@NotNull ModuleExpression expr) {
-            addModule(expr);
-        }
-
-        @Override
-        protected void visitFindModuleExpression(@NotNull FindModuleExpression expr) {
-            coordinate = expr.coordinate;
-            super.visitFindModuleExpression(expr);
-        }
-
-        private void addModule(Expression expression) {
-            List<Expression> modules = foundModules.get(coordinate);
-            if (modules == null) {
-                modules = new ArrayList<>();
-                foundModules.put(coordinate, modules);
-                addModule(expression);
-                return;
-            }
-            modules.add(expression);
-        }
+    @Override
+    protected void visitModuleExpression(@NotNull ModuleExpression expr) {
+      addModule(expr);
     }
 
+    @Override
+    protected void visitFindModuleExpression(@NotNull FindModuleExpression expr) {
+      coordinate = expr.coordinate;
+      super.visitFindModuleExpression(expr);
+    }
+
+    private void addModule(@NotNull Expression expression) {
+      List<Expression> modules = foundModules.get(coordinate);
+      if (modules == null) {
+        modules = new ArrayList<>();
+        foundModules.put(coordinate, modules);
+        addModule(expression);
+        return;
+      }
+      modules.add(expression);
+    }
+  }
 }

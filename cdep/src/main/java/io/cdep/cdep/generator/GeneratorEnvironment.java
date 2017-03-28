@@ -62,8 +62,11 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   private final boolean ignoreManifestHashes;
   private final Set<File> alreadyDownloaded = new HashSet<>();
 
-  public GeneratorEnvironment(PrintStream out, File workingFolder, @Nullable File userFolder, boolean forceRedownload, boolean
-      ignoreManifestHashes) {
+  public GeneratorEnvironment(PrintStream out,
+      File workingFolder,
+      @Nullable File userFolder,
+      boolean forceRedownload,
+      boolean ignoreManifestHashes) {
     if (userFolder == null) {
       userFolder = new File(System.getProperty("user.home"));
     }
@@ -89,8 +92,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     }
   }
 
-  private static void copyInputStreamToLocalFile(@NotNull InputStream input, @NotNull
-      File localFile) throws IOException {
+  private static void copyInputStreamToLocalFile(@NotNull InputStream input, @NotNull File localFile) throws IOException {
     byte[] buffer = new byte[4096];
     int n;
 
@@ -159,8 +161,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   }
 
   @Nullable
-  public CDepManifestYml tryGetManifest(Coordinate coordinate, @NotNull URL remoteArchive) throws IOException,
-      NoSuchAlgorithmException {
+  public CDepManifestYml tryGetManifest(Coordinate coordinate, @NotNull URL remoteArchive)
+      throws IOException, NoSuchAlgorithmException {
     File file = tryGetLocalDownloadedFile(coordinate, remoteArchive);
     if (file == null) {
       // The remote didn't exist. Return null;
@@ -177,8 +179,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
       String sha256 = HashUtils.getSHA256OfFile(file);
       assert cdepManifestYml.coordinate != null;
       String priorSha256 = this.cdepSha256Hashes.get(cdepManifestYml.coordinate.toString());
-      require(priorSha256 == null || priorSha256.equals(sha256), "SHA256 of cdep-manifest.yml for package '%s' does "
-          + "not agree with value in cdep.sha256. Something changed.", cdepManifestYml.coordinate);
+      require(priorSha256 == null || priorSha256.equals(sha256), "SHA256 of cdep-manifest.yml for package '%s' does " + "not "
+          + "agree with value in cdep.sha256. Something changed.", cdepManifestYml.coordinate);
       this.cdepSha256Hashes.put(cdepManifestYml.coordinate.toString(), sha256);
     }
     return cdepManifestYml;
@@ -219,8 +221,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
       ++i;
     }
     StringBuilder sb = new StringBuilder();
-    sb.append("# This file is automatically maintained by CDep.\n#\n" + "#     MANUAL EDITS WILL BE LOST ON THE NEXT " +
-        "" + "" + "" + "CDEP RUN\n#\n");
+    sb.append("# This file is automatically maintained by CDep.\n#\n" + "#     MANUAL EDITS WILL BE LOST ON THE NEXT " + "" +
+        "" + "" + "CDEP RUN\n#\n");
     sb.append("# This file contains a list of CDep coordinates along with the SHA256 hash of their\n");
     sb.append("# manifest file. This is to ensure that a manifest hasn't changed since the last\n");
     sb.append("# time CDep ran.\n");

@@ -13,13 +13,11 @@ public class CDepSHA256Utils {
 
   @NotNull
   public static CDepSHA256 convertStringToCDepSHA256(@NotNull String content) {
-        Yaml yaml = new Yaml(new Constructor(HashEntry[].class));
-        HashEntry[] result =
-                (HashEntry[]) yaml.load(new ByteArrayInputStream(content.getBytes(
-                        StandardCharsets.UTF_8)));
-        if (result == null) {
-            result = new HashEntry[0];
-        }
-        return new CDepSHA256(result);
+    Yaml yaml = new Yaml(new Constructor(HashEntry[].class));
+    HashEntry[] result = (HashEntry[]) yaml.load(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
+    if (result == null) {
+      result = new HashEntry[0];
     }
+    return new CDepSHA256(result);
+  }
 }

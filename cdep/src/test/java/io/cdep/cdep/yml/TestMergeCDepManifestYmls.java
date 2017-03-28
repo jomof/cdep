@@ -30,7 +30,6 @@ public class TestMergeCDepManifestYmls {
     CDepManifestYml iOSManifest = ResolvedManifests.sqliteiOS().cdepManifestYml;
     CDepManifestYml androidManifest = ResolvedManifests.sqliteAndroid().cdepManifestYml;
     CDepManifestYml result = MergeCDepManifestYmls.merge(androidManifest, iOSManifest);
-    assert result != null;
     iOS iOS = notNull(result.iOS);
     assert iOSManifest.iOS != null;
     assert iOSManifest.iOS.archives != null;
@@ -56,7 +55,6 @@ public class TestMergeCDepManifestYmls {
         try {
           CDepManifestYml merged1 = MergeCDepManifestYmls.merge(manifest1.resolved.cdepManifestYml, manifest2.resolved
               .cdepManifestYml);
-          assert merged1 != null;
           String string = CreateCDepManifestYmlString.create(merged1);
           CDepManifestYml merged2 = CDepManifestYmlUtils.convertStringToManifest(string);
           if (!CDepManifestYmlEquality.areDeeplyIdentical(merged1, merged2)) {
@@ -87,7 +85,6 @@ public class TestMergeCDepManifestYmls {
   public void mergeAndroidiOSLinux() throws Exception {
     CDepManifestYml result = MergeCDepManifestYmls.merge(ResolvedManifests.sqlite().cdepManifestYml, ResolvedManifests
         .sqliteLinux().cdepManifestYml);
-    assert result != null;
     assertThat(result.linux).isNotNull();
     assertThat(result.linux.archives).isNotEmpty();
     assertThat(result.linux.archives).hasLength(1);

@@ -29,8 +29,7 @@ public class FindModuleExpression extends Expression {
   final public ParameterExpression osxArchitectures;
   final public StatementExpression expression;
 
-  public FindModuleExpression(
-      Coordinate coordinate,
+  public FindModuleExpression(Coordinate coordinate,
       ParameterExpression cdepExplodedRoot,
       ParameterExpression targetPlatform,
       ParameterExpression systemVersion,

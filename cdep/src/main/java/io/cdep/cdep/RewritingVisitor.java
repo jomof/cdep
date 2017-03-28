@@ -161,13 +161,16 @@ public class RewritingVisitor {
 
   @NotNull
   private Expression visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
-    return archive(expr.file, expr.sha256, expr.size, expr.include, visitMaybeNull(expr.includePath), expr.library, visitMaybeNull(expr.libraryPath));
+    assert expr.file != null;
+    assert expr.sha256 != null;
+    return archive(expr.file, expr.sha256, expr.size, expr.include, visitMaybeNull(expr.includePath), expr.library,
+        visitMaybeNull(expr.libraryPath));
   }
 
+  @NotNull
   protected Expression visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
     return invoke((ExternalFunctionExpression) visit(expr.function), visitArray(expr.parameters));
   }
-
 
   @NotNull
   protected Expression[] visitArray(@NotNull Expression[] array) {
@@ -200,10 +203,14 @@ public class RewritingVisitor {
 
   @NotNull
   protected Expression visitFindModuleExpression(@NotNull FindModuleExpression expr) {
-    return new FindModuleExpression(expr.coordinate, (ParameterExpression) visit(expr.cdepExplodedRoot), (ParameterExpression) visit(expr.targetPlatform), (ParameterExpression) visit(expr.systemVersion), (ParameterExpression) visit(expr.androidTargetAbi), (ParameterExpression) visit(expr.androidStlType), (ParameterExpression) visit(expr.osxSysroot), (ParameterExpression) visit(expr.osxArchitectures), (StatementExpression) visit(expr.expression));
+    return new FindModuleExpression(expr.coordinate, (ParameterExpression) visit(expr.cdepExplodedRoot), (ParameterExpression)
+        visit(expr.targetPlatform), (ParameterExpression) visit(expr.systemVersion), (ParameterExpression) visit(expr
+        .androidTargetAbi), (ParameterExpression) visit(expr.androidStlType), (ParameterExpression) visit(expr.osxSysroot),
+        (ParameterExpression) visit(expr.osxArchitectures), (StatementExpression) visit(expr.expression));
   }
 
-  @NotNull Expression visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
+  @NotNull
+  Expression visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
     FunctionTableExpression newExpr = new FunctionTableExpression();
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
       newExpr.findFunctions.put(coordinate, (FindModuleExpression) visit(expr.findFunctions.get(coordinate)));

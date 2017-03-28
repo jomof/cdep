@@ -1,9 +1,14 @@
 package io.cdep.cdep.ast.finder;
 
-public class ArrayExpression extends Expression {
-    final public Expression elements[];
+import io.cdep.annotations.NotNull;
 
-  ArrayExpression(Expression elements[]) {
-        this.elements = elements;
-    }
+import static io.cdep.cdep.utils.Invariant.elementsNotNull;
+
+public class ArrayExpression extends Expression {
+  @NotNull
+  final public Expression elements[];
+
+  ArrayExpression(@NotNull Expression elements[]) {
+    this.elements = elementsNotNull(elements);
+  }
 }

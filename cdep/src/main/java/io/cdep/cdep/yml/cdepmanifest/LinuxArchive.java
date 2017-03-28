@@ -23,7 +23,11 @@ public class LinuxArchive {
     this.include = "include";
   }
 
-  public LinuxArchive(@NotNull String file, @NotNull String sha256, @NotNull Long size, @NotNull String lib, @NotNull String include) {
+  public LinuxArchive(@NotNull String file,
+      @NotNull String sha256,
+      @NotNull Long size,
+      @NotNull String lib,
+      @NotNull String include) {
     this.file = file;
     this.sha256 = sha256;
     this.size = size;

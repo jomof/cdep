@@ -55,8 +55,13 @@ public class CDepManifestYml {
     this.example = null;
   }
 
-  public CDepManifestYml(@NotNull Coordinate coordinate, @Nullable HardNameDependency[] dependencies, @Nullable Archive archive, @Nullable Android android,
-      @Nullable iOS ios, @Nullable Linux linux, @NotNull String example) {
+  public CDepManifestYml(@NotNull Coordinate coordinate,
+      @Nullable HardNameDependency[] dependencies,
+      @Nullable Archive archive,
+      @Nullable Android android,
+      @Nullable iOS ios,
+      @Nullable Linux linux,
+      @NotNull String example) {
     this.coordinate = coordinate;
     this.dependencies = dependencies;
     this.archive = archive;

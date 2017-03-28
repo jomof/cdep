@@ -23,53 +23,49 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class FileUtils {
-  public static void copyFile(@NotNull File sourceFile, @NotNull File destFile) throws
-      IOException {
-        if(!destFile.exists()) {
-            //noinspection ResultOfMethodCallIgnored
-            destFile.createNewFile();
-        }
 
-        FileChannel source = null;
-        FileChannel destination = null;
-
-        try {
-            source = new FileInputStream(sourceFile).getChannel();
-            destination = new FileOutputStream(destFile).getChannel();
-            destination.transferFrom(source, 0, source.size());
-        }
-        finally {
-            if(source != null) {
-                source.close();
-            }
-            if(destination != null) {
-                destination.close();
-            }
-        }
+  public static void copyFile(@NotNull File sourceFile, @NotNull File destFile) throws IOException {
+    if (!destFile.exists()) {
+      //noinspection ResultOfMethodCallIgnored
+      destFile.createNewFile();
     }
+
+    FileChannel source = null;
+    FileChannel destination = null;
+
+    try {
+      source = new FileInputStream(sourceFile).getChannel();
+      destination = new FileOutputStream(destFile).getChannel();
+      destination.transferFrom(source, 0, source.size());
+    } finally {
+      if (source != null) {
+        source.close();
+      }
+      if (destination != null) {
+        destination.close();
+      }
+    }
+  }
 
 
   @NotNull
   public static String readAllText(@NotNull File file) throws IOException {
-        return new String(Files.readAllBytes(
-                Paths.get(file.getCanonicalPath())));
-    }
+    return new String(Files.readAllBytes(Paths.get(file.getCanonicalPath())));
+  }
 
-  public static void writeTextToFile(@NotNull File file, @NotNull String body) throws
-      IOException {
-
-        BufferedWriter writer = null;
-        //noinspection ResultOfMethodCallIgnored
-      file.getAbsoluteFile().getParentFile().mkdirs();
-        //noinspection ResultOfMethodCallIgnored
-        file.delete();
-        try {
-            writer = new BufferedWriter(new FileWriter(file));
-            writer.write(body);
-        } finally {
-            if (writer != null) {
-                writer.close();
-            }
-        }
+  public static void writeTextToFile(@NotNull File file, @NotNull String body) throws IOException {
+    BufferedWriter writer = null;
+    //noinspection ResultOfMethodCallIgnored
+    file.getAbsoluteFile().getParentFile().mkdirs();
+    //noinspection ResultOfMethodCallIgnored
+    file.delete();
+    try {
+      writer = new BufferedWriter(new FileWriter(file));
+      writer.write(body);
+    } finally {
+      if (writer != null) {
+        writer.close();
+      }
     }
+  }
 }

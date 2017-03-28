@@ -37,28 +37,24 @@ public class EnvironmentUtils {
    */
 
   @NotNull
-  static File getPackageLevelIncludeFolder(@NotNull GeneratorEnvironment environment, String coordinate, @NotNull ResolvedManifest resolved) throws
-      URISyntaxException, MalformedURLException {
+  static File getPackageLevelIncludeFolder(@NotNull GeneratorEnvironment environment,
+      @NotNull String coordinate,
+      @NotNull ResolvedManifest resolved) throws URISyntaxException, MalformedURLException {
     CDepManifestYml manifest = resolved.cdepManifestYml;
     Archive archive = manifest.archive;
     require(archive != null, "'%s' does not have archive", coordinate);
     require(archive.include != null, "'%s' does not have archive.include", coordinate);
     require(archive.file != null, "'%s' does not have archive.include.file", coordinate);
     assert manifest.coordinate != null;
-    return new File(
-        environment.getLocalUnzipFolder(
-            manifest.coordinate,
-            resolved.remote.toURI()
-                .resolve(".").resolve(archive.file)
-                .toURL()),
-        archive.include);
+    return new File(environment.getLocalUnzipFolder(manifest.coordinate, resolved.remote.toURI().resolve(".").resolve(archive
+        .file).toURL()), archive.include);
   }
 
   /**
    * Return the resolved manifest or throw an exception.
    */
   @NotNull
-  private static ResolvedManifest resolveManifest(GeneratorEnvironment environment, @NotNull String coordinate)
+  private static ResolvedManifest resolveManifest(@NotNull GeneratorEnvironment environment, @NotNull String coordinate)
       throws IOException, NoSuchAlgorithmException {
     SoftNameDependency name = new SoftNameDependency(coordinate);
     ResolvedManifest resolved = new Resolver(environment).resolveAny(name);

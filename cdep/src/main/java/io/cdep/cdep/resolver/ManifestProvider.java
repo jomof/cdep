@@ -9,6 +9,6 @@ import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 
 public interface ManifestProvider {
-  @Nullable CDepManifestYml tryGetManifest(Coordinate coordinate, URL remoteArchive)
-      throws IOException, NoSuchAlgorithmException;
+  @Nullable
+  CDepManifestYml tryGetManifest(Coordinate coordinate, URL remoteArchive) throws IOException, NoSuchAlgorithmException;
 }

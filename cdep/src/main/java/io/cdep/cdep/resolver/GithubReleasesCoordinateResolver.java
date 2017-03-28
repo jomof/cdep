@@ -29,13 +29,13 @@ import static java.util.regex.Pattern.compile;
 
 public class GithubReleasesCoordinateResolver extends CoordinateResolver {
 
-    final private Pattern pattern = compile("^com\\.github\\.(.*):(.*):(.*)$");
-    final private GithubStyleUrlCoordinateResolver urlResolver = new GithubStyleUrlCoordinateResolver();
+  final private Pattern pattern = compile("^com\\.github\\.(.*):(.*):(.*)$");
+  final private GithubStyleUrlCoordinateResolver urlResolver = new GithubStyleUrlCoordinateResolver();
 
   @Nullable
   @Override
-  public ResolvedManifest resolve(@NotNull ManifestProvider environment, @NotNull
-      SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException {
+  public ResolvedManifest resolve(@NotNull ManifestProvider environment, @NotNull SoftNameDependency dependency)
+      throws IOException, NoSuchAlgorithmException {
     String coordinate = dependency.compile;
     Matcher match = pattern.matcher(notNull(coordinate));
     if (match.find()) {
@@ -48,7 +48,8 @@ public class GithubReleasesCoordinateResolver extends CoordinateResolver {
         subArtifact = "-" + artifactId.substring(pos + 1);
         artifactId = artifactId.substring(0, pos);
       }
-      String manifest = String.format("https://github.com/%s/%s/releases/download/%s/cdep-manifest%s.yml", user, artifactId, version, subArtifact);
+      String manifest = String.format("https://github.com/%s/%s/releases/download/%s/cdep-manifest%s.yml", user, artifactId,
+          version, subArtifact);
       return urlResolver.resolve(environment, new SoftNameDependency(manifest));
     }
     return null;

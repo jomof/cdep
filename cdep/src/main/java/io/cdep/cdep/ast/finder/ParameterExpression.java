@@ -17,10 +17,10 @@ package io.cdep.cdep.ast.finder;
 
 public class ParameterExpression extends Expression {
 
-    final public String name;
+  final public String name;
 
   ParameterExpression(String name) {
-        this.name = name;
-    }
+    this.name = name;
+  }
 
 }

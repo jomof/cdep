@@ -17,13 +17,8 @@ public class ModuleArchiveExpression extends Expression {
   final public String library;
   final public Expression libraryPath;
 
-  ModuleArchiveExpression(
-      URL file,
-      String sha256,
-      Long size,
-      String include, // Like "include"
-      Expression fullIncludePath,
-      String library, // Like "lib/libsqlite.a"
+  ModuleArchiveExpression(URL file, String sha256, Long size, String include, // Like "include"
+      Expression fullIncludePath, String library, // Like "lib/libsqlite.a"
       Expression fullLibraryName) {
     this.file = notNull(file);
     this.sha256 = notNull(sha256);

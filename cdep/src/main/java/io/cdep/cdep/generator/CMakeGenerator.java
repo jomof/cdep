@@ -40,7 +40,7 @@ public class CMakeGenerator {
   @Nullable
   private FindModuleExpression signature = null;
 
-  public CMakeGenerator(GeneratorEnvironment environment, FunctionTableExpression table) {
+  public CMakeGenerator(GeneratorEnvironment environment, @NotNull FunctionTableExpression table) {
     this.environment = environment;
     this.table = (FunctionTableExpression) notNull(new CMakeConvertJoinedFileToString().visit(table));
     this.sb = new StringBuilder();
@@ -79,7 +79,8 @@ public class CMakeGenerator {
     return file.toString().replace("\\", "/");
   }
 
-  @NotNull File getCMakeConfigurationFile() {
+  @NotNull
+  File getCMakeConfigurationFile() {
     return new File(environment.modulesFolder, CONFIG_FILE_NAME);
   }
 
@@ -105,7 +106,11 @@ public class CMakeGenerator {
 
       append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
 
-      append("  # Choose between Android NDK Toolchain and CMake Android Toolchain\n" + "  if(DEFINED CMAKE_ANDROID_STL_TYPE)\n" + "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" + "    set(CDEP_DETERMINED_ANDROID_ABI ${CMAKE_ANDROID_ARCH_ABI})\n" + "  else()\n" + "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" + "    set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" + "  endif()\n\n");
+      append("  # Choose between Android NDK Toolchain and CMake Android Toolchain\n" + "  if(DEFINED CMAKE_ANDROID_STL_TYPE)"
+          + "\n" + "    set(CDEP_DETERMINED_ANDROID_RUNTIME ${CMAKE_ANDROID_STL_TYPE})\n" + "    set" + "" +
+          "(CDEP_DETERMINED_ANDROID_ABI " + "${CMAKE_ANDROID_ARCH_ABI})\n" + "  else()\n" + "    set" + "" +
+          "(CDEP_DETERMINED_ANDROID_RUNTIME ${ANDROID_STL})\n" + "    " + "set(CDEP_DETERMINED_ANDROID_ABI ${ANDROID_ABI})\n" +
+          "  endif()\n\n");
       append("  set(cdep_exploded_root \"%s\")\n", getCMakePath(environment.unzippedArchivesFolder));
       ++indent;
       visit(specific.expression);
@@ -250,8 +255,7 @@ public class CMakeGenerator {
     sb.append(String.format(format, args));
   }
 
-  private String parameterName(@NotNull FindModuleExpression signature, @NotNull
-      ParameterExpression expr) {
+  private String parameterName(@NotNull FindModuleExpression signature, @NotNull ParameterExpression expr) {
     if (expr == signature.targetPlatform) {
       return "CMAKE_SYSTEM_NAME";
     }
@@ -274,8 +278,10 @@ public class CMakeGenerator {
     throw new RuntimeException(expr.name);
   }
 
-  private Object appendAssignments(String prefix, @NotNull FindModuleExpression signature, Expression expr, @Nullable
-      String assignResult) {
+  private Object appendAssignments(String prefix,
+      @NotNull FindModuleExpression signature,
+      Expression expr,
+      @Nullable String assignResult) {
     if (expr instanceof AssignmentExpression) {
       AssignmentExpression specific = (AssignmentExpression) expr;
       String identifier = specific.name;

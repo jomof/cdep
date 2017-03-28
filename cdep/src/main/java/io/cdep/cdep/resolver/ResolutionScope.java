@@ -41,12 +41,10 @@ public class ResolutionScope {
   /**
    * Utility function to add a new edge to an edge map.
    */
-  private static void addEdge(@NotNull Map<Coordinate, List<Coordinate>> edges,
-      Coordinate from,
-      Coordinate to) {
+  private static void addEdge(@NotNull Map<Coordinate, List<Coordinate>> edges, Coordinate from, Coordinate to) {
     List<Coordinate> tos = edges.get(from);
     if (tos == null) {
-        edges.put(from, new ArrayList<Coordinate>());
+      edges.put(from, new ArrayList<Coordinate>());
       addEdge(edges, from, to);
       return;
     }
@@ -93,18 +91,18 @@ public class ResolutionScope {
   /**
    * Record the fact that the given dependency has been resolved.
    *
-   * @param softname the name that started the resolution.
-   * @param resolved the resolved manifest and hard name.
+   * @param softname               the name that started the resolution.
+   * @param resolved               the resolved manifest and hard name.
    * @param transitiveDependencies any new dependencies that were discovered during resolution
    */
-  public void recordResolved(@NotNull SoftNameDependency softname, @NotNull ResolvedManifest resolved, @NotNull List<HardNameDependency>
-      transitiveDependencies) {
+  public void recordResolved(@NotNull SoftNameDependency softname,
+      @NotNull ResolvedManifest resolved,
+      @NotNull List<HardNameDependency> transitiveDependencies) {
     assert resolved.cdepManifestYml.coordinate != null;
-    require(!isResolved(resolved.cdepManifestYml.coordinate.toString()), "%s was already resolved", resolved
-        .cdepManifestYml.coordinate);
+    require(!isResolved(resolved.cdepManifestYml.coordinate.toString()), "%s was already resolved", resolved.cdepManifestYml
+        .coordinate);
 
-    this.resolved.put(resolved.cdepManifestYml.coordinate.toString(),
-        new FoundManifestResolution(resolved));
+    this.resolved.put(resolved.cdepManifestYml.coordinate.toString(), new FoundManifestResolution(resolved));
 
     unresolved.remove(resolved.cdepManifestYml.coordinate.toString());
     unresolved.remove(softname.compile);

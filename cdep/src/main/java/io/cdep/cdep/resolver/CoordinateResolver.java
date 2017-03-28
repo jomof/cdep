@@ -24,5 +24,6 @@ import java.security.NoSuchAlgorithmException;
 abstract class CoordinateResolver {
 
   @Nullable
-  public abstract ResolvedManifest resolve(ManifestProvider environment, SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException;
+  public abstract ResolvedManifest resolve(ManifestProvider environment, SoftNameDependency dependency)
+      throws IOException, NoSuchAlgorithmException;
 }

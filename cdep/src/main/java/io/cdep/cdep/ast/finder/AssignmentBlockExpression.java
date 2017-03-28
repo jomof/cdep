@@ -1,14 +1,17 @@
 package io.cdep.cdep.ast.finder;
 
+import io.cdep.annotations.NotNull;
 
 import java.util.List;
 
 public class AssignmentBlockExpression extends StatementExpression {
-    final public List<AssignmentExpression> assignments;
-    final public StatementExpression statement;
+  @NotNull
+  final public List<AssignmentExpression> assignments;
+  @NotNull
+  final public StatementExpression statement;
 
-  AssignmentBlockExpression(List<AssignmentExpression> assignments, StatementExpression statement) {
-        this.assignments = assignments;
-        this.statement = statement;
-    }
+  AssignmentBlockExpression(@NotNull List<AssignmentExpression> assignments, @NotNull StatementExpression statement) {
+    this.assignments = assignments;
+    this.statement = statement;
+  }
 }
