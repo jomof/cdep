@@ -161,11 +161,6 @@ public class ExpressionBuilder {
   }
 
   @NotNull
-  public static ParameterExpression parameter(@NotNull String name) {
-    return new ParameterExpression(name);
-  }
-
-  @NotNull
   public static AbortExpression abort(@NotNull String message, @NotNull Expression... parameters) {
     return new AbortExpression(message, parameters);
   }

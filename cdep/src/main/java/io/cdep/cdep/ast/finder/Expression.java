@@ -18,7 +18,7 @@ package io.cdep.cdep.ast.finder;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.CreateStringVisitor;
 
-public class Expression {
+abstract public class Expression {
   @Nullable
   private String string = null;
 

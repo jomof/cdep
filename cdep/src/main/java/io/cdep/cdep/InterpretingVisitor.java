@@ -1,38 +1,18 @@
 package io.cdep.cdep;
 
-import static io.cdep.cdep.utils.Invariant.fail;
-import static io.cdep.cdep.utils.Invariant.notNull;
-import static io.cdep.cdep.utils.Invariant.require;
-import static io.cdep.cdep.utils.ReflectionUtils.invoke;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.ArrayExpression;
-import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
-import io.cdep.cdep.ast.finder.ExampleExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.IntegerExpression;
-import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ModuleExpression;
-import io.cdep.cdep.ast.finder.MultiStatementExpression;
-import io.cdep.cdep.ast.finder.NopExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.*;
+
 import java.io.File;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.utils.ReflectionUtils.invoke;
 
 /**
  * Walks the expression tree and interprets the value for the supplied state.
@@ -161,7 +141,7 @@ public class InterpretingVisitor {
     throw new RuntimeException("intr" + expr.getClass().toString());
   }
 
-  private Object visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
+  protected Object visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
     return null;
   }
 
@@ -216,17 +196,15 @@ public class InterpretingVisitor {
     return expr.method;
   }
 
-  @SuppressWarnings({"SameReturnValue", "unused"})
   @Nullable
   private Object visitExampleExpression(ExampleExpression expr) {
     return null;
   }
 
-  @SuppressWarnings("SameReturnValue")
   @Nullable
   Object visitAbortExpression(@NotNull AbortExpression expr) {
     Object parameters[] = (Object[]) coerce(visitArray(expr.parameters), String[].class);
-    fail(expr.message, parameters);
+    fail("Abort: " + expr.message, parameters);
     return null;
   }
 
@@ -281,8 +259,11 @@ public class InterpretingVisitor {
   @Nullable
   Object visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
     for (int i = 0; i < expr.conditions.length; ++i) {
-      boolean condition = (boolean) visit(expr.conditions[i]);
-      if (condition) {
+      Object condition = visit(expr.conditions[i]);
+      require(Boolean.class.isAssignableFrom(condition.getClass()),
+          "Value of type '%s' was not assignable to boolean",
+          condition.getClass());
+      if ((boolean) condition) {
         Object result = visit(expr.expressions[i]);
         require(result != null, "Expected %s to not return null", expr.expressions[i]);
         return result;

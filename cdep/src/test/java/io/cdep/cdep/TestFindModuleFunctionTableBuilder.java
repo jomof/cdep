@@ -15,9 +15,6 @@
 */
 package io.cdep.cdep;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
@@ -27,10 +24,14 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
+import org.junit.Test;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 @SuppressWarnings("ConstantConditions")
 public class TestFindModuleFunctionTableBuilder {
@@ -172,7 +173,7 @@ public class TestFindModuleFunctionTableBuilder {
           .getAbsolutePath(), new String[]{"armv7s"}, "/Applications/Xcode.app/Contents/Developer/Platforms/" + "iPhoneSimulator.platform/Developer/SDKs/iPad10.2.sdk").remote.getPath();
       fail("Expected exception");
     } catch (RuntimeException e) {
-      assertThat(e).hasMessage("OSX SDK iPad10.2 is not supported by com.github.jomof:sqlite:0.0.0 and architecture armv7s. Supported: iPhoneOS10.2 ");
+      assertThat(e).hasMessage("Abort: OSX SDK iPad10.2 is not supported by com.github.jomof:sqlite:0.0.0 and architecture armv7s. Supported: iPhoneOS10.2 ");
     }
   }
 

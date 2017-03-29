@@ -20,6 +20,11 @@ public class AbortExpression extends StatementExpression {
   final public String message;
   final public Expression parameters[];
 
+  public AbortExpression() {
+    this.message = "";
+    this.parameters = new Expression[0];
+  }
+
   AbortExpression(String message, Expression... parameters) {
     this.message = message;
     this.parameters = parameters;
