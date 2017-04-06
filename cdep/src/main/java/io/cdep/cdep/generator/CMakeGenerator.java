@@ -106,7 +106,7 @@ public class CMakeGenerator {
       append("###\n");
       String coordinateVar = String.format("%s_CDEP_COORDINATE", getUpperArtifactId());
       append("%sif(%s)\n", prefix, coordinateVar);
-      append("%s  message(FATAL_ERROR \"CDep module '$(%s}' was already defined\")\n", prefix, coordinateVar);
+      append("%s  message(FATAL_ERROR \"CDep module '${%s}' was already defined\")\n", prefix, coordinateVar);
       append("%sendif(%s)\n", prefix, coordinateVar);
       append("%sset(%s \"%s\")\n", prefix, coordinateVar, specific.coordinate);
       if (specific.headerArchive != null && specific.include != null) {
