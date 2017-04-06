@@ -50,17 +50,6 @@ public class TestCDep {
   }
 
   @Test
-  public void lintWhereTwoFilesContainTheSameZip() throws Exception {
-    try {
-      main(main("lint", "com.github.jomof:firebase/admob:2.1.3-rev8"));
-      fail("Expected failure");
-    } catch (RuntimeException e) {
-      assertThat(e.toString()).contains(" The file should only be in the lowest level package 'com.github" +
-          ".jomof:firebase/app:2.1.3-rev8'");
-    }
-  }
-
-  @Test
   public void mergeTwo() throws Exception {
     File output = new File(".test-files/mergeTwo/merged-manifest.yml");
     output.delete();
