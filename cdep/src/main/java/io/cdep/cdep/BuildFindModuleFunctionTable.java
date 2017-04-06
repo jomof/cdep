@@ -120,7 +120,7 @@ public class BuildFindModuleFunctionTable {
       cases.put(string("Linux"),
           buildSingleArchiveResolution(resolved, manifest.linux.archives[0], explodedArchiveFolder, dependencies));
     }
-    if (headerOnly && manifest.archive != null) {
+    if (headerOnly && manifest.interfaces != null && manifest.interfaces.headers != null) {
       supported.add("Android");
       supported.add("Darwin");
       supported.add("Linux");
@@ -144,15 +144,15 @@ public class BuildFindModuleFunctionTable {
         StringUtils.joinOn(" ", supported)), globals.cmakeSystemName);
     StatementExpression expression = ifSwitch(bool, expressions, abort);
 
-    Archive archive = manifest.archive;
-    if (archive != null) {
+    if (manifest.interfaces != null && manifest.interfaces.headers != null) {
+      Archive archive = manifest.interfaces.headers;
       expression = multi(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies), expression);
     }
 
-    if (manifest.archive != null && manifest.archive.file != null) {
+    if (manifest.interfaces != null && manifest.interfaces.headers != null && manifest.interfaces.headers.file != null) {
       return new FindModuleExpression(coordinate,
-          manifest.archive.file,
-          manifest.archive.include,
+          manifest.interfaces.headers.file,
+          manifest.interfaces.headers.include,
           expression);
     }
     return new FindModuleExpression(coordinate,

@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package io.cdep.cdep.yml.cdepmanifest;
+package io.cdep.cdep.yml.cdepmanifest.v2;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.yml.cdepmanifest.*;
 
 public class CDepManifestYml {
   @Nullable
@@ -25,7 +26,7 @@ public class CDepManifestYml {
   @Nullable
   final public HardNameDependency dependencies[];
   @Nullable
-  final public Interfaces interfaces;
+  final public Archive archive;
   @Nullable
   final public Android android;
   @Nullable
@@ -41,7 +42,7 @@ public class CDepManifestYml {
     this.sourceVersion = null;
     this.coordinate = null;
     this.dependencies = null;
-    this.interfaces = null;
+    this.archive = null;
     this.android = null;
     this.linux = null;
     this.iOS = null;
@@ -52,7 +53,7 @@ public class CDepManifestYml {
     this.sourceVersion = null;
     this.coordinate = coordinate;
     this.dependencies = null;
-    this.interfaces = null;
+    this.archive = null;
     this.android = null;
     this.linux = null;
     this.iOS = null;
@@ -63,7 +64,7 @@ public class CDepManifestYml {
       @NotNull CDepManifestYmlVersion sourceVersion,
       @NotNull Coordinate coordinate,
       @Nullable HardNameDependency[] dependencies,
-      @Nullable Interfaces interfaces,
+      @Nullable Archive archive,
       @Nullable Android android,
       @Nullable iOS ios,
       @Nullable Linux linux,
@@ -71,7 +72,7 @@ public class CDepManifestYml {
     this.sourceVersion = sourceVersion;
     this.coordinate = coordinate;
     this.dependencies = dependencies;
-    this.interfaces = interfaces;
+    this.archive = archive;
     this.android = android;
     this.iOS = ios;
     this.linux = linux;

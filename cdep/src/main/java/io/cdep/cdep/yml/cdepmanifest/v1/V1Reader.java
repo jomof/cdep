@@ -15,7 +15,7 @@ import static io.cdep.cdep.utils.Invariant.require;
 public class V1Reader {
 
   @NotNull
-  public static io.cdep.cdep.yml.cdepmanifest.CDepManifestYml convertStringToManifest(@NotNull String content) {
+  public static io.cdep.cdep.yml.cdepmanifest.v2.CDepManifestYml convertStringToManifest(@NotNull String content) {
     Yaml yaml = new Yaml(new Constructor(CDepManifestYml.class));
     CDepManifestYml manifest = (CDepManifestYml) yaml.load(
         new ByteArrayInputStream(content.getBytes(StandardCharsets
@@ -24,8 +24,8 @@ public class V1Reader {
     return convert(manifest);
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.CDepManifestYml convert(CDepManifestYml manifest) {
-    return new io.cdep.cdep.yml.cdepmanifest.CDepManifestYml(
+  private static io.cdep.cdep.yml.cdepmanifest.v2.CDepManifestYml convert(CDepManifestYml manifest) {
+    return new io.cdep.cdep.yml.cdepmanifest.v2.CDepManifestYml(
         CDepManifestYmlVersion.v1,
         manifest.coordinate,
         manifest.dependencies,

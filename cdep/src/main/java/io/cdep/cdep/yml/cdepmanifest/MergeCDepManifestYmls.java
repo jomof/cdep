@@ -48,7 +48,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
     }
     covisit("coordinate", left.coordinate, right.coordinate, Coordinate.class);
     covisitHardNameDependencyArray("dependencies", left.dependencies, right.dependencies);
-    covisit("archive", left.archive, right.archive, Archive.class);
+    covisit("interfaces", left.interfaces, right.interfaces, Interfaces.class);
     covisit("example", left.example, right.example, String.class);
     covisit("linux", left.linux, right.linux, Object.class);
     covisit("iOS", left.iOS, right.iOS, iOS.class);
@@ -64,7 +64,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
     if (right.sourceVersion.ordinal() < sourceVersion.ordinal()) {
       sourceVersion = right.sourceVersion;
     }
-    returnValue = new CDepManifestYml(sourceVersion, left.coordinate, left.dependencies, left.archive, android, ios, linux, left.example);
+    returnValue = new CDepManifestYml(sourceVersion, left.coordinate, left.dependencies, left.interfaces, android, ios, linux, left.example);
   }
 
   @Override

@@ -39,7 +39,8 @@ public class EnvironmentUtils {
       @NotNull String coordinate,
       @NotNull ResolvedManifest resolved) throws URISyntaxException, MalformedURLException {
     CDepManifestYml manifest = resolved.cdepManifestYml;
-    Archive archive = manifest.archive;
+    require(manifest.interfaces != null, "'%s' does not have archive", coordinate);
+    Archive archive = manifest.interfaces.headers;
     require(archive != null, "'%s' does not have archive", coordinate);
     require(archive.include != null, "'%s' does not have archive.include", coordinate);
     require(archive.file != null, "'%s' does not have archive.include.file", coordinate);

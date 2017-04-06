@@ -15,6 +15,10 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
   public void covisitCDepManifestYmlVersion(String name, CDepManifestYmlVersion left, CDepManifestYmlVersion right) {
   }
 
+  public void covisitInterfaces(String name, Interfaces left, Interfaces right) {
+    covisitFields(left, right);
+  }
+
   public void covisitCDepManifestYml(String name, CDepManifestYml left, CDepManifestYml right) {
     covisitFields(left, right);
   }

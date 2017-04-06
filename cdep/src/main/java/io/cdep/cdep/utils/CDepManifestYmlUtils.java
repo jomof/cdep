@@ -19,7 +19,7 @@ import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.*;
-import io.cdep.cdep.yml.cdepmanifest.v1.V1Reader;
+import io.cdep.cdep.yml.cdepmanifest.v2.V2Reader;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.error.YAMLException;
@@ -43,10 +43,10 @@ public class CDepManifestYmlUtils {
           new ByteArrayInputStream(content.getBytes(StandardCharsets
               .UTF_8)));
       if (manifest != null) {
-        manifest.sourceVersion = CDepManifestYmlVersion.v2;
+        manifest.sourceVersion = CDepManifestYmlVersion.vlatest;
       }
     } catch (YAMLException e) {
-      manifest = V1Reader.convertStringToManifest(content);
+      manifest = V2Reader.convertStringToManifest(content);
     }
     require(manifest != null, "Manifest was empty");
     return manifest;
