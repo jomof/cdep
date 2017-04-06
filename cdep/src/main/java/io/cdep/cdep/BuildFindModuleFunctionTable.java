@@ -33,7 +33,7 @@ import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
 @SuppressWarnings("Java8ReplaceMapGet")
-public class FindModuleFunctionTableBuilder {
+public class BuildFindModuleFunctionTable {
 
   @NotNull
   private final Map<Coordinate, ResolvedManifest> manifests = new HashMap<>();
@@ -428,7 +428,8 @@ public class FindModuleFunctionTableBuilder {
 
     for (int platform : platforms) {
       conditions.add(0, gte(globals.cmakeSystemVersion, platform));
-      expressions.add(0, buildAndroidAbiExpression(globals, resolved, grouped.get(platform), explodedArchiveFolder, dependencies));
+      expressions.add(0,
+          buildAndroidAbiExpression(globals, resolved, grouped.get(platform), explodedArchiveFolder, dependencies));
     }
     return ifSwitch(conditions,
         expressions,
@@ -443,7 +444,6 @@ public class FindModuleFunctionTableBuilder {
       @NotNull List<AndroidArchive> androids,
       @NotNull AssignmentExpression explodedArchiveFolder,
       @NotNull Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
-    AndroidArchive archive = androids.iterator().next();
     CDepManifestYml manifest = resolved.cdepManifestYml;
     Map<Expression, Expression> cases = new HashMap<>();
     String supported = "";
@@ -462,11 +462,13 @@ public class FindModuleFunctionTableBuilder {
 
     if (grouped.size() == 1 && grouped.containsKey(null)) {
       // Header only case.
+      AndroidArchive archive = androids.iterator().next();
       return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, null,
-        explodedArchiveFolder), dependencies);
+          explodedArchiveFolder), dependencies);
     }
 
     for (String abi : grouped.keySet()) {
+      AndroidArchive archive = grouped.get(abi).iterator().next();
       supported += abi + " ";
       cases.put(string(abi), buildSingleArchiveResolution(resolved, archive, abi, explodedArchiveFolder, dependencies));
     }

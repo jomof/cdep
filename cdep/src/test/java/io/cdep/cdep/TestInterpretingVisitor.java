@@ -15,7 +15,8 @@ import static org.junit.Assert.fail;
 public class TestInterpretingVisitor {
   @Test
   public void testNullInclude() throws Exception {
-    new InterpretingVisitor().visit(archive(new URL("https://google.com"), "sha256", 192L, null, null, null, null));
+    new InterpretingVisitor().visit(archive(new URL("https://google.com"), "sha256",
+        192L, null, null, null, null));
   }
 
   @Test
@@ -34,9 +35,11 @@ public class TestInterpretingVisitor {
         "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github.jomof:firebase/admob:2.1.3-rev8");
     expected.put("singleABI",
         "Abort: Target platform Linux is not supported by com.github.jomof:sqlite:0.0.0. Supported: Android");
+    expected.put("singleABISqlite",
+        "Abort: Target platform Linux is not supported by com.github.jomof:sqlite:3.16.2-rev45. Supported: Android Darwin");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
-      FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+      BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
       builder.addManifest(manifest.resolved);
       String expectedFailure = expected.get(manifest.name);
       try {
@@ -104,7 +107,7 @@ public class TestInterpretingVisitor {
 
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
-      FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+      BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
       builder.addManifest(manifest.resolved);
       String expectedFailure = expected.get(manifest.name);
       try {
@@ -170,7 +173,7 @@ public class TestInterpretingVisitor {
         "Abort: Target platform Darwin is not supported by com.github.jomof:sqlite:0.0.0. Supported: Android");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
-      final FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+      final BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
       builder.addManifest(manifest.resolved);
       String expectedFailure = expected.get(manifest.name);
       try {

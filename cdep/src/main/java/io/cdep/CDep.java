@@ -17,9 +17,8 @@ package io.cdep;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
+import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.CheckLocalFileSystemIntegrity;
-import io.cdep.cdep.FindModuleFunctionTableBuilder;
-import io.cdep.cdep.StubCheckLocalFileSystemIntegrity;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.generator.CMakeExamplesGenerator;
 import io.cdep.cdep.generator.CMakeGenerator;
@@ -79,7 +78,7 @@ public class CDep {
   @NotNull
   private static FunctionTableExpression getFunctionTableExpression(@NotNull GeneratorEnvironment environment,
       @NotNull SoftNameDependency dependencies[]) throws IOException, URISyntaxException, NoSuchAlgorithmException {
-    FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+    BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     Resolver resolver = new Resolver(environment);
     ResolutionScope scope = resolver.resolveAll(dependencies);
     for (String name : scope.getResolutions()) {
@@ -202,7 +201,7 @@ public class CDep {
         FunctionTableExpression table = getFunctionTableExpression(environment, dependencies);
 
         // Check that the expected files were downloaded
-        new StubCheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder).visit(table);
+        //new StubCheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder).visit(table);
         return true;
       } else {
         out.print("Usage: cdep lint (coordinate or path/to/cdep-manifest.yml)'\n");

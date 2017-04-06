@@ -304,6 +304,9 @@ public class TestCDepManifestYmlUtils {
     expected.put("sqliteiOS-sqliteiOS",
         "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to the same archive file " +
             "'sqlite-ios-platform-iPhoneOS-architecture-armv7-sdk-9.3.zip'");
+    expected.put("singleABISqlite-singleABISqlite",
+        "Package 'com.github.jomof:sqlite:3.16.2-rev45' contains multiple references to the same archive file " +
+            "'sqlite-android-cxx-platform-12-armeabi.zip'");
 
     boolean somethingUnexpected = false;
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {

@@ -105,7 +105,7 @@ public class TestCDep {
   public void lintBoost() throws Exception {
     main(main("lint",
         "com.github.jomof:boost:1.0.63-rev18"
-       ));
+    ));
   }
 
   @Test
@@ -199,8 +199,8 @@ public class TestCDep {
         yaml, StandardCharsets.UTF_8);
     Files.write("# This file is automatically maintained by CDep.\n#\n#     MANUAL EDITS WILL BE LOST ON THE NEXT " +
             "CDEP RUN\n#\n# This file contains a list of CDep coordinates along with the SHA256 hash of their\n"
-            + "# manifest file. This is to ensure that a manifest hasn't changed since the last\n# time CDep ran.\n" 
-            + "# The recommended best practice is to check this file into source control so that\n# anyone else " + 
+            + "# manifest file. This is to ensure that a manifest hasn't changed since the last\n# time CDep ran.\n"
+            + "# The recommended best practice is to check this file into source control so that\n# anyone else " +
             "who builds this project is guaranteed to get the same dependencies.\n\n\n",
         yamlSha256,
         StandardCharsets.UTF_8);
@@ -235,8 +235,8 @@ public class TestCDep {
         //                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
         //                + "- compile: com.github.jomof:cmakeify:0.0.70\n"
         + "- compile: com.github.jomof:mathfu:1.0.2-rev7\n- compile: https://github" +
-        ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml\n- compile: com.github" +
-        ".jomof:low-level-statistics:0.0.16\n", yaml, StandardCharsets.UTF_8);
+        ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml\n" +
+        "- compile: com.github.jomof:low-level-statistics:0.0.16\n", yaml, StandardCharsets.UTF_8);
     String result1 = main("show", "manifest", "-wf", yaml.getParent());
     yaml.delete();
     Files.write(result1, yaml, StandardCharsets.UTF_8);
@@ -247,32 +247,33 @@ public class TestCDep {
     String result3 = main("-wf", yaml.getParent());
   }
 
-  //    @Test
-  //    public void firebase() throws Exception {
-  //        CDepYml config = new CDepYml();
-  //        System.out.printf(new Yaml().dump(config));
-  //        File yaml = new File(".test-files/firebase/cdep.yml");
-  //        yaml.getParentFile().mkdirs();
-  //        Files.write("builders: [cmake, cmakeExamples]\n"
-  //                + "dependencies:\n"
-  //                + "- compile: /usr/local/google/home/jomof/projects/firebase/.deploy/"
-  //                + "com.jomofisher/firebase/2.1.3-rev1/cdep-manifest-storage.yml\n",
-  //            yaml, StandardCharsets.UTF_8);
-  //        String result1 = main("show", "manifest", "-wf", yaml.getParent());
-  //        yaml.delete();
-  //        Files.write(result1, yaml, StandardCharsets.UTF_8);
-  //        System.out.print(result1);
-  //        String result = main("-wf", yaml.getParent());
-  //        System.out.printf(result);
-  //    }
+  @Test
+  public void sqlite() throws Exception {
+    CDepYml config = new CDepYml();
+    System.out.printf(new Yaml().dump(config));
+    File yaml = new File(".test-files/firebase/cdep.yml");
+    yaml.getParentFile().mkdirs();
+    Files.write("builders: [cmake, cmakeExamples]\n"
+            + "dependencies:\n"
+            + "- compile: com.github.jomof:sqlite:3.16.2-rev45\n",
+        yaml, StandardCharsets.UTF_8);
+    String result1 = main("show", "manifest", "-wf", yaml.getParent());
+    yaml.delete();
+    Files.write(result1, yaml, StandardCharsets.UTF_8);
+    System.out.print(result1);
+    String result = main("-wf", yaml.getParent());
+    System.out.printf(result);
+  }
 
   @Test
   public void redownload() throws Exception {
     CDepYml config = new CDepYml();
     File yaml = new File(".test-files/simpleDependency/cdep.yml");
     yaml.getParentFile().mkdirs();
-    Files.write("builders: [cmake, cmakeExamples]\ndependencies:\n- compile: com.github" +
-        ".jomof:low-level-statistics:0.0.16\n", yaml, StandardCharsets.UTF_8);
+    Files.write("builders: [cmake, cmakeExamples]\n" +
+            "dependencies:\n" +
+            "- compile: com.github.jomof:low-level-statistics:0.0.16\n", yaml,
+        StandardCharsets.UTF_8);
     // Download first.
     main("-wf", yaml.getParent());
     // Redownload

@@ -15,6 +15,279 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class ResolvedManifests {
+  @NotNull
+  public static ResolvedManifest singleABISqlite() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: sqlite\n" +
+        "  version: 3.16.2-rev45\n" +
+        "android:\n" +
+        "  dependencies:\n" +
+        "  archives:\n" +
+        "    - file: sqlite-android-cxx-platform-12-armeabi.zip\n" +
+        "      sha256: 5f2d0311c6dfabcd6674b0e2c0e5c8f693d6b9f2590b5dfa0c5c26c3fa129de7\n" +
+        "      size: 980275\n" +
+        "      ndk: r13b\n" +
+        "      runtime: c++\n" +
+        "      platform: 12\n" +
+        "      abi: armeabi\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-cxx-platform-12-armeabi-v7a.zip\n" +
+        "      sha256: 8a66e88c571adf7cf025e7e3b350e67af4b3bf7b5e9327d78cb0c7621e882aa5\n" +
+        "      size: 944437\n" +
+        "      ndk: r13b\n" +
+        "      runtime: c++\n" +
+        "      platform: 12\n" +
+        "      abi: armeabi-v7a\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-cxx-platform-12-x86.zip\n" +
+        "      sha256: 1701d88c4a1fae2df73ba16e0696a6bcf66de35590580279c2c3acaefe864dd2\n" +
+        "      size: 1010262\n" +
+        "      ndk: r13b\n" +
+        "      runtime: c++\n" +
+        "      platform: 12\n" +
+        "      abi: x86\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-gnustl-platform-12-armeabi.zip\n" +
+        "      sha256: e348a8256d09b622264fde6248b2a128359f96683b2051d87607cd326d52f207\n" +
+        "      size: 980305\n" +
+        "      ndk: r13b\n" +
+        "      runtime: gnustl\n" +
+        "      platform: 12\n" +
+        "      abi: armeabi\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-gnustl-platform-12-armeabi-v7a.zip\n" +
+        "      sha256: a3a24ac0a72bc98f1469a6b741540d61e251418f1b84e022e7826561ee5ddb74\n" +
+        "      size: 944458\n" +
+        "      ndk: r13b\n" +
+        "      runtime: gnustl\n" +
+        "      platform: 12\n" +
+        "      abi: armeabi-v7a\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-gnustl-platform-12-x86.zip\n" +
+        "      sha256: fa75a9846ed1e13ae321a6b0c5aa5630e3c7d446bb4b2a8452b7909a375e2ce2\n" +
+        "      size: 1010292\n" +
+        "      ndk: r13b\n" +
+        "      runtime: gnustl\n" +
+        "      platform: 12\n" +
+        "      abi: x86\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-stlport-platform-12-armeabi.zip\n" +
+        "      sha256: 2fcd7d13946dc9460e9a982b23a3ec58f72c9c85e5419e6d2b2195b189530c93\n" +
+        "      size: 980299\n" +
+        "      ndk: r13b\n" +
+        "      runtime: stlport\n" +
+        "      platform: 12\n" +
+        "      abi: armeabi\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-stlport-platform-12-armeabi-v7a.zip\n" +
+        "      sha256: 94ef5df595f1d12fbf9a89d42ca400ec5029c593ac8ce896fb2ea5a0f689feb5\n" +
+        "      size: 944463\n" +
+        "      ndk: r13b\n" +
+        "      runtime: stlport\n" +
+        "      platform: 12\n" +
+        "      abi: armeabi-v7a\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-stlport-platform-12-x86.zip\n" +
+        "      sha256: f8a4ac89c2109716057155fdd03069928c4500b89e5d1df5a419c9a2c84513a4\n" +
+        "      size: 1010275\n" +
+        "      ndk: r13b\n" +
+        "      runtime: stlport\n" +
+        "      platform: 12\n" +
+        "      abi: x86\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-cxx-platform-21-armeabi.zip\n" +
+        "      sha256: a71ccf0b3e6e032aa639c40422c0acffb97f9db2ef98770b7c68d8b451877f12\n" +
+        "      size: 980483\n" +
+        "      ndk: r13b\n" +
+        "      runtime: c++\n" +
+        "      platform: 21\n" +
+        "      abi: armeabi\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-cxx-platform-21-armeabi-v7a.zip\n" +
+        "      sha256: d6e9e4a2d993fa513b06a98040fb8ed0d6d16da67a662c65faf6fa42977de3cd\n" +
+        "      size: 944616\n" +
+        "      ndk: r13b\n" +
+        "      runtime: c++\n" +
+        "      platform: 21\n" +
+        "      abi: armeabi-v7a\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-cxx-platform-21-arm64-v8a.zip\n" +
+        "      sha256: 1628df08f794311a80ba2baaf51f29b3a7c2dbf5348787ee20b8da5aa7f8daf1\n" +
+        "      size: 954374\n" +
+        "      ndk: r13b\n" +
+        "      runtime: c++\n" +
+        "      platform: 21\n" +
+        "      abi: arm64-v8a\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-cxx-platform-21-x86.zip\n" +
+        "      sha256: 60853a52145018fd15ce2578dd9c824475a60fd7ab8fb2b966558d41289de088\n" +
+        "      size: 1010369\n" +
+        "      ndk: r13b\n" +
+        "      runtime: c++\n" +
+        "      platform: 21\n" +
+        "      abi: x86\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-cxx-platform-21-x86_64.zip\n" +
+        "      sha256: aab9578c12e2e3f54f3be3ad44f7a5387512749f6f1b5125586bc57106b45bd3\n" +
+        "      size: 974451\n" +
+        "      ndk: r13b\n" +
+        "      runtime: c++\n" +
+        "      platform: 21\n" +
+        "      abi: x86_64\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-gnustl-platform-21-armeabi.zip\n" +
+        "      sha256: 56d5816ff4931bd467b34fac98dd4dab301f01d3ca3c91fbc61679f567710297\n" +
+        "      size: 980475\n" +
+        "      ndk: r13b\n" +
+        "      runtime: gnustl\n" +
+        "      platform: 21\n" +
+        "      abi: armeabi\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-gnustl-platform-21-armeabi-v7a.zip\n" +
+        "      sha256: 5d52d0db30c916190f4feba0449dd57ff1cb1081a2358f92828a356fb486c42b\n" +
+        "      size: 944611\n" +
+        "      ndk: r13b\n" +
+        "      runtime: gnustl\n" +
+        "      platform: 21\n" +
+        "      abi: armeabi-v7a\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-gnustl-platform-21-arm64-v8a.zip\n" +
+        "      sha256: 00dd1e16099392cb9edeec9f8d6e1a67fbe45a42fc696aa95e3b309100d5d50e\n" +
+        "      size: 954355\n" +
+        "      ndk: r13b\n" +
+        "      runtime: gnustl\n" +
+        "      platform: 21\n" +
+        "      abi: arm64-v8a\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-gnustl-platform-21-x86.zip\n" +
+        "      sha256: a964724e9443a69ce61692d2c356d6b9466eefab1d52689551970826636dab74\n" +
+        "      size: 1010346\n" +
+        "      ndk: r13b\n" +
+        "      runtime: gnustl\n" +
+        "      platform: 21\n" +
+        "      abi: x86\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-gnustl-platform-21-x86_64.zip\n" +
+        "      sha256: 871207a0b606279675ff4426937f6ef34ad5f39dc4a083f28be72993f92a75ce\n" +
+        "      size: 974455\n" +
+        "      ndk: r13b\n" +
+        "      runtime: gnustl\n" +
+        "      platform: 21\n" +
+        "      abi: x86_64\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-stlport-platform-21-armeabi.zip\n" +
+        "      sha256: 0d26f166c232fd5c0735bfaa14ae8350301b5258880d813dba2be6def4c2e862\n" +
+        "      size: 980482\n" +
+        "      ndk: r13b\n" +
+        "      runtime: stlport\n" +
+        "      platform: 21\n" +
+        "      abi: armeabi\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-stlport-platform-21-armeabi-v7a.zip\n" +
+        "      sha256: 49b6282523580466ab508ffd9d086c04a827d42918dae8c7daa440e3936fb439\n" +
+        "      size: 944624\n" +
+        "      ndk: r13b\n" +
+        "      runtime: stlport\n" +
+        "      platform: 21\n" +
+        "      abi: armeabi-v7a\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-stlport-platform-21-arm64-v8a.zip\n" +
+        "      sha256: ef3905ef9a484e5772380b9d2b5a3e2875e243b9201517f45ce8dd07497789a8\n" +
+        "      size: 954359\n" +
+        "      ndk: r13b\n" +
+        "      runtime: stlport\n" +
+        "      platform: 21\n" +
+        "      abi: arm64-v8a\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-stlport-platform-21-x86.zip\n" +
+        "      sha256: 5e3518cd7a2687afd05dd3d4e64837ab7b970c64620e08e079707b9e3dcbbb95\n" +
+        "      size: 1010368\n" +
+        "      ndk: r13b\n" +
+        "      runtime: stlport\n" +
+        "      platform: 21\n" +
+        "      abi: x86\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-android-stlport-platform-21-x86_64.zip\n" +
+        "      sha256: 3d794d8a9d9cd082b1bccc5d0ccc36704b5c9fa514c6c1512c850f764c981fda\n" +
+        "      size: 974553\n" +
+        "      ndk: r13b\n" +
+        "      runtime: stlport\n" +
+        "      platform: 21\n" +
+        "      abi: x86_64\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "iOS:\n" +
+        "  archives:\n" +
+        "    - file: sqlite-ios-platform-iPhoneOS-architecture-armv7-sdk-9.3.zip\n" +
+        "      sha256: a50eed482b83c4cbe03d25b501b68b80a374b14aa36fb1cd19f21d03500dbe2e\n" +
+        "      size: 514132\n" +
+        "      platform: iPhoneOS\n" +
+        "      architecture: armv7\n" +
+        "      sdk: 9.3\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-ios-platform-iPhoneOS-architecture-armv7s-sdk-9.3.zip\n" +
+        "      sha256: 4c9484799d62711c670469e0369e280311e5297a278994b84d3c746d555c3e25\n" +
+        "      size: 514253\n" +
+        "      platform: iPhoneOS\n" +
+        "      architecture: armv7s\n" +
+        "      sdk: 9.3\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-ios-platform-iPhoneOS-architecture-arm64-sdk-9.3.zip\n" +
+        "      sha256: 5ec985dbfb3f988a35afb665a12d1e80deb26e1d5684a2e2b6c8bca9ce32273e\n" +
+        "      size: 529340\n" +
+        "      platform: iPhoneOS\n" +
+        "      architecture: arm64\n" +
+        "      sdk: 9.3\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-ios-platform-iPhoneSimulator-architecture-i386-sdk-9.3.zip\n" +
+        "      sha256: fc0ff04fbfe7a8d866406168208008ae352a243111c64656e6294a1696b10446\n" +
+        "      size: 555307\n" +
+        "      platform: iPhoneSimulator\n" +
+        "      architecture: i386\n" +
+        "      sdk: 9.3\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "    - file: sqlite-ios-platform-iPhoneSimulator-architecture-x86_64-sdk-9.3.zip\n" +
+        "      sha256: 84e75eabff1e14387c13ce0b9fe939ecc152d8ee086056fce5df2cce41a395ba\n" +
+        "      size: 547071\n" +
+        "      platform: iPhoneSimulator\n" +
+        "      architecture: x86_64\n" +
+        "      sdk: 9.3\n" +
+        "      include: include\n" +
+        "      lib: libsqlite.a\n" +
+        "example: |\n" +
+        "  #include <sqlite3.h>\n" +
+        "  void test() {\n" +
+        "    sqlite3_initialize();\n" +
+        "  }\n");
+  }
 
   // This is a cmakeify.yml that has "abi" instead of abis.
   @NotNull

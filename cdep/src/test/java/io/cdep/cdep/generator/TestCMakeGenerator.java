@@ -1,14 +1,15 @@
 package io.cdep.cdep.generator;
 
-import static org.junit.Assert.fail;
-
-import io.cdep.cdep.FindModuleFunctionTableBuilder;
+import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import org.junit.Test;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Test;
+
+import static org.junit.Assert.fail;
 
 public class TestCMakeGenerator {
   final private GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File(""   +
@@ -16,7 +17,7 @@ public class TestCMakeGenerator {
 
   @Test
   public void testBoost() throws Exception {
-    FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+    BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(ResolvedManifests.boost());
     FunctionTableExpression table = builder.build();
     String result = new CMakeGenerator(environment, table).create();
@@ -29,7 +30,7 @@ public class TestCMakeGenerator {
     expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
-      FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+      BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
       builder.addManifest(manifest.resolved);
       String expectedFailure = expected.get(manifest.name);
       try {

@@ -21,7 +21,7 @@ public class TestRewritingVisitor {
     Map<String, String> expected = new HashMap<>();
     expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found");
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
-      FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
+      BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
       builder.addManifest(manifest.resolved);
       String expectedFailure = expected.get(manifest.name);
       try {

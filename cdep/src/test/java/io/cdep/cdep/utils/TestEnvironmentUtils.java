@@ -24,6 +24,7 @@ public class TestEnvironmentUtils {
     expected.put("sqlite", "'sqlite' does not have archive");
     expected.put("archiveMissingFile", "'archiveMissingFile' does not have archive.include.file");
     expected.put("singleABI", "'singleABI' does not have archive");
+    expected.put("singleABISqlite", "'singleABISqlite' does not have archive");
 
     boolean unexpectedFailure = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
