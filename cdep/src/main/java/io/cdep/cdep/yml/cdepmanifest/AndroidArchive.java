@@ -41,7 +41,7 @@ public class AndroidArchive {
     this.platform = null;
     this.builder = null;
     this.abi = null;
-    this.include = "include";
+    this.include = null;
     this.lib = null;
     this.flavor = null;
   }

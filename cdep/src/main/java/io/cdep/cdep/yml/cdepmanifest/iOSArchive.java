@@ -33,6 +33,6 @@ public class iOSArchive {
     this.sdk = null;
     this.lib = null;
     this.flavor = null;
-    this.include = "include";
+    this.include = null;
   }
 }

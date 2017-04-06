@@ -17,7 +17,7 @@ public class Archive {
     this.file = null;
     this.sha256 = null;
     this.size = null;
-    this.include = "include";
+    this.include = null;
   }
 
   public Archive(@NotNull String file, @NotNull String sha256, long size, @Nullable String include) {

@@ -20,7 +20,7 @@ public class LinuxArchive {
     this.sha256 = null;
     this.size = null;
     this.lib = null;
-    this.include = "include";
+    this.include = null;
   }
 
   public LinuxArchive(@NotNull String file,
