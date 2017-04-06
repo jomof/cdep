@@ -20,7 +20,7 @@ public class Archive {
     this.include = "include";
   }
 
-  public Archive(@NotNull String file, @NotNull String sha256, long size, @NotNull String include) {
+  public Archive(@NotNull String file, @NotNull String sha256, long size, @Nullable String include) {
     this.file = file;
     this.sha256 = sha256;
     this.size = size;

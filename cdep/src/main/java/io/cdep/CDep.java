@@ -33,6 +33,7 @@ import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
+import io.cdep.cdep.yml.cdepmanifest.Interfaces;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
 
 import java.io.ByteArrayOutputStream;
@@ -46,6 +47,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
 
 public class CDep {
 
@@ -233,6 +235,9 @@ public class CDep {
         return true;
       }
 
+      if ("headers".equals(args.get(1))) {
+        return handleMergeHeaders(args);
+      }
       File output = new File(args.get(args.size() - 1));
       if (output.exists()) {
         throw new RuntimeException(String.format("File %s already exists", output.getAbsolutePath()));
@@ -265,6 +270,39 @@ public class CDep {
       return true;
     }
     return false;
+  }
+
+  private boolean handleMergeHeaders(List<String> args) throws IOException, NoSuchAlgorithmException {
+    if (args.size() != 5) {
+      out.printf("Usage: cdep merge headers coordinate headers.zip outputmanifest.yml");
+      return true;
+    }
+    String coordinate = args.get(2);
+    File zip = new File(args.get(3));
+    if (!zip.isFile()) {
+      throw new RuntimeException(String.format("File %s already doesn't exist or isn't a file", zip.getAbsolutePath()));
+    }
+    File output = new File(args.get(4));
+    GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
+    SoftNameDependency name = new SoftNameDependency(coordinate);
+    ResolvedManifest resolved = new Resolver(environment).resolveAny(name);
+
+    String sha256 = HashUtils.getSHA256OfFile(zip);
+    long size = zip.length();
+    CDepManifestYml prior = resolved.cdepManifestYml;
+    CDepManifestYml updated = new CDepManifestYml(
+        prior.sourceVersion,
+        prior.coordinate,
+        prior.dependencies,
+        new Interfaces(archive(zip.getName(), sha256, size, null)),
+        prior.android,
+        prior.iOS,
+        prior.linux,
+        prior.example);
+    String body = CreateCDepManifestYmlString.create(updated);
+    FileUtils.writeTextToFile(output, body);
+    out.printf("Merged %s and %s into %s.\n", coordinate, zip, output);
+    return true;
   }
 
   private boolean handleShow(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
@@ -447,6 +485,7 @@ public class CDep {
     out.printf(" cdep redownload: redownload dependencies for current cdep.yml\n");
     out.printf(" cdep create hashes: create or recreate cdep.sha256 file\n");
     out.printf(" cdep merge {coordinate} {coordinate2} ... outputmanifest.yml: " + "merge manifests into outputmanifest.yml\n");
+    out.printf(" cdep merge headers {coordinate} {headers.zip} outputmanifest.yml: " + "merge header and manifest into outputmanifest.yml\n");
     out.printf(" cdep fetch {coordinate} {coordinate2} ... : download multiple packages\n");
     out.printf(" cdep wrapper: copy cdep to the current folder\n");
     out.printf(" cdep --version: show version information\n");
