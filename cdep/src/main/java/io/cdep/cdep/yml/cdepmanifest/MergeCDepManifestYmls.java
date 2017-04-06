@@ -60,7 +60,11 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
 
     assert left.coordinate != null;
     assert left.example != null;
-    returnValue = new CDepManifestYml(left.coordinate, left.dependencies, left.archive, android, ios, linux, left.example);
+    CDepManifestYmlVersion sourceVersion = left.sourceVersion;
+    if (right.sourceVersion.ordinal() < sourceVersion.ordinal()) {
+      sourceVersion = right.sourceVersion;
+    }
+    returnValue = new CDepManifestYml(sourceVersion, left.coordinate, left.dependencies, left.archive, android, ios, linux, left.example);
   }
 
   @Override

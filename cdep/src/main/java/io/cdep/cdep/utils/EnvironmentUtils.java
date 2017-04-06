@@ -34,7 +34,8 @@ public class EnvironmentUtils {
    * archive.
    */
   @NotNull
-  static File getPackageLevelIncludeFolder(@NotNull GeneratorEnvironment environment,
+  static File getPackageLevelIncludeFolder(
+      @NotNull GeneratorEnvironment environment,
       @NotNull String coordinate,
       @NotNull ResolvedManifest resolved) throws URISyntaxException, MalformedURLException {
     CDepManifestYml manifest = resolved.cdepManifestYml;

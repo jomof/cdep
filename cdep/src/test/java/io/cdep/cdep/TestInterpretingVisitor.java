@@ -32,6 +32,8 @@ public class TestInterpretingVisitor {
         "Abort: Target platform Linux is not supported by com.github.jomof:sqlite:3.16.2-rev33. Supported: Android");
     expected.put("admob",
         "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github.jomof:firebase/admob:2.1.3-rev8");
+    expected.put("singleABI",
+        "Abort: Target platform Linux is not supported by com.github.jomof:sqlite:0.0.0. Supported: Android");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
@@ -164,6 +166,8 @@ public class TestInterpretingVisitor {
         "Abort: Target platform Darwin is not supported by com.github.jomof:sqlite:0.0.0. Supported: Linux");
     expected.put("admob",
         "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github.jomof:firebase/admob:2.1.3-rev8");
+    expected.put("singleABI",
+        "Abort: Target platform Darwin is not supported by com.github.jomof:sqlite:0.0.0. Supported: Android");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       final FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();

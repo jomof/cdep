@@ -1,11 +1,12 @@
 package io.cdep.cdep.resolver;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import java.io.File;
 import org.junit.Test;
+
+import java.io.File;
+
+import static com.google.common.truth.Truth.assertThat;
 
 public class TestGithubReleasesCoordinateResolver {
   final private GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File(""  +
@@ -22,6 +23,6 @@ public class TestGithubReleasesCoordinateResolver {
     assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("2.1.3-rev5");
     assert resolved.cdepManifestYml.android != null;
     assert resolved.cdepManifestYml.android.archives != null;
-    assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(3);
+    assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(21);
   }
 }

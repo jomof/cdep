@@ -1,8 +1,6 @@
-package io.cdep.cdep.yml.cdepmanifest;
+package io.cdep.cdep.yml.cdepmanifest.v1;
 
 import io.cdep.annotations.Nullable;
-
-import static io.cdep.cdep.utils.Invariant.require;
 
 @SuppressWarnings("unused")
 public class AndroidArchive {
@@ -23,7 +21,7 @@ public class AndroidArchive {
   @Nullable
   final public String builder;
   @Nullable
-  final public String abi;
+  final public String abis[];
   @Nullable
   final public String include;
   @Nullable
@@ -40,37 +38,9 @@ public class AndroidArchive {
     this.runtime = null;
     this.platform = null;
     this.builder = null;
-    this.abi = null;
+    this.abis = null;
     this.include = "include";
     this.lib = null;
     this.flavor = null;
-  }
-
-  public AndroidArchive(String file,
-      String sha256,
-      Long size,
-      String ndk,
-      String compiler,
-      String runtime,
-      String platform,
-      String builder,
-      String abi,
-      String include,
-      String lib,
-      String flavor) {
-    require(abi != null);
-    this.file = file;
-    this.sha256 = sha256;
-    this.size = size;
-    this.ndk = ndk;
-    this.compiler = compiler;
-    this.runtime = runtime;
-    this.platform = platform;
-    this.builder = builder;
-    this.abi = abi;
-    this.include = include;
-    this.lib = lib;
-    this.flavor = flavor;
-    require(this.abi != null);
   }
 }

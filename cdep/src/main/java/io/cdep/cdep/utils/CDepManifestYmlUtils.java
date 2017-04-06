@@ -19,8 +19,10 @@ import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.*;
+import io.cdep.cdep.yml.cdepmanifest.v1.V1Reader;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
@@ -34,10 +36,20 @@ public class CDepManifestYmlUtils {
   @NotNull
   public static CDepManifestYml convertStringToManifest(@NotNull String content) {
     Yaml yaml = new Yaml(new Constructor(CDepManifestYml.class));
-    CDepManifestYml dependencyConfig = (CDepManifestYml) yaml.load(new ByteArrayInputStream(content.getBytes(StandardCharsets
-        .UTF_8)));
-    require(dependencyConfig != null, "Manifest was empty");
-    return dependencyConfig;
+    CDepManifestYml manifest;
+    try {
+      // Try to read current version
+      manifest = (CDepManifestYml) yaml.load(
+          new ByteArrayInputStream(content.getBytes(StandardCharsets
+              .UTF_8)));
+      if (manifest != null) {
+        manifest.sourceVersion = CDepManifestYmlVersion.v2;
+      }
+    } catch (YAMLException e) {
+      manifest = V1Reader.convertStringToManifest(content);
+    }
+    require(manifest != null, "Manifest was empty");
+    return manifest;
   }
 
   public static void checkManifestSanity(@NotNull CDepManifestYml cdepManifestYml) {
@@ -58,14 +70,18 @@ public class CDepManifestYmlUtils {
     private final Set<String> filesSeen = new HashSet<>();
     @Nullable
     private Coordinate coordinate = null;
+    @Nullable
+    private CDepManifestYmlVersion sourceVersion = null;
 
     @Override
     public void visitString(@Nullable String name, @NotNull String node) {
       if (name != null && name.equals("file")) {
-        require(!filesSeen.contains(node.toLowerCase()),
-            "Package '%s' contains multiple references to the same" + " " + "archive file '%s'",
-            coordinate,
-            node);
+        if (sourceVersion.ordinal() > CDepManifestYmlVersion.v1.ordinal()) {
+          require(!filesSeen.contains(node.toLowerCase()),
+              "Package '%s' contains multiple references to the same" + " " + "archive file '%s'",
+              coordinate,
+              node);
+        }
         filesSeen.add(node.toLowerCase());
       }
     }
@@ -73,6 +89,7 @@ public class CDepManifestYmlUtils {
     @Override
     public void visitCDepManifestYml(@Nullable String name, @NotNull CDepManifestYml value) {
       coordinate = value.coordinate;
+      sourceVersion = value.sourceVersion;
       require(coordinate != null, "Manifest was missing coordinate");
       super.visitCDepManifestYml(name, value);
       require(!filesSeen.isEmpty(), "Package '%s' does not contain any files", coordinate);

@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package io.cdep.cdep.yml.cdepmanifest;
+package io.cdep.cdep.yml.cdepmanifest.v1;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.yml.cdepmanifest.Archive;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.Linux;
+import io.cdep.cdep.yml.cdepmanifest.iOS;
 
 public class CDepManifestYml {
   @Nullable
@@ -34,11 +38,8 @@ public class CDepManifestYml {
   final public iOS iOS;
   @Nullable
   final public String example;
-  @Nullable
-  public CDepManifestYmlVersion sourceVersion;
 
   public CDepManifestYml() {
-    this.sourceVersion = null;
     this.coordinate = null;
     this.dependencies = null;
     this.archive = null;
@@ -49,7 +50,6 @@ public class CDepManifestYml {
   }
 
   public CDepManifestYml(@NotNull Coordinate coordinate) {
-    this.sourceVersion = null;
     this.coordinate = coordinate;
     this.dependencies = null;
     this.archive = null;
@@ -59,16 +59,13 @@ public class CDepManifestYml {
     this.example = null;
   }
 
-  public CDepManifestYml(
-      @NotNull CDepManifestYmlVersion sourceVersion,
-      @NotNull Coordinate coordinate,
+  public CDepManifestYml(@NotNull Coordinate coordinate,
       @Nullable HardNameDependency[] dependencies,
       @Nullable Archive archive,
       @Nullable Android android,
       @Nullable iOS ios,
       @Nullable Linux linux,
-      @Nullable String example) {
-    this.sourceVersion = sourceVersion;
+      @NotNull String example) {
     this.coordinate = coordinate;
     this.dependencies = dependencies;
     this.archive = archive;

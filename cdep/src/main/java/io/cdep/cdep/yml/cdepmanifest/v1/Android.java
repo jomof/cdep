@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package io.cdep.cdep.yml.cdepmanifest;
+package io.cdep.cdep.yml.cdepmanifest.v1;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 
 public class Android {
   @Nullable
@@ -29,7 +30,7 @@ public class Android {
     this.archives = new AndroidArchive[0];
   }
 
-  public Android(@Nullable HardNameDependency dependencies[], @NotNull AndroidArchive archives[]) {
+  Android(@Nullable HardNameDependency dependencies[], @NotNull AndroidArchive archives[]) {
     this.dependencies = dependencies;
     this.archives = archives;
   }

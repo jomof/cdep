@@ -54,7 +54,7 @@ public class TestFindModuleFunctionTableBuilder {
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
     assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.81");
     assert resolved.cdepManifestYml.android != null;
-    assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(2);
+    assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(8);
 
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     builder.addManifest(resolved);
@@ -199,7 +199,7 @@ public class TestFindModuleFunctionTableBuilder {
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
     assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.81");
-    assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(2);
+    assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(8);
 
     FindModuleFunctionTableBuilder builder = new FindModuleFunctionTableBuilder();
     builder.addManifest(resolved);
