@@ -273,16 +273,17 @@ public class CDep {
   }
 
   private boolean handleMergeHeaders(List<String> args) throws IOException, NoSuchAlgorithmException {
-    if (args.size() != 5) {
-      out.printf("Usage: cdep merge headers coordinate headers.zip outputmanifest.yml");
+    if (args.size() != 6) {
+      out.printf("Usage: cdep merge headers coordinate headers.zip folder outputmanifest.yml");
       return true;
     }
     String coordinate = args.get(2);
     File zip = new File(args.get(3));
+    String include = args.get(4);
     if (!zip.isFile()) {
       throw new RuntimeException(String.format("File %s already doesn't exist or isn't a file", zip.getAbsolutePath()));
     }
-    File output = new File(args.get(4));
+    File output = new File(args.get(5));
     GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
     SoftNameDependency name = new SoftNameDependency(coordinate);
     ResolvedManifest resolved = new Resolver(environment).resolveAny(name);
@@ -294,7 +295,7 @@ public class CDep {
         prior.sourceVersion,
         prior.coordinate,
         prior.dependencies,
-        new Interfaces(archive(zip.getName(), sha256, size, null)),
+        new Interfaces(archive(zip.getName(), sha256, size, include)),
         prior.android,
         prior.iOS,
         prior.linux,

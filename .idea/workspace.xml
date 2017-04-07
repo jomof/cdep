@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="Linux">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smoke-test/cdep.yml" afterPath="$PROJECT_DIR$/smoke-test/cdep.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -117,11 +118,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestCDep.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TestCDep.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="72" column="3" lean-forward="false" selection-start-line="72" selection-start-column="3" selection-end-line="72" selection-end-column="3" />
+            <state relative-caret-position="533">
+              <caret line="74" column="56" lean-forward="false" selection-start-line="74" selection-start-column="56" selection-end-line="74" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -139,11 +140,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="273">
               <caret line="16" column="1" lean-forward="false" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CDep.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="285" column="37" lean-forward="false" selection-start-line="285" selection-start-column="37" selection-end-line="285" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -191,16 +202,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LinuxArchive.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/LinuxArchive.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="693">
-              <caret line="22" column="23" lean-forward="false" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Archive.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Archive.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -225,8 +226,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>RuntimeException</find>
-      <find>new RuntimeException</find>
       <find>throw new RuntimeException(String.format</find>
       <find>getMethod</find>
       <find>SuppressWarnings</find>
@@ -253,8 +252,10 @@
       <find>archive:</find>
       <find>covisitInter</find>
       <find>write</find>
-      <find>merge</find>
       <find>was malformed</find>
+      <find>&quot;include</find>
+      <find>&quot;merge</find>
+      <find>merge</find>
     </findStrings>
     <replaceStrings>
       <replace>0.0.74</replace>
@@ -1152,7 +1153,6 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYmlEquality.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/yml/TestMergeCDepManifestYmls.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYml.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestBuilder.java" />
         <option value="$PROJECT_DIR$/cdep/.test-files/mergeHeaders/merged-manifest.yml" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/AndroidArchive.java" />
@@ -1162,10 +1162,11 @@
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestEnvironmentUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java" />
-        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestResolver.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java" />
         <option value="$PROJECT_DIR$/smoke-test/cdep.yml" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
+        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
       </list>
     </option>
   </component>
@@ -1861,7 +1862,7 @@
       <recent name="io.cdep.cdep.yml.cdepmanifest" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in cdep-cdep">
+  <component name="RunManager" selected="JUnit.TestCDep.mergeHeaders">
     <configuration default="false" name="All in cdep-cdep" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="cdep-cdep" />
@@ -1871,32 +1872,6 @@
       <option name="MAIN_CLASS_NAME" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/cdep" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="false" name="TestResolver.testScopeUnresolvableDependencyResolve" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="io.cdep.cdep.resolver.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="cdep-cdep" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="io.cdep.cdep.resolver" />
-      <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.resolver.TestResolver" />
-      <option name="METHOD_NAME" value="testScopeUnresolvableDependencyResolve" />
-      <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/cdep" />
@@ -1974,6 +1949,32 @@
       <option name="PACKAGE_NAME" value="io.cdep.cdep.utils" />
       <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.utils.TestCDepManifestYmlUtils" />
       <option name="METHOD_NAME" value="testTwoWayMergeSanity" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/cdep" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestCDep.mergeHeaders" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="io.cdep.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="cdep-cdep" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="io.cdep" />
+      <option name="MAIN_CLASS_NAME" value="io.cdep.TestCDep" />
+      <option name="METHOD_NAME" value="mergeHeaders" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -2163,18 +2164,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="JUnit.All in cdep-cdep" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.TestResolver.testScopeUnresolvableDependencyResolve" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.TestResolver" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.testAllResolvedManifests" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.testTwoWayMergeSanity" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.TestResolver" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.testAllResolvedManifests" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.testTwoWayMergeSanity" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TestCDep.mergeHeaders" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.All in cdep-cdep" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.testTwoWayMergeSanity" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.testAllResolvedManifests" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.TestResolver" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.TestResolver.testScopeUnresolvableDependencyResolve" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.TestCDep.mergeHeaders" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.All in cdep-cdep" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.testTwoWayMergeSanity" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.TestCDepManifestYmlUtils.testAllResolvedManifests" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.TestResolver" />
       </list>
     </recent_temporary>
   </component>
@@ -2191,13 +2192,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
-    </task>
-    <task id="LOCAL-00158" summary="Linux">
-      <created>1490638282966</created>
-      <option name="number" value="00158" />
-      <option name="presentableId" value="LOCAL-00158" />
-      <option name="project" value="LOCAL" />
-      <updated>1490638282966</updated>
     </task>
     <task id="LOCAL-00159" summary="Linux">
       <created>1490639507552</created>
@@ -2535,24 +2529,25 @@
       <option name="project" value="LOCAL" />
       <updated>1491529944522</updated>
     </task>
-    <option name="localTasksCounter" value="207" />
+    <task id="LOCAL-00207" summary="Linux">
+      <created>1491531484761</created>
+      <option name="number" value="00207" />
+      <option name="presentableId" value="LOCAL-00207" />
+      <option name="project" value="LOCAL" />
+      <updated>1491531484761</updated>
+    </task>
+    <option name="localTasksCounter" value="208" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_cdep-cdep - 2017.04.06 at 18h 41m 04s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_cdep-cdep - 2017.04.06 at 18h 42m 56s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
     <history-entry file="All_in_cdep-cdep - 2017.04.06 at 18h 44m 06s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestCDepManifestYmlUtils_testAllResolvedManifests - 2017.04.06 at 18h 41m 53s.xml">
-      <configuration name="TestCDepManifestYmlUtils.testAllResolvedManifests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestCDepManifestYmlUtils_testAllResolvedManifests - 2017.04.06 at 18h 42m 09s.xml">
-      <configuration name="TestCDepManifestYmlUtils.testAllResolvedManifests" configurationId="JUnit" />
+    <history-entry file="All_in_cdep-cdep - 2017.04.07 at 05h 45m 44s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestCDepManifestYmlUtils_testAllResolvedManifests - 2017.04.06 at 18h 42m 36s.xml">
       <configuration name="TestCDepManifestYmlUtils.testAllResolvedManifests" configurationId="JUnit" />
@@ -2563,16 +2558,22 @@
     <history-entry file="TestCDepManifestYmlUtils_testTwoWayMergeSanity - 2017.04.06 at 18h 43m 39s.xml">
       <configuration name="TestCDepManifestYmlUtils.testTwoWayMergeSanity" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestResolver - 2017.04.06 at 18h 40m 22s.xml">
-      <configuration name="TestResolver" configurationId="JUnit" />
+    <history-entry file="TestCDep_mergeHeaders - 2017.04.07 at 05h 46m 26s.xml">
+      <configuration name="TestCDep.mergeHeaders" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestResolver - 2017.04.06 at 18h 40m 49s.xml">
-      <configuration name="TestResolver" configurationId="JUnit" />
+    <history-entry file="TestCDep_mergeHeaders - 2017.04.07 at 05h 47m 04s.xml">
+      <configuration name="TestCDep.mergeHeaders" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestCDep_mergeHeaders - 2017.04.07 at 05h 47m 39s.xml">
+      <configuration name="TestCDep.mergeHeaders" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestCDep_mergeHeaders - 2017.04.07 at 05h 48m 20s.xml">
+      <configuration name="TestCDep.mergeHeaders" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="3226" height="1746" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -2581,7 +2582,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32840833" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42377433" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42377433" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32840833" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33322623" sideWeight="0.4964467" order="0" side_tool="false" content_ui="combo" />
@@ -3141,14 +3142,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="296" column="26" lean-forward="false" selection-start-line="296" selection-start-column="26" selection-end-line="296" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="469">
@@ -3231,14 +3224,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="72" column="3" lean-forward="false" selection-start-line="72" selection-start-column="3" selection-end-line="72" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestResolver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
@@ -3269,6 +3254,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="16" column="1" lean-forward="false" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="285" column="37" lean-forward="false" selection-start-line="285" selection-start-column="37" selection-end-line="285" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="533">
+          <caret line="74" column="56" lean-forward="false" selection-start-line="74" selection-start-column="56" selection-end-line="74" selection-end-column="56" />
           <folding />
         </state>
       </provider>

@@ -68,7 +68,11 @@ public class TestCDep {
     String text = main("merge", "headers",
         "com.github.jomof:sqlite:3.16.2-rev48",
         zip.toString(),
+        "include",
         output.toString());
+    assertThat(text).doesNotContain("Usage");
+    assertThat(text).contains("Merged com.github.jomof:sqlite:3.16.2-rev48 and .test-files\\mergeHeaders\\headers.zip into " +
+        ".test-files\\mergeHeaders\\merged-manifest.yml.");
     System.out.printf(text);
   }
 
