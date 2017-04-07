@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="Linux">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -2193,13 +2191,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00159" summary="Linux">
-      <created>1490639507552</created>
-      <option name="number" value="00159" />
-      <option name="presentableId" value="LOCAL-00159" />
-      <option name="project" value="LOCAL" />
-      <updated>1490639507552</updated>
-    </task>
     <task id="LOCAL-00160" summary="Linux">
       <created>1490639564854</created>
       <option name="number" value="00160" />
@@ -2536,7 +2527,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491531484761</updated>
     </task>
-    <option name="localTasksCounter" value="208" />
+    <task id="LOCAL-00208" summary="Linux">
+      <created>1491569320293</created>
+      <option name="number" value="00208" />
+      <option name="presentableId" value="LOCAL-00208" />
+      <option name="project" value="LOCAL" />
+      <updated>1491569320293</updated>
+    </task>
+    <option name="localTasksCounter" value="209" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2548,9 +2546,6 @@
     </history-entry>
     <history-entry file="All_in_cdep-cdep - 2017.04.07 at 05h 45m 44s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestCDepManifestYmlUtils_testAllResolvedManifests - 2017.04.06 at 18h 42m 36s.xml">
-      <configuration name="TestCDepManifestYmlUtils.testAllResolvedManifests" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestCDepManifestYmlUtils_testTwoWayMergeSanity - 2017.04.06 at 18h 43m 21s.xml">
       <configuration name="TestCDepManifestYmlUtils.testTwoWayMergeSanity" configurationId="JUnit" />
@@ -2568,6 +2563,9 @@
       <configuration name="TestCDep.mergeHeaders" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestCDep_mergeHeaders - 2017.04.07 at 05h 48m 20s.xml">
+      <configuration name="TestCDep.mergeHeaders" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestCDep_mergeHeaders - 2017.04.07 at 05h 55m 15s.xml">
       <configuration name="TestCDep.mergeHeaders" configurationId="JUnit" />
     </history-entry>
   </component>
