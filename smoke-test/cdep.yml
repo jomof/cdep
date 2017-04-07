@@ -14,7 +14,7 @@ dependencies:
 # Uncomment to work on version unification
 #- compile: com.github.jomof:vectorial:0.0.0-rev14
 - compile: com.github.jomof:mathfu:1.0.2-rev9
-- compile: com.github.jomof:sdl2:2.0.5-rev22
+#- compile: com.github.jomof:sdl2:2.0.5-rev22
 
 # Yaml-cpp only currently supports a small number of ABI
 #- compile: com.github.jomof:yaml-cpp:0.5.3-rev20
