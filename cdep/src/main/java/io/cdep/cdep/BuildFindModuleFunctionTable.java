@@ -165,7 +165,7 @@ public class BuildFindModuleFunctionTable {
   private StatementExpression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
       @NotNull Archive archive, @NotNull AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
-    if (archive.file == null || archive.sha256 == null || archive.size == null || archive.include == null) {
+    if (archive.file == null || archive.sha256 == null || archive.size == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, null,

@@ -1,10 +1,5 @@
 package io.cdep.cdep.resolver;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
@@ -12,8 +7,14 @@ import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import java.net.URL;
 import org.junit.Test;
+
+import java.net.URL;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class TestResolver {
@@ -50,24 +51,12 @@ public class TestResolver {
           + "compile: com.github" + ".jomof:firebase/app:2.1.3-rev8\n" + "    sha256: " +
           "8292d143db85ec40ddf4d51133571607f4df3796e0477e8678993dcae4acfd03");
 
-
   @NotNull
   private static final CDepManifestYml ADMOB_BROKEN_DEPENDENCY_MANIFEST = CDepManifestYmlUtils.convertStringToManifest
       ("coordinate:\n" + "  groupId: com.github" + ".jomof\n" + "  artifactId: firebase/admob\n" + "  version: 2.1.3-rev7\n" +
           "archive:\n" + "  file: firebase-include.zip\n" + "  sha256: " +
           "51827bab4c5b4f335058ab3c0a93f9fa39ba284d21bd686f27368829ee088815\n" + "  size: 93293\n" + "dependencies:\n" + "  - "
           + "compile: xxx\n" + "    sha256: " + "8292d143db85ec40ddf4d51133571607f4df3796e0477e8678993dcae4acfd03");
-
-
-  @Test
-  public void testSimpleResolve() throws Exception {
-    ManifestProvider provider = mock(ManifestProvider.class);
-    when(provider.tryGetManifest(ADMOB_COORDINATE, new URL(ADMOB_URL))).thenReturn(ADMOB_MANIFEST);
-    Resolver resolver = new Resolver(provider);
-    assert ADMOB_COORDINATE != null;
-    ResolvedManifest resolved = resolver.resolveAny(new SoftNameDependency(ADMOB_COORDINATE.toString()));
-    assertThat(resolved).isNotNull();
-  }
 
   @Test
   public void twoResolversMatch() throws Exception {
@@ -86,18 +75,6 @@ public class TestResolver {
   }
 
   @Test
-  public void testScopeResolve() throws Exception {
-    ManifestProvider provider = mock(ManifestProvider.class);
-    when(provider.tryGetManifest(ADMOB_COORDINATE, new URL(ADMOB_URL))).thenReturn(ADMOB_MANIFEST);
-    String APP_URL = "https://github.com/jomof/firebase/releases/download/2.1.3-rev7/cdep-manifest-app.yml";
-    when(provider.tryGetManifest(APP_COORDINATE, new URL(APP_URL))).thenReturn(APP_MANIFEST);
-    Resolver resolver = new Resolver(provider);
-    assert ADMOB_COORDINATE != null;
-    ResolutionScope scope = resolver.resolveAll(new SoftNameDependency[]{new SoftNameDependency(ADMOB_COORDINATE.toString())});
-    assertThat(scope.isResolutionComplete()).isTrue();
-  }
-
-  @Test
   public void testScopeUnresolvableDependencyResolve() throws Exception {
     ManifestProvider provider = mock(ManifestProvider.class);
     when(provider.tryGetManifest(ADMOB_COORDINATE, new URL(ADMOB_URL))).thenReturn(ADMOB_MISSING_DEPENDENCY_MANIFEST);
@@ -107,7 +84,7 @@ public class TestResolver {
       resolver.resolveAll(new SoftNameDependency[]{new SoftNameDependency(ADMOB_COORDINATE.toString())});
       fail("Expected exception");
     } catch (RuntimeException e) {
-      assertThat(e).hasMessage("Could not resolve 'com.github.jomof:firebase/app:2.1.3-rev8'. " + "It doesn't exist.");
+      assertThat(e).hasMessage("Archive com.github.jomof:firebase/admob:2.1.3-rev7 is missing include");
     }
   }
 
@@ -121,7 +98,7 @@ public class TestResolver {
       resolver.resolveAll(new SoftNameDependency[]{new SoftNameDependency(ADMOB_COORDINATE.toString())});
       fail("Expected exception");
     } catch (RuntimeException e) {
-      assertThat(e).hasMessage("Could not resolve 'xxx'. It didn't look like a coordinate.");
+      assertThat(e).hasMessage("Archive com.github.jomof:firebase/admob:2.1.3-rev7 is missing include");
     }
   }
 

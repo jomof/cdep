@@ -100,10 +100,45 @@ public class CDepManifestYmlUtils {
       if (value == null) {
         return;
       }
-      require(value.file != null && value.file.length() != 0, "Archive is missing file", name);
-      require(value.sha256 != null && value.sha256.length() != 0, "Archive is missing sha256", name);
-      require(value.size != null && value.size != 0, "Archive is missing size or it is zero", name);
+      require(value.file != null && value.file.length() != 0, "Archive %s is missing file", coordinate);
+      require(value.sha256 != null && value.sha256.length() != 0, "Archive %s is missing sha256", coordinate);
+      require(value.size != null && value.size != 0, "Archive %s is missing size or it is zero", coordinate);
+      require(value.include != null && value.include.length() != 0, "Archive %s is missing include", coordinate);
       super.visitArchive(name, value);
+    }
+
+    @Override
+    public void visitAndroidArchive(@Nullable String name, @NotNull AndroidArchive value) {
+      if (value == null) {
+        return;
+      }
+      require(value.file != null && value.file.length() != 0, "Android archive %s is missing file", coordinate);
+      require(value.sha256 != null && value.sha256.length() != 0, "Android archive %s is missing sha256", coordinate);
+      require(value.size != null && value.size != 0, "Android archive %s is missing size or it is zero", coordinate);
+      super.visitAndroidArchive(name, value);
+    }
+
+
+    @Override
+    public void visitiOSArchive(@Nullable String name, @NotNull iOSArchive value) {
+      if (value == null) {
+        return;
+      }
+      require(value.file != null && value.file.length() != 0, "iOS archive %s is missing file", coordinate);
+      require(value.sha256 != null && value.sha256.length() != 0, "iOS archive %s is missing sha256", coordinate);
+      require(value.size != null && value.size != 0, "iOS archive %s is missing size or it is zero", coordinate);
+      super.visitiOSArchive(name, value);
+    }
+
+    @Override
+    public void visitLinuxArchive(@Nullable String name, @NotNull LinuxArchive value) {
+      if (value == null) {
+        return;
+      }
+      require(value.file != null && value.file.length() != 0, "iOS archive %s is missing file", coordinate);
+      require(value.sha256 != null && value.sha256.length() != 0, "iOS archive %s is missing sha256", coordinate);
+      require(value.size != null && value.size != 0, "iOS archive %s is missing size or it is zero", coordinate);
+      super.visitLinuxArchive(name, value);
     }
 
     @Override

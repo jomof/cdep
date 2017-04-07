@@ -73,14 +73,6 @@ public class TestCDep {
   }
 
   @Test
-  public void mergeSecondMissing() throws Exception {
-    File output = new File(".test-files/mergeSecondMissing/merged-manifest.yml");
-    output.delete();
-    assertThat(main("merge", "com.github.jomof:firebase/admob:2.1.3-rev8", "non:existing:1.2.3", output.toString())).contains
-        ("Manifest for 'non:existing:1.2.3' didn't exist");
-  }
-
-  @Test
   public void mergeFirstMissing() throws Exception {
     File output = new File(".test-files/mergeFirstMissing/merged-manifest.yml");
     output.delete();
@@ -114,14 +106,14 @@ public class TestCDep {
   @Test
   public void lintSomeKnownLibraries() throws Exception {
     main(main("lint",
-        "com.github.jomof:firebase/admob:2.1.3-rev11",
-        "com.github.jomof:firebase/analytics:2.1.3-rev11",
-        "com.github.jomof:firebase/auth:2.1.3-rev11",
-        "com.github.jomof:firebase/database:2.1.3-rev11",
-        "com.github.jomof:firebase/invites:2.1.3-rev11",
-        "com.github.jomof:firebase/messaging:2.1.3-rev11",
-        "com.github.jomof:firebase/remote_config:2.1.3-rev11",
-        "com.github.jomof:firebase/storage:2.1.3-rev11",
+//        "com.github.jomof:firebase/admob:2.1.3-rev11",
+//        "com.github.jomof:firebase/analytics:2.1.3-rev11",
+//        "com.github.jomof:firebase/auth:2.1.3-rev11",
+//        "com.github.jomof:firebase/database:2.1.3-rev11",
+//        "com.github.jomof:firebase/invites:2.1.3-rev11",
+//        "com.github.jomof:firebase/messaging:2.1.3-rev11",
+//        "com.github.jomof:firebase/remote_config:2.1.3-rev11",
+//        "com.github.jomof:firebase/storage:2.1.3-rev11",
         "com.github.jomof:sqlite:3.16.2-rev25",
         "com.github.jomof:boost:1.0.63-rev18",
         "com.github.jomof:vectorial:0.0.0-rev11",
