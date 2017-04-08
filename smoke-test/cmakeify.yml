@@ -4,7 +4,7 @@ includes: [include]
 android:
   flavors:
     default: >
-      -Dcdep-dependencies_DIR=$(pwd)/smoke-test/.cdep/modules
+      -Dcdep-dependencies_DIR=$(pwd)/.cdep/modules
       -DCMAKE_SYSTEM_VERSION=21
   ndk:
     platforms: [9, 21]
