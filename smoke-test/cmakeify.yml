@@ -1,6 +1,6 @@
 targets: [android]
 buildTarget: hello
-extraIncludes: [include]
+includes: [include]
 android:
   flavors:
     default: >
