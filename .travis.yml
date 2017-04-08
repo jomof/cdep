@@ -1,4 +1,6 @@
 language: java
+git:
+  depth: 3
 matrix:
   include:
   - jdk: oraclejdk7
