@@ -2,68 +2,70 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="Linux">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/atari_8bit_font_revised.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/easy_font_raw.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_caves_limit_connectivity.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_caves_tiny_corridors.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_corner_caves.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_horizontal_corridors_v1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_horizontal_corridors_v2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_horizontal_corridors_v3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_limit_connectivity_fat.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_limited_connectivity.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_maze_2_wide.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_maze_plus_2_wide.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_open_areas.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_ref2_corner_caves.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_rooms_and_corridors.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_rooms_and_corridors_2_wide_diagonal_bias.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_rooms_limit_connectivity.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_round_rooms_diagonal_corridors.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_sean_dungeon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_simple_caves_2_wide.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_square_rooms_with_random_rects.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/map_01.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/map_02.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/map_03.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/data/herringbone/license.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/deprecated/rrsprintf.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/deprecated/stb_image.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/deprecated/stretchy_buffer.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/docs/other_libs.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/docs/stb_howto.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/docs/stb_voxel_render_interview.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/docs/why_public_domain.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_c_lexer.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_connected_components.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_divide.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_dxt.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_easy_font.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_herringbone_wang_tile.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_image.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_image_resize.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_image_write.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_leakcheck.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_perlin.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_rect_pack.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_sprintf.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_textedit.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_tilemap_editor.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_truetype.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_vorbis.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stb_voxel_render.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/stretchy_buffer.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/tools/README.footer.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/tools/README.header.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/tools/README.list" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/tools/easy_font_maker.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/tools/make_readme.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/tools/make_readme.dsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/tools/mr.bat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/tools/unicode.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-files/stb/tools/unicode/unicode.dsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/stb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitmodules" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/atari_8bit_font_revised.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/easy_font_raw.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/license.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_caves_limit_connectivity.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_caves_tiny_corridors.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_corner_caves.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_horizontal_corridors_v1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_horizontal_corridors_v2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_horizontal_corridors_v3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_limit_connectivity_fat.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_limited_connectivity.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_maze_2_wide.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_maze_plus_2_wide.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_open_areas.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_ref2_corner_caves.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_rooms_and_corridors.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_rooms_and_corridors_2_wide_diagonal_bias.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_rooms_limit_connectivity.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_round_rooms_diagonal_corridors.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_sean_dungeon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_simple_caves_2_wide.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/herringbone/template_square_rooms_with_random_rects.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/map_01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/map_02.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/data/map_03.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/deprecated/rrsprintf.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/deprecated/stb_image.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/deprecated/stretchy_buffer.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/docs/other_libs.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/docs/stb_howto.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/docs/stb_voxel_render_interview.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/docs/why_public_domain.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_c_lexer.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_connected_components.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_divide.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_dxt.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_easy_font.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_herringbone_wang_tile.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_image.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_image_resize.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_image_write.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_leakcheck.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_perlin.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_rect_pack.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_sprintf.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_textedit.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_tilemap_editor.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_truetype.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_vorbis.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stb_voxel_render.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/stretchy_buffer.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/tools/README.footer.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/tools/README.header.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/tools/README.list" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/tools/easy_font_maker.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/tools/make_readme.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/tools/make_readme.dsp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/tools/mr.bat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/tools/unicode.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test-files/stb/tools/unicode/unicode.dsp" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
@@ -178,11 +180,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestCDep.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TestCDep.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="69" column="36" lean-forward="false" selection-start-line="69" selection-start-column="36" selection-end-line="69" selection-end-column="36" />
+            <state relative-caret-position="198">
+              <caret line="34" column="13" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -248,7 +250,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CDep.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CDep.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="244">
@@ -1354,11 +1356,147 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="test">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="test">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="java">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="io/cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="test">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="java">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="io/cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="cdep">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="third_party/stb">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1802,13 +1940,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00179" summary="Linux">
-      <created>1490665457351</created>
-      <option name="number" value="00179" />
-      <option name="presentableId" value="LOCAL-00179" />
-      <option name="project" value="LOCAL" />
-      <updated>1490665457351</updated>
-    </task>
     <task id="LOCAL-00180" summary="Linux">
       <created>1490665826561</created>
       <option name="number" value="00180" />
@@ -2145,7 +2276,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491683365531</updated>
     </task>
-    <option name="localTasksCounter" value="228" />
+    <task id="LOCAL-00228" summary="Linux">
+      <created>1491684421668</created>
+      <option name="number" value="00228" />
+      <option name="presentableId" value="LOCAL-00228" />
+      <option name="project" value="LOCAL" />
+      <updated>1491684421668</updated>
+    </task>
+    <option name="localTasksCounter" value="229" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2797,14 +2935,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="69" column="36" lean-forward="false" selection-start-line="69" selection-start-column="36" selection-end-line="69" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/smoke-test/include/smoke-test.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -2865,6 +2995,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="244">
           <caret line="237" column="0" lean-forward="false" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="34" column="13" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
           <folding />
         </state>
       </provider>
