@@ -7,6 +7,8 @@ import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -344,6 +346,13 @@ public class TestCDepManifestYmlUtils {
     if (somethingUnexpected) {
       throw new RuntimeException("Saw unexpected results. See console.");
     }
+  }
+
+  @Test
+  public void readPartial() throws IOException {
+    // Make sure we can read an incomplete specification for 'fullfill' scenario
+    CDepManifestYml partial = CDepManifestYmlUtils.convertStringToManifest(
+        FileUtils.readAllText(new File("../third_party/stb/cdep/cdep-manifest-divide.yml")));
   }
 
   private static class CoverConstructor extends CDepManifestYmlUtils {

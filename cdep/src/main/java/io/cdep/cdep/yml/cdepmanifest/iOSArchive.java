@@ -35,4 +35,25 @@ public class iOSArchive {
     this.flavor = null;
     this.include = null;
   }
+
+  public iOSArchive(
+      String file,
+      String sha256,
+      Long size,
+      iOSPlatform platform,
+      iOSArchitecture architecture,
+      String sdk,
+      String include,
+      String lib,
+      String flavor) {
+    this.file = file;
+    this.sha256 = sha256;
+    this.size = size;
+    this.platform = platform;
+    this.architecture = architecture;
+    this.sdk = sdk;
+    this.include = include;
+    this.lib = lib;
+    this.flavor = flavor;
+  }
 }
