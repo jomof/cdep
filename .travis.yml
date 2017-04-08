@@ -15,6 +15,7 @@ matrix:
     - ./travis_cdep
     #- cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
     - ./cmakeify -wf smoke-test
+    - cat .cmakeify/build.sh
     - ./cmakeify -wf smoke-test/.cdep/examples/cmake
 
 deploy:
