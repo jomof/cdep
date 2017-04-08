@@ -17,6 +17,7 @@ package io.cdep;
 
 import com.google.common.io.Files;
 import io.cdep.annotations.NotNull;
+import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
@@ -73,6 +74,7 @@ public class TestCDep {
     assertThat(text).doesNotContain("Usage");
     assertThat(text).contains("Merged com.github.jomof:sqlite:3.16.2-rev48 and ");
     System.out.printf(text);
+    System.out.printf(FileUtils.readAllText(output));
   }
 
   @Test

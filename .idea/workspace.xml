@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="Linux">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smoke-test/cdep.yml" afterPath="$PROJECT_DIR$/smoke-test/cdep.yml" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -116,11 +118,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestCDep.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TestCDep.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="533">
-              <caret line="74" column="4" lean-forward="false" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
+            <state relative-caret-position="609">
+              <caret line="76" column="52" lean-forward="false" selection-start-line="76" selection-start-column="52" selection-end-line="76" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -138,11 +140,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="273">
-              <caret line="16" column="1" lean-forward="false" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+              <caret line="16" column="44" lean-forward="false" selection-start-line="16" selection-start-column="44" selection-end-line="16" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -151,8 +153,18 @@
       <file leaf-file-name="CDep.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="285" column="37" lean-forward="false" selection-start-line="285" selection-start-column="37" selection-end-line="285" selection-end-column="37" />
+            <state relative-caret-position="279">
+              <caret line="341" column="29" lean-forward="false" selection-start-line="341" selection-start-column="29" selection-end-line="341" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidArchive.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v1/AndroidArchive.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="41" column="19" lean-forward="false" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -168,43 +180,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BuildFindModuleFunctionTable.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="167" column="78" lean-forward="false" selection-start-line="167" selection-start-column="78" selection-end-line="167" selection-end-column="78" />
-              <folding>
-                <marker date="1491528557864" expanded="true" signature="21079:21209" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cmakeify.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/smoke-test/cmakeify.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestEnvironmentUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestEnvironmentUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-209">
-              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Archive.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Archive.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state relative-caret-position="-222">
+              <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreateStringVisitor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CreateStringVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="141" column="19" lean-forward="false" selection-start-line="141" selection-start-column="13" selection-end-line="141" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -224,8 +214,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>throw new RuntimeException(String.format</find>
-      <find>getMethod</find>
       <find>SuppressWarnings</find>
       <find>ConstantConditions</find>
       <find>org.jetbrains.annotations.</find>
@@ -253,6 +241,8 @@
       <find>was malformed</find>
       <find>&quot;include</find>
       <find>&quot;merge</find>
+      <find>&quot;include&quot;</find>
+      <find>includ</find>
       <find>merge</find>
     </findStrings>
     <replaceStrings>
@@ -1162,9 +1152,9 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestResolver.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java" />
-        <option value="$PROJECT_DIR$/smoke-test/cdep.yml" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
+        <option value="$PROJECT_DIR$/smoke-test/cdep.yml" />
       </list>
     </option>
   </component>
@@ -2191,13 +2181,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00162" summary="Linux">
-      <created>1490642592167</created>
-      <option name="number" value="00162" />
-      <option name="presentableId" value="LOCAL-00162" />
-      <option name="project" value="LOCAL" />
-      <updated>1490642592167</updated>
-    </task>
     <task id="LOCAL-00163" summary="Linux">
       <created>1490642919746</created>
       <option name="number" value="00163" />
@@ -2534,21 +2517,22 @@
       <option name="project" value="LOCAL" />
       <updated>1491570263485</updated>
     </task>
-    <option name="localTasksCounter" value="211" />
+    <task id="LOCAL-00211" summary="Linux">
+      <created>1491570269238</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1491570269238</updated>
+    </task>
+    <option name="localTasksCounter" value="212" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_cdep-cdep - 2017.04.06 at 18h 42m 56s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_cdep-cdep - 2017.04.06 at 18h 44m 06s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
     <history-entry file="All_in_cdep-cdep - 2017.04.07 at 05h 45m 44s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestCDepManifestYmlUtils_testTwoWayMergeSanity - 2017.04.06 at 18h 43m 21s.xml">
-      <configuration name="TestCDepManifestYmlUtils.testTwoWayMergeSanity" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestCDepManifestYmlUtils_testTwoWayMergeSanity - 2017.04.06 at 18h 43m 39s.xml">
       <configuration name="TestCDepManifestYmlUtils.testTwoWayMergeSanity" configurationId="JUnit" />
@@ -2566,6 +2550,12 @@
       <configuration name="TestCDep.mergeHeaders" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestCDep_mergeHeaders - 2017.04.07 at 05h 55m 15s.xml">
+      <configuration name="TestCDep.mergeHeaders" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestCDep_mergeHeaders - 2017.04.08 at 06h 46m 05s.xml">
+      <configuration name="TestCDep.mergeHeaders" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestCDep_mergeHeaders - 2017.04.08 at 06h 46m 54s.xml">
       <configuration name="TestCDep.mergeHeaders" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -2861,14 +2851,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v1/AndroidArchive.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/resolver/TestGithubReleasesCoordinateResolver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="627">
@@ -2934,14 +2916,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="764">
           <caret line="38" column="124" lean-forward="false" selection-start-line="38" selection-start-column="124" selection-end-line="38" selection-end-column="124" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CreateStringVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -3188,14 +3162,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Archive.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestEnvironmentUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-209">
@@ -3232,10 +3198,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java">
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Archive.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="281" column="14" lean-forward="false" selection-start-line="281" selection-start-column="14" selection-end-line="281" selection-end-column="14" />
+        <state relative-caret-position="-222">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CreateStringVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="141" column="19" lean-forward="false" selection-start-line="141" selection-start-column="13" selection-end-line="141" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="341" column="29" lean-forward="false" selection-start-line="341" selection-start-column="29" selection-end-line="341" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v1/AndroidArchive.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="41" column="19" lean-forward="false" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="76" column="52" lean-forward="false" selection-start-line="76" selection-start-column="52" selection-end-line="76" selection-end-column="52" />
           <folding />
         </state>
       </provider>
@@ -3248,26 +3246,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="281" column="14" lean-forward="false" selection-start-line="281" selection-start-column="14" selection-end-line="281" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
-          <caret line="16" column="1" lean-forward="false" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="285" column="37" lean-forward="false" selection-start-line="285" selection-start-column="37" selection-end-line="285" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="74" column="4" lean-forward="false" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
+          <caret line="16" column="44" lean-forward="false" selection-start-line="16" selection-start-column="44" selection-end-line="16" selection-end-column="44" />
           <folding />
         </state>
       </provider>
