@@ -67,6 +67,7 @@ public class TestCDep {
     left.delete();
     right.delete();
     merged.delete();
+    merged.getParentFile().mkdirs();
 
     Files.write("coordinate:\n" +
         "  groupId: com.github.jomof\n" +
