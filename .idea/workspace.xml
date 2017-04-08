@@ -190,8 +190,8 @@
       <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="20" column="10" lean-forward="false" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
+            <state relative-caret-position="462">
+              <caret line="19" column="8" lean-forward="false" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -1715,13 +1715,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00173" summary="Linux">
-      <created>1490662251706</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1490662251706</updated>
-    </task>
     <task id="LOCAL-00174" summary="Linux">
       <created>1490664331204</created>
       <option name="number" value="00174" />
@@ -2058,7 +2051,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491673331655</updated>
     </task>
-    <option name="localTasksCounter" value="222" />
+    <task id="LOCAL-00222" summary="Linux">
+      <created>1491677142566</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1491677142566</updated>
+    </task>
+    <option name="localTasksCounter" value="223" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2779,8 +2779,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="20" column="10" lean-forward="false" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
+        <state relative-caret-position="462">
+          <caret line="19" column="8" lean-forward="false" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
           <folding />
         </state>
       </provider>
