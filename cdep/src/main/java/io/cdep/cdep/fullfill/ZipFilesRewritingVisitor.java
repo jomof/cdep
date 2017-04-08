@@ -1,5 +1,6 @@
 package io.cdep.cdep.fullfill;
 
+import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
 
@@ -11,16 +12,15 @@ import java.nio.file.StandardCopyOption;
 import static io.cdep.cdep.utils.Invariant.require;
 
 /**
- * Zip up file entries and add sha256, size, and include
+ * Zip up file entries into layout folder. Doesn't record SHA or size since that is done
+ * in a subsequent pass.
  */
 public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
-  private final File outputFolder;
   private final File layout;
   private final File staging;
 
 
   ZipFilesRewritingVisitor(File outputFolder) {
-    this.outputFolder = outputFolder;
     this.layout = new File(outputFolder, "layout");
     if (!this.layout.isDirectory()) {
       this.layout.mkdirs();
@@ -30,6 +30,10 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     if (!this.staging.isDirectory()) {
       this.staging.mkdirs();
     }
+  }
+
+  File getLayoutFolder() {
+    return layout;
   }
 
   @Override
@@ -51,10 +55,17 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
       throw new RuntimeException(e);
     }
 
+    // Zip that file
+    try {
+      ArchiveUtils.pack(stagingZipFolder.getParentFile().toPath(), layoutZipFile.toPath());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
     return new Archive(
         layoutZipFile.getName(),
-        "shamalamadingdong",
-        102L,
+        null,
+        null,
         "include"
     );
   }
