@@ -13,4 +13,15 @@ public class SubstituteStringsRewritingVisitor extends CDepManifestYmlRewritingV
     return this;
   }
 
+  @Override
+  protected String visitString(String value) {
+    if (value == null) {
+      return null;
+    }
+    String result = value;
+    for (String key : variables.keySet()) {
+      result = result.replace(key, variables.get(key));
+    }
+    return result;
+  }
 }
