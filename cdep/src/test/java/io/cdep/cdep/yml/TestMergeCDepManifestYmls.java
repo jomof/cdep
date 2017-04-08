@@ -45,7 +45,7 @@ public class TestMergeCDepManifestYmls {
     Set<String> commonDifferences = new HashSet<>();
     commonDifferences.add("Manifests were different at artifactId.coordinate.[value]");
     commonDifferences.add("Manifests were different at file.headers.interfaces.[value]");
-    commonDifferences.add("Manifests were different at sha256.headers.interfaces.[value]");
+    commonDifferences.add("Manifests were different at include.headers.interfaces.[value]");
     commonDifferences.add("Manifests were different at size.headers.interfaces.[value]");
     commonDifferences.add("Manifests were different at sha256.archive.[value]");
     commonDifferences.add("Manifests were different at version.coordinate.[value]");

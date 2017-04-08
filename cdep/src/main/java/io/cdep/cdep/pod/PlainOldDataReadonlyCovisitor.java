@@ -93,7 +93,7 @@ public class PlainOldDataReadonlyCovisitor {
     push(name);
     try {
       Method method = getMethod(getClass(), methodName, String.class, type, type);
-      invoke(method, this, null, left, right);
+      invoke(method, this, name, left, right);
     } finally {
       pop();
     }

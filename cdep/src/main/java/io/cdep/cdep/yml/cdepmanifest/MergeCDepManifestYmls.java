@@ -33,6 +33,15 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   }
 
   @Override
+  public void covisitString(String name, String left, String right) {
+    if (name != null && name.equals("sha256")) {
+      // Ignore hashes when merging
+      return;
+    }
+    super.covisitString(name, left, right);
+  }
+
+  @Override
   public void covisitCDepManifestYml(String name, @Nullable CDepManifestYml left, @Nullable CDepManifestYml right) {
     if (left == null && right == null) {
       returnValue = null;
@@ -59,12 +68,13 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
     Linux linux = (Linux) returnValue;
 
     assert left.coordinate != null;
-    assert left.example != null;
     CDepManifestYmlVersion sourceVersion = left.sourceVersion;
     if (right.sourceVersion.ordinal() < sourceVersion.ordinal()) {
       sourceVersion = right.sourceVersion;
     }
-    returnValue = new CDepManifestYml(sourceVersion, left.coordinate, left.dependencies, left.interfaces, android, ios, linux, left.example);
+    // If any differences were allow, return the "right" version.
+    returnValue = new CDepManifestYml(sourceVersion, right.coordinate, right.dependencies, right.interfaces,
+        android, ios, linux, left.example);
   }
 
   @Override

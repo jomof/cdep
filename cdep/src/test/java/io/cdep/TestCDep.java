@@ -60,6 +60,47 @@ public class TestCDep {
   }
 
   @Test
+  public void mergeTwoWithDifferentHash() throws Exception {
+    File left = new File(".test-files/mergeTwo/merged-manifest-left.yml");
+    File right = new File(".test-files/mergeTwo/merged-manifest-right.yml");
+    File merged = new File(".test-files/mergeTwo/merged-manifest-merged.yml");
+    left.delete();
+    right.delete();
+    merged.delete();
+
+    Files.write("coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: sdl2\n" +
+        "  version: 2.0.5-rev26\n" +
+        "interfaces:\n" +
+        "  headers:\n" +
+        "    file: headers.zip\n" +
+        "    sha256: e7e61f29f9480209f1cad71c4d4f7cec75d63e7a457bbe9da0ac26a64ad5751b-left\n" +
+        "    size: 338812\n" +
+        "    include: include", left, StandardCharsets.UTF_8);
+
+    Files.write("coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: sdl2\n" +
+        "  version: 2.0.5-rev26\n" +
+        "interfaces:\n" +
+        "  headers:\n" +
+        "    file: headers.zip\n" +
+        "    sha256: e7e61f29f9480209f1cad71c4d4f7cec75d63e7a457bbe9da0ac26a64ad5751-right\n" +
+        "    size: 338812\n" +
+        "    include: include", right, StandardCharsets.UTF_8);
+    merged.getParentFile().mkdirs();
+    String text = main("merge",
+        left.toString(),
+        right.toString(),
+        merged.toString());
+    System.out.printf(text);
+    String mergedText = FileUtils.readAllText(merged);
+    System.out.printf(mergedText);
+    assertThat(mergedText).contains("-right");
+  }
+
+  @Test
   public void mergeHeaders() throws Exception {
     File output = new File(".test-files/mergeHeaders/merged-manifest.yml");
     File zip = new File(".test-files/mergeHeaders/headers.zip");
@@ -111,14 +152,14 @@ public class TestCDep {
   @Test
   public void lintSomeKnownLibraries() throws Exception {
     main(main("lint",
-//        "com.github.jomof:firebase/admob:2.1.3-rev11",
-//        "com.github.jomof:firebase/analytics:2.1.3-rev11",
-//        "com.github.jomof:firebase/auth:2.1.3-rev11",
-//        "com.github.jomof:firebase/database:2.1.3-rev11",
-//        "com.github.jomof:firebase/invites:2.1.3-rev11",
-//        "com.github.jomof:firebase/messaging:2.1.3-rev11",
-//        "com.github.jomof:firebase/remote_config:2.1.3-rev11",
-//        "com.github.jomof:firebase/storage:2.1.3-rev11",
+        //        "com.github.jomof:firebase/admob:2.1.3-rev11",
+        //        "com.github.jomof:firebase/analytics:2.1.3-rev11",
+        //        "com.github.jomof:firebase/auth:2.1.3-rev11",
+        //        "com.github.jomof:firebase/database:2.1.3-rev11",
+        //        "com.github.jomof:firebase/invites:2.1.3-rev11",
+        //        "com.github.jomof:firebase/messaging:2.1.3-rev11",
+        //        "com.github.jomof:firebase/remote_config:2.1.3-rev11",
+        //        "com.github.jomof:firebase/storage:2.1.3-rev11",
         "com.github.jomof:sqlite:3.16.2-rev25",
         "com.github.jomof:boost:1.0.63-rev18",
         "com.github.jomof:vectorial:0.0.0-rev11",
@@ -336,8 +377,8 @@ public class TestCDep {
     Files.write("builders: [cmake, cmakeExamples]\ndependencies:\n- compile: com.github" +
         ".jomof:low-level-statistics:0.0.16\n", yaml, StandardCharsets.UTF_8);
     File hashes = new File(".test-files/checkThatHashesWork/cdep.sha256");
-    Files.write("- coordinate: com.github.jomof:low-level-statistics:0.0.16\n  sha256: dogbone", hashes, StandardCharsets
-        .UTF_8);
+    Files.write("- coordinate: com.github.jomof:low-level-statistics:0.0.16\n  " +
+        "sha256: dogbone", hashes, StandardCharsets.UTF_8);
     try {
       main("-wf", yaml.getParent());
       fail("Expected failure");
