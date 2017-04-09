@@ -17,7 +17,7 @@ public class TestHashAndSizeRewritingVisitor {
         FileUtils.readAllText(new File("../third_party/stb/cdep/cdep-manifest-divide.yml")));
 
     CDepManifestYml afterSubstitution = new SubstituteStringsRewritingVisitor()
-        .replace("${wf}", new File("../third_party/stb").getAbsolutePath())
+        .replace("${source}", new File("../third_party/stb").getAbsolutePath())
         .visitCDepManifestYml(before);
 
     File output = new File(".test-files/testHashAndSize").getAbsoluteFile();
