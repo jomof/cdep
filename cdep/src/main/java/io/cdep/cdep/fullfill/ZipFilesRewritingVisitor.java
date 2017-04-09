@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static io.cdep.cdep.utils.Invariant.require;
 
@@ -18,7 +21,7 @@ import static io.cdep.cdep.utils.Invariant.require;
 public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   private final File layout;
   private final File staging;
-
+  private final List<File> zips = new ArrayList<>();
 
   ZipFilesRewritingVisitor(File outputFolder) {
     this.layout = new File(outputFolder, "layout");
@@ -62,11 +65,17 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
       throw new RuntimeException(e);
     }
 
+    zips.add(layoutZipFile);
+
     return new Archive(
         layoutZipFile.getName(),
         null,
         null,
         "include"
     );
+  }
+
+  public Collection<? extends File> getZips() {
+    return zips;
   }
 }

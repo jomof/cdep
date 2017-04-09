@@ -20,6 +20,7 @@ import io.cdep.annotations.Nullable;
 import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.CheckLocalFileSystemIntegrity;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.fullfill.Fullfill;
 import io.cdep.cdep.generator.CMakeExamplesGenerator;
 import io.cdep.cdep.generator.CMakeGenerator;
 import io.cdep.cdep.generator.GeneratorEnvironment;
@@ -143,6 +144,9 @@ public class CDep {
       return;
     }
     if (handleFetch(args)) {
+      return;
+    }
+    if (handleFullfill(args)) {
       return;
     }
     if (!handleReadCDepYml()) {
@@ -424,6 +428,36 @@ public class CDep {
     return false;
   }
 
+  private boolean handleFullfill(@NotNull List<String> args) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+    if (args.size() > 0 && "fullfill".equals(args.get(0))) {
+      if (args.size() < 4) {
+        out.printf("Usage: cdep fullfill source-folder version manifest1.yml manifest2.yml ...\n");
+        return true;
+      }
+
+      File manifests[] = new File[args.size() - 3];
+      for (int i = 0; i < manifests.length; ++i) {
+        manifests[i] = new File(args.get(i + 3));
+        require(manifests[i].isFile(), "Manifest %s did not exist", manifests[i]);
+      }
+
+      File sourceFolder = new File(args.get(1));
+      require(sourceFolder.isDirectory(), "Source folder %s did not exist", sourceFolder);
+
+      File outputFolder = new File(".cdep/fullfill/output");
+
+      String version = args.get(2);
+
+      List<File> layoutFiles = Fullfill.multiple(manifests, outputFolder, sourceFolder, version);
+
+      for (File file : layoutFiles) {
+        out.printf("%s\n", file);
+      }
+      return true;
+    }
+    return false;
+  }
+
   private void handleGenerateScript() throws IOException, URISyntaxException, NoSuchAlgorithmException {
     //noinspection ConstantConditions
     if (config.dependencies == null || config.dependencies.length == 0) {
@@ -486,7 +520,8 @@ public class CDep {
     out.printf(" cdep redownload: redownload dependencies for current cdep.yml\n");
     out.printf(" cdep create hashes: create or recreate cdep.sha256 file\n");
     out.printf(" cdep merge {coordinate} {coordinate2} ... outputmanifest.yml: " + "merge manifests into outputmanifest.yml\n");
-    out.printf(" cdep merge headers {coordinate} {headers.zip} outputmanifest.yml: " + "merge header and manifest into outputmanifest.yml\n");
+    out.printf(" cdep merge headers {coordinate} {headers.zip} outputmanifest.yml: " + "merge header and manifest into " +
+        "outputmanifest.yml\n");
     out.printf(" cdep fetch {coordinate} {coordinate2} ... : download multiple packages\n");
     out.printf(" cdep wrapper: copy cdep to the current folder\n");
     out.printf(" cdep --version: show version information\n");

@@ -102,6 +102,16 @@ public class TestCDep {
   }
 
   @Test
+  public void fullfill() throws Exception {
+    String text = main("fullfill",
+        "../third_party/stb",
+        "1.0.0",
+        "../third_party/stb/cdep/cdep-manifest-divide.yml",
+        "../third_party/stb/cdep/cdep-manifest-c_lexer.yml");
+    System.out.printf(text);
+  }
+
+  @Test
   public void mergeHeaders() throws Exception {
     File output = new File(".test-files/mergeHeaders/merged-manifest.yml");
     File zip = new File(".test-files/mergeHeaders/headers.zip");

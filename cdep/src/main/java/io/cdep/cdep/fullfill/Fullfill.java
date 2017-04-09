@@ -7,10 +7,13 @@ import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fullfill {
 
-  public static void multiple(File templates[], File outputFolder, File sourceFolder, String version) throws IOException {
+  public static List<File> multiple(File templates[], File outputFolder, File sourceFolder, String version) throws IOException {
+    List<File> result = new ArrayList<>();
     CDepManifestYml manifests[] = new CDepManifestYml[templates.length];
 
     // Read all manifest files
@@ -32,6 +35,7 @@ public class Fullfill {
     for (int i = 0; i < manifests.length; ++i) {
       manifests[i] = zipper.visitCDepManifestYml(manifests[i]);
     }
+    result.addAll(zipper.getZips());
 
     // Hash zips
     HashAndSizeRewritingVisitor hasher = new HashAndSizeRewritingVisitor(zipper.getLayoutFolder());
@@ -44,6 +48,8 @@ public class Fullfill {
       String body = CreateCDepManifestYmlString.create(manifests[i]);
       File output = new File(zipper.getLayoutFolder(), templates[i].getName());
       FileUtils.writeTextToFile(output, body);
+      result.add(output);
     }
+    return result;
   }
 }
