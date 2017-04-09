@@ -22,6 +22,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   private final File layout;
   private final File staging;
   private final List<File> zips = new ArrayList<>();
+  private int index = 0;
 
   ZipFilesRewritingVisitor(File outputFolder) {
     this.layout = new File(outputFolder, "layout");
@@ -41,23 +42,27 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
 
   @Override
   protected Archive visitArchive(Archive archive) {
-    File singleFile = new File(archive.file);
-    require(singleFile.exists(), "File %s didn't exist", singleFile.getAbsoluteFile());
-    File layoutZipFile = new File(layout, singleFile.getName() + ".zip");
+    PathMapping mappings[] = PathMapping.parse(archive.file);
+
+    File layoutZipFile = new File(layout, "archive" + index + ".zip");
     File stagingZipFolder = new File(staging, layoutZipFile.getName());
     stagingZipFolder = new File(stagingZipFolder, "include");
-    File stagingZipFile = new File(stagingZipFolder, singleFile.getName());
+    ++index;
 
-    // Make the staging zip folder
-    stagingZipFolder.mkdirs();
+    for (PathMapping mapping : mappings) {
+      require(mapping.from.exists(), "File %s didn't exist", mapping.from.getAbsoluteFile());
+      File stagingZipFile = new File(stagingZipFolder, mapping.to.getPath());
 
-    // Copy the single header file to the staging zip folder.
-    try {
-      Files.copy(singleFile.toPath(), stagingZipFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+      // Make the staging zip folder
+      stagingZipFile.getParentFile().mkdirs();
+
+      // Copy the single header file to the staging zip folder.
+      try {
+        Files.copy(mapping.from.toPath(), stagingZipFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
     }
-
     // Zip that file
     try {
       ArchiveUtils.pack(stagingZipFolder.getParentFile().toPath(), layoutZipFile.toPath());

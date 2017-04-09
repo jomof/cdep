@@ -27,7 +27,7 @@ public class TestZipFilesRewritingVisitor {
 
     assertThat(zipper.getLayoutFolder().isDirectory()).isTrue();
     assertThat(new File(zipper.getLayoutFolder(), "stb_divide.h.zip").isFile()).isTrue();
-    assertThat(afterZipping.interfaces.headers.file).isEqualTo("stb_divide.h.zip");
+    assertThat(afterZipping.interfaces.headers.file).isEqualTo("archive0.zip");
     assertThat(afterZipping.interfaces.headers.include).isEqualTo("include");
   }
 }

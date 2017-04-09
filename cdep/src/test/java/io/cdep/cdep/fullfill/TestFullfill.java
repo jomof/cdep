@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.common.truth.Truth.assertThat;
+
 public class TestFullfill {
 
   File[] templates(File... folders) {
@@ -26,9 +28,19 @@ public class TestFullfill {
   }
 
   @Test
-  public void testBasic() throws IOException {
-    File templates[] = templates(new File("../third_party/stb/cdep/"));
-    File output = new File(".test-files/TestFullfill").getAbsoluteFile();
+  public void testBasicSTB() throws IOException {
+    File templates[] = templates(
+        new File("../third_party/stb/cdep/"));
+    File output = new File(".test-files/testBasicSTB").getAbsoluteFile();
     Fullfill.multiple(templates, output, new File("../third_party/stb"), "1.2.3");
+  }
+
+  @Test
+  public void testBasicTinyDir() throws IOException {
+    File templates[] = templates(
+        new File("../third_party/tinydir/"));
+    File output = new File(".test-files/testBasicTinyDir").getAbsoluteFile();
+    List<File> result = Fullfill.multiple(templates, output, new File("../third_party/tinydir"), "1.2.3");
+    assertThat(result).hasSize(2);
   }
 }
