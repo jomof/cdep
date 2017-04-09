@@ -21,12 +21,12 @@ public class TestZipFilesRewritingVisitor {
         .visitCDepManifestYml(before);
 
     File output = new File(".test-files/testZipFullfill").getAbsoluteFile();
-
+    output.delete();
     ZipFilesRewritingVisitor zipper = new ZipFilesRewritingVisitor(output);
     CDepManifestYml afterZipping = zipper.visitCDepManifestYml(afterSubstitution);
 
     assertThat(zipper.getLayoutFolder().isDirectory()).isTrue();
-    assertThat(new File(zipper.getLayoutFolder(), "stb_divide.h.zip").isFile()).isTrue();
+    assertThat(new File(zipper.getLayoutFolder(), "archive0.zip").isFile()).isTrue();
     assertThat(afterZipping.interfaces.headers.file).isEqualTo("archive0.zip");
     assertThat(afterZipping.interfaces.headers.include).isEqualTo("include");
   }
