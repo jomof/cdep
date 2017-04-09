@@ -4,7 +4,6 @@
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="Fullfillment&#10;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/stb" afterPath="$PROJECT_DIR$/third_party/stb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/stb/cdep/cdep.yml" afterPath="$PROJECT_DIR$/third_party/stb/cdep/cdep.yml" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -108,56 +107,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="stb_connected_components.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/third_party/stb/stb_connected_components.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="14" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cdep-manifest-connected_components.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-connected_components.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="6" column="24" lean-forward="false" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cdep-manifest-dxt.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-dxt.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="6" column="24" lean-forward="false" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cdep-manifest-easy_font.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-easy_font.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="stb_truetype.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/third_party/stb/stb_truetype.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6567">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="stb_herringbone_wang_tile.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/third_party/stb/stb_herringbone_wang_tile.h">
           <provider selected="true" editor-type-id="text-editor">
@@ -178,33 +127,83 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="8" column="75" lean-forward="false" selection-start-line="8" selection-start-column="75" selection-end-line="8" selection-end-column="75" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <marker date="1491752739973" expanded="true" signature="34:178" ph="dependencies: &lt;2 items&gt;" />
+                <marker date="1491754994150" expanded="true" signature="34:178" ph="dependencies: &lt;2 items&gt;" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stb_easy_font.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/third_party/stb/stb_easy_font.h">
+      <file leaf-file-name="cdep-manifest-perlin.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-perlin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="100" selection-end-column="1" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stb_dxt.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/third_party/stb/stb_dxt.h">
+      <file leaf-file-name="cdep-manifest-leakcheck.yml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-leakcheck.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="2" column="8" lean-forward="true" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="38" />
+            <state relative-caret-position="264">
+              <caret line="8" column="18" lean-forward="false" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stb_sprintf.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/third_party/stb/stb_sprintf.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3465">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cdep-manifest-image_resize.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-image_resize.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cdep-manifest-image_write.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-image_write.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cdep-manifest-image.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-image.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="297">
+              <caret line="9" column="2" lean-forward="false" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stb_image.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/third_party/stb/stb_image.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -1115,12 +1114,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/Archive.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Interface.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYmlVersion.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/V2Reader.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/EnvironmentUtils.java" />
-        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/ResolvedManifests.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYmlReadonlyVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYmlEquality.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYml.java" />
@@ -1165,7 +1158,13 @@
         <option value="$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-dxt.yml" />
         <option value="$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-connected_components.yml" />
         <option value="$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-herringbone_wang_tile.yml" />
+        <option value="$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-image.yml" />
+        <option value="$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-image_resize.yml" />
         <option value="$PROJECT_DIR$/third_party/stb/cdep/cdep.yml" />
+        <option value="$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-perlin.yml" />
+        <option value="$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-leak_check.yml" />
+        <option value="$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-image_write.yml" />
+        <option value="$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-leakcheck.yml" />
       </list>
     </option>
   </component>
@@ -1754,13 +1753,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00200" summary="Linux">
-      <created>1491510528037</created>
-      <option name="number" value="00200" />
-      <option name="presentableId" value="LOCAL-00200" />
-      <option name="project" value="LOCAL" />
-      <updated>1491510528037</updated>
-    </task>
     <task id="LOCAL-00201" summary="Linux">
       <created>1491516140750</created>
       <option name="number" value="00201" />
@@ -2097,7 +2089,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491705603158</updated>
     </task>
-    <option name="localTasksCounter" value="249" />
+    <task id="LOCAL-00249" summary="Fullfillment&#10;">
+      <created>1491752757370</created>
+      <option name="number" value="00249" />
+      <option name="presentableId" value="LOCAL-00249" />
+      <option name="project" value="LOCAL" />
+      <updated>1491752757370</updated>
+    </task>
+    <option name="localTasksCounter" value="250" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2144,10 +2143,10 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32840833" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42377433" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32840833" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32840833" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20501286" sideWeight="0.4964467" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3384822" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3384822" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16966581" sideWeight="0.476731" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2383,65 +2382,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYmlReadonlyVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="8" column="52" lean-forward="false" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/RewritingVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
-          <caret line="121" column="0" lean-forward="false" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="353" column="0" lean-forward="false" selection-start-line="353" selection-start-column="0" selection-end-line="354" selection-end-column="93" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYml.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="69" column="30" lean-forward="true" selection-start-line="62" selection-start-column="5" selection-end-line="69" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Interfaces.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="12" column="35" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="35" />
-          <folding>
-            <element signature="e#171#172#0" expanded="false" />
-            <element signature="e#200#201#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Android.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="31" column="27" lean-forward="false" selection-start-line="31" selection-start-column="27" selection-end-line="31" selection-end-column="96" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/iOS.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="12" column="2" lean-forward="false" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Linux.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -2710,7 +2650,7 @@
         <state relative-caret-position="495">
           <caret line="15" column="17" lean-forward="false" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2859,13 +2799,69 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/third_party/stb/stb_image.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-image.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="9" column="2" lean-forward="false" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/third_party/stb/stb_sprintf.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3465">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="8" column="75" lean-forward="false" selection-start-line="8" selection-start-column="75" selection-end-line="8" selection-end-column="75" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1491752739973" expanded="true" signature="34:178" ph="dependencies: &lt;2 items&gt;" />
+            <marker date="1491754994150" expanded="true" signature="34:178" ph="dependencies: &lt;2 items&gt;" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-image_resize.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-image_write.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-perlin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-leakcheck.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="8" column="18" lean-forward="false" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
