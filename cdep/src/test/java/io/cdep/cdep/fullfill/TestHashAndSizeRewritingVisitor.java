@@ -10,7 +10,10 @@ import java.io.IOException;
 
 import static com.google.common.truth.Truth.assertThat;
 
-public class TestZipFilesRewritingVisitor {
+/**
+ * Created by jomof on 4/8/2017.
+ */
+public class TestHashAndSizeRewritingVisitor {
   @Test
   public void testBasic() throws IOException {
     CDepManifestYml before = CDepManifestYmlUtils.convertStringToManifest(
@@ -20,7 +23,7 @@ public class TestZipFilesRewritingVisitor {
         .replace("${wf}", new File("../third_party/stb").getAbsolutePath())
         .visitCDepManifestYml(before);
 
-    File output = new File(".test-files/testZipFullfill").getAbsoluteFile();
+    File output = new File(".test-files/testHashAndSize").getAbsoluteFile();
 
     ZipFilesRewritingVisitor zipper = new ZipFilesRewritingVisitor(output);
     CDepManifestYml afterZipping = zipper.visitCDepManifestYml(afterSubstitution);
@@ -29,5 +32,11 @@ public class TestZipFilesRewritingVisitor {
     assertThat(new File(zipper.getLayoutFolder(), "stb_divide.h.zip").isFile()).isTrue();
     assertThat(afterZipping.interfaces.headers.file).isEqualTo("stb_divide.h.zip");
     assertThat(afterZipping.interfaces.headers.include).isEqualTo("include");
+
+    CDepManifestYml afterHashing = new HashAndSizeRewritingVisitor(zipper.getLayoutFolder())
+        .visitCDepManifestYml(afterZipping);
+
+    assertThat(afterHashing.interfaces.headers.sha256).isNotNull();
+    assertThat(afterHashing.interfaces.headers.size).isNotNull();
   }
 }
