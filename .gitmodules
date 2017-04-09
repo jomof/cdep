@@ -1,3 +1,6 @@
 [submodule "third_party/stb"]
 	path = third_party/stb
 	url = https://github.com/jomof/stb
+[submodule "third_party/tinydir"]
+	path = third_party/tinydir
+	url = https://github.com/jomof/tinydir
