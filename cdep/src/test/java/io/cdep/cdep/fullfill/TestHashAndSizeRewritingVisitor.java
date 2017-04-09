@@ -10,9 +10,6 @@ import java.io.IOException;
 
 import static com.google.common.truth.Truth.assertThat;
 
-/**
- * Created by jomof on 4/8/2017.
- */
 public class TestHashAndSizeRewritingVisitor {
   @Test
   public void testBasic() throws IOException {
