@@ -50,6 +50,12 @@ public class Fullfill {
       FileUtils.writeTextToFile(output, body);
       result.add(output);
     }
+
+    // Lint the manifests
+    for (int i = 0; i < manifests.length; ++i) {
+      CDepManifestYmlUtils.checkManifestSanity(manifests[i]);
+    }
+
     return result;
   }
 }
