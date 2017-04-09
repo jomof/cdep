@@ -22,11 +22,11 @@ public class TestPathMapping {
   @Test
   public void simplePair() {
     PathMapping mappings[] = PathMapping.parse(
-        "C:\\Users\\jomof\\projects\\hold\\cdep\\cdep\\..\\third_party\\stb\\tinydir.h " +
+        "..\\third_party\\tinydir\\tinydir.h " +
         "-> tinydir\\tinydir.h");
     assertThat(mappings).hasLength(1);
     assertThat(mappings[0].from.getName()).isEqualTo("tinydir.h");
-    assertThat(mappings[0].from.getParentFile().getName()).isEqualTo("stb");
+    assertThat(mappings[0].from.getParentFile().getName()).isEqualTo("tinydir");
     assertThat(mappings[0].to.getName()).isEqualTo("tinydir.h");
     assertThat(mappings[0].to.getParentFile().getName()).isEqualTo("tinydir");
     assertThat(mappings[0].to.isAbsolute()).isEqualTo(false);
