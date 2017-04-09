@@ -13,7 +13,7 @@ matrix:
         - gcc-4.8
         - g++-4.8
     script:
-    - ./gradlew assemble check packageArtifacts
+    - ./gradlew assemble check packageArtifacts --info
     - ./travis_cdep
     #- cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
     - pushd smoke-test
