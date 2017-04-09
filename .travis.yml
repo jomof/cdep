@@ -18,8 +18,8 @@ matrix:
     #- cat $(pwd)/smoke-test/.cdep/modules/cdep-dependencies-config.cmake
     - pushd smoke-test
     - cat .cdep/examples/cmake/CMakeLists.txt
-    - ../cmakeify  --group-id com.github.jomof --artifact-id smoke-test --target-version ${TRAVIS_TAG}
-    - ../cmakeify -wf .cdep/examples/cmake --group-id com.github.jomof --artifact-id smoke-test-examples --target-version ${TRAVIS_TAG}
+    - ../cmakeify  --group-id com.github.jomof --artifact-id smoke-test --target-version ${TRAVIS_TAG:-0.0.0}
+    - ../cmakeify -wf .cdep/examples/cmake --group-id com.github.jomof --artifact-id smoke-test-examples --target-version ${TRAVIS_TAG:-0.0.0}
     - popd
 
 deploy:
