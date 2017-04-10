@@ -12,8 +12,8 @@ import java.util.Map;
 import static org.junit.Assert.fail;
 
 public class TestCMakeGenerator {
-  final private GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File(""   +
-      "./test-files/TestCMakeGenerator/working"), null, false, false);
+  final private GeneratorEnvironment environment = new GeneratorEnvironment(
+      new File("./test-files/TestCMakeGenerator/working"), null, false, false);
 
   @Test
   public void testBoost() throws Exception {

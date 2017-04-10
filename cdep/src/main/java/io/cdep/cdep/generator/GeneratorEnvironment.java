@@ -15,6 +15,7 @@
 */
 package io.cdep.cdep.generator;
 
+import static io.cdep.cdep.io.IO.info;
 import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
@@ -51,18 +52,12 @@ import java.util.Set;
 import org.yaml.snakeyaml.error.YAMLException;
 
 public class GeneratorEnvironment implements ManifestProvider, DownloadProvider {
-
-  final public PrintStream out;
-
   @NotNull
   final public File downloadFolder;
-
   @NotNull
   final public File unzippedArchivesFolder;
-
   @NotNull
   final public File modulesFolder;
-
   @NotNull
   final public File examplesFolder;
   final public boolean forceRedownload;
@@ -71,7 +66,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   private final boolean ignoreManifestHashes;
   private final Set<File> alreadyDownloaded = new HashSet<>();
 
-  public GeneratorEnvironment(PrintStream out,
+  public GeneratorEnvironment(
       File workingFolder,
       @Nullable File userFolder,
       boolean forceRedownload,
@@ -79,7 +74,6 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     if (userFolder == null) {
       userFolder = new File(System.getProperty("user.home"));
     }
-    this.out = out;
     this.workingFolder = workingFolder;
     this.downloadFolder = new File(userFolder, ".cdep/downloads").getAbsoluteFile();
     this.unzippedArchivesFolder = new File(userFolder, ".cdep/exploded").getAbsoluteFile();
@@ -147,15 +141,15 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
 
     // Indicate whether download or force redownload
     if (forceRedownload) {
-      out.printf("Redownloading %s\n", remoteArchive);
+      info("Redownloading %s\n", remoteArchive);
     } else {
-      out.printf("Downloading %s\n", remoteArchive);
+      info("Downloading %s\n", remoteArchive);
     }
 
     // Try to get the content at the remote. If it doesn't exist return null.
     InputStream input = tryGetUrlInputStream(remoteArchive);
     if (input == null) {
-      out.printf("  didn't exist, skipping.\n");
+      info("  didn't exist, skipping.\n");
       return null;
     }
 

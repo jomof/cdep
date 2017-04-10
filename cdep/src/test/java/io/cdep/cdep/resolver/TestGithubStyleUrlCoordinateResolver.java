@@ -25,7 +25,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 public class TestGithubStyleUrlCoordinateResolver {
 
-  final private GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File(""  +
+  final private GeneratorEnvironment environment = new GeneratorEnvironment(new File(""  +
       "./test-files/TestFindModuleFunctionTableBuilder/working"), null, false, false);
 
   @Test

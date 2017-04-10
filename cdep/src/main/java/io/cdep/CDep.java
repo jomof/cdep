@@ -25,6 +25,7 @@ import io.cdep.cdep.generator.CMakeExamplesGenerator;
 import io.cdep.cdep.generator.CMakeGenerator;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
+import io.cdep.cdep.io.IO;
 import io.cdep.cdep.resolver.ResolutionScope;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
@@ -47,6 +48,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static io.cdep.cdep.io.IO.info;
+import static io.cdep.cdep.io.IO.infoln;
 import static io.cdep.cdep.utils.Invariant.*;
 import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
 
@@ -56,8 +59,6 @@ public class CDep {
   @Nullable
   private final File downloadFolder = null;
   @NotNull
-  private PrintStream out = System.out;
-  @NotNull
   private File workingFolder = new File(".");
   @Nullable
   private CDepYml config = null;
@@ -65,7 +66,7 @@ public class CDep {
   private File configFile = null;
 
   CDep(@NotNull PrintStream out) {
-    this.out = out;
+    IO.setOut(out);
   }
 
   public static int main(@NotNull String[] args) {
@@ -210,7 +211,7 @@ public class CDep {
         //new StubCheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder).visit(table);
         return true;
       } else {
-        out.print("Usage: cdep lint (coordinate or path/to/cdep-manifest.yml)'\n");
+        info("Usage: cdep lint (coordinate or path/to/cdep-manifest.yml)'\n");
         return true;
       }
     }
@@ -223,10 +224,10 @@ public class CDep {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
         getFunctionTableExpression(environment);
         environment.writeCDepSHA256File();
-        out.printf("Created cdep.sha256\n");
+        info("Created cdep.sha256\n");
         return true;
       }
-      out.print("Usage: cdep create hashes'\n");
+      info("Usage: cdep create hashes'\n");
       return true;
     }
     return false;
@@ -235,7 +236,7 @@ public class CDep {
   private boolean handleMerge(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "merge".equals(args.get(0))) {
       if (args.size() < 4) {
-        out.printf("Usage: cdep merge coordinate1 coordinate2 ... outputmanifest.yml");
+        info("Usage: cdep merge coordinate1 coordinate2 ... outputmanifest.yml");
         return true;
       }
 
@@ -254,7 +255,7 @@ public class CDep {
         SoftNameDependency name = new SoftNameDependency(args.get(i));
         ResolvedManifest resolved = new Resolver(environment).resolveAny(name);
         if (resolved == null) {
-          out.printf("Manifest for '%s' didn't exist. Aborting merge.\n", args.get(i));
+          info("Manifest for '%s' didn't exist. Aborting merge.\n", args.get(i));
           return true;
         } else if (merged == null) {
           merged = resolved.cdepManifestYml;
@@ -270,7 +271,7 @@ public class CDep {
       // Write the merged manifest out
       String body = CreateCDepManifestYmlString.create(merged);
       FileUtils.writeTextToFile(output, body);
-      out.printf("Merged %s manifests into %s.\n", args.size() - 2, output);
+      info("Merged %s manifests into %s.\n", args.size() - 2, output);
       return true;
     }
     return false;
@@ -278,7 +279,7 @@ public class CDep {
 
   private boolean handleMergeHeaders(List<String> args) throws IOException, NoSuchAlgorithmException {
     if (args.size() != 6) {
-      out.printf("Usage: cdep merge headers coordinate headers.zip folder outputmanifest.yml");
+      info("Usage: cdep merge headers coordinate headers.zip folder outputmanifest.yml");
       return true;
     }
     String coordinate = args.get(2);
@@ -306,7 +307,7 @@ public class CDep {
         prior.example);
     String body = CreateCDepManifestYmlString.create(updated);
     FileUtils.writeTextToFile(output, body);
-    out.printf("Merged %s and %s into %s.\n", coordinate, zip, output);
+    info("Merged %s and %s into %s.\n", coordinate, zip, output);
     return true;
   }
 
@@ -314,51 +315,53 @@ public class CDep {
     if (args.size() > 0 && "show".equals(args.get(0))) {
       if (args.size() > 1 && "folders".equals(args.get(1))) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
-        out.printf("Downloads: %s\n", environment.downloadFolder.getAbsolutePath());
-        out.printf("Exploded: %s\n", environment.unzippedArchivesFolder.getAbsolutePath());
-        out.printf("Modules: %s\n", environment.modulesFolder.getAbsolutePath());
+        info("Downloads: %s\n", environment.downloadFolder.getAbsolutePath());
+        info("Exploded: %s\n", environment.unzippedArchivesFolder.getAbsolutePath());
+        info("Modules: %s\n", environment.modulesFolder.getAbsolutePath());
         return true;
       }
       if (args.size() > 1 && "local".equals(args.get(1))) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
         if (args.size() == 2) {
-          out.printf("Usage: cdep show local %s\n", EXAMPLE_COORDINATE);
+          info("Usage: cdep show local %s\n", EXAMPLE_COORDINATE);
           return true;
         }
         SoftNameDependency dependency = new SoftNameDependency(args.get(2));
         Resolver resolver = new Resolver(environment);
         ResolvedManifest resolved = resolver.resolveAny(dependency);
         if (resolved == null) {
-          out.printf("Could not resolve manifest coordinate %s\n", args.get(2));
+          info("Could not resolve manifest coordinate %s\n", args.get(2));
           return true;
         }
 
         File local = environment.getLocalDownloadFilename(resolved.cdepManifestYml.coordinate, resolved.remote);
-        out.println(local.getCanonicalFile());
+        infoln(local.getCanonicalFile());
         return true;
       }
       if (args.size() > 1 && "manifest".equals(args.get(1))) {
         handleReadCDepYml();
         assert config != null;
-        out.print(config.toString());
+        info(config.toString());
         return true;
       }
       if (args.size() > 1 && "include".equals(args.get(1))) {
         if (args.size() == 2) {
-          out.print("Usage: show include {coordinate}/n");
+          info("Usage: show include {coordinate}/n");
           return true;
         }
         // Redirect output so that only the include folder is printed (so that it can be redirected in shells)
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream alternOut = new PrintStream(baos);
+        PrintStream original = IO.setOut(alternOut);
         for (int i = 2; i < args.size(); ++i) {
-          GeneratorEnvironment environment = getGeneratorEnvironment(alternOut, false, true);
+          GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
           File include = EnvironmentUtils.getPackageLevelIncludeFolder(environment, args.get(i));
-          out.printf("%s\n", include);
+          IO.setOut(original);
+          info("%s\n", include);
         }
         return true;
       }
-      out.print("Usage: cdep show [folders|local|manifest|include]'\n");
+      info("Usage: cdep show [folders|local|manifest|include]'\n");
       return true;
     }
     return false;
@@ -374,7 +377,7 @@ public class CDep {
       if (applicationBase == null || !applicationBase.isDirectory()) {
         fail("Could not find folder for io.cdep.appname='%s'", appname);
       }
-      out.printf("Installing cdep wrapper from %s\n", applicationBase);
+      info("Installing cdep wrapper from %s\n", applicationBase);
       File cdepBatFrom = new File(applicationBase, "cdep.bat");
       File cdepBatTo = new File(workingFolder, "cdep.bat");
       File cdepFrom = new File(applicationBase, "cdep");
@@ -385,19 +388,19 @@ public class CDep {
       File bootstrapTo = new File(workingFolder, "bootstrap/wrapper/bootstrap.jar");
       //noinspection ResultOfMethodCallIgnored
       bootstrapTo.getParentFile().mkdirs();
-      out.printf("Installing %s\n", cdepBatTo);
+      info("Installing %s\n", cdepBatTo);
       FileUtils.copyFile(cdepBatFrom, cdepBatTo);
-      out.printf("Installing %s\n", cdepTo);
+      info("Installing %s\n", cdepTo);
       FileUtils.copyFile(cdepFrom, cdepTo);
       if (!cdepTo.setExecutable(true)) {
         throw new RuntimeException("User did not have permission to make cdep executable");
       }
-      out.printf("Installing %s\n", bootstrapTo);
+      info("Installing %s\n", bootstrapTo);
       FileUtils.copyFile(bootstrapFrom, bootstrapTo);
       if (cdepYmlTo.isFile()) {
-        out.printf("Not overwriting %s\n", cdepYmlTo);
+        info("Not overwriting %s\n", cdepYmlTo);
       } else {
-        out.printf("Installing %s\n", cdepYmlTo);
+        info("Installing %s\n", cdepYmlTo);
         FileUtils.copyFile(cdepYmlFrom, cdepYmlTo);
       }
       return true;
@@ -408,7 +411,7 @@ public class CDep {
   private boolean handleFetch(@NotNull List<String> args) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fetch".equals(args.get(0))) {
       if (args.size() < 2) {
-        out.printf("Usage: cdep fetch {coordinate1} {coordinate2} ...\n");
+        info("Usage: cdep fetch {coordinate1} {coordinate2} ...\n");
         return true;
       }
 
@@ -422,7 +425,7 @@ public class CDep {
         new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder).visit(table);
       }
 
-      out.printf("Fetch complete\n");
+      info("Fetch complete\n");
       return true;
     }
     return false;
@@ -431,7 +434,7 @@ public class CDep {
   private boolean handleFullfill(@NotNull List<String> args) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fullfill".equals(args.get(0))) {
       if (args.size() < 4) {
-        out.printf("Usage: cdep fullfill source-folder version manifest1.yml manifest2.yml ...\n");
+        info("Usage: cdep fullfill source-folder version manifest1.yml manifest2.yml ...\n");
         return true;
       }
 
@@ -451,7 +454,7 @@ public class CDep {
       List<File> layoutFiles = Fullfill.multiple(manifests, outputFolder, sourceFolder, version);
 
       for (File file : layoutFiles) {
-        out.printf("%s\n", file);
+        info("%s\n", file);
       }
       return true;
     }
@@ -461,7 +464,7 @@ public class CDep {
   private void handleGenerateScript() throws IOException, URISyntaxException, NoSuchAlgorithmException {
     //noinspection ConstantConditions
     if (config.dependencies == null || config.dependencies.length == 0) {
-      out.printf("Nothing to do. Add dependencies to %s\n", configFile);
+      info("Nothing to do. Add dependencies to %s\n", configFile);
       return;
     }
     GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
@@ -488,18 +491,13 @@ public class CDep {
 
   @NotNull
   private GeneratorEnvironment getGeneratorEnvironment(boolean forceRedownload, boolean ignoreManifestHashes) {
-    return getGeneratorEnvironment(out, forceRedownload, ignoreManifestHashes);
-  }
-
-  @NotNull
-  private GeneratorEnvironment getGeneratorEnvironment(PrintStream out, boolean forceRedownload, boolean ignoreManifestHashes) {
-    return new GeneratorEnvironment(out, workingFolder, downloadFolder, forceRedownload, ignoreManifestHashes);
+    return new GeneratorEnvironment(workingFolder, downloadFolder, forceRedownload, ignoreManifestHashes);
   }
 
   private boolean handleReadCDepYml() throws IOException {
     configFile = new File(workingFolder, "cdep.yml");
     if (!configFile.exists()) {
-      out.printf("Expected a configuration file at %s\n", configFile.getCanonicalFile());
+      info("Expected a configuration file at %s\n", configFile.getCanonicalFile());
       return false;
     }
 
@@ -512,19 +510,19 @@ public class CDep {
     if (args.size() != 1 || !args.get(0).equals("--help")) {
       return true;
     }
-    out.printf("cdep %s\n", BuildInfo.PROJECT_VERSION);
-    out.printf(" cdep: download dependencies and generate build modules for current cdep.yml\n");
-    out.printf(" cdep show folders: show local download and file folders\n");
-    out.printf(" cdep show manifest: show cdep interpretation of cdep.yml\n");
-    out.printf(" cdep show include {coordinate}: show local include path for the given coordinate\n");
-    out.printf(" cdep redownload: redownload dependencies for current cdep.yml\n");
-    out.printf(" cdep create hashes: create or recreate cdep.sha256 file\n");
-    out.printf(" cdep merge {coordinate} {coordinate2} ... outputmanifest.yml: " + "merge manifests into outputmanifest.yml\n");
-    out.printf(" cdep merge headers {coordinate} {headers.zip} outputmanifest.yml: " + "merge header and manifest into " +
+    info("cdep %s\n", BuildInfo.PROJECT_VERSION);
+    info(" cdep: download dependencies and generate build modules for current cdep.yml\n");
+    info(" cdep show folders: show local download and file folders\n");
+    info(" cdep show manifest: show cdep interpretation of cdep.yml\n");
+    info(" cdep show include {coordinate}: show local include path for the given coordinate\n");
+    info(" cdep redownload: redownload dependencies for current cdep.yml\n");
+    info(" cdep create hashes: create or recreate cdep.sha256 file\n");
+    info(" cdep merge {coordinate} {coordinate2} ... outputmanifest.yml: " + "merge manifests into outputmanifest.yml\n");
+    info(" cdep merge headers {coordinate} {headers.zip} outputmanifest.yml: " + "merge header and manifest into " +
         "outputmanifest.yml\n");
-    out.printf(" cdep fetch {coordinate} {coordinate2} ... : download multiple packages\n");
-    out.printf(" cdep wrapper: copy cdep to the current folder\n");
-    out.printf(" cdep --version: show version information\n");
+    info(" cdep fetch {coordinate} {coordinate2} ... : download multiple packages\n");
+    info(" cdep wrapper: copy cdep to the current folder\n");
+    info(" cdep --version: show version information\n");
     return false;
   }
 
@@ -544,7 +542,7 @@ public class CDep {
     if (args.size() != 1 || !args.get(0).equals("--version")) {
       return true;
     }
-    out.printf("cdep %s\n", BuildInfo.PROJECT_VERSION);
+    info("cdep %s\n", BuildInfo.PROJECT_VERSION);
     return false;
   }
 }

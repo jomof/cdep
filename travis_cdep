@@ -1,22 +1,28 @@
-TRAVIS_CDEP_JAR=cdep/build/libs/cdep.jar
-if [ -f "cdep/build/libs/cdep-dev.jar" ]; then
-    TRAVIS_CDEP_JAR=cdep/build/libs/cdep-dev.jar
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo DIR=$DIR
+
+TRAVIS_CDEP_JAR=$DIR/cdep/build/libs/cdep.jar
+if [ -f "$DIR/cdep/build/libs/cdep-dev.jar" ]; then
+    TRAVIS_CDEP_JAR=$DIR/cdep/build/libs/cdep-dev.jar
 fi
-if [ -f "cdep/build/libs/cdep-${TRAVIS_TAG}.jar" ]; then
-    TRAVIS_CDEP_JAR=cdep/build/libs/cdep-${TRAVIS_TAG}.jar
+if [ -f "$DIR/cdep/build/libs/cdep-${TRAVIS_TAG}.jar" ]; then
+    TRAVIS_CDEP_JAR=$DIR/cdep/build/libs/cdep-${TRAVIS_TAG}.jar
 fi
-BOOTSTRAP_MANIFEST=$(pwd)/cdep/build/libs/bootstrap.yml
+BOOTSTRAP_MANIFEST=$DIR/cdep/build/libs/bootstrap.yml
+echo BOOTSTRAP_MANIFEST=$BOOTSTRAP_MANIFEST
+
 echo entry: io.cdep.CDep > $BOOTSTRAP_MANIFEST
 echo dependencies: >> $BOOTSTRAP_MANIFEST
-printf "%s\n" "- $(pwd)/$TRAVIS_CDEP_JAR" >>$BOOTSTRAP_MANIFEST
+printf "%s\n" "- $TRAVIS_CDEP_JAR" >>$BOOTSTRAP_MANIFEST
 printf "%s\n" "- https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.17/snakeyaml-1.17.jar" >>$BOOTSTRAP_MANIFEST
 cat $BOOTSTRAP_MANIFEST
-pushd smoke-test
+
 echo ./cdep $BOOTSTRAP_MANIFEST
-../.package/redist/cdep $BOOTSTRAP_MANIFEST wrapper
+$DIR/.package/redist/cdep $BOOTSTRAP_MANIFEST wrapper
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
-./cdep $BOOTSTRAP_MANIFEST
+./cdep $BOOTSTRAP_MANIFEST "$@"
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
-popd
+
+
 
 

@@ -36,7 +36,7 @@ import static org.junit.Assert.fail;
 @SuppressWarnings("ConstantConditions")
 public class TestFindModuleFunctionTableBuilder {
 
-  private final GeneratorEnvironment environment = new GeneratorEnvironment(System.out,
+  private final GeneratorEnvironment environment = new GeneratorEnvironment(
       new File("" + "./test-files/TestFindModuleFunctionTableBuilder/working"),
       null,
       false,

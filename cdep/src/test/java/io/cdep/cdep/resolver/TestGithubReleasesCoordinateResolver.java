@@ -9,7 +9,7 @@ import java.io.File;
 import static com.google.common.truth.Truth.assertThat;
 
 public class TestGithubReleasesCoordinateResolver {
-  final private GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File(""  +
+  final private GeneratorEnvironment environment = new GeneratorEnvironment(new File(""  +
       "./test-files/TestGithubReleasesCoordinateResolver/working"), null, false, false);
 
   @Test

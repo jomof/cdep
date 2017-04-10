@@ -24,6 +24,7 @@ import io.cdep.cdep.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
 
+import static io.cdep.cdep.io.IO.info;
 import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
@@ -51,7 +52,7 @@ public class CMakeGenerator {
   public void generate() throws IOException {
     String text = create();
     File file = getCMakeConfigurationFile();
-    environment.out.printf("Generating %s\n", file);
+    info("Generating %s\n", file);
     FileUtils.writeTextToFile(file, text);
   }
 

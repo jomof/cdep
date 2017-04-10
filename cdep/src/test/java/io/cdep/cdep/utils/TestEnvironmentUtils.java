@@ -11,7 +11,7 @@ import java.util.Map;
 import static org.junit.Assert.fail;
 
 public class TestEnvironmentUtils {
-  private final GeneratorEnvironment environment = new GeneratorEnvironment(System.out, new File("" +
+  private final GeneratorEnvironment environment = new GeneratorEnvironment(new File("" +
       "./test-files/TestEnvironmentUtils/working"), null, false, false);
 
   @Test
