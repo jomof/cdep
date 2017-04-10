@@ -173,8 +173,8 @@ public class TestCDep {
         //        "com.github.jomof:firebase/storage:2.1.3-rev11",
         "com.github.jomof:sqlite:3.16.2-rev25",
         "com.github.jomof:boost:1.0.63-rev18",
-        "com.github.jomof:vectorial:0.0.0-rev11",
-        "com.github.jomof:mathfu:1.0.2-rev7",
+        //"com.github.jomof:vectorial:0.0.0-rev11",
+        //"com.github.jomof:mathfu:1.0.2-rev7",
         "com.github.jomof:sdl2:2.0.5-rev11"));
   }
 
@@ -211,17 +211,17 @@ public class TestCDep {
     System.out.printf(result);
   }
 
-  @Test
-  public void runMathfu() throws Exception {
-    CDepYml config = new CDepYml();
-    System.out.printf(new Yaml().dump(config));
-    File yaml = new File(".test-files/runMathfu/cdep.yml");
-    yaml.getParentFile().mkdirs();
-    Files.write("builders: [cmake, cmakeExamples]\ndependencies:\n- compile: com.github.jomof:mathfu:1.0.2-rev7\n",
-        yaml, StandardCharsets.UTF_8);
-    String result = main("-wf", yaml.getParent());
-    System.out.printf(result);
-  }
+//  @Test
+//  public void runMathfu() throws Exception {
+//    CDepYml config = new CDepYml();
+//    System.out.printf(new Yaml().dump(config));
+//    File yaml = new File(".test-files/runMathfu/cdep.yml");
+//    yaml.getParentFile().mkdirs();
+//    Files.write("builders: [cmake, cmakeExamples]\ndependencies:\n- compile: com.github.jomof:mathfu:1.0.2-rev7\n",
+//        yaml, StandardCharsets.UTF_8);
+//    String result = main("-wf", yaml.getParent());
+//    System.out.printf(result);
+//  }
 
   @Test
   public void testMissingGithubCoordinate() throws Exception {
@@ -240,25 +240,25 @@ public class TestCDep {
     }
   }
 
-  @Test
-  public void emptyCdepSha256() throws Exception {
-    CDepYml config = new CDepYml();
-    System.out.printf(new Yaml().dump(config));
-    File yaml = new File(".test-files/emptyCdepSha256/cdep.yml");
-    File yamlSha256 = new File(".test-files/emptyCdepSha256/cdep.sha256");
-    yaml.getParentFile().mkdirs();
-    Files.write("builders: [cmake, cmakeExamples]\ndependencies:\n- compile: com.github.jomof:mathfu:1.0.2-rev7\n",
-        yaml, StandardCharsets.UTF_8);
-    Files.write("# This file is automatically maintained by CDep.\n#\n#     MANUAL EDITS WILL BE LOST ON THE NEXT " +
-            "CDEP RUN\n#\n# This file contains a list of CDep coordinates along with the SHA256 hash of their\n"
-            + "# manifest file. This is to ensure that a manifest hasn't changed since the last\n# time CDep ran.\n"
-            + "# The recommended best practice is to check this file into source control so that\n# anyone else " +
-            "who builds this project is guaranteed to get the same dependencies.\n\n\n",
-        yamlSha256,
-        StandardCharsets.UTF_8);
-    String result = main("-wf", yaml.getParent());
-    System.out.printf(result);
-  }
+//  @Test
+//  public void emptyCdepSha256() throws Exception {
+//    CDepYml config = new CDepYml();
+//    System.out.printf(new Yaml().dump(config));
+//    File yaml = new File(".test-files/emptyCdepSha256/cdep.yml");
+//    File yamlSha256 = new File(".test-files/emptyCdepSha256/cdep.sha256");
+//    yaml.getParentFile().mkdirs();
+//    Files.write("builders: [cmake, cmakeExamples]\ndependencies:\n- compile: com.github.jomof:mathfu:1.0.2-rev7\n",
+//        yaml, StandardCharsets.UTF_8);
+//    Files.write("# This file is automatically maintained by CDep.\n#\n#     MANUAL EDITS WILL BE LOST ON THE NEXT " +
+//            "CDEP RUN\n#\n# This file contains a list of CDep coordinates along with the SHA256 hash of their\n"
+//            + "# manifest file. This is to ensure that a manifest hasn't changed since the last\n# time CDep ran.\n"
+//            + "# The recommended best practice is to check this file into source control so that\n# anyone else " +
+//            "who builds this project is guaranteed to get the same dependencies.\n\n\n",
+//        yamlSha256,
+//        StandardCharsets.UTF_8);
+//    String result = main("-wf", yaml.getParent());
+//    System.out.printf(result);
+//  }
 
   @Test
   public void unfindableLocalFile() throws Exception {
@@ -277,27 +277,27 @@ public class TestCDep {
     }
   }
 
-  @Test
-  public void someKnownUrls() throws Exception {
-    CDepYml config = new CDepYml();
-    System.out.printf(new Yaml().dump(config));
-    File yaml = new File(".test-files/someKnownUrls/cdep.yml");
-    yaml.getParentFile().mkdirs();
-    Files.write("builders: [cmake, cmakeExamples]\ndependencies:\n"
-        //                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
-        //                + "- compile: com.github.jomof:cmakeify:0.0.70\n"
-        + "- compile: com.github.jomof:mathfu:1.0.2-rev7\n- compile: https://github" +
-        ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml\n" +
-        "- compile: com.github.jomof:low-level-statistics:0.0.16\n", yaml, StandardCharsets.UTF_8);
-    String result1 = main("show", "manifest", "-wf", yaml.getParent());
-    yaml.delete();
-    Files.write(result1, yaml, StandardCharsets.UTF_8);
-    System.out.print(result1);
-    String result2 = main("show", "manifest", "-wf", yaml.getParent());
-    assertThat(result2).isEqualTo(result1);
-    assertThat(result2).contains("0.0.81");
-    String result3 = main("-wf", yaml.getParent());
-  }
+//  @Test
+//  public void someKnownUrls() throws Exception {
+//    CDepYml config = new CDepYml();
+//    System.out.printf(new Yaml().dump(config));
+//    File yaml = new File(".test-files/someKnownUrls/cdep.yml");
+//    yaml.getParentFile().mkdirs();
+//    Files.write("builders: [cmake, cmakeExamples]\ndependencies:\n"
+//        //                + "- compile: com.github.jomof:boost:1.0.63-rev12\n"
+//        //                + "- compile: com.github.jomof:cmakeify:0.0.70\n"
+//        + "- compile: com.github.jomof:mathfu:1.0.2-rev7\n- compile: https://github" +
+//        ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml\n" +
+//        "- compile: com.github.jomof:low-level-statistics:0.0.16\n", yaml, StandardCharsets.UTF_8);
+//    String result1 = main("show", "manifest", "-wf", yaml.getParent());
+//    yaml.delete();
+//    Files.write(result1, yaml, StandardCharsets.UTF_8);
+//    System.out.print(result1);
+//    String result2 = main("show", "manifest", "-wf", yaml.getParent());
+//    assertThat(result2).isEqualTo(result1);
+//    assertThat(result2).contains("0.0.81");
+//    String result3 = main("-wf", yaml.getParent());
+//  }
 
   @Test
   public void sqlite() throws Exception {
