@@ -15,17 +15,17 @@
 */
 package io.cdep.cdep.utils;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import io.cdep.annotations.NotNull;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
+import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class FileUtils {
 
@@ -71,5 +71,19 @@ public class FileUtils {
         writer.close();
       }
     }
+  }
+
+  public static Collection<File> listFileTree(File dir) {
+    Set<File> fileTree = new HashSet<>();
+    if (dir == null || dir.listFiles() == null) {
+      return fileTree;
+    }
+    for (File entry : dir.listFiles()) {
+      if (entry.isFile())
+        fileTree.add(entry);
+      else
+        fileTree.addAll(listFileTree(entry));
+    }
+    return fileTree;
   }
 }

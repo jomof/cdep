@@ -4,3 +4,6 @@
 [submodule "third_party/tinydir"]
 	path = third_party/tinydir
 	url = https://github.com/jomof/tinydir
+[submodule "third_party/vectorial"]
+	path = third_party/vectorial
+	url = https://github.com/jomof/vectorial

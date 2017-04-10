@@ -43,4 +43,13 @@ public class TestFullfill {
     List<File> result = Fullfill.multiple(templates, output, new File("../third_party/tinydir"), "1.2.3");
     assertThat(result).hasSize(2);
   }
+
+  @Test
+  public void testBasicVectorial() throws IOException {
+    File templates[] = templates(
+        new File("../third_party/vectorial/cdep"));
+    File output = new File(".test-files/testBasicVectorial").getAbsoluteFile();
+    List<File> result = Fullfill.multiple(templates, output, new File("../third_party/vectorial"), "1.2.3");
+    assertThat(result).hasSize(2);
+  }
 }

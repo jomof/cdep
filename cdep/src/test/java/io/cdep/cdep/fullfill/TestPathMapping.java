@@ -6,9 +6,6 @@ import java.io.File;
 
 import static com.google.common.truth.Truth.assertThat;
 
-/**
- * Created by jomof on 4/9/2017.
- */
 public class TestPathMapping {
 
   @Test
@@ -30,5 +27,11 @@ public class TestPathMapping {
     assertThat(mappings[0].to.getName()).isEqualTo("tinydir.h");
     assertThat(mappings[0].to.getParentFile().getName()).isEqualTo("tinydir");
     assertThat(mappings[0].to.isAbsolute()).isEqualTo(false);
+  }
+
+  @Test
+  public void expandSimple() {
+    PathMapping mappings[] = PathMapping.parse("../third_party/vectorial/include/...");
+    assertThat(mappings).hasLength(21);
   }
 }
