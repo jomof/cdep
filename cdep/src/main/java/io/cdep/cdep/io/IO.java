@@ -18,10 +18,6 @@ public class IO {
     return original;
   }
 
-  private void infoImpl(String format, Object ... args) {
-    out.printf(format, args);
-  }
-
   /**
    * Print an info message.
    */
@@ -34,5 +30,9 @@ public class IO {
    */
   public static void infoln(Object format, Object ... args) {
     io.infoImpl(format + "\n", args);
+  }
+
+  private void infoImpl(String format, Object ... args) {
+    out.printf(format, args);
   }
 }

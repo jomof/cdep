@@ -1,17 +1,16 @@
 package io.cdep.cdep.generator;
 
+import static io.cdep.cdep.io.IO.info;
+import static io.cdep.cdep.utils.Invariant.notNull;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.ExampleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.utils.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
-
-import static io.cdep.cdep.io.IO.info;
-import static io.cdep.cdep.utils.Invariant.notNull;
 
 public class CMakeExamplesGenerator {
 

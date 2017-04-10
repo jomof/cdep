@@ -15,18 +15,33 @@
 */
 package io.cdep.cdep.generator;
 
-import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
-import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.finder.*;
-import io.cdep.cdep.utils.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
-
 import static io.cdep.cdep.io.IO.info;
 import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
+
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
+import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.IntegerExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.ast.finder.MultiStatementExpression;
+import io.cdep.cdep.ast.finder.NopExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StatementExpression;
+import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.utils.FileUtils;
+import java.io.File;
+import java.io.IOException;
 
 public class CMakeGenerator {
 

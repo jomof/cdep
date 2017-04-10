@@ -15,13 +15,12 @@
 */
 package io.cdep.cdep.resolver;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import org.junit.Test;
-
 import java.io.File;
-
-import static com.google.common.truth.Truth.assertThat;
+import org.junit.Test;
 
 public class TestGithubStyleUrlCoordinateResolver {
 

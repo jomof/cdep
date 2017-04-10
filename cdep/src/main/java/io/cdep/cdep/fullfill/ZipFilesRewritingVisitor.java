@@ -1,9 +1,11 @@
 package io.cdep.cdep.fullfill;
 
+import static io.cdep.cdep.io.IO.infoln;
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,10 +13,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import static io.cdep.cdep.io.IO.info;
-import static io.cdep.cdep.io.IO.infoln;
-import static io.cdep.cdep.utils.Invariant.require;
 
 /**
  * Zip up file entries into layout folder. Doesn't record SHA or size since that is done
