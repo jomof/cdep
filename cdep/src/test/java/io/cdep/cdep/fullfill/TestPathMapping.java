@@ -22,8 +22,8 @@ public class TestPathMapping {
   @Test
   public void simplePair() {
     PathMapping mappings[] = PathMapping.parse(
-        "..\\third_party\\tinydir\\tinydir.h " +
-        "-> tinydir\\tinydir.h");
+        "../third_party/tinydir/tinydir.h " +
+        "-> tinydir/tinydir.h");
     assertThat(mappings).hasLength(1);
     assertThat(mappings[0].from.getName()).isEqualTo("tinydir.h");
     assertThat(mappings[0].from.getParentFile().getName()).isEqualTo("tinydir");
