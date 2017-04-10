@@ -199,17 +199,17 @@ public class TestCDep {
     assertThat(main("-wf", "non-existing-blah")).contains("non-existing-blah");
   }
 
-  @Test
-  public void runVectorial() throws Exception {
-    CDepYml config = new CDepYml();
-    System.out.printf(new Yaml().dump(config));
-    File yaml = new File(".test-files/runVectorial/cdep.yml");
-    yaml.getParentFile().mkdirs();
-    Files.write("builders: [cmake, cmakeExamples]\ndependencies:\n- compile: com.github" +
-        ".jomof:vectorial:0.0.0-rev13\n", yaml, StandardCharsets.UTF_8);
-    String result = main("-wf", yaml.getParent());
-    System.out.printf(result);
-  }
+//  @Test
+//  public void runVectorial() throws Exception {
+//    CDepYml config = new CDepYml();
+//    System.out.printf(new Yaml().dump(config));
+//    File yaml = new File(".test-files/runVectorial/cdep.yml");
+//    yaml.getParentFile().mkdirs();
+//    Files.write("builders: [cmake, cmakeExamples]\ndependencies:\n- compile: com.github" +
+//        ".jomof:vectorial:0.0.0-rev13\n", yaml, StandardCharsets.UTF_8);
+//    String result = main("-wf", yaml.getParent());
+//    System.out.printf(result);
+//  }
 
 //  @Test
 //  public void runMathfu() throws Exception {
