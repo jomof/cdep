@@ -1,0 +1,15 @@
+io.cdep
+io.cdep.annotations
+io.cdep.cdep
+io.cdep.cdep.ast.finder
+io.cdep.cdep.fullfill
+io.cdep.cdep.generator
+io.cdep.cdep.io
+io.cdep.cdep.pod
+io.cdep.cdep.resolver
+io.cdep.cdep.utils
+io.cdep.cdep.yml.cdep
+io.cdep.cdep.yml.cdepmanifest
+io.cdep.cdep.yml.cdepmanifest.v1
+io.cdep.cdep.yml.cdepmanifest.v2
+io.cdep.cdep.yml.cdepsha25

@@ -1,0 +1,4 @@
+entry: io.cdep.CDep
+dependencies:
+- /usr/local/google/home/jomof/projects/cdep/cdep/build/libs/cdep-dev.jar
+- https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.17/snakeyaml-1.17.jar

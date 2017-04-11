@@ -16,6 +16,7 @@
 package io.cdep.cdep.generator;
 
 import static io.cdep.cdep.io.IO.info;
+import static io.cdep.cdep.io.IO.infoln;
 import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
@@ -98,7 +99,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
         lastException = e;
       }
       --retriesRemaining;
-      info("Retrying %s", url);
+      infoln("Retrying %s", url);
     }
     require(lastException != null, "Should have an exception that indicates retry reason");
     throw lastException;
