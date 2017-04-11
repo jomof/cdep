@@ -75,7 +75,10 @@ public class CDepManifestYmlUtils {
 
     @Override
     public void visitString(@Nullable String name, @NotNull String node) {
-      if (name != null && name.equals("file")) {
+      if (name == null) {
+        return;
+      }
+      if (name.equals("file")) {
         if (sourceVersion.ordinal() > CDepManifestYmlVersion.v1.ordinal()) {
           require(!filesSeen.contains(node.toLowerCase()),
               "Package '%s' contains multiple references to the same" + " " + "archive file '%s'",
@@ -83,7 +86,22 @@ public class CDepManifestYmlUtils {
               node);
         }
         filesSeen.add(node.toLowerCase());
+      } else if (name.equals("sha256")) {
+        if (node == null || node.length() == 0) {
+          require(false,
+              "Package '%s' contains null or empty sha256",
+              coordinate);
+        }
       }
+    }
+
+    @Override
+    public void visitHardNameDependency(@Nullable String name, @NotNull HardNameDependency value) {
+      require(value.compile != null, "Package '%s' contains dependency with no 'compile' value", coordinate);
+      require(value.sha256 != null, "Package '%s' contains dependency '%s' with no sha256 value",
+          coordinate,
+          value.compile);
+      super.visitHardNameDependency(name, value);
     }
 
     @Override
@@ -117,7 +135,6 @@ public class CDepManifestYmlUtils {
       require(value.size != null && value.size != 0, "Android archive %s is missing size or it is zero", coordinate);
       super.visitAndroidArchive(name, value);
     }
-
 
     @Override
     public void visitiOSArchive(@Nullable String name, @NotNull iOSArchive value) {

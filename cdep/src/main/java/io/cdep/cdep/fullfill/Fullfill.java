@@ -1,5 +1,6 @@
 package io.cdep.cdep.fullfill;
 
+import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
@@ -12,7 +13,8 @@ import java.util.List;
 
 public class Fullfill {
 
-  public static List<File> multiple(File templates[], File outputFolder, File sourceFolder, String version) throws IOException {
+  public static List<File> multiple(GeneratorEnvironment environment,
+      File templates[], File outputFolder, File sourceFolder, String version) throws IOException {
     List<File> result = new ArrayList<>();
     CDepManifestYml manifests[] = new CDepManifestYml[templates.length];
 
@@ -38,9 +40,15 @@ public class Fullfill {
     result.addAll(zipper.getZips());
 
     // Hash zips
-    HashAndSizeRewritingVisitor hasher = new HashAndSizeRewritingVisitor(zipper.getLayoutFolder());
+    FileHashAndSizeRewritingVisitor hasher = new FileHashAndSizeRewritingVisitor(zipper.getLayoutFolder());
     for (int i = 0; i < manifests.length; ++i) {
       manifests[i] = hasher.visitCDepManifestYml(manifests[i]);
+    }
+
+    // Hash zips
+    DependencyHashRewritingVisitor dependencyHasher = new DependencyHashRewritingVisitor(environment);
+    for (int i = 0; i < manifests.length; ++i) {
+      manifests[i] = dependencyHasher.visitCDepManifestYml(manifests[i]);
     }
 
     // Write each of the final manifests to the layout folder

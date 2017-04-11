@@ -15,9 +15,6 @@
 */
 package io.cdep.cdep;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
@@ -27,16 +24,20 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
+import org.junit.Test;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 @SuppressWarnings("ConstantConditions")
 public class TestFindModuleFunctionTableBuilder {
 
   private final GeneratorEnvironment environment = new GeneratorEnvironment(
-      new File("" + "./test-files/TestFindModuleFunctionTableBuilder/working"),
+      new File("./test-files/TestFindModuleFunctionTableBuilder/working"),
       null,
       false,
       false);
