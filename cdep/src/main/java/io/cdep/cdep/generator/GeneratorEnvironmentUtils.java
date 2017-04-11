@@ -66,6 +66,7 @@ public class GeneratorEnvironmentUtils {
           // It may have been an interrupted download. Try again.
           if (!environment.forceRedownload) {
             forceUnzip = true;
+            local.delete();
             local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
             require(local != null, "Resolved archive '%s' didn't exist", archive.file);
           }
