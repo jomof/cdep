@@ -31,7 +31,7 @@ public class TestHashAndSizeRewritingVisitor {
     assertThat(afterZipping.interfaces.headers.file).isEqualTo("archive0.zip");
     assertThat(afterZipping.interfaces.headers.include).isEqualTo("include");
 
-    CDepManifestYml afterHashing = new HashAndSizeRewritingVisitor(zipper.getLayoutFolder())
+    CDepManifestYml afterHashing = new FileHashAndSizeRewritingVisitor(zipper.getLayoutFolder())
         .visitCDepManifestYml(afterZipping);
 
     assertThat(afterHashing.interfaces.headers.sha256).isNotNull();

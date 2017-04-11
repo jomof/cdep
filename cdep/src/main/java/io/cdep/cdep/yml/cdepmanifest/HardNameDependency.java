@@ -19,7 +19,7 @@ public class HardNameDependency {
     this.sha256 = null;
   }
 
-  public HardNameDependency(@NotNull String compile, @NotNull String sha256) {
+  public HardNameDependency(@NotNull String compile, @Nullable String sha256) {
     this.compile = compile;
     this.sha256 = sha256;
   }

@@ -12,8 +12,7 @@ dependencies:
 - compile: com.github.jomof:boost:1.0.63-rev18
 
 - compile: com.github.jomof:vectorial:0.0.0-rev16
-# Uncomment to work on version unification
-#- compile: com.github.jomof:mathfu:1.0.2-rev9
+- compile: com.github.jomof:mathfu:1.1.0-rev1
 - compile: com.github.jomof:sdl2:2.0.5-rev26
 
 # Yaml-cpp only currently supports a small number of ABI

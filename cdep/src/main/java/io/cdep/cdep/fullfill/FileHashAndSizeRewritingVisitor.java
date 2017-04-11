@@ -8,10 +8,10 @@ import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-public class HashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVisitor {
+public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   private final File layoutFolder;
 
-  HashAndSizeRewritingVisitor(File layoutFolder) {
+  FileHashAndSizeRewritingVisitor(File layoutFolder) {
     this.layoutFolder = layoutFolder;
   }
 
