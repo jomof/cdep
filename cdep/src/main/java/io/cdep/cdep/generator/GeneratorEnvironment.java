@@ -85,13 +85,23 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   private static InputStream tryGetUrlInputStream(@NotNull URL url) throws IOException {
     URLConnection con = url.openConnection();
     con.connect();
-    try {
-      return con.getInputStream();
-    } catch (FileNotFoundException e) {
-      // If the file wasn't found we may want to look for it in other places. Continue by
-      // returning null;
-      return null;
+    int retriesRemaining = 3;
+    IOException lastException = null;
+    while (retriesRemaining > 0) {
+      try {
+        return con.getInputStream();
+      } catch (FileNotFoundException e) {
+        // If the file wasn't found we may want to look for it in other places. Continue by
+        // returning null;
+        return null;
+      } catch (IOException e) {
+        lastException = e;
+      }
+      --retriesRemaining;
+      info("Retrying %s", url);
     }
+    require(lastException != null, "Should have an exception that indicates retry reason");
+    throw lastException;
   }
 
   private static void copyInputStreamToLocalFile(@NotNull InputStream input, @NotNull File localFile) throws IOException {
