@@ -65,7 +65,7 @@ public class CMakeExamplesGenerator {
     File file = getExampleRootFolder();
     file = new File(file, notNull(coordinate.groupId));
     file = new File(file, notNull(coordinate.artifactId));
-    file = new File(file, notNull(coordinate.version));
+    file = new File(file, notNull(coordinate.version.value));
     return file;
   }
 }

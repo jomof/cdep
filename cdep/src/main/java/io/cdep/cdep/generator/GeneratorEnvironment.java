@@ -126,7 +126,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     assert coordinate.artifactId != null;
     local = new File(local, coordinate.artifactId);
     assert coordinate.version != null;
-    local = new File(local, coordinate.version);
+    local = new File(local, coordinate.version.value);
     local = new File(local, getUrlBaseName(remoteArchive));
     return local;
   }
@@ -208,7 +208,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     assert coordinate.artifactId != null;
     local = new File(local, coordinate.artifactId);
     assert coordinate.version != null;
-    local = new File(local, coordinate.version);
+    local = new File(local, coordinate.version.value);
     local = new File(local, getUrlBaseName(remoteArchive));
     return local;
   }

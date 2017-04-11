@@ -1,10 +1,11 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.cdep.Version;
 
 class VersionUtils {
-  static String checkVersion(@NotNull String version) {
-    String[] pointSections = version.split("\\.");
+  static String checkVersion(@NotNull Version version) {
+    String[] pointSections = version.value.split("\\.");
     String EXPECTED = "major.minor.point[-tweak]";
     if (pointSections.length == 1) {
       return String.format("expected %s but there were no dots", EXPECTED);

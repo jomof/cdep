@@ -3,6 +3,7 @@ package io.cdep.cdep.yml.cdepmanifest;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.Version;
 import io.cdep.cdep.pod.PlainOldDataReadonlyVisitor;
 
 @SuppressWarnings("unused")
@@ -25,6 +26,10 @@ abstract public class CDepManifestYmlReadonlyVisitor extends PlainOldDataReadonl
   }
 
   public void visitCoordinate(@Nullable String name, @NotNull Coordinate value) {
+    visitPlainOldDataObject(name, value);
+  }
+
+  public void visitVersion(@Nullable String name, @NotNull Version value) {
     visitPlainOldDataObject(name, value);
   }
 

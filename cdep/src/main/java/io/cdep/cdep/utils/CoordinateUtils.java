@@ -19,6 +19,7 @@ import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 
+import io.cdep.cdep.Version;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +37,6 @@ public class CoordinateUtils {
     String groupId = match.group(1);
     String artifactId = match.group(2);
     String version = match.group(3);
-    return new Coordinate(groupId, artifactId, version);
+    return new Coordinate(groupId, artifactId, new Version(version));
   }
 }
