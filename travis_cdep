@@ -1,12 +1,12 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo DIR=$DIR
 
-TRAVIS_CDEP_JAR=$DIR/cdep/build/libs/cdep.jar
+TRAVIS_CDEP_JAR=$DIR/build/libs/cdep.jar
 if [ -f "$DIR/cdep/build/libs/cdep-dev.jar" ]; then
-    TRAVIS_CDEP_JAR=$DIR/cdep/build/libs/cdep-dev.jar
+    TRAVIS_CDEP_JAR=$DIR/build/libs/cdep-dev.jar
 fi
 if [ -f "$DIR/cdep/build/libs/cdep-${TRAVIS_TAG}.jar" ]; then
-    TRAVIS_CDEP_JAR=$DIR/cdep/build/libs/cdep-${TRAVIS_TAG}.jar
+    TRAVIS_CDEP_JAR=$DIR/build/libs/cdep-${TRAVIS_TAG}.jar
 fi
 BOOTSTRAP_MANIFEST=$DIR/cdep/build/libs/bootstrap.yml
 echo BOOTSTRAP_MANIFEST=$BOOTSTRAP_MANIFEST

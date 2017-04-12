@@ -52,7 +52,7 @@ public class TestBootstrap {
         main("https://raw.githubusercontent.com/jomof/cdep/master/boot.yml", "--version");
     }
 
-    @Test
+    //@Test
     public void testLocalFile() throws Exception {
         File localCDep = new File("./local-test-files/cdep-alpha-0.0.29.jar").getAbsoluteFile();
         File localSnake = new File("./local-test-files/snakeyaml-1.17.jar").getAbsoluteFile();
