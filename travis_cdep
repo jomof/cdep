@@ -2,10 +2,15 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo DIR=$DIR
 
 
-TRAVIS_CDEP_JAR=$DIR/cdep/cdep/libs/cdep-dev.jar
+TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-dev.jar
 if [ ! -f "$TRAVIS_CDEP_JAR" ]; then
-    TRAVIS_CDEP_JAR=$DIR/cdep/cdep/libs/cdep-${TRAVIS_TAG}.jar
+    TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-${TRAVIS_TAG}.jar
 fi
+if [ ! -f "$TRAVIS_CDEP_JAR" ]; then
+    echo Could not local cdep-xxx.jar, files available: $(ls $DIR/cdep/libs/*.jar)
+    exit -1
+fi
+
 
 BOOTSTRAP_MANIFEST=$DIR/cdep/build/libs/bootstrap.yml
 echo BOOTSTRAP_MANIFEST=$BOOTSTRAP_MANIFEST
