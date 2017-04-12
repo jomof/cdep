@@ -1,5 +1,5 @@
 apply plugin: 'java'
-group 'io.cdep'
+group 'io.cdep_beforejarjar'
 
 
 repositories {
@@ -17,39 +17,15 @@ buildscript {
         classpath 'net.vrallev.gradle:jarjar-gradle:1.1.0'
     }
 }
+String finalVersion = "dev"
+if (System.getenv()["TRAVIS_TAG"] != null && System.getenv()["TRAVIS_TAG"].length() > 0) {
+    finalVersion = System.getenv()["TRAVIS_TAG"]
+    version finalVersion + "-beforejarjar"
+} else {
+    version 'dev' + "-beforejarjar"
+}
 
 apply plugin: 'net.vrallev.jarjar'
-
-
-jarjar {
-	// required, path to the executable .jar file
-    jarJarFile '../tools/jarjar-1.3.jar'
-
-    // optional, the rules for the jarjar tool
-    rules = [
-            'rule org.yaml.** ext.org.yaml.@1'
-    ]
-
-    // optional, exclude files from the dependency .jar files
-    srcExcludes = ['META-INF/**']
-
-    // optional, default is build_repackaged.jar, the result .jar file name
-    //outputName 'build_repackaged.jar'
-
-    // optional, default is libs, the directory of the result .jar
-    //outputDir 'libs'
-
-    // optional, default is false
-    ignoreJarJarResult false
-}
-
-
-if (System.getenv()["TRAVIS_TAG"] != null && System.getenv()["TRAVIS_TAG"].length() > 0) {
-    version System.getenv()["TRAVIS_TAG"]
-} else {
-    version 'dev'
-}
-
 
 class GenerateBuildInfo extends DefaultTask {
     @OutputFile
@@ -65,12 +41,8 @@ class BuildInfo {
 }""")
     }
 }
-
 task generateBuildInfo(type: GenerateBuildInfo)
-//noinspection GroovyAssignabilityCheck
 compileJava.dependsOn generateBuildInfo
-//compileJava.source generateBuildInfo.buildInfoFile
-
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
@@ -86,6 +58,30 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     archives sourcesJar
     archives javadocJar
+}
+
+
+
+jarjar {
+	// required, path to the executable .jar file
+    jarJarFile '../tools/jarjar-1.3.jar'
+
+    // optional, the rules for the jarjar tool
+    rules = [
+            'rule org.yaml.** ext.org.yaml.@1'
+    ]
+
+    // optional, exclude files from the dependency .jar files
+    srcExcludes = ['META-INF/**']
+
+    // optional, default is build_repackaged.jar, the result .jar file name
+    outputName 'cdep-' + finalVersion + '.jar'
+
+    // optional, default is libs, the directory of the result .jar
+    outputDir 'libs'
+
+    // optional, default is false
+    ignoreJarJarResult false
 }
 
 dependencies {
