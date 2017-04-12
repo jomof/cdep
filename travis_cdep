@@ -1,11 +1,13 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo DIR=$DIR
-ls -LRlh $DIR
+LIBS=$DIR/cdep/libs
 
-TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-dev.jar
+echo DIR=$DIR
+ls -LRlh $LIBS
+
+TRAVIS_CDEP_JAR=$LIBS/cdep-dev.jar
 echo done
 if [ ! -f "$TRAVIS_CDEP_JAR" ]; then
-    TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-${TRAVIS_TAG}.jar
+    TRAVIS_CDEP_JAR=$LIBS/cdep-${TRAVIS_TAG}.jar
 fi
 if [ ! -f "$TRAVIS_CDEP_JAR" ]; then
     echo Could not local cdep-xxx.jar, files available: $(ls $DIR/cdep/libs/*.jar)
