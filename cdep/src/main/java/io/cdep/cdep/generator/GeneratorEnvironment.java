@@ -16,6 +16,7 @@
 package io.cdep.cdep.generator;
 
 import static io.cdep.cdep.io.IO.info;
+import static io.cdep.cdep.io.IO.infoln;
 import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
@@ -85,13 +86,23 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   private static InputStream tryGetUrlInputStream(@NotNull URL url) throws IOException {
     URLConnection con = url.openConnection();
     con.connect();
-    try {
-      return con.getInputStream();
-    } catch (FileNotFoundException e) {
-      // If the file wasn't found we may want to look for it in other places. Continue by
-      // returning null;
-      return null;
+    int retriesRemaining = 3;
+    IOException lastException = null;
+    while (retriesRemaining > 0) {
+      try {
+        return con.getInputStream();
+      } catch (FileNotFoundException e) {
+        // If the file wasn't found we may want to look for it in other places. Continue by
+        // returning null;
+        return null;
+      } catch (IOException e) {
+        lastException = e;
+      }
+      --retriesRemaining;
+      infoln("Retrying %s", url);
     }
+    require(lastException != null, "Should have an exception that indicates retry reason");
+    throw lastException;
   }
 
   private static void copyInputStreamToLocalFile(@NotNull InputStream input, @NotNull File localFile) throws IOException {
@@ -115,7 +126,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     assert coordinate.artifactId != null;
     local = new File(local, coordinate.artifactId);
     assert coordinate.version != null;
-    local = new File(local, coordinate.version);
+    local = new File(local, coordinate.version.value);
     local = new File(local, getUrlBaseName(remoteArchive));
     return local;
   }
@@ -197,7 +208,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     assert coordinate.artifactId != null;
     local = new File(local, coordinate.artifactId);
     assert coordinate.version != null;
-    local = new File(local, coordinate.version);
+    local = new File(local, coordinate.version.value);
     local = new File(local, getUrlBaseName(remoteArchive));
     return local;
   }

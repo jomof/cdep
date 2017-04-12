@@ -2,6 +2,7 @@ package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.Version;
 
 public class CDepManifestYmlRewritingVisitor {
 
@@ -228,8 +229,8 @@ public class CDepManifestYmlRewritingVisitor {
     );
   }
 
-  protected String visitVersion(String version) {
-    return visitString(version);
+  protected Version visitVersion(Version version) {
+    return new Version(visitString(version.value));
   }
 
   protected String visitArtifactId(String artifactId) {

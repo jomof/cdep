@@ -1,6 +1,7 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.Version;
 import io.cdep.cdep.pod.PlainOldDataEqualityCovisitor;
 
 @SuppressWarnings("unused")
@@ -24,6 +25,10 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
   }
 
   public void covisitCoordinate(String name, Coordinate left, Coordinate right) {
+    covisitFields(left, right);
+  }
+
+  public void covisitVersion(String name, Version left, Version right) {
     covisitFields(left, right);
   }
 

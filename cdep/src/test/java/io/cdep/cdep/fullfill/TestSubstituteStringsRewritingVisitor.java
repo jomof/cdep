@@ -19,7 +19,7 @@ public class TestSubstituteStringsRewritingVisitor {
     CDepManifestYml after = new SubstituteStringsRewritingVisitor()
         .replace("${version}", "0.0.0")
         .visitCDepManifestYml(before);
-    assertThat(after.coordinate.version).isEqualTo("0.0.0");
+    assertThat(after.coordinate.version.value).isEqualTo("0.0.0");
   }
 
   @Test

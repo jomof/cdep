@@ -28,7 +28,7 @@ public class Coordinate {
   @Nullable
   final public String artifactId; // like cmakeify
   @Nullable
-  final public String version; // like alpha-0.0.27
+  final public Version version; // like alpha-0.0.27
 
   private Coordinate() {
     groupId = null;
@@ -36,7 +36,7 @@ public class Coordinate {
     version = null;
   }
 
-  public Coordinate(@NotNull String groupId, @NotNull String artifactId, @NotNull String version) {
+  public Coordinate(@NotNull String groupId, @NotNull String artifactId, @NotNull Version version) {
     this.groupId = groupId;
     this.artifactId = artifactId;
     this.version = version;

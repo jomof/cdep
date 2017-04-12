@@ -94,7 +94,7 @@ public class BuildFindModuleFunctionTable {
     assert coordinate.artifactId != null;
     AssignmentExpression coordinateArtifactId = assign("coordinate_artifact_id", string(coordinate.artifactId));
     assert coordinate.version != null;
-    AssignmentExpression coordinateVersion = assign("coordinate_version", string(coordinate.version));
+    AssignmentExpression coordinateVersion = assign("coordinate_version", string(coordinate.version.value));
     AssignmentExpression explodedArchiveTail = assign("exploded_archive_tail",
         joinFileSegments(coordinateGroupId, coordinateArtifactId, coordinateVersion));
 

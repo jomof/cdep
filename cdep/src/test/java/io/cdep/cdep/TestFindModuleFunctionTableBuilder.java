@@ -56,7 +56,7 @@ public class TestFindModuleFunctionTableBuilder {
     assert resolved != null;
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
-    assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.81");
+    assertThat(resolved.cdepManifestYml.coordinate.version.value).isEqualTo("0.0.81");
     assert resolved.cdepManifestYml.android != null;
     assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(8);
 
@@ -260,7 +260,7 @@ public class TestFindModuleFunctionTableBuilder {
         ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
-    assertThat(resolved.cdepManifestYml.coordinate.version).isEqualTo("0.0.81");
+    assertThat(resolved.cdepManifestYml.coordinate.version.value).isEqualTo("0.0.81");
     assertThat(resolved.cdepManifestYml.android.archives.length).isEqualTo(8);
 
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
