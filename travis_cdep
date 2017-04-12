@@ -1,20 +1,19 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo DIR=$DIR
 
-TRAVIS_CDEP_JAR=$DIR/build/libs/cdep.jar
-if [ -f "$DIR/cdep/build/libs/cdep-dev.jar" ]; then
-    TRAVIS_CDEP_JAR=$DIR/build/libs/cdep-dev.jar
+
+TRAVIS_CDEP_JAR=$DIR/cdep/cdep/libs/cdep-dev.jar
+if [ ! -f "$TRAVIS_CDEP_JAR" ]; then
+    TRAVIS_CDEP_JAR=$DIR/cdep/cdep/libs/cdep-${TRAVIS_TAG}.jar
 fi
-if [ -f "$DIR/cdep/build/libs/cdep-${TRAVIS_TAG}.jar" ]; then
-    TRAVIS_CDEP_JAR=$DIR/build/libs/cdep-${TRAVIS_TAG}.jar
-fi
+
 BOOTSTRAP_MANIFEST=$DIR/cdep/build/libs/bootstrap.yml
 echo BOOTSTRAP_MANIFEST=$BOOTSTRAP_MANIFEST
 
 echo entry: io.cdep.CDep > $BOOTSTRAP_MANIFEST
 echo dependencies: >> $BOOTSTRAP_MANIFEST
 printf "%s\n" "- $TRAVIS_CDEP_JAR" >>$BOOTSTRAP_MANIFEST
-printf "%s\n" "- https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.17/snakeyaml-1.17.jar" >>$BOOTSTRAP_MANIFEST
+#printf "%s\n" "- https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.17/snakeyaml-1.17.jar" >>$BOOTSTRAP_MANIFEST
 cat $BOOTSTRAP_MANIFEST
 
 echo ./cdep $BOOTSTRAP_MANIFEST
