@@ -3,6 +3,7 @@ echo DIR=$DIR
 
 
 TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-dev.jar
+ll $DIR/cdep/libs
 if [ ! -f "$TRAVIS_CDEP_JAR" ]; then
     TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-${TRAVIS_TAG}.jar
 fi
