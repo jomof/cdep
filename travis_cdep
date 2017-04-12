@@ -3,7 +3,9 @@ echo DIR=$DIR
 
 
 TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-dev.jar
-du -a -h --max-depth=1 $DIR | grep "\.jar" | sort -hr
+echo du -a -h --max-depth=1 . | grep "jar" | sort -hr
+du -a -h --max-depth=1 . | grep "jar" | sort -hr
+echo done
 if [ ! -f "$TRAVIS_CDEP_JAR" ]; then
     TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-${TRAVIS_TAG}.jar
 fi
