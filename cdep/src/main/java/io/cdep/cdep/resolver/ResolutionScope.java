@@ -1,5 +1,9 @@
 package io.cdep.cdep.resolver;
 
+import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.DIDNT_EXIST;
+import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.UNPARSEABLE;
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.Version;
@@ -7,12 +11,13 @@ import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.utils.VersionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
-
-import java.util.*;
-
-import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.DIDNT_EXIST;
-import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.UNPARSEABLE;
-import static io.cdep.cdep.utils.Invariant.require;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Records the current state of resolving top-level and transitive dependencies.
@@ -25,6 +30,12 @@ public class ResolutionScope {
   // Map of dependency edges. Key is dependee and value is dependants.
   @NotNull
   final public Map<Coordinate, List<Coordinate>> backwardEdges = new HashMap<>();
+  // Map of dependency edges. Key is dependant and value is dependees.
+  @NotNull
+  final public Map<Version, List<Version>> unificationWinnersToLosers = new HashMap<>();
+  // Map of dependency edges. Key is dependee and value is dependants.
+  @NotNull
+  final public Map<Version, List<Version>> unificationLosersToWinners = new HashMap<>();
   // Dependencies that are not yet resolved but where resolution is possible
   @NotNull
   final private Map<String, SoftNameDependency> unresolved = new HashMap<>();
@@ -35,12 +46,6 @@ public class ResolutionScope {
   final private Map<String, Unresolvable> unresolveable = new HashMap<>();
   @NotNull
   final private Map<String, ResolvedManifest> versionlessKeyedManifests = new HashMap<>();
-  // Map of dependency edges. Key is dependant and value is dependees.
-  @NotNull
-  final public Map<Version, List<Version>> unificationWinnersToLosers = new HashMap<>();
-  // Map of dependency edges. Key is dependee and value is dependants.
-  @NotNull
-  final public Map<Version, List<Version>> unificationLosersToWinners = new HashMap<>();
 
   /**
    * Construct a fresh resolution scope.

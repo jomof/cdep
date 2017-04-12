@@ -1,23 +1,21 @@
 package io.cdep.cdep.utils;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import io.cdep.cdep.Version;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import org.junit.Test;
 
-import static com.google.common.truth.Truth.assertThat;
-
 public class TestVersionUtils {
+  private static Version version(String value) {
+    return new Version(value);
+  }
+
   @Test
   public void coverConstructor() {
     // Call constructor of tested class to cover that code.
     new CoverConstructor();
-  }
-
-  private static Version version(String value) {
-    return new Version(value);
   }
 
   @Test
