@@ -4,6 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import io.cdep.cdep.Version;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.Test;
 
@@ -175,7 +176,7 @@ public class TestVersionUtils {
       list.add(new Version(versions[i]));
     }
 
-    list.sort(VersionUtils.ASCENDING_COMPARATOR);
+    Collections.sort(list, VersionUtils.ASCENDING_COMPARATOR);
     return list;
   }
 
@@ -185,7 +186,7 @@ public class TestVersionUtils {
       list.add(new Version(versions[i]));
     }
 
-    list.sort(VersionUtils.DESCENDING_COMPARATOR);
+    Collections.sort(list, VersionUtils.DESCENDING_COMPARATOR);
     return list;
   }
 

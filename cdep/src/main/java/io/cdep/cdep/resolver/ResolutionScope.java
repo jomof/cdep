@@ -13,6 +13,7 @@ import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -177,7 +178,7 @@ public class ResolutionScope {
       List<Version> versions = new ArrayList<>();
       versions.addAll(manifests.keySet());
       assert versions.size() == 2;
-      versions.sort(VersionUtils.DESCENDING_COMPARATOR);
+      Collections.sort(versions, VersionUtils.DESCENDING_COMPARATOR);
       Version unificationWinner = versions.get(0);
       Version unificationLoser= versions.get(1);
       versionlessKeyedManifests.put(versionless.toString(), manifests.get(unificationWinner));
