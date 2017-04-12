@@ -1,12 +1,12 @@
 package io.cdep.cdep.yml.cdepmanifest.v2;
 
+import ext.org.yaml.snakeyaml.Yaml;
+import ext.org.yaml.snakeyaml.constructor.Constructor;
+import ext.org.yaml.snakeyaml.error.YAMLException;
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
 import io.cdep.cdep.yml.cdepmanifest.Interfaces;
 import io.cdep.cdep.yml.cdepmanifest.v1.V1Reader;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;

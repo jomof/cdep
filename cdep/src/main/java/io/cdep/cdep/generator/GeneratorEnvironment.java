@@ -15,13 +15,7 @@
 */
 package io.cdep.cdep.generator;
 
-import static io.cdep.cdep.io.IO.info;
-import static io.cdep.cdep.io.IO.infoln;
-import static io.cdep.cdep.utils.Invariant.fail;
-import static io.cdep.cdep.utils.Invariant.notNull;
-import static io.cdep.cdep.utils.Invariant.require;
-import static java.nio.charset.StandardCharsets.UTF_8;
-
+import ext.org.yaml.snakeyaml.error.YAMLException;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
@@ -34,14 +28,8 @@ import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.NoSuchAlgorithmException;
@@ -49,7 +37,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import org.yaml.snakeyaml.error.YAMLException;
+
+import static io.cdep.cdep.io.IO.info;
+import static io.cdep.cdep.io.IO.infoln;
+import static io.cdep.cdep.utils.Invariant.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class GeneratorEnvironment implements ManifestProvider, DownloadProvider {
   @NotNull

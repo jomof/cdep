@@ -16,11 +16,11 @@
 package io.cdep;
 
 import com.google.common.io.Files;
+import ext.org.yaml.snakeyaml.Yaml;
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import org.junit.Test;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

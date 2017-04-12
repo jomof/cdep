@@ -1,12 +1,11 @@
 package io.cdep.cdep.yml;
 
-
+import ext.org.yaml.snakeyaml.Yaml;
+import ext.org.yaml.snakeyaml.constructor.Constructor;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.yml.cdepmanifest.Android;
 import org.junit.Test;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;

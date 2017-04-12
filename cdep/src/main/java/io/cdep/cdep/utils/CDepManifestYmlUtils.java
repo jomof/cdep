@@ -15,14 +15,14 @@
 */
 package io.cdep.cdep.utils;
 
+import ext.org.yaml.snakeyaml.Yaml;
+import ext.org.yaml.snakeyaml.constructor.Constructor;
+import ext.org.yaml.snakeyaml.error.YAMLException;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.*;
 import io.cdep.cdep.yml.cdepmanifest.v2.V2Reader;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;

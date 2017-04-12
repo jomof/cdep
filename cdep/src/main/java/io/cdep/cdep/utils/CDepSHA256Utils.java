@@ -1,10 +1,10 @@
 package io.cdep.cdep.utils;
 
+import ext.org.yaml.snakeyaml.Yaml;
+import ext.org.yaml.snakeyaml.constructor.Constructor;
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
