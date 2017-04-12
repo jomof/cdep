@@ -1,9 +1,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo DIR=$DIR
-
+ls -LRlh $DIR
 
 TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-dev.jar
-ls -LRlh
 echo done
 if [ ! -f "$TRAVIS_CDEP_JAR" ]; then
     TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-${TRAVIS_TAG}.jar
