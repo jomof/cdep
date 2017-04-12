@@ -36,7 +36,7 @@ public class Coordinate {
     version = null;
   }
 
-  public Coordinate(@NotNull String groupId, @NotNull String artifactId, @NotNull Version version) {
+  public Coordinate(@NotNull String groupId, @NotNull String artifactId, @Nullable Version version) {
     this.groupId = groupId;
     this.artifactId = artifactId;
     this.version = version;
@@ -55,6 +55,9 @@ public class Coordinate {
   @NotNull
   @Override
   public String toString() {
-    return groupId + ":" + artifactId + ":" + version;
+    if (version != null) {
+      return groupId + ":" + artifactId + ":" + version;
+    }
+    return groupId + ":" + artifactId;
   }
 }

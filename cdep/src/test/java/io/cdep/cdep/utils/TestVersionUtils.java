@@ -1,6 +1,10 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.cdep.Version;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -66,6 +70,125 @@ public class TestVersionUtils {
   public void fourDots() {
     assertThat(VersionUtils.checkVersion(version("1.2.3.4")))
         .isEqualTo("expected major.minor.point[-tweak] but there were 3 dots");
+  }
+
+  @Test
+  public void sortAscendingTweak() {
+    List<Version> versions = sortA("1.2.3-rev2", "1.2.3-rev1");
+    assertThat(versions.get(0).value).isEqualTo("1.2.3-rev1");
+    assertThat(versions.get(1).value).isEqualTo("1.2.3-rev2");
+  }
+  @Test
+  public void sortDescendingTweak() {
+    List<Version> versions = sortD("1.2.3-rev2", "1.2.3-rev1");
+    assertThat(versions.get(0).value).isEqualTo("1.2.3-rev2");
+    assertThat(versions.get(1).value).isEqualTo("1.2.3-rev1");
+  }
+
+  @Test
+  public void sortAscendingNoTweak() {
+    List<Version> versions = sortA("1.2.2", "1.2.3");
+    assertThat(versions.get(0).value).isEqualTo("1.2.2");
+    assertThat(versions.get(1).value).isEqualTo("1.2.3");
+  }
+
+  @Test
+  public void sortDescendingNoTweak() {
+    List<Version> versions = sortD("1.2.2", "1.2.3");
+    assertThat(versions.get(0).value).isEqualTo("1.2.3");
+    assertThat(versions.get(1).value).isEqualTo("1.2.2");
+  }
+
+  @Test
+  public void sortAscendingStringVsInt() {
+    List<Version> versions = sortA("1.2.b", "1.2.2");
+    assertThat(versions.get(0).value).isEqualTo("1.2.2");
+    assertThat(versions.get(1).value).isEqualTo("1.2.b");
+  }
+
+  @Test
+  public void sortDescendingStringVsInt() {
+    List<Version> versions = sortD("1.2.2", "1.2.b");
+    assertThat(versions.get(0).value).isEqualTo("1.2.b");
+    assertThat(versions.get(1).value).isEqualTo("1.2.2");
+  }
+
+  @Test
+  public void sortAscendingStraggler() {
+    List<Version> versions = sortA("1.2.2-rev1", "1.2.2");
+    assertThat(versions.get(0).value).isEqualTo("1.2.2");
+    assertThat(versions.get(1).value).isEqualTo("1.2.2-rev1");
+  }
+
+  @Test
+  public void sortDescendingStraggler() {
+    List<Version> versions = sortD("1.2.2", "1.2.2-rev1");
+    assertThat(versions.get(0).value).isEqualTo("1.2.2-rev1");
+    assertThat(versions.get(1).value).isEqualTo("1.2.2");
+  }
+
+  @Test
+  public void sortAscendingMiddleString() {
+    List<Version> versions = sortA("1.a.2", "1.b.2");
+    assertThat(versions.get(0).value).isEqualTo("1.a.2");
+    assertThat(versions.get(1).value).isEqualTo("1.b.2");
+  }
+
+  @Test
+  public void sortDescendingMiddleString() {
+    List<Version> versions = sortD("1.a.2", "1.b.2");
+    assertThat(versions.get(0).value).isEqualTo("1.b.2");
+    assertThat(versions.get(1).value).isEqualTo("1.a.2");
+  }
+
+  @Test
+  public void sortAscendingDateLike() {
+    List<Version> versions = sortA("2011.1.1", "2010.1.1");
+    assertThat(versions.get(0).value).isEqualTo("2010.1.1");
+    assertThat(versions.get(1).value).isEqualTo("2011.1.1");
+  }
+
+  @Test
+  public void sortDescendingDateLike() {
+    List<Version> versions = sortD("2011.1.1", "2010.1.1");
+    assertThat(versions.get(0).value).isEqualTo("2011.1.1");
+    assertThat(versions.get(1).value).isEqualTo("2010.1.1");
+  }
+
+  @Test
+  public void sortAscendingNonSeparator() {
+    List<Version> versions = sortA("2011revA", "2011revB");
+    assertThat(versions.get(0).value).isEqualTo("2011revA");
+    assertThat(versions.get(1).value).isEqualTo("2011revB");
+  }
+
+  @Test
+  public void sortDescendingNonSeparator() {
+    List<Version> versions = sortD("2011revA", "2011revB");
+    assertThat(versions.get(0).value).isEqualTo("2011revB");
+    assertThat(versions.get(1).value).isEqualTo("2011revA");
+  }
+
+
+
+  List<Version> sortA(String ...versions) {
+    List<Version> list = new ArrayList<>();
+    for (int i = 0; i < versions.length; ++i) {
+      list.add(new Version(versions[i]));
+    }
+
+    list.sort(VersionUtils.ASCENDING_COMPARATOR);
+    return list;
+  }
+
+  List<Version> sortD(String ...versions) {
+    List<Version> list = new ArrayList<>();
+    for (int i = 0; i < versions.length; ++i) {
+      list.add(new Version(versions[i]));
+    }
+
+    list.sort(VersionUtils.DESCENDING_COMPARATOR);
+    return list;
   }
 
   private static class CoverConstructor extends VersionUtils {

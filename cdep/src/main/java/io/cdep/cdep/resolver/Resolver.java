@@ -2,7 +2,7 @@ package io.cdep.cdep.resolver;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.resolver.ResolutionScope.Resolution;
+import io.cdep.cdep.resolver.ResolutionScope.Unresolvable;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
@@ -11,17 +11,17 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-import static io.cdep.cdep.resolver.ResolutionScope.UNPARSEABLE_RESOLUTION;
-import static io.cdep.cdep.resolver.ResolutionScope.UNRESOLVEABLE_RESOLUTION;
-import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.utils.Invariant.fail;
 
 /**
  * Resolve references and groups of references (ResolutionScope)
  */
 public class Resolver {
 
-  final private static CoordinateResolver RESOLVERS[] = new CoordinateResolver[]{new GithubStyleUrlCoordinateResolver(), new
-      GithubReleasesCoordinateResolver(), new LocalFilePathCoordinateResolver()};
+  final private static CoordinateResolver RESOLVERS[] = new CoordinateResolver[] {
+      new GithubStyleUrlCoordinateResolver(),
+      new GithubReleasesCoordinateResolver(),
+      new LocalFilePathCoordinateResolver() };
 
   final private ManifestProvider manifestProvider;
   final private CoordinateResolver resolvers[];
@@ -58,13 +58,20 @@ public class Resolver {
     }
 
     // Throw some exceptions if we didn't resolve something.
-    for (String softname : scope.getResolvedNames()) {
-      Resolution resolution = scope.getResolution(softname);
+    for (String softname : scope.getUnresolvableReferences()) {
+      Unresolvable reason = scope.getUnresolveableReason(softname);
+      switch(reason) {
+        case DIDNT_EXIST:
+          fail("Could not resolve '%s'. It doesn't exist.", softname);
+          break;
+        case UNPARSEABLE:
+          fail("Could not resolve '%s'. It didn't look like a coordinate.", softname);
+          break;
+        default:
+          fail(reason.toString());
+          break;
 
-      // The resolution was something besides success.
-      require(resolution != UNRESOLVEABLE_RESOLUTION, "Could not resolve '%s'. It doesn't exist" + ".", softname);
-
-      require(resolution != UNPARSEABLE_RESOLUTION, "Could not resolve '%s'. It didn't look like " + "a coordinate.", softname);
+      }
     }
     return scope;
   }

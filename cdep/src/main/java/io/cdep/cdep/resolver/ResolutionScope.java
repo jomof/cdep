@@ -2,12 +2,16 @@ package io.cdep.cdep.resolver;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.Version;
 import io.cdep.cdep.utils.CoordinateUtils;
+import io.cdep.cdep.utils.VersionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 
 import java.util.*;
 
+import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.DIDNT_EXIST;
+import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.UNPARSEABLE;
 import static io.cdep.cdep.utils.Invariant.require;
 
 /**
@@ -15,17 +19,28 @@ import static io.cdep.cdep.utils.Invariant.require;
  */
 @SuppressWarnings("Convert2Diamond")
 public class ResolutionScope {
-
-  final static public Resolution UNPARSEABLE_RESOLUTION = new Resolution();
-  final static public Resolution UNRESOLVEABLE_RESOLUTION = new Resolution();
   // Map of dependency edges. Key is dependant and value is dependees.
+  @NotNull
   final public Map<Coordinate, List<Coordinate>> forwardEdges = new HashMap<>();
   // Map of dependency edges. Key is dependee and value is dependants.
+  @NotNull
   final public Map<Coordinate, List<Coordinate>> backwardEdges = new HashMap<>();
   // Dependencies that are not yet resolved but where resolution is possible
+  @NotNull
   final private Map<String, SoftNameDependency> unresolved = new HashMap<>();
   // Dependencies that have been resolved (successfully or unsuccessfully)
-  final private Map<String, Resolution> resolved = new HashMap<>();
+  @NotNull
+  final private Set<String> resolved = new HashSet<>();
+  @NotNull
+  final private Map<String, Unresolvable> unresolveable = new HashMap<>();
+  @NotNull
+  final private Map<String, ResolvedManifest> versionlessKeyedManifests = new HashMap<>();
+  // Map of dependency edges. Key is dependant and value is dependees.
+  @NotNull
+  final public Map<Version, List<Version>> unificationWinnersToLosers = new HashMap<>();
+  // Map of dependency edges. Key is dependee and value is dependants.
+  @NotNull
+  final public Map<Version, List<Version>> unificationLosersToWinners = new HashMap<>();
 
   /**
    * Construct a fresh resolution scope.
@@ -41,10 +56,10 @@ public class ResolutionScope {
   /**
    * Utility function to add a new edge to an edge map.
    */
-  private static void addEdge(@NotNull Map<Coordinate, List<Coordinate>> edges, Coordinate from, Coordinate to) {
-    List<Coordinate> tos = edges.get(from);
+  private static <T> void addEdge(@NotNull Map<T, List<T>> edges, T from, T to) {
+    List<T> tos = edges.get(from);
     if (tos == null) {
-      edges.put(from, new ArrayList<Coordinate>());
+      edges.put(from, new ArrayList<T>());
       addEdge(edges, from, to);
       return;
     }
@@ -57,7 +72,7 @@ public class ResolutionScope {
    * @param softname the name of the unresolved dependency.
    */
   private void addUnresolved(@NotNull SoftNameDependency softname) {
-    if (!resolved.containsKey(softname.compile)) {
+    if (!resolved.contains(softname.compile)) {
       unresolved.put(softname.compile, softname);
     }
   }
@@ -66,26 +81,42 @@ public class ResolutionScope {
    * Return true if there are no more references to resolve.
    */
   public boolean isResolutionComplete() {
-    return unresolved.size() == 0;
+    return unresolved.isEmpty();
   }
 
   /**
    * Return all remaining unresolved references.
    */
-
   @NotNull
   public Collection<SoftNameDependency> getUnresolvedReferences() {
     return new ArrayList<>(unresolved.values());
   }
 
   /**
-   * Whether the given dependency is resolved or not
+   * Return all remaining unresolved references.
+   */
+  @NotNull
+  public Collection<String> getUnresolvableReferences() {
+    return new ArrayList<>(unresolveable.keySet());
+  }
+
+  /**
+   * Return all remaining unresolved references.
+   */
+  @NotNull
+  public Unresolvable getUnresolveableReason(@NotNull String softname) {
+    return unresolveable.get(softname);
+  }
+
+  /**
+   * Whether the given dependency is resolved or not regardless of whether the resolution was
+   * successful.
    *
    * @param name the name of the dependency.
    * @return true if the dependency has already been resolved.
    */
   private boolean isResolved(String name) {
-    return resolved.containsKey(name);
+    return resolved.contains(name);
   }
 
   /**
@@ -103,7 +134,8 @@ public class ResolutionScope {
         "%s was already resolved",
         resolved.cdepManifestYml.coordinate);
 
-    this.resolved.put(resolved.cdepManifestYml.coordinate.toString(), new FoundManifestResolution(resolved));
+    Coordinate versionless = getVersionlessCoordinateResolvedManifest(resolved);
+    this.resolved.add(resolved.cdepManifestYml.coordinate.toString());
 
     unresolved.remove(resolved.cdepManifestYml.coordinate.toString());
     unresolved.remove(softname.compile);
@@ -112,7 +144,8 @@ public class ResolutionScope {
       assert hardname.compile != null;
       Coordinate coordinate = CoordinateUtils.tryParse(hardname.compile);
       if (coordinate == null) {
-        this.resolved.put(hardname.compile, UNPARSEABLE_RESOLUTION);
+        this.resolved.add(hardname.compile);
+        this.unresolveable.put(hardname.compile, UNPARSEABLE);
         continue;
       }
       addEdge(forwardEdges, resolved.cdepManifestYml.coordinate, coordinate);
@@ -122,53 +155,64 @@ public class ResolutionScope {
   }
 
   /**
+   * Unifies manifest version to most recent. Returns a versionless coordinate that is the
+   * key to the manifest even if it changes later during resolution.
+   */
+  private Coordinate getVersionlessCoordinateResolvedManifest(ResolvedManifest resolved) {
+    Coordinate versionless = new Coordinate(
+        resolved.cdepManifestYml.coordinate.groupId,
+        resolved.cdepManifestYml.coordinate.artifactId,
+        null);
+
+    ResolvedManifest preexisting = versionlessKeyedManifests.get(versionless.toString());
+    if (preexisting != null) {
+      Map<Version, ResolvedManifest> manifests = new HashMap<>();
+      manifests.put(resolved.cdepManifestYml.coordinate.version, resolved);
+      manifests.put(preexisting.cdepManifestYml.coordinate.version, preexisting);
+      List<Version> versions = new ArrayList<>();
+      versions.addAll(manifests.keySet());
+      assert versions.size() == 2;
+      versions.sort(VersionUtils.DESCENDING_COMPARATOR);
+      Version unificationWinner = versions.get(0);
+      Version unificationLoser= versions.get(1);
+      versionlessKeyedManifests.put(versionless.toString(), manifests.get(unificationWinner));
+      addEdge(unificationWinnersToLosers, unificationWinner, unificationLoser);
+      addEdge(unificationLosersToWinners, unificationLoser, unificationWinner);
+      return versionless;
+    }
+    versionlessKeyedManifests.put(versionless.toString(), resolved);
+    return versionless;
+  }
+
+  /**
    * Record fact that a given dependency could not be resolved.
    *
    * @param softname the name of the unresolvable dependency.
    */
   public void recordUnresolvable(@NotNull SoftNameDependency softname) {
     this.unresolved.remove(softname.compile);
-    this.resolved.put(softname.compile, UNRESOLVEABLE_RESOLUTION);
+    this.resolved.add(softname.compile);
+    this.unresolveable.put(softname.compile, DIDNT_EXIST);
   }
 
   /**
    * Return the set of resolved names (coordinates or soft names).
    */
-
   @NotNull
-  public Collection<String> getResolvedNames() {
-    return resolved.keySet();
+  public ResolvedManifest getResolution(@NotNull String name) {
+    return versionlessKeyedManifests.get(name);
   }
 
   /**
    * Return the set of resolved names (coordinates or soft names).
    */
-  public Resolution getResolution(String name) {
-    return resolved.get(name);
-  }
-
-  /**
-   * Return the set of resolved names (coordinates or soft names).
-   */
-
   @NotNull
   public Collection<String> getResolutions() {
-    return resolved.keySet();
+    return versionlessKeyedManifests.keySet();
   }
 
-  public static class Resolution {
-
-  }
-
-  /**
-   * A resolution that indicates a manifest was found.
-   */
-  public static class FoundManifestResolution extends Resolution {
-
-    final public ResolvedManifest resolved;
-
-    FoundManifestResolution(ResolvedManifest resolved) {
-      this.resolved = resolved;
-    }
+  public enum Unresolvable {
+    UNPARSEABLE,
+    DIDNT_EXIST
   }
 }

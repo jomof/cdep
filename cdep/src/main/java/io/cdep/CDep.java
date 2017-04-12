@@ -88,10 +88,8 @@ public class CDep {
     Resolver resolver = new Resolver(environment);
     ResolutionScope scope = resolver.resolveAll(dependencies);
     for (String name : scope.getResolutions()) {
-      ResolutionScope.Resolution resolved = scope.getResolution(name);
-      require(resolved instanceof ResolutionScope.FoundManifestResolution, "Could not resolve %s", name);
-      ResolutionScope.FoundManifestResolution found = (ResolutionScope.FoundManifestResolution) resolved;
-      builder.addManifest(found.resolved);
+      ResolvedManifest resolved = scope.getResolution(name);
+      builder.addManifest(resolved);
     }
     return builder.build();
   }
