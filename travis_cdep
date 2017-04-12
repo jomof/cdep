@@ -3,7 +3,7 @@ echo DIR=$DIR
 
 
 TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-dev.jar
-ls -l | grep "\.yml"
+ls -LRlh
 echo done
 if [ ! -f "$TRAVIS_CDEP_JAR" ]; then
     TRAVIS_CDEP_JAR=$DIR/cdep/libs/cdep-${TRAVIS_TAG}.jar
