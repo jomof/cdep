@@ -15,7 +15,6 @@
 */
 package io.cdep.cdep.generator;
 
-import ext.org.yaml.snakeyaml.error.YAMLException;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
@@ -28,6 +27,7 @@ import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
+import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.*;
 import java.net.URL;

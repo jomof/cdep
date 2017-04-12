@@ -1,5 +1,5 @@
 apply plugin: 'java'
-group 'io.cdep_beforejarjar'
+group 'io.cdep'
 
 
 repositories {
@@ -13,19 +13,15 @@ buildscript {
         }
         jcenter()
     }
-    dependencies {
-        classpath 'net.vrallev.gradle:jarjar-gradle:1.1.0'
-    }
-}
-String finalVersion = "dev"
-if (System.getenv()["TRAVIS_TAG"] != null && System.getenv()["TRAVIS_TAG"].length() > 0) {
-    finalVersion = System.getenv()["TRAVIS_TAG"]
-    version finalVersion + "-beforejarjar"
-} else {
-    version 'dev' + "-beforejarjar"
 }
 
-apply plugin: 'net.vrallev.jarjar'
+
+if (System.getenv()["TRAVIS_TAG"] != null && System.getenv()["TRAVIS_TAG"].length() > 0) {
+    version System.getenv()["TRAVIS_TAG"]
+} else {
+    version 'dev'
+}
+
 
 class GenerateBuildInfo extends DefaultTask {
     @OutputFile
@@ -41,6 +37,7 @@ class BuildInfo {
 }""")
     }
 }
+
 task generateBuildInfo(type: GenerateBuildInfo)
 compileJava.dependsOn generateBuildInfo
 
@@ -60,36 +57,15 @@ artifacts {
     archives javadocJar
 }
 
-
-
-jarjar {
-	// required, path to the executable .jar file
-    jarJarFile '../tools/jarjar-1.3.jar'
-
-    // optional, the rules for the jarjar tool
-    rules = [
-            'rule org.yaml.** ext.org.yaml.@1'
-    ]
-
-    // optional, exclude files from the dependency .jar files
-    srcExcludes = ['META-INF/**']
-
-    // optional, default is build_repackaged.jar, the result .jar file name
-    outputName 'cdep-' + finalVersion + '.jar'
-
-    // optional, default is libs, the directory of the result .jar
-    outputDir 'libs'
-
-    // optional, default is false
-    ignoreJarJarResult false
-}
-
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    jarjar 'org.yaml:snakeyaml:1.17'
+    compile 'org.yaml:snakeyaml:1.17'
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile group: 'com.google.guava', name: 'guava', version: '20.0'
     testCompile group: 'com.google.truth', name: 'truth', version: '0.31'
     testCompile "org.mockito:mockito-core:2.+"
     testCompile "org.mockito:mockito-core:2.+"
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }

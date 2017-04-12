@@ -1,5 +1,5 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-LIBS=$DIR/cdep/libs
+LIBS=$DIR/cdep/build/libs
 
 echo DIR=$DIR
 ls -LRlh $LIBS
