@@ -42,6 +42,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -133,6 +135,9 @@ public class CDep {
     handleWorkingFolder(args);
     handleDownloadFolder(args);
     if (handleWrapper(args)) {
+      return;
+    }
+    if (handleStartupInfo(args)) {
       return;
     }
     if (handleShow(args)) {
@@ -228,6 +233,32 @@ public class CDep {
         return true;
       }
       info("Usage: cdep create hashes'\n");
+      return true;
+    }
+    return false;
+  }
+
+  private boolean handleStartupInfo(@NotNull List<String> args)  {
+    if (args.size() > 0 && "startup-info".equals(args.get(0))) {
+      String jvmLocation;
+      if (System.getProperty("os.name").startsWith("Win")) {
+        jvmLocation = System.getProperties().getProperty("java.home")
+            + File.separator + "bin" + File.separator + "java.exe";
+      } else {
+        jvmLocation = System.getProperties().getProperty("java.home")
+            + File.separator + "bin" + File.separator + "java";
+      }
+      infoln("%s", jvmLocation);
+      RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
+      List<String> jvmArgs = bean.getInputArguments();
+
+      for (int i = 0; i < jvmArgs.size(); i++) {
+        infoln(jvmArgs.get(i));
+      }
+      infoln("-classpath " + System.getProperty("java.class.path"));
+      // print the non-JVM command line arguments
+      // print name of the main class with its arguments, like org.ClassName param1 param2
+      infoln(System.getProperty("sun.java.command"));
       return true;
     }
     return false;
@@ -546,4 +577,5 @@ public class CDep {
     info("cdep %s\n", BuildInfo.PROJECT_VERSION);
     return false;
   }
+
 }
