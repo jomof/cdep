@@ -7,7 +7,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/tinydir" afterPath="$PROJECT_DIR$/third_party/tinydir" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/vectorial" afterPath="$PROJECT_DIR$/third_party/vectorial" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -203,11 +204,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="495">
               <caret line="15" column="54" lean-forward="false" selection-start-line="15" selection-start-column="54" selection-end-line="15" selection-end-column="54" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestHashAndSizeRewritingVisitor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="528">
+              <caret line="36" column="46" lean-forward="false" selection-start-line="36" selection-start-column="46" selection-end-line="36" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestZipFilesRewritingVisitor.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="517">
+              <caret line="37" column="43" lean-forward="false" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -228,26 +249,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="99">
               <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="8" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="V1Reader.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v1/V1Reader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="99">
-              <caret line="3" column="3" lean-forward="false" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CDepManifestYmlUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="19" column="17" lean-forward="false" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -1168,8 +1169,6 @@
         <option value="$PROJECT_DIR$/third_party/stb/cdep/cdep-manifest-voxel_render.yml" />
         <option value="$PROJECT_DIR$/third_party/stb/.travis.yml" />
         <option value="$PROJECT_DIR$/cdep/.test-files/testBasicTinyDir/layout/cdep-manifest.yml" />
-        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java" />
-        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java" />
         <option value="$PROJECT_DIR$/third_party/vectorial/.travis.yml" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/FileUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/PathMapping.java" />
@@ -1209,6 +1208,8 @@
         <option value="$PROJECT_DIR$/travis_cdep" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/Invariant.java" />
         <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java" />
+        <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java" />
       </list>
     </option>
   </component>
@@ -1581,7 +1582,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.3086207" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
-    <property name="SearchEverywhereHistoryKey" value="Inva&#9;PSI&#9;JAVA://io.cdep.cdep.utils.Invariant&#10;cdep.yml&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/smoke-test/cdep.yml&#10;TestAndro&#9;PSI&#9;JAVA://io.cdep.cdep.yml.TestAndroid&#10;Test&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestCDep.java&#10;V1&#9;PSI&#9;JAVA://io.cdep.cdep.yml.cdepmanifest.v1.V1Reader&#10;CDepYmlUtils.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/CDepYmlUtils.java&#10;CDepSHA256Utils.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/CDepSHA256Utils.java&#10;CDepManifestYmlUtils.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java&#10;Gene&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java&#10;V2&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/V2Reader.java&#10;GeneratorEn&#9;PSI&#9;JAVA://io.cdep.cdep.generator.GeneratorEnvironmentUtils&#10;smoke-test/cdep&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/smoke-test/cdep.yml&#10;CDep.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;TestFu&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestFullfill.java&#10;TestZip&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java&#10;FileU&#9;PSI&#9;JAVA://io.cdep.cdep.utils.FileUtils&#10;TestPathMapping.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestPathMapping.java&#10;TestHashAndSizeRewritingVisitor.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java&#10;TestFull&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestFullfill.java&#10;Full&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/fullfill/Fullfill.java&#10;stb_&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/third_party/stb/stb_c_lexer.h&#10;cdep-&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/.test-files/TestFullfill/layout/cdep-manifest-divide.yml&#10;stb&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/third_party/stb/stb_c_lexer.h&#10;cdep-m&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/third_party/stb/cdep/cdep-manifest-divide.yml&#10;TestZ&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java&#10;cdep-ma&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/third_party/stb/cdep/cdep-manifest-divide.yml&#10;CDep.ja&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;travis_cdep&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/travis_cdep&#10;Merge&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/MergeCDepManifestYmls.java&#10;.test-files\mergeHeaders\merged-manifest.yml&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/.test-files/mergeHeaders/merged-manifest.yml&#10;mergeHeaders/hea&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/.test-files/mergeHeaders/headers.zip&#10;CDepMani&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java&#10;testBoo&#9;PSI&#9;JAVA://io.cdep.cdep.generator.TestCMakeGenerator#testBoost&#10;IfS&#9;PSI&#9;JAVA://io.cdep.cdep.ast.finder.IfSwitchExpression&#10;Par&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/ast/finder/ParameterExpression.java&#10;visitCDepManifestYml&#9;PSI&#9;JAVA://io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlReadonlyVisitor#visitCDepManifestYml&#10;Andro&#9;PSI&#9;JAVA://io.cdep.cdep.yml.cdepmanifest.Android&#10;Re&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/ReflectionUtils.java&#10;cdep.ym&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/redist/cdep.yml&#10;runVectorial\.cdep\modules\cdep-dependencies-config.cmake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/.test-files/runVectorial/.cdep/modules/cdep-dependencies-config.cmake&#10;TestFindModuleFunctionTableBuilder\working\.cdep\modules\cdep-dependencies-config.cmake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/test-files/TestFindModuleFunctionTableBuilder/working/.cdep/modules/cdep-dependencies-config.cmake&#10;ExpressionBu&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/ast/finder/ExpressionBuilder.java&#10;visitFin&#9;PSI&#9;JAVA://io.cdep.cdep.ReadonlyVisitor#visitFindModuleExpression&#10;Linux&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/LinuxArchive.java&#10;visitFindModuleExpression&#9;PSI&#9;JAVA://io.cdep.cdep.RewritingVisitor#visitFindModuleExpression&#10;FindModuleExpression&#9;PSI&#9;JAVA://io.cdep.cdep.InterpretingVisitor#visitFindModuleExpression&#10;CDep.jav&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;TestInterpre&#9;PSI&#9;JAVA://io.cdep.cdep.TestInterpretingVisitor&#10;handleGe&#9;PSI&#9;JAVA://io.cdep.CDep#handleGenerateScript&#10;mergeTwo/merged-manifest.yml&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/.test-files/mergeTwo/merged-manifest.yml" />
+    <property name="SearchEverywhereHistoryKey" value="TestZipFilesRewritingVisitor.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java&#10;TestHashAndSizeRewritingVisitor.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java&#10;Inva&#9;PSI&#9;JAVA://io.cdep.cdep.utils.Invariant&#10;cdep.yml&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/smoke-test/cdep.yml&#10;TestAndro&#9;PSI&#9;JAVA://io.cdep.cdep.yml.TestAndroid&#10;Test&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestCDep.java&#10;V1&#9;PSI&#9;JAVA://io.cdep.cdep.yml.cdepmanifest.v1.V1Reader&#10;CDepYmlUtils.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/CDepYmlUtils.java&#10;CDepSHA256Utils.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/CDepSHA256Utils.java&#10;CDepManifestYmlUtils.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java&#10;Gene&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java&#10;V2&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/V2Reader.java&#10;GeneratorEn&#9;PSI&#9;JAVA://io.cdep.cdep.generator.GeneratorEnvironmentUtils&#10;smoke-test/cdep&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/smoke-test/cdep.yml&#10;CDep.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;TestFu&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestFullfill.java&#10;TestZip&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java&#10;FileU&#9;PSI&#9;JAVA://io.cdep.cdep.utils.FileUtils&#10;TestPathMapping.java&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestPathMapping.java&#10;TestFull&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestFullfill.java&#10;Full&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/fullfill/Fullfill.java&#10;stb_&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/third_party/stb/stb_c_lexer.h&#10;cdep-&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/.test-files/TestFullfill/layout/cdep-manifest-divide.yml&#10;stb&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/third_party/stb/stb_c_lexer.h&#10;cdep-m&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/third_party/stb/cdep/cdep-manifest-divide.yml&#10;TestZ&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java&#10;cdep-ma&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/third_party/stb/cdep/cdep-manifest-divide.yml&#10;CDep.ja&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;travis_cdep&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/travis_cdep&#10;Merge&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/MergeCDepManifestYmls.java&#10;.test-files\mergeHeaders\merged-manifest.yml&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/.test-files/mergeHeaders/merged-manifest.yml&#10;mergeHeaders/hea&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/.test-files/mergeHeaders/headers.zip&#10;CDepMani&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java&#10;testBoo&#9;PSI&#9;JAVA://io.cdep.cdep.generator.TestCMakeGenerator#testBoost&#10;IfS&#9;PSI&#9;JAVA://io.cdep.cdep.ast.finder.IfSwitchExpression&#10;Par&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/ast/finder/ParameterExpression.java&#10;visitCDepManifestYml&#9;PSI&#9;JAVA://io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlReadonlyVisitor#visitCDepManifestYml&#10;Andro&#9;PSI&#9;JAVA://io.cdep.cdep.yml.cdepmanifest.Android&#10;Re&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/utils/ReflectionUtils.java&#10;cdep.ym&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/redist/cdep.yml&#10;runVectorial\.cdep\modules\cdep-dependencies-config.cmake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/.test-files/runVectorial/.cdep/modules/cdep-dependencies-config.cmake&#10;TestFindModuleFunctionTableBuilder\working\.cdep\modules\cdep-dependencies-config.cmake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/test-files/TestFindModuleFunctionTableBuilder/working/.cdep/modules/cdep-dependencies-config.cmake&#10;ExpressionBu&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/ast/finder/ExpressionBuilder.java&#10;visitFin&#9;PSI&#9;JAVA://io.cdep.cdep.ReadonlyVisitor#visitFindModuleExpression&#10;Linux&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/LinuxArchive.java&#10;visitFindModuleExpression&#9;PSI&#9;JAVA://io.cdep.cdep.RewritingVisitor#visitFindModuleExpression&#10;FindModuleExpression&#9;PSI&#9;JAVA://io.cdep.cdep.InterpretingVisitor#visitFindModuleExpression&#10;CDep.jav&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;TestInterpre&#9;PSI&#9;JAVA://io.cdep.cdep.TestInterpretingVisitor&#10;handleGe&#9;PSI&#9;JAVA://io.cdep.CDep#handleGenerateScript" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/cdep" />
     <property name="extract.method.default.visibility" value="packageLocal" />
     <property name="Downloaded.Files.Path.Enabled" value="true" />
@@ -2102,13 +2103,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
     </task>
-    <task id="LOCAL-00237" summary="Fullfillment&#10;">
-      <created>1491695207061</created>
-      <option name="number" value="00237" />
-      <option name="presentableId" value="LOCAL-00237" />
-      <option name="project" value="LOCAL" />
-      <updated>1491695207061</updated>
-    </task>
     <task id="LOCAL-00238" summary="Fullfillment&#10;">
       <created>1491695889984</created>
       <option name="number" value="00238" />
@@ -2445,7 +2439,14 @@
       <option name="project" value="LOCAL" />
       <updated>1492052172396</updated>
     </task>
-    <option name="localTasksCounter" value="286" />
+    <task id="LOCAL-00286" summary="Fullfillment&#10;">
+      <created>1492052375249</created>
+      <option name="number" value="00286" />
+      <option name="presentableId" value="LOCAL-00286" />
+      <option name="project" value="LOCAL" />
+      <updated>1492052375249</updated>
+    </task>
+    <option name="localTasksCounter" value="287" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2687,7 +2688,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java</url>
-          <line>44</line>
+          <line>43</line>
           <properties />
           <option name="timeStamp" value="250" />
         </line-breakpoint>
@@ -2743,13 +2744,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/third_party/tinydir/.travis.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="19" column="2" lean-forward="false" selection-start-line="19" selection-start-column="2" selection-end-line="23" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/third_party/stb/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -2786,6 +2780,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
           <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2804,13 +2799,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/logging/HighVerbosity.java" />
-    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="12" column="24" lean-forward="false" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="647">
@@ -2900,6 +2888,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
           <caret line="10" column="45" lean-forward="false" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="85" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3194,6 +3185,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
           <caret line="15" column="54" lean-forward="false" selection-start-line="15" selection-start-column="54" selection-end-line="15" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="36" column="46" lean-forward="false" selection-start-line="36" selection-start-column="46" selection-end-line="36" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="517">
+          <caret line="37" column="43" lean-forward="false" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
           <folding />
         </state>
       </provider>
