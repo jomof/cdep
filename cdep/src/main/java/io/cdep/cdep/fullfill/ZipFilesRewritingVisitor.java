@@ -1,15 +1,12 @@
 package io.cdep.cdep.fullfill;
 
-import static io.cdep.cdep.io.IO.infoln;
-import static io.cdep.cdep.utils.Invariant.require;
-
 import io.cdep.annotations.NotNull;
-import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,6 +14,9 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static io.cdep.cdep.io.IO.infoln;
+import static io.cdep.cdep.utils.Invariant.require;
 
 /**
  * Zip up file entries into layout folder. Doesn't record SHA or size since that is done
@@ -26,7 +26,6 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   private final File layout;
   private final File staging;
   private final List<File> zips = new ArrayList<>();
-  private int index = 0;
   private String prefix = "";
 
   ZipFilesRewritingVisitor(File layout, File staging) {
@@ -37,11 +36,21 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   @NotNull
   @Override
   public CDepManifestYml visitCDepManifestYml(@NotNull CDepManifestYml value) {
-    prefix = value.coordinate.groupId + "_" + value.coordinate.artifactId + "_" + value.coordinate.version.value;
+    prefix = value.coordinate.artifactId;
     prefix = prefix.replace("/", "_");
     prefix = prefix.replace("\\", "_");
     prefix = prefix.replace(":", "_");
     return super.visitCDepManifestYml(value);
+  }
+
+  private String appendKeys(String... keys) {
+    String key = prefix;
+    for (int i = 0; i < keys.length; ++i) {
+      if (keys[i] != null) {
+        key += "-" + keys[i];
+      }
+    }
+    return key;
   }
 
   @Override
@@ -55,7 +64,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     PathMapping mappings[] = PathMapping.parse(archive.file);
     require(mappings.length > 0,
         "File mapping '%s' did not resolve to any local files", archive.file);
-    File layoutZipFile = getLayoutZipFile();
+    File layoutZipFile = getLayoutZipFile(appendKeys("header"));
     File stagingZipFolder = getStagingZipFolder(layoutZipFile, "include");
 
     copyFilesToStaging(mappings, stagingZipFolder);
@@ -84,7 +93,8 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     PathMapping mappings[] = PathMapping.parse(archive.file);
     require(mappings.length > 0,
         "File mapping '%s' did not resolve to any local files", archive.file);
-    File layoutZipFile = getLayoutZipFile();
+    File layoutZipFile = getLayoutZipFile(appendKeys(archive.ndk, archive.runtime,
+        archive.platform, archive.builder, archive.flavor));
     File stagingZipFolder = getStagingZipFolder(layoutZipFile, archive.abi);
 
     copyFilesToStaging(mappings, stagingZipFolder);
@@ -109,7 +119,6 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
         archive.flavor);
   }
 
-
   @NotNull
   private File getStagingZipFolder(File layoutZipFile, String folder) {
     File stagingZipFolder = new File(staging, layoutZipFile.getName());
@@ -119,12 +128,11 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   }
 
   @NotNull
-  private File getLayoutZipFile() {
-    File layoutZipFile = new File(layout, prefix+ "_" + index + ".zip");
+  private File getLayoutZipFile(String prefix) {
+    File layoutZipFile = new File(layout, prefix + ".zip");
     if (layoutZipFile.exists()) {
       layoutZipFile.delete();
     }
-    ++index;
     return layoutZipFile;
   }
 

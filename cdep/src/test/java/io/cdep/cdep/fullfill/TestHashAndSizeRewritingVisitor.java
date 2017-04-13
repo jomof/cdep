@@ -35,7 +35,7 @@ public class TestHashAndSizeRewritingVisitor {
     CDepManifestYml afterZipping = zipper.visitCDepManifestYml(afterSubstitution);
 
     assertThat(layout.isDirectory()).isTrue();
-    assertThat(afterZipping.interfaces.headers.file).isEqualTo("com.github.jomof_stb_divide_${version}_0.zip");
+    assertThat(afterZipping.interfaces.headers.file).isEqualTo("stb_divide-header.zip");
     assertThat(afterZipping.interfaces.headers.include).isEqualTo("include");
 
     CDepManifestYml afterHashing = new FileHashAndSizeRewritingVisitor(layout)

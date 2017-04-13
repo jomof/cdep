@@ -7,6 +7,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/tinydir" afterPath="$PROJECT_DIR$/third_party/tinydir" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/vectorial" afterPath="$PROJECT_DIR$/third_party/vectorial" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java" />
     </list>
@@ -145,55 +146,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestCDep.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="18" column="7" lean-forward="false" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-              <folding>
-                <marker date="1492052054751" expanded="true" signature="1616:1670" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="1725:1803" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="1855:2134" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="2203:3699" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="3751:3989" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="4045:4673" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="4734:5027" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="5080:5366" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="5419:5699" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="5752:5833" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="5899:6710" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="5931:6464" ph="//..." />
-                <marker date="1492052054751" expanded="true" signature="6568:6659" ph="//..." />
-                <marker date="1492052054751" expanded="true" signature="6765:6841" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="6909:7053" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="7114:7212" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="7262:7347" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="7351:8398" ph="//..." />
-                <marker date="1492052054751" expanded="true" signature="8469:9093" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="9097:10336" ph="//..." />
-                <marker date="1492052054751" expanded="true" signature="10399:10972" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="10976:12178" ph="//..." />
-                <marker date="1492052054751" expanded="true" signature="12228:12862" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="12916:13477" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="13526:13853" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="13857:14343" ph="//..." />
-                <marker date="1492052054751" expanded="true" signature="14400:14776" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="14832:15341" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="15404:16220" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="16278:16698" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="16756:17391" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="17448:17465" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="17520:17601" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="17656:17864" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="17931:18081" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="18129:18250" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="18305:19975" ph="{...}" />
-                <marker date="1492052054751" expanded="true" signature="20033:21021" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TestAndroid.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/yml/TestAndroid.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -217,8 +169,8 @@
       <file leaf-file-name="TestHashAndSizeRewritingVisitor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="36" column="46" lean-forward="false" selection-start-line="36" selection-start-column="46" selection-end-line="36" selection-end-column="46" />
+            <state relative-caret-position="273">
+              <caret line="37" column="64" lean-forward="false" selection-start-line="37" selection-start-column="64" selection-end-line="37" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -227,8 +179,18 @@
       <file leaf-file-name="TestZipFilesRewritingVisitor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
-              <caret line="37" column="43" lean-forward="false" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
+            <state relative-caret-position="471">
+              <caret line="37" column="85" lean-forward="false" selection-start-line="37" selection-start-column="85" selection-end-line="37" selection-end-column="85" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ZipFilesRewritingVisitor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="28" column="24" lean-forward="false" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -268,7 +230,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>co</find>
       <find>coordinate:</find>
       <find>covisi</find>
       <find>130</find>
@@ -298,6 +259,7 @@
       <find>io.cde</find>
       <find>io.cd</find>
       <find>@throws</find>
+      <find>getLayoutZipFile</find>
     </findStrings>
     <replaceStrings>
       <replace>0.0.81</replace>
@@ -1178,7 +1140,6 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/logging/verbosity.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/logging/HighVerbosity.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/logging/Verbosity.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeExamplesGenerator.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/logging/Logger.java" />
@@ -1208,6 +1169,7 @@
         <option value="$PROJECT_DIR$/travis_cdep" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/Invariant.java" />
         <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java" />
       </list>
@@ -1397,6 +1359,72 @@
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT=".test-files">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT=".test-files">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="testHashAndSize">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="staging">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cdep">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT=".test-files">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="testHashAndSize">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1794,32 +1822,6 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="TestCDep.localPathsWork" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="io.cdep.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="cdep-cdep" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="io.cdep" />
-      <option name="MAIN_CLASS_NAME" value="io.cdep.TestCDep" />
-      <option name="METHOD_NAME" value="localPathsWork" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/cdep" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
     <configuration default="false" name="TestCDep.startupInfo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1889,6 +1891,32 @@
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/bootstrap" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestHashAndSizeRewritingVisitor.testBasic" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="io.cdep.cdep.fullfill.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="cdep-cdep" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="io.cdep.cdep.fullfill" />
+      <option name="MAIN_CLASS_NAME" value="io.cdep.cdep.fullfill.TestHashAndSizeRewritingVisitor" />
+      <option name="METHOD_NAME" value="testBasic" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/cdep" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
@@ -2074,18 +2102,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="JUnit.All in cdep-cdep" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.TestCDep.localPathsWork" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.TestCDep.startupInfo" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.TestBootstrap" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.TestBootstrap.testCDep" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.TestCDep.startupInfo" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.TestBootstrap" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.TestBootstrap.testCDep" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TestHashAndSizeRewritingVisitor.testBasic" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="JUnit.All in cdep-cdep" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.TestBootstrap" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.TestBootstrap.testCDep" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.TestCDep.startupInfo" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.TestCDep.localPathsWork" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.TestHashAndSizeRewritingVisitor.testBasic" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.TestBootstrap" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.TestBootstrap.testCDep" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.TestCDep.startupInfo" />
       </list>
     </recent_temporary>
   </component>
@@ -2102,13 +2130,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1487389274512</updated>
-    </task>
-    <task id="LOCAL-00238" summary="Fullfillment&#10;">
-      <created>1491695889984</created>
-      <option name="number" value="00238" />
-      <option name="presentableId" value="LOCAL-00238" />
-      <option name="project" value="LOCAL" />
-      <updated>1491695889984</updated>
     </task>
     <task id="LOCAL-00239" summary="Fullfillment&#10;">
       <created>1491696633305</created>
@@ -2446,16 +2467,17 @@
       <option name="project" value="LOCAL" />
       <updated>1492052375249</updated>
     </task>
-    <option name="localTasksCounter" value="287" />
+    <task id="LOCAL-00287" summary="Fullfillment&#10;">
+      <created>1492052639816</created>
+      <option name="number" value="00287" />
+      <option name="presentableId" value="LOCAL-00287" />
+      <option name="project" value="LOCAL" />
+      <updated>1492052639816</updated>
+    </task>
+    <option name="localTasksCounter" value="288" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_cdep-cdep - 2017.04.11 at 17h 59m 27s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_cdep-cdep - 2017.04.11 at 18h 49m 18s.xml">
-      <configuration name="All in cdep-cdep" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_cdep-cdep - 2017.04.11 at 19h 02m 47s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
@@ -2465,11 +2487,14 @@
     <history-entry file="All_in_cdep-cdep - 2017.04.12 at 19h 58m 49s.xml">
       <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestBootstrap - 2017.04.11 at 18h 48m 00s.xml">
-      <configuration name="TestBootstrap" configurationId="JUnit" />
+    <history-entry file="All_in_cdep-cdep - 2017.04.12 at 20h 14m 25s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestBootstrap - 2017.04.11 at 18h 51m 16s.xml">
-      <configuration name="TestBootstrap" configurationId="JUnit" />
+    <history-entry file="All_in_cdep-cdep - 2017.04.12 at 20h 15m 57s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep-cdep - 2017.04.12 at 20h 16m 39s.xml">
+      <configuration name="All in cdep-cdep" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestBootstrap - 2017.04.11 at 18h 53m 25s.xml">
       <configuration name="TestBootstrap" configurationId="JUnit" />
@@ -2479,6 +2504,9 @@
     </history-entry>
     <history-entry file="TestBootstrap - 2017.04.11 at 21h 47m 53s.xml">
       <configuration name="TestBootstrap" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestHashAndSizeRewritingVisitor_testBasic - 2017.04.12 at 20h 15m 22s.xml">
+      <configuration name="TestHashAndSizeRewritingVisitor.testBasic" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -2492,7 +2520,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32840833" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42377433" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42377433" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32840833" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25578406" sideWeight="0.4964467" order="0" side_tool="false" content_ui="combo" />
@@ -2706,7 +2734,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java</url>
-          <line>142</line>
+          <line>150</line>
           <properties />
           <option name="timeStamp" value="257" />
         </line-breakpoint>
@@ -2833,14 +2861,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="645">
           <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3189,18 +3209,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="28" column="24" lean-forward="false" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="36" column="46" lean-forward="false" selection-start-line="36" selection-start-column="46" selection-end-line="36" selection-end-column="46" />
+        <state relative-caret-position="273">
+          <caret line="37" column="64" lean-forward="false" selection-start-line="37" selection-start-column="64" selection-end-line="37" selection-end-column="64" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="37" column="43" lean-forward="false" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
+        <state relative-caret-position="471">
+          <caret line="37" column="85" lean-forward="false" selection-start-line="37" selection-start-column="85" selection-end-line="37" selection-end-column="85" />
           <folding />
         </state>
       </provider>
