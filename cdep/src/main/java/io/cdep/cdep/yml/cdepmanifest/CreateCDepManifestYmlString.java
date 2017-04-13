@@ -2,6 +2,7 @@ package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
+import io.cdep.cdep.Version;
 import io.cdep.cdep.utils.StringUtils;
 
 import static io.cdep.cdep.utils.Invariant.notNull;
@@ -39,6 +40,11 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   @Override
   public void visitiOSArchitecture(String name, @NotNull iOSArchitecture value) {
     appendIndented("%s: %s\r\n", notNull(name), value);
+  }
+
+  @Override
+  public void visitVersion(@NotNull String name, @NotNull Version value) {
+    appendIndented("%s: %s\r\n", name, value.value);
   }
 
   @Override

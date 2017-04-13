@@ -69,7 +69,7 @@ public class TestMergeCDepManifestYmls {
           }
           String actual = e.getMessage();
           if (!commonDifferences.contains(actual)) {
-            // e.printStackTrace();
+             e.printStackTrace();
             System.out.printf("expected.put(\"%s\", \"%s\");\n", key, actual);
             somethingUnexpected = true;
           }

@@ -26,7 +26,8 @@ public class TestCMakeGenerator {
   @Test
   public void testAllResolvedManifests() throws Exception {
     Map<String, String> expected = new HashMap<>();
-    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found");
+    expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, "
+        + "needed by com.github.jomof:firebase/admob:2.1.3-rev8");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
@@ -39,7 +40,7 @@ public class TestCMakeGenerator {
           fail("Expected failure");
         }
       } catch (RuntimeException e) {
-        if (expectedFailure == null || expectedFailure.equals(e.getMessage())) {
+        if (expectedFailure == null || !expectedFailure.equals(e.getMessage())) {
           System.out.printf("expected.put(\"%s\", \"%s\")\n", manifest.name, e.getMessage());
           unexpectedFailures = true;
         }

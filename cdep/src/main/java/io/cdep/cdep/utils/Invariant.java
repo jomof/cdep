@@ -1,29 +1,52 @@
 package io.cdep.cdep.utils;
 
+import static io.cdep.cdep.io.IO.infoln;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Methods for ensuring state at runtime
  */
 abstract public class Invariant {
+  private static List<List<RuntimeException>> requirementFailures = new ArrayList<>();
+
+  public static void pushScope() {
+    requirementFailures.add(new ArrayList<>());
+  }
+
+  public static List<RuntimeException> popScope() {
+    List<RuntimeException> errors = requirementFailures.get(0);
+    requirementFailures.remove(0);
+    return errors;
+  }
+
+  private static void report(RuntimeException e) {
+    if (requirementFailures.size() == 0) {
+      throw e;
+    }
+    infoln("  FAILURE: %s", e.getMessage());
+    requirementFailures.get(0).add(e);
+  }
 
   public static void fail(@NotNull String format, Object... parameters) {
-    throw new RuntimeException(String.format(format, parameters));
+    report(new RuntimeException(String.format(format, parameters)));
   }
 
   public static void require(boolean check, @NotNull String format, Object... parameters) {
     if (check) {
       return;
     }
-    throw new RuntimeException(String.format(format, parameters));
+    report(new RuntimeException(String.format(format, parameters)));
   }
 
   public static void require(boolean check) {
     if (!check) {
-      throw new RuntimeException("Invariant violation");
+      report(new RuntimeException("Invariant violation"));
     }
   }
 

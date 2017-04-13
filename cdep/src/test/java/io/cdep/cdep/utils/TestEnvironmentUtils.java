@@ -26,6 +26,9 @@ public class TestEnvironmentUtils {
     expected.put("singleABISqlite", "'singleABISqlite' does not have archive");
     expected.put("archiveMissingSha256", "'archiveMissingSha256' does not have archive.include");
     expected.put("admob", "'admob' does not have archive.include");
+    expected.put("templateWithNullArchives", "'templateWithNullArchives' does not have "
+        + "archive.include");
+    expected.put("templateWithOnlyFile", "'templateWithOnlyFile' does not have archive.include");
 
     boolean unexpectedFailure = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {

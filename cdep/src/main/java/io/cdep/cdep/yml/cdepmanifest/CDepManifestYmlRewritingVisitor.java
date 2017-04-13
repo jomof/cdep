@@ -1,6 +1,7 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.Version;
 
@@ -36,7 +37,11 @@ public class CDepManifestYmlRewritingVisitor {
     );
   }
 
-  protected LinuxArchive[] visitLinuxArchiveArray(LinuxArchive[] archives) {
+  @Nullable
+  protected LinuxArchive[] visitLinuxArchiveArray(@Nullable LinuxArchive[] archives) {
+    if (archives == null) {
+      return null;
+    }
     LinuxArchive[] result = new LinuxArchive[archives.length];
     for (int i = 0; i < result.length; ++i) {
       result[i] = visitLinuxArchive(archives[i]);
@@ -87,7 +92,11 @@ public class CDepManifestYmlRewritingVisitor {
     );
   }
 
-  protected iOSArchive[] visitiOSArchiveArray(iOSArchive[] archives) {
+  @Nullable
+  protected iOSArchive[] visitiOSArchiveArray(@Nullable iOSArchive[] archives) {
+    if (archives == null) {
+      return null;
+    }
     iOSArchive[] result = new iOSArchive[archives.length];
     for (int i = 0; i < result.length; ++i) {
       result[i] = visitiOSArchive(archives[i]);
@@ -134,7 +143,11 @@ public class CDepManifestYmlRewritingVisitor {
     );
   }
 
-  protected AndroidArchive[] visitAndroidArchiveArray(AndroidArchive[] archives) {
+  @Nullable
+  protected AndroidArchive[] visitAndroidArchiveArray(@Nullable AndroidArchive[] archives) {
+    if (archives == null) {
+      return null;
+    }
     AndroidArchive[] result = new AndroidArchive[archives.length];
     for (int i = 0; i < result.length; ++i) {
       result[i] = visitAndroidArchive(archives[i]);

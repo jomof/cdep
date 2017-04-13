@@ -1,0 +1,8 @@
+-classpath '/usr/local/google/home/jomof/projects/cdep/bootstrap/build/classes/main:/usr/local/google/home/jomof/projects/cdep/bootstrap/build/resources/main:/usr/local/google/home/jomof/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.17/7a27ea250c5130b2922b86dea63cbb1cc10a660c/snakeyaml-1.17.jar'
+-d '/usr/local/google/home/jomof/projects/cdep/bootstrap/build/docs/javadoc'
+-doctitle 'bootstrap dev API'
+-quiet 
+-windowtitle 'bootstrap dev API'
+'/usr/local/google/home/jomof/projects/cdep/bootstrap/src/main/java/io/cdep/bootstrap/WebUtils.java'
+'/usr/local/google/home/jomof/projects/cdep/bootstrap/src/main/java/io/cdep/bootstrap/Bootstrap.java'
+'/usr/local/google/home/jomof/projects/cdep/bootstrap/src/main/java/io/cdep/bootstrap/BuildInfo.java'

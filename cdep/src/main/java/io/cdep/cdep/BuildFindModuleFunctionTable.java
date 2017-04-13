@@ -214,7 +214,9 @@ public class BuildFindModuleFunctionTable {
 
   @NotNull
   private ModuleArchiveExpression buildArchive(@NotNull URL remote,
-      @NotNull String file, @NotNull String sha256, @NotNull Long size,
+      @NotNull String file,
+      @Nullable String sha256,
+      @Nullable Long size,
       @Nullable String include,
       @Nullable String lib, @NotNull AssignmentExpression explodedArchiveFolder)
       throws URISyntaxException, MalformedURLException {
@@ -409,8 +411,7 @@ public class BuildFindModuleFunctionTable {
 
     Map<Integer, List<AndroidArchive>> grouped = new HashMap<>();
     for (AndroidArchive android : androids) {
-      assert android.platform != null;
-      Integer platform = Integer.parseInt(android.platform);
+      Integer platform = android.platform == null ? null : Integer.parseInt(android.platform);
       List<AndroidArchive> group = grouped.get(platform);
       if (group == null) {
         group = new ArrayList<>();
@@ -426,8 +427,14 @@ public class BuildFindModuleFunctionTable {
     List<Expression> conditions = new ArrayList<>();
     List<Expression> expressions = new ArrayList<>();
 
-    for (int platform : platforms) {
-      conditions.add(0, gte(globals.cmakeSystemVersion, platform));
+    for (Integer platform : platforms) {
+      if (platform == null) {
+        // This is an error condition. We still want to generate a viable table with the right
+        // modules. This should probably be a boolean-typed abort.
+        conditions.add(0, gte(globals.cmakeSystemVersion, 0));
+      } else {
+        conditions.add(0, gte(globals.cmakeSystemVersion, platform));
+      }
       expressions.add(0,
           buildAndroidAbiExpression(globals, resolved, grouped.get(platform), explodedArchiveFolder, dependencies));
     }

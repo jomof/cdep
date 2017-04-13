@@ -21,17 +21,17 @@ public class PathMapping {
     for (String mapping : mappings) {
       String[] fromTo = mapping.split("->");
       if (fromTo.length == 1) {
-        if (!fromTo[0].endsWith("/...")) {
-          result.add(new PathMapping(
-              new File(fromTo[0].trim()),
-              new File(new File(fromTo[0].trim()).getName())));
-        } else {
+        if (fromTo[0].endsWith("/...")) {
           // Have some like path/...
           File baseFolder = new File(fromTo[0].substring(0, fromTo[0].length() - 4));
           for (File from : FileUtils.listFileTree(baseFolder)) {
             File to = new File(from.getPath().substring(baseFolder.getPath().length() + 1));
             result.add(new PathMapping(from, to));
           }
+        } else {
+          result.add(new PathMapping(
+              new File(fromTo[0].trim()),
+              new File(new File(fromTo[0].trim()).getName())));
         }
       } else if (fromTo.length == 2) {
         result.add(new PathMapping(

@@ -17,7 +17,7 @@ public class CDepManifestBuilder {
   }
 
   @NotNull
-  public static Android android(@Nullable HardNameDependency[] dependencies, @NotNull AndroidArchive archives[]) {
+  public static Android android(@Nullable HardNameDependency[] dependencies, @Nullable AndroidArchive archives[]) {
     return new Android(dependencies, archives);
   }
 

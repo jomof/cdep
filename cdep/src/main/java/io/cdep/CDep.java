@@ -42,6 +42,7 @@ import io.cdep.cdep.utils.EnvironmentUtils;
 import io.cdep.cdep.utils.ExpressionUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.utils.HashUtils;
+import io.cdep.cdep.utils.Invariant;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
@@ -79,7 +80,7 @@ public class CDep {
 
   public static int main(@NotNull String[] args) {
     try {
-      new CDep(System.out).go(args);
+      new CDep(System.out).go(args, false);
     } catch (Throwable e) {
       e.printStackTrace();
       return Integer.MIN_VALUE;
@@ -126,50 +127,64 @@ public class CDep {
     return result;
   }
 
-  void go(@NotNull String[] argArray) throws IOException, URISyntaxException, NoSuchAlgorithmException {
-    List<String> args = new ArrayList<>();
-    Collections.addAll(args, argArray);
+  void go(@NotNull String[] argArray, boolean showFirstExceptionStack)
+      throws IOException, URISyntaxException, NoSuchAlgorithmException {
+    try {
+      Invariant.pushScope();
+      List<String> args = new ArrayList<>();
+      Collections.addAll(args, argArray);
 
-    if (!handleHelp(args)) {
-      return;
-    }
-    if (!handleVersion(args)) {
-      return;
-    }
-    handleWorkingFolder(args);
-    handleDownloadFolder(args);
-    if (handleWrapper(args)) {
-      return;
-    }
-    if (handleStartupInfo(args)) {
-      return;
-    }
-    if (handleShow(args)) {
-      return;
-    }
-    if (handleLint(args)) {
-      return;
-    }
-    if (handleMerge(args)) {
-      return;
-    }
-    if (handleFetch(args)) {
-      return;
-    }
-    if (handleFullfill(args)) {
-      return;
-    }
-    if (!handleReadCDepYml()) {
-      return;
-    }
-    if (handleCreate(args)) {
-      return;
-    }
-    if (handleRedownload(args)) {
-      return;
-    }
+      if (!handleHelp(args)) {
+        return;
+      }
+      if (!handleVersion(args)) {
+        return;
+      }
+      handleWorkingFolder(args);
+      handleDownloadFolder(args);
+      if (handleWrapper(args)) {
+        return;
+      }
+      if (handleStartupInfo(args)) {
+        return;
+      }
+      if (handleShow(args)) {
+        return;
+      }
+      if (handleLint(args)) {
+        return;
+      }
+      if (handleMerge(args)) {
+        return;
+      }
+      if (handleFetch(args)) {
+        return;
+      }
+      if (handleFullfill(args)) {
+        return;
+      }
+      if (!handleReadCDepYml()) {
+        return;
+      }
+      if (handleCreate(args)) {
+        return;
+      }
+      if (handleRedownload(args)) {
+        return;
+      }
 
-    handleGenerateScript();
+      handleGenerateScript();
+    } finally {
+      List<RuntimeException> errors = Invariant.popScope();
+      if (errors.size() > 0) {
+        if (showFirstExceptionStack) {
+          // All errors will have been printed. Throw the first exception
+          throw errors.get(0);
+        }
+        infoln("%s errors, exiting with code -1.", errors.size());
+        System.exit(-1);
+      }
+    }
   }
 
   private void runBuilders(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) throws IOException {
@@ -548,13 +563,14 @@ public class CDep {
     }
     info("cdep %s\n", BuildInfo.PROJECT_VERSION);
     info(" cdep: download dependencies and generate build modules for current cdep.yml\n");
+    info(" cdep fullfill source-folder version manifest1.yml manifest2.yml: fill in template cdep-manifest.yml with hashes, sizes, zips, etc\n");
     info(" cdep show folders: show local download and file folders\n");
     info(" cdep show manifest: show cdep interpretation of cdep.yml\n");
     info(" cdep show include {coordinate}: show local include path for the given coordinate\n");
     info(" cdep redownload: redownload dependencies for current cdep.yml\n");
     info(" cdep create hashes: create or recreate cdep.sha256 file\n");
-    info(" cdep merge {coordinate} {coordinate2} ... outputmanifest.yml: " + "merge manifests into outputmanifest.yml\n");
-    info(" cdep merge headers {coordinate} {headers.zip} outputmanifest.yml: " + "merge header and manifest into " +
+    info(" cdep merge {coordinate} {coordinate2} ... outputmanifest.yml: merge manifests into outputmanifest.yml\n");
+    info(" cdep merge headers {coordinate} {headers.zip} outputmanifest.yml: merge header and manifest into " +
         "outputmanifest.yml\n");
     info(" cdep fetch {coordinate} {coordinate2} ... : download multiple packages\n");
     info(" cdep wrapper: copy cdep to the current folder\n");

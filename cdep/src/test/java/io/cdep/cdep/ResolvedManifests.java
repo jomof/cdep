@@ -6,6 +6,7 @@ import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.ReflectionUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 
+import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
@@ -15,6 +16,65 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class ResolvedManifests {
+  @NotNull
+  public static ResolvedManifest indistinguishableAndroidArchives() throws MalformedURLException {
+    return getResolvedManifest(
+        "coordinate:\n"
+            + "  groupId: com.github.jomof\n"
+            + "  artifactId: firebase/app\n"
+            + "  version: 0.0.0\n"
+            + "interfaces:\n"
+            + "  headers:\n"
+            + "    file: archive0.zip\n"
+            + "    sha256: ec747544670ffec2771af8a78d59200a440b5d511ed5c7b03fd5133665980e19\n"
+            + "    size: 3504\n"
+            + "    include: include\n"
+            + "android:\n"
+            + "  dependencies:\n"
+            + "  archives:\n"
+            + "    - file: archive1.zip\n"
+            + "      sha256: b64fbfe3fb87b873eec07cfd9aefbe77244914457d98bd3a12f8dcc6f5179673\n"
+            + "      size: 1093008\n"
+            + "      runtime: c++\n"
+            + "      abi: arm64-v8a\n"
+            + "      lib: libapp.a\n"
+            + "    - file: archive2.zip\n"
+            + "      sha256: c10494931ddb45e9c47e9c64249b78b0ce58e9a0d28f5eb15155fd098861841a\n"
+            + "      size: 968470\n"
+            + "      runtime: c++\n"
+            + "      abi: arm64-v8a\n"
+            + "      lib: libapp.a\n"   );
+  }
+
+  @NotNull
+  public static ResolvedManifest templateWithOnlyFile() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n"
+        + "  groupId: com.github.jomof\n"
+        + "  artifactId: firebase/app\n"
+        + "  version: ${version}\n"
+        + "interfaces:\n"
+        + "  headers:\n"
+        + "    file: ${source}/include/firebase/app.h -> firebase/app.h\n"
+        + "\n"
+        + "android:\n"
+        + "  archives:\n"
+        + "  - file: firebase_cpp_sdk/libs/android/arm64-v8a/c++/libapp.a\n");
+  }
+
+  @NotNull
+  public static ResolvedManifest templateWithNullArchives() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n"
+        + "  groupId: com.github.jomof\n"
+        + "  artifactId: firebase/app\n"
+        + "  version: ${version}\n"
+        + "interfaces:\n"
+        + "  headers:\n"
+        + "    file: ${source}/include/firebase/app.h -> firebase/app.h\n"
+        + "\n"
+        + "android:\n"
+        + "  archives:\n");
+  }
+
   @NotNull
   public static ResolvedManifest singleABISqlite() throws MalformedURLException {
     return getResolvedManifest("coordinate:\n" +
@@ -715,17 +775,20 @@ public class ResolvedManifests {
         continue;
       }
       ResolvedManifest resolved = (ResolvedManifest) ReflectionUtils.invoke(method, null);
-      result.add(new NamedManifest(method.getName(), resolved));
+      String body = CreateCDepManifestYmlString.create(resolved.cdepManifestYml);
+      result.add(new NamedManifest(method.getName(), body, resolved));
     }
     return result;
   }
 
   public static class NamedManifest {
     final public String name;
+    final public String body;
     final public ResolvedManifest resolved;
 
-    NamedManifest(String name, ResolvedManifest resolved) {
+    NamedManifest(String name, String body, ResolvedManifest resolved) {
       this.name = name;
+      this.body = body;
       this.resolved = resolved;
     }
   }

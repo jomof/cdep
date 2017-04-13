@@ -20,14 +20,23 @@ public class TestZipFilesRewritingVisitor {
         .replace("${source}", new File("../third_party/stb").getAbsolutePath())
         .visitCDepManifestYml(before);
 
-    File output = new File(".test-files/testZipFullfill").getAbsoluteFile();
-    output.delete();
-    ZipFilesRewritingVisitor zipper = new ZipFilesRewritingVisitor(output);
+    File outputFolder = new File(".test-files/testZipFullfill").getAbsoluteFile();
+    outputFolder.delete();
+
+    File layout = new File(outputFolder, "layout");
+    layout.delete();
+    layout.mkdirs();
+
+    File staging = new File(outputFolder, "staging");
+    staging.delete();
+    staging.mkdirs();
+
+    ZipFilesRewritingVisitor zipper = new ZipFilesRewritingVisitor(layout, staging);
     CDepManifestYml afterZipping = zipper.visitCDepManifestYml(afterSubstitution);
 
-    assertThat(zipper.getLayoutFolder().isDirectory()).isTrue();
-    assertThat(new File(zipper.getLayoutFolder(), "archive0.zip").isFile()).isTrue();
-    assertThat(afterZipping.interfaces.headers.file).isEqualTo("archive0.zip");
+    assertThat(layout.isDirectory()).isTrue();
+    assertThat(new File(layout, "archive0.zip").isFile()).isTrue();
+    assertThat(afterZipping.interfaces.headers.file).isEqualTo("com.github.jomof_stb_divide_${version}_0.zip");
     assertThat(afterZipping.interfaces.headers.include).isEqualTo("include");
   }
 }

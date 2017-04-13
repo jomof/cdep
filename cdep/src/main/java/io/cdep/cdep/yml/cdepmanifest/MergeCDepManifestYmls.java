@@ -94,7 +94,6 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
     covisitHardNameDependencyArray("dependencies", left.dependencies, right.dependencies);
     covisitAndroidArchiveArray("archive", left.archives, right.archives);
     AndroidArchive archives[] = (AndroidArchive[]) returnValue;
-    assert archives != null;
     returnValue = android(left.dependencies, archives);
   }
 

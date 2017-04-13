@@ -1,5 +1,7 @@
 package io.cdep.cdep.fullfill;
 
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
@@ -23,10 +25,17 @@ public class DependencyHashRewritingVisitor extends CDepManifestYmlRewritingVisi
 
   @Override
   protected HardNameDependency visitHardNameDependency(HardNameDependency dependency) {
+    require(dependency.compile != null, "Dependency had no compile field");
     if (dependency.sha256 == null) {
       try {
-        ResolvedManifest resolved = new Resolver(environment).resolveAny(new SoftNameDependency(dependency.compile));
-        File manifest = environment.tryGetLocalDownloadedFile(resolved.cdepManifestYml.coordinate, resolved.remote);
+        ResolvedManifest resolved = new Resolver(environment).resolveAny(
+            new SoftNameDependency(
+                dependency.compile));
+        require(resolved != null, "Could not resolve dependency %s",
+            dependency.compile);
+        File manifest = environment.tryGetLocalDownloadedFile(
+            resolved.cdepManifestYml.coordinate,
+            resolved.remote);
         return new HardNameDependency(
             resolved.cdepManifestYml.coordinate.toString(),
             HashUtils.getSHA256OfFile(manifest));

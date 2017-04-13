@@ -58,7 +58,6 @@ public class AndroidArchive {
       String include,
       String lib,
       String flavor) {
-    require(abi != null);
     this.file = file;
     this.sha256 = sha256;
     this.size = size;
@@ -71,6 +70,5 @@ public class AndroidArchive {
     this.include = include;
     this.lib = lib;
     this.flavor = flavor;
-    require(this.abi != null);
   }
 }

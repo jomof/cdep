@@ -1,10 +1,6 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LIBS=$DIR/cdep/build/libs
 
-echo DIR=$DIR
-ls -LRlh $LIBS
-echo done
-
 TRAVIS_CDEP_JAR=$LIBS/cdep-dev.jar
 if [ ! -f "$TRAVIS_CDEP_JAR" ]; then
     TRAVIS_CDEP_JAR=$LIBS/cdep-${TRAVIS_TAG}.jar
@@ -14,20 +10,12 @@ if [ ! -f "$TRAVIS_CDEP_JAR" ]; then
     exit -1
 fi
 
-ls -l $TRAVIS_CDEP_JAR
-echo done
-
-
 BOOTSTRAP_MANIFEST=$DIR/cdep/build/libs/bootstrap.yml
-echo BOOTSTRAP_MANIFEST=$BOOTSTRAP_MANIFEST
-
 echo entry: io.cdep.CDep > $BOOTSTRAP_MANIFEST
 echo dependencies: >> $BOOTSTRAP_MANIFEST
 printf "%s\n" "- $TRAVIS_CDEP_JAR" >>$BOOTSTRAP_MANIFEST
-cat $BOOTSTRAP_MANIFEST
 
-echo ./cdep $BOOTSTRAP_MANIFEST
-$DIR/.package/redist/cdep $BOOTSTRAP_MANIFEST wrapper
+$DIR/.package/redist/cdep $BOOTSTRAP_MANIFEST wrapper > /tmp/nul
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 ./cdep $BOOTSTRAP_MANIFEST "$@"
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi

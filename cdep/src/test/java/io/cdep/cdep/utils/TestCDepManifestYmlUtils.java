@@ -257,7 +257,11 @@ public class TestCDepManifestYmlUtils {
         "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
     expected.put("archiveMissingSize", "Archive com.github.jomof:vectorial:0.0.0 is missing size or it is zero");
     expected.put("archiveMissingFile", "Archive com.github.jomof:vectorial:0.0.0 is missing file");
-
+    expected.put("templateWithNullArchives", "Package 'com.github.jomof:firebase/app:${version}' "
+        + "has malformed version, expected major.minor.point[-tweak] but there were no dots");
+    expected.put("templateWithOnlyFile", "Package 'com.github.jomof:firebase/app:${version}' has "
+        + "malformed version, expected major.minor.point[-tweak] but there were no dots");
+    expected.put("indistinguishableAndroidArchives", "Android archive com.github.jomof:firebase/app:0.0.0 file archive2.zip is indistinguishable at build time from archive1.zip given the information in the manifest");
     boolean unexpectedFailure = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       String key = manifest.name;
@@ -313,7 +317,21 @@ public class TestCDepManifestYmlUtils {
     expected.put("sqliteiOS-sqliteiOS",
         "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to the same archive file " +
             "'sqlite-ios-platform-iPhoneOS-architecture-armv7-sdk-9.3.zip'");
-
+    expected.put("templateWithNullArchives-templateWithNullArchives", "Package 'com.github.jomof:firebase/"
+        + "app:${version}' has malformed version, expected major.minor.point[-tweak] but there were no dots");
+    expected.put("templateWithNullArchives-templateWithOnlyFile", "Package 'com.github.jomof:"
+        + "firebase/app:${version}' has malformed version, expected major.minor.point[-tweak] but there were no dots");
+    expected.put("templateWithOnlyFile-templateWithNullArchives", "Package 'com.github.jomof:firebase/"
+        + "app:${version}' has malformed version, expected major.minor.point[-tweak] but there were no dots");
+    expected.put("templateWithOnlyFile-templateWithOnlyFile", "Package 'com.github.jomof:firebase/"
+        + "app:${version}' has malformed version, expected major.minor.point[-tweak] but there were no dots");
+    expected.put("sqlite-sqlite", "Android archive com.github.jomof:sqlite:0.0.0 file sqlite-android-cxx-platform-12.zip is indistinguishable at build time from sqlite-android-cxx-platform-12.zip given the information in the manifest");
+    expected.put("sqlite-singleABI", "Android archive com.github.jomof:sqlite:0.0.0 file sqlite-android-cxx-platform-12-armeabi.zip is indistinguishable at build time from sqlite-android-cxx-platform-12.zip given the information in the manifest");
+    expected.put("sqliteAndroid-sqliteAndroid", "Android archive com.github.jomof:sqlite:3.16.2-rev33 file sqlite-android-cxx-platform-12.zip is indistinguishable at build time from sqlite-android-cxx-platform-12.zip given the information in the manifest");
+    expected.put("singleABI-sqlite", "Android archive com.github.jomof:sqlite:0.0.0 file sqlite-android-cxx-platform-12.zip is indistinguishable at build time from sqlite-android-cxx-platform-12-armeabi.zip given the information in the manifest");
+    expected.put("singleABI-singleABI", "Android archive com.github.jomof:sqlite:0.0.0 file sqlite-android-cxx-platform-12-armeabi.zip is indistinguishable at build time from sqlite-android-cxx-platform-12-armeabi.zip given the information in the manifest");
+    expected.put("indistinguishableAndroidArchives-indistinguishableAndroidArchives", "Android archive com.github.jomof:firebase/app:0.0.0 file archive2.zip is indistinguishable at build time from archive1.zip given the information in the manifest");
+    expected.put("singleABISqlite-singleABISqlite", "Android archive com.github.jomof:sqlite:3.16.2-rev45 file sqlite-android-cxx-platform-12-armeabi.zip is indistinguishable at build time from sqlite-android-cxx-platform-12-armeabi.zip given the information in the manifest");
     boolean somethingUnexpected = false;
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {
       for (ResolvedManifests.NamedManifest manifest2 : ResolvedManifests.all()) {

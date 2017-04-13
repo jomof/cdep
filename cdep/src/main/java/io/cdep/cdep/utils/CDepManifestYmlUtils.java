@@ -72,6 +72,8 @@ public class CDepManifestYmlUtils {
     private Coordinate coordinate = null;
     @Nullable
     private CDepManifestYmlVersion sourceVersion = null;
+    @NotNull
+    private Map<String, AndroidArchive> distinguishableAndroidArchives = new HashMap<>();
 
     @Override
     public void visitString(@Nullable String name, @NotNull String node) {
@@ -133,7 +135,33 @@ public class CDepManifestYmlUtils {
       require(value.file != null && value.file.length() != 0, "Android archive %s is missing file", coordinate);
       require(value.sha256 != null && value.sha256.length() != 0, "Android archive %s is missing sha256", coordinate);
       require(value.size != null && value.size != 0, "Android archive %s is missing size or it is zero", coordinate);
+
+      // Have we seen another Archive that is indistinguishable from this one?
+      String key = nullToStar(value.abi) + "-";
+      key += nullToStar(value.platform) + "-";
+      key += nullToStar(value.runtime) + "-";
+      AndroidArchive other = distinguishableAndroidArchives.get(key);
+
+      if (other != null) {
+        require(false,
+            "Android archive %s file %s is indistinguishable at build time from %s given the information in the manifest",
+            coordinate,
+            archiveName(value),
+            archiveName(other));
+      }
+      distinguishableAndroidArchives.put(key, value);
       super.visitAndroidArchive(name, value);
+    }
+
+    private String archiveName(AndroidArchive value) {
+      return value.file == null ? "<unknown>" : value.file;
+    }
+
+    private static String nullToStar(String string) {
+      if (string == null) {
+        return "*";
+      }
+      return string;
     }
 
     @Override

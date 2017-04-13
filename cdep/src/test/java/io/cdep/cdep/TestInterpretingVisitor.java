@@ -37,6 +37,11 @@ public class TestInterpretingVisitor {
         "Abort: Target platform Linux is not supported by com.github.jomof:sqlite:0.0.0. Supported: Android");
     expected.put("singleABISqlite",
         "Abort: Target platform Linux is not supported by com.github.jomof:sqlite:3.16.2-rev45. Supported: Android Darwin");
+    expected.put("templateWithNullArchives", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
+    expected.put("templateWithOnlyFile", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
+    expected.put("indistinguishableAndroidArchives", "Abort: Target platform Linux is not supported by "
+        + "com.github.jomof:firebase/app:0.0.0. Supported: Android");
+
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
@@ -99,12 +104,15 @@ public class TestInterpretingVisitor {
         "Abort: Target platform Android is not supported by com.github.jomof:sqlite:0.0.0. Supported: Linux");
     expected.put("archiveMissingFile", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("admob",
-        "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github.jomof:firebase/admob:2.1.3-rev8");
+        "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github.jomof:firebase"
+            + "/admob:2.1.3-rev8");
     expected.put("archiveMissingSize", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("archiveMissingSha256", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("sqliteiOS",
         "Abort: Target platform Android is not supported by com.github.jomof:sqlite:3.16.2-rev33. Supported: Darwin");
-
+    expected.put("templateWithNullArchives", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
+    expected.put("templateWithOnlyFile", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
+    expected.put("indistinguishableAndroidArchives", "Abort: Android ABI x86 is not supported by com.github.jomof:firebase/app:0.0.0. Supported: arm64-v8a ");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
@@ -148,7 +156,6 @@ public class TestInterpretingVisitor {
           System.out.printf("expected.put(\"%s\", \"%s\");\n", manifest.name, e.getMessage());
         }
       }
-
     }
     if (unexpectedFailures) {
       fail("Unexpected failures. See console.");
@@ -171,6 +178,10 @@ public class TestInterpretingVisitor {
         "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, needed by com.github.jomof:firebase/admob:2.1.3-rev8");
     expected.put("singleABI",
         "Abort: Target platform Darwin is not supported by com.github.jomof:sqlite:0.0.0. Supported: Android");
+    expected.put("templateWithNullArchives", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
+    expected.put("templateWithNullArchives", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
+    expected.put("templateWithOnlyFile", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
+    expected.put("indistinguishableAndroidArchives", "Abort: Target platform Darwin is not supported by com.github.jomof:firebase/app:0.0.0. Supported: Android");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       final BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();

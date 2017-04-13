@@ -1,5 +1,7 @@
 package io.cdep.cdep;
 
+import static io.cdep.cdep.utils.Invariant.fail;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.ast.finder.AbortExpression;
@@ -32,27 +34,31 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
     ModuleArchive archive = superVisitModuleArchiveExpression(expr);
     if (archive.fullIncludePath != null) {
       if (!archive.fullIncludePath.getParentFile().isDirectory()) {
-        throw new RuntimeException(String.format("Expected '%s' folder to be created but it wasn't.",
-            archive.fullIncludePath.getParentFile()));
+        fail("Expected '%s' folder to be created but it wasn't.",
+            archive.fullIncludePath.getParentFile());
       }
       if (!archive.fullIncludePath.isDirectory()) {
-        throw new RuntimeException(String.format("Downloaded '%s' did not contain include folder '%s' at it's root.\nLocal path: %s\n If you own this package you can add \"include:\" to the archive entry in cdep-manifest.yml to indicate that there is no include folder.",
+        fail("Downloaded '%s' did not contain include folder '%s' at it's root.\n"
+                + "Local path: %s\n"
+                + " If you own this package you can add \"include:\" "
+                + "to the archive entry in cdep-manifest.yml to indicate that there is no "
+                + "include folder.",
             archive.remote,
             archive.fullIncludePath.getName(),
-            archive.fullIncludePath));
+            archive.fullIncludePath);
       }
     }
     if (archive.fullLibraryName != null) {
       if (!archive.fullLibraryName.getParentFile().isDirectory()) {
-        throw new RuntimeException(String.format("Expected '%s' folder to be created but it wasn't.",
-            archive.fullLibraryName.getParentFile()));
+        fail("Expected '%s' folder to be created but it wasn't.",
+            archive.fullLibraryName.getParentFile());
       }
       if (!archive.fullLibraryName.isFile()) {
-        throw new RuntimeException(String.format("Downloaded '%s' did not contain library '%s/%s' at it's root.\nLocal path: %s",
+        fail("Downloaded '%s' did not contain library '%s/%s' at it's root.\nLocal path: %s",
             archive.remote,
             archive.fullLibraryName.getParentFile().getName(),
             archive.fullLibraryName.getName(),
-            archive.fullLibraryName));
+            archive.fullLibraryName);
       }
     }
     return archive;
