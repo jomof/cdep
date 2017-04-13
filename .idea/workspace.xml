@@ -2,138 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8b0bcbd-425a-46e6-91dc-39d438a1d534" name="Default" comment="Fullfillment&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/mini-firebase/cdep-manifest-admob.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/mini-firebase/cdep-manifest-analytics.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/mini-firebase/cdep-manifest-app.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/mini-firebase/cdep-manifest-auth.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/mini-firebase/cdep-manifest-database.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/mini-firebase/cdep-manifest-invites.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/mini-firebase/cdep-manifest-messaging.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/mini-firebase/cdep-manifest-remote_config.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/mini-firebase/cdep-manifest-storage.yml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/generate_xml_from_google_services_json.exe" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/generate_xml_from_google_services_json.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/readme.md" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/admob.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/admob.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/admob/banner_view.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/admob/banner_view.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/admob/interstitial_ad.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/admob/interstitial_ad.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/admob/native_express_ad_view.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/admob/native_express_ad_view.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/admob/rewarded_video.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/admob/rewarded_video.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/admob/types.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/admob/types.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/analytics.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/analytics.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/analytics/event_names.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/analytics/event_names.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/analytics/parameter_names.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/analytics/parameter_names.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/analytics/user_property_names.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/analytics/user_property_names.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/app.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/app.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/auth.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/auth.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/auth/credential.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/auth/credential.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/auth/types.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/auth/types.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/auth/user.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/auth/user.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/database.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/database.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/database/common.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/database/common.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/database/data_snapshot.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/database/data_snapshot.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/database/database_reference.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/database/database_reference.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/database/disconnection.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/database/disconnection.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/database/listener.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/database/listener.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/database/mutable_data.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/database/mutable_data.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/database/query.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/database/query.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/database/transaction.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/database/transaction.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/future.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/future.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/internal/common.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/internal/common.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/internal/future_impl.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/internal/future_impl.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/invites.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/invites.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/log.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/log.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/messaging.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/messaging.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/remote_config.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/remote_config.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/storage.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/storage.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/storage/common.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/storage/common.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/storage/controller.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/storage/controller.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/storage/listener.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/storage/listener.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/storage/metadata.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/storage/metadata.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/storage/storage_reference.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/storage/storage_reference.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/util.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/util.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/variant.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/variant.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/firebase/version.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/firebase/version.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/include/google_play_services/availability.h" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/include/google_play_services/availability.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86/c++/libadmob.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86/c++/libadmob.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86/c++/libanalytics.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86/c++/libanalytics.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86/c++/libapp.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86/c++/libapp.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86/c++/libauth.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86/c++/libauth.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86/c++/libdatabase.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86/c++/libdatabase.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86/c++/libinvites.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86/c++/libinvites.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86/c++/libmessaging.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86/c++/libmessaging.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86/c++/libremote_config.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86/c++/libremote_config.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86/c++/libstorage.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86/c++/libstorage.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86_64/c++/libadmob.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86_64/c++/libadmob.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86_64/c++/libanalytics.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86_64/c++/libanalytics.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86_64/c++/libapp.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86_64/c++/libapp.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86_64/c++/libauth.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86_64/c++/libauth.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86_64/c++/libdatabase.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86_64/c++/libdatabase.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86_64/c++/libinvites.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86_64/c++/libinvites.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86_64/c++/libmessaging.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86_64/c++/libmessaging.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86_64/c++/libremote_config.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86_64/c++/libremote_config.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/android/x86_64/c++/libstorage.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/android/x86_64/c++/libstorage.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/darwin/libadmob.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/darwin/libadmob.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/darwin/libanalytics.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/darwin/libanalytics.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/darwin/libapp.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/darwin/libapp.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/darwin/libauth.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/darwin/libauth.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/darwin/libdatabase.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/darwin/libdatabase.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/darwin/libinvites.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/darwin/libinvites.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/darwin/libmessaging.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/darwin/libmessaging.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/darwin/libremote_config.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/darwin/libremote_config.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/darwin/libstorage.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/darwin/libstorage.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/arm64/libadmob.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/arm64/libadmob.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/arm64/libanalytics.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/arm64/libanalytics.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/arm64/libapp.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/arm64/libapp.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/arm64/libauth.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/arm64/libauth.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/arm64/libdatabase.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/arm64/libdatabase.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/arm64/libinvites.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/arm64/libinvites.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/arm64/libmessaging.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/arm64/libmessaging.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/arm64/libremote_config.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/arm64/libremote_config.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/arm64/libstorage.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/arm64/libstorage.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/universal/libadmob.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/universal/libadmob.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/universal/libanalytics.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/universal/libanalytics.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/universal/libapp.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/universal/libapp.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/universal/libauth.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/universal/libauth.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/universal/libdatabase.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/universal/libdatabase.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/universal/libinvites.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/universal/libinvites.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/universal/libmessaging.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/universal/libmessaging.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/universal/libremote_config.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/universal/libremote_config.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/ios/universal/libstorage.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/ios/universal/libstorage.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/linux/libadmob.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/linux/libadmob.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/linux/libanalytics.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/linux/libanalytics.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/linux/libapp.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/linux/libapp.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/linux/libauth.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/linux/libauth.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/linux/libdatabase.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/linux/libdatabase.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/linux/libinvites.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/linux/libinvites.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/linux/libmessaging.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/linux/libmessaging.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/linux/libremote_config.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/linux/libremote_config.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/linux/libstorage.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/linux/libstorage.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/windows/libadmob.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/windows/libadmob.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/windows/libanalytics.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/windows/libanalytics.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/windows/libapp.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/windows/libapp.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/windows/libauth.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/windows/libauth.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/windows/libdatabase.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/windows/libdatabase.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/windows/libinvites.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/windows/libinvites.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/windows/libmessaging.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/windows/libmessaging.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/windows/libremote_config.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/windows/libremote_config.a" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/third_party/mini-firebase/libs/windows/libstorage.a" afterPath="$PROJECT_DIR$/third_party/mini-firebase/firebase_cpp_sdk/libs/windows/libstorage.a" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/mathfu" afterPath="$PROJECT_DIR$/third_party/mathfu" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/tinydir" afterPath="$PROJECT_DIR$/third_party/tinydir" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/vectorial" afterPath="$PROJECT_DIR$/third_party/vectorial" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CheckLocalFileSystemIntegrity.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CheckLocalFileSystemIntegrity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/FillMissingFieldsBasedOnFilepath.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/FillMissingFieldsBasedOnFilepath.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/Fullfill.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/Fullfill.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/StringUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/StringUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestFullfill.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestFullfill.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestHashAndSizeRewritingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestZipFilesRewritingVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smoke-test/cdep.yml" afterPath="$PROJECT_DIR$/smoke-test/cdep.yml" />
     </list>
     <ignored path="$PROJECT_DIR$/bootstrap/.gradle/" />
     <ignored path="$PROJECT_DIR$/bootstrap/build/" />
@@ -247,6 +119,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="54">
+              <caret line="3" column="54" lean-forward="false" selection-start-line="3" selection-start-column="54" selection-end-line="10" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Fullfill.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/Fullfill.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -287,7 +169,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FillMissingFieldsBasedOnFilepath.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FillMissingFieldsBasedOnFilepath.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/FillMissingFieldsBasedOnFilepath.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="989">
@@ -322,16 +204,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="126">
               <caret line="23" column="21" lean-forward="false" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ZipFilesRewritingVisitor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="636">
-              <caret line="161" column="0" lean-forward="false" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1257,7 +1129,6 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/smoke-test/cdep.yml" />
         <option value="$PROJECT_DIR$/bootstrap/src/test/java/io/cdep/bootstrap/TestBootstrap.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/V2Reader.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/CDepSHA256Utils.java" />
@@ -1293,6 +1164,7 @@
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/FillMissingFieldsBasedOnFilepath.java" />
+        <option value="$PROJECT_DIR$/smoke-test/cdep.yml" />
       </list>
     </option>
   </component>
@@ -1447,79 +1319,7 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="io/cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="io/cdep">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1533,7 +1333,7 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
+            <PATH_ELEMENT USER_OBJECT="cdep">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1541,227 +1341,7 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="main">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="main">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="io/cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="main">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="io/cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="main">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="io/cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="generator">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="main">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="io/cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="fullfill">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT=".test-files">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT=".test-files">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="testMiniFirebase">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="staging">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep-cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT=".test-files">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="testMiniFirebase">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="cdep">
+            <PATH_ELEMENT USER_OBJECT="smoke-test">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -2750,7 +2330,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="33" y="-4" width="2527" height="1604" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -2764,7 +2344,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42354533" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32840833" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32746956" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32746956" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2579605" sideWeight="0.4964467" order="0" side_tool="false" content_ui="combo" />
@@ -3206,14 +2786,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="18" lean-forward="false" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/Invariant.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -3436,6 +3008,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="989">
           <caret line="59" column="28" lean-forward="false" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="54" lean-forward="false" selection-start-line="3" selection-start-column="54" selection-end-line="10" selection-end-column="56" />
           <folding />
         </state>
       </provider>
