@@ -65,8 +65,8 @@ public class CMakeGenerator {
   }
 
   public void generate() throws IOException {
-    String text = create();
     File file = getCMakeConfigurationFile();
+    String text = create();
     info("Generating %s\n", file);
     FileUtils.writeTextToFile(file, text);
   }

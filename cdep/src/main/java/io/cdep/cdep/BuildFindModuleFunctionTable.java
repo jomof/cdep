@@ -480,9 +480,11 @@ public class BuildFindModuleFunctionTable {
       cases.put(string(abi), buildSingleArchiveResolution(resolved, archive, abi, explodedArchiveFolder, dependencies));
     }
 
-    Expression prior = abort(String.format("Android ABI %%s is not supported by %s. Supported: %s",
+    Expression prior = abort(String.format("Android ABI %%s is not supported by %s for platform %%s. Supported: %s",
         manifest.coordinate,
-        supported), globals.cdepDeterminedAndroidAbi);
+        supported),
+          globals.cdepDeterminedAndroidAbi,
+          globals.cmakeSystemVersion);
 
     Expression bool[] = new Expression[cases.size()];
     Expression expressions[] = new Expression[cases.size()];

@@ -2,6 +2,7 @@ package io.cdep.cdep.fullfill;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.utils.ArchiveUtils;
+import io.cdep.cdep.utils.StringUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
@@ -37,20 +38,10 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   @Override
   public CDepManifestYml visitCDepManifestYml(@NotNull CDepManifestYml value) {
     prefix = value.coordinate.artifactId;
-    prefix = prefix.replace("/", "_");
-    prefix = prefix.replace("\\", "_");
-    prefix = prefix.replace(":", "_");
+    prefix = prefix.replace("/", "-");
+    prefix = prefix.replace("\\", "-");
+    prefix = prefix.replace(":", "-");
     return super.visitCDepManifestYml(value);
-  }
-
-  private String appendKeys(String... keys) {
-    String key = prefix;
-    for (int i = 0; i < keys.length; ++i) {
-      if (keys[i] != null) {
-        key += "-" + keys[i];
-      }
-    }
-    return key;
   }
 
   @Override
@@ -64,13 +55,13 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     PathMapping mappings[] = PathMapping.parse(archive.file);
     require(mappings.length > 0,
         "File mapping '%s' did not resolve to any local files", archive.file);
-    File layoutZipFile = getLayoutZipFile(appendKeys("header"));
+    File layoutZipFile = getLayoutZipFile(prefix, "header");
     File stagingZipFolder = getStagingZipFolder(layoutZipFile, "include");
 
     copyFilesToStaging(mappings, stagingZipFolder);
 
     // Zip that file
-    zipStagingFilesIntoArchive(layoutZipFile, stagingZipFolder);
+    zipStagingFilesIntoArchive(layoutZipFile, stagingZipFolder.getParentFile());
 
     zips.add(layoutZipFile);
 
@@ -93,14 +84,20 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     PathMapping mappings[] = PathMapping.parse(archive.file);
     require(mappings.length > 0,
         "File mapping '%s' did not resolve to any local files", archive.file);
-    File layoutZipFile = getLayoutZipFile(appendKeys(archive.ndk, archive.runtime,
-        archive.platform, archive.builder, archive.flavor));
-    File stagingZipFolder = getStagingZipFolder(layoutZipFile, archive.abi);
+    File layoutZipFile = getLayoutZipFile(
+        prefix,
+        archive.ndk,
+        archive.runtime,
+        archive.platform,
+        archive.builder,
+        archive.flavor,
+        archive.abi);
+    File stagingZipFolder = getStagingZipFolder(layoutZipFile, "lib/" + archive.abi);
 
     copyFilesToStaging(mappings, stagingZipFolder);
 
     // Zip that file
-    zipStagingFilesIntoArchive(layoutZipFile, stagingZipFolder);
+    zipStagingFilesIntoArchive(layoutZipFile, stagingZipFolder.getParentFile().getParentFile());
 
     zips.add(layoutZipFile);
 
@@ -128,7 +125,8 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   }
 
   @NotNull
-  private File getLayoutZipFile(String prefix) {
+  private File getLayoutZipFile(String ... keys) {
+    String prefix = StringUtils.joinOnSkipNull("-", keys);
     File layoutZipFile = new File(layout, prefix + ".zip");
     if (layoutZipFile.exists()) {
       layoutZipFile.delete();
@@ -154,9 +152,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
 
   private void zipStagingFilesIntoArchive(File layoutZipFile, File stagingZipFolder) {
     try {
-      infoln("Zipping folder %s to %s", stagingZipFolder.getParentFile().toPath(),
-          layoutZipFile.toPath());
-      ArchiveUtils.pack(stagingZipFolder.getParentFile().toPath(), layoutZipFile.toPath());
+      ArchiveUtils.pack(stagingZipFolder.toPath(), layoutZipFile.toPath());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -164,7 +160,6 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
 
   private void copyFileToStaging(PathMapping mapping, File stagingZipFile) {
     try {
-      infoln("Copying %s to %s", mapping.from.toPath(), stagingZipFile.toPath());
       Files.copy(mapping.from.toPath(), stagingZipFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     } catch (IOException e) {
       throw new RuntimeException(e);

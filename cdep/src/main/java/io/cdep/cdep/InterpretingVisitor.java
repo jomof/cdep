@@ -54,6 +54,9 @@ public class InterpretingVisitor {
       }
     }
     if (clazz.equals(String.class)) {
+      if (o instanceof Integer) {
+        return o.toString();
+      }
       if (o instanceof File) {
         return o.toString();
       }

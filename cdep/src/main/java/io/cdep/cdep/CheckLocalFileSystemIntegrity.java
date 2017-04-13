@@ -38,7 +38,7 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
             archive.fullIncludePath.getParentFile());
       }
       if (!archive.fullIncludePath.isDirectory()) {
-        fail("Downloaded '%s' did not contain include folder '%s' at it's root.\n"
+        fail("Downloaded '%s' did not contain include folder '%s' at its root.\n"
                 + "Local path: %s\n"
                 + " If you own this package you can add \"include:\" "
                 + "to the archive entry in cdep-manifest.yml to indicate that there is no "
@@ -54,7 +54,7 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
             archive.fullLibraryName.getParentFile());
       }
       if (!archive.fullLibraryName.isFile()) {
-        fail("Downloaded '%s' did not contain library '%s/%s' at it's root.\nLocal path: %s",
+        fail("Downloaded '%s' did not contain library '%s/%s' at its root.\nLocal path: %s",
             archive.remote,
             archive.fullLibraryName.getParentFile().getName(),
             archive.fullLibraryName.getName(),

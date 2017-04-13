@@ -56,24 +56,9 @@ public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVi
 
     String platform = archive.platform;
     if (platform == null) {
-      if (abi != null) {
-        switch (abi) {
-          case "mips":
-          case "x86":
-          case "armeabi":
-            platform = "12";
-            break;
-          case "arm64-v8a":
-          case "armeabi-v7a":
-          case "mips64":
-          case "x86_64":
-            platform = "21";
-            break;
-          default:
-            require(false, "Unexpected ABI %s, could not estimate platform.", abi);
-            break;
-        }
-      }
+      // If the platform isn't specified then optimistically choose a very old version for
+      // best compatibility.
+      platform = "12";
     }
     return new AndroidArchive(
         archive.file,

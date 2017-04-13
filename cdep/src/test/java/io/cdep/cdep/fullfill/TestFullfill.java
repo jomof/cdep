@@ -81,6 +81,23 @@ public class TestFullfill {
   }
 
   @Test
+  public void testMiniFirebase() throws IOException {
+    File templates[] = new File[] {
+        new File("../third_party/mini-firebase/cdep-manifest-app.yml"),
+        new File("../third_party/mini-firebase/cdep-manifest-database.yml")
+    };
+    File output = new File(".test-files/testMiniFirebase").getAbsoluteFile();
+    output.delete();
+    List<File> result = Fullfill.multiple(environment, templates, output,
+        new File("../third_party/mini-firebase/firebase_cpp_sdk"), "1.2.3");
+    File manifestFile = new File(output, "layout");
+    manifestFile = new File(manifestFile, "cdep-manifest-database.yml");
+    CDepManifestYml manifest = CDepManifestYmlUtils.convertStringToManifest(FileUtils.readAllText(manifestFile));
+    assertThat(manifest.dependencies[0].sha256).isNotNull();
+    assertThat(manifest.dependencies[0].sha256).isNotEmpty();
+  }
+
+  @Test
   public void testAllResolvedManifests() throws Exception {
     Map<String, String> expected = new HashMap<>();
     expected.put("sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");

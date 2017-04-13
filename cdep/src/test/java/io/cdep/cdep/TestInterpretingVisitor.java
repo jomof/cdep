@@ -112,7 +112,8 @@ public class TestInterpretingVisitor {
         "Abort: Target platform Android is not supported by com.github.jomof:sqlite:3.16.2-rev33. Supported: Darwin");
     expected.put("templateWithNullArchives", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("templateWithOnlyFile", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
-    expected.put("indistinguishableAndroidArchives", "Abort: Android ABI x86 is not supported by com.github.jomof:firebase/app:0.0.0. Supported: arm64-v8a ");
+    expected.put("indistinguishableAndroidArchives", "Abort: Android ABI x86 is not supported by "
+        + "com.github.jomof:firebase/app:0.0.0 for platform 21. Supported: arm64-v8a ");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
@@ -152,6 +153,7 @@ public class TestInterpretingVisitor {
         }
       } catch (RuntimeException e) {
         if (expectedFailure == null || !expectedFailure.equals(e.getMessage())) {
+          //e.printStackTrace();
           unexpectedFailures = true;
           System.out.printf("expected.put(\"%s\", \"%s\");\n", manifest.name, e.getMessage());
         }

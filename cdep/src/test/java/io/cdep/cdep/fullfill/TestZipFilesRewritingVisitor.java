@@ -35,7 +35,7 @@ public class TestZipFilesRewritingVisitor {
     CDepManifestYml afterZipping = zipper.visitCDepManifestYml(afterSubstitution);
 
     assertThat(layout.isDirectory()).isTrue();
-    assertThat(afterZipping.interfaces.headers.file).isEqualTo("stb_divide-header.zip");
+    assertThat(afterZipping.interfaces.headers.file).isEqualTo("stb-divide-header.zip");
     assertThat(afterZipping.interfaces.headers.include).isEqualTo("include");
   }
 }

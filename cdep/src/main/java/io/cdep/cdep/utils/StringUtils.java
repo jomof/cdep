@@ -38,4 +38,33 @@ public class StringUtils {
     }
     return sb.toString();
   }
+
+  public static String joinOn(String delimiter, String ... strings) {
+    StringBuilder sb = new StringBuilder();
+    int i = 0;
+    for (String string : strings) {
+      if (i != 0) {
+        sb.append(delimiter);
+      }
+      sb.append(string);
+      ++i;
+    }
+    return sb.toString();
+  }
+
+  public static String joinOnSkipNull(String delimiter, String ... strings) {
+    StringBuilder sb = new StringBuilder();
+    int i = 0;
+    for (String string : strings) {
+      if (string == null) {
+        continue;
+      }
+      if (i != 0) {
+        sb.append(delimiter);
+      }
+      sb.append(string);
+      ++i;
+    }
+    return sb.toString();
+  }
 }
