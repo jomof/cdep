@@ -1,13 +1,13 @@
 package io.cdep.cdep.utils;
 
-import static io.cdep.cdep.io.IO.infoln;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static io.cdep.cdep.io.IO.infoln;
 
 /**
  * Methods for ensuring state at runtime
@@ -16,7 +16,7 @@ abstract public class Invariant {
   private static List<List<RuntimeException>> requirementFailures = new ArrayList<>();
 
   public static void pushScope() {
-    requirementFailures.add(new ArrayList<>());
+    requirementFailures.add(new ArrayList<RuntimeException>());
   }
 
   public static List<RuntimeException> popScope() {
