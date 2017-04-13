@@ -95,6 +95,8 @@ public class TestFullfill {
     CDepManifestYml manifest = CDepManifestYmlUtils.convertStringToManifest(FileUtils.readAllText(manifestFile));
     assertThat(manifest.dependencies[0].sha256).isNotNull();
     assertThat(manifest.dependencies[0].sha256).isNotEmpty();
+    // Don't allow + in file name to escape.
+    assertThat(manifest.android.archives[0].file.contains("+")).isFalse();
   }
 
   @Test

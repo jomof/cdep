@@ -131,7 +131,16 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     if (layoutZipFile.exists()) {
       layoutZipFile.delete();
     }
-    return layoutZipFile;
+    return replaceInvalidCharacters(layoutZipFile);
+  }
+
+  private File replaceInvalidCharacters(File file) {
+    String baseName = file.getName().toString();
+    baseName = baseName.replace("/", "-");
+    baseName = baseName.replace("\\", "-");
+    baseName = baseName.replace(":", "-");
+    baseName = baseName.replace("+", "p");
+    return new File(file.getParentFile(), baseName);
   }
 
   private void copyFilesToStaging(PathMapping[] mappings, File stagingZipFolder) {
