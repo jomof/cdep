@@ -1,19 +1,10 @@
 package io.cdep.cdep;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.IntegerExpression;
-import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ModuleExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.utils.StringUtils;
+
+import static io.cdep.cdep.utils.Invariant.require;
 
 public class CreateStringVisitor extends ReadonlyVisitor {
   private StringBuilder sb = new StringBuilder();
@@ -149,6 +140,11 @@ public class CreateStringVisitor extends ReadonlyVisitor {
       appendIndent();
       append("library: ");
       visit(expr.libraryPath);
+      append("\r\n");
+    }
+    if (expr.requires != null) {
+      appendIndent();
+      append("requires: " + StringUtils.joinOn(", ", expr.requires));
       append("\r\n");
     }
   }
