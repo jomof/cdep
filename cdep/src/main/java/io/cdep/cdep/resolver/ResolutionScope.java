@@ -60,6 +60,12 @@ public class ResolutionScope {
   }
 
   /**
+   * Construct a fresh resolution scope.
+   */
+  public ResolutionScope() {
+  }
+
+  /**
    * Utility function to add a new edge to an edge map.
    */
   private static <T> void addEdge(@NotNull Map<T, List<T>> edges, T from, T to) {
@@ -77,7 +83,7 @@ public class ResolutionScope {
    *
    * @param softname the name of the unresolved dependency.
    */
-  private void addUnresolved(@NotNull SoftNameDependency softname) {
+  public void addUnresolved(@NotNull SoftNameDependency softname) {
     if (!resolved.contains(softname.compile)) {
       unresolved.put(softname.compile, softname);
     }

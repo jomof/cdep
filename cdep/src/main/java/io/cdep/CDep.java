@@ -88,18 +88,6 @@ public class CDep {
     return 0;
   }
 
-  @NotNull
-  private static FunctionTableExpression getFunctionTableExpression(@NotNull GeneratorEnvironment environment,
-      @NotNull SoftNameDependency dependencies[]) throws IOException, URISyntaxException, NoSuchAlgorithmException {
-    BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
-    Resolver resolver = new Resolver(environment);
-    ResolutionScope scope = resolver.resolveAll(dependencies);
-    for (String name : scope.getResolutions()) {
-      ResolvedManifest resolved = scope.getResolution(name);
-      builder.addManifest(resolved);
-    }
-    return builder.build();
-  }
 
   /**
    * Return the first string after matching one of the arguments. Argument and strign are removed
@@ -229,7 +217,7 @@ public class CDep {
           dependencies[i - 1] = new SoftNameDependency(args.get(i));
         }
 
-        FunctionTableExpression table = getFunctionTableExpression(environment, dependencies);
+        GeneratorEnvironmentUtils.getFunctionTableExpression(environment, dependencies);
 
         // Check that the expected files were downloaded
         //new StubCheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder).visit(table);
@@ -291,7 +279,8 @@ public class CDep {
       }
 
       if ("headers".equals(args.get(1))) {
-        return handleMergeHeaders(args);
+        handleMergeHeaders(args);
+        return true;
       }
       File output = new File(args.get(args.size() - 1));
       if (output.exists()) {
@@ -327,10 +316,10 @@ public class CDep {
     return false;
   }
 
-  private boolean handleMergeHeaders(List<String> args) throws IOException, NoSuchAlgorithmException {
+  private void handleMergeHeaders(List<String> args) throws IOException, NoSuchAlgorithmException {
     if (args.size() != 6) {
       info("Usage: cdep merge headers coordinate headers.zip folder outputmanifest.yml");
-      return true;
+      return;
     }
     String coordinate = args.get(2);
     File zip = new File(args.get(3));
@@ -358,7 +347,7 @@ public class CDep {
     String body = CreateCDepManifestYmlString.create(updated);
     FileUtils.writeTextToFile(output, body);
     info("Merged %s and %s into %s.\n", coordinate, zip, output);
-    return true;
+    return;
   }
 
   private boolean handleShow(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
@@ -468,7 +457,8 @@ public class CDep {
       for (int i = 1; i < args.size(); ++i) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
         SoftNameDependency dependencies[] = new SoftNameDependency[]{new SoftNameDependency(args.get(i))};
-        FunctionTableExpression table = getFunctionTableExpression(environment, dependencies);
+        FunctionTableExpression table = GeneratorEnvironmentUtils
+            .getFunctionTableExpression(environment, dependencies);
         // Download and unzip archives.
         GeneratorEnvironmentUtils.downloadReferencedModules(environment, ExpressionUtils.getAllFoundModuleExpressions(table));
         // Check that the expected files were downloaded
@@ -481,7 +471,8 @@ public class CDep {
     return false;
   }
 
-  private boolean handleFullfill(@NotNull List<String> args) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private boolean handleFullfill(@NotNull List<String> args)
+      throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fullfill".equals(args.get(0))) {
       if (args.size() < 4) {
         info("Usage: cdep fullfill source-folder version manifest1.yml manifest2.yml ...\n");
@@ -535,9 +526,8 @@ public class CDep {
   @NotNull
   private FunctionTableExpression getFunctionTableExpression(@NotNull GeneratorEnvironment environment)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
-
     assert config != null;
-    return getFunctionTableExpression(environment, config.dependencies);
+    return GeneratorEnvironmentUtils.getFunctionTableExpression(environment, config.dependencies);
   }
 
   @NotNull

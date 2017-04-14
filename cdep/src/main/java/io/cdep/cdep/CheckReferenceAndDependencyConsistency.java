@@ -21,7 +21,7 @@ import static io.cdep.cdep.utils.Invariant.require;
  * Also check whether references were unresolved.
  */
 @SuppressWarnings("Convert2Diamond")
-public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
+public class CheckReferenceAndDependencyConsistency extends ReadonlyVisitor {
 
   // Map of dependency edges. Key is dependant and value is dependees.
   private final Map<Coordinate, List<Coordinate>> forwardEdges = new HashMap<>();
@@ -77,8 +77,9 @@ public class FindMultiplyReferencedArchives extends ReadonlyVisitor {
         Coordinate prior = shaToPrior.get(dependeeArchive.sha256);
         assert dependeeArchive.sha256 != null;
         require(prior == null,
-            "Package '%s' depends on '%s' but both packages contain a file:\n  %s\nwith the same " + "SHA256. The file should "
-                + "only be in the lowest level package '%s' (sha256:%s)",
+            "Package '%s' depends on '%s' but both packages contain a file '%s' '%s' "
+                + "with the same SHA256. The file should only be in the lowest level package '%s' "
+                + "(sha256:%s)",
             dependant,
             dependee,
             dependeeArchive.file,

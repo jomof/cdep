@@ -1,30 +1,37 @@
 package io.cdep.cdep.fullfill;
 
-import static io.cdep.cdep.io.IO.info;
 import static io.cdep.cdep.io.IO.infoln;
 
+import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.generator.GeneratorEnvironment;
+import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
+import io.cdep.cdep.resolver.ResolutionScope;
+import io.cdep.cdep.resolver.ResolvedManifest;
+import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
+import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Fullfill {
 
   /**
-   * Returns a list of manifest files.
+   * Returns a list of manifest files with missing fields filled in.
    */
   public static List<File> multiple(
       GeneratorEnvironment environment,
       File templates[],
       File outputFolder,
       File sourceFolder,
-      String version) throws IOException {
+      String version) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     List<File> result = new ArrayList<>();
     CDepManifestYml manifests[] = new CDepManifestYml[templates.length];
 
@@ -53,9 +60,14 @@ public class Fullfill {
       manifests[i] = substitutor.visitCDepManifestYml(manifests[i]);
     }
 
+    // Build function table along the way to prove function table can be built from the resulting
+    // manifests.
+    Resolver resolver = new Resolver(environment);
+    ResolutionScope scope = new ResolutionScope();
+
     infoln("Fullfilling %s manifests", templates.length);
-    FillMissingFieldsBasedOnFilepath filler = new FillMissingFieldsBasedOnFilepath();
     for (int i = 0; i < manifests.length; ++i) {
+      FillMissingFieldsBasedOnFilepath filler = new FillMissingFieldsBasedOnFilepath();
       infoln("  guessing archive details from path names in %s", manifests[i].coordinate);
       manifests[i] = filler.visitCDepManifestYml(manifests[i]);
 
@@ -82,7 +94,25 @@ public class Fullfill {
 
       infoln("  checking sanity of result %s", manifests[i].coordinate);
       CDepManifestYmlUtils.checkManifestSanity(manifests[i]);
+
+      // Find any transitive dependencies that we may need to build the function table.
+      SoftNameDependency softname = new SoftNameDependency(manifests[i].coordinate.toString());
+      scope.addUnresolved(softname);
+      scope.recordResolved(
+          softname,
+          new ResolvedManifest(output.toURI().toURL(), manifests[i]),
+          CDepManifestYmlUtils.getTransitiveDependencies(manifests[i]));
     }
+
+    infoln("  checking consistency of all manifests");
+    // Resolve all remaining dependencies. This happens if the fullfilled manifests have
+    // their own dependencies.
+    resolver.resolveAll(scope);
+
+    // Attempt to build a function table for the combination of manifests.
+    BuildFindModuleFunctionTable table = new BuildFindModuleFunctionTable();
+    GeneratorEnvironmentUtils.addAllResolvedToTable(table, scope);
+    table.build();
 
     return result;
   }

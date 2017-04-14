@@ -16,15 +16,22 @@
 package io.cdep.cdep.generator;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
 import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.resolver.ResolutionScope;
+import io.cdep.cdep.resolver.ResolvedManifest;
+import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.utils.HashUtils;
 
+import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.List;
@@ -89,5 +96,32 @@ public class GeneratorEnvironmentUtils {
         }
       }
     }
+  }
+
+  /**
+   * Resolve whatever unresolved references remain and add them to the table.
+   */
+  public static void addAllResolvedToTable(
+      @NotNull BuildFindModuleFunctionTable builder,
+      ResolutionScope scope) {
+    for (String name : scope.getResolutions()) {
+      ResolvedManifest resolved = scope.getResolution(name);
+      builder.addManifest(resolved);
+    }
+  }
+
+  /**
+   * Given a set of dependencies, build the corresponding compile function table. Will look up
+   * transitive references if necessary.
+   */
+  @NotNull
+  public static FunctionTableExpression getFunctionTableExpression(
+      @NotNull GeneratorEnvironment environment,
+      @NotNull SoftNameDependency dependencies[])
+      throws IOException, URISyntaxException, NoSuchAlgorithmException {
+    BuildFindModuleFunctionTable table = new BuildFindModuleFunctionTable();
+    ResolutionScope scope = new Resolver(environment).resolveAll(dependencies);
+    addAllResolvedToTable(table, scope);
+    return table.build();
   }
 }

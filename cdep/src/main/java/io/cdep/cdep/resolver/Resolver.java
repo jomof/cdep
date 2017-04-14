@@ -35,14 +35,22 @@ public class Resolver {
   }
 
   /**
-   * Resilve all of the references contained in the given ResolutionScope
-   *
-   * @param roots the root References
+   * Resolve all of the references contained in the given ResolutionScope roots
    */
-
   @NotNull
-  public ResolutionScope resolveAll(@NotNull SoftNameDependency[] roots) throws IOException, NoSuchAlgorithmException {
+  public ResolutionScope resolveAll(@NotNull SoftNameDependency[] roots)
+      throws IOException, NoSuchAlgorithmException {
     ResolutionScope scope = new ResolutionScope(roots);
+    resolveAll(scope);
+    return scope;
+  }
+
+  /**
+   * Resolve all of the references contained in the given ResolutionScope
+   */
+  @NotNull
+  public void resolveAll(@NotNull ResolutionScope scope)
+      throws IOException, NoSuchAlgorithmException {
     // Progressively resolve dependencies
     while (!scope.isResolutionComplete()) {
       for (SoftNameDependency softname : scope.getUnresolvedReferences()) {
@@ -50,7 +58,8 @@ public class Resolver {
         if (resolved == null) {
           scope.recordUnresolvable(softname);
         } else {
-          List<HardNameDependency> transitive = CDepManifestYmlUtils.getTransitiveDependencies(resolved.cdepManifestYml);
+          List<HardNameDependency> transitive =
+              CDepManifestYmlUtils.getTransitiveDependencies(resolved.cdepManifestYml);
           scope.recordResolved(softname, resolved, transitive);
         }
       }
@@ -69,17 +78,16 @@ public class Resolver {
         default:
           fail(reason.toString());
           break;
-
       }
     }
-    return scope;
   }
 
   /**
    * Resolve a single reference. Don't look at transitive references.
    */
   @Nullable
-  public ResolvedManifest resolveAny(@NotNull SoftNameDependency dependency) throws IOException, NoSuchAlgorithmException {
+  public ResolvedManifest resolveAny(@NotNull SoftNameDependency dependency)
+      throws IOException, NoSuchAlgorithmException {
     ResolvedManifest resolved = null;
     for (CoordinateResolver resolver : resolvers) {
       ResolvedManifest attempt = resolver.resolve(manifestProvider, dependency);

@@ -41,7 +41,7 @@ public class TestFullfill {
   }
 
   @Test
-  public void testBasicSTB() throws IOException {
+  public void testBasicSTB() throws Exception {
     File templates[] = templates(
         new File("../third_party/stb/cdep/"));
     File output = new File(".test-files/testBasicSTB").getAbsoluteFile();
@@ -49,7 +49,7 @@ public class TestFullfill {
   }
 
   @Test
-  public void testBasicTinyDir() throws IOException {
+  public void testBasicTinyDir() throws Exception {
     File templates[] = templates(
         new File("../third_party/tinydir/"));
     File output = new File(".test-files/testBasicTinyDir").getAbsoluteFile();
@@ -58,7 +58,7 @@ public class TestFullfill {
   }
 
   @Test
-  public void testBasicVectorial() throws IOException {
+  public void testBasicVectorial() throws Exception {
     File templates[] = templates(
         new File("../third_party/vectorial/cdep"));
     File output = new File(".test-files/testBasicVectorial").getAbsoluteFile();
@@ -67,7 +67,7 @@ public class TestFullfill {
   }
 
   @Test
-  public void testBasicMathFu() throws IOException {
+  public void testBasicMathFu() throws Exception {
     File templates[] = templates(
         new File("../third_party/mathfu/cdep"));
     File output = new File(".test-files/testBasicMathFu").getAbsoluteFile();
@@ -81,7 +81,7 @@ public class TestFullfill {
   }
 
   @Test
-  public void testMiniFirebase() throws IOException {
+  public void testMiniFirebase() throws Exception {
     File templates[] = new File[] {
         new File("../third_party/mini-firebase/cdep-manifest-app.yml"),
         new File("../third_party/mini-firebase/cdep-manifest-database.yml")

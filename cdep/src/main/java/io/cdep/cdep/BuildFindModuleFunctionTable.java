@@ -66,7 +66,7 @@ public class BuildFindModuleFunctionTable {
     functionTable = (FunctionTableExpression) new LiftToCommonAncestor().visit(functionTable);
 
     // Check sanity of the function system
-    new FindMultiplyReferencedArchives().visit(functionTable);
+    new CheckReferenceAndDependencyConsistency().visit(functionTable);
 
     return functionTable;
   }
