@@ -44,6 +44,22 @@ public class TestCreateCDepManifestYmlString {
   }
 
   @Test
+  public void testArchiveWithRequires() {
+    assertThat(create(archive(
+        "fileval",
+        "shaval",
+        100,
+        "hello",
+        new String[] {"cxx_auto_type"})))
+        .isEqualTo(
+          "file: fileval\r\n"
+              + "sha256: shaval\r\n"
+              + "size: 100\r\n"
+              + "include: hello\r\n"
+              + "requires: [cxx_auto_type]\r\n");
+  }
+
+  @Test
   public void testSqlite() throws Exception {
     check(ResolvedManifests.sqlite().cdepManifestYml);
   }

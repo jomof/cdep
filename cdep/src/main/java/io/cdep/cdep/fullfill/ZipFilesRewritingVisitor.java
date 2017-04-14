@@ -70,7 +70,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
         null,
         null,
         "include",
-        null
+        archive.requires
     );
   }
 
