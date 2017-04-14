@@ -1,14 +1,16 @@
 package io.cdep.cdep.generator;
 
-import static org.junit.Assert.fail;
-
 import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import org.junit.Test;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 public class TestCMakeGenerator {
   final private GeneratorEnvironment environment = new GeneratorEnvironment(
@@ -21,6 +23,16 @@ public class TestCMakeGenerator {
     FunctionTableExpression table = builder.build();
     String result = new CMakeGenerator(environment, table).create();
     System.out.printf(result);
+  }
+
+  @Test
+  public void testRequires() throws Exception {
+    BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
+    builder.addManifest(ResolvedManifests.simpleRequires());
+    FunctionTableExpression table = builder.build();
+    String result = new CMakeGenerator(environment, table).create();
+    System.out.printf(result);
+    assertThat(result).contains("target_compile_features(${target} PRIVATE cxx_auto_type)");
   }
 
   @Test

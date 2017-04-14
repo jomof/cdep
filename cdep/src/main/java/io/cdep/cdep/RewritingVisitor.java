@@ -180,8 +180,15 @@ public class RewritingVisitor {
 
   @NotNull
   private Expression visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
-    return archive(expr.file, expr.sha256, expr.size, expr.include, visitMaybeNull(expr.includePath), expr.library,
-        visitMaybeNull(expr.libraryPath));
+    return archive(
+        expr.file,
+        expr.sha256,
+        expr.size,
+        expr.include,
+        visitMaybeNull(expr.includePath),
+        expr.library,
+        visitMaybeNull(expr.libraryPath),
+        expr.requires);
   }
 
   @NotNull

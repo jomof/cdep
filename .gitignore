@@ -3,3 +3,4 @@ build/*
 integration/build/*
 cdep/build/*
 bootstrap/build/*
+.idea/*

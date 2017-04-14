@@ -69,7 +69,8 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
         layoutZipFile.getName(),
         null,
         null,
-        "include"
+        "include",
+        archive.requires
     );
   }
 

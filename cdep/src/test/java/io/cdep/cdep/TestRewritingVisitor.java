@@ -13,7 +13,7 @@ import static org.junit.Assert.fail;
 public class TestRewritingVisitor {
   @Test
   public void testNullInclude() throws Exception {
-    new RewritingVisitor().visit(archive(new URL("https://google.com"), "sha256", 192L, null, null, null, null));
+    new RewritingVisitor().visit(archive(new URL("https://google.com"), "sha256", 192L, null, null, null, null, null));
   }
 
   @Test

@@ -51,8 +51,9 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testSimple() throws Exception {
-    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" + "" +
-        ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
+    ResolvedManifest resolved = resolver.resolveAny(
+        createReference(
+            "https://github.com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
     assert resolved != null;
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
@@ -171,6 +172,17 @@ public class TestFindModuleFunctionTableBuilder {
   }
 
   @Test
+  public void testRequires() throws Exception {
+    ResolvedManifest resolved = ResolvedManifests.simpleRequires();
+    BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
+    builder.addManifest(resolved);
+    FunctionTableExpression table = builder.build();
+    String text = CreateStringVisitor.convert(table);
+    System.out.printf(text);
+    assertThat(text).contains("requires: cxx_auto_type");
+  }
+
+  @Test
   public void testLinux() throws Exception {
     ResolvedManifest resolved = ResolvedManifests.sqliteLinux();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
@@ -198,7 +210,7 @@ public class TestFindModuleFunctionTableBuilder {
         environment.unzippedArchivesFolder
             .getAbsolutePath(),
         new String[]{"armv7s"},
-        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS" + ".platform/Developer/SDKs/iPhoneOS.sdk").remote
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk").remote
         .getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-iPhone.zip");
 
@@ -207,7 +219,7 @@ public class TestFindModuleFunctionTableBuilder {
         environment.unzippedArchivesFolder
             .getAbsolutePath(),
         new String[]{"i386"},
-        "/Applications/Xcode.app/Contents/Developer/Platforms/" + "iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator" +
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator" +
             ".sdk").remote
         .getPath();
     assertThat(zip).endsWith("sqlite-ios-platform-simulator.zip");
@@ -228,7 +240,7 @@ public class TestFindModuleFunctionTableBuilder {
           environment.unzippedArchivesFolder
               .getAbsolutePath(),
           new String[]{"armv7s"},
-          "/Applications/Xcode.app/Contents/Developer/Platforms/" + "iPhoneSimulator.platform/Developer/SDKs/iPad10.2.sdk").remote
+          "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPad10.2.sdk").remote
           .getPath();
       fail("Expected exception");
     } catch (RuntimeException e) {
@@ -256,7 +268,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testCheckPlatformSwitch() throws Exception {
-    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" + "" +
+    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" +
         ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
     assertThat(resolved.cdepManifestYml.coordinate.groupId).isEqualTo("com.github.jomof");
     assertThat(resolved.cdepManifestYml.coordinate.artifactId).isEqualTo("cmakeify");
@@ -291,7 +303,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testArchivePathIsFull() throws Exception {
-    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" + "" +
+    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" +
         ".com/jomof/cmakeify/releases/download/0.0.81/cdep-manifest.yml"));
 
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
@@ -310,7 +322,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testFoundIncludeAndLib() throws Exception {
-    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" + "" +
+    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" +
         ".com/jomof/sqlite/releases/download/3.16.2-rev25/cdep-manifest.yml"));
 
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
@@ -328,7 +340,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testHeaderOnly() throws Exception {
-    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" + "" +
+    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" +
         ".com/jomof/boost/releases/download/1.0.63-rev18/cdep-manifest.yml"));
 
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
@@ -342,7 +354,7 @@ public class TestFindModuleFunctionTableBuilder {
         "c++_shared",
         "x86");
     assertThat(found.fullLibraryName).isNull();
-    assertThat(found.remote.toString()).isEqualTo("https://github" + "" +
+    assertThat(found.remote.toString()).isEqualTo("https://github" +
         ".com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
   }
 
@@ -361,7 +373,7 @@ public class TestFindModuleFunctionTableBuilder {
         "c++_shared",
         "x86");
     assertThat(found.fullLibraryName).isNull();
-    assertThat(found.remote.toString()).isEqualTo("https://github" + "" +
+    assertThat(found.remote.toString()).isEqualTo("https://github" +
         ".com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
   }
 

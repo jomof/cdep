@@ -210,7 +210,24 @@ public class CDepManifestYmlRewritingVisitor {
         visitFile(archive.file),
         visitSha256(archive.sha256),
         visitLong(archive.size),
-        visitInclude(archive.include));
+        visitInclude(archive.include),
+        visitRequiresArray(archive.requires)
+    );
+  }
+
+  protected String[] visitRequiresArray(String[] requires) {
+    if (requires == null) {
+      return null;
+    }
+    String[] result = new String[requires.length];
+    for (int i = 0; i < result.length; ++i) {
+      result[i] = visitRequire(requires[i]);
+    }
+    return result;
+  }
+
+  protected String visitRequire(String require) {
+    return visitString(require);
   }
 
   protected HardNameDependency[] visitHardNameDependencyArray(HardNameDependency[] dependencies) {

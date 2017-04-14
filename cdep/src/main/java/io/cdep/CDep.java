@@ -339,7 +339,7 @@ public class CDep {
         prior.sourceVersion,
         prior.coordinate,
         prior.dependencies,
-        new Interfaces(archive(zip.getName(), sha256, size, include)),
+        new Interfaces(archive(zip.getName(), sha256, size, include, null)),
         prior.android,
         prior.iOS,
         prior.linux,

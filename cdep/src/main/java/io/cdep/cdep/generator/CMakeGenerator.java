@@ -22,24 +22,10 @@ import static io.cdep.cdep.utils.Invariant.require;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.IntegerExpression;
-import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
-import io.cdep.cdep.ast.finder.ModuleExpression;
-import io.cdep.cdep.ast.finder.MultiStatementExpression;
-import io.cdep.cdep.ast.finder.NopExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.StatementExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.utils.FileUtils;
+import io.cdep.cdep.utils.StringUtils;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -222,18 +208,23 @@ public class CMakeGenerator {
         append("\n%s%s(${target})", prefix, getAddDependencyFunctionName(dependency));
       }
       append("\n");
-      if (specific.archive.includePath != null) {
+      ModuleArchiveExpression archive = specific.archive;
+      if (archive.requires != null && archive.requires.length > 0) {
+        append("%starget_compile_features(${target} PRIVATE %s)\n", prefix,
+            StringUtils.joinOn(" ", archive.requires));
+      }
+      if (archive.includePath != null) {
         append("%starget_include_directories(${target} PRIVATE ", prefix);
-        visit(specific.archive.includePath);
+        visit(archive.includePath);
         append(")\n");
-        append("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix, specific.archive.include);
+        append("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix, archive.include);
       }
 
-      if (specific.archive.libraryPath != null) {
+      if (archive.libraryPath != null) {
         append("%starget_link_libraries(${target} ", prefix);
-        visit(specific.archive.libraryPath);
+        visit(archive.libraryPath);
         append(")\n");
-        append("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n", prefix, specific.archive.library);
+        append("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n", prefix, archive.library);
       }
       return;
     } else if (expression instanceof AbortExpression) {
