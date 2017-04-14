@@ -27,7 +27,7 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
           "Could not hash file %s because it didn't exist",
           archive.file);
       try {
-        return new Archive(archive.file, HashUtils.getSHA256OfFile(file), file.length(), archive.include);
+        return new Archive(archive.file, HashUtils.getSHA256OfFile(file), file.length(), archive.include, archive.requires);
       } catch (NoSuchAlgorithmException e) {
         throw new RuntimeException(e);
       } catch (IOException e) {

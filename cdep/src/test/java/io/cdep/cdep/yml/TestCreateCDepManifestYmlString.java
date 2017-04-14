@@ -39,7 +39,7 @@ public class TestCreateCDepManifestYmlString {
 
   @Test
   public void testArchive() {
-    assertThat(create(archive("fileval", "shaval", 100, "hello"))).isEqualTo("file: fileval\r\n" + "sha256: shaval\r\n" +
+    assertThat(create(archive("fileval", "shaval", 100, "hello", null))).isEqualTo("file: fileval\r\n" + "sha256: shaval\r\n" +
         "size: 100\r\n" + "include: " + "hello\r\n");
   }
 
