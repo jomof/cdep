@@ -16,7 +16,7 @@ public class TestInterpretingVisitor {
   @Test
   public void testNullInclude() throws Exception {
     new InterpretingVisitor().visit(archive(new URL("https://google.com"), "sha256",
-        192L, null, null, null, null));
+        192L, null, null, null, null, null));
   }
 
   @Test

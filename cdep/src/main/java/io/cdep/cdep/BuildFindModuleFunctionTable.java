@@ -162,13 +162,22 @@ public class BuildFindModuleFunctionTable {
   }
 
   @NotNull
-  private StatementExpression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
-      @NotNull Archive archive, @NotNull AssignmentExpression explodedArchiveFolder,
+  private StatementExpression buildSingleArchiveResolution(
+      @NotNull ResolvedManifest resolved,
+      @NotNull Archive archive,
+      @NotNull AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
-    return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, null,
+    return module(buildArchive(
+        resolved.remote,
+        archive.file,
+        archive.sha256,
+        archive.size,
+        archive.include,
+        archive.requires,
+        null,
         explodedArchiveFolder), dependencies);
   }
 
@@ -179,7 +188,14 @@ public class BuildFindModuleFunctionTable {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
-    return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, archive.lib,
+    return module(buildArchive(
+        resolved.remote,
+        archive.file,
+        archive.sha256,
+        archive.size,
+        archive.include,
+        null,
+        archive.lib,
         explodedArchiveFolder), dependencies);
   }
 
@@ -190,7 +206,14 @@ public class BuildFindModuleFunctionTable {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
-    return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, archive.lib,
+    return module(buildArchive(
+        resolved.remote,
+        archive.file,
+        archive.sha256,
+        archive.size,
+        archive.include,
+        null,
+        archive.lib,
         explodedArchiveFolder), dependencies);
   }
 
@@ -208,7 +231,14 @@ public class BuildFindModuleFunctionTable {
     if (archive.lib != null) {
       lib = abi + "/" + lib;
     }
-    return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, lib,
+    return module(buildArchive(
+        resolved.remote,
+        archive.file,
+        archive.sha256,
+        archive.size,
+        archive.include,
+        null,
+        lib,
         explodedArchiveFolder), dependencies);
   }
 
@@ -218,7 +248,9 @@ public class BuildFindModuleFunctionTable {
       @Nullable String sha256,
       @Nullable Long size,
       @Nullable String include,
-      @Nullable String lib, @NotNull AssignmentExpression explodedArchiveFolder)
+      @Nullable String[] requires,
+      @Nullable String lib,
+      @NotNull AssignmentExpression explodedArchiveFolder)
       throws URISyntaxException, MalformedURLException {
     return archive(remote.toURI().resolve(".").resolve(file).toURL(),
         sha256,
@@ -226,7 +258,8 @@ public class BuildFindModuleFunctionTable {
         include,
         include == null ? null : joinFileSegments(explodedArchiveFolder, file, include),
         lib == null ? null : "lib/" + lib,
-        lib == null ? null : joinFileSegments(explodedArchiveFolder, file, "lib", lib));
+        lib == null ? null : joinFileSegments(explodedArchiveFolder, file, "lib", lib),
+        requires);
   }
 
   @NotNull
@@ -470,7 +503,14 @@ public class BuildFindModuleFunctionTable {
     if (grouped.size() == 1 && grouped.containsKey(null)) {
       // Header only case.
       AndroidArchive archive = androids.iterator().next();
-      return module(buildArchive(resolved.remote, archive.file, archive.sha256, archive.size, archive.include, null,
+      return module(buildArchive(
+          resolved.remote,
+          archive.file,
+          archive.sha256,
+          archive.size,
+          archive.include,
+          null,
+          null,
           explodedArchiveFolder), dependencies);
     }
 

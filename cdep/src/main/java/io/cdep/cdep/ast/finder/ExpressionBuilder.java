@@ -38,8 +38,9 @@ public class ExpressionBuilder {
       @Nullable String include,
       @Nullable Expression includePath,
       @Nullable String library,
-      @Nullable Expression libraryPath) {
-    return new ModuleArchiveExpression(file, sha256, size, include, includePath, library, libraryPath);
+      @Nullable Expression libraryPath,
+      @Nullable String requires[]) {
+    return new ModuleArchiveExpression(file, sha256, size, include, includePath, library, libraryPath, requires);
   }
 
   @NotNull
