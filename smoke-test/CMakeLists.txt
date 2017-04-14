@@ -4,3 +4,5 @@ find_package(cdep-dependencies REQUIRED)
 add_library(hello STATIC hello.c)
 add_all_cdep_dependencies(hello)
 
+message($CMAKE_CXX_COMPILE_FEATURES)
+
