@@ -19,22 +19,22 @@ public class TestCDepManifestYmlEquality {
 
   @Test
   public void testSqlite() throws Exception {
-    checkEquals(ResolvedManifests.sqlite().getValue().cdepManifestYml, ResolvedManifests.sqlite().getValue().cdepManifestYml);
+    checkEquals(ResolvedManifests.sqlite().manifest.cdepManifestYml, ResolvedManifests.sqlite().manifest.cdepManifestYml);
   }
 
   @Test
   public void testAdmob() throws Exception {
-    checkEquals(ResolvedManifests.admob().getValue().cdepManifestYml, ResolvedManifests.admob().getValue().cdepManifestYml);
+    checkEquals(ResolvedManifests.admob().manifest.cdepManifestYml, ResolvedManifests.admob().manifest.cdepManifestYml);
   }
 
   @Test
   public void testSqliteAdmob() throws Exception {
-    checkNotEquals(ResolvedManifests.sqlite().getValue().cdepManifestYml, ResolvedManifests.admob().getValue().cdepManifestYml);
+    checkNotEquals(ResolvedManifests.sqlite().manifest.cdepManifestYml, ResolvedManifests.admob().manifest.cdepManifestYml);
   }
 
   @Test
   public void testAdmobSqlite() throws Exception {
-    checkNotEquals(ResolvedManifests.admob().getValue().cdepManifestYml, ResolvedManifests.sqlite().getValue().cdepManifestYml);
+    checkNotEquals(ResolvedManifests.admob().manifest.cdepManifestYml, ResolvedManifests.sqlite().manifest.cdepManifestYml);
   }
 
   @Test

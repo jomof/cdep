@@ -63,18 +63,18 @@ public class TestCreateCDepManifestYmlString {
 
   @Test
   public void testSqlite() throws Exception {
-    check(ResolvedManifests.sqlite().getValue().cdepManifestYml);
+    check(ResolvedManifests.sqlite().manifest.cdepManifestYml);
   }
 
   @Test
   public void testAdmob() throws Exception {
-    check(ResolvedManifests.admob().getValue().cdepManifestYml);
+    check(ResolvedManifests.admob().manifest.cdepManifestYml);
   }
 
   @Test
   public void testRequires() throws Exception {
     // Ensure that round-trip works
-    String originalString = ResolvedManifests.simpleRequires().getKey();
+    String originalString = ResolvedManifests.simpleRequires().body;
     CDepManifestYml originalManifest = CDepManifestYmlUtils.convertStringToManifest(originalString);
     String convertedString = CDepManifestYmlUtils.convertManifestToString(originalManifest);
     CDepManifestYml convertedManifest = CDepManifestYmlUtils.convertStringToManifest(convertedString);

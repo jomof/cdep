@@ -19,7 +19,7 @@ public class TestCMakeGenerator {
   @Test
   public void testBoost() throws Exception {
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
-    builder.addManifest(ResolvedManifests.boost().getValue());
+    builder.addManifest(ResolvedManifests.boost().manifest);
     FunctionTableExpression table = builder.build();
     String result = new CMakeGenerator(environment, table).create();
     System.out.printf(result);
@@ -28,7 +28,7 @@ public class TestCMakeGenerator {
   @Test
   public void testRequires() throws Exception {
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
-    builder.addManifest(ResolvedManifests.multipleRequires().getValue());
+    builder.addManifest(ResolvedManifests.multipleRequires().manifest);
     FunctionTableExpression table = builder.build();
     String result = new CMakeGenerator(environment, table).create();
     System.out.printf(result);
