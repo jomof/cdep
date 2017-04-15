@@ -2,6 +2,7 @@ package io.cdep.cdep.fullfill;
 
 import static io.cdep.cdep.io.IO.infoln;
 
+import io.cdep.CDep;
 import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
@@ -12,6 +13,7 @@ import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
 import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
 
 import java.io.File;
@@ -88,9 +90,14 @@ public class Fullfill {
       File output = new File(layout, templates[i].getName());
       infoln("  writing manifest file %s", new File(".")
           .toURI().relativize(output.toURI()).getPath());
-      String body = CreateCDepManifestYmlString.create(manifests[i]);
+      String body = CDepManifestYmlUtils.convertManifestToString(manifests[i]);
       FileUtils.writeTextToFile(output, body);
       result.add(output);
+
+      // Attempt to read the manifest that was written to disk.
+      CDepManifestYml readFromDisk = CDepManifestYmlUtils.convertStringToManifest(
+          FileUtils.readAllText(output));
+      CDepManifestYmlEquality.areDeeplyIdentical(manifests[i], readFromDisk);
 
       infoln("  checking sanity of result %s", manifests[i].coordinate);
       CDepManifestYmlUtils.checkManifestSanity(manifests[i]);
@@ -113,6 +120,7 @@ public class Fullfill {
     BuildFindModuleFunctionTable table = new BuildFindModuleFunctionTable();
     GeneratorEnvironmentUtils.addAllResolvedToTable(table, scope);
     table.build();
+
 
     return result;
   }

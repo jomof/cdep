@@ -35,7 +35,7 @@ import static io.cdep.cdep.utils.Invariant.require;
 public class CDepManifestYmlUtils {
   @NotNull
   public static String convertManifestToString(@NotNull CDepManifestYml manifest) {
-    return CreateCDepManifestYmlString.create(manifest);
+    return CreateCDepManifestYmlString.serialize(manifest);
   }
 
   @NotNull

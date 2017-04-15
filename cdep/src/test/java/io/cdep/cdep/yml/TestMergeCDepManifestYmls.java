@@ -57,10 +57,10 @@ public class TestMergeCDepManifestYmls {
         try {
           CDepManifestYml merged1 = MergeCDepManifestYmls.merge(manifest1.resolved.cdepManifestYml, manifest2.resolved
               .cdepManifestYml);
-          String string = CreateCDepManifestYmlString.create(merged1);
+          String string = CDepManifestYmlUtils.convertManifestToString(merged1);
           CDepManifestYml merged2 = CDepManifestYmlUtils.convertStringToManifest(string);
           if (!CDepManifestYmlEquality.areDeeplyIdentical(merged1, merged2)) {
-            assertThat(string).isEqualTo(CreateCDepManifestYmlString.create(merged2));
+            assertThat(string).isEqualTo(CDepManifestYmlUtils.convertManifestToString(merged2));
             CDepManifestYmlEquality.areDeeplyIdentical(merged1, merged2);
             fail("Converted string wasn't the same as original");
           }

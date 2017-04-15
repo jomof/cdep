@@ -308,7 +308,7 @@ public class CDep {
       CDepManifestYmlUtils.checkManifestSanity(merged);
 
       // Write the merged manifest out
-      String body = CreateCDepManifestYmlString.create(merged);
+      String body = CDepManifestYmlUtils.convertManifestToString(merged);
       FileUtils.writeTextToFile(output, body);
       info("Merged %s manifests into %s.\n", args.size() - 2, output);
       return true;
@@ -344,7 +344,7 @@ public class CDep {
         prior.iOS,
         prior.linux,
         prior.example);
-    String body = CreateCDepManifestYmlString.create(updated);
+    String body = CDepManifestYmlUtils.convertManifestToString(updated);
     FileUtils.writeTextToFile(output, body);
     info("Merged %s and %s into %s.\n", coordinate, zip, output);
     return;

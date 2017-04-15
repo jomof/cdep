@@ -14,7 +14,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   private int indent = 0;
   private int eatIndent = 0;
 
-  public static String create(@NotNull Object node) {
+  public static String serialize(@NotNull Object node) {
     CreateCDepManifestYmlString thiz = new CreateCDepManifestYmlString();
     thiz.visitPlainOldDataObject(null, node);
     return thiz.sb.toString();
@@ -45,7 +45,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   @Override
   public void visitCxxLanguageFeatures(@Nullable String name, @NotNull CxxLanguageFeatures value) {
     if (name == null) {
-      append(value.toString());
+      append(value.toString() + "\r\n");
       return;
     }
     super.visitCxxLanguageFeatures(name, value);
@@ -92,7 +92,16 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
+  public void visitHardNameDependency(@Nullable String name, @NotNull HardNameDependency value) {
+    super.visitHardNameDependency(name, value);
+  }
+
+  @Override
   public void visitArray(String name, @NotNull Object[] array, @NotNull Class<?> elementType) {
+    if (elementType.isEnum()) {
+      appendIndented("%s: [%s]\r\n", name, StringUtils.joinOn(", ", array));
+      return;
+    }
     appendIndented("%s:\r\n", name);
     ++indent;
     for (Object anArray : array) {
