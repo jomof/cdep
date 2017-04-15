@@ -78,14 +78,14 @@ public class GeneratorEnvironmentUtils {
             require(local != null, "Resolved archive '%s' didn't exist", archive.file);
           }
           require(archive.size == local.length(),
-              "File size for %s was %s which did not match value %s from the manifest",
+              "File size for %s was %s which did not match constant %s from the manifest",
               archive.file,
               local.length(),
               archive.size);
         }
 
         String localSha256String = HashUtils.getSHA256OfFile(local);
-        require(localSha256String.equals(archive.sha256), "SHA256 for %s did not match value from manifest", archive.file);
+        require(localSha256String.equals(archive.sha256), "SHA256 for %s did not match constant from manifest", archive.file);
 
         File unzipFolder = environment.getLocalUnzipFolder(coordinate, archive.file);
         if (!unzipFolder.exists() || forceUnzip) {

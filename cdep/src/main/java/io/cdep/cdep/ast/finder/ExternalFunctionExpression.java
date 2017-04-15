@@ -1,6 +1,7 @@
 package io.cdep.cdep.ast.finder;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -14,7 +15,7 @@ public class ExternalFunctionExpression extends Expression {
   final public static ExternalFunctionExpression FILE_GETNAME = new ExternalFunctionExpression(File.class, "getName");
 
   // Given /a/b/c.1.txt returns index of . in .txt
-  // CMAKE string(FIND <string> <substring> <output variable> [REVERSE])
+  // CMAKE constant(FIND <constant> <substring> <output variable> [REVERSE])
   final public static ExternalFunctionExpression STRING_LASTINDEXOF = new ExternalFunctionExpression(String.class,
       "lastIndexOf",
       String.class);
@@ -50,6 +51,11 @@ public class ExternalFunctionExpression extends Expression {
       String[].class,
       String.class);
 
+  final public static ExternalFunctionExpression REQUIRES_COMPILER_FEATURES = new ExternalFunctionExpression(
+      ExternalFunctionExpression.class,
+      "requiresCompilerFeatures",
+      CxxLanguageFeatures[].class);
+
   final public Method method;
 
   private ExternalFunctionExpression(@NotNull Class clazz, @NotNull String functionName, @NotNull Class<?>... parameterTypes) {
@@ -73,5 +79,8 @@ public class ExternalFunctionExpression extends Expression {
 
   static public boolean hasOnlyElement(@NotNull String array[], @NotNull String value) {
     return array.length == 1 && value.equals(array[0]);
+  }
+
+  static public void requiresCompilerFeatures(CxxLanguageFeatures[] features) {
   }
 }

@@ -15,7 +15,7 @@ import static io.cdep.cdep.utils.Invariant.*;
 import static io.cdep.cdep.utils.ReflectionUtils.invoke;
 
 /**
- * Walks the expression tree and interprets the value for the supplied state.
+ * Walks the expression tree and interprets the constant for the supplied state.
  */
 public class InterpretingVisitor {
 
@@ -96,8 +96,8 @@ public class InterpretingVisitor {
     if (expr.getClass().equals(IfSwitchExpression.class)) {
       return visitIfSwitchExpression((IfSwitchExpression) expr);
     }
-    if (expr.getClass().equals(StringExpression.class)) {
-      return visitStringExpression((StringExpression) expr);
+    if (expr.getClass().equals(ConstantExpression.class)) {
+      return visitValueExpression((ConstantExpression) expr);
     }
     if (expr.getClass().equals(AssignmentExpression.class)) {
       return visitAssignmentExpression((AssignmentExpression) expr);
@@ -255,7 +255,7 @@ public class InterpretingVisitor {
   }
 
   @NotNull
-  private String visitStringExpression(@NotNull StringExpression expr) {
+  private Object visitValueExpression(@NotNull ConstantExpression expr) {
     return expr.value;
   }
 

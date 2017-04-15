@@ -8,10 +8,14 @@ import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.array;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.constant;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.invoke;
+
 /**
- * Expand module requires into CMake target_compile_features
+ * Expand module requires into an external function.
  */
-public class ConvertRequiresToCMakeTargetCompileFeaturesRewritingVisitor extends RewritingVisitor {
+public class ListRequiresToStatementExpression extends RewritingVisitor {
   @Override
   protected Expression visitModuleExpression(@NotNull ModuleExpression expr) {
     ModuleArchiveExpression archive = expr.archive;
@@ -29,9 +33,15 @@ public class ConvertRequiresToCMakeTargetCompileFeaturesRewritingVisitor extends
       archive.library,
       archive.libraryPath,
       null);
+    List<ConstantExpression> features = new ArrayList<>();
+    for (int i = 0; i < requires.length; ++i) {
+      features.add(constant(requires[i]));
+    }
 
     List<StatementExpression> exprs = new ArrayList<>();
-    exprs.add(CMakeInvokeMethod.targetCompileFeatures("${target}", CMakeAccessLevel.PRIVATE, requires));
+    exprs.add(invoke(
+        ExternalFunctionExpression.REQUIRES_COMPILER_FEATURES,
+        array(features.toArray(new ConstantExpression[requires.length]))));
     exprs.add(archive);
 
     return new MultiStatementExpression(exprs.toArray(new StatementExpression[exprs.size()]));

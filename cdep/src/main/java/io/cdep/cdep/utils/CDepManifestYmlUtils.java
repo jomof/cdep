@@ -109,8 +109,8 @@ public class CDepManifestYmlUtils {
 
     @Override
     public void visitHardNameDependency(@Nullable String name, @NotNull HardNameDependency value) {
-      require(value.compile != null, "Package '%s' contains dependency with no 'compile' value", coordinate);
-      require(value.sha256 != null, "Package '%s' contains dependency '%s' with no sha256 value",
+      require(value.compile != null, "Package '%s' contains dependency with no 'compile' constant", coordinate);
+      require(value.sha256 != null, "Package '%s' contains dependency '%s' with no sha256 constant",
           coordinate,
           value.compile);
       super.visitHardNameDependency(name, value);

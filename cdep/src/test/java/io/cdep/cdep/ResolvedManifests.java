@@ -33,6 +33,21 @@ public class ResolvedManifests {
   }
 
   @NotNull
+  public static Pair<String, ResolvedManifest> multipleRequires() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: firebase/app\n" +
+        "  version: 2.1.3-rev22\n" +
+        "interfaces:\n" +
+        "  headers:\n" +
+        "    file: firebase-app-header.zip\n" +
+        "    sha256: 18c2f18957a0cb2a53bca193afa978f2a8d94d33b7052d3c4383fa8e8d579535\n" +
+        "    size: 91607\n" +
+        "    include: include\n" +
+        "    requires: [cxx_auto_type, cxx_decltype]\n");
+  }
+
+  @NotNull
   public static Pair<String, ResolvedManifest> indistinguishableAndroidArchives() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n"

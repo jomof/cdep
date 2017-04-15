@@ -44,7 +44,7 @@ public class ReflectionUtils {
   }
 
   /**
-   * Get field value but convert atypical exceptions into RuntimeException. Should be used
+   * Get field constant but convert atypical exceptions into RuntimeException. Should be used
    * when it is a bug if the method doesn't exist.
    */
   public static Object getFieldValue(@NotNull Field field, Object instance) {

@@ -48,7 +48,6 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
       append(value.toString() + "\r\n");
       return;
     }
-    super.visitCxxLanguageFeatures(name, value);
     appendIndented("%s: %s\r\n", notNull(name), value);
   }
 

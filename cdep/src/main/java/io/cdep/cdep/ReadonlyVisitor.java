@@ -21,7 +21,7 @@ import io.cdep.cdep.ast.finder.ModuleExpression;
 import io.cdep.cdep.ast.finder.MultiStatementExpression;
 import io.cdep.cdep.ast.finder.NopExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.ConstantExpression;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class ReadonlyVisitor {
@@ -47,8 +47,8 @@ public class ReadonlyVisitor {
       visitIfSwitchExpression((IfSwitchExpression) expr);
       return;
     }
-    if (expr.getClass().equals(StringExpression.class)) {
-      visitStringExpression((StringExpression) expr);
+    if (expr.getClass().equals(ConstantExpression.class)) {
+      visitStringExpression((ConstantExpression) expr);
       return;
     }
     if (expr.getClass().equals(AssignmentExpression.class)) {
@@ -174,7 +174,7 @@ public class ReadonlyVisitor {
     visit(expr.expression);
   }
 
-  protected void visitStringExpression(StringExpression expr) {
+  protected void visitStringExpression(ConstantExpression expr) {
   }
 
   protected void visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {

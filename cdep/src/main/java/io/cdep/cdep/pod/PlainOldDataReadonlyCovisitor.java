@@ -22,7 +22,7 @@ public class PlainOldDataReadonlyCovisitor {
 
   private void push(@Nullable String name) {
     if (name == null) {
-      push("[value]");
+      push("[constant]");
       return;
     }
     namestack.add(0, name);

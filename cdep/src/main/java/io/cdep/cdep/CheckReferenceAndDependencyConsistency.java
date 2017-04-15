@@ -23,9 +23,9 @@ import static io.cdep.cdep.utils.Invariant.require;
 @SuppressWarnings("Convert2Diamond")
 public class CheckReferenceAndDependencyConsistency extends ReadonlyVisitor {
 
-  // Map of dependency edges. Key is dependant and value is dependees.
+  // Map of dependency edges. Key is dependant and constant is dependees.
   private final Map<Coordinate, List<Coordinate>> forwardEdges = new HashMap<>();
-  // Map of dependency edges. Key is dependee and value is dependants.
+  // Map of dependency edges. Key is dependee and constant is dependants.
   private final Map<Coordinate, List<Coordinate>> backwardEdges = new HashMap<>();
   // Map from module coordinate to the archives that it references
   private final Map<Coordinate, List<ModuleArchiveExpression>> moduleArchives = new HashMap<>();

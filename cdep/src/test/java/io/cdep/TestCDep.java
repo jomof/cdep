@@ -401,7 +401,7 @@ public class TestCDep {
       fail("Expected failure");
     } catch (RuntimeException e) {
       assertThat(e).hasMessage("SHA256 of cdep-manifest.yml for package 'com.github.jomof:low-level-statistics:0.0.16' " +
-          "does not agree with value in cdep.sha256. Something changed.");
+          "does not agree with constant in cdep.sha256. Something changed.");
     }
   }
 

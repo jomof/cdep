@@ -90,11 +90,11 @@ public class BuildFindModuleFunctionTable {
 
     Coordinate coordinate = notNull(manifest.coordinate);
     assert coordinate.groupId != null;
-    AssignmentExpression coordinateGroupId = assign("coordinate_group_id", string(coordinate.groupId));
+    AssignmentExpression coordinateGroupId = assign("coordinate_group_id", constant(coordinate.groupId));
     assert coordinate.artifactId != null;
-    AssignmentExpression coordinateArtifactId = assign("coordinate_artifact_id", string(coordinate.artifactId));
+    AssignmentExpression coordinateArtifactId = assign("coordinate_artifact_id", constant(coordinate.artifactId));
     assert coordinate.version != null;
-    AssignmentExpression coordinateVersion = assign("coordinate_version", string(coordinate.version.value));
+    AssignmentExpression coordinateVersion = assign("coordinate_version", constant(coordinate.version.value));
     AssignmentExpression explodedArchiveTail = assign("exploded_archive_tail",
         joinFileSegments(coordinateGroupId, coordinateArtifactId, coordinateVersion));
 
@@ -107,26 +107,26 @@ public class BuildFindModuleFunctionTable {
     if (manifest.android != null && manifest.android.archives != null) {
       headerOnly = false;
       supported.add("Android");
-      cases.put(string("Android"), buildAndroidStlTypeCase(globals, resolved, explodedArchiveFolder, dependencies));
+      cases.put(constant("Android"), buildAndroidStlTypeCase(globals, resolved, explodedArchiveFolder, dependencies));
     }
     if (manifest.iOS != null && manifest.iOS.archives != null) {
       headerOnly = false;
       supported.add("Darwin");
-      cases.put(string("Darwin"), buildDarwinPlatformCase(globals, resolved, explodedArchiveFolder, dependencies));
+      cases.put(constant("Darwin"), buildDarwinPlatformCase(globals, resolved, explodedArchiveFolder, dependencies));
     }
     if (manifest.linux != null && manifest.linux.archives != null && manifest.linux.archives.length > 0) {
       headerOnly = false;
       supported.add("Linux");
-      cases.put(string("Linux"),
+      cases.put(constant("Linux"),
           buildSingleArchiveResolution(resolved, manifest.linux.archives[0], explodedArchiveFolder, dependencies));
     }
     if (headerOnly && manifest.interfaces != null && manifest.interfaces.headers != null) {
       supported.add("Android");
       supported.add("Darwin");
       supported.add("Linux");
-      cases.put(string("Android"), nop());
-      cases.put(string("Darwin"), nop());
-      cases.put(string("Linux"), nop());
+      cases.put(constant("Android"), nop());
+      cases.put(constant("Darwin"), nop());
+      cases.put(constant("Linux"), nop());
     }
 
     Expression bool[] = new Expression[cases.size()];
@@ -300,7 +300,7 @@ public class BuildFindModuleFunctionTable {
     List<Expression> expressions = new ArrayList<>();
     String supported = "";
     for (iOSArchitecture architecture : grouped.keySet()) {
-      conditions.add(arrayHasOnlyElement(globals.cmakeOsxArchitectures, string(architecture.toString())));
+      conditions.add(arrayHasOnlyElement(globals.cmakeOsxArchitectures, constant(architecture.toString())));
       expressions.add(buildiOSPlatformSdkSwitch(resolved,
           grouped.get(architecture),
           explodedArchiveFolder,
@@ -333,7 +333,7 @@ public class BuildFindModuleFunctionTable {
     // TODO:  Linter should verify that there is not duplicate exact platforms (ie platform+sdk)
     for (iOSArchive archive : archives) {
       String platformSDK = archive.platform + archive.sdk;
-      conditionList.add(eq(combinedPlatformAndSDK, string(platformSDK)));
+      conditionList.add(eq(combinedPlatformAndSDK, constant(platformSDK)));
       expressionList.add(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies));
 
       supported += platformSDK + " ";
@@ -345,7 +345,7 @@ public class BuildFindModuleFunctionTable {
     assert resolved.cdepManifestYml.iOS.archives != null;
     for (iOSArchive archive : resolved.cdepManifestYml.iOS.archives) {
       assert archive.platform != null;
-      conditionList.add(stringStartsWith(combinedPlatformAndSDK, string(archive.platform.toString())));
+      conditionList.add(stringStartsWith(combinedPlatformAndSDK, constant(archive.platform.toString())));
       expressionList.add(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies));
     }
 
@@ -405,9 +405,9 @@ public class BuildFindModuleFunctionTable {
     String runtimes = "";
     for (String stlType : stlTypes.keySet()) {
       runtimes += stlType + " ";
-      cases.put(string(stlType + "_shared"),
+      cases.put(constant(stlType + "_shared"),
           buildAndroidPlatformExpression(globals, resolved, stlTypes.get(stlType), explodedArchiveFolder, dependencies));
-      cases.put(string(stlType + "_static"),
+      cases.put(constant(stlType + "_static"),
           buildAndroidPlatformExpression(globals, resolved, stlTypes.get(stlType), explodedArchiveFolder, dependencies));
     }
 
@@ -517,7 +517,7 @@ public class BuildFindModuleFunctionTable {
     for (String abi : grouped.keySet()) {
       AndroidArchive archive = grouped.get(abi).iterator().next();
       supported += abi + " ";
-      cases.put(string(abi), buildSingleArchiveResolution(resolved, archive, abi, explodedArchiveFolder, dependencies));
+      cases.put(constant(abi), buildSingleArchiveResolution(resolved, archive, abi, explodedArchiveFolder, dependencies));
     }
 
     Expression prior = abort(String.format("Android ABI %%s is not supported by %s for platform %%s. Supported: %s",

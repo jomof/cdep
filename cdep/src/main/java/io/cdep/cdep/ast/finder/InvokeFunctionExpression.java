@@ -6,7 +6,7 @@ import java.lang.reflect.Modifier;
 
 import static io.cdep.cdep.utils.Invariant.*;
 
-public class InvokeFunctionExpression extends Expression {
+public class InvokeFunctionExpression extends StatementExpression {
   @NotNull
   final public ExternalFunctionExpression function;
 

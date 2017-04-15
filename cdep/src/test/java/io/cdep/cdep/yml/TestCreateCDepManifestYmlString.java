@@ -18,10 +18,10 @@ import static io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures.cxx_auto_type;
 public class TestCreateCDepManifestYmlString {
 
   private static void check(@NotNull CDepManifestYml manifest) {
-    // Convert to string
+    // Convert to constant
     String result = CDepManifestYmlUtils.convertManifestToString(manifest);
 
-    // Convert from string
+    // Convert from constant
     CDepManifestYml manifest2 = CDepManifestYmlUtils.convertStringToManifest(result);
 
     // Would like to compare equality here.

@@ -90,7 +90,7 @@ public class CDep {
 
 
   /**
-   * Return the first string after matching one of the arguments. Argument and strign are removed
+   * Return the first constant after matching one of the arguments. Argument and strign are removed
    * from the list.
    */
 

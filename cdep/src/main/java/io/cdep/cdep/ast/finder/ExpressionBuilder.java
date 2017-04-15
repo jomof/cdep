@@ -94,7 +94,9 @@ public class ExpressionBuilder {
   }
 
   @NotNull
-  public static InvokeFunctionExpression invoke(@NotNull ExternalFunctionExpression function, @NotNull Expression... parameters) {
+  public static InvokeFunctionExpression invoke(
+      @NotNull ExternalFunctionExpression function,
+      @NotNull Expression... parameters) {
     return new InvokeFunctionExpression(function, parameters);
   }
 
@@ -107,7 +109,7 @@ public class ExpressionBuilder {
   }
 
   /**
-   * Return true if string starts with find.
+   * Return true if constant starts with find.
    */
 
   @NotNull
@@ -131,12 +133,12 @@ public class ExpressionBuilder {
   }
 
   /**
-   * Return the last index of value inside of string.
+   * Return the last index of constant inside of constant.
    */
   @SuppressWarnings("SameParameterValue")
   @NotNull
   public static InvokeFunctionExpression lastIndexOfString(@NotNull Expression string, @NotNull String value) {
-    return invoke(ExternalFunctionExpression.STRING_LASTINDEXOF, string, string(value));
+    return invoke(ExternalFunctionExpression.STRING_LASTINDEXOF, string, constant(value));
   }
 
   /**
@@ -173,15 +175,15 @@ public class ExpressionBuilder {
   }
 
   @NotNull
-  public static StringExpression string(@NotNull String value) {
-    return new StringExpression(value);
+  public static ConstantExpression constant(@NotNull Object value) {
+    return new ConstantExpression(value);
   }
 
   @NotNull
   private static ArrayExpression array(@NotNull String... elements) {
     Expression array[] = new Expression[elements.length];
     for (int i = 0; i < elements.length; ++i) {
-      array[i] = string(elements[i]);
+      array[i] = constant(elements[i]);
     }
     return array(array);
   }

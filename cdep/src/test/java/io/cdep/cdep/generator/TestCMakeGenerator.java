@@ -28,11 +28,12 @@ public class TestCMakeGenerator {
   @Test
   public void testRequires() throws Exception {
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
-    builder.addManifest(ResolvedManifests.simpleRequires().getValue());
+    builder.addManifest(ResolvedManifests.multipleRequires().getValue());
     FunctionTableExpression table = builder.build();
     String result = new CMakeGenerator(environment, table).create();
     System.out.printf(result);
-    assertThat(result).contains("target_compile_features(${target} PRIVATE cxx_auto_type)");
+    assertThat(result).contains("target_compile_features(${target} PRIVATE " +
+        "cxx_auto_type cxx_decltype)");
   }
 
   @Test

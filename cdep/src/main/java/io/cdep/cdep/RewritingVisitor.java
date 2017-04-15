@@ -11,7 +11,7 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.invoke;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.module;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.multi;
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.nop;
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.constant;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
@@ -34,7 +34,7 @@ import io.cdep.cdep.ast.finder.MultiStatementExpression;
 import io.cdep.cdep.ast.finder.NopExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
 import io.cdep.cdep.ast.finder.StatementExpression;
-import io.cdep.cdep.ast.finder.StringExpression;
+import io.cdep.cdep.ast.finder.ConstantExpression;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,8 +77,8 @@ public class RewritingVisitor {
     if (expr.getClass().equals(IfSwitchExpression.class)) {
       return visitIfSwitchExpression((IfSwitchExpression) expr);
     }
-    if (expr.getClass().equals(StringExpression.class)) {
-      return visitStringExpression((StringExpression) expr);
+    if (expr.getClass().equals(ConstantExpression.class)) {
+      return visitConstantExpression((ConstantExpression) expr);
     }
     if (expr.getClass().equals(AssignmentExpression.class)) {
       return visitAssignmentExpression((AssignmentExpression) expr);
@@ -211,8 +211,8 @@ public class RewritingVisitor {
   }
 
   @NotNull
-  protected Expression visitStringExpression(@NotNull StringExpression expr) {
-    return string(expr.value);
+  protected Expression visitConstantExpression(@NotNull ConstantExpression expr) {
+    return constant(expr.value);
   }
 
   @NotNull

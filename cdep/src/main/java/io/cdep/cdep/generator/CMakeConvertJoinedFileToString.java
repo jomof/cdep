@@ -5,7 +5,7 @@ import io.cdep.annotations.Nullable;
 import io.cdep.cdep.RewritingVisitor;
 import io.cdep.cdep.ast.finder.*;
 
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.string;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.constant;
 
 /**
  * Locate File.join statements and join them into strings.
@@ -18,7 +18,7 @@ public class CMakeConvertJoinedFileToString extends RewritingVisitor {
       String value = getUnquotedConcatenation(expr.parameters[0], "/");
       value += "/";
       value += getUnquotedConcatenation(expr.parameters[1], "/");
-      return string(value);
+      return constant(value);
 
     }
     return super.visitInvokeFunctionExpression(expr);
@@ -30,13 +30,13 @@ public class CMakeConvertJoinedFileToString extends RewritingVisitor {
   }
 
   /**
-   * If a string the return xyz without quotes.
+   * If a constant the return xyz without quotes.
    * If an assignment reference then return ${xyz}.
    */
   @Nullable
   private String getUnquotedConcatenation(Expression expr, String joinOn) {
-    if (expr instanceof StringExpression) {
-      return ((StringExpression) expr).value;
+    if (expr instanceof ConstantExpression) {
+      return ((ConstantExpression) expr).value.toString();
     }
     if (expr instanceof AssignmentReferenceExpression) {
       return String.format("${%s}", ((AssignmentReferenceExpression) expr).assignment.name);

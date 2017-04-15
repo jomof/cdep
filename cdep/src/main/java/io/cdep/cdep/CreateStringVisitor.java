@@ -166,7 +166,7 @@ public class CreateStringVisitor extends ReadonlyVisitor {
   }
 
   @Override
-  protected void visitStringExpression(@NotNull StringExpression expr) {
+  protected void visitStringExpression(@NotNull ConstantExpression expr) {
     append("'%s'", expr.value);
   }
 

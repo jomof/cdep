@@ -22,7 +22,7 @@ public class TestMergeCDepManifestYmls {
           ResolvedManifests.admob().getValue().cdepManifestYml);
       fail("Expected exception");
     } catch (RuntimeException e) {
-      assertThat(e).hasMessage("Manifests were different at artifactId.coordinate.[value]");
+      assertThat(e).hasMessage("Manifests were different at artifactId.coordinate.[constant]");
     }
   }
 
@@ -49,7 +49,7 @@ public class TestMergeCDepManifestYmls {
     commonDifferences.add("Manifests were different at include.headers.interfaces.[value]");
     commonDifferences.add("Manifests were different at size.headers.interfaces.[value]");
     commonDifferences.add("Manifests were different at sha256.archive.[value]");
-    commonDifferences.add("Manifests were different at value.version.coordinate.[value]");
+    commonDifferences.add("Manifests were different at constant.version.coordinate.[constant]");
     boolean somethingUnexpected = false;
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {
       for (ResolvedManifests.NamedManifest manifest2 : ResolvedManifests.all()) {

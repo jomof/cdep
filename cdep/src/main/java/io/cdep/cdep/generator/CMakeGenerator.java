@@ -46,7 +46,7 @@ public class CMakeGenerator {
   public CMakeGenerator(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) {
     this.environment = environment;
     table = (FunctionTableExpression) notNull(new CMakeConvertJoinedFileToString().visit(table));
-    table = (FunctionTableExpression) notNull(new ConvertRequiresToCMakeTargetCompileFeaturesRewritingVisitor().visit(table));
+    table = (FunctionTableExpression) notNull(new ListRequiresToStatementExpression().visit(table));
     this.table = table;
     this.sb = new StringBuilder();
   }
@@ -187,6 +187,8 @@ public class CMakeGenerator {
         append("%s STREQUAL %s", parms[0], parms[1]);
       } else if (specific.function == ExternalFunctionExpression.ARRAY_HAS_ONLY_ELEMENT) {
         append("%s STREQUAL %s", parms[0], parms[1]);
+      } else if (specific.function == ExternalFunctionExpression.REQUIRES_COMPILER_FEATURES) {
+        append("%starget_compile_features(${target} PRIVATE %s)\r\n", prefix, parms[0]);
       } else {
         throw new RuntimeException(specific.function.method.getName());
       }
@@ -199,8 +201,12 @@ public class CMakeGenerator {
       IntegerExpression specific = (IntegerExpression) expression;
       append("%s", specific.value);
       return;
-    } else if (expression instanceof StringExpression) {
-      StringExpression specific = (StringExpression) expression;
+    } else if (expression instanceof ConstantExpression) {
+      ConstantExpression specific = (ConstantExpression) expression;
+      if (specific.value.getClass().isEnum()) {
+        append(specific.value.toString());
+        return;
+      }
       append("\"" + specific.value + "\"");
       return;
     } else if (expression instanceof ModuleExpression) {
@@ -249,10 +255,6 @@ public class CMakeGenerator {
     } else if (expression instanceof NopExpression) {
       append("\n");
       return;
-    } else if (expression instanceof CMakeInvokeMethod) {
-      CMakeInvokeMethod specific = (CMakeInvokeMethod) expression;
-      append("%s%s\n", prefix, specific.toString());
-      return;
     } else if (expression instanceof ModuleArchiveExpression) {
       ModuleArchiveExpression specific = (ModuleArchiveExpression) expression;
       assert specific.requires == null; // Should have been rewritten by now.
@@ -268,6 +270,15 @@ public class CMakeGenerator {
         visit(specific.libraryPath);
         append(")\n");
         append("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n", prefix, specific.library);
+      }
+      return;
+    } else if (expression instanceof ArrayExpression) {
+      ArrayExpression specific = (ArrayExpression) expression;
+      for (int i = 0; i < specific.elements.length; ++i) {
+        if (i > 0) {
+          append(" ");
+        }
+        visit(specific.elements[i]);
       }
       return;
     }
@@ -325,8 +336,8 @@ public class CMakeGenerator {
         return null;
       }
       throw new RuntimeException(specific.function.method.getName());
-    } else if (expr instanceof StringExpression) {
-      StringExpression specific = (StringExpression) expr;
+    } else if (expr instanceof ConstantExpression) {
+      ConstantExpression specific = (ConstantExpression) expr;
       String result = "\"" + specific.value + "\"";
       if (assignResult != null) {
         append("%sset(%s %s)\n", prefix, assignResult, result);
