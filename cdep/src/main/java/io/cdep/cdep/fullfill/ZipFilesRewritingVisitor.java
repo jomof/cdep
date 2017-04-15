@@ -15,9 +15,11 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static io.cdep.cdep.io.IO.infoln;
 import static io.cdep.cdep.utils.Invariant.require;
+import static java.util.regex.Pattern.compile;
 
 /**
  * Zip up file entries into layout folder. Doesn't record SHA or size since that is done

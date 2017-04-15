@@ -46,7 +46,12 @@ public class CDepManifestYmlUtils {
         manifest.sourceVersion = CDepManifestYmlVersion.vlatest;
       }
     } catch (YAMLException e) {
-      manifest = V2Reader.convertStringToManifest(content);
+      try {
+        manifest = V2Reader.convertStringToManifest(content);
+      } catch (YAMLException e2) {
+        // If older readers also couldn't read it then throw the original exception.
+        throw e;
+      }
     }
     require(manifest != null, "Manifest was empty");
     return manifest;

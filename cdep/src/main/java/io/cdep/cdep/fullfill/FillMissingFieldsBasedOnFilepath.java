@@ -1,13 +1,16 @@
 package io.cdep.cdep.fullfill;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
+import static java.util.regex.Pattern.compile;
 
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVisitor {
-
   // Note, this list must be in order such that long strings come before shorter prefixes
   // of the same string.
   private String androidABIs[] = new String[] {
@@ -56,9 +59,20 @@ public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVi
 
     String platform = archive.platform;
     if (platform == null) {
-      // If the platform isn't specified then optimistically choose a very old version for
-      // best compatibility.
-      platform = "12";
+      File remaining = new File(archive.file);
+      while (remaining != null) {
+        String segment = remaining.getName();
+        if (segment.startsWith("android-")) {
+          platform = segment.substring(segment.lastIndexOf("-") + 1);
+          break;
+        }
+        remaining = remaining.getParentFile();
+      }
+      if (platform == null) {
+        // If the platform isn't specified then optimistically choose a very old version for
+        // best compatibility.
+        platform = "12";
+      }
     }
     return new AndroidArchive(
         archive.file,

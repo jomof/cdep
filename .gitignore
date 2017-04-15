@@ -4,3 +4,5 @@ integration/build/*
 cdep/build/*
 bootstrap/build/*
 .idea/*
+smoke-test/build/*
+*~

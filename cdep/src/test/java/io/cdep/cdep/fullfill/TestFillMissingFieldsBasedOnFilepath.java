@@ -42,4 +42,27 @@ public class TestFillMissingFieldsBasedOnFilepath {
     assertThat(manifest.android.archives[5].abi).isEqualTo("x86_64");
     assertThat(manifest.android.archives[6].abi).isEqualTo("x86");
   }
+
+  @Test
+  public void testPlatform() {
+    String body = "coordinate:\n"
+        + "  groupId: com.github.jomof\n"
+        + "  artifactId: firebase/app\n"
+        + "  version: ${version}\n"
+        + "interfaces:\n"
+        + "  headers:\n"
+        + "    file: ${source}/include/firebase/app.h -> firebase/app.h\n"
+        + "\n"
+        + "android:\n"
+        + "  archives:\n"
+        + "  - file: firebase_cpp_sdk/libs/android/arm64-v8a/c++/libapp.a\n"
+        + "  - file: firebase_cpp_sdk/libs/android-21/arm64-v8a/c++/libapp.a\n"
+        + "  - file: firebase_cpp_sdk/libs/android-9/arm64-v8a/c++/libapp.a\n";
+
+    CDepManifestYml manifest = CDepManifestYmlUtils.convertStringToManifest(body);
+    manifest = new FillMissingFieldsBasedOnFilepath().visitCDepManifestYml(manifest);
+    assertThat(manifest.android.archives[0].platform).isEqualTo("12");
+    assertThat(manifest.android.archives[1].platform).isEqualTo("21");
+    assertThat(manifest.android.archives[2].platform).isEqualTo("9");
+  }
 }
