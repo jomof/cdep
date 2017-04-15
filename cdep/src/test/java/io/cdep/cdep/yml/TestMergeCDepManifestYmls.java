@@ -18,7 +18,8 @@ public class TestMergeCDepManifestYmls {
   @Test
   public void testJustCoordinate() throws MalformedURLException {
     try {
-      MergeCDepManifestYmls.merge(ResolvedManifests.sqlite().cdepManifestYml, ResolvedManifests.admob().cdepManifestYml);
+      MergeCDepManifestYmls.merge(ResolvedManifests.sqlite().getValue().cdepManifestYml,
+          ResolvedManifests.admob().getValue().cdepManifestYml);
       fail("Expected exception");
     } catch (RuntimeException e) {
       assertThat(e).hasMessage("Manifests were different at artifactId.coordinate.[value]");
@@ -27,8 +28,8 @@ public class TestMergeCDepManifestYmls {
 
   @Test
   public void testMergeAndroidiOS() throws MalformedURLException {
-    CDepManifestYml iOSManifest = ResolvedManifests.sqliteiOS().cdepManifestYml;
-    CDepManifestYml androidManifest = ResolvedManifests.sqliteAndroid().cdepManifestYml;
+    CDepManifestYml iOSManifest = ResolvedManifests.sqliteiOS().getValue().cdepManifestYml;
+    CDepManifestYml androidManifest = ResolvedManifests.sqliteAndroid().getValue().cdepManifestYml;
     CDepManifestYml result = MergeCDepManifestYmls.merge(androidManifest, iOSManifest);
     iOS iOS = notNull(result.iOS);
     assert iOSManifest.iOS != null;
@@ -84,8 +85,9 @@ public class TestMergeCDepManifestYmls {
 
   @Test
   public void mergeAndroidiOSLinux() throws Exception {
-    CDepManifestYml result = MergeCDepManifestYmls.merge(ResolvedManifests.sqlite().cdepManifestYml, ResolvedManifests
-        .sqliteLinux().cdepManifestYml);
+    CDepManifestYml result = MergeCDepManifestYmls.merge(
+        ResolvedManifests.sqlite().getValue().cdepManifestYml,
+        ResolvedManifests.sqliteLinux().getValue().cdepManifestYml);
     assertThat(result.linux).isNotNull();
     assertThat(result.linux.archives).isNotEmpty();
     assertThat(result.linux.archives).hasLength(1);

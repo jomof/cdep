@@ -78,7 +78,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testArchiveOnly() throws Exception {
-    ResolvedManifest resolved = ResolvedManifests.archiveOnly();
+    ResolvedManifest resolved = ResolvedManifests.archiveOnly().getValue();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
@@ -100,7 +100,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testSingleABISqlite() throws Exception {
-    ResolvedManifest resolved = ResolvedManifests.singleABISqlite();
+    ResolvedManifest resolved = ResolvedManifests.singleABISqlite().getValue();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
@@ -119,7 +119,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testTinyiOS() throws Exception {
-    ResolvedManifest resolved = ResolvedManifests.emptyAndroidArchive();
+    ResolvedManifest resolved = ResolvedManifests.emptyAndroidArchive().getValue();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
@@ -133,7 +133,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testTinyAndroid() throws Exception {
-    ResolvedManifest resolved = ResolvedManifests.emptyiOSArchive();
+    ResolvedManifest resolved = ResolvedManifests.emptyiOSArchive().getValue();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
@@ -151,7 +151,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testiOS() throws Exception {
-    ResolvedManifest resolved = ResolvedManifests.sqlite();
+    ResolvedManifest resolved = ResolvedManifests.sqlite().getValue();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
@@ -173,7 +173,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testRequires() throws Exception {
-    ResolvedManifest resolved = ResolvedManifests.simpleRequires();
+    ResolvedManifest resolved = ResolvedManifests.simpleRequires().getValue();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
@@ -184,7 +184,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testLinux() throws Exception {
-    ResolvedManifest resolved = ResolvedManifests.sqliteLinux();
+    ResolvedManifest resolved = ResolvedManifests.sqliteLinux().getValue();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
@@ -201,7 +201,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testiOSNonSpecificSDK() throws Exception {
-    ResolvedManifest resolved = ResolvedManifests.sqlite();
+    ResolvedManifest resolved = ResolvedManifests.sqlite().getValue();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
@@ -230,7 +230,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testiOSUnknownPlatform() throws Exception {
-    ResolvedManifest resolved = ResolvedManifests.sqlite();
+    ResolvedManifest resolved = ResolvedManifests.sqlite().getValue();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
@@ -252,7 +252,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testEmptyiOSArchive() throws Exception {
-    ResolvedManifest resolved = ResolvedManifests.emptyiOSArchive();
+    ResolvedManifest resolved = ResolvedManifests.emptyiOSArchive().getValue();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();
@@ -260,7 +260,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testEmptyAndroidArchive() throws Exception {
-    ResolvedManifest resolved = ResolvedManifests.emptyAndroidArchive();
+    ResolvedManifest resolved = ResolvedManifests.emptyAndroidArchive().getValue();
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
     FunctionTableExpression table = builder.build();

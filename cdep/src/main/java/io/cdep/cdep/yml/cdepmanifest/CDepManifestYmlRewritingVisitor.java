@@ -5,6 +5,8 @@ import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.Version;
 
+import static io.cdep.cdep.utils.Invariant.notNull;
+
 public class CDepManifestYmlRewritingVisitor {
 
   @NotNull
@@ -215,19 +217,19 @@ public class CDepManifestYmlRewritingVisitor {
     );
   }
 
-  protected String[] visitRequiresArray(String[] requires) {
+  protected CxxLanguageFeatures[] visitRequiresArray(CxxLanguageFeatures[] requires) {
     if (requires == null) {
       return null;
     }
-    String[] result = new String[requires.length];
+    CxxLanguageFeatures[] result = new CxxLanguageFeatures[requires.length];
     for (int i = 0; i < result.length; ++i) {
       result[i] = visitRequire(requires[i]);
     }
     return result;
   }
 
-  protected String visitRequire(String require) {
-    return visitString(require);
+  protected CxxLanguageFeatures visitRequire(CxxLanguageFeatures require) {
+    return notNull(require);
   }
 
   protected HardNameDependency[] visitHardNameDependencyArray(HardNameDependency[] dependencies) {

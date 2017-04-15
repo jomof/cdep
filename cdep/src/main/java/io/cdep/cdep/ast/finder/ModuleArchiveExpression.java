@@ -1,12 +1,13 @@
 package io.cdep.cdep.ast.finder;
 
 import io.cdep.annotations.Nullable;
+import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 
 import java.net.URL;
 
 import static io.cdep.cdep.utils.Invariant.notNull;
 
-public class ModuleArchiveExpression extends Expression {
+public class ModuleArchiveExpression extends StatementExpression {
   @Nullable final public URL file; // The zip file.
   @Nullable final public String sha256;
   @Nullable final public Long size;
@@ -14,9 +15,9 @@ public class ModuleArchiveExpression extends Expression {
   @Nullable final public Expression includePath;
   @Nullable final public String library;
   @Nullable final public Expression libraryPath;
-  @Nullable final public String requires[];
+  @Nullable final public CxxLanguageFeatures requires[];
 
-  ModuleArchiveExpression(
+  public ModuleArchiveExpression(
       URL file,
       String sha256,
       Long size,
@@ -24,7 +25,7 @@ public class ModuleArchiveExpression extends Expression {
       Expression fullIncludePath,
       String library, // Like "lib/libsqlite.a"
       Expression fullLibraryName,
-      String requires[]) {
+      CxxLanguageFeatures requires[]) {
     this.file = notNull(file);
     this.sha256 = sha256;
     this.size = size;

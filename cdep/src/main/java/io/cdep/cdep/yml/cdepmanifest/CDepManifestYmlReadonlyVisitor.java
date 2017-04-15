@@ -53,6 +53,13 @@ abstract public class CDepManifestYmlReadonlyVisitor extends PlainOldDataReadonl
     visitPlainOldDataObject(null, value);
   }
 
+  public void visitCxxLanguageFeaturesArray(@Nullable String name, @NotNull CxxLanguageFeatures value[]) {
+    visitArray(name, value, CxxLanguageFeatures.class);
+  }
+
+  public void visitCxxLanguageFeatures(@Nullable String name, @NotNull CxxLanguageFeatures value) {
+  }
+
   public void visitArchive(@Nullable String name, @NotNull Archive value) {
     visitPlainOldDataObject(name, value);
   }

@@ -43,6 +43,16 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
+  public void visitCxxLanguageFeatures(@Nullable String name, @NotNull CxxLanguageFeatures value) {
+    if (name == null) {
+      append(value.toString());
+      return;
+    }
+    super.visitCxxLanguageFeatures(name, value);
+    appendIndented("%s: %s\r\n", notNull(name), value);
+  }
+
+  @Override
   public void visitVersion(@NotNull String name, @NotNull Version value) {
     appendIndented("%s: %s\r\n", name, value.value);
   }

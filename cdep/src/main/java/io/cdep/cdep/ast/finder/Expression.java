@@ -20,7 +20,7 @@ import io.cdep.cdep.CreateStringVisitor;
 
 abstract public class Expression {
   @Nullable
-  private String string = null;
+  protected String string = null;
 
   @Nullable
   @Override

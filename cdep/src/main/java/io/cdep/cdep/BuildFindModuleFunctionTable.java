@@ -248,7 +248,7 @@ public class BuildFindModuleFunctionTable {
       @Nullable String sha256,
       @Nullable Long size,
       @Nullable String include,
-      @Nullable String[] requires,
+      @Nullable CxxLanguageFeatures[] requires,
       @Nullable String lib,
       @NotNull AssignmentExpression explodedArchiveFolder)
       throws URISyntaxException, MalformedURLException {

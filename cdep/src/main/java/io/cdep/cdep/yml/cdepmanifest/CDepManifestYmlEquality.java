@@ -52,6 +52,13 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
     covisitFields(left, right);
   }
 
+  public void covisitCxxLanguageFeaturesArray(String name, CxxLanguageFeatures left[], CxxLanguageFeatures right[]) {
+    covisitArray(name, left, right, CxxLanguageFeatures.class);
+  }
+
+  public void covisitCxxLanguageFeatures(String name, CxxLanguageFeatures left, CxxLanguageFeatures right) {
+  }
+
   public void covisitLinux(String name, Linux left, Linux right) {
     covisitFields(left, right);
   }

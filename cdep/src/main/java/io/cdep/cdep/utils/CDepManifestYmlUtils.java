@@ -29,9 +29,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.noNullElements;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class CDepManifestYmlUtils {
+  @NotNull
+  public static String convertManifestToString(@NotNull CDepManifestYml manifest) {
+    return CreateCDepManifestYmlString.create(manifest);
+  }
 
   @NotNull
   public static CDepManifestYml convertStringToManifest(@NotNull String content) {
@@ -129,6 +134,7 @@ public class CDepManifestYmlUtils {
       require(value.sha256 != null && value.sha256.length() != 0, "Archive %s is missing sha256", coordinate);
       require(value.size != null && value.size != 0, "Archive %s is missing size or it is zero", coordinate);
       require(value.include != null && value.include.length() != 0, "Archive %s is missing include", coordinate);
+      noNullElements(value.requires);
       super.visitArchive(name, value);
     }
 

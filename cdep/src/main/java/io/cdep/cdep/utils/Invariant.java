@@ -2,6 +2,7 @@ package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
+import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,5 +75,14 @@ abstract public class Invariant {
       notNull(t);
     }
     return collection;
+  }
+
+  public static void noNullElements(Object[] requires) {
+    if (requires == null) {
+      return;
+    }
+    for (int i = 0; i < requires.length; ++i) {
+      notNull(requires[i]);
+    }
   }
 }

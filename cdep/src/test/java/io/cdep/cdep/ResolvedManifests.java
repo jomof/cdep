@@ -6,6 +6,7 @@ import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.ReflectionUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
+import javafx.util.Pair;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -17,7 +18,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class ResolvedManifests {
   @NotNull
-  public static ResolvedManifest simpleRequires() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> simpleRequires() throws MalformedURLException {
     return getResolvedManifest("coordinate:\n" +
         "  groupId: com.github.jomof\n" +
         "  artifactId: firebase/app\n" +
@@ -32,7 +33,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest indistinguishableAndroidArchives() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> indistinguishableAndroidArchives() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n"
             + "  groupId: com.github.jomof\n"
@@ -62,7 +63,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest templateWithOnlyFile() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> templateWithOnlyFile() throws MalformedURLException {
     return getResolvedManifest("coordinate:\n"
         + "  groupId: com.github.jomof\n"
         + "  artifactId: firebase/app\n"
@@ -77,7 +78,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest templateWithNullArchives() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> templateWithNullArchives() throws MalformedURLException {
     return getResolvedManifest("coordinate:\n"
         + "  groupId: com.github.jomof\n"
         + "  artifactId: firebase/app\n"
@@ -91,7 +92,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest singleABISqlite() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> singleABISqlite() throws MalformedURLException {
     return getResolvedManifest("coordinate:\n" +
         "  groupId: com.github.jomof\n" +
         "  artifactId: sqlite\n" +
@@ -366,7 +367,7 @@ public class ResolvedManifests {
 
   // This is a cmakeify.yml that has "abi" instead of abis.
   @NotNull
-  public static ResolvedManifest singleABI() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> singleABI() throws MalformedURLException {
     return getResolvedManifest("coordinate:\n" +
         "  groupId: com.github.jomof\n" +
         "  artifactId: sqlite\n" +
@@ -573,7 +574,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest boost() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> boost() throws MalformedURLException {
     return getResolvedManifest("coordinate:\n"
         + "  groupId: com.github.jomof\n"
         + "  artifactId: boost\n"
@@ -590,7 +591,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest sqliteLinux() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> sqliteLinux() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: sqlite\n  version: 0.0.0\nlinux:\n  archives:\n  - lib: " +
             "libsqlite.a\n    file: sqlite-linux.zip\n    sha256: " +
@@ -599,7 +600,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest sqliteLinuxMultiple() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> sqliteLinuxMultiple() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: sqlite\n  version: 0.0.0\nlinux:\n  archives:\n  - lib: " +
             "libsqlite.a\n    file: sqlite-linux-1.zip\n    sha256: " +
@@ -609,7 +610,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest archiveMissingSize() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> archiveMissingSize() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: vectorial\n  version: 0.0.0\narchive:\n  file: vectorial.zip\n" +
             "  sha256: 47e72f9898a78024a96e7adc5b29d6ec02313a02087646d69d7797f13840121c\n  size: \n  include: " +
@@ -618,7 +619,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest archiveMissingFile() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> archiveMissingFile() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: vectorial\n  version: 0.0.0\narchive:\n  file:\n  sha256: " +
             "47e72f9898a78024a96e7adc5b29d6ec02313a02087646d69d7797f13840121c\n  size: 92\n  include: " +
@@ -627,7 +628,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest archiveMissingSha256() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> archiveMissingSha256() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: vectorial\n  version: 0.0.0\narchive:\n  file: bob.zip\n  " +
             "sha256: \n  size: 92\nexample: |\n  #include <vectorial/simd4f.h>\n  void test() {\n    float z = " +
@@ -635,7 +636,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest archiveMissingInclude() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> archiveMissingInclude() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: vectorial\n  version: 0.0.0\narchive:\n  file: bob.zip\n  " +
             "sha256: 47e72f9898a78024a96e7adc5b29d6ec02313a02087646d69d7797f13840121c\n  size: 92\n  include: " +
@@ -644,13 +645,13 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  static ResolvedManifest getResolvedManifest(@NotNull String manifest) throws MalformedURLException {
+  static Pair<String, ResolvedManifest> getResolvedManifest(@NotNull String manifest) throws MalformedURLException {
     CDepManifestYml yml = CDepManifestYmlUtils.convertStringToManifest(manifest);
-    return new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml);
+    return new Pair(manifest, new ResolvedManifest(new URL("http://google.com/cdep-manifest.yml"), yml));
   }
 
   @NotNull
-  public static ResolvedManifest archiveOnly() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> archiveOnly() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: vectorial\n  version: 0.0.0\narchive:\n  file: vectorial.zip\n" +
             "  sha256: 47e72f9898a78024a96e7adc5b29d6ec02313a02087646d69d7797f13840121c\n  size: 52863\n  include: " +
@@ -659,7 +660,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest admob() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> admob() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: firebase/admob\n  version: 2.1.3-rev8\ndependencies:\n  - " +
             "compile: com.github.jomof:firebase/app:2.1.3-rev8\n    sha256: " +
@@ -682,7 +683,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest sqlite() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> sqlite() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: sqlite\n  version: 0.0.0\nandroid:\n  archives:\n  - lib: " +
             "libsqlite.a\n    file: sqlite-android-cxx-platform-12.zip\n    sha256: " +
@@ -711,7 +712,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest sqliteiOS() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> sqliteiOS() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: sqlite\n  version: 3.16.2-rev33\niOS:\n  archives:\n  - lib: " +
             "libsqlite.a\n    file: sqlite-ios-platform-iPhoneOS-architecture-armv7-sdk-9.3.zip\n    sha256: " +
@@ -733,7 +734,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  public static ResolvedManifest sqliteAndroid() throws MalformedURLException {
+  public static Pair<String, ResolvedManifest> sqliteAndroid() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: sqlite\n  version: 3.16.2-rev33\nandroid:\n  archives:\n  - " +
             "lib: libsqlite.a\n    file: sqlite-android-cxx-platform-12.zip\n    sha256: " +
@@ -757,7 +758,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  static ResolvedManifest emptyiOSArchive() throws MalformedURLException {
+  static Pair<String, ResolvedManifest> emptyiOSArchive() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: sqlite\n  version: 0.0.0\nandroid:\n  archives:\n  - lib: " +
             "libsqlite.a\n    file: sqlite-android-cxx-platform-12.zip\n    sha256: " +
@@ -767,7 +768,7 @@ public class ResolvedManifests {
   }
 
   @NotNull
-  static ResolvedManifest emptyAndroidArchive() throws MalformedURLException {
+  static Pair<String, ResolvedManifest> emptyAndroidArchive() throws MalformedURLException {
     return getResolvedManifest(
         "coordinate:\n  groupId: com.github.jomof\n  artifactId: sqlite\n  version: 0.0.0\niOS:\n  archives:\n  - lib: " +
             "libsqlite.a\n    file: sqlite-ios-platform-iPhone.zip\n    sha256: " +
@@ -789,9 +790,9 @@ public class ResolvedManifests {
       if (method.getParameterTypes().length != 0) {
         continue;
       }
-      ResolvedManifest resolved = (ResolvedManifest) ReflectionUtils.invoke(method, null);
-      String body = CreateCDepManifestYmlString.create(resolved.cdepManifestYml);
-      result.add(new NamedManifest(method.getName(), body, resolved));
+      Pair<String, ResolvedManifest> resolved = (Pair<String, ResolvedManifest>) ReflectionUtils.invoke(method, null);
+      String body = resolved.getKey();
+      result.add(new NamedManifest(method.getName(), body, resolved.getValue()));
     }
     return result;
   }

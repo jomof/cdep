@@ -3,6 +3,7 @@ package io.cdep.cdep.ast.finder;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class ExpressionBuilder {
       @Nullable Expression includePath,
       @Nullable String library,
       @Nullable Expression libraryPath,
-      @Nullable String requires[]) {
+      @Nullable CxxLanguageFeatures requires[]) {
     return new ModuleArchiveExpression(file, sha256, size, include, includePath, library, libraryPath, requires);
   }
 

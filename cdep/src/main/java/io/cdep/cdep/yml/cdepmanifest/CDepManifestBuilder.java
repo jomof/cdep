@@ -13,7 +13,7 @@ public class CDepManifestBuilder {
   @SuppressWarnings("SameParameterValue")
   @NotNull
   public static Archive archive(@NotNull String file, @NotNull String sha256, long size,
-      @Nullable String include, @Nullable String requires[]) {
+      @Nullable String include, @Nullable CxxLanguageFeatures requires[]) {
     return new Archive(file, sha256, size, include, requires);
   }
 

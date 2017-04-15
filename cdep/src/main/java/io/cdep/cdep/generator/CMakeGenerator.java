@@ -15,19 +15,18 @@
 */
 package io.cdep.cdep.generator;
 
-import static io.cdep.cdep.io.IO.info;
-import static io.cdep.cdep.utils.Invariant.notNull;
-import static io.cdep.cdep.utils.Invariant.require;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.utils.FileUtils;
-import io.cdep.cdep.utils.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+
+import static io.cdep.cdep.io.IO.info;
+import static io.cdep.cdep.utils.Invariant.notNull;
+import static io.cdep.cdep.utils.Invariant.require;
 
 public class CMakeGenerator {
 
@@ -46,7 +45,9 @@ public class CMakeGenerator {
 
   public CMakeGenerator(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) {
     this.environment = environment;
-    this.table = (FunctionTableExpression) notNull(new CMakeConvertJoinedFileToString().visit(table));
+    table = (FunctionTableExpression) notNull(new CMakeConvertJoinedFileToString().visit(table));
+    table = (FunctionTableExpression) notNull(new ConvertRequiresToCMakeTargetCompileFeaturesRewritingVisitor().visit(table));
+    this.table = table;
     this.sb = new StringBuilder();
   }
 
@@ -208,24 +209,7 @@ public class CMakeGenerator {
         append("\n%s%s(${target})", prefix, getAddDependencyFunctionName(dependency));
       }
       append("\n");
-      ModuleArchiveExpression archive = specific.archive;
-      if (archive.requires != null && archive.requires.length > 0) {
-        append("%starget_compile_features(${target} PRIVATE %s)\n", prefix,
-            StringUtils.joinOn(" ", archive.requires));
-      }
-      if (archive.includePath != null) {
-        append("%starget_include_directories(${target} PRIVATE ", prefix);
-        visit(archive.includePath);
-        append(")\n");
-        append("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix, archive.include);
-      }
-
-      if (archive.libraryPath != null) {
-        append("%starget_link_libraries(${target} ", prefix);
-        visit(archive.libraryPath);
-        append(")\n");
-        append("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n", prefix, archive.library);
-      }
+      visit(specific.archive);
       return;
     } else if (expression instanceof AbortExpression) {
       AbortExpression specific = (AbortExpression) expression;
@@ -264,6 +248,27 @@ public class CMakeGenerator {
       return;
     } else if (expression instanceof NopExpression) {
       append("\n");
+      return;
+    } else if (expression instanceof CMakeInvokeMethod) {
+      CMakeInvokeMethod specific = (CMakeInvokeMethod) expression;
+      append("%s%s\n", prefix, specific.toString());
+      return;
+    } else if (expression instanceof ModuleArchiveExpression) {
+      ModuleArchiveExpression specific = (ModuleArchiveExpression) expression;
+      assert specific.requires == null; // Should have been rewritten by now.
+      if (specific.includePath != null) {
+        append("%starget_include_directories(${target} PRIVATE ", prefix);
+        visit(specific.includePath);
+        append(")\n");
+        append("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix, specific.include);
+      }
+
+      if (specific.libraryPath != null) {
+        append("%starget_link_libraries(${target} ", prefix);
+        visit(specific.libraryPath);
+        append(")\n");
+        append("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n", prefix, specific.library);
+      }
       return;
     }
     throw new RuntimeException(expression.getClass().toString());

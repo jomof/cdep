@@ -5,13 +5,14 @@ import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
-import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
+import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;
 import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
 import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.hardname;
 import static io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString.create;
+import static io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures.cxx_auto_type;
 
 public class TestCreateCDepManifestYmlString {
 
@@ -50,29 +51,44 @@ public class TestCreateCDepManifestYmlString {
         "shaval",
         100,
         "hello",
-        new String[] {"cxx_auto_type"})))
+        new CxxLanguageFeatures[]{cxx_auto_type})))
         .isEqualTo(
-          "file: fileval\r\n"
-              + "sha256: shaval\r\n"
-              + "size: 100\r\n"
-              + "include: hello\r\n"
-              + "requires: [cxx_auto_type]\r\n");
+            "file: fileval\r\n"
+                + "sha256: shaval\r\n"
+                + "size: 100\r\n"
+                + "include: hello\r\n"
+                + "requires: [cxx_auto_type]\r\n");
   }
 
   @Test
   public void testSqlite() throws Exception {
-    check(ResolvedManifests.sqlite().cdepManifestYml);
+    check(ResolvedManifests.sqlite().getValue().cdepManifestYml);
   }
 
   @Test
   public void testAdmob() throws Exception {
-    check(ResolvedManifests.admob().cdepManifestYml);
+    check(ResolvedManifests.admob().getValue().cdepManifestYml);
+  }
+
+  @Test
+  public void testRequires() throws Exception {
+    // Ensure that round-trip works
+    String originalString = ResolvedManifests.simpleRequires().getKey();
+    CDepManifestYml originalManifest = CDepManifestYmlUtils.convertStringToManifest(originalString);
+    String convertedString = CDepManifestYmlUtils.convertManifestToString(originalManifest);
+    CDepManifestYml convertedManifest = CDepManifestYmlUtils.convertStringToManifest(convertedString);
+    assertThat(CDepManifestYmlEquality.areDeeplyIdentical(originalManifest, convertedManifest)).isTrue();
   }
 
   @Test
   public void testAllResolvedManifests() throws Exception {
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
-      CreateCDepManifestYmlString.create(manifest.resolved.cdepManifestYml);
+      // Ensure that round-trip works
+      String originalString = manifest.body;
+      CDepManifestYml originalManifest = CDepManifestYmlUtils.convertStringToManifest(originalString);
+      String convertedString = CDepManifestYmlUtils.convertManifestToString(originalManifest);
+      CDepManifestYml convertedManifest = CDepManifestYmlUtils.convertStringToManifest(convertedString);
+      assertThat(CDepManifestYmlEquality.areDeeplyIdentical(originalManifest, convertedManifest)).isTrue();
     }
   }
 }
