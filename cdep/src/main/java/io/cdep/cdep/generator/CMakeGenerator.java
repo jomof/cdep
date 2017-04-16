@@ -200,9 +200,9 @@ public class CMakeGenerator {
       } else if (specific.function == ExternalFunctionExpression.REQUIRES_COMPILER_FEATURES) {
         append("\r\n%starget_compile_features(${target} PRIVATE %s)\r\n", prefix, parms[0]);
       } else if (specific.function == ExternalFunctionExpression.SUPPORTS_REQUIRES_COMPILER_FEATURES) {
-        append("CMAKE_CXX_KNOWN_FEATURES");
+        append("DEFINED CMAKE_CXX_KNOWN_FEATURES");
       } else if (specific.function == ExternalFunctionExpression.DEFINED) {
-        append("%s", parms[0]);
+        append("DEFINED %s", parms[0]);
       } else if (specific.function == ExternalFunctionExpression.NOT) {
         append("NOT %s", parms[0]);
       } else if (specific.function == ExternalFunctionExpression.OR) {
