@@ -235,7 +235,7 @@ public class CDep {
 
   private boolean handleStartupInfo(@NotNull List<String> args)  {
     if (args.size() > 0 && "startup-info".equals(args.get(0))) {
-      File jvmLocation = API.getJvmLocation();
+      String jvmLocation = API.getJvmLocation();
       infoln("%s", jvmLocation);
       RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
       List<String> jvmArgs = bean.getInputArguments();

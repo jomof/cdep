@@ -37,9 +37,9 @@ public class TestCDep {
   private static String main(@NotNull String... args) throws Exception {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     PrintStream ps = new PrintStream(baos);
-    if (System.getProperty("io.cdep.appname") == null) {
-      System.setProperty("io.cdep.appname", "rando-test-folder");
-    }
+//    if (System.getProperty("io.cdep.appname") == null) {
+//      System.setProperty("io.cdep.appname", "rando-test-folder");
+//    }
     new CDep(ps).go(args, true);
     return new String(baos.toByteArray(), StandardCharsets.UTF_8);
   }

@@ -2,17 +2,21 @@ package io.cdep;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
+import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.utils.PlatformUtils;
+import io.cdep.cdep.utils.ReflectionUtils;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 import static com.google.common.truth.Truth.assertThat;
 
 public class TestAPI {
+  private final GeneratorEnvironment environment = new GeneratorEnvironment(
+      new File("./test-files/TestAPI/working"),
+      null,
+      false,
+      false);
 
   public static String execute(String command) throws IOException, InterruptedException {
     System.out.printf("%s\n", command);
@@ -28,12 +32,12 @@ public class TestAPI {
 
   @Test
   public void testGetAPIJar() throws Exception {
-    System.out.printf("%s", API.getAPIJar());
+    System.out.printf("%s", ReflectionUtils.getLocation(API.class));
   }
 
   @Test
   public void testExecute() throws Exception {
-    String result = execute(API.callCdepVersion());
+    String result = execute(API.callCdepVersion(environment));
     assertThat(result).contains("cdep");
   }
 

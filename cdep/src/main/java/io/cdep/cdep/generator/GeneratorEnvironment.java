@@ -53,7 +53,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   @NotNull
   final public File examplesFolder;
   final public boolean forceRedownload;
-  private final File workingFolder;
+  public final File workingFolder;
   private final Map<String, String> cdepSha256Hashes = new HashMap<>();
   private final boolean ignoreManifestHashes;
   private final Set<File> alreadyDownloaded = new HashSet<>();
