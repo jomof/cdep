@@ -48,11 +48,11 @@ public class API {
     result.add(getJvmLocation());
     result.add("-classpath");
     String classPath = ReflectionUtils.getLocation(API.class).getAbsolutePath().replace("\\", "/");
-
+    String separator = PlatformUtils.isWindows() ? ";" : ":";
     if (!classPath.endsWith(".jar")) {
       // In a test environment need to include SnakeYAML since it isn't part of the unit test environment
       classPath = ReflectionUtils.getLocation(YAMLException.class).getAbsolutePath().replace("\\", "/")
-          + ";" + classPath;
+          + separator + classPath;
     }
     result.add(classPath);
     result.add("io.cdep.CDep");
