@@ -40,13 +40,15 @@ public class CMakeGenerator {
   @NotNull
   private StringBuilder sb;
   private int indent = 0;
+  private GlobalBuildEnvironmentExpression globals = null;
   @Nullable
   private Coordinate coordinate = null;
 
   public CMakeGenerator(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) {
     this.environment = environment;
+    this.globals = table.globals;
     table = (FunctionTableExpression) notNull(new CMakeConvertJoinedFileToString().visit(table));
-    table = (FunctionTableExpression) notNull(new ListRequiresToStatementExpression().visit(table));
+    table = (FunctionTableExpression) notNull(new CxxLanguageStandardRewritingVisitor().visit(table));
     this.table = table;
     this.sb = new StringBuilder();
   }
@@ -153,13 +155,19 @@ public class CMakeGenerator {
         ++indent;
         visit(specific.expressions[i]);
         --indent;
-        append("%selse", prefix);
+        if (i != specific.conditions.length -1) {
+          append("%selse", prefix);
+        }
       }
-      append("()");
+      if (specific.elseExpression instanceof NopExpression) {
+        append("%send()\r\n", prefix);
+        return;
+      }
+      append("%selse()", prefix);
       ++indent;
       visit(specific.elseExpression);
       --indent;
-      append("%sendif()\n", prefix);
+      append("%sendif()\r\n", prefix);
       return;
     } else if (expression instanceof AssignmentExpression) {
       appendAssignments(prefix, expression, null);
@@ -183,12 +191,22 @@ public class CMakeGenerator {
         append("%s MATCHES \"$%s.*\"", parms[0], unquote(parms[1]));
       } else if (specific.function == ExternalFunctionExpression.INTEGER_GTE) {
         append("%s GREATER %s", parms[0], Integer.parseInt(parms[1]) - 1);
+      } else if (specific.function == ExternalFunctionExpression.INTEGER_LT) {
+        append("%s LESS %s", parms[0], Integer.parseInt(parms[1]));
       } else if (specific.function == ExternalFunctionExpression.STRING_EQUALS) {
         append("%s STREQUAL %s", parms[0], parms[1]);
       } else if (specific.function == ExternalFunctionExpression.ARRAY_HAS_ONLY_ELEMENT) {
         append("%s STREQUAL %s", parms[0], parms[1]);
       } else if (specific.function == ExternalFunctionExpression.REQUIRES_COMPILER_FEATURES) {
-        append("%starget_compile_features(${target} PRIVATE %s)\r\n", prefix, parms[0]);
+        append("\r\n%starget_compile_features(${target} PRIVATE %s)\r\n", prefix, parms[0]);
+      } else if (specific.function == ExternalFunctionExpression.SUPPORTS_REQUIRES_COMPILER_FEATURES) {
+        append("CMAKE_CXX_KNOWN_FEATURES");
+      } else if (specific.function == ExternalFunctionExpression.DEFINED) {
+        append("%s", parms[0]);
+      } else if (specific.function == ExternalFunctionExpression.NOT) {
+        append("NOT %s", parms[0]);
+      } else if (specific.function == ExternalFunctionExpression.OR) {
+        append("%s OR %s", parms[0], parms[1]);
       } else {
         throw new RuntimeException(specific.function.method.getName());
       }
@@ -204,6 +222,10 @@ public class CMakeGenerator {
     } else if (expression instanceof ConstantExpression) {
       ConstantExpression specific = (ConstantExpression) expression;
       if (specific.value.getClass().isEnum()) {
+        append(specific.value.toString());
+        return;
+      }
+      if (specific.value.getClass() == Integer.class) {
         append(specific.value.toString());
         return;
       }
@@ -281,6 +303,14 @@ public class CMakeGenerator {
         visit(specific.elements[i]);
       }
       return;
+    } else if (expression instanceof ParameterAssignmentExpression) {
+      ParameterAssignmentExpression specific = (ParameterAssignmentExpression) expression;
+      append("\r\n%sset(", prefix);
+      visit(specific.parameter);
+      append(" ");
+      visit(specific.expression);
+      append(")\r\n");
+      return;
     }
     throw new RuntimeException(expression.getClass().toString());
   }
@@ -303,6 +333,9 @@ public class CMakeGenerator {
 
   @NotNull
   private String parameterName(@NotNull ParameterExpression expr) {
+    if (expr == globals.buildSystemCxxCompilerStandard) {
+      return "CMAKE_CXX_STANDARD";
+    }
     return expr.name;
   }
 

@@ -109,9 +109,34 @@ public class ExpressionBuilder {
   }
 
   /**
+   * Returns true if expression left less than integer right.
+   */
+  @NotNull
+  public static InvokeFunctionExpression lt(Expression left, int right) {
+    return invoke(ExternalFunctionExpression.INTEGER_LT, left, integer(right));
+  }
+
+  @NotNull
+  public static InvokeFunctionExpression not(Expression value) {
+    return invoke(ExternalFunctionExpression.NOT, value);
+  }
+
+  @NotNull
+  public static InvokeFunctionExpression or(Expression left, Expression right) {
+    return invoke(ExternalFunctionExpression.OR, left, right);
+  }
+
+  /**
+   * Returns true if the given parameter is defined.
+   */
+  @NotNull
+  public static InvokeFunctionExpression defined(ParameterExpression expr) {
+    return invoke(ExternalFunctionExpression.DEFINED, expr);
+  }
+
+  /**
    * Return true if constant starts with find.
    */
-
   @NotNull
   public static InvokeFunctionExpression stringStartsWith(@NotNull Expression string, @NotNull Expression find) {
     return invoke(ExternalFunctionExpression.STRING_STARTSWITH, string, find);

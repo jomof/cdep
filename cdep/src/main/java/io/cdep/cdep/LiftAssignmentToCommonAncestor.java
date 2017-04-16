@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class LiftToCommonAncestor extends RewritingVisitor {
+public class LiftAssignmentToCommonAncestor extends RewritingVisitor {
   @NotNull
   private final Set<AssignmentExpression> captured = new HashSet<>();
   @NotNull
   private Map<AssignmentExpression, Integer> functionCounts = new HashMap<>();
 
-  public LiftToCommonAncestor() {
+  public LiftAssignmentToCommonAncestor() {
   }
 
   @NotNull
@@ -39,8 +39,12 @@ public class LiftToCommonAncestor extends RewritingVisitor {
       body = assignmentBlock(block, body);
     }
 
-    StatementExpression result = new FindModuleExpression(expr.coordinate, expr.headerArchive,
-        expr.include, body);
+    StatementExpression result = new FindModuleExpression(
+        expr.globals,
+        expr.coordinate,
+        expr.headerArchive,
+        expr.include,
+        body);
     block = extractBlocks(result);
     if (block.size() > 0) {
       result = assignmentBlock(block, result);

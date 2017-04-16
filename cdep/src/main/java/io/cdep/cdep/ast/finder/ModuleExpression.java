@@ -29,7 +29,7 @@ public class ModuleExpression extends StatementExpression {
   @NotNull
   final public Set<Coordinate> dependencies;
 
-  ModuleExpression(@NotNull ModuleArchiveExpression archive, @NotNull Set<Coordinate> dependencies) {
+  public ModuleExpression(@NotNull ModuleArchiveExpression archive, @NotNull Set<Coordinate> dependencies) {
 
     this.archive = notNull(archive);
     this.dependencies = elementsNotNull(dependencies);

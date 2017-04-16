@@ -20,16 +20,19 @@ import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 
 public class FindModuleExpression extends StatementExpression {
+  @NotNull final public GlobalBuildEnvironmentExpression globals;
   @NotNull final public Coordinate coordinate;
   @Nullable final public String headerArchive;
   @Nullable final public String include;
   @NotNull final public StatementExpression body;
 
   public FindModuleExpression(
+      @NotNull GlobalBuildEnvironmentExpression globals,
       @NotNull Coordinate coordinate,
       @Nullable String headerArchive,
       @Nullable String include,
       @NotNull StatementExpression body) {
+    this.globals = globals;
     this.coordinate = coordinate;
     this.headerArchive = headerArchive;
     this.include = include;

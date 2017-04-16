@@ -29,7 +29,8 @@ public class ExternalFunctionExpression extends Expression {
   final public static ExternalFunctionExpression STRING_STARTSWITH = new ExternalFunctionExpression(String.class, "startsWith",
       String.class);
 
-  final public static ExternalFunctionExpression FILE_JOIN_SEGMENTS = new ExternalFunctionExpression(ExternalFunctionExpression.class,
+  final public static ExternalFunctionExpression FILE_JOIN_SEGMENTS = new ExternalFunctionExpression(ExternalFunctionExpression
+      .class,
 
       "fileJoinSegments",
       File.class,
@@ -39,6 +40,24 @@ public class ExternalFunctionExpression extends Expression {
       "gte",
       int.class,
       int.class);
+
+  final public static ExternalFunctionExpression INTEGER_LT = new ExternalFunctionExpression(ExternalFunctionExpression.class,
+      "lt",
+      int.class,
+      int.class);
+
+  final public static ExternalFunctionExpression NOT = new ExternalFunctionExpression(ExternalFunctionExpression.class,
+      "not",
+      boolean.class);
+
+  final public static ExternalFunctionExpression OR = new ExternalFunctionExpression(ExternalFunctionExpression.class,
+      "or",
+      boolean.class,
+      boolean.class);
+
+  final public static ExternalFunctionExpression DEFINED = new ExternalFunctionExpression(ExternalFunctionExpression.class,
+      "defined",
+      Object.class);
 
   final public static ExternalFunctionExpression STRING_EQUALS = new ExternalFunctionExpression(ExternalFunctionExpression.class,
       "eq",
@@ -55,6 +74,15 @@ public class ExternalFunctionExpression extends Expression {
       ExternalFunctionExpression.class,
       "requiresCompilerFeatures",
       CxxLanguageFeatures[].class);
+
+  final public static ExternalFunctionExpression SUPPORTS_REQUIRES_COMPILER_FEATURES = new ExternalFunctionExpression(
+      ExternalFunctionExpression.class,
+      "supportsCompilerFeatures");
+
+  final public static ExternalFunctionExpression SET_CXX_COMPILER_STANDARD_FOR_ALL_TARGETS = new ExternalFunctionExpression(
+      ExternalFunctionExpression.class,
+      "setCxxCompilerStandardForAllTargets",
+      int.class);
 
   final public Method method;
 
@@ -73,14 +101,51 @@ public class ExternalFunctionExpression extends Expression {
     return left >= right;
   }
 
+  static public boolean lt(int left, int right) {
+    return left < right;
+  }
+
   static public boolean eq(@NotNull String left, String right) {
     return left.equals(right);
+  }
+
+  static public boolean not(boolean value) {
+    return !value;
+  }
+
+  static public boolean or(boolean left, boolean right) {
+    return left || right;
+  }
+
+  static public boolean defined(Object object) {
+    return object != null;
   }
 
   static public boolean hasOnlyElement(@NotNull String array[], @NotNull String value) {
     return array.length == 1 && value.equals(array[0]);
   }
 
-  static public void requiresCompilerFeatures(CxxLanguageFeatures[] features) {
+  /**
+   * Declares that the current module requires certain language features. It is up
+   * to the build system to supply a compiler that can meet those features.
+   */
+  static public CxxLanguageFeatures[] requiresCompilerFeatures(CxxLanguageFeatures[] features) {
+    return features;
+  }
+
+  /**
+   * Returns true if this build system supports compiler features.
+   */
+  @SuppressWarnings("SameReturnValue")
+  static public boolean supportsCompilerFeatures() {
+    return true;
+  }
+
+  /**
+   * Sets the global compiler standard for all targets. Prefer requiresCompilerFeatures
+   * if available.
+   */
+  @SuppressWarnings("EmptyMethod")
+  static public void setCxxCompilerStandardForAllTargets(int standard) {
   }
 }

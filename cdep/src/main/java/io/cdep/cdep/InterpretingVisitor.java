@@ -3,6 +3,7 @@ package io.cdep.cdep;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -74,6 +75,14 @@ public class InterpretingVisitor {
         return result;
       }
     }
+    if (clazz.equals(CxxLanguageFeatures[].class) && o instanceof Object[]) {
+      Object specific[] = (Object[]) o;
+      CxxLanguageFeatures requires[] = new CxxLanguageFeatures[specific.length];
+      for (int i = 0; i < requires.length; ++i) {
+        requires[i] = (CxxLanguageFeatures) specific[i];
+      }
+      return requires;
+    }
     fail("Did not coerce %s to %s", o.getClass(), clazz);
     return null;
   }
@@ -144,7 +153,8 @@ public class InterpretingVisitor {
     throw new RuntimeException("intr" + expr.getClass().toString());
   }
 
-  protected Object visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
+  @SuppressWarnings("SameReturnValue")
+  private Object visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
     return null;
   }
 
@@ -199,6 +209,7 @@ public class InterpretingVisitor {
     return expr.method;
   }
 
+  @SuppressWarnings("SameReturnValue")
   @Nullable
   private Object visitExampleExpression(ExampleExpression expr) {
     return null;
@@ -322,7 +333,6 @@ public class InterpretingVisitor {
   }
 
   private static class Frame {
-
     final public Frame prior;
 
     @NotNull

@@ -63,7 +63,7 @@ public class BuildFindModuleFunctionTable {
 
     // Lift assignments up to the highest correct scope
     functionTable = (FunctionTableExpression) new ReplaceAssignmentWithReference().visit(functionTable);
-    functionTable = (FunctionTableExpression) new LiftToCommonAncestor().visit(functionTable);
+    functionTable = (FunctionTableExpression) new LiftAssignmentToCommonAncestor().visit(functionTable);
 
     // Check sanity of the function system
     new CheckReferenceAndDependencyConsistency().visit(functionTable);
@@ -150,12 +150,16 @@ public class BuildFindModuleFunctionTable {
     }
 
     if (manifest.interfaces != null && manifest.interfaces.headers != null && manifest.interfaces.headers.file != null) {
-      return new FindModuleExpression(coordinate,
+      return new FindModuleExpression(
+          globals,
+          coordinate,
           manifest.interfaces.headers.file,
           manifest.interfaces.headers.include,
           expression);
     }
-    return new FindModuleExpression(coordinate,
+    return new FindModuleExpression(
+        globals,
+        coordinate,
         null,
         null,
         expression);
