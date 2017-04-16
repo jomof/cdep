@@ -15,16 +15,8 @@
 */
 package io.cdep;
 
-import static io.cdep.cdep.io.IO.info;
-import static io.cdep.cdep.io.IO.infoln;
-import static io.cdep.cdep.utils.Invariant.fail;
-import static io.cdep.cdep.utils.Invariant.notNull;
-import static io.cdep.cdep.utils.Invariant.require;
-import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.CheckLocalFileSystemIntegrity;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.fullfill.Fullfill;
@@ -33,23 +25,16 @@ import io.cdep.cdep.generator.CMakeGenerator;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
 import io.cdep.cdep.io.IO;
-import io.cdep.cdep.resolver.ResolutionScope;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
-import io.cdep.cdep.utils.CDepManifestYmlUtils;
-import io.cdep.cdep.utils.CDepYmlUtils;
-import io.cdep.cdep.utils.EnvironmentUtils;
-import io.cdep.cdep.utils.ExpressionUtils;
-import io.cdep.cdep.utils.FileUtils;
-import io.cdep.cdep.utils.HashUtils;
-import io.cdep.cdep.utils.Invariant;
+import io.cdep.cdep.utils.*;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
 import io.cdep.cdep.yml.cdepmanifest.Interfaces;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -62,9 +47,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static io.cdep.cdep.io.IO.info;
+import static io.cdep.cdep.io.IO.infoln;
+import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
+
 public class CDep {
 
-  final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev21";
+  final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev24";
   @Nullable
   private final File downloadFolder = null;
   @NotNull
