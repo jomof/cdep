@@ -1,5 +1,6 @@
 package io.cdep.cdep.generator;
 
+import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.InterpretingVisitor;
 import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
@@ -31,7 +32,7 @@ public class TestCxxLanguageStandardRewritingVisitor {
     rewriter.visit(globals);
 
     ModuleArchiveExpression archive = makeArchive(CxxLanguageFeatures.cxx_alignof);
-    ModuleExpression module = new ModuleExpression(archive, new HashSet<>());
+    ModuleExpression module = new ModuleExpression(archive, new HashSet<Coordinate>());
     Expression result = ((MultiStatementExpression) rewriter.visitModuleExpression(module)).statements[0];
 
     InterpretingVisitor interpreter = new InterpretingVisitor();
@@ -46,7 +47,7 @@ public class TestCxxLanguageStandardRewritingVisitor {
     rewriter.visit(globals);
 
     ModuleArchiveExpression archive = makeArchive(CxxLanguageFeatures.cxx_std_17);
-    ModuleExpression module = new ModuleExpression(archive, new HashSet<>());
+    ModuleExpression module = new ModuleExpression(archive, new HashSet<Coordinate>());
     Expression result = ((MultiStatementExpression) rewriter.visitModuleExpression(module)).statements[0];
 
     InterpretingVisitor interpreter = new InterpretingVisitor();
