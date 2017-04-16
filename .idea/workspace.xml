@@ -8,6 +8,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/vectorial" afterPath="$PROJECT_DIR$/third_party/vectorial" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/build.gradle" afterPath="$PROJECT_DIR$/cdep/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -52,29 +53,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CMakeGenerator.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CMakeGenerator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="778">
-              <caret line="215" column="88" lean-forward="false" selection-start-line="215" selection-start-column="88" selection-end-line="215" selection-end-column="88" />
+            <state relative-caret-position="547">
+              <caret line="104" column="4" lean-forward="false" selection-start-line="104" selection-start-column="4" selection-end-line="104" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3234#3235#0" expanded="true" />
                 <element signature="e#3285#3286#0" expanded="true" />
                 <element signature="e#3334#3335#0" expanded="true" />
                 <element signature="e#3404#3405#0" expanded="true" />
-                <element signature="e#13685#13686#0" expanded="true" />
-                <element signature="e#13733#13734#0" expanded="true" />
+                <element signature="e#13802#13803#0" expanded="true" />
+                <element signature="e#13850#13851#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="842">
-              <caret line="59" column="57" lean-forward="false" selection-start-line="59" selection-start-column="57" selection-end-line="59" selection-end-column="57" />
+            <state relative-caret-position="66">
+              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -800,7 +801,7 @@
       <map>
         <entry key="$PROJECT_DIR$/../../cmake-server-java-bindings" value="1482011934857" />
         <entry key="$PROJECT_DIR$/../../cmakeify" value="2967081663499" />
-        <entry key="$PROJECT_DIR$" value="11916752737250" />
+        <entry key="$PROJECT_DIR$" value="11916753506810" />
         <entry key="$PROJECT_DIR$/../../literate-hash" value="2964777673907" />
       </map>
     </option>
@@ -1000,8 +1001,8 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ExternalFunctionExpression.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/resources/CMakeLibraryFunctions.cmake" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
         <option value="$PROJECT_DIR$/cdep/build.gradle" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
       </list>
     </option>
   </component>
@@ -1075,6 +1076,36 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="test" />
               <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1594,7 +1625,14 @@
       <option name="project" value="LOCAL" />
       <updated>1492359593659</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="requires">
+      <created>1492360104415</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1492360104415</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1631,7 +1669,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="3226" height="1746" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1641,7 +1679,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2535347" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1783,22 +1821,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="778">
-          <caret line="215" column="88" lean-forward="false" selection-start-line="215" selection-start-column="88" selection-end-line="215" selection-end-column="88" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3234#3235#0" expanded="true" />
-            <element signature="e#3285#3286#0" expanded="true" />
-            <element signature="e#3334#3335#0" expanded="true" />
-            <element signature="e#3404#3405#0" expanded="true" />
-            <element signature="e#13685#13686#0" expanded="true" />
-            <element signature="e#13733#13734#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/resources/CMakeLibraryFunctions.cmake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
@@ -1809,9 +1831,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="842">
-          <caret line="59" column="57" lean-forward="false" selection-start-line="59" selection-start-column="57" selection-end-line="59" selection-end-column="57" />
+        <state relative-caret-position="66">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="547">
+          <caret line="104" column="4" lean-forward="false" selection-start-line="104" selection-start-column="4" selection-end-line="104" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3234#3235#0" expanded="true" />
+            <element signature="e#3285#3286#0" expanded="true" />
+            <element signature="e#3334#3335#0" expanded="true" />
+            <element signature="e#3404#3405#0" expanded="true" />
+            <element signature="e#13802#13803#0" expanded="true" />
+            <element signature="e#13850#13851#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -102,8 +102,12 @@ public class CMakeGenerator {
 
   private String readCmakeLibraryFunctions() throws IOException {
     ClassLoader classLoader = getClass().getClassLoader();
-    File file = new File(classLoader.getResource("CMakeLibraryFunctions.cmake").getFile());
-    return FileUtils.readAllText(file);
+    
+    String file = classLoader.getResource("/CMakeLibraryFunctions.cmake").getFile();
+    if (file == null) {
+      file = classLoader.getResource("CMakeLibraryFunctions.cmake").getFile();
+    }
+    return FileUtils.readAllText(new File(file));
   }
 
   private void visit(@NotNull Expression expression) {
