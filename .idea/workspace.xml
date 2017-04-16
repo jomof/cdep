@@ -7,7 +7,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/tinydir" afterPath="$PROJECT_DIR$/third_party/tinydir" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/vectorial" afterPath="$PROJECT_DIR$/third_party/vectorial" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/resources/CMakeLibraryFunctions.cmake" afterPath="$PROJECT_DIR$/cdep/src/main/resources/CMakeLibraryFunctions.cmake" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -80,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="false">
+      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="627">
-              <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+              <caret line="19" column="5" lean-forward="false" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -120,7 +120,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CMakeLibraryFunctions.cmake" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CMakeLibraryFunctions.cmake" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/resources/CMakeLibraryFunctions.cmake">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
@@ -998,8 +998,8 @@
         <option value="$PROJECT_DIR$/cdep/build.gradle" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/FileUtils.java" />
-        <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/cdep/src/main/resources/CMakeLibraryFunctions.cmake" />
+        <option value="$PROJECT_DIR$/.travis.yml" />
       </list>
     </option>
   </component>
@@ -1557,7 +1557,14 @@
       <option name="project" value="LOCAL" />
       <updated>1492364560492</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="requires">
+      <created>1492365022848</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1492365022848</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1778,14 +1785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.travis.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1240">
@@ -1806,6 +1805,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="6" column="48" lean-forward="false" selection-start-line="6" selection-start-column="48" selection-end-line="6" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="627">
+          <caret line="19" column="5" lean-forward="false" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
           <folding />
         </state>
       </provider>
