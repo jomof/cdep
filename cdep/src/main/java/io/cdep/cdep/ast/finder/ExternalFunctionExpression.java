@@ -41,11 +41,6 @@ public class ExternalFunctionExpression extends Expression {
       int.class,
       int.class);
 
-  final public static ExternalFunctionExpression INTEGER_LT = new ExternalFunctionExpression(ExternalFunctionExpression.class,
-      "lt",
-      int.class,
-      int.class);
-
   final public static ExternalFunctionExpression NOT = new ExternalFunctionExpression(ExternalFunctionExpression.class,
       "not",
       boolean.class);
@@ -55,9 +50,10 @@ public class ExternalFunctionExpression extends Expression {
       boolean.class,
       boolean.class);
 
-  final public static ExternalFunctionExpression DEFINED = new ExternalFunctionExpression(ExternalFunctionExpression.class,
-      "defined",
-      Object.class);
+  final public static ExternalFunctionExpression REQUIRE_MINIMUM_CXX_COMPILER_STANDARD = new ExternalFunctionExpression(
+      ExternalFunctionExpression.class,
+      "requireMinimumCxxCompilerStandard",
+      String.class);
 
   final public static ExternalFunctionExpression STRING_EQUALS = new ExternalFunctionExpression(ExternalFunctionExpression.class,
       "eq",
@@ -75,7 +71,7 @@ public class ExternalFunctionExpression extends Expression {
       "requiresCompilerFeatures",
       CxxLanguageFeatures[].class);
 
-  final public static ExternalFunctionExpression SUPPORTS_REQUIRES_COMPILER_FEATURES = new ExternalFunctionExpression(
+  final public static ExternalFunctionExpression SUPPORTS_COMPILER_FEATURES = new ExternalFunctionExpression(
       ExternalFunctionExpression.class,
       "supportsCompilerFeatures");
 
@@ -147,5 +143,12 @@ public class ExternalFunctionExpression extends Expression {
    */
   @SuppressWarnings("EmptyMethod")
   static public void setCxxCompilerStandardForAllTargets(int standard) {
+  }
+
+  /**
+   * Require at least the given Cxx compiler standard.
+   */
+  static public String requireMinimumCxxCompilerStandard(String level) {
+    return "Compiler Standard Level " + level;
   }
 }

@@ -15,11 +15,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.regex.Pattern;
 
-import static io.cdep.cdep.io.IO.infoln;
 import static io.cdep.cdep.utils.Invariant.require;
-import static java.util.regex.Pattern.compile;
 
 /**
  * Zip up file entries into layout folder. Doesn't record SHA or size since that is done
@@ -57,7 +54,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     PathMapping mappings[] = PathMapping.parse(archive.file);
     require(mappings.length > 0,
         "File mapping '%s' did not resolve to any local files", archive.file);
-    File layoutZipFile = getLayoutZipFile(prefix, "header");
+    File layoutZipFile = getLayoutZipFile(prefix, "headers");
     File stagingZipFolder = getStagingZipFolder(layoutZipFile, "include");
 
     copyFilesToStaging(mappings, stagingZipFolder);
@@ -89,6 +86,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
         "File mapping '%s' did not resolve to any local files", archive.file);
     File layoutZipFile = getLayoutZipFile(
         prefix,
+        "android",
         archive.ndk,
         archive.runtime,
         archive.platform,

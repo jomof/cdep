@@ -55,46 +55,14 @@ public class CxxLanguageStandardRewritingVisitor extends RewritingVisitor {
     }
 
     List<StatementExpression> exprs = new ArrayList<>();
-    InvokeFunctionExpression invokeRequires = invoke(
-        ExternalFunctionExpression.REQUIRES_COMPILER_FEATURES,
-        array(features.toArray(new ConstantExpression[requires.length])));
-    if (minimumLanguageStandard == 0) {
-      // No point in setting the default.
-      exprs.add(invokeRequires);
-    } else {
-      /*
-        Construct an if statement that looks like this:
-
-          if (compiler supports feature requirements)
-            requireCompilerFeatures(a, b, c)
-          else if (
-            not defined current compiler standard
-            or current compiler standard < required standard)
-            setGlobalCompilerStandard(required standard)
-          else
-            nop
-
-       */
-
-      exprs.add(
-          ifSwitch(
-              new Expression[]{
-                  // If build system supports compiler feature requirements
-                  invoke(ExternalFunctionExpression.SUPPORTS_REQUIRES_COMPILER_FEATURES),
-                  // If the current global compiler standard is less than required
-                   or(not(defined(globals.buildSystemCxxCompilerStandard)),
-                       lt(globals.buildSystemCxxCompilerStandard, minimumLanguageStandard))},
-
-              new Expression[]{
-                  // The compiler supports compiler features so request the features from the manifest
-                  invoke(
-                      ExternalFunctionExpression.REQUIRES_COMPILER_FEATURES,
-                      array(features.toArray(new ConstantExpression[requires.length]))),
-                  new ParameterAssignmentExpression(
-                      globals.buildSystemCxxCompilerStandard, constant(minimumLanguageStandard))},
-              nop()));
-    }
-
+    exprs.add(
+        ifSwitch(
+            // If build system (CMake or ndk-build) supports compiler feature requirements
+            supportsCompilerFeatures(),
+            // The build system supports compiler features so request the features from the manifest
+            requiresCompilerFeatures(array(features.toArray(new ConstantExpression[requires.length]))),
+            // Otherwise, require the lowest compiler standard that supports the listed features
+            requireMinimumCxxCompilerStandard(constant(minimumLanguageStandard))));
     exprs.add(archive);
 
     return new MultiStatementExpression(exprs.toArray(new StatementExpression[exprs.size()]));

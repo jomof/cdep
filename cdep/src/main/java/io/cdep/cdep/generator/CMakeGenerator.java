@@ -61,8 +61,9 @@ public class CMakeGenerator {
   }
 
   @NotNull
-  public String create() {
+  public String create() throws IOException {
     append("# GENERATED FILE. DO NOT EDIT.\n");
+    append(readCmakeLibraryFunctions());
     for (StatementExpression findFunction : table.findFunctions.values()) {
       indent = 0;
       visit(findFunction);
@@ -99,6 +100,12 @@ public class CMakeGenerator {
     return new File(environment.modulesFolder, CONFIG_FILE_NAME);
   }
 
+  private String readCmakeLibraryFunctions() throws IOException {
+    ClassLoader classLoader = getClass().getClassLoader();
+    File file = new File(classLoader.getResource("CMakeLibraryFunctions.cmake").getFile());
+    return FileUtils.readAllText(file);
+  }
+
   private void visit(@NotNull Expression expression) {
 
     String prefix = new String(new char[indent * 2]).replace('\0', ' ');
@@ -129,14 +136,14 @@ public class CMakeGenerator {
       append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
 
       append("  # Choose between Android NDK Toolchain and CMake Android Toolchain\n"
+          + "  set(cdep_supports_compiler_features TRUE)\n"
           + "  if(DEFINED CMAKE_ANDROID_STL_TYPE)\n"
           + "    set(cdep_determined_android_runtime ${CMAKE_ANDROID_STL_TYPE})\n"
           + "    set(cdep_determined_android_abi ${CMAKE_ANDROID_ARCH_ABI})\n"
-          + "    set(cdep_determined_supports_target_compile_feature TRUE)\n"
           + "  else()\n"
           + "    set(cdep_determined_android_runtime ${ANDROID_STL})\n"
           + "    set(cdep_determined_android_abi ${ANDROID_ABI})\n"
-          + "    set(cdep_determined_supports_target_compile_feature FALSE)\n"
+          + "    set(cdep_supports_compiler_features FALSE)\n"
           + "  endif()\n\n");
       append("  set(cdep_exploded_root \"%s\")", getCMakePath(environment.unzippedArchivesFolder));
       ++indent;
@@ -193,22 +200,20 @@ public class CMakeGenerator {
         append("%s MATCHES \"$%s.*\"", parms[0], unquote(parms[1]));
       } else if (specific.function == ExternalFunctionExpression.INTEGER_GTE) {
         append("%s GREATER %s", parms[0], Integer.parseInt(parms[1]) - 1);
-      } else if (specific.function == ExternalFunctionExpression.INTEGER_LT) {
-        append("%s LESS %s", parms[0], Integer.parseInt(parms[1]));
       } else if (specific.function == ExternalFunctionExpression.STRING_EQUALS) {
         append("%s STREQUAL %s", parms[0], parms[1]);
       } else if (specific.function == ExternalFunctionExpression.ARRAY_HAS_ONLY_ELEMENT) {
         append("%s STREQUAL %s", parms[0], parms[1]);
       } else if (specific.function == ExternalFunctionExpression.REQUIRES_COMPILER_FEATURES) {
         append("\r\n%starget_compile_features(${target} PRIVATE %s)\r\n", prefix, parms[0]);
-      } else if (specific.function == ExternalFunctionExpression.SUPPORTS_REQUIRES_COMPILER_FEATURES) {
-        append("cdep_determined_supports_target_compile_feature");
-      } else if (specific.function == ExternalFunctionExpression.DEFINED) {
-        append("DEFINED %s", parms[0]);
+      } else if (specific.function == ExternalFunctionExpression.SUPPORTS_COMPILER_FEATURES) {
+        append("cdep_supports_compiler_features");
       } else if (specific.function == ExternalFunctionExpression.NOT) {
         append("NOT %s", parms[0]);
       } else if (specific.function == ExternalFunctionExpression.OR) {
         append("%s OR %s", parms[0], parms[1]);
+      } else if (specific.function == ExternalFunctionExpression.REQUIRE_MINIMUM_CXX_COMPILER_STANDARD) {
+        append("\r\n%scdepRequireMinimumCxxCompilerStandard(${target} %s)\r\n", prefix, parms[0]);
       } else {
         throw new RuntimeException(specific.function.method.getName());
       }

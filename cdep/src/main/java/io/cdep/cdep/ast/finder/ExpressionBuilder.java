@@ -109,18 +109,16 @@ public class ExpressionBuilder {
   }
 
   /**
-   * Returns true if expression left less than integer right.
+   * Logical not
    */
-  @NotNull
-  public static InvokeFunctionExpression lt(Expression left, int right) {
-    return invoke(ExternalFunctionExpression.INTEGER_LT, left, integer(right));
-  }
-
   @NotNull
   public static InvokeFunctionExpression not(Expression value) {
     return invoke(ExternalFunctionExpression.NOT, value);
   }
 
+  /**
+   * Logical or
+   */
   @NotNull
   public static InvokeFunctionExpression or(Expression left, Expression right) {
     return invoke(ExternalFunctionExpression.OR, left, right);
@@ -130,8 +128,24 @@ public class ExpressionBuilder {
    * Returns true if the given parameter is defined.
    */
   @NotNull
-  public static InvokeFunctionExpression defined(ParameterExpression expr) {
-    return invoke(ExternalFunctionExpression.DEFINED, expr);
+  public static InvokeFunctionExpression requireMinimumCxxCompilerStandard(Expression expr) {
+    return invoke(ExternalFunctionExpression.REQUIRE_MINIMUM_CXX_COMPILER_STANDARD, expr);
+  }
+
+  /**
+   * Returns true if the current build system supports compiler features.
+   */
+  @NotNull
+  public static InvokeFunctionExpression supportsCompilerFeatures() {
+    return invoke(ExternalFunctionExpression.SUPPORTS_COMPILER_FEATURES);
+  }
+
+  /**
+   * Require the given Cxx compiler features.
+   */
+  @NotNull
+  public static InvokeFunctionExpression requiresCompilerFeatures(ArrayExpression array) {
+    return invoke(ExternalFunctionExpression.REQUIRES_COMPILER_FEATURES, array);
   }
 
   /**
@@ -142,6 +156,9 @@ public class ExpressionBuilder {
     return invoke(ExternalFunctionExpression.STRING_STARTSWITH, string, find);
   }
 
+  /**
+   * Return true if the given array has just one element and it is the given value.
+   */
   @NotNull
   public static InvokeFunctionExpression arrayHasOnlyElement(@NotNull Expression array, @NotNull Expression value) {
     return invoke(ExternalFunctionExpression.ARRAY_HAS_ONLY_ELEMENT, array, value);
