@@ -7,6 +7,8 @@ import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.cdep.cdep.utils.Invariant.require;
 
@@ -30,34 +32,33 @@ public class API {
     return java;
   }
 
-  public static String callCdepVersion(GeneratorEnvironment environment) throws Exception {
-    String result = callCDep(environment);
-    return result + "show folders";
+  public static List<String> callCdepVersion(GeneratorEnvironment environment) throws Exception {
+    List<String> result = new ArrayList<>();
+    result.addAll(callCDep(environment));
+    result.add("show");
+    result.add("folders");
+    return result;
   }
 
   /**
    * Get a java command-line to call back into CDep.
    */
-  private static String callCDep(GeneratorEnvironment environment) throws MalformedURLException {
-    StringBuilder sb = new StringBuilder();
-    String java = getJvmLocation();
-    sb.append("\"" + java + "\"");
-    sb.append(" ");
-    sb.append("-classpath ");
-    String cdepClassPath = ReflectionUtils.getLocation(API.class).getAbsolutePath().replace("\\", "/");
-    if (PlatformUtils.isWindows()) {
-      sb.append("\"");
-    }
-    if (!cdepClassPath.endsWith(".jar")) {
+  private static List<String> callCDep(GeneratorEnvironment environment) throws MalformedURLException {
+    List<String> result = new ArrayList<>();
+    result.add(getJvmLocation());
+    result.add("-classpath");
+    String classPath = ReflectionUtils.getLocation(API.class).getAbsolutePath().replace("\\", "/");
+
+    if (!classPath.endsWith(".jar")) {
       // In a test environment need to include SnakeYAML since it isn't part of the unit test environment
-      sb.append(ReflectionUtils.getLocation(YAMLException.class).getAbsolutePath().replace("\\", "/") + ";");
+      classPath = ReflectionUtils.getLocation(YAMLException.class).getAbsolutePath().replace("\\", "/")
+          + ";" + classPath;
     }
-    sb.append(cdepClassPath);
-    if (PlatformUtils.isWindows()) {
-      sb.append("\"");
-    }
-    sb.append(" io.cdep.CDep ");
-    sb.append("--working-folder \"" + environment.workingFolder.getAbsolutePath().replace("\\", "/") +"\" ");
-    return sb.toString();
+    result.add(classPath);
+    result.add("io.cdep.CDep");
+    result.add("--working-folder");
+    result.add( environment.workingFolder.getAbsolutePath().replace("\\", "/"));
+
+    return result;
   }
 }

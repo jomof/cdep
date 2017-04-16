@@ -3,11 +3,11 @@ package io.cdep;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.utils.PlatformUtils;
 import io.cdep.cdep.utils.ReflectionUtils;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -18,7 +18,7 @@ public class TestAPI {
       false,
       false);
 
-  public static String execute(String command) throws IOException, InterruptedException {
+  public static String execute(List<String> command) throws IOException, InterruptedException {
     System.out.printf("%s\n", command);
     String result = Spawner.spawn(command);
     System.out.printf("%s\n", result);
@@ -44,17 +44,9 @@ public class TestAPI {
   private static class Spawner {
     private static final int THREAD_JOIN_TIMEOUT_MILLIS = 2000;
 
-    private static Process platformExec(String command) throws IOException {
-      if (PlatformUtils.isWindows()) {
-        return Runtime.getRuntime().exec(new String[]{"cmd", "/C", command});
-      } else {
-        return Runtime.getRuntime().exec(new String[]{"bash", "-c", command});
-      }
-    }
-
     @NotNull
-    private static String spawn(String command) throws IOException, InterruptedException {
-      Process proc = platformExec(command);
+    private static String spawn(List<String> command) throws IOException, InterruptedException {
+      Process proc = Runtime.getRuntime().exec(command.toArray(new String[command.size()]));
 
       // any error message?
       StreamReaderThread errorThread = new StreamReaderThread(proc.getErrorStream());
