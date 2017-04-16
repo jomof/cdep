@@ -86,4 +86,9 @@ public class FileUtils {
     }
     return fileTree;
   }
+
+  public static String readAllText(InputStream stream) {
+    java.util.Scanner s = new java.util.Scanner(stream).useDelimiter("\\A");
+    return s.hasNext() ? s.next() : "";
+  }
 }
