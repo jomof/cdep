@@ -23,6 +23,7 @@ import io.cdep.cdep.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import static io.cdep.cdep.io.IO.info;
 import static io.cdep.cdep.utils.Invariant.notNull;
@@ -102,12 +103,12 @@ public class CMakeGenerator {
 
   private String readCmakeLibraryFunctions() throws IOException {
     ClassLoader classLoader = getClass().getClassLoader();
-    
-    String file = classLoader.getResource("/CMakeLibraryFunctions.cmake").getFile();
+
+    URL file = classLoader.getResource("/CMakeLibraryFunctions.cmake");
     if (file == null) {
-      file = classLoader.getResource("CMakeLibraryFunctions.cmake").getFile();
+      file = classLoader.getResource("CMakeLibraryFunctions.cmake");
     }
-    return FileUtils.readAllText(new File(file));
+    return FileUtils.readAllText(new File(file.getFile()));
   }
 
   private void visit(@NotNull Expression expression) {
