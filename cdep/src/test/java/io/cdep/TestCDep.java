@@ -33,7 +33,6 @@ import static org.junit.Assert.fail;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class TestCDep {
-
   @NotNull
   private static String main(@NotNull String... args) throws Exception {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -68,16 +68,14 @@ public class CDep {
     IO.setOut(out);
   }
 
-  public static int main(@NotNull String[] args) {
+  public static void main(@NotNull String[] args) {
     try {
       new CDep(System.out).go(args, false);
     } catch (Throwable e) {
       e.printStackTrace();
-      return Integer.MIN_VALUE;
+      System.exit(Integer.MIN_VALUE);
     }
-    return 0;
   }
-
 
   /**
    * Return the first constant after matching one of the arguments. Argument and strign are removed
@@ -237,14 +235,7 @@ public class CDep {
 
   private boolean handleStartupInfo(@NotNull List<String> args)  {
     if (args.size() > 0 && "startup-info".equals(args.get(0))) {
-      String jvmLocation;
-      if (System.getProperty("os.name").startsWith("Win")) {
-        jvmLocation = System.getProperties().getProperty("java.home")
-            + File.separator + "bin" + File.separator + "java.exe";
-      } else {
-        jvmLocation = System.getProperties().getProperty("java.home")
-            + File.separator + "bin" + File.separator + "java";
-      }
+      File jvmLocation = API.getJvmLocation();
       infoln("%s", jvmLocation);
       RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
       List<String> jvmArgs = bean.getInputArguments();
