@@ -45,14 +45,18 @@ public class API {
     sb.append(" ");
     sb.append("-classpath ");
     String cdepClassPath = ReflectionUtils.getLocation(API.class).getAbsolutePath().replace("\\", "/");
-    sb.append("\"");
+    if (PlatformUtils.isWindows()) {
+      sb.append("\"");
+    }
     if (!cdepClassPath.endsWith(".jar")) {
       // In a test environment need to include SnakeYAML since it isn't part of the unit test environment
       sb.append(ReflectionUtils.getLocation(YAMLException.class).getAbsolutePath().replace("\\", "/") + ";");
-    } else {
     }
-    sb.append(cdepClassPath + "\" ");
-    sb.append("io.cdep.CDep ");
+    sb.append(cdepClassPath);
+    if (PlatformUtils.isWindows()) {
+      sb.append("\"");
+    }
+    sb.append(" io.cdep.CDep ");
     sb.append("--working-folder \"" + environment.workingFolder.getAbsolutePath().replace("\\", "/") +"\" ");
     return sb.toString();
   }
