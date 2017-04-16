@@ -129,14 +129,15 @@ public class CMakeGenerator {
       append("function({appenderFunctionName} target)\n".replace("{appenderFunctionName}", appenderFunctionName));
 
       append("  # Choose between Android NDK Toolchain and CMake Android Toolchain\n"
-          + "  message(CMAKE_CXX_KNOWN_FEATURES = ${CMAKE_CXX_KNOWN_FEATURES}})\n"
           + "  if(DEFINED CMAKE_ANDROID_STL_TYPE)\n"
           + "    set(cdep_determined_android_runtime ${CMAKE_ANDROID_STL_TYPE})\n"
           + "    set(cdep_determined_android_abi ${CMAKE_ANDROID_ARCH_ABI})\n"
+          + "    set(cdep_determined_supports_target_compile_feature TRUE)\n"
           + "  else()\n"
           + "    set(cdep_determined_android_runtime ${ANDROID_STL})\n"
-          + "    set(cdep_determined_android_abi ${ANDROID_ABI})\n" +
-          "  endif()\n\n");
+          + "    set(cdep_determined_android_abi ${ANDROID_ABI})\n"
+          + "    set(cdep_determined_supports_target_compile_feature FALSE)\n"
+          + "  endif()\n\n");
       append("  set(cdep_exploded_root \"%s\")", getCMakePath(environment.unzippedArchivesFolder));
       ++indent;
       visit(specific.body);
@@ -199,10 +200,9 @@ public class CMakeGenerator {
       } else if (specific.function == ExternalFunctionExpression.ARRAY_HAS_ONLY_ELEMENT) {
         append("%s STREQUAL %s", parms[0], parms[1]);
       } else if (specific.function == ExternalFunctionExpression.REQUIRES_COMPILER_FEATURES) {
-        append("\r\n%smessage(\"target_compile_features\" ${target} \"PRIVATE\" \"%s\")", prefix, parms[0]);
         append("\r\n%starget_compile_features(${target} PRIVATE %s)\r\n", prefix, parms[0]);
       } else if (specific.function == ExternalFunctionExpression.SUPPORTS_REQUIRES_COMPILER_FEATURES) {
-        append("DEFINED CMAKE_CXX_KNOWN_FEATURES");
+        append("cdep_determined_supports_target_compile_feature");
       } else if (specific.function == ExternalFunctionExpression.DEFINED) {
         append("DEFINED %s", parms[0]);
       } else if (specific.function == ExternalFunctionExpression.NOT) {
