@@ -160,7 +160,7 @@ public class CMakeGenerator {
         }
       }
       if (specific.elseExpression instanceof NopExpression) {
-        append("%send()\r\n", prefix);
+        append("%sendif()\r\n", prefix);
         return;
       }
       append("%selse()", prefix);
