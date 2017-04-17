@@ -14,11 +14,12 @@ matrix:
         - g++-4.8
     script:
     - ./gradlew assemble
-    - ./gradlew check --info
+    - ./gradlew check
     - ./gradlew packageArtifacts
     - pushd smoke-test
     - ../travis_cdep
-    #- cat .cdep/modules/cdep-dependencies-config.cmake
+    - cat ./.cdep/modules/cdep-dependencies-config.cmake
+    - cat .cdep/modules/cdep-dependencies-config.cmake
     - ../cmakeify --group-id com.github.jomof --artifact-id smoke-test --target-version 0.0.0
     - ../cmakeify -wf .cdep/examples/cmake --group-id com.github.jomof --artifact-id smoke-test-examples --target-version 0.0.0
     - popd
