@@ -357,7 +357,7 @@ public class TestCDep {
         "com.github.jomof:low-level-statistics:0.0.22",
         "low-level-statistics-android-platform-21-armeabi.zip", "-wf", folder.toString());
     System.out.printf(result);
-    assertThat(result).contains("Fetch complete");
+    assertThat(result).contains("CDep fetching");
   }
 
   //  @Test
