@@ -337,11 +337,9 @@ public class CMakeGenerator {
   private String generateCDepCall(String ... args) {
     try {
       return String.format(
-          "add_custom_command(" +
-          "TARGET ${target}" +
-          " PRE_BUILD" +
-          " COMMAND %s" +
-          " USES_TERMINAL)", StringUtils.joinOn(" ", API.generateCDepCall(environment, args)));
+          "execute_process(" +
+          " COMMAND %s)",
+          StringUtils.joinOn(" ", API.generateCDepCall(environment, args)));
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }
