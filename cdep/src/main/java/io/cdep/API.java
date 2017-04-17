@@ -37,7 +37,11 @@ public class API {
    */
   private static List<String> callCDep(GeneratorEnvironment environment) throws MalformedURLException {
     List<String> result = new ArrayList<>();
-    result.add("\"" + getJvmLocation() + "\"");
+    if (PlatformUtils.isWindows()) {
+      result.add("\"" + getJvmLocation() + "\"");
+    } else {
+      result.add(getJvmLocation());
+    }
     result.add("-classpath");
     String classPath = ReflectionUtils.getLocation(API.class).getAbsolutePath().replace("\\", "/");
     if (!classPath.endsWith(".jar")) {
@@ -49,7 +53,7 @@ public class API {
     result.add("\"" + classPath + "\"");
     result.add("io.cdep.CDep");
     result.add("--working-folder");
-    result.add( environment.workingFolder.getAbsolutePath().replace("\\", "/"));
+    result.add("\"" + environment.workingFolder.getAbsolutePath().replace("\\", "/") + "\"");
 
     return result;
   }
