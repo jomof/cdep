@@ -7,11 +7,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/tinydir" afterPath="$PROJECT_DIR$/third_party/tinydir" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/vectorial" afterPath="$PROJECT_DIR$/third_party/vectorial" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/API.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/API.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -46,11 +42,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="CDep.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CDep.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="478" column="18" lean-forward="false" selection-start-line="478" selection-start-column="18" selection-end-line="478" selection-end-column="18" />
+            <state relative-caret-position="415">
+              <caret line="529" column="6" lean-forward="false" selection-start-line="529" selection-start-column="6" selection-end-line="529" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -98,10 +94,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestCDep.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TestCDep.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
+            <state relative-caret-position="679">
               <caret line="361" column="30" lean-forward="false" selection-start-line="361" selection-start-column="30" selection-end-line="361" selection-end-column="30" />
               <folding />
             </state>
@@ -187,10 +183,10 @@
       <find>bash</find>
       <find>platformQuote</find>
       <find>alreadyExploded</find>
-      <find>fetc</find>
       <find>generateCDepCall</find>
       <find>archive</find>
       <find>handleFe</find>
+      <find>fetc</find>
     </findStrings>
     <replaceStrings>
       <replace>cdep_supports_compiler_features</replace>
@@ -1036,8 +1032,8 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/API.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
       </list>
     </option>
   </component>
@@ -2119,7 +2115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1492391460166</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="requires">
+      <created>1492395641758</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1492395641758</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2135,8 +2138,8 @@
     <history-entry file="All_in_cdep-cdep_test - 2017.04.16 at 19h 20m 16s.xml">
       <configuration name="All in cdep-cdep_test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestCDep_fetchArchive - 2017.04.16 at 19h 04m 20s.xml">
-      <configuration name="TestCDep.fetchArchive" configurationId="JUnit" />
+    <history-entry file="All_in_cdep-cdep_test - 2017.04.16 at 19h 22m 17s.xml">
+      <configuration name="All in cdep-cdep_test" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestCDep_fetchArchive - 2017.04.16 at 19h 11m 56s.xml">
       <configuration name="TestCDep.fetchArchive" configurationId="JUnit" />
@@ -2540,18 +2543,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
+    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="478" column="18" lean-forward="false" selection-start-line="478" selection-start-column="18" selection-end-line="478" selection-end-column="18" />
+        <state relative-caret-position="679">
+          <caret line="361" column="30" lean-forward="false" selection-start-line="361" selection-start-column="30" selection-end-line="361" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java">
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="361" column="30" lean-forward="false" selection-start-line="361" selection-start-column="30" selection-end-line="361" selection-end-column="30" />
+        <state relative-caret-position="415">
+          <caret line="529" column="6" lean-forward="false" selection-start-line="529" selection-start-column="6" selection-end-line="529" selection-end-column="6" />
           <folding />
         </state>
       </provider>
