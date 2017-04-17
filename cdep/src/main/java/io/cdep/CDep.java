@@ -136,6 +136,9 @@ public class CDep {
       if (handleFetch(args)) {
         return;
       }
+      if (handleFetchArchive(args)) {
+        return;
+      }
       if (handleFullfill(args)) {
         return;
       }
@@ -452,6 +455,20 @@ public class CDep {
     return false;
   }
 
+  private boolean handleFetchArchive(@NotNull List<String> args) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+    if (args.size() > 0 && "fetch-archive".equals(args.get(0))) {
+      if (args.size() < 3) {
+        info("Usage: cdep fetch-archive {coordinate} archive.zip\n");
+        return true;
+      }
+      String coordinate = args.get(1);
+      String archive = args.get(2);
+      info("CDep fetching %s %s\n", coordinate, archive);
+      return true;
+    }
+    return false;
+  }
+
   private boolean handleFullfill(@NotNull List<String> args)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fullfill".equals(args.get(0))) {
@@ -544,6 +561,7 @@ public class CDep {
     info(" cdep merge headers {coordinate} {headers.zip} outputmanifest.yml: merge header and manifest into " +
         "outputmanifest.yml\n");
     info(" cdep fetch {coordinate} {coordinate2} ... : download multiple packages\n");
+    info(" cdep fetch-archive {coordinate} archive.zip : download a single archive from withing a package\n");
     info(" cdep wrapper: copy cdep to the current folder\n");
     info(" cdep --version: show version information\n");
     return false;

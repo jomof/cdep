@@ -15,15 +15,18 @@
 */
 package io.cdep.cdep.generator;
 
+import io.cdep.API;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.utils.FileUtils;
+import io.cdep.cdep.utils.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 
 import static io.cdep.cdep.io.IO.info;
 import static io.cdep.cdep.utils.Invariant.notNull;
@@ -289,6 +292,9 @@ public class CMakeGenerator {
     } else if (expression instanceof ModuleArchiveExpression) {
       ModuleArchiveExpression specific = (ModuleArchiveExpression) expression;
       assert specific.requires == null; // Should have been rewritten by now.
+      append("%s%s\r\n",
+          prefix,
+          generateCDepCall("fetch-archive", this.coordinate.toString(), specific.file.getFile().substring(1)));
       if (specific.includePath != null) {
         append("%starget_include_directories(${target} PRIVATE ", prefix);
         visit(specific.includePath);
@@ -322,6 +328,19 @@ public class CMakeGenerator {
       return;
     }
     throw new RuntimeException(expression.getClass().toString());
+  }
+
+  private String generateCDepCall(String ... args) {
+    try {
+      return String.format(
+          "add_custom_command(" +
+          "TARGET ${target}" +
+          " PRE_BUILD" +
+          " COMMAND %s" +
+          " USES_TERMINAL)", StringUtils.joinOn(" ", API.generateCDepCall(environment, args)));
+    } catch (MalformedURLException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   private String getUpperArtifactId() {

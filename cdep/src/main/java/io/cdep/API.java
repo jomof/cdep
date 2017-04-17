@@ -32,33 +32,39 @@ public class API {
     return java;
   }
 
-  public static List<String> callCdepVersion(GeneratorEnvironment environment) throws Exception {
-    List<String> result = new ArrayList<>();
-    result.addAll(callCDep(environment));
-    result.add("show");
-    result.add("folders");
-    return result;
-  }
-
   /**
    * Get a java command-line to call back into CDep.
    */
   private static List<String> callCDep(GeneratorEnvironment environment) throws MalformedURLException {
     List<String> result = new ArrayList<>();
-    result.add(getJvmLocation());
+    result.add("\"" + getJvmLocation() + "\"");
     result.add("-classpath");
     String classPath = ReflectionUtils.getLocation(API.class).getAbsolutePath().replace("\\", "/");
-    String separator = PlatformUtils.isWindows() ? ";" : ":";
     if (!classPath.endsWith(".jar")) {
+      String separator = PlatformUtils.isWindows() ? ";" : ":";
       // In a test environment need to include SnakeYAML since it isn't part of the unit test environment
       classPath = ReflectionUtils.getLocation(YAMLException.class).getAbsolutePath().replace("\\", "/")
           + separator + classPath;
     }
-    result.add(classPath);
+    result.add("\"" + classPath + "\"");
     result.add("io.cdep.CDep");
     result.add("--working-folder");
     result.add( environment.workingFolder.getAbsolutePath().replace("\\", "/"));
 
+    return result;
+  }
+
+  /**
+   * Generate a call back to CDep.
+   */
+  public static List<String> generateCDepCall(
+      GeneratorEnvironment environment,
+      String ... args) throws MalformedURLException {
+    List<String> result = new ArrayList<>();
+    result.addAll(callCDep(environment));
+    for (String arg : args) {
+      result.add(arg);
+    }
     return result;
   }
 }

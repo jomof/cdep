@@ -341,10 +341,21 @@ public class TestCDep {
 
   @Test
   public void fetch() throws Exception {
-    File folder = new File(".test-files/fetch");
+    File folder = new File(".test-files/fetchArchive");
     folder.mkdirs();
     String result = main("fetch", "com.github.jomof:low-level-statistics:0.0.16", "com.github" +
         ".jomof:low-level-statistics:0.0.16", "-wf", folder.toString());
+    System.out.printf(result);
+    assertThat(result).contains("Fetch complete");
+  }
+
+  @Test
+  public void fetchArchive() throws Exception {
+    File folder = new File(".test-files/fetch");
+    folder.mkdirs();
+    String result = main("fetch-archive",
+        "com.github.jomof:low-level-statistics:0.0.22",
+        "low-level-statistics-android-platform-21-armeabi.zip", "-wf", folder.toString());
     System.out.printf(result);
     assertThat(result).contains("Fetch complete");
   }
