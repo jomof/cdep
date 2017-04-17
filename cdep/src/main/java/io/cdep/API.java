@@ -46,7 +46,7 @@ public class API {
     String classPath = ReflectionUtils.getLocation(API.class).getAbsolutePath().replace("\\", "/");
     if (!classPath.endsWith(".jar")) {
       String separator = PlatformUtils.isWindows() ? ";" : ":";
-      // In a test environment need to include SnakeYAML since it isn't part of the unit test environment
+      // In a test environment need to include SnakeYAML since it isn't part of the unit test
       classPath = ReflectionUtils.getLocation(YAMLException.class).getAbsolutePath().replace("\\", "/")
           + separator + classPath;
     }

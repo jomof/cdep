@@ -18,6 +18,7 @@ package io.cdep;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.CheckLocalFileSystemIntegrity;
+import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.fullfill.Fullfill;
 import io.cdep.cdep.generator.CMakeExamplesGenerator;
@@ -42,6 +43,7 @@ import java.io.PrintStream;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -236,7 +238,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleStartupInfo(@NotNull List<String> args)  {
+  private boolean handleStartupInfo(@NotNull List<String> args) {
     if (args.size() > 0 && "startup-info".equals(args.get(0))) {
       String jvmLocation = API.getJvmLocation();
       infoln("%s", jvmLocation);
@@ -455,15 +457,25 @@ public class CDep {
     return false;
   }
 
-  private boolean handleFetchArchive(@NotNull List<String> args) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private boolean handleFetchArchive(@NotNull List<String> args)
+      throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fetch-archive".equals(args.get(0))) {
-      if (args.size() < 3) {
+      if (args.size() != 5) {
         info("Usage: cdep fetch-archive {coordinate} archive.zip\n");
         return true;
       }
-      String coordinate = args.get(1);
+      Coordinate coordinate = CoordinateUtils.tryParse(args.get(1));
       String archive = args.get(2);
-      info("CDep fetching %s %s\n", coordinate, archive);
+      Long size = Long.parseLong(args.get(3));
+      String sha256 = args.get(4);
+
+      GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
+      URL remoteArchive = new URL(archive);
+      File localFile = environment.getLocalDownloadFilename(coordinate, remoteArchive);
+      if (!localFile.isFile()) {
+        info("  cdep fetching %s\n", coordinate, archive);
+      }
+      GeneratorEnvironmentUtils.downloadSingleArchive(environment, coordinate, remoteArchive, size, sha256, false);
       return true;
     }
     return false;
@@ -551,7 +563,9 @@ public class CDep {
     }
     info("cdep %s\n", BuildInfo.PROJECT_VERSION);
     info(" cdep: download dependencies and generate build modules for current cdep.yml\n");
-    info(" cdep fullfill source-folder version manifest1.yml manifest2.yml: fill in template cdep-manifest.yml with hashes, sizes, zips, etc\n");
+    info(
+        " cdep fullfill source-folder version manifest1.yml manifest2.yml: fill in template cdep-manifest.yml with hashes, " +
+            "sizes, zips, etc\n");
     info(" cdep show folders: show local download and file folders\n");
     info(" cdep show manifest: show cdep interpretation of cdep.yml\n");
     info(" cdep show include {coordinate}: show local include path for the given coordinate\n");

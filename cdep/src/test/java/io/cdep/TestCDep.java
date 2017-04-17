@@ -355,9 +355,11 @@ public class TestCDep {
     folder.mkdirs();
     String result = main("fetch-archive",
         "com.github.jomof:low-level-statistics:0.0.22",
-        "low-level-statistics-android-platform-21-armeabi.zip", "-wf", folder.toString());
+        "https://github.com/jomof/low-level-statistics/releases/download/0.0.22/low-level-statistics-android-platform-21-armeabi.zip",
+        "2035",
+        "1661c899dee3b7cf1bb3e376c1cd504a156a4658904d8554a84db4e5a71ade49",
+        "-wf", folder.toString());
     System.out.printf(result);
-    assertThat(result).contains("CDep fetching");
   }
 
   //  @Test

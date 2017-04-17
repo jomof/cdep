@@ -27,11 +27,12 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.utils.HashUtils;
-
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.List;
@@ -49,8 +50,10 @@ public class GeneratorEnvironmentUtils {
   /**
    * Given a function table and generator environment, download all of the files referenced.
    */
-  public static void downloadReferencedModules(@NotNull GeneratorEnvironment environment,
-      @NotNull Map<Coordinate, List<Expression>> foundModules) throws IOException, NoSuchAlgorithmException {
+  public static void downloadReferencedModules(
+      @NotNull GeneratorEnvironment environment,
+      @NotNull Map<Coordinate, List<Expression>> foundModules)
+      throws IOException, NoSuchAlgorithmException {
 
     Set<File> alreadyExploded = new HashSet<>();
 
@@ -64,38 +67,54 @@ public class GeneratorEnvironmentUtils {
           archive = specific.archive;
         }
         notNull(archive);
-        assert archive.file != null;
-        File local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
-        require(local != null, "Resolved archive '%s' didn't exist", archive.file);
+        URL archiveURL = archive.file;
+        Long size = archive.size;
+        String sha256 = archive.sha256;
+        assert archiveURL != null;
 
+        File local = environment.getLocalDownloadFilename(coordinate, archiveURL);
         boolean forceUnzip = environment.forceRedownload && !alreadyExploded.contains(local);
-        if (archive.size != local.length()) {
-          // It may have been an interrupted download. Try again.
-          if (!environment.forceRedownload) {
-            forceUnzip = true;
-            local.delete();
-            local = environment.tryGetLocalDownloadedFile(coordinate, archive.file);
-            require(local != null, "Resolved archive '%s' didn't exist", archive.file);
-          }
-          require(archive.size == local.length(),
-              "File size for %s was %s which did not match constant %s from the manifest",
-              archive.file,
-              local.length(),
-              archive.size);
-        }
-
-        String localSha256String = HashUtils.getSHA256OfFile(local);
-        require(localSha256String.equals(archive.sha256), "SHA256 for %s did not match constant from manifest", archive.file);
-
-        File unzipFolder = environment.getLocalUnzipFolder(coordinate, archive.file);
-        if (!unzipFolder.exists() || forceUnzip) {
-          //noinspection ResultOfMethodCallIgnored
-          unzipFolder.mkdirs();
-          ArchiveUtils.unzip(local, unzipFolder);
-          alreadyExploded.add(local);
-        }
+        local = downloadSingleArchive(environment, coordinate, archiveURL, size, sha256, forceUnzip);
+        alreadyExploded.add(local);
       }
     }
+  }
+
+  public static File downloadSingleArchive(
+      @NotNull GeneratorEnvironment environment,
+      @NotNull Coordinate coordinate,
+      @NotNull URL archiveURL,
+      long size,
+      @NotNull String sha256,
+      boolean forceUnzip) throws IOException, NoSuchAlgorithmException {
+    File local = environment.tryGetLocalDownloadedFile(coordinate, archiveURL);
+    require(local != null, "Resolved archive '%s' didn't exist", archiveURL);
+
+    if (size != local.length()) {
+      // It may have been an interrupted download. Try again.
+      if (!environment.forceRedownload) {
+        forceUnzip = true;
+        local.delete();
+        local = environment.tryGetLocalDownloadedFile(coordinate, archiveURL);
+        require(local != null, "Resolved archive '%s' didn't exist", archiveURL);
+      }
+      require(size == local.length(),
+          "File size for %s was %s which did not match constant %s from the manifest",
+          archiveURL,
+          local.length(),
+          size);
+    }
+
+    String localSha256String = HashUtils.getSHA256OfFile(local);
+    require(localSha256String.equals(sha256), "SHA256 for %s did not match constant from manifest", archiveURL);
+
+    File unzipFolder = environment.getLocalUnzipFolder(coordinate, archiveURL);
+    if (!unzipFolder.exists() || forceUnzip) {
+      //noinspection ResultOfMethodCallIgnored
+      unzipFolder.mkdirs();
+      ArchiveUtils.unzip(local, unzipFolder);
+    }
+    return local;
   }
 
   /**
