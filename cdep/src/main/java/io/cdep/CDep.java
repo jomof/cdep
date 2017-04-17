@@ -461,7 +461,7 @@ public class CDep {
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fetch-archive".equals(args.get(0))) {
       if (args.size() != 5) {
-        info("Usage: cdep fetch-archive {coordinate} archive.zip\n");
+        info("Usage: cdep fetch-archive {coordinate} archive.zip {size}{sha256}\n");
         return true;
       }
       Coordinate coordinate = CoordinateUtils.tryParse(args.get(1));
@@ -575,7 +575,7 @@ public class CDep {
     info(" cdep merge headers {coordinate} {headers.zip} outputmanifest.yml: merge header and manifest into " +
         "outputmanifest.yml\n");
     info(" cdep fetch {coordinate} {coordinate2} ... : download multiple packages\n");
-    info(" cdep fetch-archive {coordinate} archive.zip : download a single archive from withing a package\n");
+    info(" cdep fetch-archive {coordinate} archive.zip {size}{sha256} : download a single archive from within a package\n");
     info(" cdep wrapper: copy cdep to the current folder\n");
     info(" cdep --version: show version information\n");
     return false;
