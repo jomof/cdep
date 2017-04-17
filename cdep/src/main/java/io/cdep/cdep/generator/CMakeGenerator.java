@@ -292,9 +292,11 @@ public class CMakeGenerator {
     } else if (expression instanceof ModuleArchiveExpression) {
       ModuleArchiveExpression specific = (ModuleArchiveExpression) expression;
       assert specific.requires == null; // Should have been rewritten by now.
+      String url = specific.file.getFile();
+      String fileName = url.substring( url.lastIndexOf('/')+1, url.length() );
       append("%s%s\r\n",
           prefix,
-          generateCDepCall("fetch-archive", this.coordinate.toString(), specific.file.getFile().substring(1)));
+          generateCDepCall("fetch-archive", this.coordinate.toString(), fileName));
       if (specific.includePath != null) {
         append("%starget_include_directories(${target} PRIVATE ", prefix);
         visit(specific.includePath);

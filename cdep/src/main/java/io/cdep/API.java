@@ -40,7 +40,7 @@ public class API {
     if (PlatformUtils.isWindows()) {
       result.add("\"" + getJvmLocation() + "\"");
     } else {
-      result.add(getJvmLocation());
+      result.add(platformQuote(getJvmLocation()));
     }
     result.add("-classpath");
     String classPath = ReflectionUtils.getLocation(API.class).getAbsolutePath().replace("\\", "/");
@@ -50,12 +50,19 @@ public class API {
       classPath = ReflectionUtils.getLocation(YAMLException.class).getAbsolutePath().replace("\\", "/")
           + separator + classPath;
     }
-    result.add("\"" + classPath + "\"");
+    result.add(platformQuote(classPath));
     result.add("io.cdep.CDep");
     result.add("--working-folder");
-    result.add("\"" + environment.workingFolder.getAbsolutePath().replace("\\", "/") + "\"");
+    result.add(platformQuote(environment.workingFolder.getAbsolutePath().replace("\\", "/")));
 
     return result;
+  }
+
+  private static String platformQuote(String file) {
+    if (PlatformUtils.isWindows()) {
+      return "\"" + file + "\"";
+    }
+    return file;
   }
 
   /**
