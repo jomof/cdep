@@ -7,7 +7,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/tinydir" afterPath="$PROJECT_DIR$/third_party/tinydir" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/vectorial" afterPath="$PROJECT_DIR$/third_party/vectorial" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -42,11 +42,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="CDep.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CDep.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="473" column="44" lean-forward="false" selection-start-line="473" selection-start-column="44" selection-end-line="473" selection-end-column="44" />
+            <state relative-caret-position="448">
+              <caret line="475" column="23" lean-forward="false" selection-start-line="475" selection-start-column="23" selection-end-line="475" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -82,7 +82,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="660">
@@ -1022,9 +1022,9 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/API.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironmentUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/test/java/io/cdep/TestCDep.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
         <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
       </list>
     </option>
   </component>
@@ -1510,7 +1510,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/build.gradle" />
-    <property name="SearchEverywhereHistoryKey" value="TestCMake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java&#10;Te&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestAPI.java&#10;tra&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.travis.yml&#10;CDe&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;Tes&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java&#10;CDep.jav&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;CDep&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;TestCMak&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java&#10;Module&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/ast/finder/ModuleArchiveExpression.java&#10;CMakeGe&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator&#10;CmakeGe&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator&#10;CMakeG&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java&#10;Test&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestCDep.java&#10;CDep.&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;travis&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.travis.yml&#10;CDep.ja&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestCDep.java&#10;cdep.bat&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/redist/cdep.bat&#10;cdep.yml&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/redist/cdep.yml&#10;Cxx&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CxxLanguageStandardRewritingVisitor&#10;CMake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java&#10;CMakeGen&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator" />
+    <property name="SearchEverywhereHistoryKey" value="CDep&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;TestCMake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java&#10;Te&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestAPI.java&#10;tra&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.travis.yml&#10;CDe&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;Tes&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java&#10;CDep.jav&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;TestCMak&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java&#10;Module&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/ast/finder/ModuleArchiveExpression.java&#10;CMakeGe&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator&#10;CmakeGe&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator&#10;CMakeG&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java&#10;Test&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestCDep.java&#10;CDep.&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;travis&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.travis.yml&#10;CDep.ja&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestCDep.java&#10;cdep.bat&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/redist/cdep.bat&#10;cdep.yml&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/redist/cdep.yml&#10;Cxx&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CxxLanguageStandardRewritingVisitor&#10;CMake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java&#10;CMakeGen&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="extract.method.default.visibility" value="private" />
@@ -2231,7 +2231,14 @@
       <option name="project" value="LOCAL" />
       <updated>1492403215719</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="requires">
+      <created>1492403433879</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1492403433879</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2608,14 +2615,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="473" column="44" lean-forward="false" selection-start-line="473" selection-start-column="44" selection-end-line="473" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/GeneratorEnvironment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="302">
@@ -2655,6 +2654,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
           <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="475" column="23" lean-forward="false" selection-start-line="475" selection-start-column="23" selection-end-line="475" selection-end-column="23" />
           <folding />
         </state>
       </provider>

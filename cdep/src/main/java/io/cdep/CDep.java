@@ -472,9 +472,7 @@ public class CDep {
       GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
       URL remoteArchive = new URL(archive);
       File localFile = environment.getLocalDownloadFilename(coordinate, remoteArchive);
-      info("  cdep fetching %s\n", coordinate);
       GeneratorEnvironmentUtils.downloadSingleArchive(environment, coordinate, remoteArchive, size, sha256, false);
-      info("  done\n");
       require(localFile.isFile(), "Failed to download %s", localFile);
       return true;
     }
