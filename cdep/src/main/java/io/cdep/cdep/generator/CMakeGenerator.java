@@ -303,14 +303,12 @@ public class CMakeGenerator {
         append("%starget_include_directories(${target} PRIVATE ", prefix);
         visit(specific.includePath);
         append(")\n");
-        append("%smessage(\"  cdep including ${exploded_archive_tail}/%s\")\n", prefix, specific.include);
       }
 
       if (specific.libraryPath != null) {
         append("%starget_link_libraries(${target} ", prefix);
         visit(specific.libraryPath);
         append(")\n");
-        append("%smessage(\"  cdep linking ${target} with ${exploded_archive_tail}/%s\")\n", prefix, specific.library);
       }
       return;
     } else if (expression instanceof ArrayExpression) {
@@ -336,9 +334,7 @@ public class CMakeGenerator {
 
   private String generateCDepCall(String ... args) {
     try {
-      return String.format(
-          "execute_process(" +
-          " COMMAND %s)",
+      return String.format("execute_process(COMMAND %s)",
           StringUtils.joinOn(" ", API.generateCDepCall(environment, args)));
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
