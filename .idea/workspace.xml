@@ -45,8 +45,8 @@
       <file leaf-file-name="CDep.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="577" column="109" lean-forward="false" selection-start-line="577" selection-start-column="109" selection-end-line="577" selection-end-column="109" />
+            <state relative-caret-position="514">
+              <caret line="477" column="70" lean-forward="false" selection-start-line="477" selection-start-column="70" selection-end-line="477" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -131,7 +131,7 @@
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="297">
-              <caret line="19" column="19" lean-forward="true" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+              <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -1444,7 +1444,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/build.gradle" />
-    <property name="SearchEverywhereHistoryKey" value="CDep&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;TestCMak&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java&#10;Module&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/ast/finder/ModuleArchiveExpression.java&#10;CMakeGe&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator&#10;CmakeGe&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator&#10;TestCMake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java&#10;CMakeG&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java&#10;Test&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestCDep.java&#10;CDep.&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;CDep.jav&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestCDep.java&#10;travis&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.travis.yml&#10;CDep.ja&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestCDep.java&#10;cdep.bat&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/redist/cdep.bat&#10;cdep.yml&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/redist/cdep.yml&#10;Cxx&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CxxLanguageStandardRewritingVisitor&#10;CMake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java&#10;CMakeGen&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator" />
+    <property name="SearchEverywhereHistoryKey" value="CDep.jav&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;CDep&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;TestCMak&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java&#10;Module&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/ast/finder/ModuleArchiveExpression.java&#10;CMakeGe&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator&#10;CmakeGe&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator&#10;TestCMake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java&#10;CMakeG&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java&#10;Test&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestCDep.java&#10;CDep.&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/CDep.java&#10;travis&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/.travis.yml&#10;CDep.ja&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/test/java/io/cdep/TestCDep.java&#10;cdep.bat&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/redist/cdep.bat&#10;cdep.yml&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/redist/cdep.yml&#10;Cxx&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CxxLanguageStandardRewritingVisitor&#10;CMake&#9;FILE&#9;file://C:/Users/jomof/projects/hold/cdep/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java&#10;CMakeGen&#9;PSI&#9;JAVA://io.cdep.cdep.generator.CMakeGenerator" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="extract.method.default.visibility" value="private" />
@@ -1619,7 +1619,7 @@
       </FILE-GROUP>
     </UpdatedFiles>
   </component>
-  <component name="RunManager" selected="JUnit.TestCMakeGenerator.testBoost">
+  <component name="RunManager" selected="JUnit.All in cdep-cdep_test">
     <configuration default="false" name="TestAPI.testExecute" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1919,8 +1919,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.TestCMakeGenerator.testBoost" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.All in cdep-cdep_test" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.All in cdep-cdep_test" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.TestCMakeGenerator.testBoost" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.TestCDep.fetchArchive" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.TestAPI.testExecute" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.TestCMakeGenerator.testRequires" />
@@ -2130,7 +2130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1492395773785</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="requires">
+      <created>1492396008899</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1492396008899</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2146,8 +2153,8 @@
     <history-entry file="All_in_cdep-cdep_test - 2017.04.16 at 19h 22m 17s.xml">
       <configuration name="All in cdep-cdep_test" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestCDep_fetchArchive - 2017.04.16 at 19h 11m 56s.xml">
-      <configuration name="TestCDep.fetchArchive" configurationId="JUnit" />
+    <history-entry file="All_in_cdep-cdep_test - 2017.04.16 at 19h 30m 44s.xml">
+      <configuration name="All in cdep-cdep_test" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestCDep_fetchArchive - 2017.04.16 at 19h 12m 13s.xml">
       <configuration name="TestCDep.fetchArchive" configurationId="JUnit" />
@@ -2167,7 +2174,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="3226" height="1746" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2179,7 +2186,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2535347" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2535347" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2554,15 +2561,15 @@
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestCMakeGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
-          <caret line="19" column="19" lean-forward="true" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="577" column="109" lean-forward="false" selection-start-line="577" selection-start-column="109" selection-end-line="577" selection-end-column="109" />
+        <state relative-caret-position="514">
+          <caret line="477" column="70" lean-forward="false" selection-start-line="477" selection-start-column="70" selection-end-line="477" selection-end-column="70" />
           <folding />
         </state>
       </provider>
