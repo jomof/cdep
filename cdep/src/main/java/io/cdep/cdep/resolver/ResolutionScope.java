@@ -140,7 +140,7 @@ public class ResolutionScope {
         "%s was already resolved",
         resolved.cdepManifestYml.coordinate);
 
-    Coordinate versionless = getVersionlessCoordinateResolvedManifest(resolved);
+    @SuppressWarnings("unused") Coordinate versionless = getVersionlessCoordinateResolvedManifest(resolved);
     this.resolved.add(resolved.cdepManifestYml.coordinate.toString());
 
     unresolved.remove(resolved.cdepManifestYml.coordinate.toString());

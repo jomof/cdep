@@ -216,10 +216,12 @@ public class InterpretingVisitor {
     return null;
   }
 
+  @SuppressWarnings("SameReturnValue")
   @Nullable
   Object visitAbortExpression(@NotNull AbortExpression expr) {
     Object parameters[] = (Object[]) coerce(visitArray(expr.parameters, Object.class), String[].class);
-    throw new RuntimeException(String.format("Abort: " + expr.message, parameters));
+    fail("Abort: " + expr.message, parameters);
+    return null;
   }
 
   @Nullable

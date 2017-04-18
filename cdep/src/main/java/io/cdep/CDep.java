@@ -107,66 +107,69 @@ public class CDep {
 
   void go(@NotNull String[] argArray, boolean showFirstExceptionStack)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
-    try {
-      Invariant.pushScope();
-      List<String> args = new ArrayList<>();
-      Collections.addAll(args, argArray);
-
-      if (!handleHelp(args)) {
-        return;
+    Invariant.pushScope();
+    goNoScope(argArray, showFirstExceptionStack);
+    List<RuntimeException> errors = Invariant.popScope();
+    if (errors.size() > 0) {
+      if (showFirstExceptionStack) {
+        // All errors will have been printed. Throw the first exception
+        throw errors.get(0);
       }
-      if (!handleVersion(args)) {
-        return;
-      }
-      handleWorkingFolder(args);
-      handleDownloadFolder(args);
-      if (handleWrapper(args)) {
-        return;
-      }
-      if (handleStartupInfo(args)) {
-        return;
-      }
-      if (handleShow(args)) {
-        return;
-      }
-      if (handleLint(args)) {
-        return;
-      }
-      if (handleMerge(args)) {
-        return;
-      }
-      if (handleFetch(args)) {
-        return;
-      }
-      if (handleFetchArchive(args)) {
-        return;
-      }
-      if (handleFullfill(args)) {
-        return;
-      }
-      if (!handleReadCDepYml()) {
-        return;
-      }
-      if (handleCreate(args)) {
-        return;
-      }
-      if (handleRedownload(args)) {
-        return;
-      }
-
-      handleGenerateScript();
-    } finally {
-      List<RuntimeException> errors = Invariant.popScope();
-      if (errors.size() > 0) {
-        if (showFirstExceptionStack) {
-          // All errors will have been printed. Throw the first exception
-          throw errors.get(0);
-        }
-        infoln("%s errors, exiting with code -1.", errors.size());
-        System.exit(-1);
-      }
+      infoln("%s errors, exiting with code -1.", errors.size());
+      System.exit(-1);
     }
   }
+
+  void goNoScope(@NotNull String[] argArray, boolean showFirstExceptionStack)
+      throws IOException, URISyntaxException, NoSuchAlgorithmException {
+    List<String> args = new ArrayList<>();
+    Collections.addAll(args, argArray);
+
+    if (!handleHelp(args)) {
+      return;
+    }
+    if (!handleVersion(args)) {
+      return;
+    }
+    handleWorkingFolder(args);
+    handleDownloadFolder(args);
+    if (handleWrapper(args)) {
+      return;
+    }
+    if (handleStartupInfo(args)) {
+      return;
+    }
+    if (handleShow(args)) {
+      return;
+    }
+    if (handleLint(args)) {
+      return;
+    }
+    if (handleMerge(args)) {
+      return;
+    }
+    if (handleFetch(args)) {
+      return;
+    }
+    if (handleFetchArchive(args)) {
+      return;
+    }
+    if (handleFullfill(args)) {
+      return;
+    }
+    if (!handleReadCDepYml()) {
+      return;
+    }
+    if (handleCreate(args)) {
+      return;
+    }
+    if (handleRedownload(args)) {
+      return;
+    }
+
+    handleGenerateScript();
+  }
+
 
   private void runBuilders(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) throws IOException {
     for (BuildSystem buildSystem : notNull(config).builders) {
