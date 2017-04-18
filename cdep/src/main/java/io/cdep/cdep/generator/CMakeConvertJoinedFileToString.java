@@ -5,6 +5,8 @@ import io.cdep.annotations.Nullable;
 import io.cdep.cdep.RewritingVisitor;
 import io.cdep.cdep.ast.finder.*;
 
+import java.util.Objects;
+
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.constant;
 
 /**
@@ -14,7 +16,7 @@ public class CMakeConvertJoinedFileToString extends RewritingVisitor {
   @NotNull
   @Override
   protected Expression visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
-    if (expr.function == ExternalFunctionExpression.FILE_JOIN_SEGMENTS) {
+    if (Objects.equals(expr.function, ExternalFunctionExpression.FILE_JOIN_SEGMENTS)) {
       String value = getUnquotedConcatenation(expr.parameters[0], "/");
       value += "/";
       value += getUnquotedConcatenation(expr.parameters[1], "/");

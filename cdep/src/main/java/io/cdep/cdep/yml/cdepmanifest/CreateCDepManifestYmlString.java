@@ -117,6 +117,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
       --eatIndent;
       ++indent;
     }
+    //noinspection StringConcatenationInFormatCall
     sb.append(String.format(prefix + format, parms));
   }
 }

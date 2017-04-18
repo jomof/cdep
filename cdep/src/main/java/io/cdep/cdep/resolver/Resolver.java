@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.require;
 
 /**
  * Resolve references and groups of references (ResolutionScope)
@@ -92,9 +93,7 @@ public class Resolver {
     for (CoordinateResolver resolver : resolvers) {
       ResolvedManifest attempt = resolver.resolve(manifestProvider, dependency);
       if (attempt != null) {
-        if (resolved != null) {
-          throw new RuntimeException("Multiple resolvers matched coordinate: " + dependency.compile);
-        }
+        require(resolved == null, "Multiple resolvers matched coordinate: " + dependency.compile);
         resolved = attempt;
       }
     }

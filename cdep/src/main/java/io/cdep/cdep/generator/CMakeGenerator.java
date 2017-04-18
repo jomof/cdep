@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.util.Objects;
 
 import static io.cdep.cdep.io.IO.info;
 import static io.cdep.cdep.utils.Invariant.require;
@@ -203,23 +204,23 @@ public class CMakeGenerator {
         parms[i] = parmBuilder.toString();
       }
       // These are non-assignment function calls.
-      if (specific.function == ExternalFunctionExpression.STRING_STARTSWITH) {
+      if (Objects.equals(specific.function, ExternalFunctionExpression.STRING_STARTSWITH)) {
         append("%s MATCHES \"$%s.*\"", parms[0], unquote(parms[1]));
-      } else if (specific.function == ExternalFunctionExpression.INTEGER_GTE) {
+      } else if (Objects.equals(specific.function, ExternalFunctionExpression.INTEGER_GTE)) {
         append("%s GREATER %s", parms[0], Integer.parseInt(parms[1]) - 1);
-      } else if (specific.function == ExternalFunctionExpression.STRING_EQUALS) {
+      } else if (Objects.equals(specific.function, ExternalFunctionExpression.STRING_EQUALS)) {
         append("%s STREQUAL %s", parms[0], parms[1]);
-      } else if (specific.function == ExternalFunctionExpression.ARRAY_HAS_ONLY_ELEMENT) {
+      } else if (Objects.equals(specific.function, ExternalFunctionExpression.ARRAY_HAS_ONLY_ELEMENT)) {
         append("%s STREQUAL %s", parms[0], parms[1]);
-      } else if (specific.function == ExternalFunctionExpression.REQUIRES_COMPILER_FEATURES) {
+      } else if (Objects.equals(specific.function, ExternalFunctionExpression.REQUIRES_COMPILER_FEATURES)) {
         append("\r\n%starget_compile_features(${target} PRIVATE %s)\r\n", prefix, parms[0]);
-      } else if (specific.function == ExternalFunctionExpression.SUPPORTS_COMPILER_FEATURES) {
+      } else if (Objects.equals(specific.function, ExternalFunctionExpression.SUPPORTS_COMPILER_FEATURES)) {
         append("cdep_supports_compiler_features");
-      } else if (specific.function == ExternalFunctionExpression.NOT) {
+      } else if (Objects.equals(specific.function, ExternalFunctionExpression.NOT)) {
         append("NOT %s", parms[0]);
-      } else if (specific.function == ExternalFunctionExpression.OR) {
+      } else if (Objects.equals(specific.function, ExternalFunctionExpression.OR)) {
         append("%s OR %s", parms[0], parms[1]);
-      } else if (specific.function == ExternalFunctionExpression.REQUIRE_MINIMUM_CXX_COMPILER_STANDARD) {
+      } else if (Objects.equals(specific.function, ExternalFunctionExpression.REQUIRE_MINIMUM_CXX_COMPILER_STANDARD)) {
         append("\r\n%scdepRequireMinimumCxxCompilerStandard(${target} %s)\r\n", prefix, parms[0]);
       } else {
         throw new RuntimeException(specific.function.method.getName());
@@ -239,7 +240,7 @@ public class CMakeGenerator {
         append(specific.value.toString());
         return;
       }
-      if (specific.value.getClass() == Integer.class) {
+      if (Objects.equals(specific.value.getClass(), Integer.class)) {
         append(specific.value.toString());
         return;
       }
@@ -362,7 +363,7 @@ public class CMakeGenerator {
   @NotNull
   private String parameterName(@NotNull ParameterExpression expr) {
     assert globals != null;
-    if (expr == globals.buildSystemCxxCompilerStandard) {
+    if (Objects.equals(expr, globals.buildSystemCxxCompilerStandard)) {
       return "CMAKE_CXX_STANDARD";
     }
     return expr.name;
@@ -384,15 +385,15 @@ public class CMakeGenerator {
         require(value != null);
         values[i] = value;
       }
-      if (specific.function == ExternalFunctionExpression.FILE_GETNAME) {
+      if (Objects.equals(specific.function, ExternalFunctionExpression.FILE_GETNAME)) {
         require(assignResult != null);
         append("%sget_filename_component(%s ${%s} NAME)\n", prefix, assignResult, values[0]);
         return null;
-      } else if (specific.function == ExternalFunctionExpression.STRING_LASTINDEXOF) {
+      } else if (Objects.equals(specific.function, ExternalFunctionExpression.STRING_LASTINDEXOF)) {
         require(assignResult != null);
         append("%sstring(FIND %s %s %s REVERSE)\n", prefix, values[0], values[1], assignResult);
         return null;
-      } else if (specific.function == ExternalFunctionExpression.STRING_SUBSTRING_BEGIN_END) {
+      } else if (Objects.equals(specific.function, ExternalFunctionExpression.STRING_SUBSTRING_BEGIN_END)) {
         require(assignResult != null);
         append("%sstring(SUBSTRING %s %s %s %s)\n", prefix, values[0], values[1], values[2], assignResult);
         return null;

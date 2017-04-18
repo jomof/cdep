@@ -5,6 +5,7 @@ import io.cdep.annotations.NotNull;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Objects;
 
 import static io.cdep.cdep.utils.Invariant.require;
 import static io.cdep.cdep.utils.ReflectionUtils.*;
@@ -48,8 +49,8 @@ abstract public class PlainOldDataReadonlyVisitor {
             if (Modifier.isStatic(field.getModifiers())) {
         continue;
       }
-      require(field.getDeclaringClass() != Object.class);
-      require(field.getDeclaringClass() != String.class);
+      require(!Objects.equals(field.getDeclaringClass(), Object.class));
+      require(!Objects.equals(field.getDeclaringClass(), String.class));
       String methodName = getVisitorName(field.getType());
       Method method = getMethod(getClass(), methodName, String.class, field.getType());
       Object fieldValue = getFieldValue(field, node);

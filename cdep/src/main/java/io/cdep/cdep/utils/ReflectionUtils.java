@@ -104,7 +104,6 @@ public class ReflectionUtils {
       }
     }
     require(false, "Invalid URL: %s", url);
-    assert false;
-    return null;
+    throw new RuntimeException("Unreachable");
   }
 }
