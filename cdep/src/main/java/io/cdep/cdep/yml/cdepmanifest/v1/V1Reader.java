@@ -1,7 +1,6 @@
 package io.cdep.cdep.yml.cdepmanifest.v1;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -25,7 +24,7 @@ public class V1Reader {
     return convert(manifest);
   }
 
-  @Nullable
+  @NotNull
   private static io.cdep.cdep.yml.cdepmanifest.v2.CDepManifestYml convert(@NotNull CDepManifestYml manifest) {
     assert manifest.coordinate != null;
     assert manifest.android != null;

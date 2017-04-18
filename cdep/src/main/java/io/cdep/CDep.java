@@ -109,9 +109,15 @@ public class CDep {
   void go(@NotNull String[] argArray, boolean showFirstExceptionStack)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     Invariant.pushScope();
-    goNoScope(argArray, showFirstExceptionStack);
-    List<RuntimeException> errors = Invariant.popScope();
-    if (errors.size() > 0) {
+    List<RuntimeException> errors;
+
+    try {
+      goNoScope(argArray, showFirstExceptionStack);
+    } finally {
+      errors = Invariant.popScope();
+    }
+
+    if (errors != null && errors.size() > 0) {
       if (showFirstExceptionStack) {
         // All errors will have been printed. Throw the first exception
         throw errors.get(0);
@@ -170,7 +176,6 @@ public class CDep {
 
     handleGenerateScript();
   }
-
 
   private void runBuilders(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) throws IOException {
     if (config == null || config.builders == null) {

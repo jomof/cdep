@@ -30,7 +30,6 @@ public class CMakeExamplesGenerator {
       assert exampleFolder != null;
       //noinspection ResultOfMethodCallIgnored
       exampleFolder.mkdirs();
-      assert coordinate.artifactId != null;
       String artifact = coordinate.artifactId.replace("/", "_");
       String sourceName = artifact + ".cpp";
       File exampleSourceFile = new File(exampleFolder, sourceName);
@@ -64,12 +63,8 @@ public class CMakeExamplesGenerator {
   @Nullable
   private File getExampleFolder(@NotNull Coordinate coordinate) {
     File file = getExampleRootFolder();
-    assert coordinate.groupId != null;
     file = new File(file, coordinate.groupId);
-    assert coordinate.artifactId != null;
     file = new File(file, coordinate.artifactId);
-    assert coordinate.version != null;
-    assert coordinate.version.value != null;
     file = new File(file, coordinate.version.value);
     return file;
   }

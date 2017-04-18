@@ -73,7 +73,6 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
           "groupId '%s' from manifest did not agree with github url %s",
           cdepManifestYml.coordinate.groupId,
           coordinate);
-      assert cdepManifestYml.coordinate.artifactId != null;
       require(artifactId.startsWith(cdepManifestYml.coordinate.artifactId),
           "artifactId '%s' from manifest did not agree with '%s' from github url %s",
           artifactId,

@@ -32,7 +32,7 @@ public class V3Reader {
     return manifest;
   }
 
-  @Nullable
+  @NotNull
   private static io.cdep.cdep.yml.cdepmanifest.CDepManifestYml convert(@NotNull CDepManifestYml manifest) {
     assert manifest.sourceVersion != null;
     assert manifest.coordinate != null;

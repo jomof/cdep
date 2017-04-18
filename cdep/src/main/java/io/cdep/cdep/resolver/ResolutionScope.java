@@ -168,12 +168,9 @@ public class ResolutionScope {
   @Nullable
   private Coordinate getVersionlessCoordinateResolvedManifest(@NotNull ResolvedManifest resolved) {
     assert resolved.cdepManifestYml.coordinate != null;
-    assert resolved.cdepManifestYml.coordinate.groupId != null;
-    assert resolved.cdepManifestYml.coordinate.artifactId != null;
     Coordinate versionless = new Coordinate(
         resolved.cdepManifestYml.coordinate.groupId,
-        resolved.cdepManifestYml.coordinate.artifactId,
-        null);
+        resolved.cdepManifestYml.coordinate.artifactId);
 
     ResolvedManifest preexisting = versionlessKeyedManifests.get(versionless.toString());
     if (preexisting != null) {

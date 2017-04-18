@@ -1,7 +1,6 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -57,7 +56,7 @@ public class ReflectionUtils {
     }
   }
 
-  @Nullable
+  @NotNull
   public static File getLocation(@NotNull Class<?> c) throws MalformedURLException {
     URL codeSourceLocation = c.getProtectionDomain().getCodeSource().getLocation();
     if (codeSourceLocation != null) {
@@ -81,12 +80,12 @@ public class ReflectionUtils {
     return urlToFile(new URL(path));
   }
 
-  @Nullable
-  private static File urlToFile(@Nullable final URL url) {
-    return url == null ? null : urlToFile(url.toString());
+  @NotNull
+  private static File urlToFile(@NotNull final URL url) {
+    return urlToFile(url.toString());
   }
 
-  @Nullable
+  @NotNull
   private static File urlToFile(String url) {
     String path = url;
     if (path.startsWith("jar:")) {
@@ -105,6 +104,7 @@ public class ReflectionUtils {
       }
     }
     require(false, "Invalid URL: %s", url);
+    assert false;
     return null;
   }
 }

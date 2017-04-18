@@ -5,6 +5,7 @@ import io.cdep.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,6 +111,9 @@ public class PlainOldDataReadonlyCovisitor {
     assert representative != null;
     require(!representative.getClass().isEnum(), "Don't visit enum field");
     for (Field field : representative.getClass().getFields()) {
+      if (Modifier.isStatic(field.getModifiers())) {
+        continue;
+      }
       Object leftValue = left == null ? null : getFieldValue(field, left);
       Object rightValue = right == null ? null : getFieldValue(field, right);
       covisit(field.getName(), leftValue, rightValue, field.getType());

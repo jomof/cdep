@@ -26,9 +26,11 @@ public class V2Reader {
               .UTF_8)));
       prior.sourceVersion = CDepManifestYmlVersion.v2;
       manifest = convert(prior);
+      assert manifest != null;
       require(manifest.sourceVersion == CDepManifestYmlVersion.v2);
     } catch (YAMLException e) {
       manifest = convert(V1Reader.convertStringToManifest(content));
+      assert manifest != null;
       require(manifest.sourceVersion == CDepManifestYmlVersion.v1);
     }
     return manifest;

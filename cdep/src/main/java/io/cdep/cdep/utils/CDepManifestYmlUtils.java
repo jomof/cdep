@@ -266,9 +266,9 @@ public class CDepManifestYmlUtils {
     @Override
     public void visitCoordinate(@Nullable String name, @NotNull Coordinate value) {
       assert coordinate != null;
-      require(coordinate.groupId != null, "Manifest was missing coordinate.groupId");
-      require(coordinate.artifactId != null, "Manifest was missing coordinate.artifactId");
-      require(coordinate.version != null, "Manifest was missing coordinate.version");
+      require(coordinate.groupId.length() > 0, "Manifest was missing coordinate.groupId");
+      require(coordinate.artifactId.length() > 0, "Manifest was missing coordinate.artifactId");
+      require(coordinate.version.value.length() > 0, "Manifest was missing coordinate.version");
 
       String versionDiagnosis = VersionUtils.checkVersion(coordinate.version);
       if (versionDiagnosis == null) {

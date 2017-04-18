@@ -6,13 +6,17 @@ import io.cdep.annotations.Nullable;
 import java.util.Objects;
 
 public class Version {
-  @Nullable
+  public static final Version EMPTY_VERSION = new Version();
+
+  @NotNull
   public final String value;
-  public Version(@Nullable String version) {
+
+  public Version(@NotNull String version) {
     this.value = version;
   }
-  public Version() {
-    this.value = null;
+
+  private Version() {
+    this.value = "";
   }
 
   @Override
@@ -28,6 +32,6 @@ public class Version {
   @NotNull
   @Override
   public String toString() {
-    return value == null ? "None" : value;
+    return value;
   }
 }

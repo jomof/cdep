@@ -90,11 +90,8 @@ public class BuildFindModuleFunctionTable {
 
     Coordinate coordinate = manifest.coordinate;
     assert coordinate != null;
-    assert coordinate.groupId != null;
     AssignmentExpression coordinateGroupId = assign("coordinate_group_id", constant(coordinate.groupId));
-    assert coordinate.artifactId != null;
     AssignmentExpression coordinateArtifactId = assign("coordinate_artifact_id", constant(coordinate.artifactId));
-    assert coordinate.version != null;
     AssignmentExpression coordinateVersion = assign("coordinate_version", constant(coordinate.version.value));
     AssignmentExpression explodedArchiveTail = assign("exploded_archive_tail",
         joinFileSegments(coordinateGroupId, coordinateArtifactId, coordinateVersion));
@@ -256,8 +253,8 @@ public class BuildFindModuleFunctionTable {
   private ModuleArchiveExpression buildArchive(
       @NotNull URL remote,
       @NotNull String file,
-      @Nullable String sha256,
-      @Nullable Long size,
+      @NotNull String sha256,
+      @NotNull Long size,
       @Nullable String include,
       @NotNull CxxLanguageFeatures[] requires,
       @NotNull String libs[],
@@ -522,6 +519,8 @@ public class BuildFindModuleFunctionTable {
       // Header only case.
       AndroidArchive archive = androids.iterator().next();
       assert archive.file != null;
+      assert archive.sha256 != null;
+      assert archive.size != null;
       return module(buildArchive(
           resolved.remote,
           archive.file,

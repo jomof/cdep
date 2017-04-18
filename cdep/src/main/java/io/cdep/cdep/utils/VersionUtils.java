@@ -18,7 +18,6 @@ public class VersionUtils {
    * @return null if valid, otherwise a message.
    */
   static String checkVersion(@NotNull Version version) {
-    assert version.value != null;
     String[] pointSections = version.value.split("\\.");
     String EXPECTED = "major.minor.point[-tweak]";
     if (pointSections.length == 1) {
@@ -69,7 +68,6 @@ public class VersionUtils {
       String value = version.value;
       String segment = "";
       Boolean inString = null; // null means don't know
-      assert value != null;
       for (int i = 0; i < value.length(); ++i) {
         char c = value.charAt(i);
         if (c == '.' || c == '-') {

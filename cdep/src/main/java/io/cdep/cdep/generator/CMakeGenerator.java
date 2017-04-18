@@ -346,7 +346,6 @@ public class CMakeGenerator {
 
   private String getUpperArtifactId() {
     assert coordinate != null;
-    assert coordinate.artifactId != null;
     return coordinate.artifactId.toUpperCase().replace("-", "_").replace("/", "_");
   }
 

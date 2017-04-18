@@ -22,23 +22,29 @@ import java.util.Objects;
 
 @SuppressWarnings("unused")
 public class Coordinate {
-  @Nullable
+  @NotNull
   final public String groupId; // like com.github.jomof
-  @Nullable
+  @NotNull
   final public String artifactId; // like cmakeify
-  @Nullable
+  @NotNull
   final public Version version; // like alpha-0.0.27
 
   private Coordinate() {
-    groupId = null;
-    artifactId = null;
-    version = null;
+    groupId = "";
+    artifactId = "";
+    version = Version.EMPTY_VERSION;
   }
 
-  public Coordinate(@NotNull String groupId, @NotNull String artifactId, @Nullable Version version) {
+  public Coordinate(@NotNull String groupId, @NotNull String artifactId, @NotNull Version version) {
     this.groupId = groupId;
     this.artifactId = artifactId;
     this.version = version;
+  }
+
+  public Coordinate(@NotNull String groupId, @NotNull String artifactId) {
+    this.groupId = groupId;
+    this.artifactId = artifactId;
+    this.version = Version.EMPTY_VERSION;
   }
 
   @Override
@@ -54,7 +60,7 @@ public class Coordinate {
   @NotNull
   @Override
   public String toString() {
-    if (version != null) {
+    if (version.value.length() > 0) {
       return groupId + ":" + artifactId + ":" + version;
     }
     return groupId + ":" + artifactId;

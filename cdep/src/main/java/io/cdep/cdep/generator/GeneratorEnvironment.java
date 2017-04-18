@@ -111,12 +111,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   @NotNull
   public File getLocalDownloadFilename(Coordinate coordinate, URL remoteArchive) {
     File local = downloadFolder;
-    assert coordinate.groupId != null;
     local = new File(local, coordinate.groupId);
-    assert coordinate.artifactId != null;
     local = new File(local, coordinate.artifactId);
-    assert coordinate.version != null;
-    assert coordinate.version.value != null;
     local = new File(local, coordinate.version.value);
     local = new File(local, getUrlBaseName(remoteArchive));
     return local;
@@ -194,12 +190,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
   @NotNull
   public File getLocalUnzipFolder(@NotNull Coordinate coordinate, @NotNull URL remoteArchive) {
     File local = unzippedArchivesFolder;
-    assert coordinate.groupId != null;
     local = new File(local, coordinate.groupId);
-    assert coordinate.artifactId != null;
     local = new File(local, coordinate.artifactId);
-    assert coordinate.version != null;
-    assert coordinate.version.value != null;
     local = new File(local, coordinate.version.value);
     local = new File(local, getUrlBaseName(remoteArchive));
     return local;
