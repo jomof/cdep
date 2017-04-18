@@ -245,8 +245,8 @@ public class CDep {
       RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
       List<String> jvmArgs = bean.getInputArguments();
 
-      for (int i = 0; i < jvmArgs.size(); i++) {
-        infoln(jvmArgs.get(i));
+      for (String jvmArg : jvmArgs) {
+        infoln(jvmArg);
       }
       infoln("-classpath " + System.getProperty("java.class.path"));
       // print the non-JVM command line arguments
@@ -333,7 +333,6 @@ public class CDep {
     String body = CDepManifestYmlUtils.convertManifestToString(updated);
     FileUtils.writeTextToFile(output, body);
     info("Merged %s and %s into %s.\n", coordinate, zip, output);
-    return;
   }
 
   private boolean handleShow(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {

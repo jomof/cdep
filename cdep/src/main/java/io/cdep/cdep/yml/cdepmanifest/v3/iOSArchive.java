@@ -1,6 +1,8 @@
-package io.cdep.cdep.yml.cdepmanifest;
+package io.cdep.cdep.yml.cdepmanifest.v3;
 
 import io.cdep.annotations.Nullable;
+import io.cdep.cdep.yml.cdepmanifest.iOSArchitecture;
+import io.cdep.cdep.yml.cdepmanifest.iOSPlatform;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class iOSArchive {
@@ -20,7 +22,7 @@ public class iOSArchive {
   @Nullable
   final public String include;
   @Nullable
-  final public String libs[];
+  final public String lib;
   @Nullable
   final public String flavor;
 
@@ -31,7 +33,7 @@ public class iOSArchive {
     this.platform = null;
     this.architecture = null;
     this.sdk = null;
-    this.libs = null;
+    this.lib = null;
     this.flavor = null;
     this.include = null;
   }
@@ -44,7 +46,7 @@ public class iOSArchive {
       iOSArchitecture architecture,
       String sdk,
       String include,
-      String libs[],
+      String lib,
       String flavor) {
     this.file = file;
     this.sha256 = sha256;
@@ -53,7 +55,7 @@ public class iOSArchive {
     this.architecture = architecture;
     this.sdk = sdk;
     this.include = include;
-    this.libs = libs;
+    this.lib = lib;
     this.flavor = flavor;
   }
 }

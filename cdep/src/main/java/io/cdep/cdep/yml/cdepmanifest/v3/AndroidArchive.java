@@ -1,4 +1,4 @@
-package io.cdep.cdep.yml.cdepmanifest;
+package io.cdep.cdep.yml.cdepmanifest.v3;
 
 import io.cdep.annotations.Nullable;
 
@@ -25,7 +25,7 @@ public class AndroidArchive {
   @Nullable
   final public String include;
   @Nullable
-  final public String libs[];
+  final public String lib;
   @Nullable
   final public String flavor;
 
@@ -40,7 +40,7 @@ public class AndroidArchive {
     this.builder = null;
     this.abi = null;
     this.include = null;
-    this.libs = null;
+    this.lib = null;
     this.flavor = null;
   }
 
@@ -54,7 +54,7 @@ public class AndroidArchive {
       String builder,
       String abi,
       String include,
-      String libs[],
+      String lib,
       String flavor) {
     this.file = file;
     this.sha256 = sha256;
@@ -66,7 +66,7 @@ public class AndroidArchive {
     this.builder = builder;
     this.abi = abi;
     this.include = include;
-    this.libs = libs;
+    this.lib = lib;
     this.flavor = flavor;
   }
 }

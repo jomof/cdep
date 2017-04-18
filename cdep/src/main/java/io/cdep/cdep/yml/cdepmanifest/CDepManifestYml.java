@@ -31,7 +31,7 @@ public class CDepManifestYml {
   @Nullable
   final public Linux linux;
   @Nullable
-  final public iOS iOS;
+  final public io.cdep.cdep.yml.cdepmanifest.iOS iOS;
   @Nullable
   final public String example;
   @Nullable

@@ -1,4 +1,4 @@
-package io.cdep.cdep.yml.cdepmanifest;
+package io.cdep.cdep.yml.cdepmanifest.v3;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;

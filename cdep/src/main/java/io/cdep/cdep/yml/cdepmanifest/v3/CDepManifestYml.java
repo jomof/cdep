@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package io.cdep.cdep.yml.cdepmanifest.v1;
+package io.cdep.cdep.yml.cdepmanifest.v3;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.yml.cdepmanifest.Archive;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
-import io.cdep.cdep.yml.cdepmanifest.v3.Linux;
-import io.cdep.cdep.yml.cdepmanifest.v3.iOS;
+import io.cdep.cdep.yml.cdepmanifest.Interfaces;
 
 public class CDepManifestYml {
   @Nullable
@@ -29,20 +28,23 @@ public class CDepManifestYml {
   @Nullable
   final public HardNameDependency dependencies[];
   @Nullable
-  final public Archive archive;
+  final public Interfaces interfaces;
   @Nullable
-  final public Android android;
+  final public io.cdep.cdep.yml.cdepmanifest.v3.Android android;
   @Nullable
-  final public Linux linux;
+  final public io.cdep.cdep.yml.cdepmanifest.v3.Linux linux;
   @Nullable
-  final public iOS iOS;
+  final public io.cdep.cdep.yml.cdepmanifest.v3.iOS iOS;
   @Nullable
   final public String example;
+  @Nullable
+  public CDepManifestYmlVersion sourceVersion;
 
   public CDepManifestYml() {
+    this.sourceVersion = null;
     this.coordinate = null;
     this.dependencies = null;
-    this.archive = null;
+    this.interfaces = null;
     this.android = null;
     this.linux = null;
     this.iOS = null;
@@ -50,25 +52,29 @@ public class CDepManifestYml {
   }
 
   public CDepManifestYml(@NotNull Coordinate coordinate) {
+    this.sourceVersion = null;
     this.coordinate = coordinate;
     this.dependencies = null;
-    this.archive = null;
+    this.interfaces = null;
     this.android = null;
     this.linux = null;
     this.iOS = null;
     this.example = null;
   }
 
-  public CDepManifestYml(@NotNull Coordinate coordinate,
+  public CDepManifestYml(
+      @NotNull CDepManifestYmlVersion sourceVersion,
+      @NotNull Coordinate coordinate,
       @Nullable HardNameDependency[] dependencies,
-      @Nullable Archive archive,
+      @Nullable Interfaces interfaces,
       @Nullable Android android,
       @Nullable iOS ios,
       @Nullable Linux linux,
-      @NotNull String example) {
+      @Nullable String example) {
+    this.sourceVersion = sourceVersion;
     this.coordinate = coordinate;
     this.dependencies = dependencies;
-    this.archive = archive;
+    this.interfaces = interfaces;
     this.android = android;
     this.iOS = ios;
     this.linux = linux;

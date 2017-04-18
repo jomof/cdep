@@ -1,14 +1,9 @@
 package io.cdep.cdep.fullfill;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
-import static io.cdep.cdep.utils.Invariant.require;
-import static java.util.regex.Pattern.compile;
-
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
+
 import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVisitor {
   // Note, this list must be in order such that long strings come before shorter prefixes
@@ -51,10 +46,10 @@ public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVi
       }
     }
 
-    String lib = archive.lib;
-    if (lib == null) {
+    String libs[] = archive.libs;
+    if (libs == null) {
       File file = new File(archive.file);
-      lib = file.getName();
+      libs = new String[] { file.getName() };
     }
 
     String platform = archive.platform;
@@ -85,7 +80,7 @@ public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVi
         archive.builder,
         abi,
         archive.include,
-        lib,
+        libs,
         archive.flavor);
   }
 }

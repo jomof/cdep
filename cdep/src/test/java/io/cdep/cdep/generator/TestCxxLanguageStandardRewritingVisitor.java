@@ -20,8 +20,8 @@ public class TestCxxLanguageStandardRewritingVisitor {
         2345L,
         null,
         null,
-        null,
-        null,
+        new String[0],
+        new Expression[0],
         requires);
   }
 

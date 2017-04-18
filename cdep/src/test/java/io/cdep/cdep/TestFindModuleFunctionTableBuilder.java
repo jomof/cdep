@@ -335,7 +335,7 @@ public class TestFindModuleFunctionTableBuilder {
         "21",
         "c++_shared",
         "x86");
-    assertThat(found.fullLibraryName.getName()).isEqualTo("libsqlite.a");
+    assertThat(found.fullLibraryNames[0].getName()).isEqualTo("libsqlite.a");
   }
 
   @Test
@@ -353,7 +353,7 @@ public class TestFindModuleFunctionTableBuilder {
         "21",
         "c++_shared",
         "x86");
-    assertThat(found.fullLibraryName).isNull();
+    assertThat(found.fullLibraryNames).isEmpty();
     assertThat(found.remote.toString()).isEqualTo("https://github" +
         ".com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
   }
@@ -372,7 +372,7 @@ public class TestFindModuleFunctionTableBuilder {
         "21",
         "c++_shared",
         "x86");
-    assertThat(found.fullLibraryName).isNull();
+    assertThat(found.fullLibraryNames).isEmpty();
     assertThat(found.remote.toString()).isEqualTo("https://github" +
         ".com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
   }

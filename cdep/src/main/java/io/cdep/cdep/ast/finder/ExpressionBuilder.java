@@ -38,10 +38,10 @@ public class ExpressionBuilder {
       @Nullable Long size,
       @Nullable String include,
       @Nullable Expression includePath,
-      @Nullable String library,
-      @Nullable Expression libraryPath,
-      @Nullable CxxLanguageFeatures requires[]) {
-    return new ModuleArchiveExpression(file, sha256, size, include, includePath, library, libraryPath, requires);
+      @NotNull String libs[],
+      @NotNull Expression libraryPaths[],
+      @NotNull CxxLanguageFeatures requires[]) {
+    return new ModuleArchiveExpression(file, sha256, size, include, includePath, libs, libraryPaths, requires);
   }
 
   @NotNull

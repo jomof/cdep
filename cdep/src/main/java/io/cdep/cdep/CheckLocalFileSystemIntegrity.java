@@ -1,15 +1,12 @@
 package io.cdep.cdep;
 
-import static io.cdep.cdep.utils.Invariant.fail;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.*;
+
 import java.io.File;
+
+import static io.cdep.cdep.utils.Invariant.fail;
 
 /**
  * Locates every referenced local file and ensures that those files are present in the right
@@ -48,17 +45,17 @@ public class CheckLocalFileSystemIntegrity extends InterpretingVisitor {
             archive.fullIncludePath);
       }
     }
-    if (archive.fullLibraryName != null) {
-      if (!archive.fullLibraryName.getParentFile().isDirectory()) {
+    for(File fullLibraryName : archive.fullLibraryNames) {
+      if (!fullLibraryName.getParentFile().isDirectory()) {
         fail("Expected '%s' folder to be created but it wasn't.",
-            archive.fullLibraryName.getParentFile());
+            fullLibraryName.getParentFile());
       }
-      if (!archive.fullLibraryName.isFile()) {
+      if (!fullLibraryName.isFile()) {
         fail("Downloaded '%s' did not contain library '%s/%s' at its root.\nLocal path: %s",
             archive.remote,
-            archive.fullLibraryName.getParentFile().getName(),
-            archive.fullLibraryName.getName(),
-            archive.fullLibraryName);
+            fullLibraryName.getParentFile().getName(),
+            fullLibraryName.getName(),
+            fullLibraryName);
       }
     }
     return archive;

@@ -1,9 +1,5 @@
 package io.cdep.cdep.resolver;
 
-import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.DIDNT_EXIST;
-import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.UNPARSEABLE;
-import static io.cdep.cdep.utils.Invariant.require;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.Version;
@@ -11,14 +7,12 @@ import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.utils.VersionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
+
+import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.DIDNT_EXIST;
+import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.UNPARSEABLE;
+import static io.cdep.cdep.utils.Invariant.require;
 
 /**
  * Records the current state of resolving top-level and transitive dependencies.
@@ -184,7 +178,7 @@ public class ResolutionScope {
       List<Version> versions = new ArrayList<>();
       versions.addAll(manifests.keySet());
       assert versions.size() == 2;
-      Collections.sort(versions, VersionUtils.DESCENDING_COMPARATOR);
+      versions.sort(VersionUtils.DESCENDING_COMPARATOR);
       Version unificationWinner = versions.get(0);
       Version unificationLoser= versions.get(1);
       versionlessKeyedManifests.put(versionless.toString(), manifests.get(unificationWinner));

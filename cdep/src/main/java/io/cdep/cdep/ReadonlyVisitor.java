@@ -2,26 +2,7 @@ package io.cdep.cdep;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.ast.finder.AbortExpression;
-import io.cdep.cdep.ast.finder.ArrayExpression;
-import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
-import io.cdep.cdep.ast.finder.AssignmentExpression;
-import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
-import io.cdep.cdep.ast.finder.ExampleExpression;
-import io.cdep.cdep.ast.finder.Expression;
-import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
-import io.cdep.cdep.ast.finder.FindModuleExpression;
-import io.cdep.cdep.ast.finder.FunctionTableExpression;
-import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
-import io.cdep.cdep.ast.finder.IfSwitchExpression;
-import io.cdep.cdep.ast.finder.IntegerExpression;
-import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
-import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
-import io.cdep.cdep.ast.finder.ModuleExpression;
-import io.cdep.cdep.ast.finder.MultiStatementExpression;
-import io.cdep.cdep.ast.finder.NopExpression;
-import io.cdep.cdep.ast.finder.ParameterExpression;
-import io.cdep.cdep.ast.finder.ConstantExpression;
+import io.cdep.cdep.ast.finder.*;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class ReadonlyVisitor {
@@ -123,7 +104,7 @@ public class ReadonlyVisitor {
 
   protected void visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     visit(expr.includePath);
-    visit(expr.libraryPath);
+    visitArray(expr.libraryPaths);
   }
 
   protected void visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {

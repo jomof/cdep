@@ -64,9 +64,8 @@ public enum CxxLanguageFeatures {
   cxx_variadic_templates(11, "Variadic templates, as defined in N2242."),
   cxx_template_template_parameters(11, "Template template parameters, as defined in ISO/IEC 14882:1998.");
   public final int standard;
-  private final String description;
+
   CxxLanguageFeatures(int standard, String description) {
     this.standard = standard;
-    this.description = description;
   }
 }

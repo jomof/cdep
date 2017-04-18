@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package io.cdep.cdep.yml.cdepmanifest;
+package io.cdep.cdep.yml.cdepmanifest.v3;
 
 import io.cdep.annotations.Nullable;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 
 public class Android {
   @Nullable

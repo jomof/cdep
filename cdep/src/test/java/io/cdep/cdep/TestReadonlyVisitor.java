@@ -1,5 +1,7 @@
 package io.cdep.cdep;
 
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 import org.junit.Test;
 
 import java.net.URL;
@@ -14,7 +16,7 @@ public class TestReadonlyVisitor {
   @Test
   public void testNullInclude() throws Exception {
     new ReadonlyVisitor().visit(archive(new URL("https://google.com"), "sha256", 192L,
-        null, null, null, null, null));
+        null, null, new String[0], new Expression[0], new CxxLanguageFeatures[0]));
   }
 
   @Test

@@ -164,9 +164,17 @@ public class RewritingVisitor {
         expr.size,
         expr.include,
         visitMaybeNull(expr.includePath),
-        expr.library,
-        visitMaybeNull(expr.libraryPath),
+        expr.libs,
+        visitExpressionArray(expr.libraryPaths),
         expr.requires);
+  }
+
+  private Expression[] visitExpressionArray(Expression[] libraryPaths) {
+    Expression result[] = new Expression[libraryPaths.length];
+    for (int i = 0; i < libraryPaths.length; ++i) {
+      result[i] = visit(libraryPaths[i]);
+    }
+    return result;
   }
 
   @NotNull

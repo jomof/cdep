@@ -1,7 +1,5 @@
 package io.cdep.cdep.fullfill;
 
-import static io.cdep.cdep.utils.Invariant.require;
-
 import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
@@ -10,6 +8,8 @@ import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+
+import static io.cdep.cdep.utils.Invariant.require;
 
 public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   private final File layoutFolder;
@@ -33,9 +33,7 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
             file.length(),
             archive.include,
             archive.requires);
-      } catch (NoSuchAlgorithmException e) {
-        throw new RuntimeException(e);
-      } catch (IOException e) {
+      } catch (NoSuchAlgorithmException | IOException e) {
         throw new RuntimeException(e);
       }
     }
@@ -62,11 +60,9 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
             archive.builder,
             archive.abi,
             archive.include,
-            archive.lib,
+            archive.libs,
             archive.flavor);
-      } catch (NoSuchAlgorithmException e) {
-        throw new RuntimeException(e);
-      } catch (IOException e) {
+      } catch (NoSuchAlgorithmException | IOException e) {
         throw new RuntimeException(e);
       }
     }

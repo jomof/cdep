@@ -1,8 +1,5 @@
 package io.cdep.cdep.fullfill;
 
-import static io.cdep.cdep.io.IO.infoln;
-
-import io.cdep.CDep;
 import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
@@ -14,7 +11,6 @@ import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
-import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +18,8 @@ import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.cdep.cdep.io.IO.infoln;
 
 public class Fullfill {
 

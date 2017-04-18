@@ -14,11 +14,9 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
  * Expand module requires into logic for setting the compiler standard that should be used.
  */
 public class CxxLanguageStandardRewritingVisitor extends RewritingVisitor {
-  private GlobalBuildEnvironmentExpression globals;
 
   @Override
   protected Expression visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
-    this.globals = expr;
     return super.visitGlobalBuildEnvironmentExpression(expr);
   }
 
@@ -36,9 +34,9 @@ public class CxxLanguageStandardRewritingVisitor extends RewritingVisitor {
         archive.size,
         archive.include,
         archive.includePath,
-        archive.library,
-        archive.libraryPath,
-        null);
+        archive.libs,
+        archive.libraryPaths,
+        new CxxLanguageFeatures[0]);
 
     // Make constant expression of requires
     List<ConstantExpression> features = new ArrayList<>();

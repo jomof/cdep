@@ -113,7 +113,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
         archive.builder,
         archive.abi,
         archive.include,
-        archive.lib,
+        archive.libs,
         archive.flavor);
   }
 

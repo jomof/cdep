@@ -1,7 +1,6 @@
 package io.cdep.cdep.yml.cdepmanifest.v1;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -26,7 +25,6 @@ public class V1Reader {
 
   private static io.cdep.cdep.yml.cdepmanifest.v2.CDepManifestYml convert(CDepManifestYml manifest) {
     return new io.cdep.cdep.yml.cdepmanifest.v2.CDepManifestYml(
-        CDepManifestYmlVersion.v1,
         manifest.coordinate,
         manifest.dependencies,
         manifest.archive,
@@ -36,15 +34,15 @@ public class V1Reader {
         manifest.example);
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.Android convert(Android android) {
-    return new io.cdep.cdep.yml.cdepmanifest.Android(android.dependencies, convert(android.archives));
+  private static io.cdep.cdep.yml.cdepmanifest.v3.Android convert(Android android) {
+    return new io.cdep.cdep.yml.cdepmanifest.v3.Android(android.dependencies, convert(android.archives));
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.AndroidArchive[] convert(AndroidArchive[] archives) {
-    List<io.cdep.cdep.yml.cdepmanifest.AndroidArchive> singleAbiArchives = new ArrayList<>();
+  private static io.cdep.cdep.yml.cdepmanifest.v3.AndroidArchive[] convert(AndroidArchive[] archives) {
+    List<io.cdep.cdep.yml.cdepmanifest.v3.AndroidArchive> singleAbiArchives = new ArrayList<>();
     for (AndroidArchive archive : archives) {
       for (String abi : archive.abis) {
-        singleAbiArchives.add(new io.cdep.cdep.yml.cdepmanifest.AndroidArchive(
+        singleAbiArchives.add(new io.cdep.cdep.yml.cdepmanifest.v3.AndroidArchive(
             archive.file,
             archive.sha256,
             archive.size,
@@ -61,6 +59,6 @@ public class V1Reader {
       }
     }
 
-    return singleAbiArchives.toArray(new io.cdep.cdep.yml.cdepmanifest.AndroidArchive[singleAbiArchives.size()]);
+    return singleAbiArchives.toArray(new io.cdep.cdep.yml.cdepmanifest.v3.AndroidArchive[singleAbiArchives.size()]);
   }
 }

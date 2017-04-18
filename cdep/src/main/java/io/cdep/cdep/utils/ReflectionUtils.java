@@ -76,8 +76,7 @@ public class ReflectionUtils {
     String suffix = c.getCanonicalName().replace('.', '/') + ".class";
     require(url.endsWith(suffix));
 
-    String base = url.substring(0, url.length() - suffix.length());
-    String path = base;
+    String path = url.substring(0, url.length() - suffix.length());
 
     if (path.startsWith("jar:")) {
       path = path.substring(4, path.length() - 2);

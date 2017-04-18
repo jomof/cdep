@@ -6,6 +6,7 @@ import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
@@ -161,8 +162,8 @@ public class InterpretingVisitor {
   @NotNull
   ModuleArchive visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     Object fullIncludePath = visit(expr.includePath);
-    Object fullLibraryName = visit(expr.libraryPath);
-    return new ModuleArchive(expr.file, (File) fullIncludePath, (File) fullLibraryName);
+    File fullLibraryNames[] = visitArray(expr.libraryPaths, File.class);
+    return new ModuleArchive(expr.file, (File) fullIncludePath, fullLibraryNames);
   }
 
   @NotNull
@@ -193,12 +194,12 @@ public class InterpretingVisitor {
 
   @NotNull
   private Object visitMultiStatementExpression(@NotNull MultiStatementExpression expr) {
-    return visitArray(expr.statements);
+    return visitArray(expr.statements, Object.class);
   }
 
   @NotNull
   private Object visitArrayExpression(@NotNull ArrayExpression expr) {
-    return visitArray(expr.elements);
+    return visitArray(expr.elements, Object.class);
   }
 
   private Object visitIntegerExpression(@NotNull IntegerExpression expr) {
@@ -217,7 +218,7 @@ public class InterpretingVisitor {
 
   @Nullable
   Object visitAbortExpression(@NotNull AbortExpression expr) {
-    Object parameters[] = (Object[]) coerce(visitArray(expr.parameters), String[].class);
+    Object parameters[] = (Object[]) coerce(visitArray(expr.parameters, Object.class), String[].class);
     fail("Abort: " + expr.message, parameters);
     return null;
   }
@@ -233,7 +234,7 @@ public class InterpretingVisitor {
 
   private Object visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
     Method method = visitExternalFunctionExpression(expr.function);
-    Object parameters[] = visitArray(expr.parameters);
+    Object parameters[] = visitArray(expr.parameters, Object.class);
 
     Object thiz = null;
     int firstParameter = 0;
@@ -249,10 +250,11 @@ public class InterpretingVisitor {
   }
 
   @NotNull
-  private Object[] visitArray(@NotNull Expression[] array) {
-    Object result[] = new Object[array.length];
+  private <T> T[] visitArray(@NotNull Expression[] array, Class<T> clazz) {
+    @SuppressWarnings("unchecked") T result[] = (T[]) Array.newInstance(clazz, array.length);
     for (int i = 0; i < array.length; ++i) {
-      result[i] = visit(array[i]);
+      //noinspection unchecked
+      result[i] = (T) visit(array[i]);
     }
     return result;
   }
@@ -357,12 +359,12 @@ public class InterpretingVisitor {
 
     final public URL remote;
     final public File fullIncludePath;
-    final public File fullLibraryName;
+    final public File fullLibraryNames[];
 
-    ModuleArchive(URL remote, File fullIncludePath, File fullLibraryName) {
+    ModuleArchive(URL remote, File fullIncludePath, File fullLibraryNames[]) {
       this.remote = remote;
       this.fullIncludePath = fullIncludePath;
-      this.fullLibraryName = fullLibraryName;
+      this.fullLibraryNames = fullLibraryNames;
     }
   }
 }

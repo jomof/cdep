@@ -1,8 +1,10 @@
 package io.cdep.cdep;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.cdep.ast.finder.Expression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 import org.junit.Test;
 
 import java.net.URL;
@@ -16,7 +18,7 @@ public class TestInterpretingVisitor {
   @Test
   public void testNullInclude() throws Exception {
     new InterpretingVisitor().visit(archive(new URL("https://google.com"), "sha256",
-        192L, null, null, null, null, null));
+        192L, null, null, new String[0], new Expression[0], new CxxLanguageFeatures[0]));
   }
 
   @Test

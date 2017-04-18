@@ -18,7 +18,12 @@ package io.cdep.cdep.yml.cdepmanifest.v2;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.yml.cdepmanifest.*;
+import io.cdep.cdep.yml.cdepmanifest.Archive;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.v3.Android;
+import io.cdep.cdep.yml.cdepmanifest.v3.Linux;
+import io.cdep.cdep.yml.cdepmanifest.v3.iOS;
 
 public class CDepManifestYml {
   @Nullable
@@ -32,7 +37,7 @@ public class CDepManifestYml {
   @Nullable
   final public Linux linux;
   @Nullable
-  final public iOS iOS;
+  final public io.cdep.cdep.yml.cdepmanifest.v3.iOS iOS;
   @Nullable
   final public String example;
   @Nullable
@@ -61,7 +66,6 @@ public class CDepManifestYml {
   }
 
   public CDepManifestYml(
-      @NotNull CDepManifestYmlVersion sourceVersion,
       @NotNull Coordinate coordinate,
       @Nullable HardNameDependency[] dependencies,
       @Nullable Archive archive,
@@ -69,7 +73,7 @@ public class CDepManifestYml {
       @Nullable iOS ios,
       @Nullable Linux linux,
       @Nullable String example) {
-    this.sourceVersion = sourceVersion;
+    this.sourceVersion = CDepManifestYmlVersion.v1;
     this.coordinate = coordinate;
     this.dependencies = dependencies;
     this.archive = archive;

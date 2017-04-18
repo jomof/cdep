@@ -19,7 +19,7 @@ import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.*;
-import io.cdep.cdep.yml.cdepmanifest.v2.V2Reader;
+import io.cdep.cdep.yml.cdepmanifest.v3.V3Reader;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.error.YAMLException;
@@ -28,9 +28,7 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import static io.cdep.cdep.utils.Invariant.fail;
-import static io.cdep.cdep.utils.Invariant.noNullElements;
-import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.utils.Invariant.*;
 
 public class CDepManifestYmlUtils {
   @NotNull
@@ -52,7 +50,7 @@ public class CDepManifestYmlUtils {
       }
     } catch (YAMLException e) {
       try {
-        manifest = V2Reader.convertStringToManifest(content);
+        manifest = V3Reader.convertStringToManifest(content);
       } catch (YAMLException e2) {
         // If older readers also couldn't read it then throw the original exception.
         throw e;
@@ -85,6 +83,13 @@ public class CDepManifestYmlUtils {
     @NotNull
     private Map<String, AndroidArchive> distinguishableAndroidArchives = new HashMap<>();
 
+    private static String nullToStar(String string) {
+      if (string == null) {
+        return "*";
+      }
+      return string;
+    }
+
     @Override
     public void visitString(@Nullable String name, @NotNull String node) {
       if (name == null) {
@@ -93,7 +98,7 @@ public class CDepManifestYmlUtils {
       if (name.equals("file")) {
         if (sourceVersion.ordinal() > CDepManifestYmlVersion.v1.ordinal()) {
           require(!filesSeen.contains(node.toLowerCase()),
-              "Package '%s' contains multiple references to the same" + " " + "archive file '%s'",
+              "Package '%s' contains multiple references to the same archive file '%s'",
               coordinate,
               node);
         }
@@ -168,13 +173,6 @@ public class CDepManifestYmlUtils {
       return value.file == null ? "<unknown>" : value.file;
     }
 
-    private static String nullToStar(String string) {
-      if (string == null) {
-        return "*";
-      }
-      return string;
-    }
-
     @Override
     public void visitiOSArchive(@Nullable String name, @NotNull iOSArchive value) {
       if (value == null) {
@@ -201,53 +199,68 @@ public class CDepManifestYmlUtils {
     public void visitiOS(@Nullable String name, @NotNull iOS value) {
       if (value.archives != null) {
         for (iOSArchive archive : value.archives) {
-          require(archive.lib == null || archive.lib.endsWith(".a"),
-              "Package '%s' has non-static iOS libraryName " + "'%s'",
-              coordinate,
-              archive.lib);
           require(archive.file != null, "Package '%s' has missing ios.archive.file", coordinate);
           require(archive.sha256 != null, "Package '%s' has missing ios.archive.sha256 for '%s'", coordinate, archive.file);
           require(archive.size != null, "Package '%s' has missing ios.archive.size for '%s'", coordinate, archive.file);
           require(archive.sdk != null, "Package '%s' has missing ios.archive.sdk for '%s'", coordinate, archive.file);
           require(archive.platform != null, "Package '%s' has missing ios.archive.platform for '%s'", coordinate, archive.file);
+          if (archive.libs == null) {
+            continue;
+          }
+          for (String lib : archive.libs) {
+            require(lib.endsWith(".a"),
+                "Package '%s' has non-static iOS libraryName '%s'",
+                coordinate, lib);
+          }
         }
       }
-
       super.visitiOS(name, value);
     }
 
     @Override
-    public void visitLinux(@Nullable String name, @NotNull Linux value) {
-      if (value.archives != null) {
-        require(value.archives.length <= 1, "Package '%s' has multiple linux archives. Only one is allowed.", coordinate);
+    public void visitLinux(@Nullable String name, @NotNull Linux linux) {
+      if (linux.archives == null) {
+        return;
       }
-      super.visitLinux(name, value);
+      require(linux.archives.length <= 1, "Package '%s' has multiple linux archives. Only one is allowed.", coordinate);
+      for (LinuxArchive archive : linux.archives) {
+        for (String lib : archive.libs) {
+          require(lib.endsWith(".a"),
+              "Package '%s' has non-static android libraryName '%s'",
+              coordinate, lib);
+        }
+      }
+      super.visitLinux(name, linux);
     }
 
     @Override
     public void visitAndroid(@Nullable String name, @NotNull Android value) {
       if (value.archives != null) {
         for (AndroidArchive archive : value.archives) {
-          require(archive.lib == null || archive.lib.endsWith(".a"),
-              "Package '%s' has non-static android " + "libraryName " + "'%s'",
-              coordinate,
-              archive.lib);
-          if (archive.runtime != null) {
-            switch (archive.runtime) {
-              case "c++":
-              case "stlport":
-              case "gnustl":
-                break;
-              default:
-                fail("Package '%s' has unexpected android runtime '%s'. Allowed: c++, stlport, gnustl",
-                    coordinate,
-                    archive.runtime);
-            }
-          }
 
           require(archive.file != null, "Package '%s' has missing android.archive.file", coordinate);
           require(archive.sha256 != null, "Package '%s' has missing android.archive.sha256 for '%s'", coordinate, archive.file);
           require(archive.size != null, "Package '%s' has missing android.archive.size for '%s'", coordinate, archive.file);
+          if (archive.libs == null) {
+            continue;
+          }
+          for (String lib : archive.libs) {
+            require(lib.endsWith(".a"),
+                "Package '%s' has non-static android libraryName '%s'",
+                coordinate, lib);
+            if (archive.runtime != null) {
+              switch (archive.runtime) {
+                case "c++":
+                case "stlport":
+                case "gnustl":
+                  break;
+                default:
+                  fail("Package '%s' has unexpected android runtime '%s'. Allowed: c++, stlport, gnustl",
+                      coordinate,
+                      archive.runtime);
+              }
+            }
+          }
         }
       }
 

@@ -16,25 +16,25 @@ import static io.cdep.cdep.utils.Invariant.require;
 public class V2Reader {
 
   @NotNull
-  public static io.cdep.cdep.yml.cdepmanifest.CDepManifestYml convertStringToManifest(@NotNull String content) {
+  public static io.cdep.cdep.yml.cdepmanifest.v3.CDepManifestYml convertStringToManifest(@NotNull String content) {
     Yaml yaml = new Yaml(new Constructor(CDepManifestYml.class));
-    io.cdep.cdep.yml.cdepmanifest.CDepManifestYml manifest;
+    io.cdep.cdep.yml.cdepmanifest.v3.CDepManifestYml manifest;
     try {
       CDepManifestYml prior = (CDepManifestYml) yaml.load(
           new ByteArrayInputStream(content.getBytes(StandardCharsets
               .UTF_8)));
       prior.sourceVersion = CDepManifestYmlVersion.v2;
-      manifest = convertx(prior);
+      manifest = convert(prior);
       require(manifest.sourceVersion == CDepManifestYmlVersion.v2);
     } catch (YAMLException e) {
-      manifest = convertx(V1Reader.convertStringToManifest(content));
+      manifest = convert(V1Reader.convertStringToManifest(content));
       require(manifest.sourceVersion == CDepManifestYmlVersion.v1);
     }
     return manifest;
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.CDepManifestYml convertx(CDepManifestYml manifest) {
-    return new io.cdep.cdep.yml.cdepmanifest.CDepManifestYml(
+  private static io.cdep.cdep.yml.cdepmanifest.v3.CDepManifestYml convert(CDepManifestYml manifest) {
+    return new io.cdep.cdep.yml.cdepmanifest.v3.CDepManifestYml(
         manifest.sourceVersion,
         manifest.coordinate,
         manifest.dependencies,

@@ -56,8 +56,19 @@ public class CDepManifestYmlRewritingVisitor {
         visitFile(archive.file),
         visitSha256(archive.sha256),
         visitSize(archive.size),
-        visitLib(archive.lib),
+        visitLibArray(archive.libs),
         visitInclude(archive.include));
+  }
+
+  private String[] visitLibArray(String[] libs) {
+    if (libs == null) {
+      return null;
+    }
+    String result[] = new String[libs.length];
+    for (int i = 0; i < result.length; ++i) {
+      result[i] = visitLib(libs[i]);
+    }
+    return result;
   }
 
   protected String visitInclude(String include) {
@@ -115,7 +126,7 @@ public class CDepManifestYmlRewritingVisitor {
         visitiOSArchitecture(archive.architecture),
         visitSdk(archive.sdk),
         visitInclude(archive.include),
-        visitLib(archive.lib),
+        visitLibArray(archive.libs),
         visitFlavor(archive.flavor));
   }
 
@@ -169,7 +180,7 @@ public class CDepManifestYmlRewritingVisitor {
         visitBuilder(archive.builder),
         visitAbi(archive.abi),
         visitInclude(archive.include),
-        visitLib(archive.lib),
+        visitLibArray(archive.libs),
         visitFlavor(archive.flavor));
   }
 

@@ -4,8 +4,6 @@ import io.cdep.annotations.NotNull;
 import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.utils.StringUtils;
 
-import static io.cdep.cdep.utils.Invariant.require;
-
 public class CreateStringVisitor extends ReadonlyVisitor {
   private StringBuilder sb = new StringBuilder();
   private int indent = 0;
@@ -136,11 +134,11 @@ public class CreateStringVisitor extends ReadonlyVisitor {
       visit(expr.includePath);
       append("\r\n");
     }
-    if (expr.libraryPath != null) {
+    if (expr.libraryPaths.length > 0) {
       appendIndent();
-      append("library: ");
-      visit(expr.libraryPath);
-      append("\r\n");
+      append("libraries: [");
+      visitArray(expr.libraryPaths);
+      append("]\r\n");
     }
     if (expr.requires != null) {
       appendIndent();

@@ -1,9 +1,10 @@
 package io.cdep.cdep.fullfill;
 
-import static com.google.common.truth.Truth.assertThat;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
 
 public class TestFillMissingFieldsBasedOnFilepath {
 
@@ -31,7 +32,7 @@ public class TestFillMissingFieldsBasedOnFilepath {
     manifest = new FillMissingFieldsBasedOnFilepath().visitCDepManifestYml(manifest);
     assertThat(manifest.android.archives[0].abi).isEqualTo("arm64-v8a");
     assertThat(manifest.android.archives[0].runtime).isEqualTo("stlport");
-    assertThat(manifest.android.archives[0].lib).isEqualTo("libapp.a");
+    assertThat(manifest.android.archives[0].libs[0]).isEqualTo("libapp.a");
     assertThat(manifest.android.archives[1].abi).isEqualTo("armeabi-v7a");
     assertThat(manifest.android.archives[1].runtime).isEqualTo("gnustl");
     assertThat(manifest.android.archives[2].abi).isEqualTo("armeabi");

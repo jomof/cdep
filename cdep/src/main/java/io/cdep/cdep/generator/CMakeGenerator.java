@@ -291,7 +291,7 @@ public class CMakeGenerator {
       return;
     } else if (expression instanceof ModuleArchiveExpression) {
       ModuleArchiveExpression specific = (ModuleArchiveExpression) expression;
-      assert specific.requires == null; // Should have been rewritten by now.
+      assert specific.requires.length == 0; // Should have been rewritten by now.
       append("%s%s\r\n",
           prefix,
           generateCDepCall(
@@ -305,9 +305,9 @@ public class CMakeGenerator {
         append(")\n");
       }
 
-      if (specific.libraryPath != null) {
+      for(Expression libraryPath : specific.libraryPaths) {
         append("%starget_link_libraries(${target} ", prefix);
-        visit(specific.libraryPath);
+        visit(libraryPath);
         append(")\n");
       }
       return;

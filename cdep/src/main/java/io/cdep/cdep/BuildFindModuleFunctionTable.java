@@ -19,6 +19,7 @@ import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.ast.finder.*;
 import io.cdep.cdep.resolver.ResolvedManifest;
+import io.cdep.cdep.utils.ArrayUtils;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.utils.StringUtils;
 import io.cdep.cdep.yml.cdepmanifest.*;
@@ -180,8 +181,8 @@ public class BuildFindModuleFunctionTable {
         archive.sha256,
         archive.size,
         archive.include,
-        archive.requires,
-        null,
+        ArrayUtils.emptyIfNull(archive.requires, CxxLanguageFeatures.class),
+        new String [0],
         explodedArchiveFolder), dependencies);
   }
 
@@ -198,8 +199,8 @@ public class BuildFindModuleFunctionTable {
         archive.sha256,
         archive.size,
         archive.include,
-        null,
-        archive.lib,
+        new CxxLanguageFeatures[0],
+        archive.libs,
         explodedArchiveFolder), dependencies);
   }
 
@@ -216,8 +217,8 @@ public class BuildFindModuleFunctionTable {
         archive.sha256,
         archive.size,
         archive.include,
-        null,
-        archive.lib,
+        new CxxLanguageFeatures[0],
+        archive.libs,
         explodedArchiveFolder), dependencies);
   }
 
@@ -231,18 +232,23 @@ public class BuildFindModuleFunctionTable {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     require(abi.length() > 0);
-    String lib = archive.lib;
-    if (archive.lib != null) {
-      lib = abi + "/" + lib;
+
+    String abiLibs[] = null;
+    if (archive.libs != null) {
+      abiLibs = new String[archive.libs.length];
+      for (int i = 0; i < abiLibs.length; ++i) {
+        abiLibs[i] = abi + "/" + archive.libs[i];
+      }
     }
+
     return module(buildArchive(
         resolved.remote,
         archive.file,
         archive.sha256,
         archive.size,
         archive.include,
-        null,
-        lib,
+        new CxxLanguageFeatures[0],
+        abiLibs,
         explodedArchiveFolder), dependencies);
   }
 
@@ -252,17 +258,25 @@ public class BuildFindModuleFunctionTable {
       @Nullable String sha256,
       @Nullable Long size,
       @Nullable String include,
-      @Nullable CxxLanguageFeatures[] requires,
-      @Nullable String lib,
+      @NotNull CxxLanguageFeatures[] requires,
+      @NotNull String libs[],
       @NotNull AssignmentExpression explodedArchiveFolder)
       throws URISyntaxException, MalformedURLException {
+    notNull(requires);
+    String libLibs[] = new String[libs.length];
+    Expression libPaths[] = new Expression[libs.length];
+    for (int i = 0; i < libs.length; ++i) {
+      libLibs[i] = "lib/" + libs[i];
+      libPaths[i] = joinFileSegments(explodedArchiveFolder, file, "lib", libs[i]);
+    }
+
     return archive(remote.toURI().resolve(".").resolve(file).toURL(),
         sha256,
         size,
         include,
         include == null ? null : joinFileSegments(explodedArchiveFolder, file, include),
-        lib == null ? null : "lib/" + lib,
-        lib == null ? null : joinFileSegments(explodedArchiveFolder, file, "lib", lib),
+        libLibs,
+        libPaths,
         requires);
   }
 
@@ -513,8 +527,8 @@ public class BuildFindModuleFunctionTable {
           archive.sha256,
           archive.size,
           archive.include,
-          null,
-          null,
+          new CxxLanguageFeatures[0],
+          new String[0],
           explodedArchiveFolder), dependencies);
     }
 

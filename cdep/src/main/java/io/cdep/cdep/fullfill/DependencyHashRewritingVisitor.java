@@ -1,7 +1,5 @@
 package io.cdep.cdep.fullfill;
 
-import static io.cdep.cdep.utils.Invariant.require;
-
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
@@ -13,6 +11,8 @@ import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+
+import static io.cdep.cdep.utils.Invariant.require;
 
 /**
  * Fill in hash values for hard name dependencies.
@@ -39,9 +39,7 @@ public class DependencyHashRewritingVisitor extends CDepManifestYmlRewritingVisi
         return new HardNameDependency(
             resolved.cdepManifestYml.coordinate.toString(),
             HashUtils.getSHA256OfFile(manifest));
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      } catch (NoSuchAlgorithmException e) {
+      } catch (IOException | NoSuchAlgorithmException e) {
         throw new RuntimeException(e);
       }
     }
