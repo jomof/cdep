@@ -20,9 +20,6 @@ import io.cdep.cdep.Coordinate;
 
 import java.util.Set;
 
-import static io.cdep.cdep.utils.Invariant.elementsNotNull;
-import static io.cdep.cdep.utils.Invariant.notNull;
-
 public class ModuleExpression extends StatementExpression {
   @NotNull
   final public ModuleArchiveExpression archive;
@@ -31,7 +28,7 @@ public class ModuleExpression extends StatementExpression {
 
   public ModuleExpression(@NotNull ModuleArchiveExpression archive, @NotNull Set<Coordinate> dependencies) {
 
-    this.archive = notNull(archive);
-    this.dependencies = elementsNotNull(dependencies);
+    this.archive = archive;
+    this.dependencies = dependencies;
   }
 }

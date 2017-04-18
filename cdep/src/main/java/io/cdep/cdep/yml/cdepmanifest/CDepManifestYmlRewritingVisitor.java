@@ -5,12 +5,11 @@ import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.Version;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
-
 public class CDepManifestYmlRewritingVisitor {
 
   @NotNull
   public CDepManifestYml visitCDepManifestYml(@NotNull CDepManifestYml value) {
+    assert value.coordinate != null;
     return new CDepManifestYml(
         visitDepManifestYmlVersion(value.sourceVersion),
         visitCoordinate(value.coordinate),
@@ -264,7 +263,7 @@ public class CDepManifestYmlRewritingVisitor {
   }
 
   private CxxLanguageFeatures visitRequire(CxxLanguageFeatures require) {
-    return notNull(require);
+    return require;
   }
 
   @Nullable
@@ -293,6 +292,7 @@ public class CDepManifestYmlRewritingVisitor {
 
   @NotNull
   private Coordinate visitCoordinate(@NotNull Coordinate coordinate) {
+    assert coordinate.version != null;
     return new Coordinate(
         visitGroupId(coordinate.groupId),
         visitArtifactId(coordinate.artifactId),

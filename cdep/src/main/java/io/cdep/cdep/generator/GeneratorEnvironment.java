@@ -40,7 +40,8 @@ import java.util.Set;
 
 import static io.cdep.cdep.io.IO.info;
 import static io.cdep.cdep.io.IO.infoln;
-import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.require;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class GeneratorEnvironment implements ManifestProvider, DownloadProvider {
@@ -110,8 +111,6 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
 
   @NotNull
   public File getLocalDownloadFilename(Coordinate coordinate, URL remoteArchive) {
-    coordinate = notNull(coordinate);
-    remoteArchive = notNull(remoteArchive);
     File local = downloadFolder;
     assert coordinate.groupId != null;
     local = new File(local, coordinate.groupId);
@@ -125,7 +124,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
 
   @Nullable
   public File tryGetLocalDownloadedFile(Coordinate coordinate, @NotNull URL remoteArchive) throws IOException {
-    File local = getLocalDownloadFilename(notNull(coordinate), notNull(remoteArchive));
+    File local = getLocalDownloadFilename(coordinate, remoteArchive);
 
     if (local.isFile() && !forceRedownload) {
       return local;

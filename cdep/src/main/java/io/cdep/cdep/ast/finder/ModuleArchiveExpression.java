@@ -6,7 +6,6 @@ import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 
 import java.net.URL;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class ModuleArchiveExpression extends StatementExpression {
@@ -17,22 +16,19 @@ public class ModuleArchiveExpression extends StatementExpression {
   @Nullable final public Expression includePath;
   @NotNull final public String libs[];
   @NotNull final public Expression libraryPaths[];
-  @Nullable final public CxxLanguageFeatures requires[];
+  @NotNull final public CxxLanguageFeatures requires[];
 
   public ModuleArchiveExpression(
-      URL file,
-      String sha256,
-      Long size,
-      String include, // Like "include"
-      Expression fullIncludePath,
+      @Nullable URL file,
+      @Nullable String sha256,
+      @Nullable Long size,
+      @Nullable String include, // Like "include"
+      @Nullable Expression fullIncludePath,
       @NotNull String libs[], // Like "lib/libsqlite.a"
       @NotNull Expression libraryPaths[],
-      CxxLanguageFeatures requires[]) {
-    notNull(libs);
-    notNull(libraryPaths);
-    notNull(requires);
+      @Nullable CxxLanguageFeatures requires[]) {
     require(libs.length == libraryPaths.length);
-    this.file = notNull(file);
+    this.file = file;
     this.sha256 = sha256;
     this.size = size;
     this.include = include;

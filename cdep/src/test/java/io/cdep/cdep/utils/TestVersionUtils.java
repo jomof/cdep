@@ -173,8 +173,8 @@ public class TestVersionUtils {
 
   private List<Version> sortA(String... versions) {
     List<Version> list = new ArrayList<>();
-    for (int i = 0; i < versions.length; ++i) {
-      list.add(new Version(versions[i]));
+    for (String version : versions) {
+      list.add(new Version(version));
     }
 
     Collections.sort(list, VersionUtils.ASCENDING_COMPARATOR);
@@ -183,8 +183,8 @@ public class TestVersionUtils {
 
   private List<Version> sortD(String... versions) {
     List<Version> list = new ArrayList<>();
-    for (int i = 0; i < versions.length; ++i) {
-      list.add(new Version(versions[i]));
+    for (String version : versions) {
+      list.add(new Version(version));
     }
 
     Collections.sort(list, VersionUtils.DESCENDING_COMPARATOR);

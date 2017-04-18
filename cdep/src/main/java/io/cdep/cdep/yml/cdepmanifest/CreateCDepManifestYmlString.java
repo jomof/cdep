@@ -5,8 +5,6 @@ import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Version;
 import io.cdep.cdep.utils.StringUtils;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
-
 public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor {
 
   @NotNull
@@ -21,7 +19,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitPlainOldDataObject(@Nullable String name, @NotNull Object value) {
+  protected void visitPlainOldDataObject(@Nullable String name, @NotNull Object value) {
     if (name == null) {
       super.visitPlainOldDataObject(null, value);
       return;
@@ -34,12 +32,12 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitiOSPlatform(String name, @NotNull iOSPlatform value) {
-    appendIndented("%s: %s\r\n", notNull(name), value);
+    appendIndented("%s: %s\r\n", name, value);
   }
 
   @Override
   public void visitiOSArchitecture(String name, @NotNull iOSArchitecture value) {
-    appendIndented("%s: %s\r\n", notNull(name), value);
+    appendIndented("%s: %s\r\n", name, value);
   }
 
   @Override
@@ -48,18 +46,16 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
       append(value.toString() + "\r\n");
       return;
     }
-    appendIndented("%s: %s\r\n", notNull(name), value);
+    appendIndented("%s: %s\r\n", name, value);
   }
 
   @Override
-  public void visitVersion(@NotNull String name, @NotNull Version value) {
+  public void visitVersion(String name, @NotNull Version value) {
     appendIndented("%s: %s\r\n", name, value.value);
   }
 
   @Override
   public void visitString(String name, @NotNull String value) {
-    notNull(value);
-    notNull(name);
     if (!value.contains("\n")) {
       appendIndented("%s: %s\r\n", name, value);
       return;
@@ -82,7 +78,7 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitLong(String name, Long node) {
-    appendIndented("%s: %s\r\n", notNull(name), node);
+    appendIndented("%s: %s\r\n", name, node);
   }
 
   @Override

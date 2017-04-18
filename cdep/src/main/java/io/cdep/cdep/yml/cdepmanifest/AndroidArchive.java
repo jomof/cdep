@@ -44,18 +44,18 @@ public class AndroidArchive {
     this.flavor = null;
   }
 
-  public AndroidArchive(String file,
-      String sha256,
-      Long size,
-      String ndk,
-      String compiler,
-      String runtime,
-      String platform,
-      String builder,
-      String abi,
-      String include,
-      String libs[],
-      String flavor) {
+  public AndroidArchive(@Nullable String file,
+      @Nullable String sha256,
+      @Nullable Long size,
+      @Nullable String ndk,
+      @Nullable String compiler,
+      @Nullable String runtime,
+      @Nullable String platform,
+      @Nullable String builder,
+      @Nullable String abi,
+      @Nullable String include,
+      @Nullable String libs[],
+      @Nullable String flavor) {
     this.file = file;
     this.sha256 = sha256;
     this.size = size;

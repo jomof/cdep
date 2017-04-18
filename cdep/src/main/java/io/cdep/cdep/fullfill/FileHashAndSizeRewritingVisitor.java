@@ -22,7 +22,7 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
 
   @Nullable
   @Override
-  protected Archive visitArchive(@NotNull Archive archive) {
+  protected Archive visitArchive(Archive archive) {
     if (archive.sha256 == null) {
       File file = new File(layoutFolder, archive.file);
       require(

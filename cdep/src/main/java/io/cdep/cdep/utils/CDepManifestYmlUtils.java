@@ -28,7 +28,8 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.require;
 
 public class CDepManifestYmlUtils {
   @NotNull
@@ -57,6 +58,7 @@ public class CDepManifestYmlUtils {
       }
     }
     require(manifest != null, "Manifest was empty");
+    assert manifest != null;
     return manifest;
   }
 
@@ -97,6 +99,7 @@ public class CDepManifestYmlUtils {
         return;
       }
       if (name.equals("file")) {
+        assert sourceVersion != null;
         if (sourceVersion.ordinal() > CDepManifestYmlVersion.v1.ordinal()) {
           require(!filesSeen.contains(node.toLowerCase()),
               "Package '%s' contains multiple references to the same archive file '%s'",
@@ -105,7 +108,7 @@ public class CDepManifestYmlUtils {
         }
         filesSeen.add(node.toLowerCase());
       } else if (name.equals("sha256")) {
-        if (node == null || node.length() == 0) {
+        if (node.length() == 0) {
           require(false,
               "Package '%s' contains null or empty sha256",
               coordinate);
@@ -140,15 +143,11 @@ public class CDepManifestYmlUtils {
       require(value.sha256 != null && value.sha256.length() != 0, "Archive %s is missing sha256", coordinate);
       require(value.size != null && value.size != 0, "Archive %s is missing size or it is zero", coordinate);
       require(value.include != null && value.include.length() != 0, "Archive %s is missing include", coordinate);
-      noNullElements(value.requires);
       super.visitArchive(name, value);
     }
 
     @Override
     public void visitAndroidArchive(@Nullable String name, @NotNull AndroidArchive value) {
-      if (value == null) {
-        return;
-      }
       require(value.file != null && value.file.length() != 0, "Android archive %s is missing file", coordinate);
       require(value.sha256 != null && value.sha256.length() != 0, "Android archive %s is missing sha256", coordinate);
       require(value.size != null && value.size != 0, "Android archive %s is missing size or it is zero", coordinate);
@@ -177,9 +176,6 @@ public class CDepManifestYmlUtils {
 
     @Override
     public void visitiOSArchive(@Nullable String name, @NotNull iOSArchive value) {
-      if (value == null) {
-        return;
-      }
       require(value.file != null && value.file.length() != 0, "iOS archive %s is missing file", coordinate);
       require(value.sha256 != null && value.sha256.length() != 0, "iOS archive %s is missing sha256", coordinate);
       require(value.size != null && value.size != 0, "iOS archive %s is missing size or it is zero", coordinate);
@@ -188,9 +184,6 @@ public class CDepManifestYmlUtils {
 
     @Override
     public void visitLinuxArchive(@Nullable String name, @NotNull LinuxArchive value) {
-      if (value == null) {
-        return;
-      }
       require(value.file != null && value.file.length() != 0, "iOS archive %s is missing file", coordinate);
       require(value.sha256 != null && value.sha256.length() != 0, "iOS archive %s is missing sha256", coordinate);
       require(value.size != null && value.size != 0, "iOS archive %s is missing size or it is zero", coordinate);
@@ -226,6 +219,7 @@ public class CDepManifestYmlUtils {
       }
       require(linux.archives.length <= 1, "Package '%s' has multiple linux archives. Only one is allowed.", coordinate);
       for (LinuxArchive archive : linux.archives) {
+        assert archive.libs != null;
         for (String lib : archive.libs) {
           require(lib.endsWith(".a"),
               "Package '%s' has non-static android libraryName '%s'",

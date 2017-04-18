@@ -11,7 +11,7 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.reference;
  * Replace AssignmentExpression with AssignmentReferenceExpression and lift assignments to the
  * nearest block.
  */
-public class ReplaceAssignmentWithReference extends RewritingVisitor {
+class ReplaceAssignmentWithReference extends RewritingVisitor {
 
   @NotNull
   @Override

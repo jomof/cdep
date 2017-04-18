@@ -17,11 +17,11 @@ package io.cdep.cdep;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
+
 import java.util.Objects;
 
 @SuppressWarnings("unused")
 public class Coordinate {
-
   @Nullable
   final public String groupId; // like com.github.jomof
   @Nullable

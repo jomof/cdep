@@ -4,7 +4,7 @@ import io.cdep.annotations.NotNull;
 
 import java.lang.reflect.Modifier;
 
-import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.utils.Invariant.require;
 
 public class InvokeFunctionExpression extends StatementExpression {
   @NotNull
@@ -14,8 +14,8 @@ public class InvokeFunctionExpression extends StatementExpression {
   final public Expression parameters[];
 
   InvokeFunctionExpression(@NotNull ExternalFunctionExpression function, @NotNull Expression parameters[]) {
-    this.function = notNull(function);
-    this.parameters = elementsNotNull(parameters);
+    this.function = function;
+    this.parameters = parameters;
     int expectedParameters = function.method.getParameterTypes().length;
     if (!Modifier.isStatic(function.method.getModifiers())) {
       expectedParameters++;

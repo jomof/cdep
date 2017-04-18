@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.google.common.truth.Truth.assertThat;
-import static io.cdep.cdep.utils.Invariant.notNull;
 import static junit.framework.TestCase.fail;
 
 public class TestMergeCDepManifestYmls {
@@ -31,11 +30,11 @@ public class TestMergeCDepManifestYmls {
     CDepManifestYml iOSManifest = ResolvedManifests.sqliteiOS().manifest.cdepManifestYml;
     CDepManifestYml androidManifest = ResolvedManifests.sqliteAndroid().manifest.cdepManifestYml;
     CDepManifestYml result = MergeCDepManifestYmls.merge(androidManifest, iOSManifest);
-    iOS iOS = notNull(result.iOS);
+    iOS iOS = result.iOS;
     assert iOSManifest.iOS != null;
     assert iOSManifest.iOS.archives != null;
     assertThat(iOS.archives).hasLength(iOSManifest.iOS.archives.length);
-    Android android = notNull(result.android);
+    Android android = result.android;
     assert androidManifest.android != null;
     assert androidManifest.android.archives != null;
     assertThat(android.archives).hasLength(androidManifest.android.archives.length);

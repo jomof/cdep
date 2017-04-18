@@ -24,7 +24,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
 import static java.util.regex.Pattern.compile;
 
 public class GithubReleasesCoordinateResolver extends CoordinateResolver {
@@ -37,7 +36,7 @@ public class GithubReleasesCoordinateResolver extends CoordinateResolver {
   public ResolvedManifest resolve(@NotNull ManifestProvider environment, @NotNull SoftNameDependency dependency)
       throws IOException, NoSuchAlgorithmException {
     String coordinate = dependency.compile;
-    Matcher match = pattern.matcher(notNull(coordinate));
+    Matcher match = pattern.matcher(coordinate);
     if (match.find()) {
       String user = match.group(1);
       String artifactId = match.group(2);

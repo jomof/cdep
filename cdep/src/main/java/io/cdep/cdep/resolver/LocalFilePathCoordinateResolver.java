@@ -15,18 +15,18 @@
 */
 package io.cdep.cdep.resolver;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class LocalFilePathCoordinateResolver extends CoordinateResolver {
 
@@ -34,7 +34,7 @@ public class LocalFilePathCoordinateResolver extends CoordinateResolver {
   @Override
   public ResolvedManifest resolve(ManifestProvider environment, @NotNull SoftNameDependency dependency) throws IOException {
     String coordinate = dependency.compile;
-    File local = new File(notNull(coordinate));
+    File local = new File(coordinate);
     if (!local.isFile()) {
       return null;
     }

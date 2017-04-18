@@ -34,6 +34,8 @@ public class V3Reader {
 
   @Nullable
   private static io.cdep.cdep.yml.cdepmanifest.CDepManifestYml convert(@NotNull CDepManifestYml manifest) {
+    assert manifest.sourceVersion != null;
+    assert manifest.coordinate != null;
     return new io.cdep.cdep.yml.cdepmanifest.CDepManifestYml(
         manifest.sourceVersion,
         manifest.coordinate,
@@ -50,6 +52,7 @@ public class V3Reader {
     if (linux == null) {
       return null;
     }
+    assert linux.archives != null;
     return new io.cdep.cdep.yml.cdepmanifest.Linux(convertLinuxArchiveArray(linux.archives));
   }
 
@@ -64,6 +67,9 @@ public class V3Reader {
 
   @Nullable
   private static io.cdep.cdep.yml.cdepmanifest.LinuxArchive convertLinuxArchive(@NotNull LinuxArchive archive) {
+    assert archive.file != null;
+    assert archive.sha256 != null;
+    assert archive.size != null;
     return new io.cdep.cdep.yml.cdepmanifest.LinuxArchive(
         archive.file,
         archive.sha256,

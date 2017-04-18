@@ -21,11 +21,14 @@ public class V1Reader {
         new ByteArrayInputStream(content.getBytes(StandardCharsets
             .UTF_8)));
     require(manifest != null, "Manifest was empty");
+    assert manifest != null;
     return convert(manifest);
   }
 
   @Nullable
   private static io.cdep.cdep.yml.cdepmanifest.v2.CDepManifestYml convert(@NotNull CDepManifestYml manifest) {
+    assert manifest.coordinate != null;
+    assert manifest.android != null;
     return new io.cdep.cdep.yml.cdepmanifest.v2.CDepManifestYml(
         manifest.coordinate,
         manifest.dependencies,
@@ -38,12 +41,16 @@ public class V1Reader {
 
   @NotNull
   private static io.cdep.cdep.yml.cdepmanifest.v3.Android convert(@NotNull Android android) {
+    assert android.archives != null;
     return new io.cdep.cdep.yml.cdepmanifest.v3.Android(android.dependencies, convert(android.archives));
   }
 
   private static io.cdep.cdep.yml.cdepmanifest.v3.AndroidArchive[] convert(@NotNull AndroidArchive[] archives) {
     List<io.cdep.cdep.yml.cdepmanifest.v3.AndroidArchive> singleAbiArchives = new ArrayList<>();
     for (AndroidArchive archive : archives) {
+      if (archive.abis == null) {
+        continue;
+      }
       for (String abi : archive.abis) {
         singleAbiArchives.add(new io.cdep.cdep.yml.cdepmanifest.v3.AndroidArchive(
             archive.file,

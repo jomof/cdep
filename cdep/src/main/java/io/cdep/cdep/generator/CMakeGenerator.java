@@ -29,7 +29,6 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 
 import static io.cdep.cdep.io.IO.info;
-import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class CMakeGenerator {
@@ -52,8 +51,8 @@ public class CMakeGenerator {
   public CMakeGenerator(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) {
     this.environment = environment;
     this.globals = table.globals;
-    table = (FunctionTableExpression) notNull(new CMakeConvertJoinedFileToString().visit(table));
-    table = (FunctionTableExpression) notNull(new CxxLanguageStandardRewritingVisitor().visit(table));
+    table = (FunctionTableExpression) new CMakeConvertJoinedFileToString().visit(table);
+    table = (FunctionTableExpression) new CxxLanguageStandardRewritingVisitor().visit(table);
     this.table = table;
     this.sb = new StringBuilder();
   }
@@ -295,6 +294,9 @@ public class CMakeGenerator {
     } else if (expression instanceof ModuleArchiveExpression) {
       ModuleArchiveExpression specific = (ModuleArchiveExpression) expression;
       assert specific.requires.length == 0; // Should have been rewritten by now.
+      assert this.coordinate != null;
+      assert specific.file != null;
+      assert specific.size != null;
       append("%s%s\r\n",
           prefix,
           generateCDepCall(
@@ -362,6 +364,7 @@ public class CMakeGenerator {
 
   @NotNull
   private String parameterName(@NotNull ParameterExpression expr) {
+    assert globals != null;
     if (expr == globals.buildSystemCxxCompilerStandard) {
       return "CMAKE_CXX_STANDARD";
     }

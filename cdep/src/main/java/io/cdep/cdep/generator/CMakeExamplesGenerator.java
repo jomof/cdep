@@ -1,16 +1,16 @@
 package io.cdep.cdep.generator;
 
-import static io.cdep.cdep.io.IO.info;
-import static io.cdep.cdep.utils.Invariant.notNull;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.ExampleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.utils.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
+
+import static io.cdep.cdep.io.IO.info;
 
 public class CMakeExamplesGenerator {
 
@@ -30,7 +30,8 @@ public class CMakeExamplesGenerator {
       assert exampleFolder != null;
       //noinspection ResultOfMethodCallIgnored
       exampleFolder.mkdirs();
-      String artifact = notNull(coordinate.artifactId).replace("/", "_");
+      assert coordinate.artifactId != null;
+      String artifact = coordinate.artifactId.replace("/", "_");
       String sourceName = artifact + ".cpp";
       File exampleSourceFile = new File(exampleFolder, sourceName);
       info("Generating %s\n", exampleSourceFile);
@@ -63,9 +64,13 @@ public class CMakeExamplesGenerator {
   @Nullable
   private File getExampleFolder(@NotNull Coordinate coordinate) {
     File file = getExampleRootFolder();
-    file = new File(file, notNull(coordinate.groupId));
-    file = new File(file, notNull(coordinate.artifactId));
-    file = new File(file, notNull(coordinate.version.value));
+    assert coordinate.groupId != null;
+    file = new File(file, coordinate.groupId);
+    assert coordinate.artifactId != null;
+    file = new File(file, coordinate.artifactId);
+    assert coordinate.version.value != null;
+    assert coordinate.version != null;
+    file = new File(file, coordinate.version.value);
     return file;
   }
 }

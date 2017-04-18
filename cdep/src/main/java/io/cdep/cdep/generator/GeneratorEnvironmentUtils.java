@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
 /**
@@ -60,14 +59,13 @@ public class GeneratorEnvironmentUtils {
 
     // Download and unzip any modules.
     for (Coordinate coordinate : foundModules.keySet()) {
-      List<Expression> foundModuleExpressions = foundModules.get(notNull(coordinate));
+      List<Expression> foundModuleExpressions = foundModules.get(coordinate);
       for (Expression foundModule : foundModuleExpressions) {
         ModuleArchiveExpression archive = null;
         if (foundModule instanceof ModuleExpression) {
           ModuleExpression specific = (ModuleExpression) foundModule;
           archive = specific.archive;
         }
-        notNull(archive);
         URL archiveURL = archive.file;
         Long size = archive.size;
         String sha256 = archive.sha256;

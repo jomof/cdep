@@ -28,7 +28,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
@@ -39,7 +38,7 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
   @Override
   public ResolvedManifest resolve(@NotNull ManifestProvider environment, @NotNull SoftNameDependency dependency)
       throws IOException, NoSuchAlgorithmException {
-    String coordinate = notNull(dependency.compile);
+    String coordinate = dependency.compile;
     Matcher match = pattern.matcher(coordinate);
     if (match.find()) {
 
@@ -68,8 +67,6 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
       }
 
       // Ensure that the manifest coordinate agrees with the url provided
-      notNull(cdepManifestYml.coordinate);
-      notNull(cdepManifestYml.coordinate.artifactId);
       require(groupId.equals(cdepManifestYml.coordinate.groupId),
           "groupId '%s' from manifest did not agree with github url %s",
           cdepManifestYml.coordinate.groupId,

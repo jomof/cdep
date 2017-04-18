@@ -3,15 +3,13 @@ package io.cdep.cdep.ast.finder;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
-
 public class ConstantExpression extends Expression {
 
   @NotNull
   final public Object value;
 
-  ConstantExpression(Object value) {
-    this.value = notNull(value);
+  ConstantExpression(@NotNull Object value) {
+    this.value = value;
   }
 
   @Override

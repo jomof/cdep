@@ -2,8 +2,6 @@ package io.cdep.cdep.yml.cdepsha25;
 
 import io.cdep.annotations.Nullable;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
-
 @SuppressWarnings("unused")
 public class HashEntry {
   @Nullable
@@ -16,8 +14,8 @@ public class HashEntry {
     this.sha256 = null;
   }
 
-  public HashEntry(String coordinate, String sha256) {
-    this.coordinate = notNull(coordinate);
-    this.sha256 = notNull(sha256);
+  public HashEntry(@Nullable String coordinate, @Nullable String sha256) {
+    this.coordinate = coordinate;
+    this.sha256 = sha256;
   }
 }

@@ -5,7 +5,7 @@ import io.cdep.annotations.NotNull;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.utils.Invariant.require;
 import static io.cdep.cdep.utils.ReflectionUtils.*;
 
 /**
@@ -14,7 +14,7 @@ import static io.cdep.cdep.utils.ReflectionUtils.*;
 @SuppressWarnings("unused")
 abstract public class PlainOldDataReadonlyVisitor {
 
-  public void visitPlainOldDataObject(String name, @NotNull Object value) {
+  protected void visitPlainOldDataObject(String name, @NotNull Object value) {
     visitFields(value);
   }
 
@@ -27,22 +27,19 @@ abstract public class PlainOldDataReadonlyVisitor {
   public void visitLong(String name, Long value) {
   }
 
-  public void visitArray(String name, @NotNull Object[] array, @NotNull Class<?> elementType) {
-    elementsNotNull(array);
+  protected void visitArray(String name, @NotNull Object[] array, @NotNull Class<?> elementType) {
     for (Object value : array) {
       visit(value, elementType);
     }
   }
 
   public void visit(Object element, @NotNull Class<?> elementClass) {
-    notNull(element);
     String methodName = getVisitorName(elementClass);
     Method method = getMethod(getClass(), methodName, String.class, elementClass);
     invoke(method, this, null, element);
   }
 
-  public void visitFields(@NotNull Object node) {
-    notNull(node);
+  private void visitFields(@NotNull Object node) {
     if (node.getClass().isEnum()) {
       return;
     }

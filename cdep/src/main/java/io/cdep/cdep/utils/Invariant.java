@@ -1,10 +1,8 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static io.cdep.cdep.io.IO.infoln;
@@ -47,41 +45,6 @@ abstract public class Invariant {
   public static void require(boolean check) {
     if (!check) {
       report(new RuntimeException("Invariant violation"));
-    }
-  }
-
-  @NotNull
-  public static <T> T notNull(@Nullable T obj) {
-    if (obj == null) {
-      throw new RuntimeException("Invariant violation. Value was null.");
-    }
-    return obj;
-  }
-
-  @NotNull
-  public static <T> T[] elementsNotNull(@NotNull T[] array) {
-    notNull(array);
-    for (T t : array) {
-      notNull(t);
-    }
-    return array;
-  }
-
-  @NotNull
-  public static <T extends Collection> T elementsNotNull(@NotNull T collection) {
-    notNull(collection);
-    for (Object t : collection) {
-      notNull(t);
-    }
-    return collection;
-  }
-
-  public static void noNullElements(@Nullable Object[] requires) {
-    if (requires == null) {
-      return;
-    }
-    for (Object require : requires) {
-      notNull(require);
     }
   }
 }

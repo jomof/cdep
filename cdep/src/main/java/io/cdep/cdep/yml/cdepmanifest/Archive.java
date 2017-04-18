@@ -1,7 +1,6 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.utils.Invariant;
 
 public class Archive {
   @Nullable
@@ -34,6 +33,5 @@ public class Archive {
     this.size = size;
     this.include = include;
     this.requires = requires;
-    Invariant.noNullElements(requires);
   }
 }

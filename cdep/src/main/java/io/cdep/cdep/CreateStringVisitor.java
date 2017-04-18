@@ -140,11 +140,9 @@ public class CreateStringVisitor extends ReadonlyVisitor {
       visitArray(expr.libraryPaths);
       append("]\r\n");
     }
-    if (expr.requires != null) {
-      appendIndent();
-      append("requires: " + StringUtils.joinOn(", ", expr.requires));
-      append("\r\n");
-    }
+    appendIndent();
+    append("requires: " + StringUtils.joinOn(", ", expr.requires));
+    append("\r\n");
   }
 
   @Override

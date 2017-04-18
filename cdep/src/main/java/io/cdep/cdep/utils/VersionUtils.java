@@ -18,6 +18,7 @@ public class VersionUtils {
    * @return null if valid, otherwise a message.
    */
   static String checkVersion(@NotNull Version version) {
+    assert version.value != null;
     String[] pointSections = version.value.split("\\.");
     String EXPECTED = "major.minor.point[-tweak]";
     if (pointSections.length == 1) {
@@ -68,10 +69,12 @@ public class VersionUtils {
       String value = version.value;
       String segment = "";
       Boolean inString = null; // null means don't know
+      assert value != null;
       for (int i = 0; i < value.length(); ++i) {
         char c = value.charAt(i);
         if (c == '.' || c == '-') {
           // Separator char
+          //noinspection ConstantConditions
           if (inString) {
             segments.add(segment);
           } else {
@@ -93,7 +96,7 @@ public class VersionUtils {
           }
           // Segment contains a string but we're now on a number. Add the segment to the list
           segments.add(segment);
-          inString = isString;
+          inString = false;
           segment = "" + c;
           continue;
         }
@@ -103,12 +106,13 @@ public class VersionUtils {
         }
         // Segment contains a number but we're now on a non-number. Add the segment to the list.
         segments.add(Integer.parseInt(segment));
-        inString = isString;
+        inString = true;
         segment = "" + c;
       }
 
       // If there's anything left over then add it to the list.
       if (segment.length() > 0) {
+        //noinspection ConstantConditions
         if (inString) {
           segments.add(segment);
         } else {

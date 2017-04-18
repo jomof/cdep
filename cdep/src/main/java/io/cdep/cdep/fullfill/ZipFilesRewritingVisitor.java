@@ -38,7 +38,9 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   @NotNull
   @Override
   public CDepManifestYml visitCDepManifestYml(@NotNull CDepManifestYml value) {
+    assert value.coordinate != null;
     prefix = value.coordinate.artifactId;
+    assert prefix != null;
     prefix = prefix.replace("/", "-");
     prefix = prefix.replace("\\", "-");
     prefix = prefix.replace(":", "-");

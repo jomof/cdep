@@ -30,7 +30,6 @@ import java.net.URL;
 import java.util.*;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
-import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
 @SuppressWarnings("Java8ReplaceMapGet")
@@ -89,7 +88,8 @@ public class BuildFindModuleFunctionTable {
       }
     }
 
-    Coordinate coordinate = notNull(manifest.coordinate);
+    Coordinate coordinate = manifest.coordinate;
+    assert coordinate != null;
     assert coordinate.groupId != null;
     AssignmentExpression coordinateGroupId = assign("coordinate_group_id", constant(coordinate.groupId));
     assert coordinate.artifactId != null;
@@ -200,7 +200,7 @@ public class BuildFindModuleFunctionTable {
         archive.size,
         archive.include,
         new CxxLanguageFeatures[0],
-        archive.libs,
+        ArrayUtils.emptyIfNull(archive.libs, String.class),
         explodedArchiveFolder), dependencies);
   }
 
@@ -218,7 +218,7 @@ public class BuildFindModuleFunctionTable {
         archive.size,
         archive.include,
         new CxxLanguageFeatures[0],
-        archive.libs,
+        ArrayUtils.emptyIfNull(archive.libs, String.class),
         explodedArchiveFolder), dependencies);
   }
 
@@ -248,12 +248,13 @@ public class BuildFindModuleFunctionTable {
         archive.size,
         archive.include,
         new CxxLanguageFeatures[0],
-        abiLibs,
+        ArrayUtils.emptyIfNull(abiLibs, String.class),
         explodedArchiveFolder), dependencies);
   }
 
   @NotNull
-  private ModuleArchiveExpression buildArchive(@NotNull URL remote,
+  private ModuleArchiveExpression buildArchive(
+      @NotNull URL remote,
       @NotNull String file,
       @Nullable String sha256,
       @Nullable Long size,
@@ -262,7 +263,6 @@ public class BuildFindModuleFunctionTable {
       @NotNull String libs[],
       @NotNull AssignmentExpression explodedArchiveFolder)
       throws URISyntaxException, MalformedURLException {
-    notNull(requires);
     String libLibs[] = new String[libs.length];
     Expression libPaths[] = new Expression[libs.length];
     for (int i = 0; i < libs.length; ++i) {
@@ -297,7 +297,7 @@ public class BuildFindModuleFunctionTable {
     AssignmentExpression combinedPlatformAndSDK = assign("combined_platform_and_sdk",
         substring(osxSysrootSDKName, integer(0), lastDotPosition));
 
-    notNull(resolved.cdepManifestYml.iOS);
+    assert resolved.cdepManifestYml.iOS != null;
     iOSArchive[] archives = resolved.cdepManifestYml.iOS.archives;
     if (archives == null) {
       archives = new iOSArchive[0];
@@ -398,8 +398,8 @@ public class BuildFindModuleFunctionTable {
 
     // Gather up the runtime names
     Map<String, List<AndroidArchive>> stlTypes = new HashMap<>();
-    notNull(resolved.cdepManifestYml.android);
-    notNull(resolved.cdepManifestYml.android.archives);
+    assert resolved.cdepManifestYml.android != null;
+    assert resolved.cdepManifestYml.android.archives != null;
     for (AndroidArchive android : resolved.cdepManifestYml.android.archives) {
       List<AndroidArchive> androids = stlTypes.get(android.runtime);
       if (androids == null) {
@@ -521,6 +521,7 @@ public class BuildFindModuleFunctionTable {
     if (grouped.size() == 1 && grouped.containsKey(null)) {
       // Header only case.
       AndroidArchive archive = androids.iterator().next();
+      assert archive.file != null;
       return module(buildArchive(
           resolved.remote,
           archive.file,

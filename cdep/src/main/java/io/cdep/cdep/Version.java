@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Version {
   @Nullable
   public final String value;
-  public Version(String version) {
+  public Version(@Nullable String version) {
     this.value = version;
   }
   public Version() {
@@ -22,6 +22,7 @@ public class Version {
 
   @Override
   public int hashCode() {
+    assert value != null;
     return value.hashCode();
   }
 

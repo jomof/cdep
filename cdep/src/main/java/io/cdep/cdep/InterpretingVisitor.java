@@ -13,7 +13,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.require;
 import static io.cdep.cdep.utils.ReflectionUtils.invoke;
 
 /**
@@ -169,7 +170,6 @@ public class InterpretingVisitor {
 
   @NotNull
   private Object visitAssignmentReferenceExpression(@NotNull AssignmentReferenceExpression expr) {
-    notNull(stack);
     AssignmentFuture future = stack.lookup(expr.assignment);
     if (future.value == null) {
       Frame oldStack = stack;

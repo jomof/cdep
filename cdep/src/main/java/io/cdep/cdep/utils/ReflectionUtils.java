@@ -11,7 +11,6 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class ReflectionUtils {
@@ -21,7 +20,6 @@ public class ReflectionUtils {
    * throw.
    */
   public static Object invoke(@NotNull Method method, Object thiz, Object... args) {
-    notNull(method);
     try {
       return method.invoke(thiz, args);
     } catch (IllegalAccessException e) {
@@ -40,8 +38,6 @@ public class ReflectionUtils {
    * when it is a bug if the method doesn't exist.
    */
   public static Method getMethod(@NotNull Class<?> clazz, @NotNull String name, Class<?>... parameterTypes) {
-    notNull(clazz);
-    notNull(name);
     try {
       return clazz.getMethod(name, parameterTypes);
     } catch (NoSuchMethodException e) {
@@ -54,8 +50,6 @@ public class ReflectionUtils {
    * when it is a bug if the method doesn't exist.
    */
   public static Object getFieldValue(@NotNull Field field, Object instance) {
-    notNull(field);
-    notNull(instance);
     try {
       return field.get(instance);
     } catch (IllegalAccessException e) {

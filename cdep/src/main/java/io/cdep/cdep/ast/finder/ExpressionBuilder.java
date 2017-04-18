@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static io.cdep.cdep.utils.Invariant.notNull;
 import static io.cdep.cdep.utils.Invariant.require;
 
 /**
@@ -61,9 +60,6 @@ public class ExpressionBuilder {
   public static IfSwitchExpression ifSwitch(@NotNull List<Expression> conditionList,
       @NotNull List<Expression> expressionList,
       @NotNull Expression elseExpression) {
-    notNull(conditionList);
-    notNull(expressionList);
-    notNull(elseExpression);
     require(conditionList.size() == expressionList.size());
     int size = conditionList.size();
     Expression conditions[] = new Expression[size];
@@ -71,8 +67,6 @@ public class ExpressionBuilder {
     for (int i = 0; i < size; ++i) {
       conditions[i] = conditionList.get(i);
       expressions[i] = expressionList.get(i);
-      notNull(conditions[i]);
-      notNull(expressions[i]);
     }
     return ifSwitch(conditions, expressions, elseExpression);
   }
@@ -217,7 +211,7 @@ public class ExpressionBuilder {
   }
 
   @NotNull
-  public static ConstantExpression constant(@NotNull Object value) {
+  public static ConstantExpression constant(@Nullable Object value) {
     return new ConstantExpression(value);
   }
 

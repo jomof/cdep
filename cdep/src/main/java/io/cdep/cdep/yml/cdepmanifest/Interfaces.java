@@ -10,7 +10,7 @@ public class Interfaces {
     this.headers = null;
   }
 
-  public Interfaces(Archive headers) {
+  public Interfaces(@Nullable Archive headers) {
     this.headers = headers;
   }
 }

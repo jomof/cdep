@@ -51,7 +51,8 @@ import java.util.List;
 
 import static io.cdep.cdep.io.IO.info;
 import static io.cdep.cdep.io.IO.infoln;
-import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.require;
 import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
 
 public class CDep {
@@ -172,7 +173,10 @@ public class CDep {
 
 
   private void runBuilders(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) throws IOException {
-    for (BuildSystem buildSystem : notNull(config).builders) {
+    if (config == null || config.builders == null) {
+      return;
+    }
+    for (BuildSystem buildSystem : config.builders) {
       switch (buildSystem) {
         case cmake:
           new CMakeGenerator(environment, table).generate();
@@ -291,9 +295,10 @@ public class CDep {
           merged = MergeCDepManifestYmls.merge(merged, resolved.cdepManifestYml);
         }
       }
-      notNull(merged);
+      require(merged != null, "No manifests to merge");
 
       // Check the merge for sanity
+      assert merged != null;
       CDepManifestYmlUtils.checkManifestSanity(merged);
 
       // Write the merged manifest out
@@ -323,7 +328,10 @@ public class CDep {
 
     String sha256 = HashUtils.getSHA256OfFile(zip);
     long size = zip.length();
+    assert resolved != null;
     CDepManifestYml prior = resolved.cdepManifestYml;
+    assert prior.sourceVersion != null;
+    assert prior.coordinate != null;
     CDepManifestYml updated = new CDepManifestYml(
         prior.sourceVersion,
         prior.coordinate,
@@ -474,7 +482,9 @@ public class CDep {
       GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
       URL remoteArchive = new URL(archive);
       File localFile = environment.getLocalDownloadFilename(coordinate, remoteArchive);
-      GeneratorEnvironmentUtils.downloadSingleArchive(environment, coordinate, remoteArchive, size, sha256, false);
+      assert coordinate != null;
+      GeneratorEnvironmentUtils.downloadSingleArchive(
+          environment, coordinate, remoteArchive, size, sha256, false);
       require(localFile.isFile(), "Failed to download %s", localFile);
       return true;
     }

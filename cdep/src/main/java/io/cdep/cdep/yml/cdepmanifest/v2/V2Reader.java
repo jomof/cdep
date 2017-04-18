@@ -36,6 +36,8 @@ public class V2Reader {
 
   @Nullable
   private static io.cdep.cdep.yml.cdepmanifest.v3.CDepManifestYml convert(@NotNull CDepManifestYml manifest) {
+    assert manifest.sourceVersion != null;
+    assert manifest.coordinate != null;
     return new io.cdep.cdep.yml.cdepmanifest.v3.CDepManifestYml(
         manifest.sourceVersion,
         manifest.coordinate,

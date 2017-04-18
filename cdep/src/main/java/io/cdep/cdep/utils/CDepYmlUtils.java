@@ -34,6 +34,7 @@ abstract public class CDepYmlUtils {
     Yaml yaml = new Yaml(new Constructor(CDepYml.class));
     CDepYml cdepYml = (CDepYml) yaml.load(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
     require(cdepYml != null, "cdep.yml was empty");
+    assert cdepYml != null;
     return cdepYml;
   }
 }

@@ -1,5 +1,6 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
@@ -37,15 +38,15 @@ public class iOSArchive {
   }
 
   public iOSArchive(
-      String file,
-      String sha256,
-      Long size,
-      iOSPlatform platform,
-      iOSArchitecture architecture,
-      String sdk,
-      String include,
-      String libs[],
-      String flavor) {
+      @Nullable String file,
+      @Nullable String sha256,
+      @Nullable Long size,
+      @Nullable iOSPlatform platform,
+      @Nullable iOSArchitecture architecture,
+      @Nullable String sdk,
+      @Nullable String include,
+      @NotNull String libs[],
+      @Nullable String flavor) {
     this.file = file;
     this.sha256 = sha256;
     this.size = size;

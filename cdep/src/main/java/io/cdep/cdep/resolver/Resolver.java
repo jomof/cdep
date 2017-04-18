@@ -1,16 +1,17 @@
 package io.cdep.cdep.resolver;
 
-import static io.cdep.cdep.utils.Invariant.fail;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.resolver.ResolutionScope.Unresolvable;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import static io.cdep.cdep.utils.Invariant.fail;
 
 /**
  * Resolve references and groups of references (ResolutionScope)
@@ -48,7 +49,6 @@ public class Resolver {
   /**
    * Resolve all of the references contained in the given ResolutionScope
    */
-  @NotNull
   public void resolveAll(@NotNull ResolutionScope scope)
       throws IOException, NoSuchAlgorithmException {
     // Progressively resolve dependencies
