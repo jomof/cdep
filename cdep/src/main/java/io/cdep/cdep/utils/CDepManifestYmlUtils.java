@@ -237,7 +237,7 @@ public class CDepManifestYmlUtils {
             require(lib.endsWith(".a"),
                 "Package '%s' has non-static android libraryName '%s'",
                 coordinate, lib);
-            if (archive.runtime.isEmpty()) {
+            if (!archive.runtime.isEmpty()) {
               switch (archive.runtime) {
                 case "c++":
                 case "stlport":

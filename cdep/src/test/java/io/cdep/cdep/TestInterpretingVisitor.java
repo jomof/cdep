@@ -43,6 +43,7 @@ public class TestInterpretingVisitor {
     expected.put("templateWithOnlyFile", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("indistinguishableAndroidArchives", "Abort: Target platform Linux is not supported by "
         + "com.github.jomof:firebase/app:0.0.0. Supported: Android");
+    expected.put("re2", "Abort: Target platform Linux is not supported by com.github.jomof:re2:17.3.1-rev13. Supported: Android");
 
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
@@ -186,6 +187,8 @@ public class TestInterpretingVisitor {
     expected.put("templateWithNullArchives", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("templateWithOnlyFile", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("indistinguishableAndroidArchives", "Abort: Target platform Darwin is not supported by com.github.jomof:firebase/app:0.0.0. Supported: Android");
+    expected.put("re2", "Abort: Target platform Darwin is not supported by com.github.jomof:re2:17.3.1-rev13. Supported: Android");
+
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       final BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
