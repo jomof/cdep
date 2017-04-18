@@ -2,60 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c62ed7f7-0c09-479d-b432-3323e9034425" name="Default" comment="requires">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ArrayUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v3/Android.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v3/AndroidArchive.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v3/CDepManifestYml.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v3/Linux.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v3/LinuxArchive.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v3/V3Reader.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v3/iOS.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v3/iOSArchive.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/mathfu" afterPath="$PROJECT_DIR$/third_party/mathfu" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/stb" afterPath="$PROJECT_DIR$/third_party/stb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/tinydir" afterPath="$PROJECT_DIR$/third_party/tinydir" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/vectorial" afterPath="$PROJECT_DIR$/third_party/vectorial" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CheckLocalFileSystemIntegrity.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CheckLocalFileSystemIntegrity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CreateStringVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CreateStringVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/RewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/RewritingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ExpressionBuilder.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ExpressionBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ModuleArchiveExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ModuleArchiveExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/DependencyHashRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/DependencyHashRewritingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/FileHashAndSizeRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/FileHashAndSizeRewritingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/FillMissingFieldsBasedOnFilepath.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/FillMissingFieldsBasedOnFilepath.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/Fullfill.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/Fullfill.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/fullfill/ZipFilesRewritingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CxxLanguageStandardRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CxxLanguageStandardRewritingVisitor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/CDepManifestYmlUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/Invariant.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/Invariant.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/PlatformUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/PlatformUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ReflectionUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ReflectionUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Android.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Android.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/AndroidArchive.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/AndroidArchive.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYml.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYml.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYmlRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYmlRewritingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYmlVersion.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CDepManifestYmlVersion.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CxxLanguageFeatures.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/CxxLanguageFeatures.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Linux.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/Linux.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/LinuxArchive.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/LinuxArchive.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/iOSArchive.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/iOSArchive.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v1/CDepManifestYml.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v1/CDepManifestYml.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v1/V1Reader.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v1/V1Reader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/CDepManifestYml.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/CDepManifestYml.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/V2Reader.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/V2Reader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestFindModuleFunctionTableBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestReadonlyVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestReadonlyVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestRewritingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestFillMissingFieldsBasedOnFilepath.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestFillMissingFieldsBasedOnFilepath.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestCxxLanguageStandardRewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestCxxLanguageStandardRewritingVisitor.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -114,8 +66,10 @@
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/CDepManifestYml.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="640">
-              <caret line="66" column="6" lean-forward="false" selection-start-line="66" selection-start-column="6" selection-end-line="66" selection-end-column="6" />
-              <folding />
+              <caret line="68" column="6" lean-forward="false" selection-start-line="68" selection-start-column="6" selection-end-line="68" selection-end-column="6" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -130,17 +84,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResolutionScope.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ResolutionScope.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="302">
-              <caret line="186" column="0" lean-forward="false" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
+              <caret line="186" column="14" lean-forward="false" selection-start-line="186" selection-start-column="14" selection-end-line="186" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Invariant.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Invariant.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/Invariant.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="318">
@@ -1117,8 +1071,8 @@
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ReflectionUtils.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/CDepManifestYml.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/PlatformUtils.java" />
-        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java" />
         <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/Invariant.java" />
+        <option value="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java" />
       </list>
     </option>
   </component>
@@ -1144,7 +1098,7 @@
         </expanded-state>
         <selected-state>
           <State>
-            <id>ConstantConditions</id>
+            <id>ConstantAssertCondition</id>
           </State>
         </selected-state>
       </profile-state>
@@ -1672,6 +1626,44 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="resolver" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cdep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="generator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1840,6 +1832,9 @@
     <property name="settings.editor.selected.configurable" value="Errors" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="extract.method.default.visibility" value="private" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -2425,7 +2420,14 @@
       <option name="project" value="LOCAL" />
       <updated>1492404267848</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="requires">
+      <created>1492483065495</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1492483065495</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2951,8 +2953,10 @@
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/yml/cdepmanifest/v2/CDepManifestYml.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="640">
-          <caret line="66" column="6" lean-forward="false" selection-start-line="66" selection-start-column="6" selection-end-line="66" selection-end-column="6" />
-          <folding />
+          <caret line="68" column="6" lean-forward="false" selection-start-line="68" selection-start-column="6" selection-end-line="68" selection-end-column="6" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2960,14 +2964,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="33">
           <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="186" column="0" lean-forward="false" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2983,5 +2979,88 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/resolver/ResolutionScope.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="186" column="14" lean-forward="false" selection-start-line="186" selection-start-column="14" selection-end-line="186" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>bootstrap</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Gradle: com.google.errorprone:error_prone_annotations:2.0.12</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
