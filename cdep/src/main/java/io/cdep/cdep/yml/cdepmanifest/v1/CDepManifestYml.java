@@ -23,6 +23,7 @@ import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.v3.Linux;
 import io.cdep.cdep.yml.cdepmanifest.v3.iOS;
 
+@SuppressWarnings("WeakerAccess")
 public class CDepManifestYml {
   @Nullable
   final public Coordinate coordinate;

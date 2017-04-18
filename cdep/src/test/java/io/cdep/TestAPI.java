@@ -18,7 +18,7 @@ public class TestAPI {
       false,
       false);
 
-  public static String execute(List<String> command) throws IOException, InterruptedException {
+  private static String execute(List<String> command) throws IOException, InterruptedException {
     System.out.printf("%s\n", command);
     String result = Spawner.spawn(command);
     System.out.printf("%s\n", result);

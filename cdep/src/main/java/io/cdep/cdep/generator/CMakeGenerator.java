@@ -104,7 +104,7 @@ public class CMakeGenerator {
     return new File(environment.modulesFolder, CONFIG_FILE_NAME);
   }
 
-  private String readCmakeLibraryFunctions() throws IOException {
+  private String readCmakeLibraryFunctions() {
     ClassLoader classLoader = getClass().getClassLoader();
 
     InputStream stream = classLoader.getResourceAsStream("CMakeLibraryFunctions.cmake");

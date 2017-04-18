@@ -457,7 +457,7 @@ public class CDep {
   }
 
   private boolean handleFetchArchive(@NotNull List<String> args)
-      throws IOException, URISyntaxException, NoSuchAlgorithmException {
+      throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fetch-archive".equals(args.get(0))) {
       if (args.size() != 5) {
         info("Usage: cdep fetch-archive {coordinate} archive.zip {size}{sha256}\n");

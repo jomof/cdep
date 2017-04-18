@@ -91,11 +91,6 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
-  public void visitHardNameDependency(@Nullable String name, @NotNull HardNameDependency value) {
-    super.visitHardNameDependency(name, value);
-  }
-
-  @Override
   public void visitArray(String name, @NotNull Object[] array, @NotNull Class<?> elementType) {
     if (elementType.isEnum()) {
       appendIndented("%s: [%s]\r\n", name, StringUtils.joinOn(", ", array));

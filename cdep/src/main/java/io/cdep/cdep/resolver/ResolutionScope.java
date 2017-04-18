@@ -27,10 +27,10 @@ public class ResolutionScope {
   final public Map<Coordinate, List<Coordinate>> backwardEdges = new HashMap<>();
   // Map of dependency edges. Key is dependant and value is dependees.
   @NotNull
-  final public Map<Version, List<Version>> unificationWinnersToLosers = new HashMap<>();
+  private final Map<Version, List<Version>> unificationWinnersToLosers = new HashMap<>();
   // Map of dependency edges. Key is dependee and value is dependants.
   @NotNull
-  final public Map<Version, List<Version>> unificationLosersToWinners = new HashMap<>();
+  private final Map<Version, List<Version>> unificationLosersToWinners = new HashMap<>();
   // Dependencies that are not yet resolved but where resolution is possible
   @NotNull
   final private Map<String, SoftNameDependency> unresolved = new HashMap<>();

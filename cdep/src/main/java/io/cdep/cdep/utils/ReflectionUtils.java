@@ -85,11 +85,11 @@ public class ReflectionUtils {
     return urlToFile(new URL(path));
   }
 
-  public static File urlToFile(final URL url) {
+  private static File urlToFile(final URL url) {
     return url == null ? null : urlToFile(url.toString());
   }
 
-  public static File urlToFile(String url) {
+  private static File urlToFile(String url) {
     String path = url;
     if (path.startsWith("jar:")) {
       int index = path.indexOf("!/");
@@ -101,10 +101,10 @@ public class ReflectionUtils {
       }
       return new File(new URL(path).toURI());
     } catch (MalformedURLException | URISyntaxException e) {
-    }
-    if (path.startsWith("file:")) {
-      path = path.substring(5);
-      return new File(path);
+      if (path.startsWith("file:")) {
+        path = path.substring(5);
+        return new File(path);
+      }
     }
     require(false, "Invalid URL: %s", url);
     return null;

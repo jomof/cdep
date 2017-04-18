@@ -10,7 +10,7 @@ public class PathMapping {
   final public File from;
   final public File to;
 
-  PathMapping(File from, File to) {
+  private PathMapping(File from, File to) {
     this.from = from;
     this.to = to;
   }

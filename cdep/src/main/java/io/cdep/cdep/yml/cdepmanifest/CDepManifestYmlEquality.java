@@ -13,6 +13,7 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
     return thiz.areEqual;
   }
 
+  @SuppressWarnings("EmptyMethod")
   public void covisitCDepManifestYmlVersion(String name, CDepManifestYmlVersion left, CDepManifestYmlVersion right) {
   }
 
@@ -56,6 +57,7 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
     covisitArray(name, left, right, CxxLanguageFeatures.class);
   }
 
+  @SuppressWarnings("EmptyMethod")
   public void covisitCxxLanguageFeatures(String name, CxxLanguageFeatures left, CxxLanguageFeatures right) {
   }
 

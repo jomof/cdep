@@ -1,12 +1,13 @@
 package io.cdep.cdep.utils;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import io.cdep.cdep.Version;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
 
 public class TestVersionUtils {
   private static Version version(String value) {
@@ -170,7 +171,7 @@ public class TestVersionUtils {
 
 
 
-  List<Version> sortA(String ...versions) {
+  private List<Version> sortA(String... versions) {
     List<Version> list = new ArrayList<>();
     for (int i = 0; i < versions.length; ++i) {
       list.add(new Version(versions[i]));
@@ -180,7 +181,7 @@ public class TestVersionUtils {
     return list;
   }
 
-  List<Version> sortD(String ...versions) {
+  private List<Version> sortD(String... versions) {
     List<Version> list = new ArrayList<>();
     for (int i = 0; i < versions.length; ++i) {
       list.add(new Version(versions[i]));

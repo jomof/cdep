@@ -8,7 +8,7 @@ import java.io.File;
 public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVisitor {
   // Note, this list must be in order such that long strings come before shorter prefixes
   // of the same string.
-  private String androidABIs[] = new String[] {
+  private final String[] androidABIs = new String[] {
       "arm64-v8a",
       "armeabi-v7a",
       "armeabi",

@@ -219,8 +219,7 @@ public class InterpretingVisitor {
   @Nullable
   Object visitAbortExpression(@NotNull AbortExpression expr) {
     Object parameters[] = (Object[]) coerce(visitArray(expr.parameters, Object.class), String[].class);
-    fail("Abort: " + expr.message, parameters);
-    return null;
+    throw new RuntimeException(String.format("Abort: " + expr.message, parameters));
   }
 
   @Nullable

@@ -1,6 +1,5 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
-import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
 public class iOS {
@@ -15,7 +14,7 @@ public class iOS {
     this.archives = null;
   }
 
-  public iOS(@Nullable HardNameDependency[] dependencies, @NotNull iOSArchive[] archives) {
+  public iOS(@Nullable HardNameDependency[] dependencies, @Nullable iOSArchive[] archives) {
     this.dependencies = dependencies;
     this.archives = archives;
   }

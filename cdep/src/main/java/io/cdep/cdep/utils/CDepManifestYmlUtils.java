@@ -76,12 +76,12 @@ public class CDepManifestYmlUtils {
   public static class Checker extends CDepManifestYmlReadonlyVisitor {
     @NotNull
     private final Set<String> filesSeen = new HashSet<>();
+    @NotNull
+    private final Map<String, AndroidArchive> distinguishableAndroidArchives = new HashMap<>();
     @Nullable
     private Coordinate coordinate = null;
     @Nullable
     private CDepManifestYmlVersion sourceVersion = null;
-    @NotNull
-    private Map<String, AndroidArchive> distinguishableAndroidArchives = new HashMap<>();
 
     private static String nullToStar(String string) {
       if (string == null) {

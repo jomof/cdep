@@ -2,7 +2,6 @@ package io.cdep.cdep.fullfill;
 
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
@@ -25,7 +24,7 @@ public class TestFullfill {
       false,
       false);
 
-  File[] templates(File... folders) {
+  private File[] templates(File... folders) {
     List<File> templates = new ArrayList<>();
     for (File folder : folders) {
       for (File file : folder.listFiles(new FileFilter() {

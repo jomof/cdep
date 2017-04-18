@@ -13,7 +13,7 @@ import static io.cdep.cdep.io.IO.infoln;
  * Methods for ensuring state at runtime
  */
 abstract public class Invariant {
-  private static List<List<RuntimeException>> requirementFailures = new ArrayList<>();
+  private static final List<List<RuntimeException>> requirementFailures = new ArrayList<>();
 
   public static void pushScope() {
     requirementFailures.add(new ArrayList<RuntimeException>());

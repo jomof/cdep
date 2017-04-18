@@ -9,6 +9,7 @@ import io.cdep.cdep.pod.PlainOldDataReadonlyVisitor;
 @SuppressWarnings("unused")
 abstract public class CDepManifestYmlReadonlyVisitor extends PlainOldDataReadonlyVisitor {
 
+  @SuppressWarnings("EmptyMethod")
   public void visitCDepManifestYmlVersion(@NotNull String name, CDepManifestYmlVersion sourceVersion) {
 
   }

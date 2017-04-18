@@ -22,7 +22,7 @@ public class CDepManifestYmlRewritingVisitor {
         visitExample(value.example));
   }
 
-  protected String visitExample(String example) {
+  private String visitExample(String example) {
     return visitString(example);
   }
 
@@ -30,7 +30,7 @@ public class CDepManifestYmlRewritingVisitor {
     return example;
   }
 
-  protected Linux visitLinux(Linux linux) {
+  private Linux visitLinux(Linux linux) {
     if (linux == null) {
       return null;
     }
@@ -40,7 +40,7 @@ public class CDepManifestYmlRewritingVisitor {
   }
 
   @Nullable
-  protected LinuxArchive[] visitLinuxArchiveArray(@Nullable LinuxArchive[] archives) {
+  private LinuxArchive[] visitLinuxArchiveArray(@Nullable LinuxArchive[] archives) {
     if (archives == null) {
       return null;
     }
@@ -51,7 +51,7 @@ public class CDepManifestYmlRewritingVisitor {
     return result;
   }
 
-  protected LinuxArchive visitLinuxArchive(LinuxArchive archive) {
+  private LinuxArchive visitLinuxArchive(LinuxArchive archive) {
     return new LinuxArchive(
         visitFile(archive.file),
         visitSha256(archive.sha256),
@@ -71,31 +71,31 @@ public class CDepManifestYmlRewritingVisitor {
     return result;
   }
 
-  protected String visitInclude(String include) {
+  private String visitInclude(String include) {
     return visitString(include);
   }
 
-  protected String visitLib(String lib) {
+  private String visitLib(String lib) {
     return visitString(lib);
   }
 
-  protected Long visitSize(Long size) {
+  private Long visitSize(Long size) {
     return visitLong(size);
   }
 
-  protected Long visitLong(Long value) {
+  private Long visitLong(Long value) {
     return value;
   }
 
-  protected String visitSha256(String sha256) {
+  private String visitSha256(String sha256) {
     return visitString(sha256);
   }
 
-  protected String visitFile(String file) {
+  private String visitFile(String file) {
     return visitString(file);
   }
 
-  protected iOS visitiOS(iOS iOS) {
+  private iOS visitiOS(iOS iOS) {
     if (iOS == null) {
       return null;
     }
@@ -106,7 +106,7 @@ public class CDepManifestYmlRewritingVisitor {
   }
 
   @Nullable
-  protected iOSArchive[] visitiOSArchiveArray(@Nullable iOSArchive[] archives) {
+  private iOSArchive[] visitiOSArchiveArray(@Nullable iOSArchive[] archives) {
     if (archives == null) {
       return null;
     }
@@ -117,7 +117,7 @@ public class CDepManifestYmlRewritingVisitor {
     return result;
   }
 
-  protected iOSArchive visitiOSArchive(iOSArchive archive) {
+  private iOSArchive visitiOSArchive(iOSArchive archive) {
     return new iOSArchive(
         visitFile(archive.file),
         visitSha256(archive.sha256),
@@ -130,23 +130,23 @@ public class CDepManifestYmlRewritingVisitor {
         visitFlavor(archive.flavor));
   }
 
-  protected String visitFlavor(String flavor) {
+  private String visitFlavor(String flavor) {
     return visitString(flavor);
   }
 
-  protected String visitSdk(String sdk) {
+  private String visitSdk(String sdk) {
     return visitString(sdk);
   }
 
-  protected iOSArchitecture visitiOSArchitecture(iOSArchitecture architecture) {
+  private iOSArchitecture visitiOSArchitecture(iOSArchitecture architecture) {
     return architecture;
   }
 
-  protected iOSPlatform visitiOSPlatform(iOSPlatform platform) {
+  private iOSPlatform visitiOSPlatform(iOSPlatform platform) {
     return platform;
   }
 
-  protected Android visitAndroid(Android android) {
+  private Android visitAndroid(Android android) {
     if (android == null) {
       return null;
     }
@@ -157,7 +157,7 @@ public class CDepManifestYmlRewritingVisitor {
   }
 
   @Nullable
-  protected AndroidArchive[] visitAndroidArchiveArray(@Nullable AndroidArchive[] archives) {
+  private AndroidArchive[] visitAndroidArchiveArray(@Nullable AndroidArchive[] archives) {
     if (archives == null) {
       return null;
     }
@@ -184,31 +184,31 @@ public class CDepManifestYmlRewritingVisitor {
         visitFlavor(archive.flavor));
   }
 
-  protected String visitAbi(String abi) {
+  private String visitAbi(String abi) {
     return visitString(abi);
   }
 
-  protected String visitBuilder(String builder) {
+  private String visitBuilder(String builder) {
     return visitString(builder);
   }
 
-  protected String visitPlatform(String platform) {
+  private String visitPlatform(String platform) {
     return visitString(platform);
   }
 
-  protected String visitRuntime(String runtime) {
+  private String visitRuntime(String runtime) {
     return visitString(runtime);
   }
 
-  protected String visitCompiler(String compiler) {
+  private String visitCompiler(String compiler) {
     return visitString(compiler);
   }
 
-  protected String visitNdk(String ndk) {
+  private String visitNdk(String ndk) {
     return visitString(ndk);
   }
 
-  protected Interfaces visitInterfaces(Interfaces interfaces) {
+  private Interfaces visitInterfaces(Interfaces interfaces) {
     if (interfaces == null) {
       return null;
     }
@@ -228,7 +228,7 @@ public class CDepManifestYmlRewritingVisitor {
     );
   }
 
-  protected CxxLanguageFeatures[] visitRequiresArray(CxxLanguageFeatures[] requires) {
+  private CxxLanguageFeatures[] visitRequiresArray(CxxLanguageFeatures[] requires) {
     if (requires == null) {
       return null;
     }
@@ -239,11 +239,11 @@ public class CDepManifestYmlRewritingVisitor {
     return result;
   }
 
-  protected CxxLanguageFeatures visitRequire(CxxLanguageFeatures require) {
+  private CxxLanguageFeatures visitRequire(CxxLanguageFeatures require) {
     return notNull(require);
   }
 
-  protected HardNameDependency[] visitHardNameDependencyArray(HardNameDependency[] dependencies) {
+  private HardNameDependency[] visitHardNameDependencyArray(HardNameDependency[] dependencies) {
     if (dependencies == null) {
       return null;
     }
@@ -260,11 +260,11 @@ public class CDepManifestYmlRewritingVisitor {
         visitSha256(dependency.sha256));
   }
 
-  protected String visitCompile(String compile) {
+  private String visitCompile(String compile) {
     return visitString(compile);
   }
 
-  protected Coordinate visitCoordinate(Coordinate coordinate) {
+  private Coordinate visitCoordinate(Coordinate coordinate) {
     return new Coordinate(
         visitGroupId(coordinate.groupId),
         visitArtifactId(coordinate.artifactId),
@@ -272,19 +272,19 @@ public class CDepManifestYmlRewritingVisitor {
     );
   }
 
-  protected Version visitVersion(Version version) {
+  private Version visitVersion(Version version) {
     return new Version(visitString(version.value));
   }
 
-  protected String visitArtifactId(String artifactId) {
+  private String visitArtifactId(String artifactId) {
     return visitString(artifactId);
   }
 
-  protected String visitGroupId(String groupId) {
+  private String visitGroupId(String groupId) {
     return visitString(groupId);
   }
 
-  protected CDepManifestYmlVersion visitDepManifestYmlVersion(CDepManifestYmlVersion sourceVersion) {
+  private CDepManifestYmlVersion visitDepManifestYmlVersion(CDepManifestYmlVersion sourceVersion) {
     return sourceVersion;
   }
 }
