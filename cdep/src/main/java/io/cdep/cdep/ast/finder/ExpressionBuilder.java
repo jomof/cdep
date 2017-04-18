@@ -33,8 +33,8 @@ public class ExpressionBuilder {
 
   @NotNull
   public static ModuleArchiveExpression archive(@NotNull URL file,
-      @Nullable String sha256,
-      @Nullable Long size,
+      @NotNull String sha256,
+      @NotNull Long size,
       @Nullable String include,
       @Nullable Expression includePath,
       @NotNull String libs[],

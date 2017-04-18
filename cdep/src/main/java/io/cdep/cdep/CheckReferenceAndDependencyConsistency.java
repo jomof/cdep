@@ -75,7 +75,6 @@ public class CheckReferenceAndDependencyConsistency extends ReadonlyVisitor {
       // Have any of the dependee archives been seen before?
       for (ModuleArchiveExpression dependeeArchive : moduleArchives.get(dependee)) {
         Coordinate prior = shaToPrior.get(dependeeArchive.sha256);
-        assert dependeeArchive.sha256 != null;
         require(prior == null,
             "Package '%s' depends on '%s' but both packages contain a file '%s' '%s' "
                 + "with the same SHA256. The file should only be in the lowest level package '%s' "

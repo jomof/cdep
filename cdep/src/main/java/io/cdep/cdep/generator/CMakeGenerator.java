@@ -295,8 +295,6 @@ public class CMakeGenerator {
       ModuleArchiveExpression specific = (ModuleArchiveExpression) expression;
       assert specific.requires.length == 0; // Should have been rewritten by now.
       assert this.coordinate != null;
-      assert specific.file != null;
-      assert specific.size != null;
       append("%s%s\r\n",
           prefix,
           generateCDepCall(

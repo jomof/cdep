@@ -70,12 +70,9 @@ public class GeneratorEnvironmentUtils {
         URL archiveURL = archive.file;
         Long size = archive.size;
         String sha256 = archive.sha256;
-        assert archiveURL != null;
 
         File local = environment.getLocalDownloadFilename(coordinate, archiveURL);
         boolean forceUnzip = environment.forceRedownload && !alreadyExploded.contains(local);
-        assert size != null;
-        assert sha256 != null;
         local = downloadSingleArchive(environment, coordinate, archiveURL, size, sha256, forceUnzip);
         alreadyExploded.add(local);
       }
