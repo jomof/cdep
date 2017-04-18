@@ -53,11 +53,11 @@ public class StringUtils {
     return sb.toString();
   }
 
-  public static String joinOnSkipNull(String delimiter, @NotNull String ... strings) {
+  public static String joinOnSkipNullOrEmpty(String delimiter, @NotNull String ... strings) {
     StringBuilder sb = new StringBuilder();
     int i = 0;
     for (String string : strings) {
-      if (string == null) {
+      if (string == null || string.isEmpty()) {
         continue;
       }
       if (i != 0) {

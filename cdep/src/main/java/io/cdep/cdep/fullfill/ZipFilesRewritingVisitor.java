@@ -132,7 +132,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
 
   @NotNull
   private File getLayoutZipFile(String ... keys) {
-    String prefix = StringUtils.joinOnSkipNull("-", keys);
+    String prefix = StringUtils.joinOnSkipNullOrEmpty("-", keys);
     File layoutZipFile = new File(layout, prefix + ".zip");
     if (layoutZipFile.exists()) {
       //noinspection ResultOfMethodCallIgnored

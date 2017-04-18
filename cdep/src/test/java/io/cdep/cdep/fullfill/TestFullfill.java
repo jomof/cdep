@@ -1,6 +1,8 @@
 package io.cdep.cdep.fullfill;
 
+import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ResolvedManifests;
+import io.cdep.cdep.Version;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
@@ -13,6 +15,7 @@ import java.util.*;
 
 import static com.google.common.truth.Truth.assertThat;
 import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.yml.CDepManifestYmlSubject.assertThat;
 
 public class TestFullfill {
   private final GeneratorEnvironment environment = new GeneratorEnvironment(
@@ -104,18 +107,42 @@ public class TestFullfill {
     FileUtils.writeTextToFile(manifestFile, manifest.body);
     Fullfill.multiple(
         environment,
-            new File[]{manifestFile},
-            new File(outputFolder, "output"),
-            new File(outputFolder, "source"),
-            "1.2.3");
+        new File[]{manifestFile},
+        new File(outputFolder, "output"),
+        new File(outputFolder, "source"),
+        "1.2.3");
+  }
+
+  @Test
+  public void testRe2() throws Exception {
+    ResolvedManifests.TestManifest manifest = ResolvedManifests.sqlite();
+    File outputFolder = new File(".test-files/TestFullfill/re2").getAbsoluteFile();
+    outputFolder.delete();
+    outputFolder.mkdirs();
+
+    File manifestFile = new File(outputFolder, "cdep-manifest.yml");
+    FileUtils.writeTextToFile(manifestFile, manifest.body);
+    List<File> results = Fullfill.multiple(
+        environment,
+        new File[]{manifestFile},
+        new File(outputFolder, "output"),
+        new File(outputFolder, "source"),
+        "1.2.3");
+
+    CDepManifestYml result = CDepManifestYmlUtils.convertStringToManifest(FileUtils.readAllText(results.get(0)));
+    assertThat(result).hasCoordinate(new Coordinate("com.github.jomof", "sqlite", new Version("0.0.0")));
+    assertThat(result).hasArchiveNamed("sqlite-android-gnustl-platform-21.zip");
   }
 
   @Test
   public void testAllResolvedManifests() throws Exception {
     Map<String, String> expected = new HashMap<>();
-    expected.put("sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
+    expected.put("sqliteLinuxMultiple",
+        "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
     expected.put("archiveMissingSize", "Archive com.github.jomof:vectorial:0.0.0 is missing size or it is zero");
-    expected.put("indistinguishableAndroidArchives", "Android archive com.github.jomof:firebase/app:0.0.0 file archive2.zip is indistinguishable at build time from archive1.zip given the information in the manifest");
+    expected.put("indistinguishableAndroidArchives",
+        "Android archive com.github.jomof:firebase/app:0.0.0 file archive2.zip is indistinguishable at build time from " +
+            "archive1.zip given the information in the manifest");
     expected.put("archiveMissingSha256", "Could not hash file bob.zip because it didn't exist");
     expected.put("archiveMissingFile", "Package 'com.github.jomof:vectorial:0.0.0' does not contain any files");
     expected.put("admob", "Archive com.github.jomof:firebase/admob:2.1.3-rev8 is missing include");

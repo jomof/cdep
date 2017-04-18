@@ -34,7 +34,7 @@ public class TestStringUtils {
 
   @Test
   public void joinOnSkipNull() throws Exception {
-    assertThat(StringUtils.joinOnSkipNull("+", "1", null, "3")).isEqualTo("1+3");
+    assertThat(StringUtils.joinOnSkipNullOrEmpty("+", "1", null, "3")).isEqualTo("1+3");
   }
 
   @Test
