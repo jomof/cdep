@@ -68,7 +68,6 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
       }
 
       // Ensure that the manifest coordinate agrees with the url provided
-      assert cdepManifestYml.coordinate != null;
       require(groupId.equals(cdepManifestYml.coordinate.groupId),
           "groupId '%s' from manifest did not agree with github url %s",
           cdepManifestYml.coordinate.groupId,

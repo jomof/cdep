@@ -6,6 +6,7 @@ import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;
+import static io.cdep.cdep.utils.Invariant.require;
 
 public class TestCDepManifestYmlEquality {
 
@@ -42,8 +43,20 @@ public class TestCDepManifestYmlEquality {
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {
       for (ResolvedManifests.NamedManifest manifest2 : ResolvedManifests.all()) {
         boolean expected = manifest1.name.equals(manifest2.name);
-        assertThat(CDepManifestYmlEquality.areDeeplyIdentical(manifest1.resolved.cdepManifestYml, manifest2.resolved
-            .cdepManifestYml)).isEqualTo(expected);
+        if (CDepManifestYmlEquality.areDeeplyIdentical(
+            manifest1.resolved.cdepManifestYml,
+            manifest2.resolved.cdepManifestYml) != expected) {
+          if (expected) {
+            CDepManifestYmlEquality.throwIfNotDeeplyIdentical(
+                manifest1.resolved.cdepManifestYml,
+                manifest2.resolved.cdepManifestYml);
+          } else {
+            CDepManifestYmlEquality.areDeeplyIdentical(
+                manifest1.resolved.cdepManifestYml,
+                manifest2.resolved.cdepManifestYml);
+            require(false, "Expected %s to not be equal to %s", manifest1.name, manifest2.name);
+          }
+        }
       }
     }
   }

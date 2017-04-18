@@ -2,7 +2,12 @@ package io.cdep.cdep.yml.cdepmanifest.v3;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
+import io.cdep.cdep.utils.ArrayUtils;
+import io.cdep.cdep.utils.LongUtils;
+import io.cdep.cdep.utils.ObjectUtils;
+import io.cdep.cdep.utils.StringUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.v2.V2Reader;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -11,6 +16,7 @@ import org.yaml.snakeyaml.error.YAMLException;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 
+import static io.cdep.cdep.Coordinate.EMPTY_COORDINATE;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class V3Reader {
@@ -34,17 +40,15 @@ public class V3Reader {
 
   @NotNull
   private static io.cdep.cdep.yml.cdepmanifest.CDepManifestYml convert(@NotNull CDepManifestYml manifest) {
-    assert manifest.sourceVersion != null;
-    assert manifest.coordinate != null;
     return new io.cdep.cdep.yml.cdepmanifest.CDepManifestYml(
-        manifest.sourceVersion,
-        manifest.coordinate,
-        manifest.dependencies,
+        manifest.sourceVersion != null ? manifest.sourceVersion : CDepManifestYmlVersion.vlatest,
+        ObjectUtils.nullToDefault(manifest.coordinate, EMPTY_COORDINATE),
+        ArrayUtils.nullToEmpty(manifest.dependencies, HardNameDependency.class),
         manifest.interfaces,
         convertAndroid(manifest.android),
         convertiOS(manifest.iOS),
         convertLinux(manifest.linux),
-        manifest.example);
+        StringUtils.nullToEmpty(manifest.example));
   }
 
   @Nullable
@@ -102,15 +106,15 @@ public class V3Reader {
   @Nullable
   private static io.cdep.cdep.yml.cdepmanifest.iOSArchive convertiOSArchive(@NotNull iOSArchive archive) {
     return new io.cdep.cdep.yml.cdepmanifest.iOSArchive(
-        archive.file,
-        archive.sha256,
-        archive.size,
+        StringUtils.nullToEmpty(archive.file),
+        StringUtils.nullToEmpty(archive.sha256),
+        LongUtils.nullToZero(archive.size),
         archive.platform,
         archive.architecture,
-        archive.sdk,
-        archive.include,
+        StringUtils.nullToEmpty(archive.sdk),
+        StringUtils.nullToEmpty(archive.include),
         new String[] { archive.lib },
-        archive.flavor
+        StringUtils.nullToEmpty(archive.flavor)
     );
   }
 
@@ -136,19 +140,20 @@ public class V3Reader {
 
   @Nullable
   private static io.cdep.cdep.yml.cdepmanifest.AndroidArchive convertAndroidArchive(@NotNull AndroidArchive archive) {
+    //noinspection ConstantConditions
     return new io.cdep.cdep.yml.cdepmanifest.AndroidArchive(
-        archive.file,
-        archive.sha256,
-        archive.size,
-        archive.ndk,
-        archive.compiler,
-        archive.runtime,
-        archive.platform,
-        archive.builder,
-        archive.abi,
-        archive.include,
-        new String[] { archive.lib },
-        archive.flavor
+        StringUtils.nullToEmpty(archive.file),
+        StringUtils.nullToEmpty(archive.sha256),
+        LongUtils.nullToZero(archive.size),
+        StringUtils.nullToEmpty(archive.ndk),
+        StringUtils.nullToEmpty(archive.compiler),
+        StringUtils.nullToEmpty(archive.runtime),
+        StringUtils.nullToEmpty(archive.platform),
+        StringUtils.nullToEmpty(archive.builder),
+        StringUtils.nullToEmpty(archive.abi),
+        StringUtils.nullToEmpty(archive.include),
+        StringUtils.singletonArrayOrEmpty(archive.lib),
+        StringUtils.nullToEmpty(archive.flavor)
     );
   }
 }

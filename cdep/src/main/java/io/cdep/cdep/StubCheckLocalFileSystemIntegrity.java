@@ -5,6 +5,7 @@ import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
 
 import java.io.File;
 
+@SuppressWarnings("unused")
 public class StubCheckLocalFileSystemIntegrity extends CheckLocalFileSystemIntegrity {
   public StubCheckLocalFileSystemIntegrity(File explodedRoot) {
     super(explodedRoot);

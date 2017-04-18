@@ -3,6 +3,7 @@ package io.cdep.cdep.yml.cdepmanifest.v3;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
+@SuppressWarnings("unused")
 public class LinuxArchive {
   @Nullable
   final public String file;

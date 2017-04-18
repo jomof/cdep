@@ -88,6 +88,9 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitArray(String name, @NotNull Object[] array, @NotNull Class<?> elementType) {
+    if (array.length == 0) {
+      return;
+    }
     if (elementType.isEnum()) {
       appendIndented("%s: [%s]\r\n", name, StringUtils.joinOn(", ", array));
       return;

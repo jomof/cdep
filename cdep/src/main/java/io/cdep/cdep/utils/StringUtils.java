@@ -1,6 +1,7 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 
 import java.util.Collection;
 
@@ -66,5 +67,21 @@ public class StringUtils {
       ++i;
     }
     return sb.toString();
+  }
+
+  @NotNull
+  public static String nullToEmpty(@Nullable String value) {
+    if (value == null) {
+      return "";
+    }
+    return value;
+  }
+
+  @NotNull
+  public static String[] singletonArrayOrEmpty(@Nullable String value) {
+    if (value == null) {
+      return new String[0];
+    }
+    return new String[] {value};
   }
 }

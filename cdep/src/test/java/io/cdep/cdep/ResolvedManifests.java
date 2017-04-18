@@ -5,6 +5,8 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.ReflectionUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import org.junit.Test;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
@@ -12,17 +14,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.common.truth.Truth.assertThat;
+
 @SuppressWarnings("unused")
 public class ResolvedManifests {
-  public static class TestManifest {
-    final public String body;
-    final public ResolvedManifest manifest;
-    TestManifest(String body, ResolvedManifest manifest) {
-      this.body = body;
-      this.manifest = manifest;
-    }
-  }
-  
   @NotNull
   public static TestManifest simpleRequires() throws MalformedURLException {
     return getResolvedManifest("coordinate:\n" +
@@ -799,13 +794,31 @@ public class ResolvedManifests {
   }
 
   @NotNull
+  static public List<TestManifest> allTestManifest() {
+    List<TestManifest> result = new ArrayList<>();
+    for (Method method : ResolvedManifests.class.getMethods()) {
+      if (!Modifier.isStatic(method.getModifiers())) {
+        continue;
+      }
+      if (method.getReturnType() != TestManifest.class) {
+        continue;
+      }
+      if (method.getParameterTypes().length != 0) {
+        continue;
+      }
+      result.add((TestManifest) ReflectionUtils.invoke(method, null));
+    }
+    return result;
+  }
+
+  @NotNull
   static public List<NamedManifest> all() {
     List<NamedManifest> result = new ArrayList<>();
     for (Method method : ResolvedManifests.class.getMethods()) {
       if (!Modifier.isStatic(method.getModifiers())) {
         continue;
       }
-      if (method.getReturnType() != ResolvedManifest.class) {
+      if (method.getReturnType() != TestManifest.class) {
         continue;
       }
       if (method.getParameterTypes().length != 0) {
@@ -816,6 +829,22 @@ public class ResolvedManifests {
       result.add(new NamedManifest(method.getName(), body, resolved.manifest));
     }
     return result;
+  }
+
+  @Test
+  public void checkResolvedIntegrity() {
+    assertThat(all()).isNotEmpty();
+    assertThat(allTestManifest()).isNotEmpty();
+  }
+
+  public static class TestManifest {
+    final public String body;
+    final public ResolvedManifest manifest;
+
+    TestManifest(String body, ResolvedManifest manifest) {
+      this.body = body;
+      this.manifest = manifest;
+    }
   }
 
   public static class NamedManifest {

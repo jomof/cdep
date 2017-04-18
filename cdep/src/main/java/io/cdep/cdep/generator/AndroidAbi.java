@@ -5,6 +5,7 @@ import io.cdep.annotations.NotNull;
 /**
  * Enum of valid ABI you can specify for NDK.
  */
+@SuppressWarnings("unused")
 public enum AndroidAbi {
   ARMEABI("armeabi"), ARMEABI_V7A("armeabi-v7a"), ARM64_V8A("arm64-v8a"), X86("x86"), X86_64("x86_64"), MIPS("mips"), MIPS64(
       "mips64");

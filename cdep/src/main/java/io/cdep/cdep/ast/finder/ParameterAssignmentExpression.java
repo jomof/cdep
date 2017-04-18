@@ -2,6 +2,7 @@ package io.cdep.cdep.ast.finder;
 
 import io.cdep.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class ParameterAssignmentExpression extends Expression {
   @NotNull
   final public ParameterExpression parameter;

@@ -340,8 +340,8 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void testHeaderOnly() throws Exception {
-    ResolvedManifest resolved = resolver.resolveAny(createReference("https://github" +
-        ".com/jomof/boost/releases/download/1.0.63-rev18/cdep-manifest.yml"));
+    ResolvedManifest resolved = resolver.resolveAny(createReference(
+        "https://github.com/jomof/boost/releases/download/1.0.63-rev18/cdep-manifest.yml"));
 
     BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
     builder.addManifest(resolved);
@@ -354,8 +354,8 @@ public class TestFindModuleFunctionTableBuilder {
         "c++_shared",
         "x86");
     assertThat(found.fullLibraryNames).isEmpty();
-    assertThat(found.remote.toString()).isEqualTo("https://github" +
-        ".com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
+    assertThat(found.remote.toString()).isEqualTo(
+        "https://github.com/jomof/boost/releases/download/1.0.63-rev18/boost_1_63_0.zip");
   }
 
   @Test

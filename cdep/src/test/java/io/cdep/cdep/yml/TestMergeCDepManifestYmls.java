@@ -43,12 +43,13 @@ public class TestMergeCDepManifestYmls {
   @Test
   public void testTwoWayMerges() throws Exception {
     Set<String> commonDifferences = new HashSet<>();
-    commonDifferences.add("Manifests were different at artifactId.coordinate.[value]");
-    commonDifferences.add("Manifests were different at file.headers.interfaces.[value]");
-    commonDifferences.add("Manifests were different at include.headers.interfaces.[value]");
-    commonDifferences.add("Manifests were different at size.headers.interfaces.[value]");
-    commonDifferences.add("Manifests were different at sha256.archive.[value]");
-    commonDifferences.add("Manifests were different at constant.version.coordinate.[constant]");
+    commonDifferences.add("Manifests were different at requires.requires.headers.interfaces.[constant]");
+    commonDifferences.add("Manifests were different at artifactId.coordinate.[constant]");
+    commonDifferences.add("Manifests were different at file.headers.interfaces.[constant]");
+    commonDifferences.add("Manifests were different at include.headers.interfaces.[constant]");
+    commonDifferences.add("Manifests were different at size.headers.interfaces.[constant]");
+    commonDifferences.add("Manifests were different at sha256.archive.[constant]");
+    commonDifferences.add("Manifests were different at value.version.coordinate.[constant]");
     boolean somethingUnexpected = false;
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {
       for (ResolvedManifests.NamedManifest manifest2 : ResolvedManifests.all()) {

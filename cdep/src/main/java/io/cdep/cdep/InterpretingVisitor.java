@@ -20,6 +20,7 @@ import static io.cdep.cdep.utils.ReflectionUtils.invoke;
 /**
  * Walks the expression tree and interprets the constant for the supplied state.
  */
+@SuppressWarnings("unused")
 public class InterpretingVisitor {
 
   @Nullable

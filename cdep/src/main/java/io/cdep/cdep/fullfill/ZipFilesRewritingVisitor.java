@@ -38,7 +38,6 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   @NotNull
   @Override
   public CDepManifestYml visitCDepManifestYml(@NotNull CDepManifestYml value) {
-    assert value.coordinate != null;
     prefix = value.coordinate.artifactId;
     prefix = prefix.replace("/", "-");
     prefix = prefix.replace("\\", "-");
@@ -49,8 +48,8 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   @Nullable
   @Override
   protected Archive visitArchive(@Nullable Archive archive) {
-    if (archive == null || archive.file == null) {
-      return archive;
+    if (archive == null || archive.file.isEmpty()) {
+      return null;
     }
     if (archive.file.endsWith(".zip")) {
       return archive;
@@ -70,8 +69,8 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
 
     return new Archive(
         layoutZipFile.getName(),
-        null,
-        null,
+        "",
+        0L,
         "include",
         archive.requires
     );
@@ -80,7 +79,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   @Nullable
   @Override
   protected AndroidArchive visitAndroidArchive(@Nullable AndroidArchive archive) {
-    if (archive == null || archive.file == null) {
+    if (archive == null || archive.file.isEmpty()) {
       return archive;
     }
     if (archive.file.endsWith(".zip")) {
@@ -109,8 +108,8 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
 
     return new AndroidArchive(
         layoutZipFile.getName(),
-        null,
-        null,
+        "",
+        0L,
         archive.ndk,
         archive.compiler,
         archive.runtime,

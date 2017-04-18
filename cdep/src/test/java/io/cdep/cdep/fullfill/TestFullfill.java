@@ -12,7 +12,7 @@ import java.io.FileFilter;
 import java.util.*;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import static io.cdep.cdep.utils.Invariant.require;
 
 public class TestFullfill {
   private final GeneratorEnvironment environment = new GeneratorEnvironment(
@@ -94,23 +94,31 @@ public class TestFullfill {
   }
 
   @Test
+  public void testSqlite() throws Exception {
+    ResolvedManifests.TestManifest manifest = ResolvedManifests.sqlite();
+    File outputFolder = new File(".test-files/TestFullfill/testSqlite").getAbsoluteFile();
+    outputFolder.delete();
+    outputFolder.mkdirs();
+
+    File manifestFile = new File(outputFolder, "cdep-manifest.yml");
+    FileUtils.writeTextToFile(manifestFile, manifest.body);
+    Fullfill.multiple(
+        environment,
+            new File[]{manifestFile},
+            new File(outputFolder, "output"),
+            new File(outputFolder, "source"),
+            "1.2.3");
+  }
+
+  @Test
   public void testAllResolvedManifests() throws Exception {
     Map<String, String> expected = new HashMap<>();
-    expected.put("sqliteLinuxMultiple",
-        "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
+    expected.put("sqliteLinuxMultiple", "Package 'com.github.jomof:sqlite:0.0.0' has multiple linux archives. Only one is allowed.");
     expected.put("archiveMissingSize", "Archive com.github.jomof:vectorial:0.0.0 is missing size or it is zero");
-    expected.put("archiveMissingFile", "Archive com.github.jomof:vectorial:0.0.0 is missing file");
-    expected.put("admob", "Archive com.github.jomof:firebase/admob:2.1.3-rev8 is missing include");
-    expected.put("sqlite",
-        "Package 'com.github.jomof:sqlite:0.0.0' contains multiple references to the same archive file " +
-            "'sqlite-android-cxx-platform-12.zip'");
-    expected.put("sqliteAndroid",
-        "Package 'com.github.jomof:sqlite:3.16.2-rev33' contains multiple references to the same archive file " +
-            "'sqlite-android-cxx-platform-12.zip'");
+    expected.put("indistinguishableAndroidArchives", "Android archive com.github.jomof:firebase/app:0.0.0 file archive2.zip is indistinguishable at build time from archive1.zip given the information in the manifest");
     expected.put("archiveMissingSha256", "Could not hash file bob.zip because it didn't exist");
-    expected.put("indistinguishableAndroidArchives", "Android archive com.github.jomof:firebase/"
-        + "app:0.0.0 file archive2.zip is indistinguishable at build time from archive1.zip given "
-        + "the information in the manifest");
+    expected.put("archiveMissingFile", "Package 'com.github.jomof:vectorial:0.0.0' does not contain any files");
+    expected.put("admob", "Archive com.github.jomof:firebase/admob:2.1.3-rev8 is missing include");
     boolean unexpectedFailure = false;
 
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
@@ -132,7 +140,7 @@ public class TestFullfill {
             new File(outputFolder, "source"),
             "1.2.3");
         if (expectedFailure != null) {
-          fail("Expected failure");
+          require(false, "Expected failure in %s: '%s'", manifest.name, expectedFailure);
         }
       } catch (RuntimeException e) {
         if (!(e.getClass().equals(RuntimeException.class))) {
@@ -145,7 +153,7 @@ public class TestFullfill {
           continue;
         }
         if (!e.getMessage().equals(expectedFailure)) {
-          e.printStackTrace();
+          //e.printStackTrace();
           System.out.printf("expected.put(\"%s\", \"%s\");\n", key, e.getMessage());
           unexpectedFailure = true;
         }

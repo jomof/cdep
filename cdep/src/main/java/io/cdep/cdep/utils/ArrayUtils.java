@@ -10,7 +10,7 @@ public class ArrayUtils {
    * Return an empty array if the array is null.
    */
   @NotNull
-  public static <T> T[] emptyIfNull(@Nullable T[] array, Class<T> clazz) {
+  public static <T> T[] nullToEmpty(@Nullable T[] array, Class<T> clazz) {
     if (array == null) {
       //noinspection unchecked
       return (T[]) Array.newInstance(clazz, 0);

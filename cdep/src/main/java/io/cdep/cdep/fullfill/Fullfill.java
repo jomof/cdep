@@ -107,7 +107,6 @@ public class Fullfill {
       CDepManifestYmlUtils.checkManifestSanity(manifests[i]);
 
       // Find any transitive dependencies that we may need to build the function table.
-      assert coordinate != null;
       SoftNameDependency softname = new SoftNameDependency(coordinate.toString());
       scope.addUnresolved(softname);
       scope.recordResolved(

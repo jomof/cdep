@@ -19,6 +19,7 @@ import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 
+@SuppressWarnings("unused")
 public class Android {
   @Nullable
   final public HardNameDependency dependencies[];

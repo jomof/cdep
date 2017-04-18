@@ -28,6 +28,7 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import static io.cdep.cdep.Coordinate.EMPTY_COORDINATE;
 import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.require;
 
@@ -59,7 +60,7 @@ public class CDepManifestYmlUtils {
     }
     require(manifest != null, "Manifest was empty");
     assert manifest != null;
-    return manifest;
+    return new ConvertNullToDefaultRewritingVisitor().visitCDepManifestYml(manifest);
   }
 
   public static void checkManifestSanity(@NotNull CDepManifestYml cdepManifestYml) {
@@ -69,9 +70,7 @@ public class CDepManifestYmlUtils {
   @NotNull
   public static List<HardNameDependency> getTransitiveDependencies(@NotNull CDepManifestYml cdepManifestYml) {
     List<HardNameDependency> dependencies = new ArrayList<>();
-    if (cdepManifestYml.dependencies != null) {
-      Collections.addAll(dependencies, cdepManifestYml.dependencies);
-    }
+    Collections.addAll(dependencies, cdepManifestYml.dependencies);
     return dependencies;
   }
 
@@ -129,7 +128,7 @@ public class CDepManifestYmlUtils {
     public void visitCDepManifestYml(@Nullable String name, @NotNull CDepManifestYml value) {
       coordinate = value.coordinate;
       sourceVersion = value.sourceVersion;
-      require(coordinate != null, "Manifest was missing coordinate");
+      require(!coordinate.equals(EMPTY_COORDINATE), "Manifest was missing coordinate");
       super.visitCDepManifestYml(name, value);
       require(!filesSeen.isEmpty(), "Package '%s' does not contain any files", coordinate);
     }
@@ -139,18 +138,18 @@ public class CDepManifestYmlUtils {
       if (value == null) {
         return;
       }
-      require(value.file != null && value.file.length() != 0, "Archive %s is missing file", coordinate);
-      require(value.sha256 != null && value.sha256.length() != 0, "Archive %s is missing sha256", coordinate);
-      require(value.size != null && value.size != 0, "Archive %s is missing size or it is zero", coordinate);
-      require(value.include != null && value.include.length() != 0, "Archive %s is missing include", coordinate);
+      require(value.file.length() != 0, "Archive %s is missing file", coordinate);
+      require(value.sha256.length() != 0, "Archive %s is missing sha256", coordinate);
+      require(value.size != 0, "Archive %s is missing size or it is zero", coordinate);
+      require(value.include.length() != 0, "Archive %s is missing include", coordinate);
       super.visitArchive(name, value);
     }
 
     @Override
     public void visitAndroidArchive(@Nullable String name, @NotNull AndroidArchive value) {
-      require(value.file != null && value.file.length() != 0, "Android archive %s is missing file", coordinate);
-      require(value.sha256 != null && value.sha256.length() != 0, "Android archive %s is missing sha256", coordinate);
-      require(value.size != null && value.size != 0, "Android archive %s is missing size or it is zero", coordinate);
+      require(!value.file.isEmpty(), "Android archive %s is missing file", coordinate);
+      require(!value.sha256.isEmpty(), "Android archive %s is missing sha256", coordinate);
+      require(value.size != 0, "Android archive %s is missing size or it is zero", coordinate);
 
       // Have we seen another Archive that is indistinguishable from this one?
       String key = nullToStar(value.abi) + "-";
@@ -171,14 +170,14 @@ public class CDepManifestYmlUtils {
 
     @NotNull
     private String archiveName(@NotNull AndroidArchive value) {
-      return value.file == null ? "<unknown>" : value.file;
+      return value.file.isEmpty() ? "<unknown>" : value.file;
     }
 
     @Override
     public void visitiOSArchive(@Nullable String name, @NotNull iOSArchive value) {
-      require(value.file != null && value.file.length() != 0, "iOS archive %s is missing file", coordinate);
-      require(value.sha256 != null && value.sha256.length() != 0, "iOS archive %s is missing sha256", coordinate);
-      require(value.size != null && value.size != 0, "iOS archive %s is missing size or it is zero", coordinate);
+      require(value.file.length() != 0, "iOS archive %s is missing file", coordinate);
+      require(value.sha256.length() != 0, "iOS archive %s is missing sha256", coordinate);
+      require(value.size != 0, "iOS archive %s is missing size or it is zero", coordinate);
       super.visitiOSArchive(name, value);
     }
 
@@ -194,14 +193,11 @@ public class CDepManifestYmlUtils {
     public void visitiOS(@Nullable String name, @NotNull iOS value) {
       if (value.archives != null) {
         for (iOSArchive archive : value.archives) {
-          require(archive.file != null, "Package '%s' has missing ios.archive.file", coordinate);
-          require(archive.sha256 != null, "Package '%s' has missing ios.archive.sha256 for '%s'", coordinate, archive.file);
-          require(archive.size != null, "Package '%s' has missing ios.archive.size for '%s'", coordinate, archive.file);
-          require(archive.sdk != null, "Package '%s' has missing ios.archive.sdk for '%s'", coordinate, archive.file);
+          require(!archive.file.isEmpty(), "Package '%s' has missing ios.archive.file", coordinate);
+          require(!archive.sha256.isEmpty(), "Package '%s' has missing ios.archive.sha256 for '%s'", coordinate, archive.file);
+          require(archive.size != 0L, "Package '%s' has missing ios.archive.size for '%s'", coordinate, archive.file);
+          require(!archive.sdk.isEmpty(), "Package '%s' has missing ios.archive.sdk for '%s'", coordinate, archive.file);
           require(archive.platform != null, "Package '%s' has missing ios.archive.platform for '%s'", coordinate, archive.file);
-          if (archive.libs == null) {
-            continue;
-          }
           for (String lib : archive.libs) {
             require(lib.endsWith(".a"),
                 "Package '%s' has non-static iOS libraryName '%s'",
@@ -234,17 +230,14 @@ public class CDepManifestYmlUtils {
       if (value.archives != null) {
         for (AndroidArchive archive : value.archives) {
 
-          require(archive.file != null, "Package '%s' has missing android.archive.file", coordinate);
-          require(archive.sha256 != null, "Package '%s' has missing android.archive.sha256 for '%s'", coordinate, archive.file);
-          require(archive.size != null, "Package '%s' has missing android.archive.size for '%s'", coordinate, archive.file);
-          if (archive.libs == null) {
-            continue;
-          }
+          require(!archive.file.isEmpty(), "Package '%s' has missing android.archive.file", coordinate);
+          require(!archive.sha256.isEmpty(), "Package '%s' has missing android.archive.sha256 for '%s'", coordinate, archive.file);
+          require(archive.size != 0, "Package '%s' has missing or zero android.archive.size for '%s'", coordinate, archive.file);
           for (String lib : archive.libs) {
             require(lib.endsWith(".a"),
                 "Package '%s' has non-static android libraryName '%s'",
                 coordinate, lib);
-            if (archive.runtime != null) {
+            if (archive.runtime.isEmpty()) {
               switch (archive.runtime) {
                 case "c++":
                 case "stlport":
@@ -265,12 +258,11 @@ public class CDepManifestYmlUtils {
 
     @Override
     public void visitCoordinate(@Nullable String name, @NotNull Coordinate value) {
-      assert coordinate != null;
-      require(coordinate.groupId.length() > 0, "Manifest was missing coordinate.groupId");
-      require(coordinate.artifactId.length() > 0, "Manifest was missing coordinate.artifactId");
-      require(coordinate.version.value.length() > 0, "Manifest was missing coordinate.version");
+      require(value.groupId.length() > 0, "Manifest was missing coordinate.groupId");
+      require(value.artifactId.length() > 0, "Manifest was missing coordinate.artifactId");
+      require(value.version.value.length() > 0, "Manifest was missing coordinate.version");
 
-      String versionDiagnosis = VersionUtils.checkVersion(coordinate.version);
+      String versionDiagnosis = VersionUtils.checkVersion(value.version);
       if (versionDiagnosis == null) {
         super.visitCoordinate(name, value);
         return;

@@ -41,7 +41,6 @@ public class DependencyHashRewritingVisitor extends CDepManifestYmlRewritingVisi
         File manifest = environment.tryGetLocalDownloadedFile(
             resolved.cdepManifestYml.coordinate,
             resolved.remote);
-        assert resolved.cdepManifestYml.coordinate != null;
         assert manifest != null;
         return new HardNameDependency(
             resolved.cdepManifestYml.coordinate.toString(),

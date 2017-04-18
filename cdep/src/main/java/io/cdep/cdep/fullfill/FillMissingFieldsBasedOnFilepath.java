@@ -22,11 +22,11 @@ public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVi
   @Nullable
   @Override
   protected AndroidArchive visitAndroidArchive(@Nullable AndroidArchive archive) {
-    if (archive == null || archive.file == null) {
-      return archive;
+    if (archive == null || archive.file.isEmpty()) {
+      return null;
     }
     String abi = archive.abi;
-    if (abi == null) {
+    if (abi.isEmpty()) {
       for (String androidABI : androidABIs) {
         if (archive.file.contains(androidABI)) {
           abi = androidABI;
@@ -36,7 +36,7 @@ public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVi
     }
 
     String runtime = archive.runtime;
-    if (runtime == null) {
+    if (runtime.isEmpty()) {
       if (archive.file.contains("c++")) {
         runtime = "c++";
       } else if (archive.file.contains("cxx")) {
@@ -49,13 +49,13 @@ public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVi
     }
 
     String libs[] = archive.libs;
-    if (libs == null) {
+    if (libs.length == 0) {
       File file = new File(archive.file);
       libs = new String[] { file.getName() };
     }
 
     String platform = archive.platform;
-    if (platform == null) {
+    if (platform.isEmpty()) {
       File remaining = new File(archive.file);
       while (remaining != null) {
         String segment = remaining.getName();
@@ -65,7 +65,7 @@ public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVi
         }
         remaining = remaining.getParentFile();
       }
-      if (platform == null) {
+      if (platform.isEmpty()) {
         // If the platform isn't specified then optimistically choose a very old version for
         // best compatibility.
         platform = "12";

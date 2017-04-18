@@ -25,7 +25,7 @@ public class TestCreateCDepManifestYmlString {
     CDepManifestYml manifest2 = CDepManifestYmlUtils.convertStringToManifest(result);
 
     // Would like to compare equality here.
-    assertThat(CDepManifestYmlEquality.areDeeplyIdentical(manifest, manifest2)).isTrue();
+    CDepManifestYmlEquality.throwIfNotDeeplyIdentical(manifest, manifest2);
   }
 
   @Test
@@ -41,7 +41,7 @@ public class TestCreateCDepManifestYmlString {
 
   @Test
   public void testArchive() {
-    assertThat(serialize(archive("fileval", "shaval", 100, "hello", null))).isEqualTo("file: fileval\r\n" + "sha256: shaval\r\n" +
+    assertThat(serialize(archive("fileval", "shaval", 100, "hello", new CxxLanguageFeatures[0]))).isEqualTo("file: fileval\r\n" + "sha256: shaval\r\n" +
         "size: 100\r\n" + "include: " + "hello\r\n");
   }
 
@@ -83,13 +83,8 @@ public class TestCreateCDepManifestYmlString {
 
   @Test
   public void testAllResolvedManifests() throws Exception {
-    for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
-      // Ensure that round-trip works
-      String originalString = manifest.body;
-      CDepManifestYml originalManifest = CDepManifestYmlUtils.convertStringToManifest(originalString);
-      String convertedString = CDepManifestYmlUtils.convertManifestToString(originalManifest);
-      CDepManifestYml convertedManifest = CDepManifestYmlUtils.convertStringToManifest(convertedString);
-      assertThat(CDepManifestYmlEquality.areDeeplyIdentical(originalManifest, convertedManifest)).isTrue();
+    for (ResolvedManifests.TestManifest manifest : ResolvedManifests.allTestManifest()) {
+      check(manifest.manifest.cdepManifestYml);
     }
   }
 }

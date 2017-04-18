@@ -22,6 +22,8 @@ import java.util.Objects;
 
 @SuppressWarnings("unused")
 public class Coordinate {
+  final public static Coordinate EMPTY_COORDINATE = new Coordinate();
+
   @NotNull
   final public String groupId; // like com.github.jomof
   @NotNull

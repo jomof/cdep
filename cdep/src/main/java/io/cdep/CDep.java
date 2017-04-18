@@ -33,6 +33,7 @@ import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 import io.cdep.cdep.yml.cdepmanifest.Interfaces;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
 
@@ -55,6 +56,7 @@ import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.require;
 import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
 
+@SuppressWarnings("unused")
 public class CDep {
 
   final private static String EXAMPLE_COORDINATE = "com.github.jomof:boost:1.0.63-rev24";
@@ -335,13 +337,11 @@ public class CDep {
     long size = zip.length();
     assert resolved != null;
     CDepManifestYml prior = resolved.cdepManifestYml;
-    assert prior.sourceVersion != null;
-    assert prior.coordinate != null;
     CDepManifestYml updated = new CDepManifestYml(
         prior.sourceVersion,
         prior.coordinate,
         prior.dependencies,
-        new Interfaces(archive(zip.getName(), sha256, size, include, null)),
+        new Interfaces(archive(zip.getName(), sha256, size, include, new CxxLanguageFeatures[0])),
         prior.android,
         prior.iOS,
         prior.linux,

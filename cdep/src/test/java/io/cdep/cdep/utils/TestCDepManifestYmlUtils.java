@@ -208,12 +208,17 @@ public class TestCDepManifestYmlUtils {
   @Test
   public void missingAndroidSize() {
     try {
-      check("coordinate:\n" + "  groupId: com.github.jomof\n" + "  artifactId: boost\n" + "  version: 1.0.63-rev10\n" +
-          "android:\n" + "  archives:\n" + "   " + " - file: bob.zip\n" + "      sha256: " +
-          "97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
+      check("coordinate:\n"
+          + "  groupId: com.github.jomof\n"
+          + "  artifactId: boost\n"
+          + "  version: 1.0.63-rev10\n"
+          + "android:\n"
+          + "  archives:\n"
+          + "   - file: bob.zip\n"
+          + "     sha256: 97ce6635df1f44653a597343cd5757bb8b6b992beb3720f5fc761e3644bcbe7b\n");
       fail("Expected an exception");
     } catch (Exception e) {
-      assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' has missing android.archive.size for 'bob.zip'");
+      assertThat(e).hasMessage("Package 'com.github.jomof:boost:1.0.63-rev10' has missing or zero android.archive.size for 'bob.zip'");
     }
   }
 

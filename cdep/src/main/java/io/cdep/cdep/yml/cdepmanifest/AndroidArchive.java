@@ -1,61 +1,61 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
-import io.cdep.annotations.Nullable;
+import io.cdep.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public class AndroidArchive {
-  @Nullable
+  @NotNull
   final public String file;
-  @Nullable
+  @NotNull
   final public String sha256;
-  @Nullable
+  @NotNull
   final public Long size;
-  @Nullable
+  @NotNull
   final public String ndk;
-  @Nullable
+  @NotNull
   final public String compiler;
-  @Nullable
+  @NotNull
   final public String runtime;
-  @Nullable
+  @NotNull
   final public String platform;
-  @Nullable
+  @NotNull
   final public String builder;
-  @Nullable
+  @NotNull
   final public String abi;
-  @Nullable
+  @NotNull
   final public String include;
-  @Nullable
+  @NotNull
   final public String libs[];
-  @Nullable
+  @NotNull
   final public String flavor;
 
   private AndroidArchive() {
-    this.file = null;
-    this.sha256 = null;
-    this.size = null;
-    this.ndk = null;
-    this.compiler = null;
-    this.runtime = null;
-    this.platform = null;
-    this.builder = null;
-    this.abi = null;
-    this.include = null;
-    this.libs = null;
-    this.flavor = null;
+    this.file = "";
+    this.sha256 = "";
+    this.size = 0L;
+    this.ndk = "";
+    this.compiler = "";
+    this.runtime = "";
+    this.platform = "";
+    this.builder = "";
+    this.abi = "";
+    this.include = "";
+    this.libs = new String[0];
+    this.flavor = "";
   }
 
-  public AndroidArchive(@Nullable String file,
-      @Nullable String sha256,
-      @Nullable Long size,
-      @Nullable String ndk,
-      @Nullable String compiler,
-      @Nullable String runtime,
-      @Nullable String platform,
-      @Nullable String builder,
-      @Nullable String abi,
-      @Nullable String include,
-      @Nullable String libs[],
-      @Nullable String flavor) {
+  public AndroidArchive(@NotNull String file,
+      @NotNull String sha256,
+      long size,
+      @NotNull String ndk,
+      @NotNull String compiler,
+      @NotNull String runtime,
+      @NotNull String platform,
+      @NotNull String builder,
+      @NotNull String abi,
+      @NotNull String include,
+      @NotNull String libs[],
+      @NotNull String flavor) {
     this.file = file;
     this.sha256 = sha256;
     this.size = size;

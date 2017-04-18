@@ -13,6 +13,7 @@ import static io.cdep.cdep.io.IO.infoln;
 abstract public class Invariant {
   private static final List<List<RuntimeException>> requirementFailures = new ArrayList<>();
 
+  @SuppressWarnings("Convert2Diamond")
   public static void pushScope() {
     requirementFailures.add(new ArrayList<RuntimeException>());
   }

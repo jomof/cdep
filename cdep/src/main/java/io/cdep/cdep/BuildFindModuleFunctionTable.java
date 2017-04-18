@@ -48,14 +48,13 @@ public class BuildFindModuleFunctionTable {
 
     // Build module lookup findFunctions
     for (ResolvedManifest resolved : manifests.values()) {
-      require(resolved.cdepManifestYml.coordinate != null);
       functionTable.findFunctions.put(resolved.cdepManifestYml.coordinate, buildFindModule(
           functionTable.globals, resolved));
     }
 
     // Build examples
     for (ResolvedManifest resolved : manifests.values()) {
-      if (resolved.cdepManifestYml.example == null) {
+      if (resolved.cdepManifestYml.example.isEmpty()) {
         continue;
       }
       functionTable.examples.put(resolved.cdepManifestYml.coordinate, new ExampleExpression(resolved.cdepManifestYml.example));
@@ -80,16 +79,13 @@ public class BuildFindModuleFunctionTable {
     Map<Expression, Expression> cases = new HashMap<>();
     Set<Coordinate> dependencies = new HashSet<>();
     CDepManifestYml manifest = resolved.cdepManifestYml;
-    if (manifest.dependencies != null) {
-      for (HardNameDependency dependency : manifest.dependencies) {
-        assert dependency.compile != null;
-        Coordinate coordinate = CoordinateUtils.tryParse(dependency.compile);
-        dependencies.add(coordinate);
-      }
+    for (HardNameDependency dependency : manifest.dependencies) {
+      assert dependency.compile != null;
+      Coordinate coordinate = CoordinateUtils.tryParse(dependency.compile);
+      dependencies.add(coordinate);
     }
 
     Coordinate coordinate = manifest.coordinate;
-    assert coordinate != null;
     AssignmentExpression coordinateGroupId = assign("coordinate_group_id", constant(coordinate.groupId));
     AssignmentExpression coordinateArtifactId = assign("coordinate_artifact_id", constant(coordinate.artifactId));
     AssignmentExpression coordinateVersion = assign("coordinate_version", constant(coordinate.version.value));
@@ -118,7 +114,8 @@ public class BuildFindModuleFunctionTable {
       cases.put(constant("Linux"),
           buildSingleArchiveResolution(resolved, manifest.linux.archives[0], explodedArchiveFolder, dependencies));
     }
-    if (headerOnly && manifest.interfaces != null && manifest.interfaces.headers != null) {
+    Interfaces interfaces = manifest.interfaces;
+    if (headerOnly && interfaces != null && interfaces.headers != null) {
       supported.add("Android");
       supported.add("Darwin");
       supported.add("Linux");
@@ -142,17 +139,17 @@ public class BuildFindModuleFunctionTable {
         StringUtils.joinOn(" ", supported)), globals.cmakeSystemName);
     StatementExpression expression = ifSwitch(bool, expressions, abort);
 
-    if (manifest.interfaces != null && manifest.interfaces.headers != null) {
-      Archive archive = manifest.interfaces.headers;
+    if (interfaces != null && interfaces.headers != null) {
+      Archive archive = interfaces.headers;
       expression = multi(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies), expression);
     }
 
-    if (manifest.interfaces != null && manifest.interfaces.headers != null && manifest.interfaces.headers.file != null) {
+    if (interfaces != null && interfaces.headers != null && interfaces.headers.file.length() > 0) {
       return new FindModuleExpression(
           globals,
           coordinate,
-          manifest.interfaces.headers.file,
-          manifest.interfaces.headers.include,
+          interfaces.headers.file,
+          interfaces.headers.include,
           expression);
     }
     return new FindModuleExpression(
@@ -169,7 +166,7 @@ public class BuildFindModuleFunctionTable {
       @NotNull Archive archive,
       @NotNull AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
-    if (archive.file == null || archive.sha256 == null || archive.size == null) {
+    if (archive.file.isEmpty() || archive.sha256.isEmpty() || archive.size == 0L) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     return module(buildArchive(
@@ -178,7 +175,7 @@ public class BuildFindModuleFunctionTable {
         archive.sha256,
         archive.size,
         archive.include,
-        ArrayUtils.emptyIfNull(archive.requires, CxxLanguageFeatures.class),
+        ArrayUtils.nullToEmpty(archive.requires, CxxLanguageFeatures.class),
         new String [0],
         explodedArchiveFolder), dependencies);
   }
@@ -197,7 +194,7 @@ public class BuildFindModuleFunctionTable {
         archive.size,
         archive.include,
         new CxxLanguageFeatures[0],
-        ArrayUtils.emptyIfNull(archive.libs, String.class),
+        ArrayUtils.nullToEmpty(archive.libs, String.class),
         explodedArchiveFolder), dependencies);
   }
 
@@ -205,7 +202,7 @@ public class BuildFindModuleFunctionTable {
   private Expression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
       @NotNull iOSArchive archive, @NotNull AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
-    if (archive.file == null || archive.sha256 == null || archive.size == null) {
+    if (archive.file.isEmpty() || archive.sha256.isEmpty() || archive.size == 0L) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     return module(buildArchive(
@@ -215,7 +212,7 @@ public class BuildFindModuleFunctionTable {
         archive.size,
         archive.include,
         new CxxLanguageFeatures[0],
-        ArrayUtils.emptyIfNull(archive.libs, String.class),
+        ArrayUtils.nullToEmpty(archive.libs, String.class),
         explodedArchiveFolder), dependencies);
   }
 
@@ -225,17 +222,14 @@ public class BuildFindModuleFunctionTable {
       @NotNull String abi,
       @NotNull AssignmentExpression explodedArchiveFolder,
       @NotNull Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
-    if (archive.file == null || archive.sha256 == null || archive.size == null) {
+    if (archive.file.isEmpty() || archive.sha256.isEmpty() || archive.size == 0L) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     require(abi.length() > 0);
 
-    String abiLibs[] = null;
-    if (archive.libs != null) {
-      abiLibs = new String[archive.libs.length];
-      for (int i = 0; i < abiLibs.length; ++i) {
-        abiLibs[i] = abi + "/" + archive.libs[i];
-      }
+    String abiLibs[] = new String[archive.libs.length];
+    for (int i = 0; i < abiLibs.length; ++i) {
+      abiLibs[i] = abi + "/" + archive.libs[i];
     }
 
     return module(buildArchive(
@@ -245,7 +239,7 @@ public class BuildFindModuleFunctionTable {
         archive.size,
         archive.include,
         new CxxLanguageFeatures[0],
-        ArrayUtils.emptyIfNull(abiLibs, String.class),
+        ArrayUtils.nullToEmpty(abiLibs, String.class),
         explodedArchiveFolder), dependencies);
   }
 
@@ -406,7 +400,7 @@ public class BuildFindModuleFunctionTable {
       androids.add(android);
     }
 
-    List<AndroidArchive> noRuntimeAndroids = stlTypes.get(null);
+    List<AndroidArchive> noRuntimeAndroids = stlTypes.get("");
     if (noRuntimeAndroids != null) {
       require(stlTypes.size() == 1,
           "Runtime is on some android submodules but not other in module '%s'",
@@ -453,13 +447,13 @@ public class BuildFindModuleFunctionTable {
 
     // If there's only one android left and it doesn't have a platform then this is
     // a header-only module.
-    if (androids.size() == 1 && androids.get(0).platform == null) {
+    if (androids.size() == 1 && androids.get(0).platform.isEmpty()) {
       return buildAndroidAbiExpression(globals, resolved, androids, explodedArchiveFolder, dependencies);
     }
 
     Map<Integer, List<AndroidArchive>> grouped = new HashMap<>();
     for (AndroidArchive android : androids) {
-      Integer platform = android.platform == null ? null : Integer.parseInt(android.platform);
+      Integer platform = android.platform.isEmpty() ? null : Integer.parseInt(android.platform);
       List<AndroidArchive> group = grouped.get(platform);
       if (group == null) {
         group = new ArrayList<>();
@@ -515,12 +509,9 @@ public class BuildFindModuleFunctionTable {
       group.add(android);
     }
 
-    if (grouped.size() == 1 && grouped.containsKey(null)) {
+    if (grouped.size() == 1 && grouped.containsKey("")) {
       // Header only case.
       AndroidArchive archive = androids.iterator().next();
-      assert archive.file != null;
-      assert archive.sha256 != null;
-      assert archive.size != null;
       return module(buildArchive(
           resolved.remote,
           archive.file,

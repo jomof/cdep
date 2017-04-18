@@ -10,6 +10,10 @@ public class PlainOldDataEqualityCovisitor extends PlainOldDataReadonlyCovisitor
   protected boolean areEqual = true;
   @Nullable
   protected String firstDifference = null;
+  @Nullable
+  protected Object firstDifferenceLeft = null;
+  @Nullable
+  protected Object firstDifferenceRight = null;
 
   public static boolean areDeeplyIdentical(Object left, Object right) {
     PlainOldDataEqualityCovisitor thiz = new PlainOldDataEqualityCovisitor();
@@ -23,6 +27,8 @@ public class PlainOldDataEqualityCovisitor extends PlainOldDataReadonlyCovisitor
       if (!equal) {
         areEqual = false;
         firstDifference = StringUtils.joinOn(".", namestack);
+        firstDifferenceLeft = left;
+        firstDifferenceRight = right;
       }
     }
   }

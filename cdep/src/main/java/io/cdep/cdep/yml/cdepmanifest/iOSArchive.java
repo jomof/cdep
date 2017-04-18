@@ -6,47 +6,47 @@ import io.cdep.annotations.Nullable;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class iOSArchive {
 
-  @Nullable
+  @NotNull
   final public String file;
-  @Nullable
+  @NotNull
   final public String sha256;
-  @Nullable
+  @NotNull
   final public Long size;
   @Nullable
   final public iOSPlatform platform;
   @Nullable
   final public iOSArchitecture architecture;
-  @Nullable
+  @NotNull
   final public String sdk;
-  @Nullable
+  @NotNull
   final public String include;
-  @Nullable
+  @NotNull
   final public String libs[];
-  @Nullable
+  @NotNull
   final public String flavor;
 
   private iOSArchive() {
-    this.file = null;
-    this.sha256 = null;
-    this.size = null;
+    this.file = "";
+    this.sha256 = "";
+    this.size = 0L;
     this.platform = null;
     this.architecture = null;
-    this.sdk = null;
-    this.libs = null;
-    this.flavor = null;
-    this.include = null;
+    this.sdk = "";
+    this.libs = new String[0];
+    this.flavor = "";
+    this.include = "";
   }
 
   public iOSArchive(
-      @Nullable String file,
-      @Nullable String sha256,
-      @Nullable Long size,
+      @NotNull String file,
+      @NotNull String sha256,
+      @NotNull Long size,
       @Nullable iOSPlatform platform,
       @Nullable iOSArchitecture architecture,
-      @Nullable String sdk,
-      @Nullable String include,
+      @NotNull String sdk,
+      @NotNull String include,
       @NotNull String libs[],
-      @Nullable String flavor) {
+      @NotNull String flavor) {
     this.file = file;
     this.sha256 = sha256;
     this.size = size;

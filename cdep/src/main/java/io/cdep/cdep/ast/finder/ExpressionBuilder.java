@@ -16,6 +16,7 @@ import static io.cdep.cdep.utils.Invariant.require;
 /**
  * Methods for creating expression trees
  */
+@SuppressWarnings("unused")
 public class ExpressionBuilder {
   @NotNull
   public static AssignmentBlockExpression assignmentBlock(@NotNull List<AssignmentExpression> assignments,

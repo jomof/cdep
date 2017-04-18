@@ -1,33 +1,34 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
-import io.cdep.annotations.Nullable;
+import io.cdep.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class Archive {
-  @Nullable
+  @NotNull
   final public String file;
-  @Nullable
+  @NotNull
   final public String sha256;
-  @Nullable
+  @NotNull
   final public Long size;
-  @Nullable
+  @NotNull
   final public String include;
-  @Nullable
+  @NotNull
   final public CxxLanguageFeatures requires[];
 
   private Archive() {
-    this.file = null;
-    this.sha256 = null;
-    this.size = null;
-    this.include = null;
-    this.requires = null;
+    this.file = "";
+    this.sha256 = "";
+    this.size = 0L;
+    this.include = "";
+    this.requires = new CxxLanguageFeatures[0];
   }
 
   public Archive(
-      @Nullable String file,
-      @Nullable String sha256,
-      @Nullable Long size,
-      @Nullable String include,
-      @Nullable CxxLanguageFeatures requires[]) {
+      @NotNull String file,
+      @NotNull String sha256,
+      @NotNull Long size,
+      @NotNull String include,
+      @NotNull CxxLanguageFeatures requires[]) {
     this.file = file;
     this.sha256 = sha256;
     this.size = size;

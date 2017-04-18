@@ -177,7 +177,6 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     }
     if (!ignoreManifestHashes) {
       String sha256 = HashUtils.getSHA256OfFile(file);
-      assert cdepManifestYml.coordinate != null;
       String priorSha256 = this.cdepSha256Hashes.get(cdepManifestYml.coordinate.toString());
       require(priorSha256 == null || priorSha256.equals(sha256),
           "SHA256 of cdep-manifest.yml for package '%s' does " + "not " + "agree with constant in cdep.sha256. Something changed.",

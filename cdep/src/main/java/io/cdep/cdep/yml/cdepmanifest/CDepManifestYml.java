@@ -20,9 +20,9 @@ import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 
 public class CDepManifestYml {
-  @Nullable
+  @NotNull
   final public Coordinate coordinate;
-  @Nullable
+  @NotNull
   final public HardNameDependency dependencies[];
   @Nullable
   final public Interfaces interfaces;
@@ -31,43 +31,43 @@ public class CDepManifestYml {
   @Nullable
   final public Linux linux;
   @Nullable
-  final public io.cdep.cdep.yml.cdepmanifest.iOS iOS;
-  @Nullable
+  final public iOS iOS;
+  @NotNull
   final public String example;
-  @Nullable
+  @NotNull
   public CDepManifestYmlVersion sourceVersion;
 
   public CDepManifestYml() {
-    this.sourceVersion = null;
-    this.coordinate = null;
-    this.dependencies = null;
+    this.sourceVersion = CDepManifestYmlVersion.vlatest;
+    this.coordinate = Coordinate.EMPTY_COORDINATE;
+    this.dependencies = new HardNameDependency[0];
     this.interfaces = null;
     this.android = null;
     this.linux = null;
     this.iOS = null;
-    this.example = null;
+    this.example = "";
   }
 
   public CDepManifestYml(@NotNull Coordinate coordinate) {
-    this.sourceVersion = null;
+    this.sourceVersion = CDepManifestYmlVersion.vlatest;
     this.coordinate = coordinate;
-    this.dependencies = null;
+    this.dependencies = new HardNameDependency[0];
     this.interfaces = null;
     this.android = null;
     this.linux = null;
     this.iOS = null;
-    this.example = null;
+    this.example = "";
   }
 
   public CDepManifestYml(
       @NotNull CDepManifestYmlVersion sourceVersion,
       @NotNull Coordinate coordinate,
-      @Nullable HardNameDependency[] dependencies,
+      @NotNull HardNameDependency[] dependencies,
       @Nullable Interfaces interfaces,
       @Nullable Android android,
       @Nullable iOS ios,
       @Nullable Linux linux,
-      @Nullable String example) {
+      @NotNull String example) {
     this.sourceVersion = sourceVersion;
     this.coordinate = coordinate;
     this.dependencies = dependencies;

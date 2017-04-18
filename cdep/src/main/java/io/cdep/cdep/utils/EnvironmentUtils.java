@@ -44,11 +44,8 @@ public class EnvironmentUtils {
     Archive archive = manifest.interfaces.headers;
     require(archive != null, "'%s' does not have archive", coordinate);
     assert archive != null;
-    require(archive.include != null, "'%s' does not have archive.include", coordinate);
-    require(archive.file != null, "'%s' does not have archive.include.file", coordinate);
-    assert manifest.coordinate != null;
-    assert archive.file != null;
-    assert archive.include != null;
+    require(!archive.include.isEmpty(), "'%s' does not have archive.include", coordinate);
+    require(!archive.file.isEmpty(), "'%s' does not have archive.include.file", coordinate);
     return new File(environment.getLocalUnzipFolder(manifest.coordinate,
         resolved.remote.toURI().resolve(".").resolve(archive.file).toURL()), archive.include);
   }

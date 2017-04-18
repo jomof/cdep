@@ -18,7 +18,7 @@ import static io.cdep.cdep.utils.Invariant.require;
 /**
  * Records the current state of resolving top-level and transitive dependencies.
  */
-@SuppressWarnings("Convert2Diamond")
+@SuppressWarnings({"Convert2Diamond", "unused"})
 public class ResolutionScope {
   // Map of dependency edges. Key is dependant and value is dependees.
   @NotNull
@@ -136,7 +136,6 @@ public class ResolutionScope {
   public void recordResolved(@NotNull SoftNameDependency softname,
       @NotNull ResolvedManifest resolved,
       @NotNull List<HardNameDependency> transitiveDependencies) {
-    assert resolved.cdepManifestYml.coordinate != null;
     require(!isResolved(resolved.cdepManifestYml.coordinate.toString()),
         "%s was already resolved",
         resolved.cdepManifestYml.coordinate);
@@ -165,9 +164,9 @@ public class ResolutionScope {
    * Unifies manifest version to most recent. Returns a versionless coordinate that is the
    * key to the manifest even if it changes later during resolution.
    */
+  @SuppressWarnings("Java8ListSort")
   @Nullable
   private Coordinate getVersionlessCoordinateResolvedManifest(@NotNull ResolvedManifest resolved) {
-    assert resolved.cdepManifestYml.coordinate != null;
     Coordinate versionless = new Coordinate(
         resolved.cdepManifestYml.coordinate.groupId,
         resolved.cdepManifestYml.coordinate.artifactId);
@@ -176,7 +175,6 @@ public class ResolutionScope {
     if (preexisting != null) {
       Map<Version, ResolvedManifest> manifests = new HashMap<>();
       manifests.put(resolved.cdepManifestYml.coordinate.version, resolved);
-      assert preexisting.cdepManifestYml.coordinate != null;
       manifests.put(preexisting.cdepManifestYml.coordinate.version, preexisting);
       List<Version> versions = new ArrayList<>();
       versions.addAll(manifests.keySet());

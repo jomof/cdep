@@ -23,8 +23,10 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
   @Nullable
   @Override
   protected Archive visitArchive(Archive archive) {
-    if (archive.sha256 == null) {
-      assert archive.file != null;
+    if (archive == null) {
+      return null;
+    }
+    if (archive.sha256.isEmpty()) {
       File file = new File(layoutFolder, archive.file);
       require(
           file.isFile(),
@@ -47,8 +49,7 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
   @Nullable
   @Override
   protected AndroidArchive visitAndroidArchive(@NotNull AndroidArchive archive) {
-    if (archive.sha256 == null) {
-      assert archive.file != null;
+    if (archive.sha256.isEmpty()) {
       File file = new File(layoutFolder, archive.file);
       require(
           file.isFile(),

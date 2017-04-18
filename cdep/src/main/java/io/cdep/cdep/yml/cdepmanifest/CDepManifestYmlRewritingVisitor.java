@@ -128,7 +128,7 @@ public class CDepManifestYmlRewritingVisitor {
   }
 
   @NotNull
-  private iOSArchive visitiOSArchive(@NotNull iOSArchive archive) {
+  protected iOSArchive visitiOSArchive(@NotNull iOSArchive archive) {
     return new iOSArchive(
         visitFile(archive.file),
         visitSha256(archive.sha256),
