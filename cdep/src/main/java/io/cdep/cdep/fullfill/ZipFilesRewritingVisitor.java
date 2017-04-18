@@ -121,6 +121,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   private File getStagingZipFolder(File layoutZipFile, String folder) {
     File stagingZipFolder = new File(staging, layoutZipFile.getName());
     stagingZipFolder = new File(stagingZipFolder, folder);
+    //noinspection ResultOfMethodCallIgnored
     stagingZipFolder.delete();
     return stagingZipFolder;
   }
@@ -130,13 +131,14 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     String prefix = StringUtils.joinOnSkipNull("-", keys);
     File layoutZipFile = new File(layout, prefix + ".zip");
     if (layoutZipFile.exists()) {
+      //noinspection ResultOfMethodCallIgnored
       layoutZipFile.delete();
     }
     return replaceInvalidCharacters(layoutZipFile);
   }
 
   private File replaceInvalidCharacters(File file) {
-    String baseName = file.getName().toString();
+    String baseName = file.getName();
     baseName = baseName.replace("/", "-");
     baseName = baseName.replace("\\", "-");
     baseName = baseName.replace(":", "-");
@@ -153,6 +155,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
       File stagingZipFile = new File(stagingZipFolder, mapping.to.getPath());
 
       // Make the staging zip folder
+      //noinspection ResultOfMethodCallIgnored
       stagingZipFile.getParentFile().mkdirs();
 
       // Copy the single header file to the staging zip folder.

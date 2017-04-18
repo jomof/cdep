@@ -94,6 +94,7 @@ public class GeneratorEnvironmentUtils {
       // It may have been an interrupted download. Try again.
       if (!environment.forceRedownload) {
         forceUnzip = true;
+        //noinspection ResultOfMethodCallIgnored
         local.delete();
         local = environment.tryGetLocalDownloadedFile(coordinate, archiveURL);
         require(local != null, "Resolved archive '%s' didn't exist", archiveURL);

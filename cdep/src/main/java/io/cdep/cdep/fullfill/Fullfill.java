@@ -37,11 +37,13 @@ public class Fullfill {
 
     File layout = new File(outputFolder, "layout");
     if (!layout.isDirectory()) {
+      //noinspection ResultOfMethodCallIgnored
       layout.mkdirs();
     }
 
     File staging = new File(outputFolder, "staging");
     if (!staging.isDirectory()) {
+      //noinspection ResultOfMethodCallIgnored
       staging.mkdirs();
     }
 

@@ -8,6 +8,7 @@ import org.yaml.snakeyaml.error.YAMLException;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static io.cdep.cdep.utils.Invariant.require;
@@ -73,9 +74,7 @@ public class API {
       String ... args) throws MalformedURLException {
     List<String> result = new ArrayList<>();
     result.addAll(callCDep(environment));
-    for (String arg : args) {
-      result.add(arg);
-    }
+    Collections.addAll(result, args);
     return result;
   }
 }

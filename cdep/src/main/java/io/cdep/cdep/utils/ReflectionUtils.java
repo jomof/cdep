@@ -100,8 +100,7 @@ public class ReflectionUtils {
         path = "file:/" + path.substring(5);
       }
       return new File(new URL(path).toURI());
-    } catch (MalformedURLException e) {
-    } catch (URISyntaxException e) {
+    } catch (MalformedURLException | URISyntaxException e) {
     }
     if (path.startsWith("file:")) {
       path = path.substring(5);
