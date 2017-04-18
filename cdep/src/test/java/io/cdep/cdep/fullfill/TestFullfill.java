@@ -9,10 +9,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
@@ -27,14 +24,12 @@ public class TestFullfill {
   private File[] templates(File... folders) {
     List<File> templates = new ArrayList<>();
     for (File folder : folders) {
-      for (File file : folder.listFiles(new FileFilter() {
+      Collections.addAll(templates, folder.listFiles(new FileFilter() {
         @Override
         public boolean accept(File pathname) {
           return pathname.getName().startsWith("cdep-manifest");
         }
-      })) {
-        templates.add(file);
-      }
+      }));
     }
     return templates.toArray(new File[templates.size()]);
   }

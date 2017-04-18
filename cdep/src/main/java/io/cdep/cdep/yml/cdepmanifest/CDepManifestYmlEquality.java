@@ -33,6 +33,7 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
     covisitFields(left, right);
   }
 
+  @SuppressWarnings("WeakerAccess")
   public void covisitHardNameDependencyArray(@SuppressWarnings("SameParameterValue") String name, HardNameDependency left[], HardNameDependency right[]) {
     covisitArray(name, left, right, HardNameDependency.class);
   }

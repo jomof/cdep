@@ -13,7 +13,7 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
 
 @SuppressWarnings("unused")
 public class RewritingVisitor {
-  final protected Map<Expression, Expression> identity = new HashMap<>();
+  private final Map<Expression, Expression> identity = new HashMap<>();
 
   @NotNull
   public Expression visit(@NotNull Expression expr) {
@@ -26,7 +26,7 @@ public class RewritingVisitor {
   }
 
   @Nullable
-  public Expression visitMaybeNull(@Nullable Expression expr) {
+  private Expression visitMaybeNull(@Nullable Expression expr) {
     if (expr == null) {
       return null;
     }
@@ -34,7 +34,7 @@ public class RewritingVisitor {
   }
 
   @Nullable
-  protected Expression visitNoIdentity(@NotNull Expression expr) {
+  private Expression visitNoIdentity(@NotNull Expression expr) {
 
     if (expr.getClass().equals(FunctionTableExpression.class)) {
       return visitFunctionTableExpression((FunctionTableExpression) expr);
@@ -100,7 +100,7 @@ public class RewritingVisitor {
     return expr;
   }
 
-  protected Expression visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
+  private Expression visitAssignmentReferenceExpression(AssignmentReferenceExpression expr) {
     return expr;
   }
 
@@ -119,27 +119,27 @@ public class RewritingVisitor {
   }
 
   @NotNull
-  protected Expression visitArrayExpression(@NotNull ArrayExpression expr) {
+  private Expression visitArrayExpression(@NotNull ArrayExpression expr) {
     return array(visitArray(expr.elements));
   }
 
   @NotNull
-  protected Expression visitIntegerExpression(@NotNull IntegerExpression expr) {
+  private Expression visitIntegerExpression(@NotNull IntegerExpression expr) {
     return integer(expr.value);
   }
 
-  protected Expression visitExternalFunctionExpression(ExternalFunctionExpression expr) {
+  private Expression visitExternalFunctionExpression(ExternalFunctionExpression expr) {
     // Don't rewrite since identity is used for lookup.
     return expr;
   }
 
   @NotNull
-  protected Expression visitExampleExpression(@NotNull ExampleExpression expr) {
+  private Expression visitExampleExpression(@NotNull ExampleExpression expr) {
     return new ExampleExpression(expr.sourceCode);
   }
 
   @NotNull
-  protected Expression visitAbortExpression(@NotNull AbortExpression expr) {
+  private Expression visitAbortExpression(@NotNull AbortExpression expr) {
     return abort(expr.message, visitArray(expr.parameters));
   }
 
@@ -184,7 +184,7 @@ public class RewritingVisitor {
   }
 
   @NotNull
-  protected Expression[] visitArray(@NotNull Expression[] array) {
+  private Expression[] visitArray(@NotNull Expression[] array) {
     Expression result[] = new Expression[array.length];
     for (int i = 0; i < array.length; ++i) {
       result[i] = visit(array[i]);
@@ -193,27 +193,27 @@ public class RewritingVisitor {
   }
 
   @NotNull
-  protected Expression visitAssignmentExpression(@NotNull AssignmentExpression expr) {
+  Expression visitAssignmentExpression(@NotNull AssignmentExpression expr) {
     return assign(expr.name, visit(expr.expression));
   }
 
   @NotNull
-  protected Expression visitConstantExpression(@NotNull ConstantExpression expr) {
+  private Expression visitConstantExpression(@NotNull ConstantExpression expr) {
     return constant(expr.value);
   }
 
   @NotNull
-  protected Expression visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
+  Expression visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
     return ifSwitch(visitArray(expr.conditions), visitArray(expr.expressions), visit(expr.elseExpression));
   }
 
   @NotNull
-  protected Expression visitParameterExpression(@NotNull ParameterExpression expr) {
+  private Expression visitParameterExpression(@NotNull ParameterExpression expr) {
     return expr;
   }
 
   @NotNull
-  protected Expression visitFindModuleExpression(@NotNull FindModuleExpression expr) {
+  Expression visitFindModuleExpression(@NotNull FindModuleExpression expr) {
     return new FindModuleExpression(
         (GlobalBuildEnvironmentExpression) visit(expr.globals),
         expr.coordinate,
@@ -223,7 +223,7 @@ public class RewritingVisitor {
   }
 
   @NotNull
-  Expression visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
+  private Expression visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
     FunctionTableExpression newExpr = new FunctionTableExpression(expr.globals);
 
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
@@ -236,7 +236,7 @@ public class RewritingVisitor {
   }
 
   @NotNull
-  protected StatementExpression[] visitStatementExpressionArray(@NotNull StatementExpression[] array) {
+  private StatementExpression[] visitStatementExpressionArray(@NotNull StatementExpression[] array) {
     StatementExpression result[] = new StatementExpression[array.length];
     for (int i = 0; i < array.length; ++i) {
       result[i] = (StatementExpression) visit(array[i]);
@@ -245,12 +245,12 @@ public class RewritingVisitor {
   }
 
   @NotNull
-  protected Expression visitMultiStatementExpression(@NotNull MultiStatementExpression expr) {
+  private Expression visitMultiStatementExpression(@NotNull MultiStatementExpression expr) {
     return multi(visitStatementExpressionArray(expr.statements));
   }
 
   @NotNull
-  protected Expression visitNopExpression(@NotNull NopExpression expr) {
+  private Expression visitNopExpression(@NotNull NopExpression expr) {
     return nop();
   }
 }

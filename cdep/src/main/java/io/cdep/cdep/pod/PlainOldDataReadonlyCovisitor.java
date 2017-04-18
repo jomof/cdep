@@ -55,7 +55,7 @@ public class PlainOldDataReadonlyCovisitor {
     covisitFields(left, right);
   }
 
-  public <T> void covisitArray(String name, @Nullable T[] left, @Nullable T[] right, @NotNull Class<T> elementType) {
+  protected <T> void covisitArray(String name, @Nullable T[] left, @Nullable T[] right, @NotNull Class<T> elementType) {
     if (left == null && right == null) {
       return;
     }
@@ -85,7 +85,7 @@ public class PlainOldDataReadonlyCovisitor {
     covisit(null, left, right, left.getClass());
   }
 
-  public void covisit(String name, @Nullable Object left, @Nullable Object right, @NotNull Class<?> type) {
+  protected void covisit(String name, @Nullable Object left, @Nullable Object right, @NotNull Class<?> type) {
     if (left == null && right == null) {
       return;
     }
@@ -99,7 +99,7 @@ public class PlainOldDataReadonlyCovisitor {
     }
   }
 
-  public void covisitFields(@Nullable Object left, @Nullable Object right) {
+  protected void covisitFields(@Nullable Object left, @Nullable Object right) {
     require(left != null || right != null);
     Object representative = right;
     if (representative == null) {
