@@ -36,6 +36,7 @@ public class GithubReleasesCoordinateResolver extends CoordinateResolver {
   public ResolvedManifest resolve(@NotNull ManifestProvider environment, @NotNull SoftNameDependency dependency)
       throws IOException, NoSuchAlgorithmException {
     String coordinate = dependency.compile;
+    assert coordinate != null;
     Matcher match = pattern.matcher(coordinate);
     if (match.find()) {
       String user = match.group(1);

@@ -5,6 +5,7 @@ import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.Version;
 
+@SuppressWarnings("ConstantConditions")
 public class CDepManifestYmlRewritingVisitor {
 
   @NotNull

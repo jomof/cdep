@@ -94,7 +94,6 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
       --retriesRemaining;
       infoln("Retrying %s", url);
     }
-    require(lastException != null, "Should have an exception that indicates retry reason");
     throw lastException;
   }
 
@@ -117,6 +116,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     assert coordinate.artifactId != null;
     local = new File(local, coordinate.artifactId);
     assert coordinate.version != null;
+    assert coordinate.version.value != null;
     local = new File(local, coordinate.version.value);
     local = new File(local, getUrlBaseName(remoteArchive));
     return local;
@@ -199,6 +199,7 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     assert coordinate.artifactId != null;
     local = new File(local, coordinate.artifactId);
     assert coordinate.version != null;
+    assert coordinate.version.value != null;
     local = new File(local, coordinate.version.value);
     local = new File(local, getUrlBaseName(remoteArchive));
     return local;

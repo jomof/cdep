@@ -66,6 +66,7 @@ public class GeneratorEnvironmentUtils {
           ModuleExpression specific = (ModuleExpression) foundModule;
           archive = specific.archive;
         }
+        assert archive != null;
         URL archiveURL = archive.file;
         Long size = archive.size;
         String sha256 = archive.sha256;
@@ -73,6 +74,8 @@ public class GeneratorEnvironmentUtils {
 
         File local = environment.getLocalDownloadFilename(coordinate, archiveURL);
         boolean forceUnzip = environment.forceRedownload && !alreadyExploded.contains(local);
+        assert size != null;
+        assert sha256 != null;
         local = downloadSingleArchive(environment, coordinate, archiveURL, size, sha256, forceUnzip);
         alreadyExploded.add(local);
       }
@@ -89,7 +92,7 @@ public class GeneratorEnvironmentUtils {
       boolean forceUnzip) throws IOException, NoSuchAlgorithmException {
     File local = environment.tryGetLocalDownloadedFile(coordinate, archiveURL);
     require(local != null, "Resolved archive '%s' didn't exist", archiveURL);
-
+    assert local != null;
     if (size != local.length()) {
       // It may have been an interrupted download. Try again.
       if (!environment.forceRedownload) {
@@ -99,6 +102,7 @@ public class GeneratorEnvironmentUtils {
         local = environment.tryGetLocalDownloadedFile(coordinate, archiveURL);
         require(local != null, "Resolved archive '%s' didn't exist", archiveURL);
       }
+      assert local != null;
       require(size == local.length(),
           "File size for %s was %s which did not match constant %s from the manifest",
           archiveURL,

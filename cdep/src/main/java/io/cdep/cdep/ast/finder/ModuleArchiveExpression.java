@@ -9,9 +9,9 @@ import java.net.URL;
 import static io.cdep.cdep.utils.Invariant.require;
 
 public class ModuleArchiveExpression extends StatementExpression {
-  @Nullable final public URL file; // The zip file.
-  @Nullable final public String sha256;
-  @Nullable final public Long size;
+  @NotNull final public URL file; // The zip file.
+  @NotNull final public String sha256;
+  @NotNull final public Long size;
   @Nullable final public String include;
   @Nullable final public Expression includePath;
   @NotNull final public String libs[];
@@ -19,14 +19,14 @@ public class ModuleArchiveExpression extends StatementExpression {
   @NotNull final public CxxLanguageFeatures requires[];
 
   public ModuleArchiveExpression(
-      @Nullable URL file,
-      @Nullable String sha256,
-      @Nullable Long size,
+      @NotNull URL file,
+      @NotNull String sha256,
+      @NotNull Long size,
       @Nullable String include, // Like "include"
       @Nullable Expression fullIncludePath,
       @NotNull String libs[], // Like "lib/libsqlite.a"
       @NotNull Expression libraryPaths[],
-      @Nullable CxxLanguageFeatures requires[]) {
+      @NotNull CxxLanguageFeatures requires[]) {
     require(libs.length == libraryPaths.length);
     this.file = file;
     this.sha256 = sha256;

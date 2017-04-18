@@ -22,13 +22,12 @@ public class Version {
 
   @Override
   public int hashCode() {
-    assert value != null;
-    return value.hashCode();
+    return toString().hashCode();
   }
 
   @NotNull
   @Override
   public String toString() {
-    return value;
+    return value == null ? "None" : value;
   }
 }

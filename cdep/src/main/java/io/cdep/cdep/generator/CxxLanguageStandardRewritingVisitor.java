@@ -24,7 +24,7 @@ public class CxxLanguageStandardRewritingVisitor extends RewritingVisitor {
   protected Expression visitModuleExpression(@NotNull ModuleExpression expr) {
     ModuleArchiveExpression archive = expr.archive;
     CxxLanguageFeatures requires[] = archive.requires;
-    if (requires == null || requires.length == 0) {
+    if (requires.length == 0) {
       return super.visitModuleExpression(expr);
     }
 

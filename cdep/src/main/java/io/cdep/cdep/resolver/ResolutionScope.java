@@ -167,6 +167,9 @@ public class ResolutionScope {
    */
   @Nullable
   private Coordinate getVersionlessCoordinateResolvedManifest(@NotNull ResolvedManifest resolved) {
+    assert resolved.cdepManifestYml.coordinate.groupId != null;
+    assert resolved.cdepManifestYml.coordinate != null;
+    assert resolved.cdepManifestYml.coordinate.artifactId != null;
     Coordinate versionless = new Coordinate(
         resolved.cdepManifestYml.coordinate.groupId,
         resolved.cdepManifestYml.coordinate.artifactId,
@@ -176,6 +179,7 @@ public class ResolutionScope {
     if (preexisting != null) {
       Map<Version, ResolvedManifest> manifests = new HashMap<>();
       manifests.put(resolved.cdepManifestYml.coordinate.version, resolved);
+      assert preexisting.cdepManifestYml.coordinate != null;
       manifests.put(preexisting.cdepManifestYml.coordinate.version, preexisting);
       List<Version> versions = new ArrayList<>();
       versions.addAll(manifests.keySet());

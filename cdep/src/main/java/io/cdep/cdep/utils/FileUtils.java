@@ -80,6 +80,7 @@ public class FileUtils {
     if (dir == null || dir.listFiles() == null) {
       return fileTree;
     }
+    //noinspection ConstantConditions
     for (File entry : dir.listFiles()) {
       if (entry.isFile())
         fileTree.add(entry);

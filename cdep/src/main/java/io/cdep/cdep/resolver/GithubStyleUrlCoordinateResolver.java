@@ -39,6 +39,7 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
   public ResolvedManifest resolve(@NotNull ManifestProvider environment, @NotNull SoftNameDependency dependency)
       throws IOException, NoSuchAlgorithmException {
     String coordinate = dependency.compile;
+    assert coordinate != null;
     Matcher match = pattern.matcher(coordinate);
     if (match.find()) {
 
@@ -67,10 +68,12 @@ public class GithubStyleUrlCoordinateResolver extends CoordinateResolver {
       }
 
       // Ensure that the manifest coordinate agrees with the url provided
+      assert cdepManifestYml.coordinate != null;
       require(groupId.equals(cdepManifestYml.coordinate.groupId),
           "groupId '%s' from manifest did not agree with github url %s",
           cdepManifestYml.coordinate.groupId,
           coordinate);
+      assert cdepManifestYml.coordinate.artifactId != null;
       require(artifactId.startsWith(cdepManifestYml.coordinate.artifactId),
           "artifactId '%s' from manifest did not agree with '%s' from github url %s",
           artifactId,

@@ -34,6 +34,7 @@ public class LocalFilePathCoordinateResolver extends CoordinateResolver {
   @Override
   public ResolvedManifest resolve(ManifestProvider environment, @NotNull SoftNameDependency dependency) throws IOException {
     String coordinate = dependency.compile;
+    assert coordinate != null;
     File local = new File(coordinate);
     if (!local.isFile()) {
       return null;

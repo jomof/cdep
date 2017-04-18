@@ -212,6 +212,7 @@ public class ExpressionBuilder {
 
   @NotNull
   public static ConstantExpression constant(@Nullable Object value) {
+    assert value != null;
     return new ConstantExpression(value);
   }
 

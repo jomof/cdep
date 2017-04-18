@@ -57,7 +57,7 @@ public class ReflectionUtils {
     }
   }
 
-  @NotNull
+  @Nullable
   public static File getLocation(@NotNull Class<?> c) throws MalformedURLException {
     URL codeSourceLocation = c.getProtectionDomain().getCodeSource().getLocation();
     if (codeSourceLocation != null) {
@@ -67,6 +67,7 @@ public class ReflectionUtils {
     URL classResource = c.getResource(c.getSimpleName() + ".class");
     require(classResource != null);
 
+    assert classResource != null;
     String url = classResource.toString();
     String suffix = c.getCanonicalName().replace('.', '/') + ".class";
     require(url.endsWith(suffix));
@@ -85,6 +86,7 @@ public class ReflectionUtils {
     return url == null ? null : urlToFile(url.toString());
   }
 
+  @Nullable
   private static File urlToFile(String url) {
     String path = url;
     if (path.startsWith("jar:")) {

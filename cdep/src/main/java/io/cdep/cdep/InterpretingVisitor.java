@@ -170,6 +170,7 @@ public class InterpretingVisitor {
 
   @NotNull
   private Object visitAssignmentReferenceExpression(@NotNull AssignmentReferenceExpression expr) {
+    assert stack != null;
     AssignmentFuture future = stack.lookup(expr.assignment);
     if (future.value == null) {
       Frame oldStack = stack;
@@ -278,6 +279,7 @@ public class InterpretingVisitor {
   Object visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
     for (int i = 0; i < expr.conditions.length; ++i) {
       Object condition = visit(expr.conditions[i]);
+      assert condition != null;
       require(Boolean.class.isAssignableFrom(condition.getClass()),
           "Value of type '%s' was not assignable to boolean",
           condition.getClass());
@@ -351,6 +353,7 @@ public class InterpretingVisitor {
       AssignmentFuture value = assignments.get(assignment);
       if (value == null) {
         require(prior != null, "Could not resolve '%s", assignment.name);
+        assert prior != null;
         return prior.lookup(assignment);
       }
       return value;

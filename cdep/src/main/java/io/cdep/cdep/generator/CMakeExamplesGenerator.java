@@ -68,8 +68,8 @@ public class CMakeExamplesGenerator {
     file = new File(file, coordinate.groupId);
     assert coordinate.artifactId != null;
     file = new File(file, coordinate.artifactId);
-    assert coordinate.version.value != null;
     assert coordinate.version != null;
+    assert coordinate.version.value != null;
     file = new File(file, coordinate.version.value);
     return file;
   }

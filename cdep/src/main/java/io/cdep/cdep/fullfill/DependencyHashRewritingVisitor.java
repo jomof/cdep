@@ -31,14 +31,18 @@ public class DependencyHashRewritingVisitor extends CDepManifestYmlRewritingVisi
     require(dependency.compile != null, "Dependency had no compile field");
     if (dependency.sha256 == null) {
       try {
+        assert dependency.compile != null;
         ResolvedManifest resolved = new Resolver(environment).resolveAny(
             new SoftNameDependency(
                 dependency.compile));
         require(resolved != null, "Could not resolve dependency %s",
             dependency.compile);
+        assert resolved != null;
         File manifest = environment.tryGetLocalDownloadedFile(
             resolved.cdepManifestYml.coordinate,
             resolved.remote);
+        assert resolved.cdepManifestYml.coordinate != null;
+        assert manifest != null;
         return new HardNameDependency(
             resolved.cdepManifestYml.coordinate.toString(),
             HashUtils.getSHA256OfFile(manifest));

@@ -81,6 +81,8 @@ public class PlainOldDataReadonlyCovisitor {
 
   public void covisit(@Nullable Object left, @Nullable Object right) {
     require(left != null && right != null);
+    assert left != null;
+    assert right != null;
     require(left.getClass().equals(right.getClass()));
     covisit(null, left, right, left.getClass());
   }
@@ -105,6 +107,7 @@ public class PlainOldDataReadonlyCovisitor {
     if (representative == null) {
       representative = left;
     }
+    assert representative != null;
     require(!representative.getClass().isEnum(), "Don't visit enum field");
     for (Field field : representative.getClass().getFields()) {
       Object leftValue = left == null ? null : getFieldValue(field, left);

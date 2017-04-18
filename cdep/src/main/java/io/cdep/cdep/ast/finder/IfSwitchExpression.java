@@ -14,6 +14,7 @@ public class IfSwitchExpression extends StatementExpression {
   public IfSwitchExpression() {
     conditions = new Expression[0];
     expressions = new Expression[0];
+    //noinspection ConstantConditions
     elseExpression = null;
   }
 

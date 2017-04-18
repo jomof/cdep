@@ -40,11 +40,15 @@ public class EnvironmentUtils {
       @NotNull ResolvedManifest resolved) throws URISyntaxException, MalformedURLException {
     CDepManifestYml manifest = resolved.cdepManifestYml;
     require(manifest.interfaces != null, "'%s' does not have archive", coordinate);
+    assert manifest.interfaces != null;
     Archive archive = manifest.interfaces.headers;
     require(archive != null, "'%s' does not have archive", coordinate);
+    assert archive != null;
     require(archive.include != null, "'%s' does not have archive.include", coordinate);
     require(archive.file != null, "'%s' does not have archive.include.file", coordinate);
     assert manifest.coordinate != null;
+    assert archive.file != null;
+    assert archive.include != null;
     return new File(environment.getLocalUnzipFolder(manifest.coordinate,
         resolved.remote.toURI().resolve(".").resolve(archive.file).toURL()), archive.include);
   }
@@ -58,6 +62,7 @@ public class EnvironmentUtils {
     SoftNameDependency name = new SoftNameDependency(coordinate);
     ResolvedManifest resolved = new Resolver(environment).resolveAny(name);
     require(resolved != null, "Could not resolve '%s'", coordinate);
+    assert resolved != null;
     return resolved;
   }
 }
