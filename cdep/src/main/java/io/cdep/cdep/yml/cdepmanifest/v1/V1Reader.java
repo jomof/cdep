@@ -1,6 +1,7 @@
 package io.cdep.cdep.yml.cdepmanifest.v1;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -23,7 +24,8 @@ public class V1Reader {
     return convert(manifest);
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.v2.CDepManifestYml convert(CDepManifestYml manifest) {
+  @Nullable
+  private static io.cdep.cdep.yml.cdepmanifest.v2.CDepManifestYml convert(@NotNull CDepManifestYml manifest) {
     return new io.cdep.cdep.yml.cdepmanifest.v2.CDepManifestYml(
         manifest.coordinate,
         manifest.dependencies,
@@ -34,11 +36,12 @@ public class V1Reader {
         manifest.example);
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.v3.Android convert(Android android) {
+  @NotNull
+  private static io.cdep.cdep.yml.cdepmanifest.v3.Android convert(@NotNull Android android) {
     return new io.cdep.cdep.yml.cdepmanifest.v3.Android(android.dependencies, convert(android.archives));
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.v3.AndroidArchive[] convert(AndroidArchive[] archives) {
+  private static io.cdep.cdep.yml.cdepmanifest.v3.AndroidArchive[] convert(@NotNull AndroidArchive[] archives) {
     List<io.cdep.cdep.yml.cdepmanifest.v3.AndroidArchive> singleAbiArchives = new ArrayList<>();
     for (AndroidArchive archive : archives) {
       for (String abi : archive.abis) {

@@ -18,7 +18,7 @@ import static io.cdep.cdep.utils.ReflectionUtils.*;
 public class PlainOldDataReadonlyCovisitor {
 
   @NotNull
-  List<String> namestack = new ArrayList<>();
+  final List<String> namestack = new ArrayList<>();
 
   private void push(@Nullable String name) {
     if (name == null) {

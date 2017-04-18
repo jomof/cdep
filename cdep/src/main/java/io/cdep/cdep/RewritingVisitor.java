@@ -169,7 +169,8 @@ public class RewritingVisitor {
         expr.requires);
   }
 
-  private Expression[] visitExpressionArray(Expression[] libraryPaths) {
+  @NotNull
+  private Expression[] visitExpressionArray(@NotNull Expression[] libraryPaths) {
     Expression result[] = new Expression[libraryPaths.length];
     for (int i = 0; i < libraryPaths.length; ++i) {
       result[i] = visit(libraryPaths[i]);

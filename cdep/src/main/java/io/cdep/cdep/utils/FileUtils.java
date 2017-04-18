@@ -16,6 +16,7 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
@@ -73,7 +74,8 @@ public class FileUtils {
     }
   }
 
-  public static Collection<File> listFileTree(File dir) {
+  @NotNull
+  public static Collection<File> listFileTree(@Nullable File dir) {
     Set<File> fileTree = new HashSet<>();
     if (dir == null || dir.listFiles() == null) {
       return fileTree;
@@ -87,7 +89,8 @@ public class FileUtils {
     return fileTree;
   }
 
-  public static String readAllText(InputStream stream) {
+  @NotNull
+  public static String readAllText(@NotNull InputStream stream) {
     java.util.Scanner s = new java.util.Scanner(stream).useDelimiter("\\A");
     return s.hasNext() ? s.next() : "";
   }

@@ -1,6 +1,7 @@
 package io.cdep.cdep.fullfill;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.utils.ArchiveUtils;
 import io.cdep.cdep.utils.StringUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
@@ -26,6 +27,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   private final File layout;
   private final File staging;
   private final List<File> zips = new ArrayList<>();
+  @Nullable
   private String prefix = "";
 
   ZipFilesRewritingVisitor(File layout, File staging) {
@@ -43,8 +45,9 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     return super.visitCDepManifestYml(value);
   }
 
+  @Nullable
   @Override
-  protected Archive visitArchive(Archive archive) {
+  protected Archive visitArchive(@Nullable Archive archive) {
     if (archive == null || archive.file == null) {
       return archive;
     }
@@ -73,8 +76,9 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     );
   }
 
+  @Nullable
   @Override
-  protected AndroidArchive visitAndroidArchive(AndroidArchive archive) {
+  protected AndroidArchive visitAndroidArchive(@Nullable AndroidArchive archive) {
     if (archive == null || archive.file == null) {
       return archive;
     }
@@ -118,7 +122,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   }
 
   @NotNull
-  private File getStagingZipFolder(File layoutZipFile, String folder) {
+  private File getStagingZipFolder(@NotNull File layoutZipFile, @NotNull String folder) {
     File stagingZipFolder = new File(staging, layoutZipFile.getName());
     stagingZipFolder = new File(stagingZipFolder, folder);
     //noinspection ResultOfMethodCallIgnored
@@ -137,7 +141,8 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     return replaceInvalidCharacters(layoutZipFile);
   }
 
-  private File replaceInvalidCharacters(File file) {
+  @NotNull
+  private File replaceInvalidCharacters(@NotNull File file) {
     String baseName = file.getName();
     baseName = baseName.replace("/", "-");
     baseName = baseName.replace("\\", "-");
@@ -146,7 +151,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     return new File(file.getParentFile(), baseName);
   }
 
-  private void copyFilesToStaging(PathMapping[] mappings, File stagingZipFolder) {
+  private void copyFilesToStaging(@NotNull PathMapping[] mappings, File stagingZipFolder) {
     for (PathMapping mapping : mappings) {
       require(
           mapping.from.exists(),
@@ -163,7 +168,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     }
   }
 
-  private void zipStagingFilesIntoArchive(File layoutZipFile, File stagingZipFolder) {
+  private void zipStagingFilesIntoArchive(@NotNull File layoutZipFile, @NotNull File stagingZipFolder) {
     try {
       ArchiveUtils.pack(stagingZipFolder.toPath(), layoutZipFile.toPath());
     } catch (IOException e) {
@@ -171,7 +176,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     }
   }
 
-  private void copyFileToStaging(PathMapping mapping, File stagingZipFile) {
+  private void copyFileToStaging(@NotNull PathMapping mapping, @NotNull File stagingZipFile) {
     try {
       Files.copy(mapping.from.toPath(), stagingZipFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     } catch (IOException e) {
@@ -179,6 +184,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     }
   }
 
+  @NotNull
   public Collection<? extends File> getZips() {
     return zips;
   }

@@ -16,6 +16,7 @@
 package io.cdep.cdep.generator;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.Expression;
@@ -80,6 +81,7 @@ public class GeneratorEnvironmentUtils {
     }
   }
 
+  @Nullable
   public static File downloadSingleArchive(
       @NotNull GeneratorEnvironment environment,
       @NotNull Coordinate coordinate,
@@ -123,7 +125,7 @@ public class GeneratorEnvironmentUtils {
    */
   public static void addAllResolvedToTable(
       @NotNull BuildFindModuleFunctionTable builder,
-      ResolutionScope scope) {
+      @NotNull ResolutionScope scope) {
     for (String name : scope.getResolutions()) {
       ResolvedManifest resolved = scope.getResolution(name);
       builder.addManifest(resolved);

@@ -1,5 +1,7 @@
 package io.cdep.cdep.fullfill;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
@@ -23,8 +25,9 @@ public class DependencyHashRewritingVisitor extends CDepManifestYmlRewritingVisi
     this.environment = environment;
   }
 
+  @Nullable
   @Override
-  protected HardNameDependency visitHardNameDependency(HardNameDependency dependency) {
+  protected HardNameDependency visitHardNameDependency(@NotNull HardNameDependency dependency) {
     require(dependency.compile != null, "Dependency had no compile field");
     if (dependency.sha256 == null) {
       try {
@@ -39,7 +42,7 @@ public class DependencyHashRewritingVisitor extends CDepManifestYmlRewritingVisi
         return new HardNameDependency(
             resolved.cdepManifestYml.coordinate.toString(),
             HashUtils.getSHA256OfFile(manifest));
-      } catch (IOException | NoSuchAlgorithmException e) {
+      } catch (@NotNull IOException | NoSuchAlgorithmException e) {
         throw new RuntimeException(e);
       }
     }

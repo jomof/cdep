@@ -1,5 +1,6 @@
 package io.cdep;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.utils.PlatformUtils;
 import io.cdep.cdep.utils.ReflectionUtils;
@@ -36,7 +37,8 @@ public class API {
   /**
    * Get a java command-line to call back into CDep.
    */
-  private static List<String> callCDep(GeneratorEnvironment environment) throws MalformedURLException {
+  @NotNull
+  private static List<String> callCDep(@NotNull GeneratorEnvironment environment) throws MalformedURLException {
     List<String> result = new ArrayList<>();
     if (PlatformUtils.isWindows()) {
       result.add("\"" + getJvmLocation() + "\"");
@@ -69,8 +71,9 @@ public class API {
   /**
    * Generate a call back to CDep.
    */
+  @NotNull
   public static List<String> generateCDepCall(
-      GeneratorEnvironment environment,
+      @NotNull GeneratorEnvironment environment,
       String ... args) throws MalformedURLException {
     List<String> result = new ArrayList<>();
     result.addAll(callCDep(environment));

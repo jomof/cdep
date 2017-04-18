@@ -1,5 +1,6 @@
 package io.cdep.cdep.fullfill;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.cdep.utils.FileUtils;
 
 import java.io.File;
@@ -15,7 +16,7 @@ public class PathMapping {
     this.to = to;
   }
 
-  public static PathMapping[] parse(String text) {
+  public static PathMapping[] parse(@NotNull String text) {
     List<PathMapping> result = new ArrayList<>();
     String[] mappings = text.split("\\|");
     for (String mapping : mappings) {

@@ -83,7 +83,8 @@ public class CDepManifestYmlUtils {
     @Nullable
     private CDepManifestYmlVersion sourceVersion = null;
 
-    private static String nullToStar(String string) {
+    @Nullable
+    private static String nullToStar(@Nullable String string) {
       if (string == null) {
         return "*";
       }
@@ -169,7 +170,8 @@ public class CDepManifestYmlUtils {
       super.visitAndroidArchive(name, value);
     }
 
-    private String archiveName(AndroidArchive value) {
+    @NotNull
+    private String archiveName(@NotNull AndroidArchive value) {
       return value.file == null ? "<unknown>" : value.file;
     }
 

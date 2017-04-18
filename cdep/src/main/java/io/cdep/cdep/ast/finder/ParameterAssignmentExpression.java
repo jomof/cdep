@@ -3,6 +3,7 @@ package io.cdep.cdep.ast.finder;
 import io.cdep.annotations.NotNull;
 
 public class ParameterAssignmentExpression extends Expression {
+  @NotNull
   final public ParameterExpression parameter;
   @NotNull
   final public Expression expression;

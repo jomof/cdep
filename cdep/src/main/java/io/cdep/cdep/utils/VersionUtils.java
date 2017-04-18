@@ -2,6 +2,7 @@ package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.Version;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -61,7 +62,8 @@ public class VersionUtils {
      * Break the given version into separate islands of String or Integer. Separators like . and -
      * are discorded.
      */
-    private static List<Object> segment(Version version) {
+    @NotNull
+    private static List<Object> segment(@NotNull Version version) {
       List<Object> segments = new ArrayList<>();
       String value = version.value;
       String segment = "";
@@ -117,7 +119,7 @@ public class VersionUtils {
       return segments;
     }
 
-    private int rawCompare(Version o1, Version o2) {
+    private int rawCompare(@NotNull Version o1, @NotNull Version o2) {
       List<Object> s1 = segment(o1);
       List<Object> s2 = segment(o2);
 
@@ -158,7 +160,7 @@ public class VersionUtils {
 
 
     @Override
-    public int compare(Version o1, Version o2) {
+    public int compare(@NotNull Version o1, @NotNull Version o2) {
       return order * rawCompare(o1, o2);
 
     }

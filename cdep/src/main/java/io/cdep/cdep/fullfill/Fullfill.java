@@ -1,5 +1,6 @@
 package io.cdep.cdep.fullfill;
 
+import io.cdep.annotations.NotNull;
 import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
@@ -26,11 +27,12 @@ public class Fullfill {
   /**
    * Returns a list of manifest files with missing fields filled in.
    */
+  @NotNull
   public static List<File> multiple(
       GeneratorEnvironment environment,
-      File templates[],
+      @NotNull File templates[],
       File outputFolder,
-      File sourceFolder,
+      @NotNull File sourceFolder,
       String version) throws IOException, URISyntaxException, NoSuchAlgorithmException {
     List<File> result = new ArrayList<>();
     CDepManifestYml manifests[] = new CDepManifestYml[templates.length];

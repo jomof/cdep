@@ -120,7 +120,7 @@ public class CDep {
     }
   }
 
-  void goNoScope(@NotNull String[] argArray, boolean showFirstExceptionStack)
+  private void goNoScope(@NotNull String[] argArray, boolean showFirstExceptionStack)
       throws IOException, URISyntaxException, NoSuchAlgorithmException {
     List<String> args = new ArrayList<>();
     Collections.addAll(args, argArray);
@@ -305,7 +305,7 @@ public class CDep {
     return false;
   }
 
-  private void handleMergeHeaders(List<String> args) throws IOException, NoSuchAlgorithmException {
+  private void handleMergeHeaders(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
     if (args.size() != 6) {
       info("Usage: cdep merge headers coordinate headers.zip folder outputmanifest.yml");
       return;

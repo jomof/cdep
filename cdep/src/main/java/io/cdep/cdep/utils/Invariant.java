@@ -25,7 +25,7 @@ abstract public class Invariant {
     return errors;
   }
 
-  private static void report(RuntimeException e) {
+  private static void report(@NotNull RuntimeException e) {
     if (requirementFailures.size() == 0) {
       throw e;
     }
@@ -76,7 +76,7 @@ abstract public class Invariant {
     return collection;
   }
 
-  public static void noNullElements(Object[] requires) {
+  public static void noNullElements(@Nullable Object[] requires) {
     if (requires == null) {
       return;
     }

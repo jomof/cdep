@@ -22,15 +22,18 @@ public class CDepManifestYmlRewritingVisitor {
         visitExample(value.example));
   }
 
+  @Nullable
   private String visitExample(String example) {
     return visitString(example);
   }
 
+  @Nullable
   protected String visitString(String example) {
     return example;
   }
 
-  private Linux visitLinux(Linux linux) {
+  @Nullable
+  private Linux visitLinux(@Nullable Linux linux) {
     if (linux == null) {
       return null;
     }
@@ -51,7 +54,8 @@ public class CDepManifestYmlRewritingVisitor {
     return result;
   }
 
-  private LinuxArchive visitLinuxArchive(LinuxArchive archive) {
+  @NotNull
+  private LinuxArchive visitLinuxArchive(@NotNull LinuxArchive archive) {
     return new LinuxArchive(
         visitFile(archive.file),
         visitSha256(archive.sha256),
@@ -60,7 +64,8 @@ public class CDepManifestYmlRewritingVisitor {
         visitInclude(archive.include));
   }
 
-  private String[] visitLibArray(String[] libs) {
+  @Nullable
+  private String[] visitLibArray(@Nullable String[] libs) {
     if (libs == null) {
       return null;
     }
@@ -71,10 +76,12 @@ public class CDepManifestYmlRewritingVisitor {
     return result;
   }
 
+  @Nullable
   private String visitInclude(String include) {
     return visitString(include);
   }
 
+  @Nullable
   private String visitLib(String lib) {
     return visitString(lib);
   }
@@ -87,15 +94,18 @@ public class CDepManifestYmlRewritingVisitor {
     return value;
   }
 
+  @Nullable
   private String visitSha256(String sha256) {
     return visitString(sha256);
   }
 
+  @Nullable
   private String visitFile(String file) {
     return visitString(file);
   }
 
-  private iOS visitiOS(iOS iOS) {
+  @Nullable
+  private iOS visitiOS(@Nullable iOS iOS) {
     if (iOS == null) {
       return null;
     }
@@ -117,7 +127,8 @@ public class CDepManifestYmlRewritingVisitor {
     return result;
   }
 
-  private iOSArchive visitiOSArchive(iOSArchive archive) {
+  @NotNull
+  private iOSArchive visitiOSArchive(@NotNull iOSArchive archive) {
     return new iOSArchive(
         visitFile(archive.file),
         visitSha256(archive.sha256),
@@ -130,10 +141,12 @@ public class CDepManifestYmlRewritingVisitor {
         visitFlavor(archive.flavor));
   }
 
+  @Nullable
   private String visitFlavor(String flavor) {
     return visitString(flavor);
   }
 
+  @Nullable
   private String visitSdk(String sdk) {
     return visitString(sdk);
   }
@@ -146,7 +159,8 @@ public class CDepManifestYmlRewritingVisitor {
     return platform;
   }
 
-  private Android visitAndroid(Android android) {
+  @Nullable
+  private Android visitAndroid(@Nullable Android android) {
     if (android == null) {
       return null;
     }
@@ -168,7 +182,8 @@ public class CDepManifestYmlRewritingVisitor {
     return result;
   }
 
-  protected AndroidArchive visitAndroidArchive(AndroidArchive archive) {
+  @Nullable
+  protected AndroidArchive visitAndroidArchive(@NotNull AndroidArchive archive) {
     return new AndroidArchive(
         visitFile(archive.file),
         visitSha256(archive.sha256),
@@ -184,38 +199,46 @@ public class CDepManifestYmlRewritingVisitor {
         visitFlavor(archive.flavor));
   }
 
+  @Nullable
   private String visitAbi(String abi) {
     return visitString(abi);
   }
 
+  @Nullable
   private String visitBuilder(String builder) {
     return visitString(builder);
   }
 
+  @Nullable
   private String visitPlatform(String platform) {
     return visitString(platform);
   }
 
+  @Nullable
   private String visitRuntime(String runtime) {
     return visitString(runtime);
   }
 
+  @Nullable
   private String visitCompiler(String compiler) {
     return visitString(compiler);
   }
 
+  @Nullable
   private String visitNdk(String ndk) {
     return visitString(ndk);
   }
 
-  private Interfaces visitInterfaces(Interfaces interfaces) {
+  @Nullable
+  private Interfaces visitInterfaces(@Nullable Interfaces interfaces) {
     if (interfaces == null) {
       return null;
     }
     return new Interfaces(visitArchive(interfaces.headers));
   }
 
-  protected Archive visitArchive(Archive archive) {
+  @Nullable
+  protected Archive visitArchive(@Nullable Archive archive) {
     if (archive == null) {
       return null;
     }
@@ -228,7 +251,8 @@ public class CDepManifestYmlRewritingVisitor {
     );
   }
 
-  private CxxLanguageFeatures[] visitRequiresArray(CxxLanguageFeatures[] requires) {
+  @Nullable
+  private CxxLanguageFeatures[] visitRequiresArray(@Nullable CxxLanguageFeatures[] requires) {
     if (requires == null) {
       return null;
     }
@@ -243,7 +267,8 @@ public class CDepManifestYmlRewritingVisitor {
     return notNull(require);
   }
 
-  private HardNameDependency[] visitHardNameDependencyArray(HardNameDependency[] dependencies) {
+  @Nullable
+  private HardNameDependency[] visitHardNameDependencyArray(@Nullable HardNameDependency[] dependencies) {
     if (dependencies == null) {
       return null;
     }
@@ -254,17 +279,20 @@ public class CDepManifestYmlRewritingVisitor {
     return result;
   }
 
-  protected HardNameDependency visitHardNameDependency(HardNameDependency dependency) {
+  @Nullable
+  protected HardNameDependency visitHardNameDependency(@NotNull HardNameDependency dependency) {
     return new HardNameDependency(
         visitCompile(dependency.compile),
         visitSha256(dependency.sha256));
   }
 
+  @Nullable
   private String visitCompile(String compile) {
     return visitString(compile);
   }
 
-  private Coordinate visitCoordinate(Coordinate coordinate) {
+  @NotNull
+  private Coordinate visitCoordinate(@NotNull Coordinate coordinate) {
     return new Coordinate(
         visitGroupId(coordinate.groupId),
         visitArtifactId(coordinate.artifactId),
@@ -272,14 +300,17 @@ public class CDepManifestYmlRewritingVisitor {
     );
   }
 
-  private Version visitVersion(Version version) {
+  @NotNull
+  private Version visitVersion(@NotNull Version version) {
     return new Version(visitString(version.value));
   }
 
+  @Nullable
   private String visitArtifactId(String artifactId) {
     return visitString(artifactId);
   }
 
+  @Nullable
   private String visitGroupId(String groupId) {
     return visitString(groupId);
   }

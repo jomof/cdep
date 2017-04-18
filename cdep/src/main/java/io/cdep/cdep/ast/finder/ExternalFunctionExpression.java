@@ -1,6 +1,7 @@
 package io.cdep.cdep.ast.finder;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 
 import java.io.File;
@@ -113,7 +114,7 @@ public class ExternalFunctionExpression extends Expression {
     return left || right;
   }
 
-  static public boolean defined(Object object) {
+  static public boolean defined(@Nullable Object object) {
     return object != null;
   }
 
@@ -148,6 +149,7 @@ public class ExternalFunctionExpression extends Expression {
   /**
    * Require at least the given Cxx compiler standard.
    */
+  @NotNull
   static public String requireMinimumCxxCompilerStandard(String level) {
     return "Compiler Standard Level " + level;
   }

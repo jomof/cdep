@@ -1,6 +1,7 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -85,7 +86,8 @@ public class ReflectionUtils {
     return urlToFile(new URL(path));
   }
 
-  private static File urlToFile(final URL url) {
+  @Nullable
+  private static File urlToFile(@Nullable final URL url) {
     return url == null ? null : urlToFile(url.toString());
   }
 
@@ -100,7 +102,7 @@ public class ReflectionUtils {
         path = "file:/" + path.substring(5);
       }
       return new File(new URL(path).toURI());
-    } catch (MalformedURLException | URISyntaxException e) {
+    } catch (@NotNull MalformedURLException | URISyntaxException e) {
       if (path.startsWith("file:")) {
         path = path.substring(5);
         return new File(path);

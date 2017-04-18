@@ -25,8 +25,8 @@ public class ModuleArchiveExpression extends StatementExpression {
       Long size,
       String include, // Like "include"
       Expression fullIncludePath,
-      String libs[], // Like "lib/libsqlite.a"
-      Expression libraryPaths[],
+      @NotNull String libs[], // Like "lib/libsqlite.a"
+      @NotNull Expression libraryPaths[],
       CxxLanguageFeatures requires[]) {
     notNull(libs);
     notNull(libraryPaths);

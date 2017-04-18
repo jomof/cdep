@@ -74,12 +74,13 @@ public class ArchiveUtils {
     zipFile.close();
   }
 
-  public static void pack(final Path folder, final Path zipFilePath) throws IOException {
+  public static void pack(@NotNull final Path folder, @NotNull final Path zipFilePath) throws IOException {
     try (
             FileOutputStream fos = new FileOutputStream(zipFilePath.toFile());
             ZipOutputStream zos = new ZipOutputStream(fos)
     ) {
         Files.walkFileTree(folder, new SimpleFileVisitor<Path>() {
+            @NotNull
             public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
                 zos.putNextEntry(new ZipEntry(folder.relativize(file).toString()));
                 Files.copy(file, zos);
@@ -87,6 +88,7 @@ public class ArchiveUtils {
                 return FileVisitResult.CONTINUE;
             }
 
+            @NotNull
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attributes) throws IOException {
                 zos.putNextEntry(new ZipEntry(folder.relativize(dir).toString() + "/"));
                 zos.closeEntry();

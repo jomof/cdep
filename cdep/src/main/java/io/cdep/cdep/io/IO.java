@@ -1,5 +1,7 @@
 package io.cdep.cdep.io;
 
+import io.cdep.annotations.NotNull;
+
 import java.io.PrintStream;
 
 /**
@@ -21,7 +23,7 @@ public class IO {
   /**
    * Print an info message.
    */
-  public static void info(String format, Object ... args) {
+  public static void info(@NotNull String format, Object ... args) {
     io.infoImpl(format, args);
   }
 
@@ -32,7 +34,7 @@ public class IO {
     io.infoImpl(format + "\n", args);
   }
 
-  private void infoImpl(String format, Object ... args) {
+  private void infoImpl(@NotNull String format, Object ... args) {
     out.printf(format, args);
   }
 }

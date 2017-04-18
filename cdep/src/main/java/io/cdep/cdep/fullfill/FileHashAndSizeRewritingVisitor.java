@@ -1,5 +1,7 @@
 package io.cdep.cdep.fullfill;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
@@ -18,8 +20,9 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
     this.layoutFolder = layoutFolder;
   }
 
+  @Nullable
   @Override
-  protected Archive visitArchive(Archive archive) {
+  protected Archive visitArchive(@NotNull Archive archive) {
     if (archive.sha256 == null) {
       File file = new File(layoutFolder, archive.file);
       require(
@@ -33,15 +36,16 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
             file.length(),
             archive.include,
             archive.requires);
-      } catch (NoSuchAlgorithmException | IOException e) {
+      } catch (@NotNull NoSuchAlgorithmException | IOException e) {
         throw new RuntimeException(e);
       }
     }
     return archive;
   }
 
+  @Nullable
   @Override
-  protected AndroidArchive visitAndroidArchive(AndroidArchive archive) {
+  protected AndroidArchive visitAndroidArchive(@NotNull AndroidArchive archive) {
     if (archive.sha256 == null) {
       File file = new File(layoutFolder, archive.file);
       require(
@@ -62,7 +66,7 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
             archive.include,
             archive.libs,
             archive.flavor);
-      } catch (NoSuchAlgorithmException | IOException e) {
+      } catch (@NotNull NoSuchAlgorithmException | IOException e) {
         throw new RuntimeException(e);
       }
     }

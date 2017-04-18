@@ -154,6 +154,7 @@ public class InterpretingVisitor {
     throw new RuntimeException("intr" + expr.getClass().toString());
   }
 
+  @Nullable
   @SuppressWarnings("SameReturnValue")
   private Object visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
     return null;

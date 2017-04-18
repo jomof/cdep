@@ -39,7 +39,7 @@ public class StringUtils {
     return sb.toString();
   }
 
-  public static String joinOn(String delimiter, String ... strings) {
+  public static String joinOn(String delimiter, @NotNull String ... strings) {
     StringBuilder sb = new StringBuilder();
     int i = 0;
     for (String string : strings) {
@@ -52,7 +52,7 @@ public class StringUtils {
     return sb.toString();
   }
 
-  public static String joinOnSkipNull(String delimiter, String ... strings) {
+  public static String joinOnSkipNull(String delimiter, @NotNull String ... strings) {
     StringBuilder sb = new StringBuilder();
     int i = 0;
     for (String string : strings) {

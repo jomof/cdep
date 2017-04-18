@@ -1,11 +1,12 @@
 package io.cdep.cdep;
 
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
+
 import java.util.Objects;
 
 public class Version {
+  @Nullable
   public final String value;
   public Version(String version) {
     this.value = version;

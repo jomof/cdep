@@ -33,7 +33,7 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
     covisitFields(left, right);
   }
 
-  public void covisitHardNameDependencyArray(String name, HardNameDependency left[], HardNameDependency right[]) {
+  public void covisitHardNameDependencyArray(@SuppressWarnings("SameParameterValue") String name, HardNameDependency left[], HardNameDependency right[]) {
     covisitArray(name, left, right, HardNameDependency.class);
   }
 
@@ -45,7 +45,7 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
     covisitFields(left, right);
   }
 
-  public void covisitAndroidArchiveArray(String name, AndroidArchive left[], AndroidArchive right[]) {
+  public void covisitAndroidArchiveArray(@SuppressWarnings("SameParameterValue") String name, AndroidArchive left[], AndroidArchive right[]) {
     covisitArray(name, left, right, AndroidArchive.class);
   }
 
@@ -65,7 +65,7 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
     covisitFields(left, right);
   }
 
-  public void covisitLinuxArchiveArray(String name, LinuxArchive left[], LinuxArchive right[]) {
+  public void covisitLinuxArchiveArray(@SuppressWarnings("SameParameterValue") String name, LinuxArchive left[], LinuxArchive right[]) {
     covisitArray(name, left, right, LinuxArchive.class);
   }
 
@@ -77,7 +77,7 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
     covisitFields(left, right);
   }
 
-  public void covisitiOSArchiveArray(String name, iOSArchive left[], iOSArchive right[]) {
+  public void covisitiOSArchiveArray(@SuppressWarnings("SameParameterValue") String name, iOSArchive left[], iOSArchive right[]) {
     covisitArray(name, left, right, iOSArchive.class);
   }
 

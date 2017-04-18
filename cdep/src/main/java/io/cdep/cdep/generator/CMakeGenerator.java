@@ -44,6 +44,7 @@ public class CMakeGenerator {
   @NotNull
   private StringBuilder sb;
   private int indent = 0;
+  @Nullable
   private GlobalBuildEnvironmentExpression globals = null;
   @Nullable
   private Coordinate coordinate = null;
@@ -84,6 +85,7 @@ public class CMakeGenerator {
     return sb.toString();
   }
 
+  @NotNull
   private FindModuleExpression getFindFunction(StatementExpression statement) {
     if (statement instanceof FindModuleExpression) {
       return (FindModuleExpression) statement;
@@ -104,6 +106,7 @@ public class CMakeGenerator {
     return new File(environment.modulesFolder, CONFIG_FILE_NAME);
   }
 
+  @NotNull
   private String readCmakeLibraryFunctions() {
     ClassLoader classLoader = getClass().getClassLoader();
 

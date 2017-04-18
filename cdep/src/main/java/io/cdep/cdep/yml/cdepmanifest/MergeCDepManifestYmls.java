@@ -33,7 +33,7 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
   }
 
   @Override
-  public void covisitString(String name, String left, String right) {
+  public void covisitString(@Nullable String name, String left, String right) {
     if (name != null && name.equals("sha256")) {
       // Ignore hashes when merging
       return;

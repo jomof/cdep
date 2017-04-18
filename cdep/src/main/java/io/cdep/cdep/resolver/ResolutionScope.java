@@ -1,6 +1,7 @@
 package io.cdep.cdep.resolver;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.Version;
 import io.cdep.cdep.utils.CoordinateUtils;
@@ -164,7 +165,8 @@ public class ResolutionScope {
    * Unifies manifest version to most recent. Returns a versionless coordinate that is the
    * key to the manifest even if it changes later during resolution.
    */
-  private Coordinate getVersionlessCoordinateResolvedManifest(ResolvedManifest resolved) {
+  @Nullable
+  private Coordinate getVersionlessCoordinateResolvedManifest(@NotNull ResolvedManifest resolved) {
     Coordinate versionless = new Coordinate(
         resolved.cdepManifestYml.coordinate.groupId,
         resolved.cdepManifestYml.coordinate.artifactId,

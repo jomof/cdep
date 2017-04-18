@@ -1,6 +1,7 @@
 package io.cdep.cdep.yml.cdepmanifest.v3;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
 import io.cdep.cdep.yml.cdepmanifest.v2.V2Reader;
 import org.yaml.snakeyaml.Yaml;
@@ -31,7 +32,8 @@ public class V3Reader {
     return manifest;
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.CDepManifestYml convert(CDepManifestYml manifest) {
+  @Nullable
+  private static io.cdep.cdep.yml.cdepmanifest.CDepManifestYml convert(@NotNull CDepManifestYml manifest) {
     return new io.cdep.cdep.yml.cdepmanifest.CDepManifestYml(
         manifest.sourceVersion,
         manifest.coordinate,
@@ -43,14 +45,16 @@ public class V3Reader {
         manifest.example);
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.Linux convertLinux(Linux linux) {
+  @Nullable
+  private static io.cdep.cdep.yml.cdepmanifest.Linux convertLinux(@Nullable Linux linux) {
     if (linux == null) {
       return null;
     }
     return new io.cdep.cdep.yml.cdepmanifest.Linux(convertLinuxArchiveArray(linux.archives));
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.LinuxArchive[] convertLinuxArchiveArray(LinuxArchive[] archives) {
+  @NotNull
+  private static io.cdep.cdep.yml.cdepmanifest.LinuxArchive[] convertLinuxArchiveArray(@NotNull LinuxArchive[] archives) {
     io.cdep.cdep.yml.cdepmanifest.LinuxArchive result[] = new io.cdep.cdep.yml.cdepmanifest.LinuxArchive[archives.length];
     for (int i = 0; i < result.length; ++i) {
       result[i] = convertLinuxArchive(archives[i]);
@@ -58,7 +62,8 @@ public class V3Reader {
     return result;
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.LinuxArchive convertLinuxArchive(LinuxArchive archive) {
+  @Nullable
+  private static io.cdep.cdep.yml.cdepmanifest.LinuxArchive convertLinuxArchive(@NotNull LinuxArchive archive) {
     return new io.cdep.cdep.yml.cdepmanifest.LinuxArchive(
         archive.file,
         archive.sha256,
@@ -68,14 +73,16 @@ public class V3Reader {
     );
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.iOS convertiOS(iOS ios) {
+  @Nullable
+  private static io.cdep.cdep.yml.cdepmanifest.iOS convertiOS(@Nullable iOS ios) {
     if (ios == null) {
       return null;
     }
     return new io.cdep.cdep.yml.cdepmanifest.iOS(ios.dependencies, convertiOSArchiveArray(ios.archives));
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.iOSArchive[] convertiOSArchiveArray(iOSArchive[] archives) {
+  @Nullable
+  private static io.cdep.cdep.yml.cdepmanifest.iOSArchive[] convertiOSArchiveArray(@Nullable iOSArchive[] archives) {
     if (archives == null) {
       return null;
     }
@@ -86,7 +93,8 @@ public class V3Reader {
     return result;
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.iOSArchive convertiOSArchive(iOSArchive archive) {
+  @Nullable
+  private static io.cdep.cdep.yml.cdepmanifest.iOSArchive convertiOSArchive(@NotNull iOSArchive archive) {
     return new io.cdep.cdep.yml.cdepmanifest.iOSArchive(
         archive.file,
         archive.sha256,
@@ -100,14 +108,16 @@ public class V3Reader {
     );
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.Android convertAndroid(Android android) {
+  @Nullable
+  private static io.cdep.cdep.yml.cdepmanifest.Android convertAndroid(@Nullable Android android) {
     if (android == null) {
       return null;
     }
     return new io.cdep.cdep.yml.cdepmanifest.Android(android.dependencies, convertAndroidArchiveArray(android.archives));
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.AndroidArchive[] convertAndroidArchiveArray(AndroidArchive[] archives) {
+  @Nullable
+  private static io.cdep.cdep.yml.cdepmanifest.AndroidArchive[] convertAndroidArchiveArray(@Nullable AndroidArchive[] archives) {
     if (archives == null) {
       return null;
     }
@@ -118,7 +128,8 @@ public class V3Reader {
     return result;
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.AndroidArchive convertAndroidArchive(AndroidArchive archive) {
+  @Nullable
+  private static io.cdep.cdep.yml.cdepmanifest.AndroidArchive convertAndroidArchive(@NotNull AndroidArchive archive) {
     return new io.cdep.cdep.yml.cdepmanifest.AndroidArchive(
         archive.file,
         archive.sha256,

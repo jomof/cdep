@@ -148,7 +148,7 @@ public class CreateStringVisitor extends ReadonlyVisitor {
   }
 
   @Override
-  protected void visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
+  protected void visitGlobalBuildEnvironmentExpression(@NotNull GlobalBuildEnvironmentExpression expr) {
     append("import %s\r\n", expr.cdepExplodedRoot.name);
     append("import %s\r\n", expr.cmakeSystemName.name);
     append("import %s\r\n", expr.cmakeSystemVersion.name);

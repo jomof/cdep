@@ -1,6 +1,7 @@
 package io.cdep.cdep.yml.cdepmanifest.v2;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
 import io.cdep.cdep.yml.cdepmanifest.Interfaces;
 import io.cdep.cdep.yml.cdepmanifest.v1.V1Reader;
@@ -33,7 +34,8 @@ public class V2Reader {
     return manifest;
   }
 
-  private static io.cdep.cdep.yml.cdepmanifest.v3.CDepManifestYml convert(CDepManifestYml manifest) {
+  @Nullable
+  private static io.cdep.cdep.yml.cdepmanifest.v3.CDepManifestYml convert(@NotNull CDepManifestYml manifest) {
     return new io.cdep.cdep.yml.cdepmanifest.v3.CDepManifestYml(
         manifest.sourceVersion,
         manifest.coordinate,

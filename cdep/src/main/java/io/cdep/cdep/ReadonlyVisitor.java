@@ -92,7 +92,7 @@ public class ReadonlyVisitor {
     throw new RuntimeException("ro" + expr.getClass().toString());
   }
 
-  protected void visitGlobalBuildEnvironmentExpression(GlobalBuildEnvironmentExpression expr) {
+  protected void visitGlobalBuildEnvironmentExpression(@NotNull GlobalBuildEnvironmentExpression expr) {
     visit(expr.cdepDeterminedAndroidRuntime);
     visit(expr.cdepDeterminedAndroidAbi);
     visit(expr.cdepExplodedRoot);
