@@ -4,6 +4,7 @@ import io.cdep.annotations.NotNull;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.utils.PlatformUtils;
 import io.cdep.cdep.utils.ReflectionUtils;
+import org.fusesource.jansi.AnsiConsole;
 import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.File;
@@ -53,6 +54,9 @@ public class API {
       // In a test environment need to include SnakeYAML since it isn't part of the unit test
       File yamlLocation = ReflectionUtils.getLocation(YAMLException.class);
       classPath = yamlLocation.getAbsolutePath().replace("\\", "/")
+          + separator + classPath;
+      File jansiLocation = ReflectionUtils.getLocation(AnsiConsole.class);
+      classPath = jansiLocation.getAbsolutePath().replace("\\", "/")
           + separator + classPath;
     }
     result.add(platformQuote(classPath));

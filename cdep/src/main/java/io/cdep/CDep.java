@@ -36,6 +36,7 @@ import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 import io.cdep.cdep.yml.cdepmanifest.Interfaces;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
+import org.fusesource.jansi.AnsiConsole;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -69,13 +70,15 @@ public class CDep {
   @Nullable
   private File configFile = null;
 
-  CDep(@NotNull PrintStream out) {
+  CDep(@NotNull PrintStream out, @NotNull PrintStream err, boolean ansi) {
     IO.setOut(out);
+    IO.setErr(err);
+    IO.setAnsi(ansi);
   }
 
   public static void main(@NotNull String[] args) {
     try {
-      new CDep(System.out).go(args, false);
+      new CDep(AnsiConsole.out, AnsiConsole.err, true).go(args, false);
     } catch (Throwable e) {
       e.printStackTrace();
       System.exit(Integer.MIN_VALUE);

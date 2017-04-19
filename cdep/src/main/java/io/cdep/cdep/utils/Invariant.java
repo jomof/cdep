@@ -5,7 +5,7 @@ import io.cdep.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.cdep.cdep.io.IO.infoln;
+import static io.cdep.cdep.io.IO.errorln;
 import static io.cdep.cdep.utils.StringUtils.safeFormat;
 
 /**
@@ -38,7 +38,7 @@ abstract public class Invariant {
       throw e;
     }
     if (showOutputs.get(0)) {
-      infoln("  FAILURE: %s", e.getMessage());
+      errorln("FAILURE: %s", e.getMessage());
     }
     requirementFailures.get(0).add(e);
   }

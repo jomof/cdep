@@ -37,8 +37,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static io.cdep.cdep.io.IO.info;
-import static io.cdep.cdep.io.IO.infoln;
+import static io.cdep.cdep.io.IO.*;
 import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.require;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -137,9 +136,9 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
 
     // Indicate whether download or force redownload
     if (forceRedownload) {
-      info("Redownloading %s\n", remoteArchive);
+      infogreen("Redownloading %s\n", remoteArchive);
     } else {
-      info("Downloading %s\n", remoteArchive);
+      infogreen("Downloading %s\n", remoteArchive);
     }
 
     // Try to get the content at the remote. If it doesn't exist return null.
