@@ -44,12 +44,14 @@ public class TestMergeCDepManifestYmls {
   public void testTwoWayMerges() throws Exception {
     Set<String> commonDifferences = new HashSet<>();
     commonDifferences.add("Manifests were different at requires.requires.headers.interfaces.[constant]");
+    commonDifferences.add("Manifests were different at groupId.coordinate.[constant]");
     commonDifferences.add("Manifests were different at artifactId.coordinate.[constant]");
     commonDifferences.add("Manifests were different at file.headers.interfaces.[constant]");
     commonDifferences.add("Manifests were different at include.headers.interfaces.[constant]");
     commonDifferences.add("Manifests were different at size.headers.interfaces.[constant]");
     commonDifferences.add("Manifests were different at sha256.archive.[constant]");
     commonDifferences.add("Manifests were different at value.version.coordinate.[constant]");
+    commonDifferences.add("Manifests were different at compile.dependencies.[constant]");
     boolean somethingUnexpected = false;
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {
       for (ResolvedManifests.NamedManifest manifest2 : ResolvedManifests.all()) {
@@ -70,7 +72,7 @@ public class TestMergeCDepManifestYmls {
           }
           String actual = e.getMessage();
           if (!commonDifferences.contains(actual)) {
-             e.printStackTrace();
+            // e.printStackTrace();
             System.out.printf("expected.put(\"%s\", \"%s\");\n", key, actual);
             somethingUnexpected = true;
           }

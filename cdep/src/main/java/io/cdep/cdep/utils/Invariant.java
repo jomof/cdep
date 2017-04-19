@@ -24,7 +24,7 @@ abstract public class Invariant {
     return errors;
   }
 
-  private static void report(@NotNull RuntimeException e) {
+  public static void report(@NotNull RuntimeException e) {
     if (requirementFailures.size() == 0) {
       throw e;
     }

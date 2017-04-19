@@ -12,11 +12,13 @@ import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static io.cdep.cdep.utils.Invariant.report;
 import static io.cdep.cdep.utils.Invariant.require;
 
 /**
@@ -179,8 +181,8 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   private void copyFileToStaging(@NotNull PathMapping mapping, @NotNull File stagingZipFile) {
     try {
       Files.copy(mapping.from.toPath(), stagingZipFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    } catch (IOException | InvalidPathException e) {
+      report(new RuntimeException(e));
     }
   }
 

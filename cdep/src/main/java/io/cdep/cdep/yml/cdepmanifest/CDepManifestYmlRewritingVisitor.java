@@ -292,8 +292,7 @@ public class CDepManifestYmlRewritingVisitor {
   }
 
   @NotNull
-  private Coordinate visitCoordinate(@NotNull Coordinate coordinate) {
-    assert coordinate.version != null;
+  protected Coordinate visitCoordinate(@NotNull Coordinate coordinate) {
     return new Coordinate(
         visitGroupId(coordinate.groupId),
         visitArtifactId(coordinate.artifactId),

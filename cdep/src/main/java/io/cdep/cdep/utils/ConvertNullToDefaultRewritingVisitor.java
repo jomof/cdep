@@ -2,9 +2,11 @@ package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
+import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.*;
 
 import static io.cdep.cdep.Coordinate.EMPTY_COORDINATE;
+import static io.cdep.cdep.Version.EMPTY_VERSION;
 
 /**
  * When Yaml is de-serialized, it may contain null in fields marked @NonNull.
@@ -42,6 +44,24 @@ public class ConvertNullToDefaultRewritingVisitor extends CDepManifestYmlRewriti
         value.iOS,
         value.linux,
         StringUtils.nullToEmpty(value.example)));
+  }
+
+  @NotNull
+  @Override
+  protected Coordinate visitCoordinate(@NotNull Coordinate coordinate) {
+    return super.visitCoordinate(new Coordinate(
+        StringUtils.nullToEmpty(coordinate.groupId),
+        StringUtils.nullToEmpty(coordinate.artifactId),
+        ObjectUtils.nullToDefault(coordinate.version, EMPTY_VERSION)
+    ));
+  }
+
+  @Nullable
+  @Override
+  protected HardNameDependency visitHardNameDependency(@NotNull HardNameDependency dependency) {
+    return super.visitHardNameDependency(new HardNameDependency(
+        StringUtils.nullToEmpty(dependency.compile),
+        StringUtils.nullToEmpty(dependency.sha256)));
   }
 
   @Nullable

@@ -197,7 +197,7 @@ public class CDep {
     }
   }
 
-  private boolean handleRedownload(@NotNull List<String> args) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private boolean handleRedownload(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "redownload".equals(args.get(0))) {
       GeneratorEnvironment environment = getGeneratorEnvironment(true, false);
       FunctionTableExpression table = getFunctionTableExpression(environment);
@@ -214,7 +214,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleLint(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
+  private boolean handleLint(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "lint".equals(args.get(0))) {
       if (args.size() > 1) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
@@ -237,7 +237,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleCreate(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
+  private boolean handleCreate(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "create".equals(args.get(0))) {
       if (args.size() > 1 && "hashes".equals(args.get(1))) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
@@ -448,7 +448,7 @@ public class CDep {
     return false;
   }
 
-  private boolean handleFetch(@NotNull List<String> args) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private boolean handleFetch(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fetch".equals(args.get(0))) {
       if (args.size() < 2) {
         info("Usage: cdep fetch {coordinate1} {coordinate2} ...\n");
@@ -497,7 +497,7 @@ public class CDep {
   }
 
   private boolean handleFullfill(@NotNull List<String> args)
-      throws IOException, URISyntaxException, NoSuchAlgorithmException {
+      throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fullfill".equals(args.get(0))) {
       if (args.size() < 4) {
         info("Usage: cdep fullfill source-folder version manifest1.yml manifest2.yml ...\n");
@@ -528,7 +528,7 @@ public class CDep {
     return false;
   }
 
-  private void handleGenerateScript() throws IOException, URISyntaxException, NoSuchAlgorithmException {
+  private void handleGenerateScript() throws IOException, NoSuchAlgorithmException {
     //noinspection ConstantConditions
     if (config.dependencies == null || config.dependencies.length == 0) {
       info("Nothing to do. Add dependencies to %s\n", configFile);
@@ -550,7 +550,7 @@ public class CDep {
 
   @NotNull
   private FunctionTableExpression getFunctionTableExpression(@NotNull GeneratorEnvironment environment)
-      throws IOException, URISyntaxException, NoSuchAlgorithmException {
+      throws IOException, NoSuchAlgorithmException {
     assert config != null;
     return GeneratorEnvironmentUtils.getFunctionTableExpression(environment, config.dependencies);
   }

@@ -6,7 +6,11 @@ import io.cdep.cdep.Version;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
+import io.cdep.cdep.utils.Invariant;
+import io.cdep.cdep.yml.CDepManifestYmlGenerator;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import net.java.quickcheck.QuickCheck;
+import net.java.quickcheck.characteristic.AbstractCharacteristic;
 import org.junit.Test;
 
 import java.io.File;
@@ -146,6 +150,7 @@ public class TestFullfill {
     expected.put("archiveMissingSha256", "Could not hash file bob.zip because it didn't exist");
     expected.put("archiveMissingFile", "Package 'com.github.jomof:vectorial:0.0.0' does not contain any files");
     expected.put("admob", "Archive com.github.jomof:firebase/admob:2.1.3-rev8 is missing include");
+    expected.put("fuzz1", "Dependency had no compile field");
     boolean unexpectedFailure = false;
 
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
@@ -189,5 +194,31 @@ public class TestFullfill {
     if (unexpectedFailure) {
       throw new RuntimeException("Unexpected failures. See console.");
     }
+  }
+
+  @Test
+  public void fuzzTest() {
+    QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
+      @Override
+      protected void doSpecify(CDepManifestYml any) throws Throwable {
+        try {
+          Invariant.pushScope();
+          File outputFolder = new File(".test-files/TestFullfill/fuzzTest/"
+              + "fuzzTest").getAbsoluteFile();
+          outputFolder.delete();
+          outputFolder.mkdirs();
+          File manifestFile = new File(outputFolder, "cdep-manifest.yml");
+          FileUtils.writeTextToFile(manifestFile, CDepManifestYmlUtils.convertManifestToString(any));
+          Fullfill.multiple(
+              environment,
+              new File[]{manifestFile},
+              new File(outputFolder, "output"),
+              new File(outputFolder, "source"),
+              "1.2.3");
+        } finally {
+          Invariant.popScope();
+        }
+      }
+    });
   }
 }

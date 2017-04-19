@@ -16,7 +16,6 @@ import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class Fullfill {
       @NotNull File templates[],
       File outputFolder,
       @NotNull File sourceFolder,
-      String version) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+      String version) throws IOException, NoSuchAlgorithmException {
     List<File> result = new ArrayList<>();
     CDepManifestYml manifests[] = new CDepManifestYml[templates.length];
 

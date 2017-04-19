@@ -18,77 +18,103 @@ import static com.google.common.truth.Truth.assertThat;
 
 @SuppressWarnings("unused")
 public class ResolvedManifests {
-    @NotNull
+  @NotNull
+  public static TestManifest fuzz2() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n" +
+        "  groupId: \n" +
+        "  artifactId: \n" +
+        "  version: \n" +
+        "interfaces:\n" +
+        "  headers:\n" +
+        "    file: \",S`&|[x0q;J.$9D#P6FUDG>+&69ZXG\"\n" +
+        "    sha256: 1234\n" +
+        "    size: 100 \n" +
+        "    include: Y81Z-%q{iyu9rVk)4w7VHr9T~-8}\n" +
+        "    requires: [cxx_attributes, cxx_attributes, cxx_delegating_constructors, cxx_digit_separators, " +
+        "cxx_nonstatic_member_init, cxx_raw_string_literals, cxx_raw_string_literals]\n");
+  }
+
+  @NotNull
+  public static TestManifest fuzz1() throws MalformedURLException {
+    return getResolvedManifest("coordinate:\n" +
+        "  groupId: \n" +
+        "  artifactId: \n" +
+        "  version: \n" +
+        "dependencies:\n" +
+        "  - compile: \n");
+  }
+
+  @NotNull
   public static TestManifest re2() throws MalformedURLException {
-    return getResolvedManifest("coordinate:\n"+
-      "  groupId: com.github.jomof\n"+
-      "  artifactId: re2\n"+
-      "  version: 17.3.1-rev13\n"+
-      "interfaces:\n"+
-      "  headers:\n"+
-      "    file: re2-header.zip\n"+
-      "    sha256: 4bce31b6e319021a1cc2838573c4855b94a222e2004fef5fb6d067f8f84ad7d4\n"+
-      "    size: 43964\n"+
-      "    include: include\n"+
-      "    requires: [cxx_deleted_functions, cxx_variadic_templates]\n"+
-      "android:\n"+
-      "  dependencies:\n"+
-      "  archives:\n"+
-      "    - file: re2-21-armeabi.zip\n"+
-      "      sha256: 0f84538e027c63874175b80cc9b69845d2b6fe825446459188743f02ba881eba\n"+
-      "      size: 3063079\n"+
-      "      platform: 21\n"+
-      "      abi: armeabi\n"+
-      "      lib: libre2.a\n"+
-      "    - file: re2-21-armeabi-v7a.zip\n"+
-      "      sha256: 2a6abd472b20b0543a782b638ae6a56ea76c884b685c33b2d701ecf6c19d2a06\n"+
-      "      size: 3027838\n"+
-      "      platform: 21\n"+
-      "      abi: armeabi-v7a\n"+
-      "      lib: libre2.a\n"+
-      "    - file: re2-21-x86_64.zip\n"+
-      "      sha256: b5b601063674cd1f9c72dc865ce0fe2d9e293e4acac47e78a1dd95046d015d9c\n"+
-      "      size: 3052728\n"+
-      "      platform: 21\n"+
-      "      abi: x86_64\n"+
-      "      lib: libre2.a\n"+
-      "    - file: re2-21-arm64-v8a.zip\n"+
-      "      sha256: c103d5164bbd213cffc60f54b1f404e6af9988e05b36922a011c600624779d6a\n"+
-      "      size: 3059374\n"+
-      "      platform: 21\n"+
-      "      abi: arm64-v8a\n"+
-      "      lib: libre2.a\n"+
-      "    - file: re2-21-x86.zip\n"+
-      "      sha256: ef017da852091374cbed55f6a99749146ec9bff55032e940998e8e285a8fc7f9\n"+
-      "      size: 3089600\n"+
-      "      platform: 21\n"+
-      "      abi: x86\n"+
-      "      lib: libre2.a\n"+
-      "    - file: re2-12-armeabi.zip\n"+
-      "      sha256: d7f2a60586160b1429e421fbdfcb765fbe9a5ccfdfb63c40955b9178c79f2572\n"+
-      "      size: 3062546\n"+
-      "      platform: 12\n"+
-      "      abi: armeabi\n"+
-      "      lib: libre2.a\n"+
-      "    - file: re2-12-armeabi-v7a.zip\n"+
-      "      sha256: 28f653d1d2e28ca32d66fd22462eb50b9502351b3102934b15d5a020c215d2e7\n"+
-      "      size: 3027537\n"+
-      "      platform: 12\n"+
-      "      abi: armeabi-v7a\n"+
-      "      lib: libre2.a\n"+
-      "    - file: re2-12-x86.zip\n"+
-      "      sha256: c9c5c26c8e4a2c214ee2d1491bbd35063ca828f5593164683cfea30948916087\n"+
-      "      size: 3089626\n"+
-      "      platform: 12\n"+
-      "      abi: x86\n"+
-      "      lib: libre2.a\n"+
-      "example: |\n"+
-      "  #include <re2/re2.h>\n"+
-      "  void test() {\n"+
-      "    RE2::FullMatch(\"hello\", \"h.*o\");\n"+
-      "  }\n"+
-      "  \n"+
-      "   \n");
+    return getResolvedManifest("coordinate:\n" +
+        "  groupId: com.github.jomof\n" +
+        "  artifactId: re2\n" +
+        "  version: 17.3.1-rev13\n" +
+        "interfaces:\n" +
+        "  headers:\n" +
+        "    file: re2-header.zip\n" +
+        "    sha256: 4bce31b6e319021a1cc2838573c4855b94a222e2004fef5fb6d067f8f84ad7d4\n" +
+        "    size: 43964\n" +
+        "    include: include\n" +
+        "    requires: [cxx_deleted_functions, cxx_variadic_templates]\n" +
+        "android:\n" +
+        "  dependencies:\n" +
+        "  archives:\n" +
+        "    - file: re2-21-armeabi.zip\n" +
+        "      sha256: 0f84538e027c63874175b80cc9b69845d2b6fe825446459188743f02ba881eba\n" +
+        "      size: 3063079\n" +
+        "      platform: 21\n" +
+        "      abi: armeabi\n" +
+        "      lib: libre2.a\n" +
+        "    - file: re2-21-armeabi-v7a.zip\n" +
+        "      sha256: 2a6abd472b20b0543a782b638ae6a56ea76c884b685c33b2d701ecf6c19d2a06\n" +
+        "      size: 3027838\n" +
+        "      platform: 21\n" +
+        "      abi: armeabi-v7a\n" +
+        "      lib: libre2.a\n" +
+        "    - file: re2-21-x86_64.zip\n" +
+        "      sha256: b5b601063674cd1f9c72dc865ce0fe2d9e293e4acac47e78a1dd95046d015d9c\n" +
+        "      size: 3052728\n" +
+        "      platform: 21\n" +
+        "      abi: x86_64\n" +
+        "      lib: libre2.a\n" +
+        "    - file: re2-21-arm64-v8a.zip\n" +
+        "      sha256: c103d5164bbd213cffc60f54b1f404e6af9988e05b36922a011c600624779d6a\n" +
+        "      size: 3059374\n" +
+        "      platform: 21\n" +
+        "      abi: arm64-v8a\n" +
+        "      lib: libre2.a\n" +
+        "    - file: re2-21-x86.zip\n" +
+        "      sha256: ef017da852091374cbed55f6a99749146ec9bff55032e940998e8e285a8fc7f9\n" +
+        "      size: 3089600\n" +
+        "      platform: 21\n" +
+        "      abi: x86\n" +
+        "      lib: libre2.a\n" +
+        "    - file: re2-12-armeabi.zip\n" +
+        "      sha256: d7f2a60586160b1429e421fbdfcb765fbe9a5ccfdfb63c40955b9178c79f2572\n" +
+        "      size: 3062546\n" +
+        "      platform: 12\n" +
+        "      abi: armeabi\n" +
+        "      lib: libre2.a\n" +
+        "    - file: re2-12-armeabi-v7a.zip\n" +
+        "      sha256: 28f653d1d2e28ca32d66fd22462eb50b9502351b3102934b15d5a020c215d2e7\n" +
+        "      size: 3027537\n" +
+        "      platform: 12\n" +
+        "      abi: armeabi-v7a\n" +
+        "      lib: libre2.a\n" +
+        "    - file: re2-12-x86.zip\n" +
+        "      sha256: c9c5c26c8e4a2c214ee2d1491bbd35063ca828f5593164683cfea30948916087\n" +
+        "      size: 3089626\n" +
+        "      platform: 12\n" +
+        "      abi: x86\n" +
+        "      lib: libre2.a\n" +
+        "example: |\n" +
+        "  #include <re2/re2.h>\n" +
+        "  void test() {\n" +
+        "    RE2::FullMatch(\"hello\", \"h.*o\");\n" +
+        "  }\n" +
+        "  \n" +
+        "   \n");
   }
 
   @NotNull

@@ -55,7 +55,10 @@ public class CDepManifestYmlUtils {
         manifest = V3Reader.convertStringToManifest(content);
       } catch (YAMLException e2) {
         // If older readers also couldn't read it then throw the original exception.
-        throw e;
+        require(false, "%s", e2.toString());
+        return new CDepManifestYml(
+            EMPTY_COORDINATE
+        );
       }
     }
     require(manifest != null, "Manifest was empty");
@@ -117,8 +120,8 @@ public class CDepManifestYmlUtils {
 
     @Override
     public void visitHardNameDependency(@Nullable String name, @NotNull HardNameDependency value) {
-      require(value.compile != null, "Package '%s' contains dependency with no 'compile' constant", coordinate);
-      require(value.sha256 != null, "Package '%s' contains dependency '%s' with no sha256 constant",
+      require(!value.compile.isEmpty(), "Package '%s' contains dependency with no 'compile' constant", coordinate);
+      require(!value.sha256.isEmpty(), "Package '%s' contains dependency '%s' with no sha256 constant",
           coordinate,
           value.compile);
       super.visitHardNameDependency(name, value);

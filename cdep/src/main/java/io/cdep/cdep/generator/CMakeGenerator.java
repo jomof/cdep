@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.util.IllegalFormatException;
 import java.util.Objects;
 
 import static io.cdep.cdep.io.IO.info;
@@ -244,7 +245,7 @@ public class CMakeGenerator {
         append(specific.value.toString());
         return;
       }
-      append("\"" + specific.value + "\"");
+      append("\"%s\"", specific.value);
       return;
     } else if (expression instanceof ModuleExpression) {
       ModuleExpression specific = (ModuleExpression) expression;
@@ -357,7 +358,11 @@ public class CMakeGenerator {
   }
 
   private void append(@NotNull String format, @NotNull Object... args) {
-    sb.append(String.format(format, args));
+    try {
+      sb.append(String.format(format, args));
+    } catch (IllegalFormatException e) {
+      require(false, "String from manifest contained format flags: %s", e.getMessage());
+    }
   }
 
   @NotNull

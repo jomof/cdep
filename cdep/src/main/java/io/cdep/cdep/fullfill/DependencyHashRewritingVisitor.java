@@ -14,13 +14,16 @@ import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
+import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.yml.cdepmanifest.HardNameDependency.EMPTY_HARDNAME_DEPENDENCY;
 
 /**
  * Fill in hash values for hard name dependencies.
  */
 public class DependencyHashRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   private final GeneratorEnvironment environment;
+
   DependencyHashRewritingVisitor(GeneratorEnvironment environment) {
     this.environment = environment;
   }
@@ -28,16 +31,25 @@ public class DependencyHashRewritingVisitor extends CDepManifestYmlRewritingVisi
   @Nullable
   @Override
   protected HardNameDependency visitHardNameDependency(@NotNull HardNameDependency dependency) {
-    require(dependency.compile != null, "Dependency had no compile field");
-    if (dependency.sha256 == null) {
+    require(!dependency.compile.isEmpty(), "Dependency had no compile field");
+    if (dependency.sha256.isEmpty()) {
       try {
-        assert dependency.compile != null;
         ResolvedManifest resolved = new Resolver(environment).resolveAny(
             new SoftNameDependency(
                 dependency.compile));
-        require(resolved != null, "Could not resolve dependency %s",
-            dependency.compile);
-        assert resolved != null;
+        if (resolved == null) {
+          if (!dependency.compile.isEmpty()) {
+            require(false, "Could not resolve dependency %s",
+                dependency.compile);
+          } else if (!dependency.sha256.isEmpty()) {
+            require(false, "Could not resolve dependency [%s]",
+                dependency.sha256.substring(0, 7));
+          } else {
+            fail("Could not resolve dependency because it had no name");
+          }
+          return EMPTY_HARDNAME_DEPENDENCY;
+        }
+
         File manifest = environment.tryGetLocalDownloadedFile(
             resolved.cdepManifestYml.coordinate,
             resolved.remote);

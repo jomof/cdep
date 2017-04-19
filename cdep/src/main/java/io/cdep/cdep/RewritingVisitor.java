@@ -148,15 +148,6 @@ public class RewritingVisitor {
   }
 
   @NotNull
-  private ModuleArchiveExpression[] visitArchiveArray(@NotNull ModuleArchiveExpression[] archives) {
-    ModuleArchiveExpression result[] = new ModuleArchiveExpression[archives.length];
-    for (int i = 0; i < result.length; ++i) {
-      result[i] = (ModuleArchiveExpression) visit(archives[i]);
-    }
-    return result;
-  }
-
-  @NotNull
   private Expression visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
     return archive(
         expr.file,

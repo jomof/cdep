@@ -1,7 +1,6 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
 
 /**
  * This is a name like com.github.jomof:firebase/admob:2.1.3-rev7
@@ -9,17 +8,18 @@ import io.cdep.annotations.Nullable;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class HardNameDependency {
-  @Nullable
+  static final public HardNameDependency EMPTY_HARDNAME_DEPENDENCY = new HardNameDependency();
+  @NotNull
   final public String compile;
-  @Nullable
+  @NotNull
   final public String sha256;
 
   private HardNameDependency() {
-    this.compile = null;
-    this.sha256 = null;
+    this.compile = "";
+    this.sha256 = "";
   }
 
-  public HardNameDependency(@NotNull String compile, @Nullable String sha256) {
+  public HardNameDependency(@NotNull String compile, @NotNull String sha256) {
     this.compile = compile;
     this.sha256 = sha256;
   }

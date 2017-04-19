@@ -64,19 +64,6 @@ public class InterpretingVisitor {
       if (o instanceof File) {
         return o.toString();
       }
-      if (o instanceof String[]) {
-        String specific[] = (String[]) o;
-        String result = "[";
-        for (int i = 0; i < specific.length; ++i) {
-          if (i != 0) {
-            result += ", ";
-          }
-          result += specific[i];
-
-        }
-        result += "]";
-        return result;
-      }
     }
     if (clazz.equals(CxxLanguageFeatures[].class) && o instanceof Object[]) {
       Object specific[] = (Object[]) o;

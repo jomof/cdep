@@ -3,9 +3,17 @@ package io.cdep.cdep.generator;
 import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.resolver.ResolvedManifest;
+import io.cdep.cdep.utils.CDepManifestYmlUtils;
+import io.cdep.cdep.utils.Invariant;
+import io.cdep.cdep.yml.CDepManifestYmlGenerator;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import net.java.quickcheck.QuickCheck;
+import net.java.quickcheck.characteristic.AbstractCharacteristic;
 import org.junit.Test;
 
 import java.io.File;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +23,25 @@ import static org.junit.Assert.fail;
 public class TestCMakeGenerator {
   final private GeneratorEnvironment environment = new GeneratorEnvironment(
       new File("./test-files/TestCMakeGenerator/working"), null, false, false);
+
+  @Test
+  public void fuzzTest() {
+    QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
+      @Override
+      protected void doSpecify(CDepManifestYml any) throws Throwable {
+        try {
+          Invariant.pushScope();
+          String capture = CDepManifestYmlUtils.convertManifestToString(any);
+          BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
+          builder.addManifest(new ResolvedManifest(new URL("https://google.com"), any));
+          FunctionTableExpression table = builder.build();
+          String result = new CMakeGenerator(environment, table).create();
+        } finally {
+          Invariant.popScope();
+        }
+      }
+    });
+  }
 
   @Test
   public void testBoost() throws Exception {

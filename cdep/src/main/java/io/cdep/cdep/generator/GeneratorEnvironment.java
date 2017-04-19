@@ -27,7 +27,6 @@ import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
-import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.*;
 import java.net.URL;
@@ -170,11 +169,8 @@ public class GeneratorEnvironment implements ManifestProvider, DownloadProvider 
     }
     String text = FileUtils.readAllText(file);
     CDepManifestYml cdepManifestYml;
-    try {
-      cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(text);
-    } catch (YAMLException e) {
-      throw new RuntimeException(String.format("Parsing '%s'", coordinate), e);
-    }
+    cdepManifestYml = CDepManifestYmlUtils.convertStringToManifest(text);
+
     if (!ignoreManifestHashes) {
       String sha256 = HashUtils.getSHA256OfFile(file);
       String priorSha256 = this.cdepSha256Hashes.get(cdepManifestYml.coordinate.toString());

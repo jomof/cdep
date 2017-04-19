@@ -56,8 +56,14 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitString(String name, @NotNull String value) {
-    if (!value.contains("\n")) {
+    if (!containsFlowCharacter(value)) {
       appendIndented("%s: %s\r\n", name, value);
+      return;
+    }
+
+    if (!value.contains("\n")) {
+      // If no line breaks then just quote it.
+      appendIndented("%s: \"%s\"\r\n", name, yamlEscape(value));
       return;
     }
 
@@ -74,6 +80,14 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
       }
     }
     --indent;
+  }
+
+  private String yamlEscape(String value) {
+    return value.replace("\\", "\\\\");
+  }
+
+  private boolean containsFlowCharacter(String value) {
+    return (value.contains(",") || value.contains("\n"));
   }
 
   @Override

@@ -267,6 +267,8 @@ public class TestCDepManifestYmlUtils {
     expected.put("templateWithOnlyFile", "Package 'com.github.jomof:firebase/app:${version}' has "
         + "malformed version, expected major.minor.point[-tweak] but there were no dots");
     expected.put("indistinguishableAndroidArchives", "Android archive com.github.jomof:firebase/app:0.0.0 file archive2.zip is indistinguishable at build time from archive1.zip given the information in the manifest");
+    expected.put("fuzz1", "Manifest was missing coordinate");
+    expected.put("fuzz2", "Manifest was missing coordinate");
     boolean unexpectedFailure = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       String key = manifest.name;
@@ -338,7 +340,8 @@ public class TestCDepManifestYmlUtils {
     expected.put("indistinguishableAndroidArchives-indistinguishableAndroidArchives", "Android archive com.github.jomof:firebase/app:0.0.0 file archive2.zip is indistinguishable at build time from archive1.zip given the information in the manifest");
     expected.put("singleABISqlite-singleABISqlite", "Android archive com.github.jomof:sqlite:3.16.2-rev45 file sqlite-android-cxx-platform-12-armeabi.zip is indistinguishable at build time from sqlite-android-cxx-platform-12-armeabi.zip given the information in the manifest");
     expected.put("re2-re2", "Android archive com.github.jomof:re2:17.3.1-rev13 file re2-21-armeabi.zip is indistinguishable at build time from re2-21-armeabi.zip given the information in the manifest");
-
+    expected.put("fuzz1-fuzz1", "Manifest was missing coordinate");
+    expected.put("fuzz2-fuzz2", "Manifest was missing coordinate");
     boolean somethingUnexpected = false;
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {
       for (ResolvedManifests.NamedManifest manifest2 : ResolvedManifests.all()) {

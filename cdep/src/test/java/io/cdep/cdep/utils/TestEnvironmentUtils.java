@@ -1,13 +1,14 @@
 package io.cdep.cdep.utils;
 
-import static org.junit.Assert.fail;
-
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.generator.GeneratorEnvironment;
+import org.junit.Test;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Test;
+
+import static org.junit.Assert.fail;
 
 public class TestEnvironmentUtils {
   private final GeneratorEnvironment environment = new GeneratorEnvironment(new File("" +
@@ -29,7 +30,8 @@ public class TestEnvironmentUtils {
     expected.put("templateWithNullArchives", "'templateWithNullArchives' does not have "
         + "archive.include");
     expected.put("templateWithOnlyFile", "'templateWithOnlyFile' does not have archive.include");
-
+    expected.put("fuzz1", "'fuzz1' does not have archive");
+    expected.put("fuzz2", "Illegal character in path at index 2: ,S`&|[x0q;J.$9D#P6FUDG>+&69ZXG");
     boolean unexpectedFailure = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       String key = manifest.name;

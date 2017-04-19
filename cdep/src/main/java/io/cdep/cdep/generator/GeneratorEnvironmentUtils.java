@@ -32,7 +32,6 @@ import io.cdep.cdep.yml.cdep.SoftNameDependency;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
@@ -139,7 +138,7 @@ public class GeneratorEnvironmentUtils {
   public static FunctionTableExpression getFunctionTableExpression(
       @NotNull GeneratorEnvironment environment,
       @NotNull SoftNameDependency dependencies[])
-      throws IOException, URISyntaxException, NoSuchAlgorithmException {
+      throws IOException, NoSuchAlgorithmException {
     BuildFindModuleFunctionTable table = new BuildFindModuleFunctionTable();
     ResolutionScope scope = new Resolver(environment).resolveAll(dependencies);
     addAllResolvedToTable(table, scope);

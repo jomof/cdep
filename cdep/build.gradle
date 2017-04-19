@@ -72,7 +72,7 @@ dependencies {
     testCompile group: 'com.google.guava', name: 'guava', version: '20.0'
     testCompile group: 'com.google.truth', name: 'truth', version: '0.31'
     testCompile "org.mockito:mockito-core:2.+"
-    testCompile "org.mockito:mockito-core:2.+"
+    testCompile group: 'net.java', name: 'quickcheck', version: '0.6'
 }
 
 jar {

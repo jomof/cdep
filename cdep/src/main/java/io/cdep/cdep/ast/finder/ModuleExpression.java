@@ -27,7 +27,9 @@ public class ModuleExpression extends StatementExpression {
   final public Set<Coordinate> dependencies;
 
   public ModuleExpression(@NotNull ModuleArchiveExpression archive, @NotNull Set<Coordinate> dependencies) {
-
+    for(Coordinate coordinate : dependencies) {
+      assert coordinate != null;
+    }
     this.archive = archive;
     this.dependencies = dependencies;
   }

@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.*;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
+import static io.cdep.cdep.io.IO.infoln;
 import static io.cdep.cdep.utils.Invariant.require;
 
 @SuppressWarnings("Java8ReplaceMapGet")
@@ -43,7 +44,7 @@ public class BuildFindModuleFunctionTable {
   }
 
   @NotNull
-  public FunctionTableExpression build() throws MalformedURLException, URISyntaxException {
+  public FunctionTableExpression build() {
     FunctionTableExpression functionTable = new FunctionTableExpression();
 
     // Build module lookup findFunctions
@@ -73,16 +74,17 @@ public class BuildFindModuleFunctionTable {
   @NotNull
   private FindModuleExpression buildFindModule(
       @NotNull GlobalBuildEnvironmentExpression globals,
-      @NotNull ResolvedManifest resolved)
-      throws MalformedURLException, URISyntaxException {
+      @NotNull ResolvedManifest resolved) {
 
     Map<Expression, Expression> cases = new HashMap<>();
     Set<Coordinate> dependencies = new HashSet<>();
     CDepManifestYml manifest = resolved.cdepManifestYml;
     for (HardNameDependency dependency : manifest.dependencies) {
-      assert dependency.compile != null;
       Coordinate coordinate = CoordinateUtils.tryParse(dependency.compile);
-      dependencies.add(coordinate);
+      infoln("Could not parse main manifest coordinate %s", dependency.compile);
+      if (coordinate != null) {
+        dependencies.add(coordinate);
+      }
     }
 
     Coordinate coordinate = manifest.coordinate;
@@ -134,9 +136,12 @@ public class BuildFindModuleFunctionTable {
     }
 
     AbortExpression abort;
-    require(supported.size() > 0, "Module '%s' doesn't support any platforms.", coordinate);
-    abort = abort(String.format("Target platform %%s is not supported by %s. " + "Supported: %s", coordinate,
-        StringUtils.joinOn(" ", supported)), globals.cmakeSystemName);
+    if (supported.size() == 0) {
+      abort = abort(String.format("Module '%s' doesn't support any platforms.", coordinate));
+    } else {
+      abort = abort(String.format("Target platform %%s is not supported by %s. " + "Supported: %s", coordinate,
+          StringUtils.joinOn(" ", supported)), globals.cmakeSystemName);
+    }
     StatementExpression expression = ifSwitch(bool, expressions, abort);
 
     if (interfaces != null && interfaces.headers != null) {
@@ -165,29 +170,33 @@ public class BuildFindModuleFunctionTable {
       @NotNull ResolvedManifest resolved,
       @NotNull Archive archive,
       @NotNull AssignmentExpression explodedArchiveFolder,
-      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+      Set<Coordinate> dependencies) {
     if (archive.file.isEmpty() || archive.sha256.isEmpty() || archive.size == 0L) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
-    return module(buildArchive(
+    StatementExpression moduleArchive = buildArchive(
         resolved.remote,
         archive.file,
         archive.sha256,
         archive.size,
         archive.include,
         ArrayUtils.nullToEmpty(archive.requires, CxxLanguageFeatures.class),
-        new String [0],
-        explodedArchiveFolder), dependencies);
+        new String[0],
+        explodedArchiveFolder);
+    if (moduleArchive instanceof ModuleArchiveExpression) {
+      return module((ModuleArchiveExpression) moduleArchive, dependencies);
+    }
+    return moduleArchive;
   }
 
   @NotNull
   private Expression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
       @NotNull LinuxArchive archive, @NotNull AssignmentExpression explodedArchiveFolder,
-      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+      Set<Coordinate> dependencies) {
     if (archive.file == null || archive.sha256 == null || archive.size == null) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
-    return module(buildArchive(
+    Expression moduleArchive = buildArchive(
         resolved.remote,
         archive.file,
         archive.sha256,
@@ -195,17 +204,21 @@ public class BuildFindModuleFunctionTable {
         archive.include,
         new CxxLanguageFeatures[0],
         ArrayUtils.nullToEmpty(archive.libs, String.class),
-        explodedArchiveFolder), dependencies);
+        explodedArchiveFolder);
+    if (moduleArchive instanceof ModuleArchiveExpression) {
+      return module((ModuleArchiveExpression) moduleArchive, dependencies);
+    }
+    return moduleArchive;
   }
 
   @NotNull
   private Expression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
       @NotNull iOSArchive archive, @NotNull AssignmentExpression explodedArchiveFolder,
-      Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+      Set<Coordinate> dependencies) {
     if (archive.file.isEmpty() || archive.sha256.isEmpty() || archive.size == 0L) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
-    return module(buildArchive(
+    Expression moduleArchive = buildArchive(
         resolved.remote,
         archive.file,
         archive.sha256,
@@ -213,7 +226,11 @@ public class BuildFindModuleFunctionTable {
         archive.include,
         new CxxLanguageFeatures[0],
         ArrayUtils.nullToEmpty(archive.libs, String.class),
-        explodedArchiveFolder), dependencies);
+        explodedArchiveFolder);
+    if (moduleArchive instanceof ModuleArchiveExpression) {
+      return module((ModuleArchiveExpression) moduleArchive, dependencies);
+    }
+    return moduleArchive;
   }
 
   @NotNull
@@ -221,7 +238,7 @@ public class BuildFindModuleFunctionTable {
       @NotNull AndroidArchive archive,
       @NotNull String abi,
       @NotNull AssignmentExpression explodedArchiveFolder,
-      @NotNull Set<Coordinate> dependencies) throws URISyntaxException, MalformedURLException {
+      @NotNull Set<Coordinate> dependencies) {
     if (archive.file.isEmpty() || archive.sha256.isEmpty() || archive.size == 0L) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
@@ -231,8 +248,7 @@ public class BuildFindModuleFunctionTable {
     for (int i = 0; i < abiLibs.length; ++i) {
       abiLibs[i] = abi + "/" + archive.libs[i];
     }
-
-    return module(buildArchive(
+    Expression moduleArchive = buildArchive(
         resolved.remote,
         archive.file,
         archive.sha256,
@@ -240,11 +256,15 @@ public class BuildFindModuleFunctionTable {
         archive.include,
         new CxxLanguageFeatures[0],
         ArrayUtils.nullToEmpty(abiLibs, String.class),
-        explodedArchiveFolder), dependencies);
+        explodedArchiveFolder);
+    if (moduleArchive instanceof ModuleArchiveExpression) {
+      return module((ModuleArchiveExpression) moduleArchive, dependencies);
+    }
+    return moduleArchive;
   }
 
   @NotNull
-  private ModuleArchiveExpression buildArchive(
+  private StatementExpression buildArchive(
       @NotNull URL remote,
       @NotNull String file,
       @NotNull String sha256,
@@ -252,8 +272,7 @@ public class BuildFindModuleFunctionTable {
       @Nullable String include,
       @NotNull CxxLanguageFeatures[] requires,
       @NotNull String libs[],
-      @NotNull AssignmentExpression explodedArchiveFolder)
-      throws URISyntaxException, MalformedURLException {
+      @NotNull AssignmentExpression explodedArchiveFolder) {
     String libLibs[] = new String[libs.length];
     Expression libPaths[] = new Expression[libs.length];
     for (int i = 0; i < libs.length; ++i) {
@@ -261,14 +280,23 @@ public class BuildFindModuleFunctionTable {
       libPaths[i] = joinFileSegments(explodedArchiveFolder, file, "lib", libs[i]);
     }
 
-    return archive(remote.toURI().resolve(".").resolve(file).toURL(),
-        sha256,
-        size,
-        include,
-        include == null ? null : joinFileSegments(explodedArchiveFolder, file, include),
-        libLibs,
-        libPaths,
-        requires);
+    try {
+      return archive(
+          remote.toURI().resolve(".").resolve(file).toURL(),
+          sha256,
+          size,
+          include,
+          include == null ? null : joinFileSegments(explodedArchiveFolder, file, include),
+          libLibs,
+          libPaths,
+          requires);
+    } catch (IllegalArgumentException e) {
+      return abort("Archive file could not be converted to URL. It is likely an illegal path.");
+    } catch (MalformedURLException e) {
+      return abort("Archive file could not be converted to URL. It may have an unknown protocol.");
+    } catch (URISyntaxException e) {
+      return abort("Archive file could not be converted to URL. It may have an invalid syntax.");
+    }
   }
 
   @NotNull
@@ -276,7 +304,7 @@ public class BuildFindModuleFunctionTable {
       @NotNull GlobalBuildEnvironmentExpression globals,
       @NotNull ResolvedManifest resolved,
       @NotNull AssignmentExpression explodedArchiveFolder,
-      @NotNull Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+      @NotNull Set<Coordinate> dependencies) {
 
     // Something like iPhone10.2.sdk or iPhone.sdk
     AssignmentExpression osxSysrootSDKName = assign("osx_sysroot_sdk_name", getFileName(globals.cmakeOsxSysroot));
@@ -303,7 +331,7 @@ public class BuildFindModuleFunctionTable {
       @NotNull iOSArchive archive[],
       @NotNull AssignmentExpression explodedArchiveFolder,
       @NotNull AssignmentExpression combinedPlatformAndSDK,
-      Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+      Set<Coordinate> dependencies) {
     Map<iOSArchitecture, List<iOSArchive>> grouped = groupByArchitecture(archive);
     List<Expression> conditions = new ArrayList<>();
     List<Expression> expressions = new ArrayList<>();
@@ -333,7 +361,7 @@ public class BuildFindModuleFunctionTable {
       @NotNull AssignmentExpression explodedArchiveFolder,
       @NotNull AssignmentExpression combinedPlatformAndSDK,
       iOSArchitecture architecture,
-      Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+      Set<Coordinate> dependencies) {
     List<Expression> conditionList = new ArrayList<>();
     List<Expression> expressionList = new ArrayList<>();
     String supported = "";
@@ -385,7 +413,7 @@ public class BuildFindModuleFunctionTable {
       @NotNull GlobalBuildEnvironmentExpression globals,
       @NotNull ResolvedManifest resolved,
       @NotNull AssignmentExpression explodedArchiveFolder,
-      @NotNull Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+      @NotNull Set<Coordinate> dependencies) {
 
     // Gather up the runtime names
     Map<String, List<AndroidArchive>> stlTypes = new HashMap<>();
@@ -443,7 +471,7 @@ public class BuildFindModuleFunctionTable {
       @NotNull AssignmentExpression explodedArchiveFolder,
       //
       // Parent of all .zip folders for this coordinate
-      @NotNull Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+      @NotNull Set<Coordinate> dependencies) {
 
     // If there's only one android left and it doesn't have a platform then this is
     // a header-only module.
@@ -492,7 +520,7 @@ public class BuildFindModuleFunctionTable {
       @NotNull ResolvedManifest resolved,
       @NotNull List<AndroidArchive> androids,
       @NotNull AssignmentExpression explodedArchiveFolder,
-      @NotNull Set<Coordinate> dependencies) throws MalformedURLException, URISyntaxException {
+      @NotNull Set<Coordinate> dependencies) {
     CDepManifestYml manifest = resolved.cdepManifestYml;
     Map<Expression, Expression> cases = new HashMap<>();
     String supported = "";
@@ -512,7 +540,7 @@ public class BuildFindModuleFunctionTable {
     if (grouped.size() == 1 && grouped.containsKey("")) {
       // Header only case.
       AndroidArchive archive = androids.iterator().next();
-      return module(buildArchive(
+      Expression moduleArchive = buildArchive(
           resolved.remote,
           archive.file,
           archive.sha256,
@@ -520,7 +548,11 @@ public class BuildFindModuleFunctionTable {
           archive.include,
           new CxxLanguageFeatures[0],
           new String[0],
-          explodedArchiveFolder), dependencies);
+          explodedArchiveFolder);
+      if (moduleArchive instanceof ModuleArchiveExpression) {
+        return module((ModuleArchiveExpression) moduleArchive, dependencies);
+      }
+      return moduleArchive;
     }
 
     for (String abi : grouped.keySet()) {
@@ -532,8 +564,8 @@ public class BuildFindModuleFunctionTable {
     Expression prior = abort(String.format("Android ABI %%s is not supported by %s for platform %%s. Supported: %s",
         manifest.coordinate,
         supported),
-          globals.cdepDeterminedAndroidAbi,
-          globals.cmakeSystemVersion);
+        globals.cdepDeterminedAndroidAbi,
+        globals.cmakeSystemVersion);
 
     Expression bool[] = new Expression[cases.size()];
     Expression expressions[] = new Expression[cases.size()];

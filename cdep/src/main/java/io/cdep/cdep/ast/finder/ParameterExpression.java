@@ -21,10 +21,6 @@ public class ParameterExpression extends Expression {
   @NotNull
   final public String name;
 
-  public ParameterExpression() {
-    this.name = "";
-  }
-
   ParameterExpression(@NotNull String name) {
     this.name = name;
   }

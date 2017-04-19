@@ -35,7 +35,10 @@ public class CheckReferenceAndDependencyConsistency extends ReadonlyVisitor {
   /**
    * Utility function to add a new edge to an edge map.
    */
-  private static void addEdge(@NotNull Map<Coordinate, List<Coordinate>> edges, Coordinate from, Coordinate to) {
+  private static void addEdge(
+      @NotNull Map<Coordinate, List<Coordinate>> edges,
+      @NotNull Coordinate from,
+      @NotNull Coordinate to) {
     List<Coordinate> tos = edges.get(from);
     if (tos == null) {
       edges.put(from, new ArrayList<Coordinate>());
@@ -72,8 +75,11 @@ public class CheckReferenceAndDependencyConsistency extends ReadonlyVisitor {
     for (Coordinate dependee : forwardEdges.get(dependant)) {
       List<ModuleArchiveExpression> dependeeArchives = moduleArchives.get(dependee);
       require(dependeeArchives != null, "Reference %s was not found, needed by %s", dependee, dependant);
+      if (dependeeArchives == null) {
+        continue;
+      }
       // Have any of the dependee archives been seen before?
-      for (ModuleArchiveExpression dependeeArchive : moduleArchives.get(dependee)) {
+      for (ModuleArchiveExpression dependeeArchive : dependeeArchives) {
         Coordinate prior = shaToPrior.get(dependeeArchive.sha256);
         require(prior == null,
             "Package '%s' depends on '%s' but both packages contain a file '%s' '%s' "

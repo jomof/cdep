@@ -147,7 +147,6 @@ public class ResolutionScope {
     unresolved.remove(softname.compile);
 
     for (HardNameDependency hardname : transitiveDependencies) {
-      assert hardname.compile != null;
       Coordinate coordinate = CoordinateUtils.tryParse(hardname.compile);
       if (coordinate == null) {
         this.resolved.add(hardname.compile);

@@ -81,9 +81,17 @@ public class PlainOldDataReadonlyCovisitor {
   }
 
   public void covisit(@Nullable Object left, @Nullable Object right) {
-    require(left != null && right != null);
-    assert left != null;
-    assert right != null;
+    if (left == null && right == null) {
+      return;
+    }
+    if (left == null) {
+      covisit(null, null, right, right.getClass());
+      return;
+    }
+    if (right == null) {
+      covisit(null, left, null, left.getClass());
+      return;
+    }
     require(left.getClass().equals(right.getClass()));
     covisit(null, left, right, left.getClass());
   }

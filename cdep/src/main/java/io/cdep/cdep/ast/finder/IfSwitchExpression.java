@@ -11,13 +11,6 @@ public class IfSwitchExpression extends StatementExpression {
   @NotNull
   final public Expression elseExpression;
 
-  public IfSwitchExpression() {
-    conditions = new Expression[0];
-    expressions = new Expression[0];
-    //noinspection ConstantConditions
-    elseExpression = null;
-  }
-
   IfSwitchExpression(@NotNull Expression conditions[], @NotNull Expression expressions[], @NotNull Expression elseExpression) {
     this.conditions = conditions;
     this.expressions = expressions;
