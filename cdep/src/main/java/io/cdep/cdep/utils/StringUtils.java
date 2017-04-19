@@ -4,6 +4,7 @@ import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.IllegalFormatException;
 
 public class StringUtils {
 
@@ -88,5 +89,35 @@ public class StringUtils {
   @NotNull
   public static String whitespace(int indent) {
     return new String(new char[indent ]).replace('\0', ' ');
+  }
+
+  @NotNull
+  public static String safeFormat(@NotNull String format, Object ... args) {
+    try {
+      return String.format(format, args);
+    } catch (IllegalFormatException e) {
+      // It looks like format characters coming from the user in some way.
+      // Provide a safe alternative that has all the same information.
+      return format + " with parameters {" + joinOn(", ", args) + "}";
+    }
+  }
+
+  public static boolean containsAny(@NotNull String value, @NotNull String chars) {
+    for (Character c : chars.toCharArray()) {
+      if (value.contains(c.toString())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @NotNull
+  public static String firstAvailable(@NotNull String value, int n) {
+    //noinspection ConstantConditions
+    if (value == null) {
+      //noinspection ReturnOfNull
+      return null;
+    }
+    return value.substring(0, Math.min(n, value.length()));
   }
 }

@@ -26,14 +26,16 @@ public class TestCMakeGenerator {
 
   @Test
   public void fuzzTest() {
+    //for (int i = 0 ; i < 100; ++ i)
     QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
       @Override
       protected void doSpecify(CDepManifestYml any) throws Throwable {
+        String capture = CDepManifestYmlUtils.convertManifestToString(any);
+        CDepManifestYml readAny = CDepManifestYmlUtils.convertStringToManifest(capture);
         try {
-          Invariant.pushScope();
-          String capture = CDepManifestYmlUtils.convertManifestToString(any);
+          Invariant.pushScope(false);
           BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
-          builder.addManifest(new ResolvedManifest(new URL("https://google.com"), any));
+          builder.addManifest(new ResolvedManifest(new URL("https://google.com"), readAny));
           FunctionTableExpression table = builder.build();
           String result = new CMakeGenerator(environment, table).create();
         } finally {
@@ -68,6 +70,7 @@ public class TestCMakeGenerator {
     Map<String, String> expected = new HashMap<>();
     expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found, "
         + "needed by com.github.jomof:firebase/admob:2.1.3-rev8");
+    expected.put("fuzz1", "Could not parse main manifest coordinate []");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();

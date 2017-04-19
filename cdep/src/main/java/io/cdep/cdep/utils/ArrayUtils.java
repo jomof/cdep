@@ -22,13 +22,14 @@ public class ArrayUtils {
 
   @NotNull
   public static <T> T[] removeNullElements(@NotNull T[] array, Class<T> clazz) {
-    List<T> list = new ArrayList<T>();
-    for (int i = 0; i < array.length; ++i) {
-      if (array[i] == null) {
+    @SuppressWarnings("Convert2Diamond") List<T> list = new ArrayList<T>();
+    for (T anArray : array) {
+      if (anArray == null) {
         continue;
       }
-      list.add(array[i]);
+      list.add(anArray);
     }
+    //noinspection unchecked
     return list.toArray((T[])Array.newInstance(clazz, list.size()));
   }
 }

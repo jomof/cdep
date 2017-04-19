@@ -6,6 +6,7 @@ import io.cdep.cdep.ast.finder.FindModuleExpression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
 import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,15 +82,16 @@ public class CheckReferenceAndDependencyConsistency extends ReadonlyVisitor {
       // Have any of the dependee archives been seen before?
       for (ModuleArchiveExpression dependeeArchive : dependeeArchives) {
         Coordinate prior = shaToPrior.get(dependeeArchive.sha256);
+        String digest = StringUtils.firstAvailable(dependeeArchive.sha256, 7);
         require(prior == null,
-            "Package '%s' depends on '%s' but both packages contain a file '%s' '%s' "
+            "Package '%s' depends on '%s' but both packages contain a file '%s' "
                 + "with the same SHA256. The file should only be in the lowest level package '%s' "
                 + "(sha256:%s)",
             dependant,
             dependee,
             dependeeArchive.file,
             dependee,
-            dependeeArchive.sha256.substring(0, 8));
+            digest);
       }
     }
   }

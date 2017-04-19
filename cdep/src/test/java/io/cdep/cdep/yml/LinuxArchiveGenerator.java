@@ -1,15 +1,13 @@
 package io.cdep.cdep.yml;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.cdep.yml.cdepmanifest.Archive;
-import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
+import io.cdep.cdep.yml.cdepmanifest.LinuxArchive;
 import net.java.quickcheck.Generator;
 
-import static io.cdep.cdep.yml.ArchiveGenerator.Kind.missing;
 import static net.java.quickcheck.generator.CombinedGenerators.arrays;
 import static net.java.quickcheck.generator.PrimitiveGenerators.*;
 
-public class ArchiveGenerator implements Generator<Archive> {
+public class LinuxArchiveGenerator implements Generator<LinuxArchive> {
   @NotNull
   final public Generator<Kind> kind = enumValues(Kind.class);
   @NotNull
@@ -21,21 +19,19 @@ public class ArchiveGenerator implements Generator<Archive> {
   @NotNull
   final public Generator<String> include = strings();
   @NotNull
-  final public Generator<CxxLanguageFeatures[]> requires = arrays(enumValues(CxxLanguageFeatures.class),
-      CxxLanguageFeatures.class);
+  final public Generator<String[]> libs = arrays(new ShortFilenameGenerator(), String.class);
 
   @Override
-  public Archive next() {
-    if (kind.next() == missing) {
+  public LinuxArchive next() {
+    if (kind.next() == Kind.missing) {
       return null;
     }
-    return new Archive(
+    return new LinuxArchive(
         file.next(),
         sha256.next(),
         size.next(),
-        include.next(),
-        requires.next()
-    );
+        libs.next(),
+        include.next());
   }
 
   enum Kind {

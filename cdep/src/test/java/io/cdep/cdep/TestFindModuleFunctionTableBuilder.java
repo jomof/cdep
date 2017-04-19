@@ -22,11 +22,18 @@ import io.cdep.cdep.generator.CMakeGenerator;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
+import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.ExpressionUtils;
+import io.cdep.cdep.utils.Invariant;
+import io.cdep.cdep.yml.CDepManifestYmlGenerator;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import net.java.quickcheck.QuickCheck;
+import net.java.quickcheck.characteristic.AbstractCharacteristic;
 import org.junit.Test;
 
 import java.io.File;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -339,6 +346,31 @@ public class TestFindModuleFunctionTableBuilder {
   }
 
   @Test
+  public void fuzzTest() {
+      QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
+        @Override
+        protected void doSpecify(CDepManifestYml any) throws Throwable {
+          String capture = CDepManifestYmlUtils.convertManifestToString(any);
+          CDepManifestYml readAny = any;
+          try {
+            readAny = CDepManifestYmlUtils.convertStringToManifest(capture);
+          } catch (RuntimeException e) {
+            System.out.printf("%s", capture);
+            throw e;
+          }
+          try {
+            Invariant.pushScope();
+            BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
+            builder.addManifest(new ResolvedManifest(new URL("https://google.com"), readAny));
+            builder.build();
+          } finally {
+            Invariant.popScope();
+          }
+        }
+      });
+  }
+
+  @Test
   public void testHeaderOnly() throws Exception {
     ResolvedManifest resolved = resolver.resolveAny(createReference(
         "https://github.com/jomof/boost/releases/download/1.0.63-rev18/cdep-manifest.yml"));
@@ -381,6 +413,7 @@ public class TestFindModuleFunctionTableBuilder {
   public void testAllResolvedManifests() throws Exception {
     Map<String, String> expected = new HashMap<>();
     expected.put("admob", "Reference com.github.jomof:firebase/app:2.1.3-rev8 was not found");
+    expected.put("fuzz1", "Could not parse main manifest coordinate []");
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
       builder.addManifest(manifest.resolved);

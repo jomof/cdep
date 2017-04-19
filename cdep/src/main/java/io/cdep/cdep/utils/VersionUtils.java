@@ -29,6 +29,9 @@ public class VersionUtils {
     if (pointSections.length > 3) {
       return String.format("expected %s but there were %s dots", EXPECTED, pointSections.length - 1);
     }
+    if (pointSections.length == 0) {
+       return String.format("expected %s but there was only a dot", EXPECTED);
+    }
     if (!StringUtils.isNumeric(pointSections[0])) {
       return String.format("expected %s but major version '%s' wasn't a number", EXPECTED, pointSections[0]);
     }

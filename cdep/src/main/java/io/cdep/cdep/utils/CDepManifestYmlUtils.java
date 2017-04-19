@@ -54,8 +54,8 @@ public class CDepManifestYmlUtils {
       try {
         manifest = V3Reader.convertStringToManifest(content);
       } catch (YAMLException e2) {
-        // If older readers also couldn't read it then throw the original exception.
-        require(false, "%s", e2.toString());
+        // If older readers also couldn't read it then report the original exception.
+        require(false, "%s", e.toString());
         return new CDepManifestYml(
             EMPTY_COORDINATE
         );
@@ -186,9 +186,9 @@ public class CDepManifestYmlUtils {
 
     @Override
     public void visitLinuxArchive(@Nullable String name, @NotNull LinuxArchive value) {
-      require(value.file != null && value.file.length() != 0, "iOS archive %s is missing file", coordinate);
-      require(value.sha256 != null && value.sha256.length() != 0, "iOS archive %s is missing sha256", coordinate);
-      require(value.size != null && value.size != 0, "iOS archive %s is missing size or it is zero", coordinate);
+      require(value.file.length() != 0, "iOS archive %s is missing file", coordinate);
+      require(value.sha256.length() != 0, "iOS archive %s is missing sha256", coordinate);
+      require(value.size != 0, "iOS archive %s is missing size or it is zero", coordinate);
       super.visitLinuxArchive(name, value);
     }
 
@@ -213,12 +213,8 @@ public class CDepManifestYmlUtils {
 
     @Override
     public void visitLinux(@Nullable String name, @NotNull Linux linux) {
-      if (linux.archives == null) {
-        return;
-      }
       require(linux.archives.length <= 1, "Package '%s' has multiple linux archives. Only one is allowed.", coordinate);
       for (LinuxArchive archive : linux.archives) {
-        assert archive.libs != null;
         for (String lib : archive.libs) {
           require(lib.endsWith(".a"),
               "Package '%s' has non-static android libraryName '%s'",

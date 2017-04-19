@@ -7,6 +7,10 @@ import io.cdep.cdep.yml.cdepmanifest.*;
 
 import static io.cdep.cdep.Coordinate.EMPTY_COORDINATE;
 import static io.cdep.cdep.Version.EMPTY_VERSION;
+import static io.cdep.cdep.utils.ArrayUtils.nullToEmpty;
+import static io.cdep.cdep.utils.ArrayUtils.removeNullElements;
+import static io.cdep.cdep.utils.LongUtils.nullToZero;
+import static io.cdep.cdep.utils.StringUtils.nullToEmpty;
 
 /**
  * When Yaml is de-serialized, it may contain null in fields marked @NonNull.
@@ -18,18 +22,40 @@ public class ConvertNullToDefaultRewritingVisitor extends CDepManifestYmlRewriti
   @Override
   protected AndroidArchive visitAndroidArchive(@NotNull AndroidArchive archive) {
     return super.visitAndroidArchive(new AndroidArchive(
-        StringUtils.nullToEmpty(archive.file),
-        StringUtils.nullToEmpty(archive.sha256),
-        LongUtils.nullToZero(archive.size),
-        StringUtils.nullToEmpty(archive.ndk),
-        StringUtils.nullToEmpty(archive.compiler),
-        StringUtils.nullToEmpty(archive.runtime),
-        StringUtils.nullToEmpty(archive.platform),
-        StringUtils.nullToEmpty(archive.builder),
-        StringUtils.nullToEmpty(archive.abi),
-        StringUtils.nullToEmpty(archive.include),
-        ArrayUtils.nullToEmpty(archive.libs, String.class),
-        StringUtils.nullToEmpty(archive.flavor)));
+        nullToEmpty(archive.file),
+        nullToEmpty(archive.sha256),
+        nullToZero(archive.size),
+        nullToEmpty(archive.ndk),
+        nullToEmpty(archive.compiler),
+        nullToEmpty(archive.runtime),
+        nullToEmpty(archive.platform),
+        nullToEmpty(archive.builder),
+        nullToEmpty(archive.abi),
+        nullToEmpty(archive.include),
+        removeNullElements(nullToEmpty(archive.libs, String.class), String.class),
+        nullToEmpty(archive.flavor)));
+  }
+
+  @NotNull
+  @Override
+  protected LinuxArchive visitLinuxArchive(@NotNull LinuxArchive archive) {
+    return new LinuxArchive(
+        nullToEmpty(archive.file),
+        nullToEmpty(archive.sha256),
+        nullToZero(archive.size),
+        removeNullElements(nullToEmpty(archive.libs, String.class), String.class),
+        nullToEmpty(archive.include));
+  }
+
+  @Nullable
+  @Override
+  protected Linux visitLinux(@Nullable Linux linux) {
+    if (linux == null) {
+      return null;
+    }
+    return new Linux(
+        nullToEmpty(visitLinuxArchiveArray(linux.archives), LinuxArchive.class)
+    );
   }
 
   @NotNull
@@ -38,22 +64,22 @@ public class ConvertNullToDefaultRewritingVisitor extends CDepManifestYmlRewriti
     return super.visitCDepManifestYml(new CDepManifestYml(
         value.sourceVersion,
         ObjectUtils.nullToDefault(value.coordinate, EMPTY_COORDINATE),
-        ArrayUtils.removeNullElements(
-          ArrayUtils.nullToEmpty(value.dependencies, HardNameDependency.class),
-          HardNameDependency.class),
+        removeNullElements(
+            nullToEmpty(value.dependencies, HardNameDependency.class),
+            HardNameDependency.class),
         value.interfaces,
         value.android,
         value.iOS,
         value.linux,
-        StringUtils.nullToEmpty(value.example)));
+        nullToEmpty(value.example)));
   }
 
   @NotNull
   @Override
   protected Coordinate visitCoordinate(@NotNull Coordinate coordinate) {
     return super.visitCoordinate(new Coordinate(
-        StringUtils.nullToEmpty(coordinate.groupId),
-        StringUtils.nullToEmpty(coordinate.artifactId),
+        nullToEmpty(coordinate.groupId),
+        nullToEmpty(coordinate.artifactId),
         ObjectUtils.nullToDefault(coordinate.version, EMPTY_VERSION)
     ));
   }
@@ -62,8 +88,8 @@ public class ConvertNullToDefaultRewritingVisitor extends CDepManifestYmlRewriti
   @Override
   protected HardNameDependency visitHardNameDependency(@NotNull HardNameDependency dependency) {
     return super.visitHardNameDependency(new HardNameDependency(
-        StringUtils.nullToEmpty(dependency.compile),
-        StringUtils.nullToEmpty(dependency.sha256)));
+        nullToEmpty(dependency.compile),
+        nullToEmpty(dependency.sha256)));
   }
 
   @Nullable
@@ -73,25 +99,25 @@ public class ConvertNullToDefaultRewritingVisitor extends CDepManifestYmlRewriti
       return null;
     }
     return super.visitArchive(new Archive(
-        StringUtils.nullToEmpty(archive.file),
-        StringUtils.nullToEmpty(archive.sha256),
-        LongUtils.nullToZero(archive.size),
-        StringUtils.nullToEmpty(archive.include),
-        ArrayUtils.nullToEmpty(archive.requires, CxxLanguageFeatures.class)));
+        nullToEmpty(archive.file),
+        nullToEmpty(archive.sha256),
+        nullToZero(archive.size),
+        nullToEmpty(archive.include),
+        nullToEmpty(archive.requires, CxxLanguageFeatures.class)));
   }
 
   @NotNull
   @Override
   public iOSArchive visitiOSArchive(@NotNull iOSArchive archive) {
     return super.visitiOSArchive(new iOSArchive(
-        StringUtils.nullToEmpty(archive.file),
-        StringUtils.nullToEmpty(archive.sha256),
-        LongUtils.nullToZero(archive.size),
+        nullToEmpty(archive.file),
+        nullToEmpty(archive.sha256),
+        nullToZero(archive.size),
         archive.platform,
         archive.architecture,
-        StringUtils.nullToEmpty(archive.sdk),
-        StringUtils.nullToEmpty(archive.include),
-        ArrayUtils.nullToEmpty(archive.libs, String.class),
-        StringUtils.nullToEmpty(archive.flavor)));
+        nullToEmpty(archive.sdk),
+        nullToEmpty(archive.include),
+        removeNullElements(nullToEmpty(archive.libs, String.class), String.class),
+        nullToEmpty(archive.flavor)));
   }
 }

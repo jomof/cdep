@@ -16,6 +16,7 @@ import java.util.Map;
 import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.require;
 import static io.cdep.cdep.utils.ReflectionUtils.invoke;
+import static io.cdep.cdep.utils.StringUtils.safeFormat;
 
 /**
  * Walks the expression tree and interprets the constant for the supplied state.
@@ -210,8 +211,9 @@ public class InterpretingVisitor {
   @Nullable
   Object visitAbortExpression(@NotNull AbortExpression expr) {
     Object parameters[] = (Object[]) coerce(visitArray(expr.parameters, Object.class), String[].class);
-    fail("Abort: " + expr.message, parameters);
-    return null;
+    String message = safeFormat("Abort: " + expr.message, parameters);
+    fail(message);
+    return message;
   }
 
   @Nullable

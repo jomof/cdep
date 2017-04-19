@@ -201,15 +201,15 @@ public class TestFullfill {
     QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
       @Override
       protected void doSpecify(CDepManifestYml any) throws Throwable {
+        File outputFolder = new File(".test-files/TestFullfill/fuzzTest/"
+            + "fuzzTest").getAbsoluteFile();
+        outputFolder.delete();
+        outputFolder.mkdirs();
+        File manifestFile = new File(outputFolder, "cdep-manifest.yml");
+        String body = CDepManifestYmlUtils.convertManifestToString(any);
+        FileUtils.writeTextToFile(manifestFile, body);
         try {
           Invariant.pushScope();
-          File outputFolder = new File(".test-files/TestFullfill/fuzzTest/"
-              + "fuzzTest").getAbsoluteFile();
-          outputFolder.delete();
-          outputFolder.mkdirs();
-          File manifestFile = new File(outputFolder, "cdep-manifest.yml");
-          String body = CDepManifestYmlUtils.convertManifestToString(any);
-          FileUtils.writeTextToFile(manifestFile, body);
           Fullfill.multiple(
               environment,
               new File[]{manifestFile},

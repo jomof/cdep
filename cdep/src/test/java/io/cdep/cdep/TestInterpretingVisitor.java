@@ -30,14 +30,16 @@ public class TestInterpretingVisitor {
 
   @Test
   public void fuzzTest() {
+    // for (int i = 0; i < 100; ++i)
     QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
       @Override
       protected void doSpecify(CDepManifestYml any) throws Throwable {
         try {
           Invariant.pushScope();
           String capture = CDepManifestYmlUtils.convertManifestToString(any);
+          CDepManifestYml readAny = CDepManifestYmlUtils.convertStringToManifest(capture);
           BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
-          builder.addManifest(new ResolvedManifest(new URL("https://google.com"), any));
+          builder.addManifest(new ResolvedManifest(new URL("https://google.com"), readAny));
           FunctionTableExpression function = builder.build();
           visitAndroid(function);
           visitiOS(function);
@@ -50,33 +52,33 @@ public class TestInterpretingVisitor {
   }
 
   private void visitiOS(final FunctionTableExpression function) {
-new InterpretingVisitor() {
-          @Override
-          protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-            if (function.globals.cdepExplodedRoot == expr) {
-              return "exploded/root";
-            }
-            if (function.globals.cmakeSystemName == expr) {
-              return "Darwin";
-            }
-            if (function.globals.cmakeSystemVersion == expr) {
-              return 21;
-            }
-            if (function.globals.cdepDeterminedAndroidAbi == expr) {
-              return "x86";
-            }
-            if (function.globals.cdepDeterminedAndroidRuntime == expr) {
-              return "c++_static";
-            }
-            if (function.globals.cmakeOsxSysroot == expr) {
-              return "/iPhoneOS10.2.sdk";
-            }
-            if (function.globals.cmakeOsxArchitectures == expr) {
-              return new String[]{"i386"};
-            }
-            return super.visitParameterExpression(expr);
-          }
-        }.visit(function);
+    new InterpretingVisitor() {
+      @Override
+      protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
+        if (function.globals.cdepExplodedRoot == expr) {
+          return "exploded/root";
+        }
+        if (function.globals.cmakeSystemName == expr) {
+          return "Darwin";
+        }
+        if (function.globals.cmakeSystemVersion == expr) {
+          return 21;
+        }
+        if (function.globals.cdepDeterminedAndroidAbi == expr) {
+          return "x86";
+        }
+        if (function.globals.cdepDeterminedAndroidRuntime == expr) {
+          return "c++_static";
+        }
+        if (function.globals.cmakeOsxSysroot == expr) {
+          return "/iPhoneOS10.2.sdk";
+        }
+        if (function.globals.cmakeOsxArchitectures == expr) {
+          return new String[]{"i386"};
+        }
+        return super.visitParameterExpression(expr);
+      }
+    }.visit(function);
   }
 
   @Test
@@ -102,7 +104,7 @@ new InterpretingVisitor() {
     expected.put("indistinguishableAndroidArchives", "Abort: Target platform Linux is not supported by "
         + "com.github.jomof:firebase/app:0.0.0. Supported: Android");
     expected.put("re2", "Abort: Target platform Linux is not supported by com.github.jomof:re2:17.3.1-rev13. Supported: Android");
-    expected.put("fuzz1", "Abort: Module ':' doesn't support any platforms.");
+    expected.put("fuzz1", "Could not parse main manifest coordinate []");
     expected.put("fuzz2", "Abort: Archive file could not be converted to URL. It is likely an illegal path.");
 
     boolean unexpectedFailures = false;
@@ -181,7 +183,7 @@ new InterpretingVisitor() {
     expected.put("templateWithOnlyFile", "Abort: Archive in http://google.com/cdep-manifest.yml was malformed");
     expected.put("indistinguishableAndroidArchives", "Abort: Android ABI x86 is not supported by "
         + "com.github.jomof:firebase/app:0.0.0 for platform 21. Supported: arm64-v8a ");
-    expected.put("fuzz1", "Abort: Module ':' doesn't support any platforms.");
+    expected.put("fuzz1", "Could not parse main manifest coordinate []");
     expected.put("fuzz2", "Abort: Archive file could not be converted to URL. It is likely an illegal path.");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
@@ -260,7 +262,7 @@ new InterpretingVisitor() {
         "Abort: Target platform Darwin is not supported by com.github.jomof:firebase/app:0.0.0. Supported: Android");
     expected.put("re2",
         "Abort: Target platform Darwin is not supported by com.github.jomof:re2:17.3.1-rev13. Supported: Android");
-    expected.put("fuzz1", "Abort: Module ':' doesn't support any platforms.");
+    expected.put("fuzz1", "Could not parse main manifest coordinate []");
     expected.put("fuzz2", "Abort: Archive file could not be converted to URL. It is likely an illegal path.");
 
     boolean unexpectedFailures = false;

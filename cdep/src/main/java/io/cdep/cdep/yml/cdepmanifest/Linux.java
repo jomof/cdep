@@ -1,14 +1,13 @@
 package io.cdep.cdep.yml.cdepmanifest;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
 
 public class Linux {
-  @Nullable
+  @NotNull
   final public LinuxArchive archives[];
 
   Linux() {
-    archives = null;
+    archives = new LinuxArchive[0];
   }
 
   public Linux(@NotNull LinuxArchive archives[]) {

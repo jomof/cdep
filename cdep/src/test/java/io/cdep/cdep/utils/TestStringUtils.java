@@ -1,11 +1,14 @@
 package io.cdep.cdep.utils;
 
+import net.java.quickcheck.QuickCheck;
+import net.java.quickcheck.characteristic.AbstractCharacteristic;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
+import static net.java.quickcheck.generator.PrimitiveGenerators.strings;
 
 public class TestStringUtils {
   @Test
@@ -51,6 +54,18 @@ public class TestStringUtils {
   @Test
   public void checkIsNotNumber() {
     assertThat(StringUtils.isNumeric("x")).isFalse();
+  }
+
+  @Test
+  public void fuzzTest() {
+    QuickCheck.forAll(strings(), new AbstractCharacteristic<String>() {
+      @Override
+      protected void doSpecify(String any) throws Throwable {
+        StringUtils.containsAny(any, any);
+        StringUtils.firstAvailable(any, 7);
+
+      }
+    });
   }
 
   private static class CoverConstructor extends StringUtils {

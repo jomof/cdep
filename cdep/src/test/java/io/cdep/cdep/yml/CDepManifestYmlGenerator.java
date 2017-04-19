@@ -13,21 +13,25 @@ import static net.java.quickcheck.generator.PrimitiveGenerators.strings;
  */
 public class CDepManifestYmlGenerator implements Generator<CDepManifestYml> {
   Generator<CDepManifestYmlVersion> versionGenerator = enumValues(CDepManifestYmlVersion.class);
+  Generator<Coordinate> coordinateGenerator = new CoordinateGenerator();
   Generator<HardNameDependency[]> dependenciesGenerator = arrays(new HardnameGenerator(), HardNameDependency.class);
   Generator<String> exampleGenerator = strings();
   Generator<Archive> archiveGenerator = new ArchiveGenerator();
+  Generator<AndroidArchive[]> androidArchiveGenerator = arrays(new AndroidArchiveGenerator(), AndroidArchive.class);
+  Generator<LinuxArchive[]> linuxArchiveGenerator = arrays(new LinuxArchiveGenerator(), LinuxArchive.class);
+
 
   @Override
   public CDepManifestYml next() {
 
     return new CDepManifestYml(
         versionGenerator.next(),
-        Coordinate.EMPTY_COORDINATE,
+        coordinateGenerator.next(),
         dependenciesGenerator.next(),
         new Interfaces(archiveGenerator.next()),
+        new Android(dependenciesGenerator.next(), androidArchiveGenerator.next()),
         null,
-        null,
-        null,
+        new Linux(linuxArchiveGenerator.next()),
         exampleGenerator.next());
   }
 }

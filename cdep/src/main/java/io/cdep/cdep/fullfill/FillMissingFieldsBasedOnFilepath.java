@@ -1,6 +1,7 @@
 package io.cdep.cdep.fullfill;
 
 import io.cdep.annotations.Nullable;
+import io.cdep.cdep.utils.ArrayUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
 
@@ -18,6 +19,18 @@ public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVi
       "x86_64",
       "x86"};
 
+  @Nullable
+  @Override
+  protected AndroidArchive[] visitAndroidArchiveArray(@Nullable AndroidArchive[] archives) {
+    if (archives == null) {
+      return null;
+    }
+    AndroidArchive[] result = new AndroidArchive[archives.length];
+    for (int i = 0; i < result.length; ++i) {
+      result[i] = visitAndroidArchive(archives[i]);
+    }
+    return ArrayUtils.removeNullElements(result, AndroidArchive.class);
+  }
 
   @Nullable
   @Override

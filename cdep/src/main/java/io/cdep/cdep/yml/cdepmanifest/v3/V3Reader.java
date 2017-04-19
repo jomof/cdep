@@ -69,7 +69,7 @@ public class V3Reader {
     return result;
   }
 
-  @Nullable
+  @NotNull
   private static io.cdep.cdep.yml.cdepmanifest.LinuxArchive convertLinuxArchive(@NotNull LinuxArchive archive) {
     assert archive.file != null;
     assert archive.sha256 != null;
@@ -79,7 +79,7 @@ public class V3Reader {
         archive.sha256,
         archive.size,
         new String[] { archive.lib },
-        archive.include
+        StringUtils.nullToEmpty(archive.include)
     );
   }
 

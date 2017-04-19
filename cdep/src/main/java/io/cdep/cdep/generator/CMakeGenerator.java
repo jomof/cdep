@@ -269,7 +269,7 @@ public class CMakeGenerator {
         sb = old;
         parms[i] = "${" + argBuilder.toString() + "}";
       }
-      String message = String.format(specific.message, parms);
+      String message = StringUtils.safeFormat(specific.message, parms);
       append("\n%smessage(FATAL_ERROR \"%s\")\n", prefix, message);
       return;
     } else if (expression instanceof AssignmentBlockExpression) {

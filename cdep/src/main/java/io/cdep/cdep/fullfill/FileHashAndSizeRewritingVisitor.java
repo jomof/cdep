@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.utils.Invariant.failIf;
 
 public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   private final File layoutFolder;
@@ -28,10 +28,11 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
     }
     if (archive.sha256.isEmpty()) {
       File file = new File(layoutFolder, archive.file);
-      require(
-          file.isFile(),
+      if (failIf(!file.isFile(),
           "Could not hash file %s because it didn't exist",
-          archive.file);
+          archive.file)) {
+        return archive;
+      }
       try {
         return new Archive(
             archive.file,
@@ -51,10 +52,11 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
   protected AndroidArchive visitAndroidArchive(@NotNull AndroidArchive archive) {
     if (archive.sha256.isEmpty()) {
       File file = new File(layoutFolder, archive.file);
-      require(
-          file.isFile(),
+      if (failIf(!file.isFile(),
           "Could not hash file %s because it didn't exist",
-          archive.file);
+          archive.file)) {
+        return archive;
+      }
       try {
         return new AndroidArchive(
             archive.file,
@@ -69,7 +71,7 @@ public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVis
             archive.include,
             archive.libs,
             archive.flavor);
-      } catch (@NotNull NoSuchAlgorithmException | IOException e) {
+      } catch(@NotNull NoSuchAlgorithmException | IOException e) {
         throw new RuntimeException(e);
       }
     }

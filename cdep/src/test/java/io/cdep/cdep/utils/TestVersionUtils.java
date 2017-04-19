@@ -1,6 +1,9 @@
 package io.cdep.cdep.utils;
 
 import io.cdep.cdep.Version;
+import io.cdep.cdep.yml.VersionGenerator;
+import net.java.quickcheck.QuickCheck;
+import net.java.quickcheck.characteristic.AbstractCharacteristic;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -78,6 +81,7 @@ public class TestVersionUtils {
     assertThat(versions.get(0).value).isEqualTo("1.2.3-rev1");
     assertThat(versions.get(1).value).isEqualTo("1.2.3-rev2");
   }
+
   @Test
   public void sortDescendingTweak() {
     List<Version> versions = sortD("1.2.3-rev2", "1.2.3-rev1");
@@ -169,8 +173,6 @@ public class TestVersionUtils {
     assertThat(versions.get(1).value).isEqualTo("2011revA");
   }
 
-
-
   private List<Version> sortA(String... versions) {
     List<Version> list = new ArrayList<>();
     for (String version : versions) {
@@ -189,6 +191,17 @@ public class TestVersionUtils {
 
     Collections.sort(list, VersionUtils.DESCENDING_COMPARATOR);
     return list;
+  }
+
+  @Test
+  public void fuzzTest() {
+    for (int i = 0; i < 10; ++i)
+    QuickCheck.forAll(new VersionGenerator(), new AbstractCharacteristic<Version>() {
+      @Override
+      protected void doSpecify(Version any) throws Throwable {
+        VersionUtils.checkVersion(any);
+      }
+    });
   }
 
   private static class CoverConstructor extends VersionUtils {

@@ -10,16 +10,17 @@ import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static io.cdep.cdep.utils.Invariant.report;
-import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.utils.Invariant.*;
 
 /**
  * Zip up file entries into layout folder. Doesn't record SHA or size since that is done
@@ -65,7 +66,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     copyFilesToStaging(mappings, stagingZipFolder);
 
     // Zip that file
-    zipStagingFilesIntoArchive(layoutZipFile, stagingZipFolder.getParentFile());
+    zipStagingFilesIntoArchive(stagingZipFolder.getParentFile(), layoutZipFile);
 
     zips.add(layoutZipFile);
 
@@ -104,7 +105,7 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     copyFilesToStaging(mappings, stagingZipFolder);
 
     // Zip that file
-    zipStagingFilesIntoArchive(layoutZipFile, stagingZipFolder.getParentFile().getParentFile());
+    zipStagingFilesIntoArchive(stagingZipFolder.getParentFile().getParentFile(), layoutZipFile);
 
     zips.add(layoutZipFile);
 
@@ -155,10 +156,12 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
 
   private void copyFilesToStaging(@NotNull PathMapping[] mappings, File stagingZipFolder) {
     for (PathMapping mapping : mappings) {
-      require(
-          mapping.from.exists(),
+      if (failIf(
+          !mapping.from.exists(),
           "Could not zip file %s because it didn't exist",
-          mapping.from.getAbsoluteFile());
+          mapping.from.getAbsoluteFile())) {
+        continue;
+      }
       File stagingZipFile = new File(stagingZipFolder, mapping.to.getPath());
 
       // Make the staging zip folder
@@ -170,9 +173,14 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
     }
   }
 
-  private void zipStagingFilesIntoArchive(@NotNull File layoutZipFile, @NotNull File stagingZipFolder) {
+  private void zipStagingFilesIntoArchive(@NotNull File stagingZipFolder,
+      @NotNull File layoutZipFile) {
     try {
       ArchiveUtils.pack(stagingZipFolder.toPath(), layoutZipFile.toPath());
+    } catch(InvalidPathException e) {
+      fail("Path isn't valid: %s", e.getMessage());
+    } catch (FileNotFoundException| NoSuchFileException e) {
+      fail("File %s doesn't exist", e.getMessage());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -181,8 +189,12 @@ public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
   private void copyFileToStaging(@NotNull PathMapping mapping, @NotNull File stagingZipFile) {
     try {
       Files.copy(mapping.from.toPath(), stagingZipFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-    } catch (IOException | InvalidPathException e) {
-      report(new RuntimeException(e));
+    } catch (InvalidPathException e) {
+      fail("Path isn't valid: %s", e.getMessage());
+    } catch (FileNotFoundException| NoSuchFileException e) {
+      fail("File %s doesn't exist", e.getMessage());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 

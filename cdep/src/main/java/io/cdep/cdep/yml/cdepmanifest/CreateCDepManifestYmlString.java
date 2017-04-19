@@ -71,7 +71,17 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitVersion(String name, @NotNull Version value) {
-    appendIndented("%s: %s\r\n", name, value.value);
+    appendIndented("%s: %s\r\n", name, quoteIfNecessary(value.value));
+  }
+
+  private String quoteIfNecessary(String value) {
+    if (value.isEmpty()) {
+      return "\"\"";
+    }
+    if (containsQuotableCharacters(value)) {
+      return "\"" + yamlEscape(value) + "\"";
+    }
+    return value;
   }
 
   @Override
@@ -79,14 +89,14 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
     if (value.isEmpty()) {
       return;
     }
-    if (!containsFlowCharacter(value)) {
+    if (!containsQuotableCharacters(value)) {
       appendIndented("%s: %s\r\n", name, value);
       return;
     }
 
     if (!value.contains("\n")) {
       // If no line breaks then just quote it.
-      appendIndented("%s: \"%s\"\r\n", name, yamlEscape(value));
+      appendIndented("%s: %s\r\n", name, quoteIfNecessary(value));
       return;
     }
 
@@ -106,11 +116,16 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   private String yamlEscape(String value) {
-    return value.replace("\\", "\\\\");
+    return value
+        .replace("\\", "\\\\")
+        .replace("\"", "\\\"")
+        .replace("\n", "\\\n")
+        .replace("\r", "\\\r")
+        .replace('\u007F', '?');
   }
 
-  private boolean containsFlowCharacter(String value) {
-    return (value.contains(",") || value.contains("\n"));
+  private boolean containsQuotableCharacters(String value) {
+    return StringUtils.containsAny(value, "`,\n{}[]|*;'\\\"\r\u0074\u007f>%'=:<?@#&!- ");
   }
 
   @Override
@@ -120,7 +135,11 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitStringArray(String name, @NotNull String[] array) {
-    appendIndented("%s: [%s]\r\n", name, StringUtils.joinOn(", ", array));
+    String strings[] = new String[array.length];
+    for (int i = 0; i < array.length; ++i) {
+      strings[i] = quoteIfNecessary(array[i]);
+    }
+    appendIndented("%s: [%s]\r\n", name, StringUtils.joinOn(", ", strings));
   }
 
   @Override
@@ -135,6 +154,9 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
     appendIndented("%s:\r\n", name);
     ++indent;
     for (Object obj : array) {
+      if (obj == null) {
+        continue;
+      }
       push();
       visit(obj, elementType);
       String sub = pop();

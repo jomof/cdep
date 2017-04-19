@@ -30,7 +30,7 @@ import java.net.URL;
 import java.util.*;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
-import static io.cdep.cdep.io.IO.infoln;
+import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.require;
 
 @SuppressWarnings("Java8ReplaceMapGet")
@@ -81,9 +81,10 @@ public class BuildFindModuleFunctionTable {
     CDepManifestYml manifest = resolved.cdepManifestYml;
     for (HardNameDependency dependency : manifest.dependencies) {
       Coordinate coordinate = CoordinateUtils.tryParse(dependency.compile);
-      infoln("Could not parse main manifest coordinate %s", dependency.compile);
       if (coordinate != null) {
         dependencies.add(coordinate);
+      } else {
+        fail("Could not parse main manifest coordinate [%s]", dependency.compile);
       }
     }
 
@@ -110,7 +111,7 @@ public class BuildFindModuleFunctionTable {
       supported.add("Darwin");
       cases.put(constant("Darwin"), buildDarwinPlatformCase(globals, resolved, explodedArchiveFolder, dependencies));
     }
-    if (manifest.linux != null && manifest.linux.archives != null && manifest.linux.archives.length > 0) {
+    if (manifest.linux != null && manifest.linux.archives.length > 0) {
       headerOnly = false;
       supported.add("Linux");
       cases.put(constant("Linux"),
@@ -193,7 +194,7 @@ public class BuildFindModuleFunctionTable {
   private Expression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
       @NotNull LinuxArchive archive, @NotNull AssignmentExpression explodedArchiveFolder,
       Set<Coordinate> dependencies) {
-    if (archive.file == null || archive.sha256 == null || archive.size == null) {
+    if (archive.file.isEmpty() || archive.sha256.isEmpty() || archive.size == 0) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
     Expression moduleArchive = buildArchive(
@@ -481,7 +482,15 @@ public class BuildFindModuleFunctionTable {
 
     Map<Integer, List<AndroidArchive>> grouped = new HashMap<>();
     for (AndroidArchive android : androids) {
-      Integer platform = android.platform.isEmpty() ? null : Integer.parseInt(android.platform);
+      Integer platform;
+      try {
+        platform = android.platform.isEmpty() ? 0 : Integer.parseInt(android.platform);
+      } catch (NumberFormatException e) {
+        return abort(String.format(
+            "Android platform string in %s manifest could not be converted to an integer",
+            resolved.cdepManifestYml.coordinate));
+
+      }
       List<AndroidArchive> group = grouped.get(platform);
       if (group == null) {
         group = new ArrayList<>();

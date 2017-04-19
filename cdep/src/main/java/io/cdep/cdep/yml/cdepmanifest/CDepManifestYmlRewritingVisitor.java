@@ -33,7 +33,7 @@ public class CDepManifestYmlRewritingVisitor {
   }
 
   @Nullable
-  private Linux visitLinux(@Nullable Linux linux) {
+  protected Linux visitLinux(@Nullable Linux linux) {
     if (linux == null) {
       return null;
     }
@@ -43,7 +43,7 @@ public class CDepManifestYmlRewritingVisitor {
   }
 
   @Nullable
-  private LinuxArchive[] visitLinuxArchiveArray(@Nullable LinuxArchive[] archives) {
+  protected LinuxArchive[] visitLinuxArchiveArray(@Nullable LinuxArchive[] archives) {
     if (archives == null) {
       return null;
     }
@@ -55,7 +55,7 @@ public class CDepManifestYmlRewritingVisitor {
   }
 
   @NotNull
-  private LinuxArchive visitLinuxArchive(@NotNull LinuxArchive archive) {
+  protected LinuxArchive visitLinuxArchive(@NotNull LinuxArchive archive) {
     return new LinuxArchive(
         visitFile(archive.file),
         visitSha256(archive.sha256),
@@ -171,7 +171,7 @@ public class CDepManifestYmlRewritingVisitor {
   }
 
   @Nullable
-  private AndroidArchive[] visitAndroidArchiveArray(@Nullable AndroidArchive[] archives) {
+  protected AndroidArchive[] visitAndroidArchiveArray(@Nullable AndroidArchive[] archives) {
     if (archives == null) {
       return null;
     }
