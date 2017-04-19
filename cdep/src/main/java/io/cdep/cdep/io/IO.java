@@ -5,8 +5,8 @@ import org.fusesource.jansi.AnsiConsole;
 
 import java.io.PrintStream;
 
-import static org.fusesource.jansi.Ansi.Color.GREEN;
-import static org.fusesource.jansi.Ansi.Color.RED;
+import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_FAINT;
+import static org.fusesource.jansi.Ansi.Color.*;
 import static org.fusesource.jansi.Ansi.ansi;
 
 /**
@@ -73,7 +73,11 @@ public class IO {
   }
 
   private void infoImpl(@NotNull String format, Object... args) {
-    out.printf(format, args);
+    if (ansi) {
+      err.print(ansi().a(INTENSITY_FAINT).fg(WHITE).a(String.format(format, args)).reset());
+    } else {
+      err.printf(format, args);
+    }
   }
 
   private void errorImpl(@NotNull String format, Object... args) {
@@ -86,9 +90,9 @@ public class IO {
 
   private void infogreenImpl(@NotNull String format, Object... args) {
     if (ansi) {
-      err.printf(format, args);
+      err.print(ansi().a(INTENSITY_FAINT).fg(GREEN).a(String.format(format, args)).reset());
     } else {
-      err.print(ansi().fg(GREEN).a(String.format(format, args)).reset());
+      err.printf(format, args);
     }
   }
 }
