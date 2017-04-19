@@ -38,7 +38,9 @@ public class ConvertNullToDefaultRewritingVisitor extends CDepManifestYmlRewriti
     return super.visitCDepManifestYml(new CDepManifestYml(
         value.sourceVersion,
         ObjectUtils.nullToDefault(value.coordinate, EMPTY_COORDINATE),
-        ArrayUtils.nullToEmpty(value.dependencies, HardNameDependency.class),
+        ArrayUtils.removeNullElements(
+          ArrayUtils.nullToEmpty(value.dependencies, HardNameDependency.class),
+          HardNameDependency.class),
         value.interfaces,
         value.android,
         value.iOS,

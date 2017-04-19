@@ -208,7 +208,8 @@ public class TestFullfill {
           outputFolder.delete();
           outputFolder.mkdirs();
           File manifestFile = new File(outputFolder, "cdep-manifest.yml");
-          FileUtils.writeTextToFile(manifestFile, CDepManifestYmlUtils.convertManifestToString(any));
+          String body = CDepManifestYmlUtils.convertManifestToString(any);
+          FileUtils.writeTextToFile(manifestFile, body);
           Fullfill.multiple(
               environment,
               new File[]{manifestFile},

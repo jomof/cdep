@@ -84,4 +84,9 @@ public class StringUtils {
     }
     return new String[] {value};
   }
+
+  @NotNull
+  public static String whitespace(int indent) {
+    return new String(new char[indent ]).replace('\0', ' ');
+  }
 }

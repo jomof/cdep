@@ -68,6 +68,9 @@ public class CDepManifestYml {
       @Nullable iOS ios,
       @Nullable Linux linux,
       @NotNull String example) {
+    for (int i = 0; i < dependencies.length; ++i) {
+      assert dependencies[i] != null;
+    }
     this.sourceVersion = sourceVersion;
     this.coordinate = coordinate;
     this.dependencies = dependencies;

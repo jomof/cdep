@@ -5,17 +5,37 @@ import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Version;
 import io.cdep.cdep.utils.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static io.cdep.cdep.utils.StringUtils.whitespace;
+
 public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor {
 
   @NotNull
-  private final StringBuilder sb = new StringBuilder();
+  private final List<StringBuilder> sb = new ArrayList<>();
   private int indent = 0;
-  private int eatIndent = 0;
+
+  public static String serialize(@NotNull Object node, int indent) {
+    CreateCDepManifestYmlString thiz = new CreateCDepManifestYmlString();
+    thiz.indent = indent;
+    thiz.push();
+    thiz.visitPlainOldDataObject(null, node);
+    return thiz.pop();
+  }
 
   public static String serialize(@NotNull Object node) {
-    CreateCDepManifestYmlString thiz = new CreateCDepManifestYmlString();
-    thiz.visitPlainOldDataObject(null, node);
-    return thiz.sb.toString();
+    return serialize(node, 0);
+  }
+
+  private void push() {
+    sb.add(0, new StringBuilder());
+  }
+
+  private String pop() {
+    String result = sb.get(0).toString();
+    sb.remove(0);
+    return result;
   }
 
   @Override
@@ -56,6 +76,9 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   @Override
   public void visitString(String name, @NotNull String value) {
+    if (value.isEmpty()) {
+      return;
+    }
     if (!containsFlowCharacter(value)) {
       appendIndented("%s: %s\r\n", name, value);
       return;
@@ -111,27 +134,28 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
     }
     appendIndented("%s:\r\n", name);
     ++indent;
-    for (Object anArray : array) {
-      appendIndented("- ");
-      ++eatIndent;
-      visit(anArray, elementType);
-      --indent;
+    for (Object obj : array) {
+      push();
+      visit(obj, elementType);
+      String sub = pop();
+      if (sub.length()==0) {
+        continue;
+      }
+      sb.get(0).append(whitespace((indent - 1) * 2));
+      sb.get(0).append("- ");
+      sb.get(0).append(sub.substring(indent * 2));
     }
     --indent;
   }
 
   private void append(@NotNull String format, Object... parms) {
-    sb.append(String.format(format, parms));
+    sb.get(0).append(String.format(format, parms));
   }
 
   private void appendIndented(String format, Object... parms) {
-    String prefix = new String(new char[indent * 2]).replace('\0', ' ');
-    if (eatIndent > 0) {
-      prefix = "";
-      --eatIndent;
-      ++indent;
-    }
+    String prefix = whitespace(indent * 2);
     //noinspection StringConcatenationInFormatCall
-    sb.append(String.format(prefix + format, parms));
+    sb.get(0).append(String.format(prefix + format, parms));
   }
+
 }

@@ -46,7 +46,7 @@ abstract public class PlainOldDataReadonlyVisitor {
       return;
     }
     for (Field field : node.getClass().getFields()) {
-            if (Modifier.isStatic(field.getModifiers())) {
+      if (Modifier.isStatic(field.getModifiers())) {
         continue;
       }
       require(!Objects.equals(field.getDeclaringClass(), Object.class));
