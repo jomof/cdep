@@ -9,7 +9,5 @@ public class ObjectUtilsTest {
   public void nullToDefault() throws Exception {
     assertThat(ObjectUtils.nullToDefault(null, "bob")).isEqualTo("bob");
     assertThat(ObjectUtils.nullToDefault("tom", "bob")).isEqualTo("tom");
-
   }
-
 }

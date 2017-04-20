@@ -1,14 +1,28 @@
+/*
+ * Copyright 2017 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 package io.cdep.cdep.io;
 
-import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_FAINT;
-import static org.fusesource.jansi.Ansi.Color.GREEN;
-import static org.fusesource.jansi.Ansi.Color.RED;
-import static org.fusesource.jansi.Ansi.Color.WHITE;
-import static org.fusesource.jansi.Ansi.ansi;
-
 import io.cdep.annotations.NotNull;
-import java.io.PrintStream;
 import org.fusesource.jansi.AnsiConsole;
+
+import java.io.PrintStream;
+
+import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_FAINT;
+import static org.fusesource.jansi.Ansi.Color.*;
+import static org.fusesource.jansi.Ansi.ansi;
 
 /**
  * Methods for dealing with command-line IO, messages, errors, etc.
@@ -31,19 +45,15 @@ public class IO {
   /**
    * Set the error stream and return the prior out stream.
    */
-  public static PrintStream setErr(PrintStream err) {
-    PrintStream original = io.err;
+  public static void setErr(PrintStream err) {
     io.err = err;
-    return original;
   }
 
   /**
    * Whether or not streams support ansi codes
    */
-  public static boolean setAnsi(boolean ansi) {
-    boolean original = io.ansi;
+  public static void setAnsi(boolean ansi) {
     io.ansi = ansi;
-    return original;
   }
 
   /**
@@ -69,8 +79,8 @@ public class IO {
   /**
    * Print an info message with a line-feed.
    */
-  public static void errorln(Object format, Object... args) {
-    io.errorImpl(format + "\n", args);
+  public static void errorln(Object... args) {
+    io.errorImpl(args);
   }
 
   private void infoImpl(@NotNull String format, Object... args) {
@@ -81,11 +91,11 @@ public class IO {
     }
   }
 
-  private void errorImpl(@NotNull String format, Object... args) {
+  private void errorImpl(Object... args) {
     if (ansi) {
-      err.print(ansi().fg(RED).a(String.format(format, args)).reset());
+      err.print(ansi().fg(RED).a(String.format("FAILURE: %s\n", args)).reset());
     } else {
-      err.printf(format, args);
+      err.printf("FAILURE: %s\n", args);
     }
   }
 

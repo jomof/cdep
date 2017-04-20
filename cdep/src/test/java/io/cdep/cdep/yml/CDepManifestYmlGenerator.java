@@ -8,9 +8,6 @@ import static net.java.quickcheck.generator.CombinedGenerators.arrays;
 import static net.java.quickcheck.generator.PrimitiveGenerators.enumValues;
 import static net.java.quickcheck.generator.PrimitiveGenerators.strings;
 
-/**
- * Created by jomof on 4/18/2017.
- */
 public class CDepManifestYmlGenerator implements Generator<CDepManifestYml> {
   Generator<CDepManifestYmlVersion> versionGenerator = enumValues(CDepManifestYmlVersion.class);
   Generator<Coordinate> coordinateGenerator = new CoordinateGenerator();

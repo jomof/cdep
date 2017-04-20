@@ -18,7 +18,6 @@ package io.cdep.cdep.generator;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.resolver.DownloadProvider;
 import io.cdep.cdep.resolver.ManifestProvider;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.CDepSHA256Utils;
@@ -42,7 +41,7 @@ import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.require;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class GeneratorEnvironment implements ManifestProvider, DownloadProvider {
+public class GeneratorEnvironment implements ManifestProvider {
   @NotNull
   final public File downloadFolder;
   @NotNull

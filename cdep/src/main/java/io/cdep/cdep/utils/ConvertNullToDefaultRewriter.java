@@ -1,4 +1,24 @@
+/*
+ * Copyright 2017 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 package io.cdep.cdep.utils;
+
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
+import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.yml.cdepmanifest.*;
 
 import static io.cdep.cdep.Coordinate.EMPTY_COORDINATE;
 import static io.cdep.cdep.Version.EMPTY_VERSION;
@@ -6,19 +26,6 @@ import static io.cdep.cdep.utils.ArrayUtils.nullToEmpty;
 import static io.cdep.cdep.utils.ArrayUtils.removeNullElements;
 import static io.cdep.cdep.utils.LongUtils.nullToZero;
 import static io.cdep.cdep.utils.StringUtils.nullToEmpty;
-
-import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
-import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
-import io.cdep.cdep.yml.cdepmanifest.Archive;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewriter;
-import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
-import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
-import io.cdep.cdep.yml.cdepmanifest.Linux;
-import io.cdep.cdep.yml.cdepmanifest.LinuxArchive;
-import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
 
 /**
  * When Yaml is de-serialized, it may contain null in fields marked @NonNull.
