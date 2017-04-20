@@ -6,7 +6,7 @@ import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.Version;
 
 @SuppressWarnings("ConstantConditions")
-public class CDepManifestYmlRewritingVisitor {
+public class CDepManifestYmlRewriter {
 
   @NotNull
   public CDepManifestYml visitCDepManifestYml(@NotNull CDepManifestYml value) {

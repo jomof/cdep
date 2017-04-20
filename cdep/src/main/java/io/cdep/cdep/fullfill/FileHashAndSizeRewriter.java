@@ -1,22 +1,21 @@
 package io.cdep.cdep.fullfill;
 
+import static io.cdep.cdep.utils.Invariant.failIf;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
-
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewriter;
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-import static io.cdep.cdep.utils.Invariant.failIf;
-
-public class FileHashAndSizeRewritingVisitor extends CDepManifestYmlRewritingVisitor {
+public class FileHashAndSizeRewriter extends CDepManifestYmlRewriter {
   private final File layoutFolder;
 
-  FileHashAndSizeRewritingVisitor(File layoutFolder) {
+  FileHashAndSizeRewriter(File layoutFolder) {
     this.layoutFolder = layoutFolder;
   }
 

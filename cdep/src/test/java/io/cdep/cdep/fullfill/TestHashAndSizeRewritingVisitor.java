@@ -1,14 +1,13 @@
 package io.cdep.cdep.fullfill;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import org.junit.Test;
-
 import java.io.File;
 import java.io.IOException;
-
-import static com.google.common.truth.Truth.assertThat;
+import org.junit.Test;
 
 public class TestHashAndSizeRewritingVisitor {
   @Test
@@ -16,7 +15,7 @@ public class TestHashAndSizeRewritingVisitor {
     CDepManifestYml before = CDepManifestYmlUtils.convertStringToManifest(
         FileUtils.readAllText(new File("../third_party/stb/cdep/cdep-manifest-divide.yml")));
 
-    CDepManifestYml afterSubstitution = new SubstituteStringsRewritingVisitor()
+    CDepManifestYml afterSubstitution = new SubstituteStringsRewriter()
         .replace("${source}", new File("../third_party/stb").getAbsolutePath())
         .visitCDepManifestYml(before);
 
@@ -31,14 +30,14 @@ public class TestHashAndSizeRewritingVisitor {
     staging.delete();
     staging.mkdirs();
 
-    ZipFilesRewritingVisitor zipper = new ZipFilesRewritingVisitor(layout, staging);
+    ZipFilesRewriter zipper = new ZipFilesRewriter(layout, staging);
     CDepManifestYml afterZipping = zipper.visitCDepManifestYml(afterSubstitution);
 
     assertThat(layout.isDirectory()).isTrue();
     assertThat(afterZipping.interfaces.headers.file).isEqualTo("stb-divide-headers.zip");
     assertThat(afterZipping.interfaces.headers.include).isEqualTo("include");
 
-    CDepManifestYml afterHashing = new FileHashAndSizeRewritingVisitor(layout)
+    CDepManifestYml afterHashing = new FileHashAndSizeRewriter(layout)
         .visitCDepManifestYml(afterZipping);
 
     assertThat(afterHashing.interfaces.headers.sha256).isNotNull();

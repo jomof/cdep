@@ -2,16 +2,15 @@ package io.cdep.cdep.fullfill;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
-
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewriter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SubstituteStringsRewritingVisitor extends CDepManifestYmlRewritingVisitor {
+public class SubstituteStringsRewriter extends CDepManifestYmlRewriter {
   final private Map<String, String> variables = new HashMap<>();
 
   @NotNull
-  SubstituteStringsRewritingVisitor replace(String key, String value) {
+  SubstituteStringsRewriter replace(String key, String value) {
     variables.put(key, value);
     return this;
   }

@@ -1,10 +1,5 @@
 package io.cdep.cdep.utils;
 
-import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
-import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.yml.cdepmanifest.*;
-
 import static io.cdep.cdep.Coordinate.EMPTY_COORDINATE;
 import static io.cdep.cdep.Version.EMPTY_VERSION;
 import static io.cdep.cdep.utils.ArrayUtils.nullToEmpty;
@@ -12,11 +7,24 @@ import static io.cdep.cdep.utils.ArrayUtils.removeNullElements;
 import static io.cdep.cdep.utils.LongUtils.nullToZero;
 import static io.cdep.cdep.utils.StringUtils.nullToEmpty;
 
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
+import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
+import io.cdep.cdep.yml.cdepmanifest.Archive;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewriter;
+import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.Linux;
+import io.cdep.cdep.yml.cdepmanifest.LinuxArchive;
+import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
+
 /**
  * When Yaml is de-serialized, it may contain null in fields marked @NonNull.
  * Fix those
  */
-public class ConvertNullToDefaultRewritingVisitor extends CDepManifestYmlRewritingVisitor {
+public class ConvertNullToDefaultRewriter extends CDepManifestYmlRewriter {
 
   @Nullable
   @Override

@@ -1,5 +1,9 @@
 package io.cdep.cdep.fullfill;
 
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.yml.cdepmanifest.HardNameDependency.EMPTY_HARDNAME_DEPENDENCY;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.generator.GeneratorEnvironment;
@@ -7,24 +11,19 @@ import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
 import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewriter;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
-
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-import static io.cdep.cdep.utils.Invariant.fail;
-import static io.cdep.cdep.utils.Invariant.require;
-import static io.cdep.cdep.yml.cdepmanifest.HardNameDependency.EMPTY_HARDNAME_DEPENDENCY;
-
 /**
  * Fill in hash values for hard name dependencies.
  */
-public class DependencyHashRewritingVisitor extends CDepManifestYmlRewritingVisitor {
+public class DependencyHashRewriter extends CDepManifestYmlRewriter {
   private final GeneratorEnvironment environment;
 
-  DependencyHashRewritingVisitor(GeneratorEnvironment environment) {
+  DependencyHashRewriter(GeneratorEnvironment environment) {
     this.environment = environment;
   }
 

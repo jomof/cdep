@@ -25,7 +25,7 @@ import java.util.List;
 public class Fullfill {
 
   /**
-   * Returns a list of manifest files with missing fields filled in.
+   * Returns a list of manifest files and zip files,
    */
   @NotNull
   public static List<File> multiple(
@@ -56,7 +56,7 @@ public class Fullfill {
     }
 
     // Replace variables
-    SubstituteStringsRewritingVisitor substitutor = new SubstituteStringsRewritingVisitor()
+    SubstituteStringsRewriter substitutor = new SubstituteStringsRewriter()
         .replace("${source}", sourceFolder.getAbsolutePath())
         .replace("${layout}", layout.getAbsolutePath())
         .replace("${version}", version);
@@ -71,8 +71,17 @@ public class Fullfill {
 
     infoln("Fullfilling %s manifests", templates.length);
     for (int i = 0; i < manifests.length; ++i) {
-      FillMissingFieldsBasedOnFilepath filler = new FillMissingFieldsBasedOnFilepath();
       Coordinate coordinate = manifests[i].coordinate;
+
+      NixLayoutRewriter nixer = new NixLayoutRewriter();
+      infoln("  analyzing file requests in manifest for %s", coordinate);
+      manifests[i] = nixer.visitCDepManifestYml(manifests[i]);
+      if (errorsInScope() > 0) {
+        // Exit early if there were problems
+        return result;
+      }
+
+      FillMissingFieldsBasedOnFilepathRewriter filler = new FillMissingFieldsBasedOnFilepathRewriter();
       infoln("  guessing archive details from path names in %s", coordinate);
       manifests[i] = filler.visitCDepManifestYml(manifests[i]);
       if (errorsInScope() > 0) {
@@ -80,7 +89,7 @@ public class Fullfill {
         return result;
       }
 
-      ZipFilesRewritingVisitor zipper = new ZipFilesRewritingVisitor(layout, staging);
+      ZipFilesRewriter zipper = new ZipFilesRewriter(layout, staging);
       infoln("  zipping files references in %s", coordinate);
       manifests[i] = zipper.visitCDepManifestYml(manifests[i]);
       result.addAll(zipper.getZips());
@@ -89,7 +98,7 @@ public class Fullfill {
         return result;
       }
 
-      FileHashAndSizeRewritingVisitor hasher = new FileHashAndSizeRewritingVisitor(layout);
+      FileHashAndSizeRewriter hasher = new FileHashAndSizeRewriter(layout);
       infoln("  computing hashes and file sizes of archives in %s", coordinate);
       manifests[i] = hasher.visitCDepManifestYml(manifests[i]);
       if (errorsInScope() > 0) {
@@ -97,8 +106,8 @@ public class Fullfill {
         return result;
       }
 
-      DependencyHashRewritingVisitor dependencyHasher =
-          new DependencyHashRewritingVisitor(environment);
+      DependencyHashRewriter dependencyHasher =
+          new DependencyHashRewriter(environment);
       infoln("  hashing dependencies in %s", coordinate);
       manifests[i] = dependencyHasher.visitCDepManifestYml(manifests[i]);
       if (errorsInScope() > 0) {

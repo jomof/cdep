@@ -3,11 +3,10 @@ package io.cdep.cdep.fullfill;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.utils.ArrayUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
-
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewriter;
 import java.io.File;
 
-public class FillMissingFieldsBasedOnFilepath extends CDepManifestYmlRewritingVisitor {
+public class FillMissingFieldsBasedOnFilepathRewriter extends CDepManifestYmlRewriter {
   // Note, this list must be in order such that long strings come before shorter prefixes
   // of the same string.
   private final String[] androidABIs = new String[] {

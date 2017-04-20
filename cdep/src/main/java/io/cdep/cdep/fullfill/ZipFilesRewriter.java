@@ -1,5 +1,9 @@
 package io.cdep.cdep.fullfill;
 
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.failIf;
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.utils.ArchiveUtils;
@@ -7,8 +11,7 @@ import io.cdep.cdep.utils.StringUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewritingVisitor;
-
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,20 +23,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static io.cdep.cdep.utils.Invariant.*;
-
 /**
  * Zip up file entries into layout folder. Doesn't record SHA or size since that is done
  * in a subsequent pass.
  */
-public class ZipFilesRewritingVisitor extends CDepManifestYmlRewritingVisitor {
+public class ZipFilesRewriter extends CDepManifestYmlRewriter {
   private final File layout;
   private final File staging;
   private final List<File> zips = new ArrayList<>();
   @Nullable
   private String prefix = "";
 
-  ZipFilesRewritingVisitor(File layout, File staging) {
+  ZipFilesRewriter(File layout, File staging) {
     this.layout = layout;
     this.staging = staging;
   }

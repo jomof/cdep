@@ -1,14 +1,13 @@
 package io.cdep.cdep.fullfill;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import org.junit.Test;
-
 import java.io.File;
 import java.io.IOException;
-
-import static com.google.common.truth.Truth.assertThat;
+import org.junit.Test;
 
 public class TestZipFilesRewritingVisitor {
   @Test
@@ -16,7 +15,7 @@ public class TestZipFilesRewritingVisitor {
     CDepManifestYml before = CDepManifestYmlUtils.convertStringToManifest(
         FileUtils.readAllText(new File("../third_party/stb/cdep/cdep-manifest-divide.yml")));
 
-    CDepManifestYml afterSubstitution = new SubstituteStringsRewritingVisitor()
+    CDepManifestYml afterSubstitution = new SubstituteStringsRewriter()
         .replace("${source}", new File("../third_party/stb").getAbsolutePath())
         .visitCDepManifestYml(before);
 
@@ -31,7 +30,7 @@ public class TestZipFilesRewritingVisitor {
     staging.delete();
     staging.mkdirs();
 
-    ZipFilesRewritingVisitor zipper = new ZipFilesRewritingVisitor(layout, staging);
+    ZipFilesRewriter zipper = new ZipFilesRewriter(layout, staging);
     CDepManifestYml afterZipping = zipper.visitCDepManifestYml(afterSubstitution);
 
     assertThat(layout.isDirectory()).isTrue();
