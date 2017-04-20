@@ -27,10 +27,7 @@ import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -208,6 +205,9 @@ public class ZipFilesRewriter extends CDepManifestYmlRewriter {
       fail("Path isn't valid: %s", e.getMessage());
     } catch (FileNotFoundException| NoSuchFileException e) {
       fail("File %s doesn't exist", e.getMessage());
+    } catch(FileSystemException e) {
+      // Seems to be unix-only
+      fail("File had a problem: %s", e.getMessage());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
