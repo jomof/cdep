@@ -336,7 +336,7 @@ public class BuildFindModuleFunctionTable {
     List<Expression> conditions = new ArrayList<>();
     List<Expression> expressions = new ArrayList<>();
     String supported = "";
-    if (grouped.size() == 0) {
+    if (grouped.size() == 1) {
       return buildiOSPlatformSdkSwitch(resolved,
           grouped.values().iterator().next(),
           explodedArchiveFolder,
