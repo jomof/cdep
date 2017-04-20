@@ -388,6 +388,12 @@ public class BuildFindModuleFunctionTable {
       supported += platformSDK + " ";
     }
 
+    if (resolved.cdepManifestYml.iOS.archives.length == 1
+        && resolved.cdepManifestYml.iOS.archives[0].platform == null) {
+      return buildSingleArchiveResolution(resolved, resolved.cdepManifestYml.iOS.archives[0],
+          explodedArchiveFolder, dependencies);
+    }
+
     // If there was no exact match then do a startsWith match like, starts  with iPhone*
     // TODO: Need to match on the highest SDK version. This matches the first seen.
     assert resolved.cdepManifestYml.iOS != null;
