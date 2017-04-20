@@ -74,9 +74,9 @@ public class IO {
 
   private void infoImpl(@NotNull String format, Object... args) {
     if (ansi) {
-      err.print(ansi().a(INTENSITY_FAINT).fg(WHITE).a(String.format(format, args)).reset());
+      out.print(ansi().a(INTENSITY_FAINT).fg(WHITE).a(String.format(format, args)).reset());
     } else {
-      err.printf(format, args);
+      out.printf(format, args);
     }
   }
 
@@ -90,9 +90,9 @@ public class IO {
 
   private void infogreenImpl(@NotNull String format, Object... args) {
     if (ansi) {
-      err.print(ansi().a(INTENSITY_FAINT).fg(GREEN).a(String.format(format, args)).reset());
+      out.print(ansi().a(INTENSITY_FAINT).fg(GREEN).a(String.format(format, args)).reset());
     } else {
-      err.printf(format, args);
+      out.printf(format, args);
     }
   }
 }

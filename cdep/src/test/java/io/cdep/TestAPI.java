@@ -38,6 +38,7 @@ public class TestAPI {
   @Test
   public void testExecute() throws Exception {
     String result = execute(API.generateCDepCall(environment, "show", "folders"));
+    System.out.print(result);
     assertThat(result).contains("cdep");
   }
 
