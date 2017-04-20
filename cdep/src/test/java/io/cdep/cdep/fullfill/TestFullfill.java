@@ -213,6 +213,7 @@ public class TestFullfill {
 
   @Test
   public void fuzzTest() {
+    //for(int i = 0; i < 100; ++i)
     QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
       @Override
       protected void doSpecify(CDepManifestYml any) throws Throwable {

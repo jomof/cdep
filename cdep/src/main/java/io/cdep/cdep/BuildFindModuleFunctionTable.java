@@ -30,8 +30,7 @@ import java.net.URL;
 import java.util.*;
 
 import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
-import static io.cdep.cdep.utils.Invariant.fail;
-import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.utils.Invariant.*;
 
 @SuppressWarnings("Java8ReplaceMapGet")
 public class BuildFindModuleFunctionTable {
@@ -337,8 +336,20 @@ public class BuildFindModuleFunctionTable {
     List<Expression> conditions = new ArrayList<>();
     List<Expression> expressions = new ArrayList<>();
     String supported = "";
+    if (grouped.size() == 0) {
+      return buildiOSPlatformSdkSwitch(resolved,
+          grouped.values().iterator().next(),
+          explodedArchiveFolder,
+          combinedPlatformAndSDK,
+          null,
+          dependencies);
+    }
     for (iOSArchitecture architecture : grouped.keySet()) {
-      conditions.add(arrayHasOnlyElement(globals.cmakeOsxArchitectures, constant(architecture.toString())));
+      if (failIf(architecture == null, "iOS architecture in manifest was unknown or missing")) {
+        conditions.add(constant(false));
+      } else {
+        conditions.add(arrayHasOnlyElement(globals.cmakeOsxArchitectures, constant(architecture.toString())));
+      }
       expressions.add(buildiOSPlatformSdkSwitch(resolved,
           grouped.get(architecture),
           explodedArchiveFolder,
@@ -361,8 +372,8 @@ public class BuildFindModuleFunctionTable {
       @NotNull List<iOSArchive> archives,
       @NotNull AssignmentExpression explodedArchiveFolder,
       @NotNull AssignmentExpression combinedPlatformAndSDK,
-      iOSArchitecture architecture,
-      Set<Coordinate> dependencies) {
+      @Nullable iOSArchitecture architecture,
+      @NotNull Set<Coordinate> dependencies) {
     List<Expression> conditionList = new ArrayList<>();
     List<Expression> expressionList = new ArrayList<>();
     String supported = "";
@@ -387,10 +398,17 @@ public class BuildFindModuleFunctionTable {
       expressionList.add(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies));
     }
 
-    Expression notFound = abort(String.format("OSX SDK %%s is not supported by %s and architecture %s. " + "Supported: %s",
+    Expression notFound;
+    if (architecture == null) {
+      notFound = abort(String.format("OSX SDK %%s is not supported by %s. " + "Supported: %s",
+        resolved.cdepManifestYml.coordinate,
+        supported), combinedPlatformAndSDK);
+    }  else {
+      notFound = abort(String.format("OSX SDK %%s is not supported by %s and architecture %s. " + "Supported: %s",
         resolved.cdepManifestYml.coordinate,
         architecture,
         supported), combinedPlatformAndSDK);
+    }
 
     return ifSwitch(conditionList, expressionList, notFound);
   }

@@ -15,6 +15,45 @@
 */
 package io.cdep.cdep.yml.cdep;
 
-public enum BuildSystem {
-  cmake, cmakeExamples
+import io.cdep.annotations.NotNull;
+
+public class BuildSystem {
+  final static public String CMAKE = "cmake";
+  final static public String CMAKE_EXAMPLES = "cmakeExamples";
+  final static public String NDK_BUILD = "ndk-build";
+
+  @NotNull
+  final public String name;
+  public BuildSystem(@NotNull String name) {
+    this.name = name;
+  }
+
+  public static BuildSystem[] values() {
+    return new BuildSystem[] {
+        new BuildSystem(CMAKE),
+        new BuildSystem(CMAKE_EXAMPLES),
+        new BuildSystem(NDK_BUILD),
+    };
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof  BuildSystem)) {
+      return false;
+    }
+    return ((BuildSystem)obj).name.equals(name);
+  }
+
+  @Override
+  public int hashCode() {
+    return name.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return name;
+  }
 }

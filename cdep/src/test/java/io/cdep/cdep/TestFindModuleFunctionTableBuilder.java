@@ -347,27 +347,28 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void fuzzTest() {
-      QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
-        @Override
-        protected void doSpecify(CDepManifestYml any) throws Throwable {
-          String capture = CDepManifestYmlUtils.convertManifestToString(any);
-          CDepManifestYml readAny = any;
-          try {
-            readAny = CDepManifestYmlUtils.convertStringToManifest(capture);
-          } catch (RuntimeException e) {
-            System.out.printf("%s", capture);
-            throw e;
-          }
-          try {
-            Invariant.pushScope();
-            BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
-            builder.addManifest(new ResolvedManifest(new URL("https://google.com"), readAny));
-            builder.build();
-          } finally {
-            Invariant.popScope();
-          }
+    //for (int i = 0; i < 1000; ++i)
+    QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
+      @Override
+      protected void doSpecify(CDepManifestYml any) throws Throwable {
+        String capture = CDepManifestYmlUtils.convertManifestToString(any);
+        CDepManifestYml readAny = any;
+        try {
+          readAny = CDepManifestYmlUtils.convertStringToManifest(capture);
+        } catch (RuntimeException e) {
+          System.out.printf("%s", capture);
+          throw e;
         }
-      });
+        try {
+          Invariant.pushScope();
+          BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();
+          builder.addManifest(new ResolvedManifest(new URL("https://google.com"), readAny));
+          builder.build();
+        } finally {
+          Invariant.popScope();
+        }
+      }
+    });
   }
 
   @Test
