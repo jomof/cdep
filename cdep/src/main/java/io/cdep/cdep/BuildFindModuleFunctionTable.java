@@ -388,8 +388,7 @@ public class BuildFindModuleFunctionTable {
       supported += platformSDK + " ";
     }
 
-    if (resolved.cdepManifestYml.iOS.archives.length == 1
-        && resolved.cdepManifestYml.iOS.archives[0].platform == null) {
+    if (resolved.cdepManifestYml.iOS.archives.length == 1) {
       return buildSingleArchiveResolution(resolved, resolved.cdepManifestYml.iOS.archives[0],
           explodedArchiveFolder, dependencies);
     }
@@ -399,7 +398,10 @@ public class BuildFindModuleFunctionTable {
     assert resolved.cdepManifestYml.iOS != null;
     assert resolved.cdepManifestYml.iOS.archives != null;
     for (iOSArchive archive : resolved.cdepManifestYml.iOS.archives) {
-      assert archive.platform != null;
+      if (failIf(archive.platform == null,
+          "iOS platform was missing in some packages and present in others. It needs to be consistent")) {
+        continue;
+      }
       conditionList.add(stringStartsWith(combinedPlatformAndSDK, constant(archive.platform.toString())));
       expressionList.add(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies));
     }

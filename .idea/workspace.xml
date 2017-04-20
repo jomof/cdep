@@ -11,6 +11,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/third_party/vectorial" afterPath="$PROJECT_DIR$/third_party/vectorial" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestFullfill.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestFullfill.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -60,8 +61,8 @@
       <file leaf-file-name="BuildFindModuleFunctionTable.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="393" column="47" lean-forward="false" selection-start-line="393" selection-start-column="47" selection-end-line="393" selection-end-column="47" />
+            <state relative-caret-position="214">
+              <caret line="402" column="17" lean-forward="false" selection-start-line="402" selection-start-column="17" selection-end-line="402" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -82,12 +83,12 @@
       <file leaf-file-name="TestFullfill.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestFullfill.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
+            <state relative-caret-position="216">
               <caret line="218" column="3" lean-forward="false" selection-start-line="218" selection-start-column="3" selection-end-line="218" selection-end-column="3" />
               <folding>
-                <element signature="e#0#10268#0" expanded="true" />
-                <element signature="e#9004#10260#0" expanded="true" />
-                <element signature="e#10259#10260#0" expanded="true" />
+                <element signature="e#0#10337#0" expanded="true" />
+                <element signature="e#9004#10329#0" expanded="true" />
+                <element signature="e#10328#10329#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2173,13 +2174,6 @@
       <option name="presentableId" value="Default" />
       <updated>1492221479266</updated>
     </task>
-    <task id="LOCAL-00017" summary="requires">
-      <created>1492382638045</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1492382638045</updated>
-    </task>
     <task id="LOCAL-00018" summary="requires">
       <created>1492383764145</created>
       <option name="number" value="00018" />
@@ -2516,7 +2510,14 @@
       <option name="project" value="LOCAL" />
       <updated>1492730302404</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Update copyrights">
+      <created>1492730748089</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1492730748089</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2524,6 +2525,9 @@
       <configuration name="All in cdep-cdep_test" configurationId="JUnit" />
     </history-entry>
     <history-entry file="All_in_cdep-cdep_test - 2017.04.20 at 16h 25m 31s.xml">
+      <configuration name="All in cdep-cdep_test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_cdep-cdep_test - 2017.04.20 at 16h 32m 52s.xml">
       <configuration name="All in cdep-cdep_test" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestFindModuleFunctionTableBuilder_fuzzTest - 2017.04.20 at 15h 57m 28s.xml">
@@ -2534,9 +2538,6 @@
     </history-entry>
     <history-entry file="TestFindModuleFunctionTableBuilder_fuzzTest - 2017.04.20 at 16h 02m 45s.xml">
       <configuration name="TestFindModuleFunctionTableBuilder.fuzzTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestFullfill_fuzzTest - 2017.04.20 at 15h 55m 35s.xml">
-      <configuration name="TestFullfill.fuzzTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestFullfill_fuzzTest - 2017.04.20 at 15h 56m 40s.xml">
       <configuration name="TestFullfill.fuzzTest" configurationId="JUnit" />
@@ -2571,7 +2572,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.53593016" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28475487" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19633676" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2764,7 +2765,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java</url>
-          <line>408</line>
+          <line>410</line>
           <properties />
           <option name="timeStamp" value="67" />
         </line-breakpoint>
@@ -3249,20 +3250,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="393" column="47" lean-forward="false" selection-start-line="393" selection-start-column="47" selection-end-line="393" selection-end-column="47" />
+        <state relative-caret-position="214">
+          <caret line="402" column="17" lean-forward="false" selection-start-line="402" selection-start-column="17" selection-end-line="402" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/fullfill/TestFullfill.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
+        <state relative-caret-position="216">
           <caret line="218" column="3" lean-forward="false" selection-start-line="218" selection-start-column="3" selection-end-line="218" selection-end-column="3" />
           <folding>
-            <element signature="e#0#10268#0" expanded="true" />
-            <element signature="e#9004#10260#0" expanded="true" />
-            <element signature="e#10259#10260#0" expanded="true" />
+            <element signature="e#0#10337#0" expanded="true" />
+            <element signature="e#9004#10329#0" expanded="true" />
+            <element signature="e#10328#10329#0" expanded="true" />
           </folding>
         </state>
       </provider>

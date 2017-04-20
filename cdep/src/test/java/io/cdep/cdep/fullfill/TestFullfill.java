@@ -242,6 +242,8 @@ public class TestFullfill {
                 new File(outputFolder, "output"),
                 new File(outputFolder, "source"),
                 "1.2.3");
+          } catch(Throwable e) {
+            System.out.print(body);
           } finally {
             IO.setOut(originalOut);
             IO.setErr(originalErr);
