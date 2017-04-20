@@ -45,8 +45,10 @@ public class IO {
   /**
    * Set the error stream and return the prior out stream.
    */
-  public static void setErr(PrintStream err) {
+  public static PrintStream setErr(PrintStream err) {
+    PrintStream original = io.err;
     io.err = err;
+    return original;
   }
 
   /**

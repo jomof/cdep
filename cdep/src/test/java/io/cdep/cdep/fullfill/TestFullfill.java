@@ -19,6 +19,7 @@ import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.Version;
 import io.cdep.cdep.generator.GeneratorEnvironment;
+import io.cdep.cdep.io.IO;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.utils.Invariant;
@@ -28,8 +29,10 @@ import net.java.quickcheck.QuickCheck;
 import net.java.quickcheck.characteristic.AbstractCharacteristic;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.PrintStream;
 import java.util.*;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -213,29 +216,38 @@ public class TestFullfill {
 
   @Test
   public void fuzzTest() {
-    //for(int i = 0; i < 100; ++i)
-    QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
-      @Override
-      protected void doSpecify(CDepManifestYml any) throws Throwable {
-        File outputFolder = new File(".test-files/TestFullfill/fuzzTest/"
-            + "fuzzTest").getAbsoluteFile();
-        outputFolder.delete();
-        outputFolder.mkdirs();
-        File manifestFile = new File(outputFolder, "cdep-manifest.yml");
-        String body = CDepManifestYmlUtils.convertManifestToString(any);
-        FileUtils.writeTextToFile(manifestFile, body);
-        try {
-          Invariant.pushScope();
-          Fullfill.multiple(
-              environment,
-              new File[]{manifestFile},
-              new File(outputFolder, "output"),
-              new File(outputFolder, "source"),
-              "1.2.3");
-        } finally {
-          Invariant.popScope();
+    for (int i = 0; i < 10000; ++i)
+      QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
+        @Override
+        protected void doSpecify(CDepManifestYml any) throws Throwable {
+          File outputFolder = new File(".test-files/TestFullfill/fuzzTest/"
+              + "fuzzTest").getAbsoluteFile();
+          outputFolder.delete();
+          outputFolder.mkdirs();
+          File manifestFile = new File(outputFolder, "cdep-manifest.yml");
+          String body = CDepManifestYmlUtils.convertManifestToString(any);
+          FileUtils.writeTextToFile(manifestFile, body);
+
+          ByteArrayOutputStream baos = new ByteArrayOutputStream();
+          PrintStream ps = new PrintStream(baos);
+          PrintStream originalOut = null;
+          PrintStream originalErr = null;
+          try {
+            Invariant.pushScope();
+            originalOut = IO.setOut(ps);
+            originalErr = IO.setErr(ps);
+            Fullfill.multiple(
+                environment,
+                new File[]{manifestFile},
+                new File(outputFolder, "output"),
+                new File(outputFolder, "source"),
+                "1.2.3");
+          } finally {
+            IO.setOut(originalOut);
+            IO.setErr(originalErr);
+            Invariant.popScope();
+          }
         }
-      }
-    });
+      });
   }
 }
