@@ -1,13 +1,14 @@
 package io.cdep.cdep.io;
 
-import io.cdep.annotations.NotNull;
-import org.fusesource.jansi.AnsiConsole;
-
-import java.io.PrintStream;
-
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_FAINT;
-import static org.fusesource.jansi.Ansi.Color.*;
+import static org.fusesource.jansi.Ansi.Color.GREEN;
+import static org.fusesource.jansi.Ansi.Color.RED;
+import static org.fusesource.jansi.Ansi.Color.WHITE;
 import static org.fusesource.jansi.Ansi.ansi;
+
+import io.cdep.annotations.NotNull;
+import java.io.PrintStream;
+import org.fusesource.jansi.AnsiConsole;
 
 /**
  * Methods for dealing with command-line IO, messages, errors, etc.
@@ -69,7 +70,7 @@ public class IO {
    * Print an info message with a line-feed.
    */
   public static void errorln(Object format, Object... args) {
-    io.infoImpl(format + "\n", args);
+    io.errorImpl(format + "\n", args);
   }
 
   private void infoImpl(@NotNull String format, Object... args) {
@@ -82,9 +83,9 @@ public class IO {
 
   private void errorImpl(@NotNull String format, Object... args) {
     if (ansi) {
-      err.printf(format, args);
-    } else {
       err.print(ansi().fg(RED).a(String.format(format, args)).reset());
+    } else {
+      err.printf(format, args);
     }
   }
 

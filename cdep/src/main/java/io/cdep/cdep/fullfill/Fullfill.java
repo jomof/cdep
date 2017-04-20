@@ -1,5 +1,8 @@
 package io.cdep.cdep.fullfill;
 
+import static io.cdep.cdep.io.IO.infoln;
+import static io.cdep.cdep.utils.Invariant.errorsInScope;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.Coordinate;
@@ -13,14 +16,11 @@ import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
-
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static io.cdep.cdep.io.IO.infoln;
 
 public class Fullfill {
 
@@ -75,20 +75,36 @@ public class Fullfill {
       Coordinate coordinate = manifests[i].coordinate;
       infoln("  guessing archive details from path names in %s", coordinate);
       manifests[i] = filler.visitCDepManifestYml(manifests[i]);
+      if (errorsInScope() > 0) {
+        // Exit early if there were problems
+        return result;
+      }
 
       ZipFilesRewritingVisitor zipper = new ZipFilesRewritingVisitor(layout, staging);
       infoln("  zipping files references in %s", coordinate);
       manifests[i] = zipper.visitCDepManifestYml(manifests[i]);
       result.addAll(zipper.getZips());
+      if (errorsInScope() > 0) {
+        // Exit early if there were problems
+        return result;
+      }
 
       FileHashAndSizeRewritingVisitor hasher = new FileHashAndSizeRewritingVisitor(layout);
       infoln("  computing hashes and file sizes of archives in %s", coordinate);
       manifests[i] = hasher.visitCDepManifestYml(manifests[i]);
+      if (errorsInScope() > 0) {
+        // Exit early if there were problems
+        return result;
+      }
 
       DependencyHashRewritingVisitor dependencyHasher =
           new DependencyHashRewritingVisitor(environment);
       infoln("  hashing dependencies in %s", coordinate);
       manifests[i] = dependencyHasher.visitCDepManifestYml(manifests[i]);
+      if (errorsInScope() > 0) {
+        // Exit early if there were problems
+        return result;
+      }
 
       File output = new File(layout, templates[i].getName());
       infoln("  writing manifest file %s", new File(".")
@@ -96,13 +112,20 @@ public class Fullfill {
       String body = CDepManifestYmlUtils.convertManifestToString(manifests[i]);
       FileUtils.writeTextToFile(output, body);
       result.add(output);
+      if (errorsInScope() > 0) {
+        // Exit early if there were problems
+        return result;
+      }
 
+      infoln("  checking sanity of result %s", coordinate);
       // Attempt to read the manifest that was written to disk.
       CDepManifestYml readFromDisk = CDepManifestYmlUtils.convertStringToManifest(
           FileUtils.readAllText(output));
       CDepManifestYmlEquality.areDeeplyIdentical(manifests[i], readFromDisk);
-
-      infoln("  checking sanity of result %s", coordinate);
+      if (errorsInScope() > 0) {
+        // Exit early if there were problems
+        return result;
+      }
       CDepManifestYmlUtils.checkManifestSanity(manifests[i]);
 
       // Find any transitive dependencies that we may need to build the function table.
@@ -112,6 +135,10 @@ public class Fullfill {
           softname,
           new ResolvedManifest(output.toURI().toURL(), manifests[i]),
           CDepManifestYmlUtils.getTransitiveDependencies(manifests[i]));
+      if (errorsInScope() > 0) {
+        // Exit early if there were problems
+        return result;
+      }
     }
 
     infoln("  checking consistency of all manifests");
@@ -123,6 +150,11 @@ public class Fullfill {
     BuildFindModuleFunctionTable table = new BuildFindModuleFunctionTable();
     GeneratorEnvironmentUtils.addAllResolvedToTable(table, scope);
     table.build();
+    if (errorsInScope() > 0) {
+      // Exit early if there were problems
+      return result;
+    }
+
 
 
     return result;

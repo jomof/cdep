@@ -1,12 +1,11 @@
 package io.cdep.cdep.utils;
 
-import io.cdep.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static io.cdep.cdep.io.IO.errorln;
 import static io.cdep.cdep.utils.StringUtils.safeFormat;
+
+import io.cdep.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Methods for ensuring state at runtime
@@ -31,6 +30,13 @@ abstract public class Invariant {
     requirementFailures.remove(0);
     showOutputs.remove(0);
     return errors;
+  }
+
+  public static int errorsInScope() {
+    if (requirementFailures.size() == 0) {
+      return 0;
+    }
+    return requirementFailures.get(0).size();
   }
 
   private static void report(@NotNull RuntimeException e) {
