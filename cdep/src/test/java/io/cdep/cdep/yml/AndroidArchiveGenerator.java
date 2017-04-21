@@ -16,16 +16,21 @@
 package io.cdep.cdep.yml;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.cdep.utils.LongUtils;
+import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 import net.java.quickcheck.Generator;
 
-import static io.cdep.cdep.yml.AndroidArchiveGenerator.Kind.missing;
+import java.util.List;
+
+import static io.cdep.cdep.utils.LongUtils.nullToZero;
 import static net.java.quickcheck.generator.CombinedGenerators.arrays;
 import static net.java.quickcheck.generator.PrimitiveGenerators.*;
 
 public class AndroidArchiveGenerator implements Generator<AndroidArchive> {
+  private static List<ResolvedManifests.TestManifest> allManifests = ResolvedManifests.allTestManifest();
+
   @NotNull
   final public Generator<Kind> kind = enumValues(Kind.class);
   @NotNull
@@ -39,6 +44,8 @@ public class AndroidArchiveGenerator implements Generator<AndroidArchive> {
   @NotNull
   final public Generator<String[]> libs = arrays(new ShortFilenameGenerator(), String.class);
   @NotNull
+  final public Generator<Long> longs = longs();
+  @NotNull
   final public Generator<String> strings = strings();
   @NotNull
   final public Generator<CxxLanguageFeatures[]> requires = arrays(enumValues(CxxLanguageFeatures.class),
@@ -46,13 +53,24 @@ public class AndroidArchiveGenerator implements Generator<AndroidArchive> {
 
   @Override
   public AndroidArchive next() {
-    if (kind.next() == missing) {
-      return null;
+    switch (kind.next()) {
+      case missing:
+        return null;
+      case actual: {
+        long n1 = Math.abs(nullToZero(longs.next()));
+
+        CDepManifestYml manifest = allManifests.get((int) (n1 % allManifests.size())).manifest.cdepManifestYml;
+        if (manifest.android != null && manifest.android.archives != null && manifest.android.archives.length > 0) {
+          int n2 = (int) (Math.abs(nullToZero(longs.next()) % manifest.android.archives.length));
+          return manifest.android.archives[n2];
+        }
+        break;
+      }
     }
     return new AndroidArchive(
         file.next(),
         sha256.next(),
-        LongUtils.nullToZero(size.next()),
+        nullToZero(size.next()),
         strings.next(),
         strings.next(),
         strings.next(),
@@ -66,6 +84,6 @@ public class AndroidArchiveGenerator implements Generator<AndroidArchive> {
   }
 
   enum Kind {
-    missing, random
+    missing, random, actual
   }
 }
