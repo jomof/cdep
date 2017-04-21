@@ -39,7 +39,7 @@ public class AndroidArchiveGenerator implements Generator<AndroidArchive> {
   @NotNull
   final public Generator<String> sha256 = strings();
   @NotNull
-  final public Generator<AndroidABI> abi = new AbiGenerator();
+  final public Generator<AndroidABI> abi = new AndroidABIGenerator();
   @NotNull
   final public Generator<Long> size = longs();
   @NotNull

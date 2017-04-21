@@ -174,7 +174,7 @@ public class CDepManifestYmlUtils {
     @Override
     public void visitAndroidABI(@Nullable String name, @NotNull AndroidABI value) {
       require(value.equals(AndroidABI.EMPTY_ABI)
-          || Arrays.asList(AndroidABI.values()).contains(value), "Unknown Android ABI '%s'", value);
+          || AndroidABI.values().contains(value), "Unknown Android ABI '%s'", value);
     }
 
     @NotNull

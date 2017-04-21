@@ -6,7 +6,7 @@ import net.java.quickcheck.Generator;
 import static net.java.quickcheck.generator.PrimitiveGenerators.integers;
 import static net.java.quickcheck.generator.PrimitiveGenerators.strings;
 
-public class AbiGenerator implements Generator<AndroidABI> {
+public class AndroidABIGenerator implements Generator<AndroidABI> {
   Generator<String> strings = strings();
   Generator<Integer> integers = integers();
 
