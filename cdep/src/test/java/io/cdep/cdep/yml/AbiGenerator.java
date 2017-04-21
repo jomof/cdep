@@ -1,23 +1,24 @@
 package io.cdep.cdep.yml;
 
+import io.cdep.cdep.yml.cdepmanifest.AndroidABI;
 import net.java.quickcheck.Generator;
 
 import static net.java.quickcheck.generator.PrimitiveGenerators.integers;
 import static net.java.quickcheck.generator.PrimitiveGenerators.strings;
 
-public class AbiGenerator implements Generator<String> {
+public class AbiGenerator implements Generator<AndroidABI> {
   Generator<String> strings = strings();
   Generator<Integer> integers = integers();
 
   @Override
-  public String next() {
+  public AndroidABI next() {
     switch (Math.abs(integers.next()) % 3) {
       case 0:
-        return "x86_64";
+        return AndroidABI.ARMEABI;
       case 1:
-        return "mips";
+        return AndroidABI.ARM64_V8A;
       default:
-        return strings.next();
+        return new AndroidABI(strings.next());
     }
   }
 }

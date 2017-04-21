@@ -21,6 +21,7 @@ import io.cdep.cdep.utils.ArrayUtils;
 import io.cdep.cdep.utils.LongUtils;
 import io.cdep.cdep.utils.ObjectUtils;
 import io.cdep.cdep.utils.StringUtils;
+import io.cdep.cdep.yml.cdepmanifest.AndroidABI;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.v2.V2Reader;
@@ -165,7 +166,7 @@ public class V3Reader {
         StringUtils.nullToEmpty(archive.runtime),
         StringUtils.nullToEmpty(archive.platform),
         StringUtils.nullToEmpty(archive.builder),
-        StringUtils.nullToEmpty(archive.abi),
+        new AndroidABI(StringUtils.nullToEmpty(archive.abi)),
         StringUtils.nullToEmpty(archive.include),
         StringUtils.singletonArrayOrEmpty(archive.lib),
         StringUtils.nullToEmpty(archive.flavor)

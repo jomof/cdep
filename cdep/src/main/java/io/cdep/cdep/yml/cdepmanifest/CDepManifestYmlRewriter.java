@@ -215,8 +215,8 @@ public class CDepManifestYmlRewriter {
   }
 
   @Nullable
-  private String visitAbi(String abi) {
-    return visitString(abi);
+  private AndroidABI visitAbi(AndroidABI abi) {
+    return new AndroidABI(visitString(abi.name));
   }
 
   @Nullable

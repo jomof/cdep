@@ -90,6 +90,10 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
     covisitFields(left, right);
   }
 
+  public void covisitAndroidABI(String name, AndroidABI left, AndroidABI right) {
+    checkEquals(left, right);
+  }
+
   public void covisitCxxLanguageFeaturesArray(String name, CxxLanguageFeatures left[], CxxLanguageFeatures right[]) {
     covisitArray(name, left, right, CxxLanguageFeatures.class);
   }

@@ -17,6 +17,7 @@ package io.cdep.cdep.yml;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.ResolvedManifests;
+import io.cdep.cdep.yml.cdepmanifest.AndroidABI;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
@@ -38,7 +39,7 @@ public class AndroidArchiveGenerator implements Generator<AndroidArchive> {
   @NotNull
   final public Generator<String> sha256 = strings();
   @NotNull
-  final public Generator<String> abi = new AbiGenerator();
+  final public Generator<AndroidABI> abi = new AbiGenerator();
   @NotNull
   final public Generator<Long> size = longs();
   @NotNull

@@ -111,7 +111,7 @@ public class ZipFilesRewriter extends CDepManifestYmlRewriter {
         archive.platform,
         archive.builder,
         archive.flavor,
-        archive.abi);
+        archive.abi.name);
     File stagingZipFolder = getStagingZipFolder(layoutZipFile, "lib/" + archive.abi);
 
     copyFilesToStaging(mappings, stagingZipFolder);

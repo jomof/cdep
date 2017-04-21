@@ -17,6 +17,7 @@ package io.cdep.cdep.yml.cdep;
 
 import io.cdep.annotations.NotNull;
 
+@SuppressWarnings("WeakerAccess")
 public class BuildSystem {
   final static public String CMAKE = "cmake";
   final static public String CMAKE_EXAMPLES = "cmakeExamples";
@@ -38,13 +39,7 @@ public class BuildSystem {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof  BuildSystem)) {
-      return false;
-    }
-    return ((BuildSystem)obj).name.equals(name);
+    return obj != null && obj instanceof BuildSystem && ((BuildSystem) obj).name.equals(name);
   }
 
   @Override

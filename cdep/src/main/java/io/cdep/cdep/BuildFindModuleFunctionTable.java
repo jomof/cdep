@@ -236,13 +236,13 @@ public class BuildFindModuleFunctionTable {
   @NotNull
   private Expression buildSingleArchiveResolution(@NotNull ResolvedManifest resolved,
       @NotNull AndroidArchive archive,
-      @NotNull String abi,
+      @NotNull AndroidABI abi,
       @NotNull AssignmentExpression explodedArchiveFolder,
       @NotNull Set<Coordinate> dependencies) {
     if (archive.file.isEmpty() || archive.sha256.isEmpty() || archive.size == 0L) {
       return abort(String.format("Archive in %s was malformed", resolved.remote));
     }
-    require(abi.length() > 0);
+    require(abi.name.length() > 0);
 
     String abiLibs[] = new String[archive.libs.length];
     for (int i = 0; i < abiLibs.length; ++i) {
@@ -348,7 +348,9 @@ public class BuildFindModuleFunctionTable {
       if (failIf(architecture == null, "iOS architecture in manifest was unknown or missing")) {
         conditions.add(constant(false));
       } else {
+        assert architecture != null;
         conditions.add(arrayHasOnlyElement(globals.cmakeOsxArchitectures, constant(architecture.toString())));
+        supported += " " + architecture.toString();
       }
       expressions.add(buildiOSPlatformSdkSwitch(resolved,
           grouped.get(architecture),
@@ -357,7 +359,6 @@ public class BuildFindModuleFunctionTable {
           architecture,
           dependencies));
 
-      supported += " " + architecture.toString();
     }
     return ifSwitch(conditions,
         expressions,
@@ -388,6 +389,8 @@ public class BuildFindModuleFunctionTable {
       supported += platformSDK + " ";
     }
 
+    assert resolved.cdepManifestYml.iOS != null;
+    assert resolved.cdepManifestYml.iOS.archives != null;
     if (resolved.cdepManifestYml.iOS.archives.length == 1) {
       return buildSingleArchiveResolution(resolved, resolved.cdepManifestYml.iOS.archives[0],
           explodedArchiveFolder, dependencies);
@@ -395,13 +398,12 @@ public class BuildFindModuleFunctionTable {
 
     // If there was no exact match then do a startsWith match like, starts  with iPhone*
     // TODO: Need to match on the highest SDK version. This matches the first seen.
-    assert resolved.cdepManifestYml.iOS != null;
-    assert resolved.cdepManifestYml.iOS.archives != null;
     for (iOSArchive archive : resolved.cdepManifestYml.iOS.archives) {
       if (failIf(archive.platform == null,
           "iOS platform was missing in some packages and present in others. It needs to be consistent")) {
         continue;
       }
+      assert archive.platform != null;
       conditionList.add(stringStartsWith(combinedPlatformAndSDK, constant(archive.platform.toString())));
       expressionList.add(buildSingleArchiveResolution(resolved, archive, explodedArchiveFolder, dependencies));
     }
@@ -560,10 +562,10 @@ public class BuildFindModuleFunctionTable {
     Map<Expression, Expression> cases = new HashMap<>();
     String supported = "";
 
-    // Group ABI (ABI may be null for header-only)
-    Map<String, List<AndroidArchive>> grouped = new HashMap<>();
+    // Group ABI (ABI may be empty for header-only)
+    Map<AndroidABI, List<AndroidArchive>> grouped = new HashMap<>();
     for (AndroidArchive android : androids) {
-      String abi = android.abi;
+      AndroidABI abi = android.abi;
       List<AndroidArchive> group = grouped.get(abi);
       if (group == null) {
         group = new ArrayList<>();
@@ -572,7 +574,7 @@ public class BuildFindModuleFunctionTable {
       group.add(android);
     }
 
-    if (grouped.size() == 1 && grouped.containsKey("")) {
+    if (grouped.size() == 1 && grouped.containsKey(AndroidABI.EMPTY_ABI)) {
       // Header only case.
       AndroidArchive archive = androids.iterator().next();
       Expression moduleArchive = buildArchive(
@@ -590,10 +592,11 @@ public class BuildFindModuleFunctionTable {
       return moduleArchive;
     }
 
-    for (String abi : grouped.keySet()) {
+    for (AndroidABI abi : grouped.keySet()) {
       AndroidArchive archive = grouped.get(abi).iterator().next();
       supported += abi + " ";
-      cases.put(constant(abi), buildSingleArchiveResolution(resolved, archive, abi, explodedArchiveFolder, dependencies));
+      cases.put(constant(abi), buildSingleArchiveResolution(resolved, archive, abi,
+          explodedArchiveFolder, dependencies));
     }
 
     Expression prior = abort(String.format("Android ABI %%s is not supported by %s for platform %%s. Supported: %s",

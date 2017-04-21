@@ -17,6 +17,7 @@ package io.cdep.cdep.fullfill;
 
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.utils.ArrayUtils;
+import io.cdep.cdep.yml.cdepmanifest.AndroidABI;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewriter;
 
@@ -53,11 +54,11 @@ public class FillMissingFieldsBasedOnFilepathRewriter extends CDepManifestYmlRew
     if (archive == null || archive.file.isEmpty()) {
       return null;
     }
-    String abi = archive.abi;
-    if (abi.isEmpty()) {
+    AndroidABI abi = archive.abi;
+    if (abi.name.isEmpty()) {
       for (String androidABI : androidABIs) {
         if (archive.file.contains(androidABI)) {
-          abi = androidABI;
+          abi = new AndroidABI(androidABI);
           break;
         }
       }

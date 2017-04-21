@@ -80,6 +80,7 @@ public class InterpretingVisitor {
       if (o instanceof File) {
         return o.toString();
       }
+      return o.toString();
     }
     if (clazz.equals(CxxLanguageFeatures[].class) && o instanceof Object[]) {
       Object specific[] = (Object[]) o;

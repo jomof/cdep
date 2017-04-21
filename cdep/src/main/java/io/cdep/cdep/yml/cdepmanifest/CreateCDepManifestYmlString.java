@@ -76,6 +76,11 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
   }
 
   @Override
+  public void visitAndroidABI(@Nullable String name, @NotNull AndroidABI value) {
+    appendIndented("%s: %s\r\n", name, quoteIfNecessary(value.name));
+  }
+
+  @Override
   public void visitCxxLanguageFeatures(@Nullable String name, @NotNull CxxLanguageFeatures value) {
     if (name == null) {
       append(value.toString() + "\r\n");

@@ -25,6 +25,7 @@ import static io.cdep.cdep.Version.EMPTY_VERSION;
 import static io.cdep.cdep.utils.ArrayUtils.nullToEmpty;
 import static io.cdep.cdep.utils.ArrayUtils.removeNullElements;
 import static io.cdep.cdep.utils.LongUtils.nullToZero;
+import static io.cdep.cdep.utils.ObjectUtils.nullToDefault;
 import static io.cdep.cdep.utils.StringUtils.nullToEmpty;
 
 /**
@@ -45,7 +46,7 @@ public class ConvertNullToDefaultRewriter extends CDepManifestYmlRewriter {
         nullToEmpty(archive.runtime),
         nullToEmpty(archive.platform),
         nullToEmpty(archive.builder),
-        nullToEmpty(archive.abi),
+        nullToDefault(archive.abi, AndroidABI.EMPTY_ABI),
         nullToEmpty(archive.include),
         removeNullElements(nullToEmpty(archive.libs, String.class), String.class),
         nullToEmpty(archive.flavor)));
@@ -78,7 +79,7 @@ public class ConvertNullToDefaultRewriter extends CDepManifestYmlRewriter {
   public CDepManifestYml visitCDepManifestYml(@NotNull CDepManifestYml value) {
     return super.visitCDepManifestYml(new CDepManifestYml(
         value.sourceVersion,
-        ObjectUtils.nullToDefault(value.coordinate, EMPTY_COORDINATE),
+        nullToDefault(value.coordinate, EMPTY_COORDINATE),
         removeNullElements(
             nullToEmpty(value.dependencies, HardNameDependency.class),
             HardNameDependency.class),
@@ -95,7 +96,7 @@ public class ConvertNullToDefaultRewriter extends CDepManifestYmlRewriter {
     return super.visitCoordinate(new Coordinate(
         nullToEmpty(coordinate.groupId),
         nullToEmpty(coordinate.artifactId),
-        ObjectUtils.nullToDefault(coordinate.version, EMPTY_VERSION)
+        nullToDefault(coordinate.version, EMPTY_VERSION)
     ));
   }
 

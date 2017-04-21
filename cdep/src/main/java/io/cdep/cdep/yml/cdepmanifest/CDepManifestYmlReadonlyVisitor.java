@@ -92,6 +92,10 @@ abstract public class CDepManifestYmlReadonlyVisitor extends PlainOldDataReadonl
     visitPlainOldDataObject(name, value);
   }
 
+  public void visitAndroidABI(@Nullable String name, @NotNull AndroidABI value) {
+    visitPlainOldDataObject(name, value);
+  }
+
   public void visitiOSArchive(@Nullable String name, @NotNull iOSArchive value) {
     visitPlainOldDataObject(name, value);
   }

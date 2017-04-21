@@ -36,7 +36,7 @@ public class AndroidArchive {
   @NotNull
   final public String builder;
   @NotNull
-  final public String abi;
+  final public AndroidABI abi;
   @NotNull
   final public String include;
   @NotNull
@@ -53,7 +53,7 @@ public class AndroidArchive {
     this.runtime = "";
     this.platform = "";
     this.builder = "";
-    this.abi = "";
+    this.abi = new AndroidABI("");
     this.include = "";
     this.libs = new String[0];
     this.flavor = "";
@@ -67,7 +67,7 @@ public class AndroidArchive {
       @NotNull String runtime,
       @NotNull String platform,
       @NotNull String builder,
-      @NotNull String abi,
+      @NotNull AndroidABI abi,
       @NotNull String include,
       @NotNull String libs[],
       @NotNull String flavor) {
