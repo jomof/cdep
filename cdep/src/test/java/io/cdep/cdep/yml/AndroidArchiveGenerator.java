@@ -38,6 +38,8 @@ public class AndroidArchiveGenerator implements Generator<AndroidArchive> {
   @NotNull
   final public Generator<String> sha256 = strings();
   @NotNull
+  final public Generator<String> abi = new AbiGenerator();
+  @NotNull
   final public Generator<Long> size = longs();
   @NotNull
   final public Generator<String> include = strings();
@@ -76,7 +78,7 @@ public class AndroidArchiveGenerator implements Generator<AndroidArchive> {
         strings.next(),
         strings.next(),
         strings.next(),
-        strings.next(),
+        abi.next(),
         include.next(),
         libs.next(),
         strings.next()

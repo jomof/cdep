@@ -347,7 +347,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void fuzzTest() {
-    //for (int i = 0; i < 1000; ++i)
+   // for (int i = 0; i < 1000; ++i)
     QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
       @Override
       protected void doSpecify(CDepManifestYml any) throws Throwable {
