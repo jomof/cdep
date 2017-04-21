@@ -14,7 +14,7 @@ matrix:
         - g++-4.8
     script:
     - ./gradlew assemble
-    - ./gradlew check --info
+    - ./gradlew check
     - ./gradlew packageArtifacts
     - pushd smoke-test
     - ../travis_cdep
