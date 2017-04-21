@@ -171,6 +171,12 @@ public class CDepManifestYmlUtils {
       super.visitAndroidArchive(name, value);
     }
 
+    @Override
+    public void visitAndroidABI(@Nullable String name, @NotNull AndroidABI value) {
+      require(value.equals(AndroidABI.EMPTY_ABI)
+          || Arrays.asList(AndroidABI.values()).contains(value), "Unknown Android ABI '%s'", value);
+    }
+
     @NotNull
     private String archiveName(@NotNull AndroidArchive value) {
       return value.file.isEmpty() ? "<unknown>" : value.file;
@@ -230,7 +236,10 @@ public class CDepManifestYmlUtils {
         for (AndroidArchive archive : value.archives) {
 
           require(!archive.file.isEmpty(), "Package '%s' has missing android.archive.file", coordinate);
-          require(!archive.sha256.isEmpty(), "Package '%s' has missing android.archive.sha256 for '%s'", coordinate, archive.file);
+          require(!archive.sha256.isEmpty(),
+              "Package '%s' has missing android.archive.sha256 for '%s'",
+              coordinate,
+              archive.file);
           require(archive.size != 0, "Package '%s' has missing or zero android.archive.size for '%s'", coordinate, archive.file);
           for (String lib : archive.libs) {
             require(lib.endsWith(".a"),
