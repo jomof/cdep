@@ -17,11 +17,28 @@ package io.cdep.cdep.fullfill;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.utils.FileUtils;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Converts path patterns in cdep-manifest.yml skeleton to a collection of files.
+ *
+ * Grammar:
+ *
+ *   Individual file:
+ *     - file: path/to/libmylib.a
+ *
+ *   All subfiles from here:
+ *     - file: path/to/files/...
+ *
+ *   Combine:
+ *     - file: a.lib | b.lib
+ *
+ *   Remap:
+ *     - file: a.lib -> somepath/a.lib
+ *
+ */
 public class PathMapping {
   final public File from;
   final public File to;
@@ -31,6 +48,9 @@ public class PathMapping {
     this.to = to;
   }
 
+  /**
+   * Returns a collection of from-to path mappings.
+   */
   public static PathMapping[] parse(@NotNull String text) {
     List<PathMapping> result = new ArrayList<>();
     String[] mappings = text.split("\\|");
@@ -57,5 +77,4 @@ public class PathMapping {
     }
     return result.toArray(new PathMapping[result.size()]);
   }
-
 }

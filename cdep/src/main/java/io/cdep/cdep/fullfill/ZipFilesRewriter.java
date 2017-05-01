@@ -15,6 +15,10 @@
 */
 package io.cdep.cdep.fullfill;
 
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.failIf;
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.utils.ArchiveUtils;
@@ -23,16 +27,18 @@ import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewriter;
-
+import io.cdep.cdep.yml.cdepmanifest.LinuxArchive;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.FileSystemException;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import static io.cdep.cdep.utils.Invariant.*;
 
 /**
  * Zip up file entries into layout folder. Doesn't record SHA or size since that is done
@@ -116,6 +122,12 @@ public class ZipFilesRewriter extends CDepManifestYmlRewriter {
 
     copyFilesToStaging(mappings, stagingZipFolder);
 
+    // Record the names of the libraries.
+    String libs[] = new String[mappings.length];
+    for (int i = 0; i < mappings.length; ++ i) {
+      libs[i] = mappings[i].to.getName();
+    }
+
     // Zip that file
     zipStagingFilesIntoArchive(stagingZipFolder.getParentFile().getParentFile(), layoutZipFile);
 
@@ -132,8 +144,45 @@ public class ZipFilesRewriter extends CDepManifestYmlRewriter {
         archive.builder,
         archive.abi,
         archive.include,
-        archive.libs,
+        libs,
         archive.flavor);
+  }
+
+  @Override
+  protected LinuxArchive visitLinuxArchive(@NotNull LinuxArchive archive) {
+    if (archive == null || archive.file.isEmpty()) {
+      return archive;
+    }
+    if (archive.file.endsWith(".zip")) {
+      return archive;
+    }
+    PathMapping mappings[] = PathMapping.parse(archive.file);
+    require(mappings.length > 0,
+        "File mapping '%s' did not resolve to any local files", archive.file);
+    File layoutZipFile = getLayoutZipFile(
+        prefix,
+        "linux");
+    File stagingZipFolder = getStagingZipFolder(layoutZipFile, "lib/");
+
+    copyFilesToStaging(mappings, stagingZipFolder);
+
+    // Record the names of the libraries.
+    String libs[] = new String[mappings.length];
+    for (int i = 0; i < mappings.length; ++ i) {
+      libs[i] = mappings[i].to.getName();
+    }
+
+    // Zip that file
+    zipStagingFilesIntoArchive(stagingZipFolder.getParentFile().getParentFile(), layoutZipFile);
+
+    zips.add(layoutZipFile);
+
+    return new LinuxArchive(
+        layoutZipFile.getName(),
+        "",
+        0L,
+        libs,
+        archive.include);
   }
 
   @NotNull

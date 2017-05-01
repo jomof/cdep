@@ -15,18 +15,18 @@
 */
 package io.cdep.cdep.fullfill;
 
+import static io.cdep.cdep.utils.Invariant.failIf;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
 import io.cdep.cdep.yml.cdepmanifest.Archive;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlRewriter;
-
+import io.cdep.cdep.yml.cdepmanifest.LinuxArchive;
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-
-import static io.cdep.cdep.utils.Invariant.failIf;
 
 public class FileHashAndSizeRewriter extends CDepManifestYmlRewriter {
   private final File layoutFolder;
@@ -86,6 +86,29 @@ public class FileHashAndSizeRewriter extends CDepManifestYmlRewriter {
             archive.include,
             archive.libs,
             archive.flavor);
+      } catch(@NotNull NoSuchAlgorithmException | IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    return archive;
+  }
+
+  @Override
+  protected LinuxArchive visitLinuxArchive(@NotNull LinuxArchive archive) {
+    if (archive.sha256.isEmpty()) {
+      File file = new File(layoutFolder, archive.file);
+      if (failIf(!file.isFile(),
+          "Could not hash file %s because it didn't exist",
+          archive.file)) {
+        return archive;
+      }
+      try {
+        return new LinuxArchive(
+            archive.file,
+            HashUtils.getSHA256OfFile(file),
+            file.length(),
+            archive.libs,
+            archive.include);
       } catch(@NotNull NoSuchAlgorithmException | IOException e) {
         throw new RuntimeException(e);
       }

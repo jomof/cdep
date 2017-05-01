@@ -15,6 +15,9 @@
 */
 package io.cdep.cdep.fullfill;
 
+import static io.cdep.cdep.io.IO.infoln;
+import static io.cdep.cdep.utils.Invariant.errorsInScope;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.BuildFindModuleFunctionTable;
 import io.cdep.cdep.Coordinate;
@@ -28,15 +31,11 @@ import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
-
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static io.cdep.cdep.io.IO.infoln;
-import static io.cdep.cdep.utils.Invariant.errorsInScope;
 
 public class Fullfill {
 
@@ -89,14 +88,6 @@ public class Fullfill {
     for (int i = 0; i < manifests.length; ++i) {
       Coordinate coordinate = manifests[i].coordinate;
 
-      NixLayoutRewriter nixer = new NixLayoutRewriter();
-      infoln("  analyzing file requests in manifest for %s", coordinate);
-      manifests[i] = nixer.visitCDepManifestYml(manifests[i]);
-      if (errorsInScope() > 0) {
-        // Exit early if there were problems
-        return result;
-      }
-
       FillMissingFieldsBasedOnFilepathRewriter filler = new FillMissingFieldsBasedOnFilepathRewriter();
       infoln("  guessing archive details from path names in %s", coordinate);
       manifests[i] = filler.visitCDepManifestYml(manifests[i]);
@@ -106,7 +97,7 @@ public class Fullfill {
       }
 
       ZipFilesRewriter zipper = new ZipFilesRewriter(layout, staging);
-      infoln("  zipping files references in %s", coordinate);
+      infoln("  zipping files referenced in %s", coordinate);
       manifests[i] = zipper.visitCDepManifestYml(manifests[i]);
       result.addAll(zipper.getZips());
       if (errorsInScope() > 0) {

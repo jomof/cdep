@@ -15,22 +15,39 @@
 */
 package io.cdep.cdep.utils;
 
-import io.cdep.annotations.NotNull;
-import io.cdep.annotations.Nullable;
-import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.yml.cdepmanifest.*;
-import io.cdep.cdep.yml.cdepmanifest.v3.V3Reader;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-import org.yaml.snakeyaml.error.YAMLException;
-
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-
 import static io.cdep.cdep.Coordinate.EMPTY_COORDINATE;
 import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.require;
+
+import io.cdep.annotations.NotNull;
+import io.cdep.annotations.Nullable;
+import io.cdep.cdep.Coordinate;
+import io.cdep.cdep.yml.cdepmanifest.Android;
+import io.cdep.cdep.yml.cdepmanifest.AndroidABI;
+import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
+import io.cdep.cdep.yml.cdepmanifest.Archive;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlReadonlyVisitor;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
+import io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.Linux;
+import io.cdep.cdep.yml.cdepmanifest.LinuxArchive;
+import io.cdep.cdep.yml.cdepmanifest.iOS;
+import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
+import io.cdep.cdep.yml.cdepmanifest.v3.V3Reader;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.error.YAMLException;
 
 public class CDepManifestYmlUtils {
   @NotNull
@@ -192,9 +209,9 @@ public class CDepManifestYmlUtils {
 
     @Override
     public void visitLinuxArchive(@Nullable String name, @NotNull LinuxArchive value) {
-      require(value.file.length() != 0, "iOS archive %s is missing file", coordinate);
-      require(value.sha256.length() != 0, "iOS archive %s is missing sha256", coordinate);
-      require(value.size != 0, "iOS archive %s is missing size or it is zero", coordinate);
+      require(value.file.length() != 0, "Linux archive %s is missing file", coordinate);
+      require(value.sha256.length() != 0, "Linux archive %s is missing sha256", coordinate);
+      require(value.size != 0, "Linux archive %s is missing size or it is zero", coordinate);
       super.visitLinuxArchive(name, value);
     }
 
@@ -209,7 +226,7 @@ public class CDepManifestYmlUtils {
           require(archive.platform != null, "Package '%s' has missing ios.archive.platform for '%s'", coordinate, archive.file);
           for (String lib : archive.libs) {
             require(lib.endsWith(".a"),
-                "Package '%s' has non-static iOS libraryName '%s'",
+                "Package '%s' has non-static iOS library file name '%s'. Should end in '.a'",
                 coordinate, lib);
           }
         }
@@ -223,7 +240,7 @@ public class CDepManifestYmlUtils {
       for (LinuxArchive archive : linux.archives) {
         for (String lib : archive.libs) {
           require(lib.endsWith(".a"),
-              "Package '%s' has non-static android libraryName '%s'",
+              "Package '%s' has non-static android library file name '%s'. Should end in '.a.'",
               coordinate, lib);
         }
       }
@@ -243,7 +260,7 @@ public class CDepManifestYmlUtils {
           require(archive.size != 0, "Package '%s' has missing or zero android.archive.size for '%s'", coordinate, archive.file);
           for (String lib : archive.libs) {
             require(lib.endsWith(".a"),
-                "Package '%s' has non-static android libraryName '%s'",
+                "Package '%s' has non-static android library file name '%s'. Should end in '.a'",
                 coordinate, lib);
             if (!archive.runtime.isEmpty()) {
               switch (archive.runtime) {
