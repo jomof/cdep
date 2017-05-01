@@ -7,6 +7,8 @@
 [submodule "third_party/vectorial"]
 	path = third_party/vectorial
 	url = https://github.com/jomof/vectorial
+	ignore = dirty
 [submodule "third_party/mathfu"]
 	path = third_party/mathfu
 	url = https://github.com/jomof/mathfu
+	ignore = dirty
