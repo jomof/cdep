@@ -15,6 +15,13 @@
 */
 package io.cdep.cdep.yml;
 
+import static com.google.common.truth.Truth.assertThat;
+import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
+import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.hardname;
+import static io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString.serialize;
+import static io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures.cxx_alignas;
+import static io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures.cxx_auto_type;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ResolvedManifests;
@@ -23,17 +30,12 @@ import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.Invariant;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
 import net.java.quickcheck.QuickCheck;
 import net.java.quickcheck.characteristic.AbstractCharacteristic;
 import org.junit.Test;
-
-import static com.google.common.truth.Truth.assertThat;
-import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
-import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.hardname;
-import static io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString.serialize;
-import static io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures.cxx_alignas;
-import static io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures.cxx_auto_type;
 
 public class TestCreateCDepManifestYmlString {
 
@@ -113,6 +115,24 @@ public class TestCreateCDepManifestYmlString {
                 "size: 100\r\n" +
                 "include: hello\r\n" +
                 "requires: [cxx_auto_type, cxx_alignas]\r\n");
+  }
+
+  @Test
+  public void testUnwantedQuotes() {
+    assertThat(serialize(new CDepManifestYml(
+        CDepManifestYmlVersion.v3,
+        new Coordinate("com.github.jomof", "openssl", new Version("1.0.1-e-rev5")),
+        new HardNameDependency[0],
+        null,
+        null,
+        null,
+        null,
+        "")))
+        .isEqualTo(
+            "coordinate:\r\n"
+                + "  groupId: com.github.jomof\r\n"
+                + "  artifactId: openssl\r\n"
+                + "  version: 1.0.1-e-rev5\r\n");
   }
 
   @Test

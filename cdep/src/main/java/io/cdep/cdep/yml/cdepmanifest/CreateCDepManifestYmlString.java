@@ -15,15 +15,14 @@
 */
 package io.cdep.cdep.yml.cdepmanifest;
 
+import static io.cdep.cdep.utils.StringUtils.whitespace;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Version;
 import io.cdep.cdep.utils.StringUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static io.cdep.cdep.utils.StringUtils.whitespace;
 
 public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor {
 
@@ -41,6 +40,12 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   public static String serialize(@NotNull Object node) {
     return serialize(node, 0);
+  }
+
+  private static boolean containsQuotableCharacters(String value) {
+    return
+        StringUtils.containsAny(value, ",\n{}[]\r\u007f=:?")
+      || StringUtils.startsWithAny(value, "-|*> !&#@<'%\"`\\");
   }
 
   private void push() {
@@ -142,10 +147,6 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
         .replace("\n", "\\\n")
         .replace("\r", "\\\r")
         .replace('\u007F', '?');
-  }
-
-  private boolean containsQuotableCharacters(String value) {
-    return StringUtils.containsAny(value, "`,\n{}[]|*;'\\\"\r\u0074\u007f>%'=:<?@#&!- ");
   }
 
   @Override

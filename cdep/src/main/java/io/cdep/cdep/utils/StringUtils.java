@@ -17,7 +17,6 @@ package io.cdep.cdep.utils;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-
 import java.util.Collection;
 import java.util.IllegalFormatException;
 
@@ -134,5 +133,14 @@ public class StringUtils {
       return null;
     }
     return value.substring(0, Math.min(n, value.length()));
+  }
+
+  public static boolean startsWithAny(@NotNull String value, @NotNull String chars) {
+    for (Character c : chars.toCharArray()) {
+      if (value.startsWith(c.toString())) {
+        return true;
+      }
+    }
+    return false;
   }
 }
