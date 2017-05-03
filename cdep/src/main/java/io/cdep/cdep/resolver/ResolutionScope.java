@@ -15,6 +15,10 @@
 */
 package io.cdep.cdep.resolver;
 
+import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.DIDNT_EXIST;
+import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.UNPARSEABLE;
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
@@ -23,18 +27,21 @@ import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.utils.VersionUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
-
-import java.util.*;
-
-import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.DIDNT_EXIST;
-import static io.cdep.cdep.resolver.ResolutionScope.Unresolvable.UNPARSEABLE;
-import static io.cdep.cdep.utils.Invariant.require;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Records the current state of resolving top-level and transitive dependencies.
  */
 @SuppressWarnings({"Convert2Diamond", "unused"})
 public class ResolutionScope {
+
   // Map of dependency edges. Key is dependant and value is dependees.
   @NotNull
   final public Map<Coordinate, List<Coordinate>> forwardEdges = new HashMap<>();
@@ -43,10 +50,10 @@ public class ResolutionScope {
   final public Map<Coordinate, List<Coordinate>> backwardEdges = new HashMap<>();
   // Map of dependency edges. Key is dependant and value is dependees.
   @NotNull
-  private final Map<Version, List<Version>> unificationWinnersToLosers = new HashMap<>();
+  private final Map<Coordinate, List<Coordinate>> unificationWinnersToLosers = new HashMap<>();
   // Map of dependency edges. Key is dependee and value is dependants.
   @NotNull
-  private final Map<Version, List<Version>> unificationLosersToWinners = new HashMap<>();
+  private final Map<Coordinate, List<Coordinate>> unificationLosersToWinners = new HashMap<>();
   // Dependencies that are not yet resolved but where resolution is possible
   @NotNull
   final private Map<String, SoftNameDependency> unresolved = new HashMap<>();
@@ -144,8 +151,8 @@ public class ResolutionScope {
   /**
    * Record the fact that the given dependency has been resolved.
    *
-   * @param softname               the name that started the resolution.
-   * @param resolved               the resolved manifest and hard name.
+   * @param softname the name that started the resolution.
+   * @param resolved the resolved manifest and hard name.
    * @param transitiveDependencies any new dependencies that were discovered during resolution
    */
   public void recordResolved(@NotNull SoftNameDependency softname,
@@ -155,7 +162,7 @@ public class ResolutionScope {
         "%s was already resolved",
         resolved.cdepManifestYml.coordinate);
 
-    @SuppressWarnings("unused") Coordinate versionless = getVersionlessCoordinateResolvedManifest(resolved);
+    determineUnificationWinner(resolved);
     this.resolved.add(resolved.cdepManifestYml.coordinate.toString());
 
     unresolved.remove(resolved.cdepManifestYml.coordinate.toString());
@@ -180,7 +187,7 @@ public class ResolutionScope {
    */
   @SuppressWarnings("Java8ListSort")
   @Nullable
-  private Coordinate getVersionlessCoordinateResolvedManifest(@NotNull ResolvedManifest resolved) {
+  private Coordinate determineUnificationWinner(@NotNull ResolvedManifest resolved) {
     Coordinate versionless = new Coordinate(
         resolved.cdepManifestYml.coordinate.groupId,
         resolved.cdepManifestYml.coordinate.artifactId);
@@ -194,9 +201,13 @@ public class ResolutionScope {
       versions.addAll(manifests.keySet());
       assert versions.size() == 2;
       Collections.sort(versions, VersionUtils.DESCENDING_COMPARATOR);
-      Version unificationWinner = versions.get(0);
-      Version unificationLoser= versions.get(1);
-      versionlessKeyedManifests.put(versionless.toString(), manifests.get(unificationWinner));
+      Version winningVersion = versions.get(0);
+
+      versionlessKeyedManifests.put(versionless.toString(), manifests.get(winningVersion));
+      Coordinate unificationWinner =
+          new Coordinate(versionless.groupId, versionless.artifactId, versions.get(0));
+      Coordinate unificationLoser =
+          new Coordinate(versionless.groupId, versionless.artifactId, versions.get(1));
       addEdge(unificationWinnersToLosers, unificationWinner, unificationLoser);
       addEdge(unificationLosersToWinners, unificationLoser, unificationWinner);
       return versionless;
@@ -230,6 +241,22 @@ public class ResolutionScope {
   @NotNull
   public Collection<String> getResolutions() {
     return versionlessKeyedManifests.keySet();
+  }
+
+  /**
+   * Return the set of unification winners.
+   */
+  @NotNull
+  public Collection<Coordinate> getUnificationWinners() {
+    return unificationWinnersToLosers.keySet();
+  }
+
+  /**
+   * Return the set of unification losers.
+   */
+  @NotNull
+  public Collection<Coordinate> getUnificationLosers() {
+    return unificationLosersToWinners.keySet();
   }
 
   public enum Unresolvable {

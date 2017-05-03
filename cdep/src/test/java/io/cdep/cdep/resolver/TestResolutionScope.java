@@ -15,20 +15,19 @@
 */
 package io.cdep.cdep.resolver;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.resolver.ResolutionScope.Unresolvable;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
-import org.junit.Test;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.google.common.truth.Truth.assertThat;
+import org.junit.Test;
 
 public class TestResolutionScope {
 
@@ -189,6 +188,126 @@ public class TestResolutionScope {
     assertThat(scope.getUnresolvedReferences()).hasSize(0);
     assertThat(scope.getResolutions()).hasSize(1);
 
+  }
+
+  @Test
+  public void testTransistiveReferencesToDifferentVersions1() throws IOException {
+    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
+        new SoftNameDependency("com.github.jomof:vectorial:1.0.1"),
+        new SoftNameDependency("com.github.jomof:mathfu:1.0.0")
+    });
+    assertThat(scope.isResolutionComplete()).isFalse();
+    assertThat(scope.getUnresolvedReferences()).hasSize(2);
+
+    // Resolve the first level dependencies
+    for (SoftNameDependency unresolved : scope.getUnresolvedReferences()) {
+      Coordinate coordinate = CoordinateUtils.tryParse(unresolved.compile);
+      switch(coordinate.artifactId) {
+        case "mathfu": {
+          CDepManifestYml manifest = new CDepManifestYml(coordinate);
+          ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
+          List<HardNameDependency> transitiveDependencies = new ArrayList<>();
+          transitiveDependencies.add(new HardNameDependency("com.github.jomof:vectorial:1.0.0", "sha"));
+          scope.recordResolved(unresolved, resolved, transitiveDependencies);
+          break; }
+        case "vectorial": {
+          CDepManifestYml manifest = new CDepManifestYml(coordinate);
+          ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
+          List<HardNameDependency> transitiveDependencies = new ArrayList<>();
+          scope.recordResolved(unresolved, resolved, transitiveDependencies);
+          break; }
+        default:
+          throw new RuntimeException(coordinate.artifactId);
+      }
+    }
+
+    // There should be one remaining dependency: com.github.jomof:vectorial:1.0.0
+    assertThat(scope.getUnresolvedReferences()).hasSize(1);
+
+    // Resolve the second level dependencies
+    for (SoftNameDependency unresolved : scope.getUnresolvedReferences()) {
+      Coordinate coordinate = CoordinateUtils.tryParse(unresolved.compile);
+      switch(coordinate.artifactId) {
+        case "vectorial": {
+          CDepManifestYml manifest = new CDepManifestYml(coordinate);
+          ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
+          List<HardNameDependency> transitiveDependencies = new ArrayList<>();
+          scope.recordResolved(unresolved, resolved, transitiveDependencies);
+          break; }
+        default:
+          throw new RuntimeException(coordinate.artifactId);
+      }
+    }
+
+    // At this point, the two versions of vectorial should be unified up to version 1.0.1
+    assertThat(scope.getUnresolvedReferences()).hasSize(0);
+    assertThat(scope.getResolutions()).hasSize(2);
+
+    // Check unification winners and losers
+    assertThat(scope.getUnificationWinners())
+        .containsExactly(CoordinateUtils.tryParse("com.github.jomof:vectorial:1.0.1"));
+    assertThat(scope.getUnificationLosers())
+        .containsExactly(CoordinateUtils.tryParse("com.github.jomof:vectorial:1.0.0"));
+  }
+
+  @Test
+  public void testTransistiveReferencesToDifferentVersions2() throws IOException {
+    ResolutionScope scope = new ResolutionScope(new SoftNameDependency[]{
+        new SoftNameDependency("com.github.jomof:mathfu:1.0.0"),
+        new SoftNameDependency("com.github.jomof:vectorial:1.0.1")
+    });
+    assertThat(scope.isResolutionComplete()).isFalse();
+    assertThat(scope.getUnresolvedReferences()).hasSize(2);
+
+    // Resolve the first level dependencies
+    for (SoftNameDependency unresolved : scope.getUnresolvedReferences()) {
+      Coordinate coordinate = CoordinateUtils.tryParse(unresolved.compile);
+      switch(coordinate.artifactId) {
+        case "mathfu": {
+          CDepManifestYml manifest = new CDepManifestYml(coordinate);
+          ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
+          List<HardNameDependency> transitiveDependencies = new ArrayList<>();
+          transitiveDependencies.add(new HardNameDependency("com.github.jomof:vectorial:1.0.0", "sha"));
+          scope.recordResolved(unresolved, resolved, transitiveDependencies);
+          break; }
+        case "vectorial": {
+          CDepManifestYml manifest = new CDepManifestYml(coordinate);
+          ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
+          List<HardNameDependency> transitiveDependencies = new ArrayList<>();
+          scope.recordResolved(unresolved, resolved, transitiveDependencies);
+          break; }
+        default:
+          throw new RuntimeException(coordinate.artifactId);
+      }
+    }
+
+    // There should be one remaining dependency: com.github.jomof:vectorial:1.0.0
+    assertThat(scope.getUnresolvedReferences()).hasSize(1);
+
+    // Resolve the second level dependencies
+    for (SoftNameDependency unresolved : scope.getUnresolvedReferences()) {
+      Coordinate coordinate = CoordinateUtils.tryParse(unresolved.compile);
+      switch(coordinate.artifactId) {
+        case "vectorial": {
+          CDepManifestYml manifest = new CDepManifestYml(coordinate);
+          ResolvedManifest resolved = new ResolvedManifest(new URL("http://www.google.com"), manifest);
+          List<HardNameDependency> transitiveDependencies = new ArrayList<>();
+          scope.recordResolved(unresolved, resolved, transitiveDependencies);
+          break; }
+        default:
+          throw new RuntimeException(coordinate.artifactId);
+      }
+    }
+
+    // At this point, the two versions of vectorial should be unified up to version 1.0.1
+    assertThat(scope.getUnresolvedReferences()).hasSize(0);
+    assertThat(scope.getResolutions()).hasSize(2);
+
+    // Check unification winners and losers
+    assertThat(scope.getUnificationWinners())
+        .containsExactly(CoordinateUtils.tryParse("com.github.jomof:vectorial:1.0.1"));
+    assertThat(scope.getUnificationLosers())
+        .containsExactly(CoordinateUtils.tryParse("com.github.jomof:vectorial:1.0.0"));
   }
 
   @Test
