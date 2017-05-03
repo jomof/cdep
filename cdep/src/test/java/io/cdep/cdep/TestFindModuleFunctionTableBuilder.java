@@ -15,6 +15,9 @@
 */
 package io.cdep.cdep;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.InterpretingVisitor.ModuleArchive;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
@@ -28,17 +31,13 @@ import io.cdep.cdep.utils.Invariant;
 import io.cdep.cdep.yml.CDepManifestYmlGenerator;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import net.java.quickcheck.QuickCheck;
-import net.java.quickcheck.characteristic.AbstractCharacteristic;
-import org.junit.Test;
-
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import net.java.quickcheck.QuickCheck;
+import net.java.quickcheck.characteristic.AbstractCharacteristic;
+import org.junit.Test;
 
 @SuppressWarnings("ConstantConditions")
 public class TestFindModuleFunctionTableBuilder {
@@ -347,7 +346,7 @@ public class TestFindModuleFunctionTableBuilder {
 
   @Test
   public void fuzzTest() {
-   // for (int i = 0; i < 1000; ++i)
+    //for (int i = 0; i < 1000; ++i)
     QuickCheck.forAll(new CDepManifestYmlGenerator(), new AbstractCharacteristic<CDepManifestYml>() {
       @Override
       protected void doSpecify(CDepManifestYml any) throws Throwable {

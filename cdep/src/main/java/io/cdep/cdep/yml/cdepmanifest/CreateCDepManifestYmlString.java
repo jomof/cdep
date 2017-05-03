@@ -44,8 +44,8 @@ public class CreateCDepManifestYmlString extends CDepManifestYmlReadonlyVisitor 
 
   private static boolean containsQuotableCharacters(String value) {
     return
-        StringUtils.containsAny(value, ",\n{}[]\r\u007f=:?")
-      || StringUtils.startsWithAny(value, "-|*> !&#@<'%\"`\\");
+        StringUtils.containsAny(value, ",\n{}[]\r\u007f=:? ")
+      || StringUtils.startsWithAny(value, "-|*>!&#@<'%\"`\\");
   }
 
   private void push() {

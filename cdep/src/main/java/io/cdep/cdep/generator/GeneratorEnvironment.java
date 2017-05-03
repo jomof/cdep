@@ -15,6 +15,13 @@
 */
 package io.cdep.cdep.generator;
 
+import static io.cdep.cdep.io.IO.info;
+import static io.cdep.cdep.io.IO.infogreen;
+import static io.cdep.cdep.io.IO.infoln;
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.require;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
@@ -26,8 +33,14 @@ import io.cdep.cdep.utils.HashUtils;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepsha25.CDepSHA256;
 import io.cdep.cdep.yml.cdepsha25.HashEntry;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.NoSuchAlgorithmException;
@@ -35,11 +48,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import static io.cdep.cdep.io.IO.*;
-import static io.cdep.cdep.utils.Invariant.fail;
-import static io.cdep.cdep.utils.Invariant.require;
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class GeneratorEnvironment implements ManifestProvider {
   @NotNull
@@ -173,7 +181,7 @@ public class GeneratorEnvironment implements ManifestProvider {
       String sha256 = HashUtils.getSHA256OfFile(file);
       String priorSha256 = this.cdepSha256Hashes.get(cdepManifestYml.coordinate.toString());
       require(priorSha256 == null || priorSha256.equals(sha256),
-          "SHA256 of cdep-manifest.yml for package '%s' does " + "not " + "agree with constant in cdep.sha256. Something changed.",
+          "SHA256 of cdep-manifest.yml for package '%s' does not agree with constant in cdep.sha256. Something changed.",
           cdepManifestYml.coordinate);
       this.cdepSha256Hashes.put(cdepManifestYml.coordinate.toString(), sha256);
     }
@@ -211,7 +219,7 @@ public class GeneratorEnvironment implements ManifestProvider {
       ++i;
     }
     StringBuilder sb = new StringBuilder();
-    sb.append("# This file is automatically maintained by CDep.\n#\n" + "#     MANUAL EDITS WILL BE LOST ON THE NEXT "  +
+    sb.append("# This file is automatically maintained by CDep.\n#\n#     MANUAL EDITS WILL BE LOST ON THE NEXT "  +
         ""  + "CDEP RUN\n#\n");
     sb.append("# This file contains a list of CDep coordinates along with the SHA256 hash of their\n");
     sb.append("# manifest file. This is to ensure that a manifest hasn't changed since the last\n");

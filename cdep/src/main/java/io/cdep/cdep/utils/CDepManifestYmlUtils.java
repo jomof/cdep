@@ -72,7 +72,7 @@ public class CDepManifestYmlUtils {
         manifest = V3Reader.convertStringToManifest(content);
       } catch (YAMLException e2) {
         // If older readers also couldn't read it then report the original exception.
-        require(false, "%s", e.toString());
+        require(false, e.toString());
         return new CDepManifestYml(
             EMPTY_COORDINATE
         );

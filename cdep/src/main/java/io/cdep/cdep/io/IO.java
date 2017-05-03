@@ -15,14 +15,16 @@
 */
 package io.cdep.cdep.io;
 
-import io.cdep.annotations.NotNull;
-import org.fusesource.jansi.AnsiConsole;
-
-import java.io.PrintStream;
-
+import static io.cdep.cdep.utils.StringUtils.safeFormat;
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_FAINT;
-import static org.fusesource.jansi.Ansi.Color.*;
+import static org.fusesource.jansi.Ansi.Color.GREEN;
+import static org.fusesource.jansi.Ansi.Color.RED;
+import static org.fusesource.jansi.Ansi.Color.WHITE;
 import static org.fusesource.jansi.Ansi.ansi;
+
+import io.cdep.annotations.NotNull;
+import java.io.PrintStream;
+import org.fusesource.jansi.AnsiConsole;
 
 /**
  * Methods for dealing with command-line IO, messages, errors, etc.
@@ -81,31 +83,33 @@ public class IO {
   /**
    * Print an info message with a line-feed.
    */
-  public static void errorln(Object... args) {
-    io.errorImpl(args);
+  public static void errorln(String format, Object... args) {
+    io.errorImpl(format, args);
   }
 
   private void infoImpl(@NotNull String format, Object... args) {
     if (ansi) {
-      out.print(ansi().a(INTENSITY_FAINT).fg(WHITE).a(String.format(format, args)).reset());
+      out.print(ansi().a(INTENSITY_FAINT).fg(WHITE).a(safeFormat(format, args)).reset());
     } else {
-      out.printf(format, args);
+      out.print(safeFormat(format, args));
     }
   }
 
-  private void errorImpl(Object... args) {
+  private void errorImpl(String format, Object... args) {
     if (ansi) {
-      err.print(ansi().fg(RED).a(String.format("FAILURE: %s\n", args)).reset());
+      err.print(ansi().fg(RED).a("FAILURE: ").a(safeFormat(format, args)).a("\n").reset());
     } else {
-      err.printf("FAILURE: %s\n", args);
+      err.printf("FAILURE: ");
+      err.print(safeFormat(format, args));
+      err.printf("\n");
     }
   }
 
   private void infogreenImpl(@NotNull String format, Object... args) {
     if (ansi) {
-      out.print(ansi().a(INTENSITY_FAINT).fg(GREEN).a(String.format(format, args)).reset());
+      out.print(ansi().a(INTENSITY_FAINT).fg(GREEN).a(safeFormat(format, args)).reset());
     } else {
-      out.printf(format, args);
+      out.print(safeFormat(format, args));
     }
   }
 }

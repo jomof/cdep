@@ -15,6 +15,14 @@
 */
 package io.cdep;
 
+import static io.cdep.cdep.io.IO.errorln;
+import static io.cdep.cdep.io.IO.info;
+import static io.cdep.cdep.io.IO.infoln;
+import static io.cdep.cdep.utils.Invariant.errorsInScope;
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.CheckLocalFileSystemIntegrity;
@@ -28,7 +36,14 @@ import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
 import io.cdep.cdep.io.IO;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
-import io.cdep.cdep.utils.*;
+import io.cdep.cdep.utils.CDepManifestYmlUtils;
+import io.cdep.cdep.utils.CDepYmlUtils;
+import io.cdep.cdep.utils.CoordinateUtils;
+import io.cdep.cdep.utils.EnvironmentUtils;
+import io.cdep.cdep.utils.ExpressionUtils;
+import io.cdep.cdep.utils.FileUtils;
+import io.cdep.cdep.utils.HashUtils;
+import io.cdep.cdep.utils.Invariant;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
@@ -36,8 +51,6 @@ import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 import io.cdep.cdep.yml.cdepmanifest.Interfaces;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
-import org.fusesource.jansi.AnsiConsole;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -50,11 +63,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static io.cdep.cdep.io.IO.info;
-import static io.cdep.cdep.io.IO.infoln;
-import static io.cdep.cdep.utils.Invariant.*;
-import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
+import org.fusesource.jansi.AnsiConsole;
 
 @SuppressWarnings("unused")
 public class CDep {
@@ -81,6 +90,9 @@ public class CDep {
     } catch (Throwable e) {
       e.printStackTrace();
       System.exit(Integer.MIN_VALUE);
+    } finally {
+      AnsiConsole.out.close();
+      AnsiConsole.err.close();
     }
   }
 
@@ -181,7 +193,8 @@ public class CDep {
     handleGenerateScript();
   }
 
-  private void runBuilders(@NotNull GeneratorEnvironment environment, @NotNull FunctionTableExpression table) throws IOException {
+  private void runBuilders(@NotNull GeneratorEnvironment environment,
+      @NotNull FunctionTableExpression table) throws IOException {
     if (config == null || config.builders == null) {
       return;
     }
@@ -194,18 +207,21 @@ public class CDep {
           new CMakeExamplesGenerator(environment).generate(table);
           break;
         default:
-          throw new RuntimeException("Unknown builder: " + buildSystem);
+          errorln("Unknown CDep builder: %s", buildSystem);
+          break;
       }
     }
   }
 
-  private boolean handleRedownload(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
+  private boolean handleRedownload(@NotNull List<String> args)
+      throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "redownload".equals(args.get(0))) {
       GeneratorEnvironment environment = getGeneratorEnvironment(true, false);
       FunctionTableExpression table = getFunctionTableExpression(environment);
 
       // Download and unzip archives.
-      GeneratorEnvironmentUtils.downloadReferencedModules(environment, ExpressionUtils.getAllFoundModuleExpressions(table));
+      GeneratorEnvironmentUtils.downloadReferencedModules(environment,
+          ExpressionUtils.getAllFoundModuleExpressions(table));
 
       // Check that the expected files were downloaded
       new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder).visit(table);
@@ -216,7 +232,8 @@ public class CDep {
     return false;
   }
 
-  private boolean handleLint(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
+  private boolean handleLint(@NotNull List<String> args)
+      throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "lint".equals(args.get(0))) {
       if (args.size() > 1) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
@@ -239,7 +256,8 @@ public class CDep {
     return false;
   }
 
-  private boolean handleCreate(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
+  private boolean handleCreate(@NotNull List<String> args)
+      throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "create".equals(args.get(0))) {
       if (args.size() > 1 && "hashes".equals(args.get(1))) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
@@ -273,7 +291,8 @@ public class CDep {
     return false;
   }
 
-  private boolean handleMerge(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
+  private boolean handleMerge(@NotNull List<String> args)
+      throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "merge".equals(args.get(0))) {
       if (args.size() < 4) {
         info("Usage: cdep merge coordinate1 coordinate2 ... outputmanifest.yml");
@@ -286,7 +305,8 @@ public class CDep {
       }
       File output = new File(args.get(args.size() - 1));
       if (output.exists()) {
-        throw new RuntimeException(String.format("File %s already exists", output.getAbsolutePath()));
+        throw new RuntimeException(
+            String.format("File %s already exists", output.getAbsolutePath()));
       }
 
       GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
@@ -319,7 +339,8 @@ public class CDep {
     return false;
   }
 
-  private void handleMergeHeaders(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
+  private void handleMergeHeaders(@NotNull List<String> args)
+      throws IOException, NoSuchAlgorithmException {
     if (args.size() != 6) {
       info("Usage: cdep merge headers coordinate headers.zip folder outputmanifest.yml");
       return;
@@ -328,7 +349,8 @@ public class CDep {
     File zip = new File(args.get(3));
     String include = args.get(4);
     if (!zip.isFile()) {
-      throw new RuntimeException(String.format("File %s already doesn't exist or isn't a file", zip.getAbsolutePath()));
+      throw new RuntimeException(
+          String.format("File %s already doesn't exist or isn't a file", zip.getAbsolutePath()));
     }
     File output = new File(args.get(5));
     GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
@@ -353,7 +375,8 @@ public class CDep {
     info("Merged %s and %s into %s.\n", coordinate, zip, output);
   }
 
-  private boolean handleShow(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException, URISyntaxException {
+  private boolean handleShow(@NotNull List<String> args)
+      throws IOException, NoSuchAlgorithmException, URISyntaxException {
     if (args.size() > 0 && "show".equals(args.get(0))) {
       if (args.size() > 1 && "folders".equals(args.get(1))) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, false);
@@ -376,7 +399,8 @@ public class CDep {
           return true;
         }
 
-        File local = environment.getLocalDownloadFilename(resolved.cdepManifestYml.coordinate, resolved.remote);
+        File local = environment
+            .getLocalDownloadFilename(resolved.cdepManifestYml.coordinate, resolved.remote);
         infoln(local.getCanonicalFile());
         return true;
       }
@@ -413,7 +437,8 @@ public class CDep {
     if (args.size() > 0 && "wrapper".equals(args.get(0))) {
       String appname = System.getProperty("io.cdep.appname");
       if (appname == null) {
-        throw new RuntimeException("Must set java system proeperty io.cdep.appname to the path of cdep.bat");
+        throw new RuntimeException(
+            "Must set java system proeperty io.cdep.appname to the path of cdep.bat");
       }
       File applicationBase = new File(appname).getParentFile();
       if (applicationBase == null || !applicationBase.isDirectory()) {
@@ -450,7 +475,8 @@ public class CDep {
     return false;
   }
 
-  private boolean handleFetch(@NotNull List<String> args) throws IOException, NoSuchAlgorithmException {
+  private boolean handleFetch(@NotNull List<String> args)
+      throws IOException, NoSuchAlgorithmException {
     if (args.size() > 0 && "fetch".equals(args.get(0))) {
       if (args.size() < 2) {
         info("Usage: cdep fetch {coordinate1} {coordinate2} ...\n");
@@ -459,11 +485,13 @@ public class CDep {
 
       for (int i = 1; i < args.size(); ++i) {
         GeneratorEnvironment environment = getGeneratorEnvironment(false, true);
-        SoftNameDependency dependencies[] = new SoftNameDependency[]{new SoftNameDependency(args.get(i))};
+        SoftNameDependency dependencies[] = new SoftNameDependency[]{
+            new SoftNameDependency(args.get(i))};
         FunctionTableExpression table = GeneratorEnvironmentUtils
             .getFunctionTableExpression(environment, dependencies);
         // Download and unzip archives.
-        GeneratorEnvironmentUtils.downloadReferencedModules(environment, ExpressionUtils.getAllFoundModuleExpressions(table));
+        GeneratorEnvironmentUtils.downloadReferencedModules(environment,
+            ExpressionUtils.getAllFoundModuleExpressions(table));
         // Check that the expected files were downloaded
         new CheckLocalFileSystemIntegrity(environment.unzippedArchivesFolder).visit(table);
       }
@@ -553,15 +581,18 @@ public class CDep {
   }
 
   @NotNull
-  private FunctionTableExpression getFunctionTableExpression(@NotNull GeneratorEnvironment environment)
+  private FunctionTableExpression getFunctionTableExpression(
+      @NotNull GeneratorEnvironment environment)
       throws IOException, NoSuchAlgorithmException {
     assert config != null;
     return GeneratorEnvironmentUtils.getFunctionTableExpression(environment, config.dependencies);
   }
 
   @NotNull
-  private GeneratorEnvironment getGeneratorEnvironment(boolean forceRedownload, boolean ignoreManifestHashes) {
-    return new GeneratorEnvironment(workingFolder, downloadFolder, forceRedownload, ignoreManifestHashes);
+  private GeneratorEnvironment getGeneratorEnvironment(boolean forceRedownload,
+      boolean ignoreManifestHashes) {
+    return new GeneratorEnvironment(workingFolder, downloadFolder, forceRedownload,
+        ignoreManifestHashes);
   }
 
   private boolean handleReadCDepYml() throws IOException {
@@ -583,18 +614,23 @@ public class CDep {
     info("cdep %s\n", BuildInfo.PROJECT_VERSION);
     info(" cdep: download dependencies and generate build modules for current cdep.yml\n");
     info(
-        " cdep fullfill source-folder version manifest1.yml manifest2.yml: fill in template cdep-manifest.yml with hashes, " +
+        " cdep fullfill source-folder version manifest1.yml manifest2.yml: fill in template cdep-manifest.yml with hashes, "
+            +
             "sizes, zips, etc\n");
     info(" cdep show folders: show local download and file folders\n");
     info(" cdep show manifest: show cdep interpretation of cdep.yml\n");
     info(" cdep show include {coordinate}: show local include path for the given coordinate\n");
     info(" cdep redownload: redownload dependencies for current cdep.yml\n");
     info(" cdep create hashes: create or recreate cdep.sha256 file\n");
-    info(" cdep merge {coordinate} {coordinate2} ... outputmanifest.yml: merge manifests into outputmanifest.yml\n");
-    info(" cdep merge headers {coordinate} {headers.zip} outputmanifest.yml: merge header and manifest into " +
-        "outputmanifest.yml\n");
+    info(
+        " cdep merge {coordinate} {coordinate2} ... outputmanifest.yml: merge manifests into outputmanifest.yml\n");
+    info(
+        " cdep merge headers {coordinate} {headers.zip} outputmanifest.yml: merge header and manifest into "
+            +
+            "outputmanifest.yml\n");
     info(" cdep fetch {coordinate} {coordinate2} ... : download multiple packages\n");
-    info(" cdep fetch-archive {coordinate} archive.zip {size}{sha256} : download a single archive from within a package\n");
+    info(
+        " cdep fetch-archive {coordinate} archive.zip {size}{sha256} : download a single archive from within a package\n");
     info(" cdep wrapper: copy cdep to the current folder\n");
     info(" cdep --version: show version information\n");
     return false;
