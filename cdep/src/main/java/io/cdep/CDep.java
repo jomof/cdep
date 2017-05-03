@@ -207,7 +207,7 @@ public class CDep {
           new CMakeExamplesGenerator(environment).generate(table);
           break;
         default:
-          errorln("Unknown CDep builder: %s", buildSystem);
+          errorln("Unknown CDep builder '%s'", buildSystem);
           break;
       }
     }

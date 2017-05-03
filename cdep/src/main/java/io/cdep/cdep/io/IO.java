@@ -23,7 +23,10 @@ import static org.fusesource.jansi.Ansi.Color.WHITE;
 import static org.fusesource.jansi.Ansi.ansi;
 
 import io.cdep.annotations.NotNull;
+import io.cdep.cdep.utils.HashUtils;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.security.NoSuchAlgorithmException;
 import org.fusesource.jansi.AnsiConsole;
 
 /**
@@ -96,10 +99,20 @@ public class IO {
   }
 
   private void errorImpl(String format, Object... args) {
+    // Create a code that is fairly unique for this error message
+    String code;
+    try {
+      code = HashUtils.getSHA256OfString(format).substring(0, 7);
+    } catch (NoSuchAlgorithmException e) {
+      code = "no-algo";
+    } catch (IOException e) {
+      code = "io-failed";
+    }
+    String prefix = String.format("FAILURE (%s): ", code);
     if (ansi) {
-      err.print(ansi().fg(RED).a("FAILURE: ").a(safeFormat(format, args)).a("\n").reset());
+      err.print(ansi().fg(RED).a(prefix).a(safeFormat(format, args)).a("\n").reset());
     } else {
-      err.printf("FAILURE: ");
+      err.printf(prefix);
       err.print(safeFormat(format, args));
       err.printf("\n");
     }
