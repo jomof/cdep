@@ -4,30 +4,8 @@
     <option name="SCOPE_TYPE" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c62ed7f7-0c09-479d-b432-3323e9034425" name="Default" comment="Add error fingerprint">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/NdkBuildGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/CommandLineUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestNdkBuildGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCommandLineUtils.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/IntegerExpression.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeConvertJoinedFileToString.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/JoinedFileToStringRewriter.java" />
+    <list default="true" id="c62ed7f7-0c09-479d-b432-3323e9034425" name="Default" comment="ndk-build support">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/CDep.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CheckReferenceAndDependencyConsistency.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CheckReferenceAndDependencyConsistency.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CreateStringVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/CreateStringVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/InterpretingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ReadonlyVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/RewritingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/RewritingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ExpressionBuilder.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ExpressionBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/GlobalBuildEnvironmentExpression.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/GlobalBuildEnvironmentExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ExpressionUtils.java" afterPath="$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ExpressionUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/FindModuleInterpreter.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/FindModuleInterpreter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/ResolvedManifests.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/ResolvedManifests.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestCheckLocalFileSystemIntegrity.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestCheckLocalFileSystemIntegrity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java" afterPath="$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smoke-test/cdep.yml" afterPath="$PROJECT_DIR$/smoke-test/cdep.yml" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -78,8 +56,8 @@
       <file leaf-file-name="cdep.yml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="42" lean-forward="false" selection-start-line="0" selection-start-column="42" selection-end-line="0" selection-end-column="42" />
+            <state relative-caret-position="234">
+              <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -89,8 +67,10 @@
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestNdkBuildGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="477">
-              <caret line="70" column="18" lean-forward="false" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="18" />
-              <folding />
+              <caret line="69" column="18" lean-forward="false" selection-start-line="69" selection-start-column="18" selection-end-line="69" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,8 +79,10 @@
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="497">
-              <caret line="284" column="78" lean-forward="false" selection-start-line="284" selection-start-column="78" selection-end-line="284" selection-end-column="78" />
-              <folding />
+              <caret line="283" column="78" lean-forward="false" selection-start-line="283" selection-start-column="78" selection-end-line="283" selection-end-column="78" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -109,8 +91,10 @@
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="645">
-              <caret line="359" column="254" lean-forward="false" selection-start-line="359" selection-start-column="254" selection-end-line="359" selection-end-column="254" />
-              <folding />
+              <caret line="358" column="254" lean-forward="false" selection-start-line="358" selection-start-column="254" selection-end-line="358" selection-end-column="254" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -119,10 +103,8 @@
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/NdkBuildGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-2702">
-              <caret line="101" column="57" lean-forward="false" selection-start-line="101" selection-start-column="57" selection-end-line="101" selection-end-column="57" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <caret line="100" column="57" lean-forward="false" selection-start-line="100" selection-start-column="57" selection-end-line="100" selection-end-column="57" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -163,8 +145,10 @@
         <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ExpressionUtils.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="260">
-              <caret line="73" column="53" lean-forward="false" selection-start-line="73" selection-start-column="53" selection-end-line="73" selection-end-column="53" />
-              <folding />
+              <caret line="72" column="53" lean-forward="false" selection-start-line="72" selection-start-column="53" selection-end-line="72" selection-end-column="53" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -173,9 +157,10 @@
         <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/ResolvedManifests.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="965">
-              <caret line="226" column="14" lean-forward="false" selection-start-line="226" selection-start-column="14" selection-end-line="226" selection-end-column="14" />
+              <caret line="225" column="14" lean-forward="false" selection-start-line="225" selection-start-column="14" selection-end-line="225" selection-end-column="14" />
               <folding>
-                <element signature="e#0#55907#0" expanded="true" />
+                <element signature="e#0#55906#0" expanded="true" />
+                <element signature="imports" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -2389,13 +2374,6 @@
       <option name="presentableId" value="Default" />
       <updated>1492221479266</updated>
     </task>
-    <task id="LOCAL-00032" summary="requires">
-      <created>1492403215719</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1492403215719</updated>
-    </task>
     <task id="LOCAL-00033" summary="requires">
       <created>1492403433879</created>
       <option name="number" value="00033" />
@@ -2732,7 +2710,14 @@
       <option name="project" value="LOCAL" />
       <updated>1493833088474</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="ndk-build support">
+      <created>1494008559147</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1494008559147</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2829,7 +2814,8 @@
     <MESSAGE value="Restore colors when there is an exception" />
     <MESSAGE value="Fix unification bug" />
     <MESSAGE value="Add error fingerprint" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add error fingerprint" />
+    <MESSAGE value="ndk-build support" />
+    <option name="LAST_COMMIT_MESSAGE" value="ndk-build support" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -2887,7 +2873,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/CMakeGenerator.java</url>
-          <line>359</line>
+          <line>377</line>
           <properties />
           <option name="timeStamp" value="35" />
         </line-breakpoint>
@@ -2925,7 +2911,7 @@
         <line-breakpoint enabled="true" type="java-line">
           <condition expression="value == null" language="JAVA" />
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/ast/finder/ExpressionBuilder.java</url>
-          <line>225</line>
+          <line>224</line>
           <properties />
           <option name="timeStamp" value="54" />
         </line-breakpoint>
@@ -2949,13 +2935,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java</url>
-          <line>348</line>
+          <line>387</line>
           <properties />
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java</url>
-          <line>412</line>
+          <line>451</line>
           <properties />
           <option name="timeStamp" value="67" />
         </line-breakpoint>
@@ -2974,7 +2960,7 @@
         <line-breakpoint enabled="true" type="java-line">
           <condition expression="abi.name.length() == 0" language="JAVA" />
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/BuildFindModuleFunctionTable.java</url>
-          <line>244</line>
+          <line>283</line>
           <properties />
           <option name="timeStamp" value="75" />
         </line-breakpoint>
@@ -2998,7 +2984,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/NdkBuildGenerator.java</url>
-          <line>194</line>
+          <line>193</line>
           <properties />
           <option name="timeStamp" value="99" />
         </line-breakpoint>
@@ -3319,8 +3305,8 @@
         <state relative-caret-position="301">
           <caret line="86" column="34" lean-forward="false" selection-start-line="86" selection-start-column="6" selection-end-line="86" selection-end-column="34" />
           <folding>
-            <element signature="e#5870#5871#0" expanded="true" />
-            <element signature="e#5896#5897#0" expanded="true" />
+            <element signature="e#6850#6851#0" expanded="true" />
+            <element signature="e#6876#6877#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3388,9 +3374,10 @@
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/ResolvedManifests.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="965">
-          <caret line="226" column="14" lean-forward="false" selection-start-line="226" selection-start-column="14" selection-end-line="226" selection-end-column="14" />
+          <caret line="225" column="14" lean-forward="false" selection-start-line="225" selection-start-column="14" selection-end-line="225" selection-end-column="14" />
           <folding>
-            <element signature="e#0#55907#0" expanded="true" />
+            <element signature="e#0#55906#0" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3398,49 +3385,55 @@
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/generator/TestNdkBuildGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="477">
-          <caret line="70" column="18" lean-forward="false" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="18" />
-          <folding />
+          <caret line="69" column="18" lean-forward="false" selection-start-line="69" selection-start-column="18" selection-end-line="69" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/utils/ExpressionUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
-          <caret line="73" column="53" lean-forward="false" selection-start-line="73" selection-start-column="53" selection-end-line="73" selection-end-column="53" />
-          <folding />
+          <caret line="72" column="53" lean-forward="false" selection-start-line="72" selection-start-column="53" selection-end-line="72" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/TestInterpretingVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="497">
-          <caret line="284" column="78" lean-forward="false" selection-start-line="284" selection-start-column="78" selection-end-line="284" selection-end-column="78" />
-          <folding />
+          <caret line="283" column="78" lean-forward="false" selection-start-line="283" selection-start-column="78" selection-end-line="283" selection-end-column="78" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/test/java/io/cdep/cdep/utils/TestCDepManifestYmlUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="645">
-          <caret line="359" column="254" lean-forward="false" selection-start-line="359" selection-start-column="254" selection-end-line="359" selection-end-column="254" />
-          <folding />
+          <caret line="358" column="254" lean-forward="false" selection-start-line="358" selection-start-column="254" selection-end-line="358" selection-end-column="254" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cdep/src/main/java/io/cdep/cdep/generator/NdkBuildGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2702">
-          <caret line="101" column="57" lean-forward="false" selection-start-line="101" selection-start-column="57" selection-end-line="101" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="100" column="57" lean-forward="false" selection-start-line="100" selection-start-column="57" selection-end-line="100" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="42" lean-forward="false" selection-start-line="0" selection-start-column="42" selection-end-line="0" selection-end-column="42" />
+        <state relative-caret-position="234">
+          <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
           <folding />
         </state>
       </provider>
