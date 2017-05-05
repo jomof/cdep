@@ -391,6 +391,9 @@ public class CMakeGenerator {
     if (Objects.equals(expr, globals.buildSystemTargetPlatform)) {
       return "CMAKE_SYSTEM_VERSION";
     }
+    if (Objects.equals(expr, globals.buildSystemNoneRuntime)) {
+      return "\"none\"";
+    }
     return expr.name;
   }
 

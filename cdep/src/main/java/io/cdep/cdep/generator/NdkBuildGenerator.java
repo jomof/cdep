@@ -208,6 +208,10 @@ public class NdkBuildGenerator extends ReadonlyVisitor {
       append("$(APP_STL)");
       return;
     }
+    if (expr == globals.buildSystemNoneRuntime) {
+      append("system");
+      return;
+    }
     append("$(%s)", expr.name);
   }
 

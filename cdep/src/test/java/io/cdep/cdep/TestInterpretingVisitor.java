@@ -249,6 +249,9 @@ public class TestInterpretingVisitor {
         if (function.globals.cmakeOsxArchitectures == expr) {
           return "i386";
         }
+        if (function.globals.buildSystemNoneRuntime == expr) {
+          return "none";
+        }
         return super.visitParameterExpression(expr);
       }
     }.visit(function);

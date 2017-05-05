@@ -34,6 +34,7 @@ import static io.cdep.cdep.ast.finder.ExpressionBuilder.substring;
 import static io.cdep.cdep.utils.Invariant.fail;
 import static io.cdep.cdep.utils.Invariant.failIf;
 import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.utils.StringUtils.safeFormat;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
@@ -516,6 +517,22 @@ public class BuildFindModuleFunctionTable {
           buildAndroidPlatformExpression(globals, resolved, stlTypes.get(stlType), explodedArchiveFolder, dependencies));
     }
 
+    // Pick a default runtime for the case where there final project uses 'none' or 'system'
+    if (stlTypes.get("c++") != null) {
+      cases.put(globals.buildSystemNoneRuntime, buildAndroidPlatformExpression(globals,
+          resolved, stlTypes.get("c++"), explodedArchiveFolder, dependencies));
+    } else if (stlTypes.get("gnustl") != null) {
+      cases.put(globals.buildSystemNoneRuntime, buildAndroidPlatformExpression(globals,
+          resolved, stlTypes.get("gnustl"), explodedArchiveFolder, dependencies));
+    } else {
+      cases.put(globals.buildSystemNoneRuntime, abort(
+          safeFormat("No suitable runtime found to substitute for '%%s' in module %s",
+              resolved.cdepManifestYml.coordinate,
+              globals.buildSystemNoneRuntime)));
+    }
+
+
+
     Expression bool[] = new Expression[cases.size()];
     Expression expressions[] = new Expression[cases.size()];
     int i = 0;
@@ -526,7 +543,7 @@ public class BuildFindModuleFunctionTable {
     }
     return ifSwitch(bool,
         expressions,
-        abort(String.format("Android runtime %%s is not supported by %s. Supported: %s",
+        abort(String.format("Android runtime '%%s' is not supported by %s. Supported: %s",
             resolved.cdepManifestYml.coordinate,
             runtimes), globals.cdepDeterminedAndroidRuntime));
   }

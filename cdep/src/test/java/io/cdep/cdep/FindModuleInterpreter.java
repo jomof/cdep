@@ -15,6 +15,7 @@
 */
 package io.cdep.cdep;
 
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.constant;
 import static io.cdep.cdep.utils.Invariant.require;
 
 import io.cdep.annotations.NotNull;
@@ -60,6 +61,9 @@ class FindModuleInterpreter {
         }
         if (expr == table.globals.cdepExplodedRoot) {
           return cdepExplodedRoot;
+        }
+        if (expr == table.globals.buildSystemNoneRuntime) {
+          return constant("none");
         }
         return super.visitParameterExpression(expr);
       }

@@ -19,6 +19,7 @@ import io.cdep.annotations.NotNull;
 
 public class GlobalBuildEnvironmentExpression extends Expression {
   @NotNull final public ParameterExpression cdepExplodedRoot;
+  @NotNull final public ParameterExpression buildSystemNoneRuntime; // 'system' in ndk-build, 'none' in CMake
   @NotNull final public ParameterExpression buildSystemTargetSystem; // Like CMAKE_SYSTEM_NAME
   @NotNull final public ParameterExpression buildSystemTargetPlatform; // Like 12 or 21 for Android
   @NotNull final public ParameterExpression cdepDeterminedAndroidAbi;
@@ -33,7 +34,8 @@ public class GlobalBuildEnvironmentExpression extends Expression {
     // UPPER_CASE names are build system (CMake or ndk-build) toolchain variables.
     // lower_case names are CDep temporaries.
     this.cdepExplodedRoot = new ParameterExpression("cdep_exploded_root");
-    this.buildSystemTargetSystem = new ParameterExpression("BUILD_SYSTEM_TARGET_SYSTEM");
+    this.buildSystemNoneRuntime = new ParameterExpression("build_system_none_runtime");
+    this.buildSystemTargetSystem = new ParameterExpression("build_system_target_system");
     this.buildSystemTargetPlatform = new ParameterExpression("build_system_target_platform");
     this.cdepDeterminedAndroidAbi = new ParameterExpression("cdep_determined_android_abi");
     this.cdepDeterminedAndroidRuntime = new ParameterExpression("cdep_determined_android_runtime");
