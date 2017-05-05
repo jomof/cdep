@@ -15,22 +15,61 @@
 */
 package io.cdep.cdep;
 
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.abort;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.arrayHasOnlyElement;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.assign;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.constant;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.eq;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.getFileName;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.gte;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.ifSwitch;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.joinFileSegments;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.lastIndexOfString;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.module;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.multi;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.nop;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.stringStartsWith;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.substring;
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.failIf;
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.StatementExpression;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.utils.ArrayUtils;
 import io.cdep.cdep.utils.CoordinateUtils;
 import io.cdep.cdep.utils.StringUtils;
-import io.cdep.cdep.yml.cdepmanifest.*;
-
+import io.cdep.cdep.yml.cdepmanifest.AndroidABI;
+import io.cdep.cdep.yml.cdepmanifest.AndroidArchive;
+import io.cdep.cdep.yml.cdepmanifest.Archive;
+import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
+import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
+import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.Interfaces;
+import io.cdep.cdep.yml.cdepmanifest.LinuxArchive;
+import io.cdep.cdep.yml.cdepmanifest.iOSArchitecture;
+import io.cdep.cdep.yml.cdepmanifest.iOSArchive;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.*;
-
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
-import static io.cdep.cdep.utils.Invariant.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @SuppressWarnings("Java8ReplaceMapGet")
 public class BuildFindModuleFunctionTable {
@@ -130,7 +169,7 @@ public class BuildFindModuleFunctionTable {
     Expression expressions[] = new Expression[cases.size()];
     int i = 0;
     for (Map.Entry<Expression, Expression> entry : cases.entrySet()) {
-      bool[i] = eq(globals.cmakeSystemName, entry.getKey());
+      bool[i] = eq(globals.buildSystemTargetSystem, entry.getKey());
       expressions[i] = entry.getValue();
       ++i;
     }
@@ -140,7 +179,7 @@ public class BuildFindModuleFunctionTable {
       abort = abort(String.format("Module '%s' doesn't support any platforms.", coordinate));
     } else {
       abort = abort(String.format("Target platform %%s is not supported by %s. " + "Supported: %s", coordinate,
-          StringUtils.joinOn(" ", supported)), globals.cmakeSystemName);
+          StringUtils.joinOn(" ", supported)), globals.buildSystemTargetSystem);
     }
     StatementExpression expression = ifSwitch(bool, expressions, abort);
 
@@ -314,7 +353,7 @@ public class BuildFindModuleFunctionTable {
 
     // Something like iPhone10.2 or iPhone
     AssignmentExpression combinedPlatformAndSDK = assign("combined_platform_and_sdk",
-        substring(osxSysrootSDKName, integer(0), lastDotPosition));
+        substring(osxSysrootSDKName, constant(0), lastDotPosition));
 
     assert resolved.cdepManifestYml.iOS != null;
     iOSArchive[] archives = resolved.cdepManifestYml.iOS.archives;
@@ -538,9 +577,9 @@ public class BuildFindModuleFunctionTable {
       if (platform == null) {
         // This is an error condition. We still want to generate a viable table with the right
         // modules. This should probably be a boolean-typed abort.
-        conditions.add(0, gte(globals.cmakeSystemVersion, 0));
+        conditions.add(0, gte(globals.buildSystemTargetPlatform, 0));
       } else {
-        conditions.add(0, gte(globals.cmakeSystemVersion, platform));
+        conditions.add(0, gte(globals.buildSystemTargetPlatform, platform));
       }
       expressions.add(0,
           buildAndroidAbiExpression(globals, resolved, grouped.get(platform), explodedArchiveFolder, dependencies));
@@ -548,7 +587,7 @@ public class BuildFindModuleFunctionTable {
     return ifSwitch(conditions,
         expressions,
         abort(String.format("Android API level %%s is not supported by %s", resolved.cdepManifestYml.coordinate),
-            globals.cmakeSystemVersion));
+            globals.buildSystemTargetPlatform));
   }
 
   @NotNull
@@ -603,7 +642,7 @@ public class BuildFindModuleFunctionTable {
         manifest.coordinate,
         supported),
         globals.cdepDeterminedAndroidAbi,
-        globals.cmakeSystemVersion);
+        globals.buildSystemTargetPlatform);
 
     Expression bool[] = new Expression[cases.size()];
     Expression expressions[] = new Expression[cases.size()];

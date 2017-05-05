@@ -15,18 +15,17 @@
 */
 package io.cdep.cdep.ast.finder;
 
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static io.cdep.cdep.utils.Invariant.require;
 
 /**
  * Methods for creating expression trees
@@ -115,7 +114,7 @@ public class ExpressionBuilder {
    */
   @NotNull
   public static InvokeFunctionExpression gte(Expression left, int right) {
-    return invoke(ExternalFunctionExpression.INTEGER_GTE, left, integer(right));
+    return invoke(ExternalFunctionExpression.INTEGER_GTE, left, constant(right));
   }
 
   /**
@@ -204,11 +203,6 @@ public class ExpressionBuilder {
   @NotNull
   public static InvokeFunctionExpression eq(@NotNull Expression left, @NotNull Expression right) {
     return invoke(ExternalFunctionExpression.STRING_EQUALS, left, right);
-  }
-
-  @NotNull
-  public static IntegerExpression integer(int value) {
-    return new IntegerExpression(value);
   }
 
   @NotNull

@@ -17,12 +17,30 @@ package io.cdep.cdep;
 
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.ArrayExpression;
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.ConstantExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.ast.finder.MultiStatementExpression;
+import io.cdep.cdep.ast.finder.NopExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class ReadonlyVisitor {
 
-  protected void visit(@Nullable Expression expr) {
+  public void visit(@Nullable Expression expr) {
     if (expr == null) {
       return;
     }
@@ -44,7 +62,7 @@ public class ReadonlyVisitor {
       return;
     }
     if (expr.getClass().equals(ConstantExpression.class)) {
-      visitStringExpression((ConstantExpression) expr);
+      visitConstantExpression((ConstantExpression) expr);
       return;
     }
     if (expr.getClass().equals(AssignmentExpression.class)) {
@@ -69,10 +87,6 @@ public class ReadonlyVisitor {
     }
     if (expr.getClass().equals(ExternalFunctionExpression.class)) {
       visitExternalFunctionExpression((ExternalFunctionExpression) expr);
-      return;
-    }
-    if (expr.getClass().equals(IntegerExpression.class)) {
-      visitIntegerExpression((IntegerExpression) expr);
       return;
     }
     if (expr.getClass().equals(ArrayExpression.class)) {
@@ -113,8 +127,9 @@ public class ReadonlyVisitor {
     visit(expr.cdepExplodedRoot);
     visit(expr.cmakeOsxArchitectures);
     visit(expr.cmakeOsxSysroot);
-    visit(expr.cmakeSystemVersion);
-    visit(expr.cmakeSystemName);
+    visit(expr.buildSystemTargetPlatform);
+    visit(expr.buildSystemTargetSystem);
+    visit(expr.buildSystemCxxCompilerStandard);
   }
 
   protected void visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
@@ -134,9 +149,6 @@ public class ReadonlyVisitor {
 
   protected void visitArrayExpression(@NotNull ArrayExpression expr) {
     visitArray(expr.elements);
-  }
-
-  protected void visitIntegerExpression(IntegerExpression expr) {
   }
 
   @SuppressWarnings("EmptyMethod")
@@ -170,7 +182,7 @@ public class ReadonlyVisitor {
     visit(expr.expression);
   }
 
-  protected void visitStringExpression(ConstantExpression expr) {
+  protected void visitConstantExpression(ConstantExpression expr) {
   }
 
   protected void visitIfSwitchExpression(@NotNull IfSwitchExpression expr) {
@@ -194,7 +206,7 @@ public class ReadonlyVisitor {
   protected void visitNopExpression(NopExpression expr) {
   }
 
-  void visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
+  protected void visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
     visit(expr.globals);
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
       visit(expr.findFunctions.get(coordinate));

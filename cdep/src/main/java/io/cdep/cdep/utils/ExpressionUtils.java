@@ -21,12 +21,15 @@ import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ReadonlyVisitor;
 import io.cdep.cdep.ast.finder.Expression;
 import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
 import io.cdep.cdep.ast.finder.ModuleExpression;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Methods for dealing with FinderExpressions.
@@ -42,9 +45,21 @@ abstract public class ExpressionUtils {
     return new Finder(expression).foundModules;
   }
 
+  /**
+   * Traverse the given expression and locate all of the FoundModuleExpressions.
+   * These expressions contain the local module location as well as the resolved coordinate
+   * and other information
+   */
+  @NotNull
+  public static Set<String> findReferencedLibraryNames(@NotNull Expression expression) {
+    return new Finder(expression).foundLibraryNames;
+  }
+
   private static class Finder extends ReadonlyVisitor {
     @NotNull
     final private Map<Coordinate, List<Expression>> foundModules = new HashMap<>();
+    @NotNull
+    final private Set<String> foundLibraryNames = new HashSet<>();
     @Nullable
     private Coordinate coordinate;
 
@@ -53,8 +68,17 @@ abstract public class ExpressionUtils {
     }
 
     @Override
+    protected void visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
+      for (String lib : expr.libs) {
+        foundLibraryNames.add(new File(lib).getName());
+      }
+      super.visitModuleArchiveExpression(expr);
+    }
+
+    @Override
     protected void visitModuleExpression(@NotNull ModuleExpression expr) {
       addModule(expr);
+      super.visitModuleExpression(expr);
     }
 
     @Override

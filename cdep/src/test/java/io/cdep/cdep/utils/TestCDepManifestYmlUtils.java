@@ -15,20 +15,19 @@
 */
 package io.cdep.cdep.utils;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
-import junit.framework.TestCase;
-import org.junit.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import junit.framework.TestCase;
+import org.junit.Test;
 
 public class TestCDepManifestYmlUtils {
 
@@ -357,6 +356,7 @@ public class TestCDepManifestYmlUtils {
     expected.put("re2-re2", "Android archive com.github.jomof:re2:17.3.1-rev13 file re2-21-armeabi.zip is indistinguishable at build time from re2-21-armeabi.zip given the information in the manifest");
     expected.put("fuzz1-fuzz1", "Manifest was missing coordinate");
     expected.put("fuzz2-fuzz2", "Manifest was missing coordinate");
+    expected.put("openssl-openssl", "Android archive com.github.jomof:openssl:1.0.1-e-rev6 file openssl-android-stlport-21-armeabi.zip is indistinguishable at build time from openssl-android-stlport-21-armeabi.zip given the information in the manifest");
     boolean somethingUnexpected = false;
     for (ResolvedManifests.NamedManifest manifest1 : ResolvedManifests.all()) {
       for (ResolvedManifests.NamedManifest manifest2 : ResolvedManifests.all()) {

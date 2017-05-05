@@ -46,10 +46,10 @@ class FindModuleInterpreter {
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-        if (expr == table.globals.cmakeSystemName) {
+        if (expr == table.globals.buildSystemTargetSystem) {
           return targetPlatform;
         }
-        if (expr == table.globals.cmakeSystemVersion) {
+        if (expr == table.globals.buildSystemTargetPlatform) {
           return systemVersion;
         }
         if (expr == table.globals.cdepDeterminedAndroidRuntime) {
@@ -73,7 +73,7 @@ class FindModuleInterpreter {
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-        if (expr == table.globals.cmakeSystemName) {
+        if (expr == table.globals.buildSystemTargetSystem) {
           return "Darwin";
         }
         if (expr == table.globals.cmakeOsxSysroot) {
@@ -117,7 +117,7 @@ class FindModuleInterpreter {
     return toModuleArchive(new InterpretingVisitor() {
       @Override
       protected Object visitParameterExpression(@NotNull ParameterExpression expr) {
-        if (expr == table.globals.cmakeSystemName) {
+        if (expr == table.globals.buildSystemTargetSystem) {
           return "Linux";
         }
         if (expr == table.globals.cdepExplodedRoot) {

@@ -19,8 +19,8 @@ import io.cdep.annotations.NotNull;
 
 public class GlobalBuildEnvironmentExpression extends Expression {
   @NotNull final public ParameterExpression cdepExplodedRoot;
-  @NotNull final public ParameterExpression cmakeSystemName;
-  @NotNull final public ParameterExpression cmakeSystemVersion;
+  @NotNull final public ParameterExpression buildSystemTargetSystem; // Like CMAKE_SYSTEM_NAME
+  @NotNull final public ParameterExpression buildSystemTargetPlatform; // Like 12 or 21 for Android
   @NotNull final public ParameterExpression cdepDeterminedAndroidAbi;
   @NotNull final public ParameterExpression cdepDeterminedAndroidRuntime;
   @NotNull final public ParameterExpression cmakeOsxSysroot;
@@ -30,11 +30,11 @@ public class GlobalBuildEnvironmentExpression extends Expression {
   @NotNull final public ParameterExpression buildSystemCxxCompilerStandard;
 
   public GlobalBuildEnvironmentExpression() {
-    // UPPER_CASE names are CMake toolchain variables.
-    // lower_case names are CDep temportaries.
+    // UPPER_CASE names are build system (CMake or ndk-build) toolchain variables.
+    // lower_case names are CDep temporaries.
     this.cdepExplodedRoot = new ParameterExpression("cdep_exploded_root");
-    this.cmakeSystemName = new ParameterExpression("CMAKE_SYSTEM_NAME");
-    this.cmakeSystemVersion = new ParameterExpression("CMAKE_SYSTEM_VERSION");
+    this.buildSystemTargetSystem = new ParameterExpression("BUILD_SYSTEM_TARGET_SYSTEM");
+    this.buildSystemTargetPlatform = new ParameterExpression("build_system_target_platform");
     this.cdepDeterminedAndroidAbi = new ParameterExpression("cdep_determined_android_abi");
     this.cdepDeterminedAndroidRuntime = new ParameterExpression("cdep_determined_android_runtime");
     this.cmakeOsxSysroot = new ParameterExpression("CMAKE_OSX_SYSROOT");

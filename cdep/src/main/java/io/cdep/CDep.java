@@ -33,6 +33,7 @@ import io.cdep.cdep.generator.CMakeExamplesGenerator;
 import io.cdep.cdep.generator.CMakeGenerator;
 import io.cdep.cdep.generator.GeneratorEnvironment;
 import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
+import io.cdep.cdep.generator.NdkBuildGenerator;
 import io.cdep.cdep.io.IO;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
@@ -205,6 +206,9 @@ public class CDep {
           break;
         case BuildSystem.CMAKE_EXAMPLES:
           new CMakeExamplesGenerator(environment).generate(table);
+          break;
+        case BuildSystem.NDK_BUILD:
+          new NdkBuildGenerator(environment).generate(table);
           break;
         default:
           errorln("Unknown CDep builder '%s'", buildSystem);

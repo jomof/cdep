@@ -15,16 +15,44 @@
 */
 package io.cdep.cdep;
 
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.abort;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.array;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.assign;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.assignmentBlock;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.constant;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.ifSwitch;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.invoke;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.module;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.multi;
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.nop;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.ast.finder.*;
-
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.ArrayExpression;
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.ConstantExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.ast.finder.MultiStatementExpression;
+import io.cdep.cdep.ast.finder.NopExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
+import io.cdep.cdep.ast.finder.StatementExpression;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.*;
 
 @SuppressWarnings("unused")
 public class RewritingVisitor {
@@ -84,9 +112,6 @@ public class RewritingVisitor {
     if (expr.getClass().equals(ExternalFunctionExpression.class)) {
       return visitExternalFunctionExpression((ExternalFunctionExpression) expr);
     }
-    if (expr.getClass().equals(IntegerExpression.class)) {
-      return visitIntegerExpression((IntegerExpression) expr);
-    }
     if (expr.getClass().equals(ArrayExpression.class)) {
       return visitArrayExpression((ArrayExpression) expr);
     }
@@ -136,11 +161,6 @@ public class RewritingVisitor {
   @NotNull
   private Expression visitArrayExpression(@NotNull ArrayExpression expr) {
     return array(visitArray(expr.elements));
-  }
-
-  @NotNull
-  private Expression visitIntegerExpression(@NotNull IntegerExpression expr) {
-    return integer(expr.value);
   }
 
   private Expression visitExternalFunctionExpression(ExternalFunctionExpression expr) {
@@ -229,7 +249,7 @@ public class RewritingVisitor {
   }
 
   @NotNull
-  private Expression visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
+  public Expression visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
     FunctionTableExpression newExpr = new FunctionTableExpression(expr.globals);
 
     for (Coordinate coordinate : expr.findFunctions.keySet()) {

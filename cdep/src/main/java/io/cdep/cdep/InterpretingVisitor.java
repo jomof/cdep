@@ -15,11 +15,33 @@
 */
 package io.cdep.cdep;
 
+import static io.cdep.cdep.utils.Invariant.fail;
+import static io.cdep.cdep.utils.Invariant.require;
+import static io.cdep.cdep.utils.ReflectionUtils.invoke;
+import static io.cdep.cdep.utils.StringUtils.safeFormat;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.ArrayExpression;
+import io.cdep.cdep.ast.finder.AssignmentBlockExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.ConstantExpression;
+import io.cdep.cdep.ast.finder.ExampleExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.FunctionTableExpression;
+import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.ast.finder.MultiStatementExpression;
+import io.cdep.cdep.ast.finder.NopExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
-
 import java.io.File;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
@@ -27,11 +49,6 @@ import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import static io.cdep.cdep.utils.Invariant.fail;
-import static io.cdep.cdep.utils.Invariant.require;
-import static io.cdep.cdep.utils.ReflectionUtils.invoke;
-import static io.cdep.cdep.utils.StringUtils.safeFormat;
 
 /**
  * Walks the expression tree and interprets the constant for the supplied state.
@@ -133,9 +150,6 @@ public class InterpretingVisitor {
     if (expr.getClass().equals(ExternalFunctionExpression.class)) {
       return visitExternalFunctionExpression((ExternalFunctionExpression) expr);
     }
-    if (expr.getClass().equals(IntegerExpression.class)) {
-      return visitIntegerExpression((IntegerExpression) expr);
-    }
     if (expr.getClass().equals(ArrayExpression.class)) {
       return visitArrayExpression((ArrayExpression) expr);
     }
@@ -207,10 +221,6 @@ public class InterpretingVisitor {
   @NotNull
   private Object visitArrayExpression(@NotNull ArrayExpression expr) {
     return visitArray(expr.elements, Object.class);
-  }
-
-  private Object visitIntegerExpression(@NotNull IntegerExpression expr) {
-    return expr.value;
   }
 
   private Method visitExternalFunctionExpression(@NotNull ExternalFunctionExpression expr) {

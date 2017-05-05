@@ -15,6 +15,9 @@
 */
 package io.cdep.cdep;
 
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
+import static org.junit.Assert.fail;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.ast.finder.Expression;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
@@ -25,16 +28,12 @@ import io.cdep.cdep.utils.Invariant;
 import io.cdep.cdep.yml.CDepManifestYmlGenerator;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
-import net.java.quickcheck.QuickCheck;
-import net.java.quickcheck.characteristic.AbstractCharacteristic;
-import org.junit.Test;
-
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.archive;
-import static org.junit.Assert.fail;
+import net.java.quickcheck.QuickCheck;
+import net.java.quickcheck.characteristic.AbstractCharacteristic;
+import org.junit.Test;
 
 public class TestInterpretingVisitor {
   @Test
@@ -73,10 +72,10 @@ public class TestInterpretingVisitor {
         if (function.globals.cdepExplodedRoot == expr) {
           return "exploded/root";
         }
-        if (function.globals.cmakeSystemName == expr) {
+        if (function.globals.buildSystemTargetSystem == expr) {
           return "Darwin";
         }
-        if (function.globals.cmakeSystemVersion == expr) {
+        if (function.globals.buildSystemTargetPlatform == expr) {
           return 21;
         }
         if (function.globals.cdepDeterminedAndroidAbi == expr) {
@@ -121,6 +120,7 @@ public class TestInterpretingVisitor {
     expected.put("re2", "Abort: Target platform Linux is not supported by com.github.jomof:re2:17.3.1-rev13. Supported: Android");
     expected.put("fuzz1", "Could not parse main manifest coordinate []");
     expected.put("fuzz2", "Abort: Archive file could not be converted to URL. It is likely an illegal path.");
+    expected.put("openssl", "Abort: Target platform Linux is not supported by com.github.jomof:openssl:1.0.1-e-rev6. Supported: Android");
 
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
@@ -156,10 +156,10 @@ public class TestInterpretingVisitor {
         if (function.globals.cdepExplodedRoot == expr) {
           return "exploded/root";
         }
-        if (function.globals.cmakeSystemName == expr) {
+        if (function.globals.buildSystemTargetSystem == expr) {
           return "Linux";
         }
-        if (function.globals.cmakeSystemVersion == expr) {
+        if (function.globals.buildSystemTargetPlatform == expr) {
           return 21;
         }
         if (function.globals.cdepDeterminedAndroidAbi == expr) {
@@ -231,10 +231,10 @@ public class TestInterpretingVisitor {
         if (function.globals.cdepExplodedRoot == expr) {
           return "exploded/root";
         }
-        if (function.globals.cmakeSystemName == expr) {
+        if (function.globals.buildSystemTargetSystem == expr) {
           return "Android";
         }
-        if (function.globals.cmakeSystemVersion == expr) {
+        if (function.globals.buildSystemTargetPlatform == expr) {
           return 21;
         }
         if (function.globals.cdepDeterminedAndroidAbi == expr) {
@@ -279,7 +279,7 @@ public class TestInterpretingVisitor {
         "Abort: Target platform Darwin is not supported by com.github.jomof:re2:17.3.1-rev13. Supported: Android");
     expected.put("fuzz1", "Could not parse main manifest coordinate []");
     expected.put("fuzz2", "Abort: Archive file could not be converted to URL. It is likely an illegal path.");
-
+    expected.put("openssl", "Abort: Target platform Darwin is not supported by com.github.jomof:openssl:1.0.1-e-rev6. Supported: Android");
     boolean unexpectedFailures = false;
     for (ResolvedManifests.NamedManifest manifest : ResolvedManifests.all()) {
       final BuildFindModuleFunctionTable builder = new BuildFindModuleFunctionTable();

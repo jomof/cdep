@@ -16,7 +16,18 @@
 package io.cdep.cdep;
 
 import io.cdep.annotations.NotNull;
-import io.cdep.cdep.ast.finder.*;
+import io.cdep.cdep.ast.finder.AbortExpression;
+import io.cdep.cdep.ast.finder.AssignmentExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.ConstantExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.FindModuleExpression;
+import io.cdep.cdep.ast.finder.GlobalBuildEnvironmentExpression;
+import io.cdep.cdep.ast.finder.IfSwitchExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
 import io.cdep.cdep.utils.StringUtils;
 
 public class CreateStringVisitor extends ReadonlyVisitor {
@@ -72,11 +83,6 @@ public class CreateStringVisitor extends ReadonlyVisitor {
     if (expr.conditions.length > 0) {
       appendIndented("end_if");
     }
-  }
-
-  @Override
-  protected void visitIntegerExpression(@NotNull IntegerExpression expr) {
-    append("%s", expr.value);
   }
 
   @Override
@@ -163,8 +169,8 @@ public class CreateStringVisitor extends ReadonlyVisitor {
   @Override
   protected void visitGlobalBuildEnvironmentExpression(@NotNull GlobalBuildEnvironmentExpression expr) {
     append("import %s\r\n", expr.cdepExplodedRoot.name);
-    append("import %s\r\n", expr.cmakeSystemName.name);
-    append("import %s\r\n", expr.cmakeSystemVersion.name);
+    append("import %s\r\n", expr.buildSystemTargetSystem.name);
+    append("import %s\r\n", expr.buildSystemTargetPlatform.name);
     append("import %s\r\n", expr.cdepDeterminedAndroidAbi.name);
     append("import %s\r\n", expr.cdepDeterminedAndroidRuntime.name);
     append("import %s\r\n", expr.cmakeOsxSysroot.name);
@@ -177,7 +183,7 @@ public class CreateStringVisitor extends ReadonlyVisitor {
   }
 
   @Override
-  protected void visitStringExpression(@NotNull ConstantExpression expr) {
+  protected void visitConstantExpression(@NotNull ConstantExpression expr) {
     append("'%s'", expr.value);
   }
 

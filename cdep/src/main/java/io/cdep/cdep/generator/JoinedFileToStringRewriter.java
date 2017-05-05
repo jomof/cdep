@@ -15,19 +15,33 @@
 */
 package io.cdep.cdep.generator;
 
+import static io.cdep.cdep.ast.finder.ExpressionBuilder.constant;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.RewritingVisitor;
-import io.cdep.cdep.ast.finder.*;
-
+import io.cdep.cdep.ast.finder.ArrayExpression;
+import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
+import io.cdep.cdep.ast.finder.ConstantExpression;
+import io.cdep.cdep.ast.finder.Expression;
+import io.cdep.cdep.ast.finder.ExternalFunctionExpression;
+import io.cdep.cdep.ast.finder.InvokeFunctionExpression;
+import io.cdep.cdep.ast.finder.ModuleExpression;
+import io.cdep.cdep.ast.finder.ParameterExpression;
 import java.util.Objects;
-
-import static io.cdep.cdep.ast.finder.ExpressionBuilder.constant;
 
 /**
  * Locate File.join statements and join them into strings.
  */
-public class CMakeConvertJoinedFileToString extends RewritingVisitor {
+public class JoinedFileToStringRewriter extends RewritingVisitor {
+  private final String left;
+  private final String right;
+
+  public JoinedFileToStringRewriter(String left, String right) {
+    this.left = left;
+    this.right = right;
+  }
+
   @NotNull
   @Override
   protected Expression visitInvokeFunctionExpression(@NotNull InvokeFunctionExpression expr) {
@@ -56,10 +70,10 @@ public class CMakeConvertJoinedFileToString extends RewritingVisitor {
       return ((ConstantExpression) expr).value.toString();
     }
     if (expr instanceof AssignmentReferenceExpression) {
-      return String.format("${%s}", ((AssignmentReferenceExpression) expr).assignment.name);
+      return String.format("$%s%s%s", left, ((AssignmentReferenceExpression) expr).assignment.name, right);
     }
     if (expr instanceof ParameterExpression) {
-      return String.format("${%s}", ((ParameterExpression) expr).name);
+      return String.format("$%s%s%s", left, ((ParameterExpression) expr).name, right);
     }
     if (expr instanceof ArrayExpression) {
       ArrayExpression specific = (ArrayExpression) expr;

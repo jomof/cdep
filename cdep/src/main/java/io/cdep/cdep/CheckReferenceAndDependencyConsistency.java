@@ -15,6 +15,8 @@ package io.cdep.cdep;
  * limitations under the License.
 */
 
+import static io.cdep.cdep.utils.Invariant.require;
+
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.ast.finder.FindModuleExpression;
@@ -22,13 +24,10 @@ import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.ast.finder.ModuleArchiveExpression;
 import io.cdep.cdep.ast.finder.ModuleExpression;
 import io.cdep.cdep.utils.StringUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static io.cdep.cdep.utils.Invariant.require;
 
 /**
  * This checker looks at the SHA256 of files along each dependency chain and ensures that each file
@@ -79,7 +78,7 @@ public class CheckReferenceAndDependencyConsistency extends ReadonlyVisitor {
   }
 
   @Override
-  void visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
+  protected void visitFunctionTableExpression(@NotNull FunctionTableExpression expr) {
     super.visitFunctionTableExpression(expr);
     for (Coordinate coordinate : forwardEdges.keySet()) {
       Map<String, Coordinate> shaToPrior = copyArchivesInto(coordinate);
