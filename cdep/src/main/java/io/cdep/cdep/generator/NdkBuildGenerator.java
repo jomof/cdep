@@ -4,10 +4,10 @@ import static io.cdep.cdep.io.IO.infoln;
 import static io.cdep.cdep.utils.Invariant.require;
 import static io.cdep.cdep.utils.StringUtils.safeFormat;
 
+import io.cdep.API;
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.Coordinate;
-import io.cdep.cdep.ReadonlyVisitor;
 import io.cdep.cdep.ast.finder.AbortExpression;
 import io.cdep.cdep.ast.finder.AssignmentExpression;
 import io.cdep.cdep.ast.finder.AssignmentReferenceExpression;
@@ -28,26 +28,25 @@ import io.cdep.cdep.utils.FileUtils;
 import io.cdep.cdep.utils.StringUtils;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class NdkBuildGenerator extends ReadonlyVisitor {
+public class NdkBuildGenerator extends AbstractNdkBuildGenerator {
+
   GlobalBuildEnvironmentExpression globals;
-
-  @NotNull
-  GeneratorEnvironment environment;
-
-  @NotNull
-  StringBuilder sb = new StringBuilder();
 
   @Nullable
   String currentLib = null;
 
+  @Nullable
+  Coordinate coordinate = null;
+
   int indent = 0;
 
   public NdkBuildGenerator(@NotNull GeneratorEnvironment environment) {
-    this.environment = environment;
+    super(environment);
   }
 
   public void generate(FunctionTableExpression expr) {
@@ -70,8 +69,10 @@ public class NdkBuildGenerator extends ReadonlyVisitor {
     appendIndented("###");
     appendIndented("cdep_exploded_root := %s", environment.unzippedArchivesFolder);
     for (Coordinate coordinate : expr.findFunctions.keySet()) {
+      this.coordinate = coordinate;
       StatementExpression findFunction = expr.findFunctions.get(coordinate);
       Set<String> libs = ExpressionUtils.findReferencedLibraryNames(findFunction);
+
       if (libs.size() == 0) {
         // Header-only library. Use BUILD_STATIC_LIBRARY.
         appendIndented("\n###");
@@ -96,6 +97,7 @@ public class NdkBuildGenerator extends ReadonlyVisitor {
           appendIndented("### library: %s", currentLib);
         }
         appendIndented("###");
+
         appendIndented("LOCAL_PATH := $(call my-dir)");
         appendIndented("include $(CLEAR_VARS)");
         appendIndented("LOCAL_MODULE := %s", moduleName);
@@ -122,14 +124,6 @@ public class NdkBuildGenerator extends ReadonlyVisitor {
     append("$(%s)", expr.assignment.name);
   }
 
-  @Override
-  protected void visitConstantExpression(ConstantExpression expr) {
-    if (expr.value instanceof String) {
-      append("%s", expr.value);
-    } else {
-      append("%s", expr.value);
-    }
-  }
 
   @Override
   protected void visitModuleExpression(@NotNull ModuleExpression expr) {
@@ -141,7 +135,22 @@ public class NdkBuildGenerator extends ReadonlyVisitor {
 
   @Override
   protected void visitModuleArchiveExpression(@NotNull ModuleArchiveExpression expr) {
+    boolean haveDownloaded = false;
     if (expr.includePath != null) {
+      if (!haveDownloaded) {
+        haveDownloaded = true;
+        appendIndented("ifeq (,$(wildcard ");
+        visit(expr.includePath);
+        append("))");
+        ++indent;
+        appendIndented(generateCDepCall(
+            "fetch-archive", this.coordinate.toString(),
+            expr.file.toString(),
+            expr.size.toString(),
+            expr.sha256));
+        --indent;
+        appendIndented("endif");
+      }
       appendIndented("LOCAL_EXPORT_C_INCLUDES += ");
       visit(expr.includePath);
     }
@@ -155,11 +164,36 @@ public class NdkBuildGenerator extends ReadonlyVisitor {
           continue;
         }
         matched = true;
+
+        if (!haveDownloaded) {
+          haveDownloaded = true;
+          appendIndented("ifeq (,$(wildcard ");
+          visit(expr.libraryPaths[i]);
+          append("))");
+          ++indent;
+          appendIndented(generateCDepCall(
+              "fetch-archive", this.coordinate.toString(),
+              expr.file.toString(),
+              expr.size.toString(),
+              expr.sha256));
+          --indent;
+          appendIndented("endif");
+        }
         appendIndented("LOCAL_SRC_FILES += ");
         visit(expr.libraryPaths[i]);
       }
       require(matched, "Library '%s' was not in the manifest. Expected one of %s",
           currentLib, StringUtils.joinOn(",", saw));
+    }
+  }
+
+
+  private String generateCDepCall(String... args) {
+    try {
+      return String.format("$(shell %s)",
+          StringUtils.joinOn(" ", API.generateCDepCall(environment, args)));
+    } catch (MalformedURLException e) {
+      throw new RuntimeException(e);
     }
   }
 
@@ -293,12 +327,11 @@ public class NdkBuildGenerator extends ReadonlyVisitor {
     return null;
   }
 
-  private void appendIndented(String format, Object ... args) {
-    sb.append("\n");
+  private void appendIndented(String format, Object... args) {
+    sb.append("\r\n");
     sb.append(new String(new char[indent * 2]).replace('\0', ' '));
     sb.append(safeFormat(format, args));
   }
-  private void append(String format, Object ... args) {
-    sb.append(safeFormat(format, args));
-  }
+
+
 }
