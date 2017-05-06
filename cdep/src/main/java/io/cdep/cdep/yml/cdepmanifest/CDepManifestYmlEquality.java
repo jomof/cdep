@@ -33,7 +33,7 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
   public static void throwIfNotDeeplyIdentical(CDepManifestYml left, CDepManifestYml right) {
     CDepManifestYmlEquality thiz = new CDepManifestYmlEquality();
     thiz.covisit(left, right);
-    require(thiz.areEqual,"Manifests were different at %s. Left was <%s>, right was <%s>",
+    require(thiz.areEqual, "Manifests were different at %s. Left was <%s>, right was <%s>",
         thiz.firstDifference,
         thiz.firstDifferenceLeft,
         thiz.firstDifferenceRight);
@@ -48,6 +48,10 @@ public class CDepManifestYmlEquality extends PlainOldDataEqualityCovisitor {
   }
 
   public void covisitCDepManifestYml(String name, CDepManifestYml left, CDepManifestYml right) {
+    covisitFields(left, right);
+  }
+
+  public void covisitLicense(String name, License left, License right) {
     covisitFields(left, right);
   }
 

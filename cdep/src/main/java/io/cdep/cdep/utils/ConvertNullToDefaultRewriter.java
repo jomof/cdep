@@ -83,6 +83,7 @@ public class ConvertNullToDefaultRewriter extends CDepManifestYmlRewriter {
         removeNullElements(
             nullToEmpty(value.dependencies, HardNameDependency.class),
             HardNameDependency.class),
+        nullToDefault(value.license, new License()),
         value.interfaces,
         value.android,
         value.iOS,

@@ -33,6 +33,11 @@ abstract public class CDepManifestYmlReadonlyVisitor extends PlainOldDataReadonl
     visitPlainOldDataObject(name, value);
   }
 
+  public void visitLicense(@Nullable String name, @NotNull License value) {
+    visitPlainOldDataObject(name, value);
+  }
+
+
   public void visitInterfaces(@Nullable String name, @NotNull Interfaces value) {
     visitPlainOldDataObject(name, value);
   }

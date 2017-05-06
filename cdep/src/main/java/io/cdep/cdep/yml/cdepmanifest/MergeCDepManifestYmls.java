@@ -87,7 +87,12 @@ public class MergeCDepManifestYmls extends CDepManifestYmlEquality {
       sourceVersion = right.sourceVersion;
     }
     // If any differences were allow, return the "right" version.
-    returnValue = new CDepManifestYml(sourceVersion, right.coordinate, right.dependencies, right.interfaces,
+    returnValue = new CDepManifestYml(
+        sourceVersion,
+        right.coordinate,
+        right.dependencies,
+        right.license,
+        right.interfaces,
         android, ios, linux, left.example);
   }
 

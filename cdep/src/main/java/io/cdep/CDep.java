@@ -15,36 +15,17 @@
 */
 package io.cdep;
 
-import static io.cdep.cdep.io.IO.errorln;
-import static io.cdep.cdep.io.IO.info;
-import static io.cdep.cdep.io.IO.infoln;
-import static io.cdep.cdep.utils.Invariant.errorsInScope;
-import static io.cdep.cdep.utils.Invariant.fail;
-import static io.cdep.cdep.utils.Invariant.require;
-import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.annotations.Nullable;
 import io.cdep.cdep.CheckLocalFileSystemIntegrity;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ast.finder.FunctionTableExpression;
 import io.cdep.cdep.fullfill.Fullfill;
-import io.cdep.cdep.generator.CMakeExamplesGenerator;
-import io.cdep.cdep.generator.CMakeGenerator;
-import io.cdep.cdep.generator.GeneratorEnvironment;
-import io.cdep.cdep.generator.GeneratorEnvironmentUtils;
-import io.cdep.cdep.generator.NdkBuildGenerator;
+import io.cdep.cdep.generator.*;
 import io.cdep.cdep.io.IO;
 import io.cdep.cdep.resolver.ResolvedManifest;
 import io.cdep.cdep.resolver.Resolver;
-import io.cdep.cdep.utils.CDepManifestYmlUtils;
-import io.cdep.cdep.utils.CDepYmlUtils;
-import io.cdep.cdep.utils.CoordinateUtils;
-import io.cdep.cdep.utils.EnvironmentUtils;
-import io.cdep.cdep.utils.ExpressionUtils;
-import io.cdep.cdep.utils.FileUtils;
-import io.cdep.cdep.utils.HashUtils;
-import io.cdep.cdep.utils.Invariant;
+import io.cdep.cdep.utils.*;
 import io.cdep.cdep.yml.cdep.BuildSystem;
 import io.cdep.cdep.yml.cdep.CDepYml;
 import io.cdep.cdep.yml.cdep.SoftNameDependency;
@@ -52,6 +33,8 @@ import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
 import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
 import io.cdep.cdep.yml.cdepmanifest.Interfaces;
 import io.cdep.cdep.yml.cdepmanifest.MergeCDepManifestYmls;
+import org.fusesource.jansi.AnsiConsole;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -64,7 +47,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.fusesource.jansi.AnsiConsole;
+
+import static io.cdep.cdep.io.IO.*;
+import static io.cdep.cdep.utils.Invariant.*;
+import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
 
 @SuppressWarnings("unused")
 public class CDep {
@@ -369,6 +355,7 @@ public class CDep {
         prior.sourceVersion,
         prior.coordinate,
         prior.dependencies,
+        prior.license,
         new Interfaces(archive(zip.getName(), sha256, size, include, new CxxLanguageFeatures[0])),
         prior.android,
         prior.iOS,

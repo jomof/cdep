@@ -24,6 +24,8 @@ public class CDepManifestYml {
   final public Coordinate coordinate;
   @NotNull
   final public HardNameDependency dependencies[];
+  @NotNull
+  final public License license;
   @Nullable
   final public Interfaces interfaces;
   @Nullable
@@ -41,6 +43,7 @@ public class CDepManifestYml {
     this.sourceVersion = CDepManifestYmlVersion.vlatest;
     this.coordinate = Coordinate.EMPTY_COORDINATE;
     this.dependencies = new HardNameDependency[0];
+    this.license = new License();
     this.interfaces = null;
     this.android = null;
     this.linux = null;
@@ -52,6 +55,7 @@ public class CDepManifestYml {
     this.sourceVersion = CDepManifestYmlVersion.vlatest;
     this.coordinate = coordinate;
     this.dependencies = new HardNameDependency[0];
+    this.license = new License();
     this.interfaces = null;
     this.android = null;
     this.linux = null;
@@ -63,6 +67,7 @@ public class CDepManifestYml {
       @NotNull CDepManifestYmlVersion sourceVersion,
       @NotNull Coordinate coordinate,
       @NotNull HardNameDependency[] dependencies,
+      @NotNull License license,
       @Nullable Interfaces interfaces,
       @Nullable Android android,
       @Nullable iOS ios,
@@ -74,6 +79,7 @@ public class CDepManifestYml {
     this.sourceVersion = sourceVersion;
     this.coordinate = coordinate;
     this.dependencies = dependencies;
+    this.license = license;
     this.interfaces = interfaces;
     this.android = android;
     this.iOS = ios;

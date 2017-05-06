@@ -24,6 +24,7 @@ import io.cdep.cdep.utils.StringUtils;
 import io.cdep.cdep.yml.cdepmanifest.AndroidABI;
 import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
 import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.License;
 import io.cdep.cdep.yml.cdepmanifest.v2.V2Reader;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -60,6 +61,7 @@ public class V3Reader {
         manifest.sourceVersion != null ? manifest.sourceVersion : CDepManifestYmlVersion.vlatest,
         ObjectUtils.nullToDefault(manifest.coordinate, EMPTY_COORDINATE),
         ArrayUtils.nullToEmpty(manifest.dependencies, HardNameDependency.class),
+        new License(),
         manifest.interfaces,
         convertAndroid(manifest.android),
         convertiOS(manifest.iOS),

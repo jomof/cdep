@@ -30,11 +30,20 @@ public class CDepManifestYmlRewriter {
         visitDepManifestYmlVersion(value.sourceVersion),
         visitCoordinate(value.coordinate),
         visitHardNameDependencyArray(value.dependencies),
+        visitLicense(value.license),
         visitInterfaces(value.interfaces),
         visitAndroid(value.android),
         visitiOS(value.iOS),
         visitLinux(value.linux),
         visitExample(value.example));
+  }
+
+  @NotNull
+  License visitLicense(@NotNull  License license) {
+    return new License(
+        visitString(license.name),
+        visitString(license.url)
+    );
   }
 
   @Nullable

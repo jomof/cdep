@@ -15,27 +15,23 @@
 */
 package io.cdep.cdep.yml;
 
-import static com.google.common.truth.Truth.assertThat;
-import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
-import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.hardname;
-import static io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString.serialize;
-import static io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures.cxx_alignas;
-import static io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures.cxx_auto_type;
-
 import io.cdep.annotations.NotNull;
 import io.cdep.cdep.Coordinate;
 import io.cdep.cdep.ResolvedManifests;
 import io.cdep.cdep.Version;
 import io.cdep.cdep.utils.CDepManifestYmlUtils;
 import io.cdep.cdep.utils.Invariant;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYml;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlEquality;
-import io.cdep.cdep.yml.cdepmanifest.CDepManifestYmlVersion;
-import io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures;
-import io.cdep.cdep.yml.cdepmanifest.HardNameDependency;
+import io.cdep.cdep.yml.cdepmanifest.*;
 import net.java.quickcheck.QuickCheck;
 import net.java.quickcheck.characteristic.AbstractCharacteristic;
 import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
+import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.archive;
+import static io.cdep.cdep.yml.cdepmanifest.CDepManifestBuilder.hardname;
+import static io.cdep.cdep.yml.cdepmanifest.CreateCDepManifestYmlString.serialize;
+import static io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures.cxx_alignas;
+import static io.cdep.cdep.yml.cdepmanifest.CxxLanguageFeatures.cxx_auto_type;
 
 public class TestCreateCDepManifestYmlString {
 
@@ -124,6 +120,7 @@ public class TestCreateCDepManifestYmlString {
         CDepManifestYmlVersion.v3,
         new Coordinate("com.github.jomof", "openssl", new Version("1.0.1-e-rev5")),
         new HardNameDependency[0],
+        new License(),
         null,
         null,
         null,
@@ -133,7 +130,8 @@ public class TestCreateCDepManifestYmlString {
             "coordinate:\r\n"
                 + "  groupId: com.github.jomof\r\n"
                 + "  artifactId: openssl\r\n"
-                + "  version: 1.0.1-e-rev5\r\n");
+                + "  version: 1.0.1-e-rev5\r\n" +
+                  "license:\r\n");
   }
 
   @Test

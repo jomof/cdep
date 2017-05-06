@@ -25,6 +25,7 @@ public class CDepManifestYmlGenerator implements Generator<CDepManifestYml> {
         versionGenerator.next(),
         coordinateGenerator.next(),
         dependenciesGenerator.next(),
+        new License(),
         new Interfaces(archiveGenerator.next()),
         new Android(dependenciesGenerator.next(), androidArchiveGenerator.next()),
         null,
