@@ -23,7 +23,7 @@ These files are meant to be checked into source control.
 Now edit cdep.yml file to add a line like this.
 
      dependencies:
-     - compile: com.github.jomof:sqlite:3.16.2-rev14
+     - compile: com.github.jomof:sqlite:3.16.2-rev51
      
 This tell CDeps that this project depends on SQLite.
 
