@@ -106,7 +106,7 @@
         <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="462">
-              <caret line="14" column="45" lean-forward="false" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
+              <caret line="21" column="46" lean-forward="false" selection-start-line="21" selection-start-column="46" selection-end-line="21" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -2093,13 +2093,6 @@
       <option name="presentableId" value="Default" />
       <updated>1492221479266</updated>
     </task>
-    <task id="LOCAL-00031" summary="requires">
-      <created>1492396933352</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1492396933352</updated>
-    </task>
     <task id="LOCAL-00032" summary="requires">
       <created>1492403215719</created>
       <option name="number" value="00032" />
@@ -2436,7 +2429,14 @@
       <option name="project" value="LOCAL" />
       <updated>1494122527296</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="Update copyrights">
+      <created>1494172077499</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1494172077499</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -3105,7 +3105,7 @@
     <entry file="file://$PROJECT_DIR$/smoke-test/cdep.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
-          <caret line="14" column="45" lean-forward="false" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
+          <caret line="21" column="46" lean-forward="false" selection-start-line="21" selection-start-column="46" selection-end-line="21" selection-end-column="46" />
           <folding />
         </state>
       </provider>

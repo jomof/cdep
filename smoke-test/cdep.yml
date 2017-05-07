@@ -19,7 +19,7 @@ dependencies:
 #- compile: com.github.jomof:yaml-cpp:0.5.3-rev20
 
 - compile: com.github.jomof:freetype:2.6.2-rev14
-- compile: com.github.jomof:tinydir:0.0.0-rev7
+- compile: com.github.jomof:tinydir:0.0.0-rev8
 - compile: com.github.jomof:protobuf:3.2.0-rev0
 
 - compile: com.github.jomof:re2:17.3.1-rev18
