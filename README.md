@@ -30,8 +30,6 @@ This tell CDeps that this project depends on SQLite.
 Next, run cdep command to download SQLite and build CMake modules for it.
 
     $ ./cdep
-    Downloading sqlite-android-gnustl_shared-platform-21.zip
-    Exploding sqlite-android-gnustl_shared-platform-21.zip
     Generating .cdep/modules/cdep-dependencies-config.cmake
 
 ## Windows
