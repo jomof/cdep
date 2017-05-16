@@ -39,3 +39,7 @@ family = firebase
 artifact = admob
 version = 2.1.3-rev22
 ```
+Artifact family name is then used to recompose the URL by adding a suffix to the CDep manifest file name.
+```
+https://github.com/jomof/firebase/releases/download/2.1.3-rev23/cdep-manifest-admob.yml
+```
