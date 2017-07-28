@@ -3,8 +3,9 @@ git:
   depth: 3
 matrix:
   include:
-  - jdk: openjdk7
+  - jdk: oraclejdk7
     os: linux
+    dist: precise
     addons:
       apt:
         sources:
