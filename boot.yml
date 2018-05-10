@@ -1,3 +1,3 @@
 entry: io.cdep.CDep
 dependencies:
-- https://github.com/google/cdep/releases/download/0.8.29/cdep-0.8.29.jar
+- https://github.com/google/cdep/releases/download/0.8.30/cdep-0.8.30.jar
